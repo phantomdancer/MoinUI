@@ -153,7 +153,7 @@ struct ContentView: View {
         .frame(minWidth: 1100, minHeight: 700)
         .toolbar {
             ToolbarItemGroup(placement: .automatic) {
-                Link(destination: URL(string: "https://github.com/phantomdancer/moin-ui")!) {
+                Link(destination: URL(string: "https://github.com/phantomdancer/MoinUI")!) {
                     if let image = Bundle.module.image(forResource: "github-fill") {
                         Image(nsImage: image)
                             .resizable()

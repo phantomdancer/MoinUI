@@ -226,19 +226,19 @@ struct ButtonExamples: View {
         ) {
             HStack(spacing: Constants.Spacing.md) {
                 MoinUIButton(
-                    localization.tr("button.label.github"),
+                    "MoinUI",
                     type: .primary,
                     icon: "link",
-                    href: URL(string: "https://github.com/anthropics/claude-code")
+                    href: URL(string: "https://github.com/phantomdancer/MoinUI")
                 )
             }
         } code: {
             """
             MoinUIButton(
-                "\(localization.tr("button.label.github"))",
+                "MoinUI",
                 type: .primary,
                 icon: "link",
-                href: URL(string: "https://github.com/...")
+                href: URL(string: "https://github.com/phantomdancer/MoinUI")
             )
             """
         }
