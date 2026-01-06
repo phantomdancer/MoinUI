@@ -133,6 +133,12 @@
     "state_desc": "禁用和加载状态。",
     "icon": "图标按钮",
     "icon_desc": "使用 SF Symbols 的纯图标按钮。",
+    "icon_text": "图标+文字",
+    "icon_text_desc": "按钮可以包含图标和文字，图标可在左侧或右侧。",
+    "link": "链接按钮",
+    "link_desc": "设置 href 属性使按钮变为链接，点击后打开 URL。",
+    "group": "按钮组",
+    "group_desc": "将多个按钮组合在一起。",
     "block": "块级按钮",
     "block_desc": "占满整行宽度的按钮。",
     "label": {
@@ -155,7 +161,11 @@
       "normal": "正常",
       "disabled": "禁用",
       "loading": "加载中",
-      "block_button": "块级按钮"
+      "block_button": "块级按钮",
+      "search": "搜索",
+      "download": "下载",
+      "go": "前往",
+      "github": "GitHub"
     }
   },
   "config": {
@@ -212,9 +222,12 @@
       "size": "按钮尺寸",
       "variant": "按钮样式变体",
       "shape": "按钮形状",
+      "icon": "图标名称 (SF Symbols)",
+      "iconPosition": "图标位置",
       "isLoading": "加载状态",
       "isDisabled": "禁用状态",
       "isBlock": "占满整行",
+      "href": "链接地址",
       "action": "点击回调"
     },
     "type_values": {

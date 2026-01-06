@@ -17,9 +17,15 @@ struct MoinUIButtonShapeStyle: Shape {
     }
 }
 
+/// 图标位置
+public enum MoinUIButtonIconPosition {
+    case leading
+    case trailing
+}
+
 /// MoinUI Button Component
 public struct MoinUIButton<Label: View>: View {
-    private let action: () -> Void
+    private let action: (() -> Void)?
     private let label: Label
     private let type: MoinUIButtonType
     private let size: MoinUIButtonSize
@@ -28,6 +34,10 @@ public struct MoinUIButton<Label: View>: View {
     private let isLoading: Bool
     private let isDisabled: Bool
     private let isBlock: Bool
+    private let icon: String?
+    private let iconPosition: MoinUIButtonIconPosition
+    private let href: URL?
+    private let target: String?
 
     @State private var isHovered = false
     @State private var isPressed = false
@@ -43,41 +53,42 @@ public struct MoinUIButton<Label: View>: View {
         size: MoinUIButtonSize = .medium,
         variant: MoinUIButtonVariant = .solid,
         shape: MoinUIButtonShape = .default,
+        icon: String? = nil,
+        iconPosition: MoinUIButtonIconPosition = .leading,
         isLoading: Bool = false,
         isDisabled: Bool = false,
         isBlock: Bool = false,
-        action: @escaping () -> Void,
+        href: URL? = nil,
+        target: String? = nil,
+        action: (() -> Void)? = nil,
         @ViewBuilder label: () -> Label
     ) {
         self.type = type
         self.size = size
         self.variant = variant
         self.shape = shape
+        self.icon = icon
+        self.iconPosition = iconPosition
         self.isLoading = isLoading
         self.isDisabled = isDisabled
         self.isBlock = isBlock
+        self.href = href
+        self.target = target
         self.action = action
         self.label = label()
     }
 
     public var body: some View {
-        Button(action: handleAction) {
-            HStack(spacing: Constants.Button.iconSpacing) {
-                if isLoading {
-                    loadingIndicator
+        Group {
+            if let href = href {
+                Link(destination: href) {
+                    buttonContent
                 }
-                label
-                    .opacity(isLoading ? 0.7 : 1)
+            } else {
+                Button(action: handleAction) {
+                    buttonContent
+                }
             }
-            .font(.system(size: fontSize, weight: .medium))
-            .foregroundColor(foregroundColor)
-            .frame(height: controlHeight)
-            .frame(maxWidth: isBlock ? .infinity : nil)
-            .frame(minWidth: shape == .circle ? controlHeight : nil)
-            .padding(.horizontal, shape == .circle ? 0 : horizontalPadding)
-            .background(backgroundColor)
-            .clipShape(buttonShape)
-            .overlay(borderOverlay)
         }
         .buttonStyle(.plain)
         .disabled(effectiveDisabled)
@@ -92,6 +103,45 @@ public struct MoinUIButton<Label: View>: View {
                 .onChanged { _ in isPressed = true }
                 .onEnded { _ in isPressed = false }
         )
+    }
+
+    @ViewBuilder
+    private var buttonContent: some View {
+        HStack(spacing: Constants.Button.iconSpacing) {
+            if isLoading {
+                loadingIndicator
+            } else if let icon = icon, iconPosition == .leading {
+                iconView(icon)
+            }
+            label
+                .opacity(isLoading ? 0.7 : 1)
+            if !isLoading, let icon = icon, iconPosition == .trailing {
+                iconView(icon)
+            }
+        }
+        .font(.system(size: fontSize, weight: .medium))
+        .foregroundColor(foregroundColor)
+        .frame(height: controlHeight)
+        .frame(maxWidth: isBlock ? .infinity : nil)
+        .frame(minWidth: shape == .circle ? controlHeight : nil)
+        .padding(.horizontal, shape == .circle ? 0 : horizontalPadding)
+        .background(backgroundColor)
+        .clipShape(buttonShape)
+        .overlay(borderOverlay)
+    }
+
+    @ViewBuilder
+    private func iconView(_ iconName: String) -> some View {
+        Image(systemName: iconName)
+            .font(.system(size: iconSize))
+    }
+
+    private var iconSize: CGFloat {
+        switch size {
+        case .small: return token.fontSizeSM
+        case .medium: return token.fontSize
+        case .large: return token.fontSizeLG
+        }
     }
 
     // MARK: - Token-based sizing
@@ -147,7 +197,7 @@ public struct MoinUIButton<Label: View>: View {
 
     private func handleAction() {
         guard !effectiveDisabled else { return }
-        action()
+        action?()
     }
 
     @ViewBuilder
@@ -244,26 +294,32 @@ public struct MoinUIButton<Label: View>: View {
 // MARK: - Convenience Initializers
 
 public extension MoinUIButton where Label == Text {
-    /// Create a button with text label
+    /// 创建文本按钮
     init(
         _ title: String,
         type: MoinUIButtonType = .default,
         size: MoinUIButtonSize = .medium,
         variant: MoinUIButtonVariant = .solid,
         shape: MoinUIButtonShape = .default,
+        icon: String? = nil,
+        iconPosition: MoinUIButtonIconPosition = .leading,
         isLoading: Bool = false,
         isDisabled: Bool = false,
         isBlock: Bool = false,
-        action: @escaping () -> Void
+        href: URL? = nil,
+        action: (() -> Void)? = nil
     ) {
         self.init(
             type: type,
             size: size,
             variant: variant,
             shape: shape,
+            icon: icon,
+            iconPosition: iconPosition,
             isLoading: isLoading,
             isDisabled: isDisabled,
             isBlock: isBlock,
+            href: href,
             action: action
         ) {
             Text(title)
@@ -271,40 +327,33 @@ public extension MoinUIButton where Label == Text {
     }
 }
 
-public extension MoinUIButton where Label == AnyView {
-    /// Create an icon-only button
+public extension MoinUIButton where Label == EmptyView {
+    /// 创建纯图标按钮
     init(
-        icon: String,
+        icon iconName: String,
         type: MoinUIButtonType = .default,
         size: MoinUIButtonSize = .medium,
         variant: MoinUIButtonVariant = .solid,
         shape: MoinUIButtonShape = .circle,
         isLoading: Bool = false,
         isDisabled: Bool = false,
-        action: @escaping () -> Void
+        href: URL? = nil,
+        action: (() -> Void)? = nil
     ) {
-        let token = MoinUIConfigProvider.shared.token
-        let iconSize: CGFloat = {
-            switch size {
-            case .small: return token.fontSizeSM
-            case .medium: return token.fontSize
-            case .large: return token.fontSizeLG
-            }
-        }()
         self.init(
             type: type,
             size: size,
             variant: variant,
             shape: shape,
+            icon: iconName,
+            iconPosition: .leading,
             isLoading: isLoading,
             isDisabled: isDisabled,
             isBlock: false,
+            href: href,
             action: action
         ) {
-            AnyView(
-                Image(systemName: icon)
-                    .font(.system(size: iconSize))
-            )
+            EmptyView()
         }
     }
 }

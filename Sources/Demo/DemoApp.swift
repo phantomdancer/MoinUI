@@ -110,7 +110,27 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
 class NavigationManager: ObservableObject {
     static let shared = NavigationManager()
-    @Published var selectedItem: NavItem? = .introduction
+
+    private let selectedItemKey = "MoinUIDemo.selectedNavItem"
+
+    @Published var selectedItem: NavItem? {
+        didSet {
+            // 保存选中状态
+            if let item = selectedItem {
+                UserDefaults.standard.set(item.rawValue, forKey: selectedItemKey)
+            }
+        }
+    }
+
+    private init() {
+        // 恢复上次选中状态
+        if let savedRawValue = UserDefaults.standard.string(forKey: selectedItemKey),
+           let savedItem = NavItem(rawValue: savedRawValue) {
+            selectedItem = savedItem
+        } else {
+            selectedItem = .introduction
+        }
+    }
 
     func navigate(to item: NavItem) {
         selectedItem = item

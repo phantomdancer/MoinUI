@@ -133,6 +133,12 @@
     "state_desc": "Disabled and loading states.",
     "icon": "Icon",
     "icon_desc": "Icon-only buttons using SF Symbols.",
+    "icon_text": "Icon + Text",
+    "icon_text_desc": "Button can contain both icon and text. Icon can be placed on left or right.",
+    "link": "Link Button",
+    "link_desc": "Set href prop to make button act as a link that opens a URL.",
+    "group": "Button Group",
+    "group_desc": "Group multiple buttons together.",
     "block": "Block",
     "block_desc": "Full-width button.",
     "label": {
@@ -155,7 +161,11 @@
       "normal": "Normal",
       "disabled": "Disabled",
       "loading": "Loading",
-      "block_button": "Block Button"
+      "block_button": "Block Button",
+      "search": "Search",
+      "download": "Download",
+      "go": "Go",
+      "github": "GitHub"
     }
   },
   "config": {
@@ -212,9 +222,12 @@
       "size": "Button size",
       "variant": "Button style variant",
       "shape": "Button shape",
+      "icon": "Icon name (SF Symbols)",
+      "iconPosition": "Icon position",
       "isLoading": "Loading state",
       "isDisabled": "Disabled state",
       "isBlock": "Full width",
+      "href": "Link URL",
       "action": "Click handler"
     },
     "type_values": {

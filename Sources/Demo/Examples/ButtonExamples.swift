@@ -21,6 +21,9 @@ struct ButtonExamples: View {
                 shapeExample
                 stateExample
                 iconExample
+                iconTextExample
+                linkExample
+                groupExample
                 blockExample
 
                 Divider()
@@ -197,6 +200,69 @@ struct ButtonExamples: View {
         }
     }
 
+    private var iconTextExample: some View {
+        ExampleSection(
+            title: localization.tr("button.icon_text"),
+            description: localization.tr("button.icon_text_desc")
+        ) {
+            HStack(spacing: Constants.Spacing.md) {
+                MoinUIButton(localization.tr("button.label.search"), type: .primary, icon: "magnifyingglass") {}
+                MoinUIButton(localization.tr("button.label.download"), type: .success, icon: "arrow.down.circle") {}
+                MoinUIButton(localization.tr("button.label.go"), type: .info, icon: "arrow.right", iconPosition: .trailing) {}
+            }
+        } code: {
+            """
+            MoinUIButton("\(localization.tr("button.label.search"))", type: .primary, icon: "magnifyingglass") {}
+            MoinUIButton("\(localization.tr("button.label.download"))", type: .success, icon: "arrow.down.circle") {}
+            MoinUIButton("\(localization.tr("button.label.go"))", type: .info, icon: "arrow.right", iconPosition: .trailing) {}
+            """
+        }
+    }
+
+    private var linkExample: some View {
+        ExampleSection(
+            title: localization.tr("button.link"),
+            description: localization.tr("button.link_desc")
+        ) {
+            HStack(spacing: Constants.Spacing.md) {
+                MoinUIButton(
+                    localization.tr("button.label.github"),
+                    type: .primary,
+                    icon: "link",
+                    href: URL(string: "https://github.com/anthropics/claude-code")
+                )
+            }
+        } code: {
+            """
+            MoinUIButton(
+                "\(localization.tr("button.label.github"))",
+                type: .primary,
+                icon: "link",
+                href: URL(string: "https://github.com/...")
+            )
+            """
+        }
+    }
+
+    private var groupExample: some View {
+        ExampleSection(
+            title: localization.tr("button.group"),
+            description: localization.tr("button.group_desc")
+        ) {
+            MoinUIButtonGroup {
+                MoinUIButton(icon: "chevron.left", type: .primary, shape: .default) {}
+                MoinUIButton(icon: "chevron.right", type: .primary, shape: .default) {}
+            }
+        } code: {
+            """
+            MoinUIButtonGroup {
+                MoinUIButton(icon: "chevron.left", type: .primary, shape: .default) {}
+                MoinUIButton(icon: "chevron.right", type: .primary, shape: .default) {}
+            }
+            """
+        }
+    }
+
     private var blockExample: some View {
         ExampleSection(
             title: localization.tr("button.block"),
@@ -230,10 +296,13 @@ struct ButtonExamples: View {
                     ("size", "MoinUIButtonSize", ".medium", localization.tr("api.button.size")),
                     ("variant", "MoinUIButtonVariant", ".solid", localization.tr("api.button.variant")),
                     ("shape", "MoinUIButtonShape", ".default", localization.tr("api.button.shape")),
+                    ("icon", "String?", "nil", localization.tr("api.button.icon")),
+                    ("iconPosition", "MoinUIButtonIconPosition", ".leading", localization.tr("api.button.iconPosition")),
                     ("isLoading", "Bool", "false", localization.tr("api.button.isLoading")),
                     ("isDisabled", "Bool", "false", localization.tr("api.button.isDisabled")),
                     ("isBlock", "Bool", "false", localization.tr("api.button.isBlock")),
-                    ("action", "() -> Void", "-", localization.tr("api.button.action")),
+                    ("href", "URL?", "nil", localization.tr("api.button.href")),
+                    ("action", "(() -> Void)?", "nil", localization.tr("api.button.action")),
                 ]
             )
 
