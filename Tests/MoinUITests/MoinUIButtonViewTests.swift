@@ -164,4 +164,65 @@ final class MoinUIButtonViewTests: XCTestCase {
         let text = try button.inspect().find(text: "Both")
         XCTAssertNotNil(text)
     }
+
+    // MARK: - Icon + Text Button Tests
+
+    func testButtonWithIconAndText() throws {
+        let button = MoinUIButton("Search", type: .primary, icon: "magnifyingglass") {}
+        let text = try button.inspect().find(text: "Search")
+        XCTAssertNotNil(text)
+        let image = try button.inspect().find(ViewType.Image.self)
+        XCTAssertNotNil(image)
+    }
+
+    func testButtonWithIconTrailing() throws {
+        let button = MoinUIButton("Next", type: .primary, icon: "arrow.right", iconPosition: .trailing) {}
+        let text = try button.inspect().find(text: "Next")
+        XCTAssertNotNil(text)
+    }
+
+    // MARK: - Link Button Tests
+
+    func testButtonWithHref() throws {
+        let button = MoinUIButton(
+            "GitHub",
+            type: .primary,
+            href: URL(string: "https://github.com")
+        )
+        // Link button renders as Link, not Button
+        let link = try button.inspect().find(ViewType.Link.self)
+        XCTAssertNotNil(link)
+    }
+
+    func testButtonWithHrefAndIcon() throws {
+        let button = MoinUIButton(
+            "Link",
+            type: .primary,
+            icon: "link",
+            href: URL(string: "https://example.com")
+        )
+        let link = try button.inspect().find(ViewType.Link.self)
+        XCTAssertNotNil(link)
+    }
+
+    // MARK: - Button Group Tests
+
+    func testButtonGroupRenders() throws {
+        let group = MoinUIButtonGroup {
+            MoinUIButton("A", type: .primary) {}
+            MoinUIButton("B", type: .primary) {}
+        }
+        let textA = try group.inspect().find(text: "A")
+        let textB = try group.inspect().find(text: "B")
+        XCTAssertNotNil(textA)
+        XCTAssertNotNil(textB)
+    }
+
+    func testButtonGroupWithSize() throws {
+        let group = MoinUIButtonGroup(size: .large) {
+            MoinUIButton("Large", type: .primary) {}
+        }
+        let text = try group.inspect().find(text: "Large")
+        XCTAssertNotNil(text)
+    }
 }

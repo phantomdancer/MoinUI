@@ -46,6 +46,18 @@ final class MoinUIButtonTests: XCTestCase {
         XCTAssertEqual(MoinUIButtonType.default.borderColor, Constants.Colors.border)
         XCTAssertEqual(MoinUIButtonType.primary.borderColor, Color.clear)
         XCTAssertEqual(MoinUIButtonType.success.borderColor, Color.clear)
+        XCTAssertEqual(MoinUIButtonType.warning.borderColor, Color.clear)
+        XCTAssertEqual(MoinUIButtonType.danger.borderColor, Color.clear)
+        XCTAssertEqual(MoinUIButtonType.info.borderColor, Color.clear)
+    }
+
+    func testButtonTypeHoverBorderColors() {
+        XCTAssertEqual(MoinUIButtonType.default.hoverBorderColor, Constants.Colors.borderHover)
+        XCTAssertEqual(MoinUIButtonType.primary.hoverBorderColor, Color.clear)
+        XCTAssertEqual(MoinUIButtonType.success.hoverBorderColor, Color.clear)
+        XCTAssertEqual(MoinUIButtonType.warning.hoverBorderColor, Color.clear)
+        XCTAssertEqual(MoinUIButtonType.danger.hoverBorderColor, Color.clear)
+        XCTAssertEqual(MoinUIButtonType.info.hoverBorderColor, Color.clear)
     }
 
     // MARK: - Size Tests
@@ -164,5 +176,139 @@ final class MoinUIButtonTests: XCTestCase {
         XCTAssertEqual(Constants.Button.iconSizeLg, 18)
         XCTAssertEqual(Constants.Button.iconSpacing, 6)
         XCTAssertEqual(Constants.Button.borderWidth, 1)
+    }
+
+    // MARK: - Icon Position Tests
+
+    func testButtonIconPositionCases() {
+        let positions: [MoinUIButtonIconPosition] = [.leading, .trailing]
+        XCTAssertEqual(positions.count, 2)
+    }
+
+    // MARK: - Button with Icon Tests
+
+    func testButtonWithIconLeading() {
+        let button = MoinUIButton(
+            "Search",
+            type: .primary,
+            icon: "magnifyingglass",
+            iconPosition: .leading
+        ) {}
+        XCTAssertNotNil(button)
+    }
+
+    func testButtonWithIconTrailing() {
+        let button = MoinUIButton(
+            "Next",
+            type: .primary,
+            icon: "arrow.right",
+            iconPosition: .trailing
+        ) {}
+        XCTAssertNotNil(button)
+    }
+
+    // MARK: - Button with Href Tests
+
+    func testButtonWithHref() {
+        let button = MoinUIButton(
+            "GitHub",
+            type: .primary,
+            href: URL(string: "https://github.com")
+        )
+        XCTAssertNotNil(button)
+    }
+
+    func testButtonWithHrefAndIcon() {
+        let button = MoinUIButton(
+            "Link",
+            type: .primary,
+            icon: "link",
+            href: URL(string: "https://example.com")
+        )
+        XCTAssertNotNil(button)
+    }
+
+    // MARK: - Icon Only Button Tests
+
+    func testIconOnlyButtonWithHref() {
+        let button = MoinUIButton(
+            icon: "link",
+            type: .primary,
+            href: URL(string: "https://example.com")
+        )
+        XCTAssertNotNil(button)
+    }
+
+    func testIconOnlyButtonAllVariants() {
+        let variants: [MoinUIButtonVariant] = [.solid, .outline, .text, .link, .ghost]
+        for variant in variants {
+            let button = MoinUIButton(
+                icon: "star",
+                type: .primary,
+                variant: variant
+            ) {}
+            XCTAssertNotNil(button)
+        }
+    }
+
+    // MARK: - Button Disabled State Tests
+
+    func testButtonDisabledState() {
+        let button = MoinUIButton(
+            "Disabled",
+            type: .primary,
+            isDisabled: true
+        ) {}
+        XCTAssertNotNil(button)
+    }
+
+    func testButtonLoadingState() {
+        let button = MoinUIButton(
+            "Loading",
+            type: .primary,
+            isLoading: true
+        ) {}
+        XCTAssertNotNil(button)
+    }
+
+    // MARK: - Button All Types Tests
+
+    func testButtonAllTypes() {
+        let types: [MoinUIButtonType] = [.default, .primary, .success, .warning, .danger, .info]
+        for buttonType in types {
+            let button = MoinUIButton(
+                "Button",
+                type: buttonType
+            ) {}
+            XCTAssertNotNil(button)
+        }
+    }
+
+    // MARK: - Button All Variants Tests
+
+    func testButtonAllVariants() {
+        let variants: [MoinUIButtonVariant] = [.solid, .outline, .text, .link, .ghost]
+        for variant in variants {
+            let button = MoinUIButton(
+                "Button",
+                type: .primary,
+                variant: variant
+            ) {}
+            XCTAssertNotNil(button)
+        }
+    }
+
+    // MARK: - Button All Shapes Tests
+
+    func testButtonAllShapes() {
+        let shapes: [MoinUIButtonShape] = [.default, .round, .circle]
+        for shape in shapes {
+            let button = MoinUIButton(
+                "B",
+                type: .primary,
+                shape: shape
+            ) {}
+            XCTAssertNotNil(button)
+        }
     }
 }
