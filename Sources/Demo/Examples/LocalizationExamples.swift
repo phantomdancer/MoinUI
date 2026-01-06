@@ -6,43 +6,22 @@ struct LocalizationExamples: View {
     @EnvironmentObject var localization: MoinUILocalization
 
     var body: some View {
-        GeometryReader { geo in
-            let isWide = geo.size.width > ResponsiveBreakpoint.small
+        ScrollView {
+            VStack(alignment: .leading, spacing: Constants.Spacing.xl) {
+                introduction
 
-            ScrollView {
-                VStack(alignment: .leading, spacing: Constants.Spacing.xl) {
-                    introduction
+                Divider()
 
-                    Divider()
+                // 示例区域（单列显示）
+                basicUsage
+                customTranslations
+                jsonTranslations
 
-                    // 响应式示例区域
-                    if isWide {
-                        LazyVGrid(
-                            columns: [
-                                GridItem(.flexible(), spacing: Constants.Spacing.xl),
-                                GridItem(.flexible(), spacing: Constants.Spacing.xl)
-                            ],
-                            alignment: .leading,
-                            spacing: Constants.Spacing.xl
-                        ) {
-                            basicUsage
-                            customTranslations
-                            jsonTranslations
-                        }
-                    } else {
-                        VStack(alignment: .leading, spacing: Constants.Spacing.xl) {
-                            basicUsage
-                            customTranslations
-                            jsonTranslations
-                        }
-                    }
+                Divider()
 
-                    Divider()
-
-                    apiReference
-                }
-                .padding(Constants.Spacing.xl)
+                apiReference
             }
+            .padding(Constants.Spacing.xl)
         }
     }
 
@@ -65,9 +44,7 @@ struct LocalizationExamples: View {
     private var basicUsage: some View {
         ExampleSection(
             title: localization.tr("i18n.basic"),
-            description: localization.tr("i18n.basic_desc"),
-            showCodeText: localization.tr("code.show"),
-            hideCodeText: localization.tr("code.hide")
+            description: localization.tr("i18n.basic_desc")
         ) {
             VStack(alignment: .leading, spacing: Constants.Spacing.sm) {
                 Text("localization.tr(\"button.title\") = \"\(localization.tr("button.title"))\"")
@@ -89,21 +66,19 @@ struct LocalizationExamples: View {
     private var customTranslations: some View {
         ExampleSection(
             title: localization.tr("i18n.custom"),
-            description: localization.tr("i18n.custom_desc"),
-            showCodeText: localization.tr("code.show"),
-            hideCodeText: localization.tr("code.hide")
+            description: localization.tr("i18n.custom_desc")
         ) {
             Text(localization.tr("i18n.custom_demo"))
                 .foregroundStyle(.secondary)
         } code: {
             """
-            // Register custom translations
+            // \(localization.tr("code_comment.register_custom_translations"))
             MoinUILocalization.shared.register([
                 "my.key": "My Value",
                 "my.other_key": "Other Value"
             ], locale: .zhCN)
 
-            // Register English
+            // \(localization.tr("code_comment.register_english"))
             MoinUILocalization.shared.register([
                 "my.key": "My Value",
                 "my.other_key": "Other Value"
@@ -115,9 +90,7 @@ struct LocalizationExamples: View {
     private var jsonTranslations: some View {
         ExampleSection(
             title: localization.tr("i18n.json"),
-            description: localization.tr("i18n.json_desc"),
-            showCodeText: localization.tr("code.show"),
-            hideCodeText: localization.tr("code.hide")
+            description: localization.tr("i18n.json_desc")
         ) {
             Text(localization.tr("i18n.json_demo"))
                 .foregroundStyle(.secondary)
@@ -126,16 +99,16 @@ struct LocalizationExamples: View {
             // zh-CN.json
             {
                 "button": {
-                    "title": "按钮",
+                    "title": "\(localization.tr("button.title"))",
                     "label": {
-                        "primary": "主要按钮"
+                        "primary": "\(localization.tr("button.label.primary"))"
                     }
                 }
             }
 
-            // Flattened keys: "button.title", "button.label.primary"
+            // \(localization.tr("code_comment.flattened_keys")): "button.title", "button.label.primary"
 
-            // Load JSON file
+            // \(localization.tr("code_comment.load_json_file"))
             if let url = Bundle.module.url(
                 forResource: "zh-CN",
                 withExtension: "json",

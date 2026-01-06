@@ -7,45 +7,23 @@ struct ConfigProviderExamples: View {
     @EnvironmentObject var configProvider: MoinUIConfigProvider
 
     var body: some View {
-        GeometryReader { geo in
-            let isWide = geo.size.width > ResponsiveBreakpoint.small
+        ScrollView {
+            VStack(alignment: .leading, spacing: Constants.Spacing.xl) {
+                introduction
 
-            ScrollView {
-                VStack(alignment: .leading, spacing: Constants.Spacing.xl) {
-                    introduction
+                Divider()
 
-                    Divider()
+                // 示例区域（单列显示）
+                basicUsage
+                localeConfig
+                themeConfig
+                tokenConfig
 
-                    // 响应式示例区域
-                    if isWide {
-                        LazyVGrid(
-                            columns: [
-                                GridItem(.flexible(), spacing: Constants.Spacing.xl),
-                                GridItem(.flexible(), spacing: Constants.Spacing.xl)
-                            ],
-                            alignment: .leading,
-                            spacing: Constants.Spacing.xl
-                        ) {
-                            basicUsage
-                            localeConfig
-                            themeConfig
-                            tokenConfig
-                        }
-                    } else {
-                        VStack(alignment: .leading, spacing: Constants.Spacing.xl) {
-                            basicUsage
-                            localeConfig
-                            themeConfig
-                            tokenConfig
-                        }
-                    }
+                Divider()
 
-                    Divider()
-
-                    apiReference
-                }
-                .padding(Constants.Spacing.xl)
+                apiReference
             }
+            .padding(Constants.Spacing.xl)
         }
     }
 
@@ -68,9 +46,7 @@ struct ConfigProviderExamples: View {
     private var basicUsage: some View {
         ExampleSection(
             title: localization.tr("config.basic"),
-            description: localization.tr("config.basic_desc"),
-            showCodeText: localization.tr("code.show"),
-            hideCodeText: localization.tr("code.hide")
+            description: localization.tr("config.basic_desc")
         ) {
             Text(localization.tr("config.basic_demo"))
                 .foregroundStyle(.secondary)
@@ -95,9 +71,7 @@ struct ConfigProviderExamples: View {
     private var localeConfig: some View {
         ExampleSection(
             title: localization.tr("config.locale"),
-            description: localization.tr("config.locale_desc"),
-            showCodeText: localization.tr("code.show"),
-            hideCodeText: localization.tr("code.hide")
+            description: localization.tr("config.locale_desc")
         ) {
             HStack(spacing: Constants.Spacing.md) {
                 MoinUIButton(localization.tr("config.switch_zh"), type: .primary) {
@@ -109,14 +83,14 @@ struct ConfigProviderExamples: View {
             }
         } code: {
             """
-            // Switch locale
-            localization.locale = .zhCN  // Chinese
-            localization.locale = .enUS  // English
+            // \(localization.tr("code_comment.switch_locale"))
+            localization.locale = .zhCN  // \(localization.tr("code_comment.chinese"))
+            localization.locale = .enUS  // \(localization.tr("code_comment.english"))
 
-            // Use in SwiftUI
+            // \(localization.tr("code_comment.use_in_swiftui"))
             Picker("", selection: $localization.locale) {
-                Text("中文").tag(MoinUILocale.zhCN)
-                Text("EN").tag(MoinUILocale.enUS)
+                Text("\(localization.tr("locale.zh"))").tag(MoinUILocale.zhCN)
+                Text("\(localization.tr("locale.en"))").tag(MoinUILocale.enUS)
             }
             """
         }
@@ -125,9 +99,7 @@ struct ConfigProviderExamples: View {
     private var themeConfig: some View {
         ExampleSection(
             title: localization.tr("config.theme"),
-            description: localization.tr("config.theme_desc"),
-            showCodeText: localization.tr("code.show"),
-            hideCodeText: localization.tr("code.hide")
+            description: localization.tr("config.theme_desc")
         ) {
             VStack(alignment: .leading, spacing: Constants.Spacing.md) {
                 // Color picker buttons
@@ -163,12 +135,12 @@ struct ConfigProviderExamples: View {
             """
             let config = MoinUIConfigProvider.shared
 
-            // Configure theme colors
+            // \(localization.tr("code_comment.configure_theme_colors"))
             config.primaryColor = .blue
             config.primaryColor = .purple
             config.primaryColor = .orange
 
-            // Or configure via token
+            // \(localization.tr("code_comment.or_configure_via_token"))
             config.token.colorPrimary = .indigo
             config.token.colorSuccess = .green
             config.token.colorDanger = .red
@@ -179,9 +151,7 @@ struct ConfigProviderExamples: View {
     private var tokenConfig: some View {
         ExampleSection(
             title: localization.tr("config.token"),
-            description: localization.tr("config.token_desc"),
-            showCodeText: localization.tr("code.show"),
-            hideCodeText: localization.tr("code.hide")
+            description: localization.tr("config.token_desc")
         ) {
             VStack(alignment: .leading, spacing: Constants.Spacing.md) {
                 // Border radius slider
@@ -238,12 +208,12 @@ struct ConfigProviderExamples: View {
             """
             let config = MoinUIConfigProvider.shared
 
-            // Configure token
+            // \(localization.tr("code_comment.configure_token"))
             config.token.borderRadius = 8
             config.token.controlHeight = 36
             config.token.fontSize = 14
 
-            // Reset to default
+            // \(localization.tr("code_comment.reset_to_default"))
             config.token = .default
             """
         }

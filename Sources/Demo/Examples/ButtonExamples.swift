@@ -7,53 +7,27 @@ struct ButtonExamples: View {
     @State private var isLoading = false
 
     var body: some View {
-        GeometryReader { geo in
-            let isWide = geo.size.width > ResponsiveBreakpoint.small
+        ScrollView {
+            VStack(alignment: .leading, spacing: Constants.Spacing.xl) {
+                introduction
 
-            ScrollView {
-                VStack(alignment: .leading, spacing: Constants.Spacing.xl) {
-                    introduction
+                Divider()
 
-                    Divider()
+                // 示例区域（单列显示）
+                basicExample
+                typeExample
+                variantExample
+                sizeExample
+                shapeExample
+                stateExample
+                iconExample
+                blockExample
 
-                    // 响应式示例区域
-                    if isWide {
-                        LazyVGrid(
-                            columns: [
-                                GridItem(.flexible(), spacing: Constants.Spacing.xl),
-                                GridItem(.flexible(), spacing: Constants.Spacing.xl)
-                            ],
-                            alignment: .leading,
-                            spacing: Constants.Spacing.xl
-                        ) {
-                            basicExample
-                            typeExample
-                            variantExample
-                            sizeExample
-                            shapeExample
-                            stateExample
-                            iconExample
-                            blockExample
-                        }
-                    } else {
-                        VStack(alignment: .leading, spacing: Constants.Spacing.xl) {
-                            basicExample
-                            typeExample
-                            variantExample
-                            sizeExample
-                            shapeExample
-                            stateExample
-                            iconExample
-                            blockExample
-                        }
-                    }
+                Divider()
 
-                    Divider()
-
-                    apiReference
-                }
-                .padding(Constants.Spacing.xl)
+                apiReference
             }
+            .padding(Constants.Spacing.xl)
         }
     }
 
@@ -76,9 +50,7 @@ struct ButtonExamples: View {
     private var basicExample: some View {
         ExampleSection(
             title: localization.tr("button.basic"),
-            description: localization.tr("button.basic_desc"),
-            showCodeText: localization.tr("code.show"),
-            hideCodeText: localization.tr("code.hide")
+            description: localization.tr("button.basic_desc")
         ) {
             HStack(spacing: Constants.Spacing.md) {
                 MoinUIButton(localization.tr("button.label.button")) {}
@@ -86,8 +58,8 @@ struct ButtonExamples: View {
             }
         } code: {
             """
-            MoinUIButton("Button") {}
-            MoinUIButton("Primary", type: .primary) {}
+            MoinUIButton("\(localization.tr("button.label.button"))") {}
+            MoinUIButton("\(localization.tr("button.label.primary"))", type: .primary) {}
             """
         }
     }
@@ -95,9 +67,7 @@ struct ButtonExamples: View {
     private var typeExample: some View {
         ExampleSection(
             title: localization.tr("button.type"),
-            description: localization.tr("button.type_desc"),
-            showCodeText: localization.tr("code.show"),
-            hideCodeText: localization.tr("code.hide")
+            description: localization.tr("button.type_desc")
         ) {
             HStack(spacing: Constants.Spacing.md) {
                 MoinUIButton(localization.tr("button.label.default")) {}
@@ -109,12 +79,12 @@ struct ButtonExamples: View {
             }
         } code: {
             """
-            MoinUIButton("Default") {}
-            MoinUIButton("Primary", type: .primary) {}
-            MoinUIButton("Success", type: .success) {}
-            MoinUIButton("Warning", type: .warning) {}
-            MoinUIButton("Danger", type: .danger) {}
-            MoinUIButton("Info", type: .info) {}
+            MoinUIButton("\(localization.tr("button.label.default"))") {}
+            MoinUIButton("\(localization.tr("button.label.primary"))", type: .primary) {}
+            MoinUIButton("\(localization.tr("button.label.success"))", type: .success) {}
+            MoinUIButton("\(localization.tr("button.label.warning"))", type: .warning) {}
+            MoinUIButton("\(localization.tr("button.label.danger"))", type: .danger) {}
+            MoinUIButton("\(localization.tr("button.label.info"))", type: .info) {}
             """
         }
     }
@@ -122,9 +92,7 @@ struct ButtonExamples: View {
     private var variantExample: some View {
         ExampleSection(
             title: localization.tr("button.variant"),
-            description: localization.tr("button.variant_desc"),
-            showCodeText: localization.tr("code.show"),
-            hideCodeText: localization.tr("code.hide")
+            description: localization.tr("button.variant_desc")
         ) {
             HStack(spacing: Constants.Spacing.md) {
                 MoinUIButton(localization.tr("button.label.solid"), type: .primary, variant: .solid) {}
@@ -135,11 +103,11 @@ struct ButtonExamples: View {
             }
         } code: {
             """
-            MoinUIButton("Solid", type: .primary, variant: .solid) {}
-            MoinUIButton("Outline", type: .primary, variant: .outline) {}
-            MoinUIButton("Text", type: .primary, variant: .text) {}
-            MoinUIButton("Link", type: .primary, variant: .link) {}
-            MoinUIButton("Ghost", type: .primary, variant: .ghost) {}
+            MoinUIButton("\(localization.tr("button.label.solid"))", type: .primary, variant: .solid) {}
+            MoinUIButton("\(localization.tr("button.label.outline"))", type: .primary, variant: .outline) {}
+            MoinUIButton("\(localization.tr("button.label.text"))", type: .primary, variant: .text) {}
+            MoinUIButton("\(localization.tr("button.label.link"))", type: .primary, variant: .link) {}
+            MoinUIButton("\(localization.tr("button.label.ghost"))", type: .primary, variant: .ghost) {}
             """
         }
     }
@@ -147,9 +115,7 @@ struct ButtonExamples: View {
     private var sizeExample: some View {
         ExampleSection(
             title: localization.tr("button.size"),
-            description: localization.tr("button.size_desc"),
-            showCodeText: localization.tr("code.show"),
-            hideCodeText: localization.tr("code.hide")
+            description: localization.tr("button.size_desc")
         ) {
             HStack(alignment: .center, spacing: Constants.Spacing.md) {
                 MoinUIButton(localization.tr("button.label.small"), type: .primary, size: .small) {}
@@ -158,9 +124,9 @@ struct ButtonExamples: View {
             }
         } code: {
             """
-            MoinUIButton("Small", type: .primary, size: .small) {}
-            MoinUIButton("Medium", type: .primary, size: .medium) {}
-            MoinUIButton("Large", type: .primary, size: .large) {}
+            MoinUIButton("\(localization.tr("button.label.small"))", type: .primary, size: .small) {}
+            MoinUIButton("\(localization.tr("button.label.medium"))", type: .primary, size: .medium) {}
+            MoinUIButton("\(localization.tr("button.label.large"))", type: .primary, size: .large) {}
             """
         }
     }
@@ -168,9 +134,7 @@ struct ButtonExamples: View {
     private var shapeExample: some View {
         ExampleSection(
             title: localization.tr("button.shape"),
-            description: localization.tr("button.shape_desc"),
-            showCodeText: localization.tr("code.show"),
-            hideCodeText: localization.tr("code.hide")
+            description: localization.tr("button.shape_desc")
         ) {
             HStack(spacing: Constants.Spacing.md) {
                 MoinUIButton(localization.tr("button.label.default"), type: .primary, shape: .default) {}
@@ -179,8 +143,8 @@ struct ButtonExamples: View {
             }
         } code: {
             """
-            MoinUIButton("Default", type: .primary, shape: .default) {}
-            MoinUIButton("Round", type: .primary, shape: .round) {}
+            MoinUIButton("\(localization.tr("button.label.default"))", type: .primary, shape: .default) {}
+            MoinUIButton("\(localization.tr("button.label.round"))", type: .primary, shape: .round) {}
             MoinUIButton(icon: "plus", type: .primary, shape: .circle) {}
             """
         }
@@ -189,9 +153,7 @@ struct ButtonExamples: View {
     private var stateExample: some View {
         ExampleSection(
             title: localization.tr("button.state"),
-            description: localization.tr("button.state_desc"),
-            showCodeText: localization.tr("code.show"),
-            hideCodeText: localization.tr("code.hide")
+            description: localization.tr("button.state_desc")
         ) {
             HStack(spacing: Constants.Spacing.md) {
                 MoinUIButton(localization.tr("button.label.normal"), type: .primary) {}
@@ -205,9 +167,9 @@ struct ButtonExamples: View {
             }
         } code: {
             """
-            MoinUIButton("Normal", type: .primary) {}
-            MoinUIButton("Disabled", type: .primary, isDisabled: true) {}
-            MoinUIButton("Loading", type: .primary, isLoading: isLoading) {
+            MoinUIButton("\(localization.tr("button.label.normal"))", type: .primary) {}
+            MoinUIButton("\(localization.tr("button.label.disabled"))", type: .primary, isDisabled: true) {}
+            MoinUIButton("\(localization.tr("button.label.loading"))", type: .primary, isLoading: isLoading) {
                 isLoading = true
             }
             """
@@ -217,9 +179,7 @@ struct ButtonExamples: View {
     private var iconExample: some View {
         ExampleSection(
             title: localization.tr("button.icon"),
-            description: localization.tr("button.icon_desc"),
-            showCodeText: localization.tr("code.show"),
-            hideCodeText: localization.tr("code.hide")
+            description: localization.tr("button.icon_desc")
         ) {
             HStack(spacing: Constants.Spacing.md) {
                 MoinUIButton(icon: "plus", type: .primary) {}
@@ -240,14 +200,12 @@ struct ButtonExamples: View {
     private var blockExample: some View {
         ExampleSection(
             title: localization.tr("button.block"),
-            description: localization.tr("button.block_desc"),
-            showCodeText: localization.tr("code.show"),
-            hideCodeText: localization.tr("code.hide")
+            description: localization.tr("button.block_desc")
         ) {
             MoinUIButton(localization.tr("button.label.block_button"), type: .primary, isBlock: true) {}
         } code: {
             """
-            MoinUIButton("Block Button", type: .primary, isBlock: true) {}
+            MoinUIButton("\(localization.tr("button.label.block_button"))", type: .primary, isBlock: true) {}
             """
         }
     }
@@ -328,11 +286,10 @@ struct ButtonExamples: View {
 struct ExampleSection<Content: View>: View {
     let title: String
     let description: String
-    let showCodeText: String
-    let hideCodeText: String
     @ViewBuilder let content: () -> Content
     let code: () -> String
 
+    @EnvironmentObject private var localization: MoinUILocalization
     @State private var showCode = false
     @ObservedObject private var config = MoinUIConfigProvider.shared
 
@@ -353,16 +310,19 @@ struct ExampleSection<Content: View>: View {
 
                     Divider()
 
-                    HStack {
-                        Spacer()
-                        Button(action: { showCode.toggle() }) {
+                    // 左对齐显示代码按钮，整行可点击
+                    Button(action: { showCode.toggle() }) {
+                        HStack(spacing: Constants.Spacing.xs) {
                             Image(systemName: showCode ? "chevron.up" : "chevron.down")
-                            Text(showCode ? hideCodeText : showCodeText)
+                            Text(showCode ? localization.tr("code.hide") : localization.tr("code.show"))
+                            Spacer()
                         }
-                        .buttonStyle(.plain)
                         .font(.caption)
                         .foregroundStyle(.secondary)
+                        .padding(.vertical, Constants.Spacing.xs)
+                        .contentShape(Rectangle())
                     }
+                    .buttonStyle(.plain)
 
                     if showCode {
                         ScrollView(.horizontal, showsIndicators: false) {

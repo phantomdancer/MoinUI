@@ -17,7 +17,19 @@
     "access_token": "访问当前主题 Token",
     "use_token_color": "使用 Token 颜色",
     "custom_token": "自定义 Token",
-    "or_light_system": ".light / .system"
+    "or_light_system": ".light / .system",
+    "switch_locale": "切换语言",
+    "chinese": "中文",
+    "english": "英文",
+    "use_in_swiftui": "在 SwiftUI 中使用",
+    "configure_theme_colors": "配置主题色",
+    "or_configure_via_token": "或通过 token 配置",
+    "configure_token": "配置 token",
+    "reset_to_default": "重置为默认值",
+    "register_custom_translations": "注册自定义翻译",
+    "register_english": "注册英文翻译",
+    "flattened_keys": "扁平化 key",
+    "load_json_file": "加载 JSON 文件"
   },
   "nav": {
     "overview": "概览",
@@ -31,7 +43,9 @@
     "desc": "只需几步即可开始使用 MoinUI。",
     "installation": "安装",
     "basic_usage": "基本用法",
-    "theme_config": "主题配置"
+    "theme_config": "主题配置",
+    "click_me": "点击我",
+    "hello_moinui": "你好 MoinUI！"
   },
   "theme": {
     "title": "主题配置",
@@ -178,7 +192,13 @@
   },
   "code": {
     "show": "显示代码",
-    "hide": "隐藏代码"
+    "hide": "隐藏代码",
+    "copy": "复制",
+    "copied": "已复制"
+  },
+  "locale": {
+    "zh": "中文",
+    "en": "EN"
   },
   "api": {
     "property": "属性",

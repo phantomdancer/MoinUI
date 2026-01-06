@@ -17,7 +17,19 @@
     "access_token": "Access current theme Token",
     "use_token_color": "Use Token colors",
     "custom_token": "Custom Token",
-    "or_light_system": ".light / .system"
+    "or_light_system": ".light / .system",
+    "switch_locale": "Switch locale",
+    "chinese": "Chinese",
+    "english": "English",
+    "use_in_swiftui": "Use in SwiftUI",
+    "configure_theme_colors": "Configure theme colors",
+    "or_configure_via_token": "Or configure via token",
+    "configure_token": "Configure token",
+    "reset_to_default": "Reset to default",
+    "register_custom_translations": "Register custom translations",
+    "register_english": "Register English",
+    "flattened_keys": "Flattened keys",
+    "load_json_file": "Load JSON file"
   },
   "nav": {
     "overview": "Overview",
@@ -31,7 +43,9 @@
     "desc": "Get started with MoinUI in just a few steps.",
     "installation": "Installation",
     "basic_usage": "Basic Usage",
-    "theme_config": "Theme Configuration"
+    "theme_config": "Theme Configuration",
+    "click_me": "Click Me",
+    "hello_moinui": "Hello MoinUI!"
   },
   "theme": {
     "title": "Theme Configuration",
@@ -178,7 +192,13 @@
   },
   "code": {
     "show": "Show Code",
-    "hide": "Hide Code"
+    "hide": "Hide Code",
+    "copy": "Copy",
+    "copied": "Copied"
+  },
+  "locale": {
+    "zh": "中文",
+    "en": "EN"
   },
   "api": {
     "property": "Property",

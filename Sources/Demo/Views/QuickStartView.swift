@@ -53,8 +53,8 @@ struct QuickStartView: View {
 
                         struct ContentView: View {
                             var body: some View {
-                                MoinUIButton("Click Me", type: .primary) {
-                                    print("Hello MoinUI!")
+                                MoinUIButton("\(localization.tr("quick_start.click_me"))", type: .primary) {
+                                    print("\(localization.tr("quick_start.hello_moinui"))")
                                 }
                             }
                         }
@@ -101,6 +101,7 @@ struct QuickStartView: View {
 private struct CodeBlock: View {
     let title: String
     let code: String
+    @EnvironmentObject private var localization: MoinUILocalization
     @State private var isCopied = false
     @ObservedObject private var config = MoinUIConfigProvider.shared
 
@@ -126,7 +127,7 @@ private struct CodeBlock: View {
                 }) {
                     HStack(spacing: 4) {
                         Image(systemName: isCopied ? "checkmark" : "doc.on.doc")
-                        Text(isCopied ? "Copied" : "Copy")
+                        Text(isCopied ? localization.tr("code.copied") : localization.tr("code.copy"))
                     }
                     .font(.caption)
                     .foregroundStyle(isCopied ? .green : token.colorTextSecondary)
