@@ -1,0 +1,242 @@
+{
+  "demo": {
+    "about": "About MoinUI Demo"
+  },
+  "toolbar": {
+    "switch_light": "Switch to Light Mode",
+    "switch_dark": "Switch to Dark Mode",
+    "lang_zh": "中文",
+    "lang_en": "EN"
+  },
+  "code_comment": {
+    "enable_global_theme": "Enable global theme with one line",
+    "method1_set_theme": "Method 1: Set theme directly",
+    "method2_toggle": "Method 2: Toggle theme",
+    "method3_check": "Method 3: Check current mode",
+    "is_dark_mode": "Currently in dark mode",
+    "access_token": "Access current theme Token",
+    "use_token_color": "Use Token colors",
+    "custom_token": "Custom Token",
+    "or_light_system": ".light / .system"
+  },
+  "nav": {
+    "overview": "Overview",
+    "introduction": "Introduction",
+    "quick_start": "Quick Start",
+    "theme": "Theme",
+    "components": "Components",
+    "development": "Development"
+  },
+  "quick_start": {
+    "desc": "Get started with MoinUI in just a few steps.",
+    "installation": "Installation",
+    "basic_usage": "Basic Usage",
+    "theme_config": "Theme Configuration"
+  },
+  "theme": {
+    "title": "Theme Configuration",
+    "description": "MoinUI provides a complete theming system supporting light, dark, and system-following modes.",
+    "root": {
+      "title": "Quick Start",
+      "desc": "Use .moinUIThemeRoot() modifier at App entry to enable global theme support.",
+      "note": ".moinUIThemeRoot() automatically sets preferredColorScheme, making the entire app (including system controls) follow theme changes."
+    },
+    "switch": {
+      "title": "Theme Switching",
+      "desc": "Switch themes via MoinUIConfigProvider.",
+      "current": "Current Theme",
+      "code_title": "Theme Switching Code"
+    },
+    "token": {
+      "title": "Token System",
+      "desc": "MoinUI uses a Token system to manage theme colors and styles, which can be customized.",
+      "colors": "Theme Colors",
+      "code_title": "Token Usage Example"
+    },
+    "api": {
+      "light": "Light theme",
+      "dark": "Dark theme",
+      "system": "Follow system",
+      "theme_prop": "Current theme setting",
+      "is_dark": "Whether in dark mode",
+      "apply": "Apply specified theme",
+      "toggle": "Toggle light/dark",
+      "theme_root": "Apply global theme (use at App entry)",
+      "theme_modifier": "Set local theme"
+    }
+  },
+  "component": {
+    "button": "Button",
+    "configProvider": "ConfigProvider",
+    "localization": "Localization"
+  },
+  "home": {
+    "tagline": "A modern macOS SwiftUI Component Library",
+    "get_started": "Get Started",
+    "github": "GitHub",
+    "features": "Features",
+    "feature": {
+      "native_title": "Native macOS",
+      "native_desc": "Built with pure SwiftUI for optimal performance and native macOS experience.",
+      "theme_title": "Themeable",
+      "theme_desc": "Flexible token-based theming system for complete visual customization.",
+      "i18n_title": "Internationalization",
+      "i18n_desc": "Built-in i18n support with easy JSON-based translation management.",
+      "a11y_title": "Accessible",
+      "a11y_desc": "Full accessibility support following macOS guidelines."
+    },
+    "components": "Components",
+    "components_desc": "Beautiful and consistent UI components",
+    "quick_start": "Quick Start",
+    "installation": "Installation",
+    "usage": "Usage",
+    "docs": "Docs",
+    "changelog": "Changelog"
+  },
+  "intro": {
+    "subtitle": "A macOS SwiftUI Component Library",
+    "version": "Version",
+    "getting_started": "Getting Started",
+    "description": "Select a component from the sidebar to view its documentation and examples.",
+    "installation": "Installation",
+    "usage": "Usage",
+    "click_me": "Click me"
+  },
+  "button": {
+    "title": "Button",
+    "description": "A button triggers an action or event when clicked.",
+    "basic": "Basic Usage",
+    "basic_desc": "Basic button with default settings.",
+    "type": "Type",
+    "type_desc": "Different button types for various scenarios.",
+    "variant": "Variant",
+    "variant_desc": "Different visual styles for buttons.",
+    "size": "Size",
+    "size_desc": "Three sizes available: small, medium (default), large.",
+    "shape": "Shape",
+    "shape_desc": "Different button shapes.",
+    "state": "State",
+    "state_desc": "Disabled and loading states.",
+    "icon": "Icon",
+    "icon_desc": "Icon-only buttons using SF Symbols.",
+    "block": "Block",
+    "block_desc": "Full-width button.",
+    "label": {
+      "button": "Button",
+      "primary": "Primary",
+      "default": "Default",
+      "success": "Success",
+      "warning": "Warning",
+      "danger": "Danger",
+      "info": "Info",
+      "solid": "Solid",
+      "outline": "Outline",
+      "text": "Text",
+      "link": "Link",
+      "ghost": "Ghost",
+      "small": "Small",
+      "medium": "Medium",
+      "large": "Large",
+      "round": "Round",
+      "normal": "Normal",
+      "disabled": "Disabled",
+      "loading": "Loading",
+      "block_button": "Block Button"
+    }
+  },
+  "config": {
+    "title": "ConfigProvider",
+    "description": "ConfigProvider is used for global configuration of MoinUI components theme, locale and other properties.",
+    "basic": "Basic Usage",
+    "basic_desc": "Configure ConfigProvider at your app entry.",
+    "basic_demo": "Inject ConfigProvider at App entry",
+    "locale": "Locale Configuration",
+    "locale_desc": "Switch the display language of the component library.",
+    "switch_zh": "Switch to Chinese",
+    "switch_en": "Switch to English",
+    "theme": "Theme Configuration",
+    "theme_desc": "Configure theme colors and style properties.",
+    "theme_demo": "Configure theme properties via ConfigProvider",
+    "primary_color": "Primary Color",
+    "token": "Token Configuration",
+    "token_desc": "Fine-grained control of component styles via Token.",
+    "border_radius": "Radius",
+    "control_height": "Height",
+    "reset": "Reset"
+  },
+  "i18n": {
+    "title": "Localization",
+    "description": "MoinUI provides complete internationalization support with customizable translations.",
+    "basic": "Basic Usage",
+    "basic_desc": "Use tr() method to get translated text.",
+    "custom": "Custom Translations",
+    "custom_desc": "Register custom translation key-value pairs.",
+    "custom_demo": "Use register() to add custom translations",
+    "json": "JSON Files",
+    "json_desc": "Load translations from JSON files with nested structure support.",
+    "json_demo": "Use registerFromJSON() to load JSON translation files"
+  },
+  "code": {
+    "show": "Show Code",
+    "hide": "Hide Code"
+  },
+  "api": {
+    "property": "Property",
+    "method": "Method",
+    "type": "Type",
+    "default": "Default",
+    "description": "Description",
+    "value": "Value",
+    "button": {
+      "type": "Button color type",
+      "size": "Button size",
+      "variant": "Button style variant",
+      "shape": "Button shape",
+      "isLoading": "Loading state",
+      "isDisabled": "Disabled state",
+      "isBlock": "Full width",
+      "action": "Click handler"
+    },
+    "type_values": {
+      "default": "Default gray button",
+      "primary": "Primary blue button",
+      "success": "Success green button",
+      "warning": "Warning orange button",
+      "danger": "Danger red button",
+      "info": "Info gray button"
+    },
+    "variant_values": {
+      "solid": "Filled background",
+      "outline": "Border only",
+      "text": "Text only, no background",
+      "link": "Link style",
+      "ghost": "Transparent background"
+    },
+    "config": {
+      "locale": "Current locale",
+      "primaryColor": "Primary color",
+      "borderRadius": "Border radius",
+      "animationDuration": "Animation duration"
+    },
+    "locale": {
+      "zhCN": "Simplified Chinese",
+      "enUS": "English"
+    },
+    "i18n": {
+      "tr": "Get translated text",
+      "register": "Register translation key-value pairs",
+      "registerFromJSON": "Register translations from JSON data",
+      "locale": "Current locale"
+    },
+    "token": {
+      "colorPrimary": "Primary color",
+      "colorSuccess": "Success color",
+      "colorWarning": "Warning color",
+      "colorDanger": "Danger color",
+      "borderRadius": "Border radius",
+      "controlHeight": "Control height",
+      "fontSize": "Font size",
+      "motionDuration": "Animation duration"
+    }
+  }
+}

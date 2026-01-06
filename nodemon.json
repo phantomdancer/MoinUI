@@ -1,0 +1,10 @@
+{
+  "watch": [
+    ".build/debug/MoinUIDemo"
+  ],
+  "exec": "pkill -f '.build/debug/MoinUIDemo' 2>/dev/null; .build/debug/MoinUIDemo",
+  "restartable": "rs",
+  "ignore": [],
+  "verbose": true,
+  "delay": 500
+}

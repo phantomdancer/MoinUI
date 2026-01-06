@@ -1,0 +1,19 @@
+{
+  "common": {
+    "loading": "Loading",
+    "confirm": "Confirm",
+    "cancel": "Cancel",
+    "ok": "OK",
+    "close": "Close",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "add": "Add",
+    "search": "Search",
+    "reset": "Reset",
+    "submit": "Submit"
+  },
+  "button": {
+    "loading": "Loading..."
+  }
+}

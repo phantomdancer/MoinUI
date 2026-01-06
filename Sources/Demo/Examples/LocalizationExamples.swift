@@ -1,0 +1,181 @@
+import SwiftUI
+import MoinUI
+
+/// Localization usage examples
+struct LocalizationExamples: View {
+    @EnvironmentObject var localization: MoinUILocalization
+
+    var body: some View {
+        GeometryReader { geo in
+            let isWide = geo.size.width > ResponsiveBreakpoint.small
+
+            ScrollView {
+                VStack(alignment: .leading, spacing: Constants.Spacing.xl) {
+                    introduction
+
+                    Divider()
+
+                    // 响应式示例区域
+                    if isWide {
+                        LazyVGrid(
+                            columns: [
+                                GridItem(.flexible(), spacing: Constants.Spacing.xl),
+                                GridItem(.flexible(), spacing: Constants.Spacing.xl)
+                            ],
+                            alignment: .leading,
+                            spacing: Constants.Spacing.xl
+                        ) {
+                            basicUsage
+                            customTranslations
+                            jsonTranslations
+                        }
+                    } else {
+                        VStack(alignment: .leading, spacing: Constants.Spacing.xl) {
+                            basicUsage
+                            customTranslations
+                            jsonTranslations
+                        }
+                    }
+
+                    Divider()
+
+                    apiReference
+                }
+                .padding(Constants.Spacing.xl)
+            }
+        }
+    }
+
+    // MARK: - Introduction
+
+    private var introduction: some View {
+        VStack(alignment: .leading, spacing: Constants.Spacing.md) {
+            Text(localization.tr("i18n.title"))
+                .font(.largeTitle)
+                .fontWeight(.bold)
+
+            Text(localization.tr("i18n.description"))
+                .font(.body)
+                .foregroundStyle(.secondary)
+        }
+    }
+
+    // MARK: - Examples
+
+    private var basicUsage: some View {
+        ExampleSection(
+            title: localization.tr("i18n.basic"),
+            description: localization.tr("i18n.basic_desc"),
+            showCodeText: localization.tr("code.show"),
+            hideCodeText: localization.tr("code.hide")
+        ) {
+            VStack(alignment: .leading, spacing: Constants.Spacing.sm) {
+                Text("localization.tr(\"button.title\") = \"\(localization.tr("button.title"))\"")
+                    .font(.system(.body, design: .monospaced))
+            }
+        } code: {
+            """
+            struct MyView: View {
+                @EnvironmentObject var localization: MoinUILocalization
+
+                var body: some View {
+                    Text(localization.tr("button.title"))
+                }
+            }
+            """
+        }
+    }
+
+    private var customTranslations: some View {
+        ExampleSection(
+            title: localization.tr("i18n.custom"),
+            description: localization.tr("i18n.custom_desc"),
+            showCodeText: localization.tr("code.show"),
+            hideCodeText: localization.tr("code.hide")
+        ) {
+            Text(localization.tr("i18n.custom_demo"))
+                .foregroundStyle(.secondary)
+        } code: {
+            """
+            // Register custom translations
+            MoinUILocalization.shared.register([
+                "my.key": "My Value",
+                "my.other_key": "Other Value"
+            ], locale: .zhCN)
+
+            // Register English
+            MoinUILocalization.shared.register([
+                "my.key": "My Value",
+                "my.other_key": "Other Value"
+            ], locale: .enUS)
+            """
+        }
+    }
+
+    private var jsonTranslations: some View {
+        ExampleSection(
+            title: localization.tr("i18n.json"),
+            description: localization.tr("i18n.json_desc"),
+            showCodeText: localization.tr("code.show"),
+            hideCodeText: localization.tr("code.hide")
+        ) {
+            Text(localization.tr("i18n.json_demo"))
+                .foregroundStyle(.secondary)
+        } code: {
+            """
+            // zh-CN.json
+            {
+                "button": {
+                    "title": "按钮",
+                    "label": {
+                        "primary": "主要按钮"
+                    }
+                }
+            }
+
+            // Flattened keys: "button.title", "button.label.primary"
+
+            // Load JSON file
+            if let url = Bundle.module.url(
+                forResource: "zh-CN",
+                withExtension: "json",
+                subdirectory: "Locales"
+            ),
+            let data = try? Data(contentsOf: url) {
+                try? MoinUILocalization.shared.registerFromJSON(
+                    data,
+                    locale: .zhCN
+                )
+            }
+            """
+        }
+    }
+
+    // MARK: - API Reference
+
+    private var apiReference: some View {
+        VStack(alignment: .leading, spacing: Constants.Spacing.lg) {
+            Text("API")
+                .font(.title2)
+                .fontWeight(.semibold)
+
+            Text("MoinUILocalization")
+                .font(.headline)
+
+            APITable(
+                headers: (
+                    localization.tr("api.method"),
+                    localization.tr("api.type"),
+                    localization.tr("api.default"),
+                    localization.tr("api.description")
+                ),
+                rows: [
+                    ("tr(_:)", "String -> String", "-", localization.tr("api.i18n.tr")),
+                    ("register(_:locale:)", "([String:String], MoinUILocale)", "-", localization.tr("api.i18n.register")),
+                    ("registerFromJSON(_:locale:)", "(Data, MoinUILocale) throws", "-", localization.tr("api.i18n.registerFromJSON")),
+                    ("locale", "MoinUILocale", ".zhCN", localization.tr("api.i18n.locale")),
+                ]
+            )
+        }
+    }
+}

@@ -1,0 +1,164 @@
+import SwiftUI
+
+/// Supported locales
+public enum MoinUILocale: String, CaseIterable, Sendable {
+    case zhCN = "zh-CN"
+    case enUS = "en-US"
+
+    public static var `default`: MoinUILocale { .zhCN }
+
+    /// Locale file name
+    var fileName: String { rawValue }
+}
+
+/// Localization manager
+public final class MoinUILocalization: ObservableObject {
+    public static let shared = MoinUILocalization()
+
+    @Published public var locale: MoinUILocale = .default
+
+    /// Flat translation dictionary for each locale
+    private var translations: [MoinUILocale: [String: String]] = [:]
+
+    /// Custom translations registered at runtime
+    private var customTranslations: [MoinUILocale: [String: String]] = [:]
+
+    private init() {
+        loadBuiltinLocales()
+    }
+
+    // MARK: - Public API
+
+    /// Set current locale
+    public func setLocale(_ locale: MoinUILocale) {
+        self.locale = locale
+    }
+
+    /// Get translated string for current locale
+    public func tr(_ key: String) -> String {
+        // Priority: custom > builtin > fallback to English > return key
+        if let value = customTranslations[locale]?[key] {
+            return value
+        }
+        if let value = translations[locale]?[key] {
+            return value
+        }
+        if locale != .enUS, let value = translations[.enUS]?[key] {
+            return value
+        }
+        return key
+    }
+
+    /// Get translated string for specific locale
+    public func tr(_ key: String, locale: MoinUILocale) -> String {
+        if let value = customTranslations[locale]?[key] {
+            return value
+        }
+        if let value = translations[locale]?[key] {
+            return value
+        }
+        if locale != .enUS, let value = translations[.enUS]?[key] {
+            return value
+        }
+        return key
+    }
+
+    // MARK: - Registration API
+
+    /// Register a single translation
+    public func register(_ key: String, translations: [MoinUILocale: String]) {
+        for (locale, value) in translations {
+            customTranslations[locale, default: [:]][key] = value
+        }
+    }
+
+    /// Register multiple translations at once
+    public func registerAll(_ items: [(String, [MoinUILocale: String])]) {
+        for (key, trans) in items {
+            register(key, translations: trans)
+        }
+    }
+
+    /// Register translations from a dictionary (nested JSON structure)
+    public func registerFromDictionary(_ dict: [String: Any], locale: MoinUILocale, prefix: String = "") {
+        let flattened = flattenDictionary(dict, prefix: prefix)
+        for (key, value) in flattened {
+            customTranslations[locale, default: [:]][key] = value
+        }
+    }
+
+    /// Register translations from JSON data
+    public func registerFromJSON(_ data: Data, locale: MoinUILocale) throws {
+        guard let dict = try JSONSerialization.jsonObject(with: data) as? [String: Any] else {
+            throw LocalizationError.invalidJSON
+        }
+        registerFromDictionary(dict, locale: locale)
+    }
+
+    /// Register translations from JSON string
+    public func registerFromJSONString(_ json: String, locale: MoinUILocale) throws {
+        guard let data = json.data(using: .utf8) else {
+            throw LocalizationError.invalidJSON
+        }
+        try registerFromJSON(data, locale: locale)
+    }
+
+    // MARK: - Private Methods
+
+    /// Load built-in locale files from bundle
+    private func loadBuiltinLocales() {
+        for locale in MoinUILocale.allCases {
+            if let url = Bundle.module.url(forResource: locale.fileName, withExtension: "json", subdirectory: "Locales"),
+               let data = try? Data(contentsOf: url),
+               let dict = try? JSONSerialization.jsonObject(with: data) as? [String: Any] {
+                translations[locale] = flattenDictionary(dict, prefix: "")
+            }
+        }
+    }
+
+    /// Flatten nested dictionary to dot-notation keys
+    private func flattenDictionary(_ dict: [String: Any], prefix: String) -> [String: String] {
+        var result: [String: String] = [:]
+
+        for (key, value) in dict {
+            let fullKey = prefix.isEmpty ? key : "\(prefix).\(key)"
+
+            if let stringValue = value as? String {
+                result[fullKey] = stringValue
+            } else if let nestedDict = value as? [String: Any] {
+                let nested = flattenDictionary(nestedDict, prefix: fullKey)
+                result.merge(nested) { _, new in new }
+            }
+        }
+
+        return result
+    }
+}
+
+// MARK: - Errors
+
+public enum LocalizationError: Error {
+    case invalidJSON
+    case fileNotFound
+}
+
+// MARK: - Global shorthand function
+
+/// Translate string using current locale
+/// Usage: tr("key")
+public func tr(_ key: String) -> String {
+    MoinUILocalization.shared.tr(key)
+}
+
+// MARK: - Environment
+
+private struct MoinUILocalizationKey: EnvironmentKey {
+    static let defaultValue = MoinUILocalization.shared
+}
+
+public extension EnvironmentValues {
+    var moinLocalization: MoinUILocalization {
+        get { self[MoinUILocalizationKey.self] }
+        set { self[MoinUILocalizationKey.self] = newValue }
+    }
+}
