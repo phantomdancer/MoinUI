@@ -1,4 +1,5 @@
 import SwiftUI
+import AppKit
 
 /// Unified button shape that can represent different shapes
 struct MoinUIButtonShapeStyle: Shape {
@@ -92,11 +93,24 @@ public struct MoinUIButton<Label: View>: View {
         }
         .buttonStyle(.plain)
         .disabled(effectiveDisabled)
-        .opacity(effectiveDisabled ? 0.6 : 1)
         .animation(.easeInOut(duration: token.motionDuration / 2), value: isHovered)
         .animation(.easeInOut(duration: token.motionDuration / 2), value: isPressed)
         .onHover { hovering in
             isHovered = hovering
+            // 设置鼠标指针样式
+            if effectiveDisabled {
+                if hovering {
+                    NSCursor.operationNotAllowed.push()
+                } else {
+                    NSCursor.pop()
+                }
+            } else {
+                if hovering {
+                    NSCursor.pointingHand.push()
+                } else {
+                    NSCursor.pop()
+                }
+            }
         }
         .simultaneousGesture(
             DragGesture(minimumDistance: 0)
@@ -218,31 +232,56 @@ public struct MoinUIButton<Label: View>: View {
     }
 
     private var backgroundColor: Color {
+        // 禁用状态：使用专门的禁用背景色
+        if effectiveDisabled {
+            switch variant {
+            case .solid:
+                return token.colorBgDisabled
+            case .outline, .text, .link, .ghost:
+                return .clear
+            }
+        }
+
         let baseColor = colorForType(type)
 
         switch variant {
         case .solid:
             if type == .default {
                 if isPressed {
-                    return token.colorBgContainer.opacity(0.8)
+                    return token.colorBgContainer.opacity(0.85)
                 } else if isHovered {
                     return token.colorBgHover
                 }
                 return token.colorBgContainer
             }
+            // 有色按钮使用专门的 hover/active 颜色
             if isPressed {
-                return baseColor.opacity(0.8)
+                return hoverColorForType(type).opacity(0.85)
             } else if isHovered {
-                return baseColor.opacity(0.9)
+                return hoverColorForType(type)
             }
             return baseColor
-        case .outline, .text, .link, .ghost:
+        case .outline, .text, .ghost:
             if isPressed {
-                return baseColor.opacity(0.1)
+                return baseColor.opacity(0.15)
             } else if isHovered {
-                return baseColor.opacity(0.05)
+                return baseColor.opacity(0.1)
             }
             return .clear
+        case .link:
+            return .clear
+        }
+    }
+
+    /// 获取 hover 状态的颜色
+    private func hoverColorForType(_ buttonType: MoinUIButtonType) -> Color {
+        switch buttonType {
+        case .default: return token.colorBgHover
+        case .primary: return token.colorPrimaryHover
+        case .success: return Color(red: 0.45, green: 0.80, blue: 0.40)
+        case .warning: return Color(red: 1.0, green: 0.78, blue: 0.40)
+        case .danger: return Color(red: 1.0, green: 0.47, blue: 0.47)
+        case .info: return Color(red: 0.65, green: 0.65, blue: 0.65)
         }
     }
 
@@ -270,6 +309,18 @@ public struct MoinUIButton<Label: View>: View {
     }
 
     private var borderColor: Color {
+        // 禁用状态：使用专门的禁用边框色
+        if effectiveDisabled {
+            switch variant {
+            case .solid, .outline:
+                return token.colorBorder.opacity(0.5)
+            case .text, .link:
+                return .clear
+            case .ghost:
+                return token.colorBorder.opacity(0.3)
+            }
+        }
+
         let baseColor = colorForType(type)
 
         switch variant {

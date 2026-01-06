@@ -72,7 +72,7 @@ final class MoinUIThemeTests: XCTestCase {
         XCTAssertEqual(DarkColors.borderHover, Color(red: 0.22, green: 0.54, blue: 1.0))
         XCTAssertEqual(DarkColors.textPrimary, Color(white: 0.92))
         XCTAssertEqual(DarkColors.textSecondary, Color(white: 0.65))
-        XCTAssertEqual(DarkColors.textDisabled, Color(white: 0.40))
-        XCTAssertEqual(DarkColors.backgroundDisabled, Color(white: 0.18))
+        XCTAssertEqual(DarkColors.textDisabled, Color(white: 0.45))
+        XCTAssertEqual(DarkColors.backgroundDisabled, Color(white: 0.22))
     }
 }

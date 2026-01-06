@@ -63,6 +63,6 @@ public enum DarkColors {
     public static let borderHover = Color(red: 0.22, green: 0.54, blue: 1.0)
     public static let textPrimary = Color(white: 0.92)
     public static let textSecondary = Color(white: 0.65)
-    public static let textDisabled = Color(white: 0.40)
-    public static let backgroundDisabled = Color(white: 0.18)
+    public static let textDisabled = Color(white: 0.45)
+    public static let backgroundDisabled = Color(white: 0.22)
 }

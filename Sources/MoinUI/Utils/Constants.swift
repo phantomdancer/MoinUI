@@ -90,7 +90,7 @@ public enum Constants {
         public static let backgroundHover = Color(white: 0.98)
         public static let textPrimary = Color(white: 0.13)
         public static let textSecondary = Color(white: 0.45)
-        public static let textDisabled = Color(white: 0.65)
-        public static let backgroundDisabled = Color(white: 0.96)
+        public static let textDisabled = Color(white: 0.55)
+        public static let backgroundDisabled = Color(white: 0.92)
     }
 }
