@@ -198,26 +198,26 @@ private struct ComponentsPreviewSection: View {
                 VStack(alignment: .leading, spacing: Constants.Spacing.md) {
                     // Types
                     HStack(spacing: Constants.Spacing.sm) {
-                        MoinUIButton("Primary", type: .primary) {}
-                        MoinUIButton("Success", type: .success) {}
-                        MoinUIButton("Warning", type: .warning) {}
-                        MoinUIButton("Danger", type: .danger) {}
-                        MoinUIButton("Default") {}
+                        MoinUIButton(localization.tr("button.label.primary"), type: .primary) {}
+                        MoinUIButton(localization.tr("button.label.success"), type: .success) {}
+                        MoinUIButton(localization.tr("button.label.warning"), type: .warning) {}
+                        MoinUIButton(localization.tr("button.label.danger"), type: .danger) {}
+                        MoinUIButton(localization.tr("button.label.default")) {}
                     }
 
                     // Variants
                     HStack(spacing: Constants.Spacing.sm) {
-                        MoinUIButton("Solid", type: .primary, variant: .solid) {}
-                        MoinUIButton("Outline", type: .primary, variant: .outline) {}
-                        MoinUIButton("Text", type: .primary, variant: .text) {}
-                        MoinUIButton("Link", type: .primary, variant: .link) {}
+                        MoinUIButton(localization.tr("button.label.solid"), type: .primary, variant: .solid) {}
+                        MoinUIButton(localization.tr("button.label.outline"), type: .primary, variant: .outline) {}
+                        MoinUIButton(localization.tr("button.label.text"), type: .primary, variant: .text) {}
+                        MoinUIButton(localization.tr("button.label.link"), type: .primary, variant: .link) {}
                     }
 
                     // Sizes & Icons
                     HStack(spacing: Constants.Spacing.sm) {
-                        MoinUIButton("Large", type: .primary, size: .large) {}
-                        MoinUIButton("Medium", type: .primary, size: .medium) {}
-                        MoinUIButton("Small", type: .primary, size: .small) {}
+                        MoinUIButton(localization.tr("button.label.large"), type: .primary, size: .large) {}
+                        MoinUIButton(localization.tr("button.label.medium"), type: .primary, size: .medium) {}
+                        MoinUIButton(localization.tr("button.label.small"), type: .primary, size: .small) {}
                         MoinUIButton(icon: "plus", type: .primary, shape: .circle) {}
                     }
                 }
