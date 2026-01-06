@@ -33,21 +33,34 @@ struct DemoApp: App {
 }
 
 class AppDelegate: NSObject, NSApplicationDelegate {
+    private var windowObserver: NSObjectProtocol?
+
     func applicationDidFinishLaunching(_ notification: Notification) {
         NSApp.setActivationPolicy(.regular)
         setupAppIcon()
         NSApp.activate(ignoringOtherApps: true)
 
-        // 窗口大小为屏幕一半，居中显示
-        DispatchQueue.main.async {
-            if let window = NSApp.windows.first, let screen = window.screen ?? NSScreen.main {
-                let screenFrame = screen.visibleFrame
-                let width = screenFrame.width / 2
-                let height = screenFrame.height / 2
-                let x = screenFrame.origin.x + (screenFrame.width - width) / 2
-                let y = screenFrame.origin.y + (screenFrame.height - height) / 2
-                window.setFrame(NSRect(x: x, y: y, width: width, height: height), display: true)
+        // 监听窗口创建完成后再设置位置
+        windowObserver = NotificationCenter.default.addObserver(
+            forName: NSWindow.didBecomeMainNotification,
+            object: nil,
+            queue: .main
+        ) { [weak self] notification in
+            guard let window = notification.object as? NSWindow,
+                  let screen = window.screen ?? NSScreen.main else { return }
+
+            // 只执行一次
+            if let observer = self?.windowObserver {
+                NotificationCenter.default.removeObserver(observer)
+                self?.windowObserver = nil
             }
+
+            // 窗口大小为屏幕一半（但不小于minSize），居中显示
+            let screenFrame = screen.visibleFrame
+            let width = max(screenFrame.width / 2, window.minSize.width)
+            let height = max(screenFrame.height / 2, window.minSize.height)
+            window.setContentSize(NSSize(width: width, height: height))
+            window.center()
         }
     }
 
