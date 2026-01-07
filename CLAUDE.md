@@ -1,83 +1,112 @@
 使用文言文回复。用最小必要语言回复，说重点，不要长篇大论。
 
-
 ## 项目概述
 
-MoinUI (墨影UI) 是一个 macOS Swift UI 库，使用 Swift 开发。
-
-开发时：
-风格配色：参考shadcn和element plus
-功能参考：ant design和element plus
-
-## 开发环境
+MoinUI（墨影UI）- macOS SwiftUI 组件库。
 
 - **平台**: macOS only
-- **语言**: Swift
-- **UI 框架**: SwiftUI
-- **IDE**: Claude Code
-- **项目结构**: Swift Package（使用 Package.swift）
+- **语言**: Swift / SwiftUI
+- **结构**: Swift Package
 
-## 常用命令
+风格参考：shadcn、Element Plus
+功能参考：Ant Design、Element Plus
 
-### 快速启动（推荐）
+## 命令
 
 ```bash
-# 使用 yarn/npm 脚本启动（推荐）
-yarn dev
+yarn dev          # 启动开发（推荐）
+swift build       # 构建
+swift test        # 测试
+swift package clean && swift build  # 清理重建
 ```
 
-### 构建和运行
+## 项目结构
 
-```bash
-# 使用 Swift Package Manager 构建
-swift build
 ```
+Sources/
+├── MoinUI/                    # 组件库
+│   ├── Components/            # 组件（Button、Input...）
+│   │   └── Button/
+│   │       ├── MoinUIButton.swift
+│   │       ├── MoinUIButtonType.swift
+│   │       ├── MoinUIButtonSize.swift
+│   │       └── MoinUIButtonVariant.swift
+│   ├── Config/                # 配置（Theme、ConfigProvider）
+│   ├── Localization/          # 国际化
+│   ├── Locales/               # 翻译文件 (JSON)
+│   └── Utils/                 # 工具（Constants）
+└── Demo/                      # 示例应用
+    ├── Examples/              # 组件示例页
+    ├── Views/                 # 页面
+    └── Locales/               # Demo翻译
 
-### 依赖管理
-
-```bash
-# 更新依赖
-swift package update
-
-# 解析依赖
-swift package resolve
-
-# 查看依赖
-swift package show-dependencies
-```
-
-### 清理
-
-```bash
-# 清理构建产物
-swift package clean
-
-# 清理并重新构建
-swift package clean && swift build
+Tests/MoinUITests/             # 测试
 ```
 
 ## 编码规范
-- 不要运行编译后的代码或程序，你需要使用 swift build编译不要有语法问题或者警告，我已经pnpm dev启动了程序，通过nodemon自动监听你build的的二进制，会自动重启
-- 不要写冗余重复的代码，保持代码简洁，尽量封装，复用
-- 编写高效代码，极致高性能实现，删除冗余代码、不要的变量、函数、类、接口、属性、方法、模块、包、文件、目录、import
-- 注意拆分文件，子组件等，不要使用一个文件的内容太多
-- 优化代码时，不要删除我的注释，而是优化注释的文案
-- 不需要实现#Preview
-- 合理使用context7工具，查询库（antd，element plus，shadcn）的使用文档
-- **不要硬编码常量**：所有魔法数字、字符串常量都应定义在 `Sources/MoinUI/Utils/Constants.swift` 中
-- 不要允许编译警告，修复所有警告
-- 所有组件都以MoinUI开头，如MoinUIButton
 
-## 流程
-- **每次编写完后，需使用swift build编译检查是否通过，如果有语法问题，需修复**
-- 需要编写完整的测试代码，必须所有测试通过
-- 保证极高的测试覆盖率
-- 保证在Demo中有对此组件的示例及使用说明，参考AntDesign官网的文档（左侧导航，右侧详细使用说明）
-- 善用网络搜索解决问题
-- 善用swift-lsp进行代码搜索
-- 需求处理完成，回复一个“毕。”在最末尾。
-- 每实现一个功能后，都需要在 doc 目录中添加产品功能的开发计划，以及竞品(antd，element plus，shadcn)的功能对比。编写成一个对比表格即可。可适当配套几行解释文字。
+### 必须遵守
 
-## 文档及国际化
-- 文本默认使用中文，代码中也默认使用中文。
-- 支持切换到英文（readme，代码国际化、Demo等），可以参考antd的locale类似的配置。
+- **组件命名**: 以 `MoinUI` 开头（MoinUIButton、MoinUIInput）
+- **常量**: 使用 `Constants.swift`，禁止硬编码魔法数字
+- **Token**: 使用 `config.token` 获取样式，禁止硬编码颜色
+- **编译**: 每次修改后 `swift build`，零警告
+- **测试**: 完整测试，高覆盖率
+- **示例**: Demo 中有完整示例
+
+### 代码风格
+
+- 简洁复用，避免冗余
+- 合理拆分文件，单文件不宜过长
+- 不实现 #Preview
+- 保留有意义的注释
+
+### Token 使用
+
+```swift
+// ✅ 正确
+.foregroundStyle(token.colorPrimary)
+.background(token.colorBgContainer)
+
+// ❌ 错误
+.foregroundStyle(Color.blue)
+.background(Color.white)
+```
+
+### Constants 使用
+
+```swift
+Constants.Spacing.sm   // 8
+Constants.Spacing.md   // 12
+Constants.Radius.md    // 6
+Constants.Size.controlHeight  // 32
+```
+
+## 工作流程
+
+1. 编写代码
+2. `swift build` 确保无警告
+3. `swift test` 确保测试通过
+4. Demo 中添加示例
+5. 添加中英文翻译
+6. 完成后回复"毕。"
+
+## 国际化
+
+- 默认中文，支持英文切换
+- 组件翻译: `Sources/MoinUI/Locales/`
+- Demo翻译: `Sources/Demo/Locales/`
+- 使用 `localization.tr("key")` 获取翻译
+
+## Skills（斜杠命令）
+
+- `/new-component` - 创建新组件模板和规范
+- `/compare-competitors` - 竞品功能对比表
+
+## 竞品参考
+
+- [Ant Design](https://ant.design)
+- [Element Plus](https://element-plus.org)
+- [shadcn/ui](https://ui.shadcn.com)
+
+使用 context7 工具查询竞品文档。
