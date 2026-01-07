@@ -13,6 +13,22 @@ struct ButtonExamples: View {
     @Binding var selectedTab: ButtonExamplesTab
     @State private var isLoading = false
 
+    /// 锚点列表
+    private let anchors: [AnchorItem] = [
+        AnchorItem(id: "type", titleKey: "button.type"),
+        AnchorItem(id: "color", titleKey: "button.color"),
+        AnchorItem(id: "variant", titleKey: "button.variant"),
+        AnchorItem(id: "size", titleKey: "button.size"),
+        AnchorItem(id: "shape", titleKey: "button.shape"),
+        AnchorItem(id: "state", titleKey: "button.state"),
+        AnchorItem(id: "icon", titleKey: "button.icon"),
+        AnchorItem(id: "icon_text", titleKey: "button.icon_text"),
+        AnchorItem(id: "link", titleKey: "button.link"),
+        AnchorItem(id: "group", titleKey: "button.group"),
+        AnchorItem(id: "block", titleKey: "button.block"),
+        AnchorItem(id: "api", titleKey: "API"),
+    ]
+
     var body: some View {
         Group {
             switch selectedTab {
@@ -27,25 +43,24 @@ struct ButtonExamples: View {
     // MARK: - Examples Content
 
     private var examplesContent: some View {
-        ScrollView {
+        ExamplePageWithAnchor(anchors: anchors) { _ in
             VStack(alignment: .leading, spacing: Constants.Spacing.xl) {
-                typeExample
-                colorExample
-                variantExample
-                sizeExample
-                shapeExample
-                stateExample
-                iconExample
-                iconTextExample
-                linkExample
-                groupExample
-                blockExample
+                typeExample.id("type")
+                colorExample.id("color")
+                variantExample.id("variant")
+                sizeExample.id("size")
+                shapeExample.id("shape")
+                stateExample.id("state")
+                iconExample.id("icon")
+                iconTextExample.id("icon_text")
+                linkExample.id("link")
+                groupExample.id("group")
+                blockExample.id("block")
 
                 Divider()
 
-                apiReference
+                apiReference.id("api")
             }
-            .padding(Constants.Spacing.xl)
         }
     }
 
