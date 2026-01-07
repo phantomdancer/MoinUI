@@ -112,8 +112,9 @@ class ButtonPlaygroundState: ObservableObject {
     @Published var isDisabled: Bool = false
     @Published var isLoading: Bool = false
     @Published var isBlock: Bool = false
+    @Published var isGhost: Bool = false
     @Published var icon: String = ""
-    @Published var iconPosition: MoinUIButtonIconPosition = .leading
+    @Published var iconPlacement: MoinUIButtonIconPlacement = .start
     @Published var useCustomColor: Bool = false
     @Published var customColor: Color = .purple
 
@@ -150,20 +151,23 @@ class ButtonPlaygroundState: ObservableObject {
         // 图标
         if hasIcon {
             params.append("icon: \"\(icon)\"")
-            if iconPosition != .leading {
-                params.append("iconPosition: .\(iconPosition)")
+            if iconPlacement != .start {
+                params.append("iconPlacement: .\(iconPlacement)")
             }
         }
 
         // 状态
         if isLoading {
-            params.append("isLoading: true")
+            params.append("loading: true")
         }
         if isDisabled {
             params.append("isDisabled: true")
         }
         if isBlock {
             params.append("isBlock: true")
+        }
+        if isGhost {
+            params.append("isGhost: true")
         }
 
         // 自定义颜色
@@ -256,8 +260,9 @@ struct ButtonPlayground: View {
                     size: state.size,
                     variant: state.variant,
                     shape: state.shape,
-                    isLoading: state.isLoading,
+                    loading: MoinUIButtonLoading(state.isLoading),
                     isDisabled: state.isDisabled,
+                    isGhost: state.isGhost,
                     color: state.useCustomColor ? state.customColor : nil
                 ) {}
             } else {
@@ -268,10 +273,11 @@ struct ButtonPlayground: View {
                     variant: state.variant,
                     shape: state.shape,
                     icon: state.hasIcon ? state.icon : nil,
-                    iconPosition: state.iconPosition,
-                    isLoading: state.isLoading,
+                    iconPlacement: state.iconPlacement,
+                    loading: MoinUIButtonLoading(state.isLoading),
                     isDisabled: state.isDisabled,
                     isBlock: state.isBlock,
+                    isGhost: state.isGhost,
                     color: state.useCustomColor ? state.customColor : nil
                 ) {}
                 .frame(maxWidth: state.isBlock ? .infinity : nil)
@@ -359,10 +365,10 @@ struct ButtonPlayground: View {
 
                     if state.hasIcon {
                         SelectPropControl(
-                            label: localization.tr("playground.prop.icon_position"),
-                            propName: localization.tr("playground.prop.icon_position_prop"),
-                            options: MoinUIButtonIconPosition.allCases,
-                            value: $state.iconPosition
+                            label: localization.tr("playground.prop.icon_placement"),
+                            propName: localization.tr("playground.prop.icon_placement_prop"),
+                            options: MoinUIButtonIconPlacement.allCases,
+                            value: $state.iconPlacement
                         )
                     }
 
@@ -385,6 +391,12 @@ struct ButtonPlayground: View {
                         label: localization.tr("playground.prop.block"),
                         propName: localization.tr("playground.prop.block_prop"),
                         value: $state.isBlock
+                    )
+
+                    TogglePropControl(
+                        label: localization.tr("playground.prop.ghost"),
+                        propName: localization.tr("playground.prop.ghost_prop"),
+                        value: $state.isGhost
                     )
                 }
             }
@@ -434,16 +446,17 @@ extension MoinUIButtonType: CaseIterable, CustomStringConvertible {
 
 extension MoinUIButtonVariant: CaseIterable, CustomStringConvertible {
     public static var allCases: [MoinUIButtonVariant] {
-        [.solid, .outline, .text, .link, .ghost]
+        [.solid, .outlined, .dashed, .filled, .text, .link]
     }
 
     public var description: String {
         switch self {
         case .solid: return "solid"
-        case .outline: return "outline"
+        case .outlined: return "outlined"
+        case .dashed: return "dashed"
+        case .filled: return "filled"
         case .text: return "text"
         case .link: return "link"
-        case .ghost: return "ghost"
         }
     }
 }
@@ -476,15 +489,15 @@ extension MoinUIButtonShape: CaseIterable, CustomStringConvertible {
     }
 }
 
-extension MoinUIButtonIconPosition: CaseIterable, CustomStringConvertible {
-    public static var allCases: [MoinUIButtonIconPosition] {
-        [.leading, .trailing]
+extension MoinUIButtonIconPlacement: CaseIterable, CustomStringConvertible {
+    public static var allCases: [MoinUIButtonIconPlacement] {
+        [.start, .end]
     }
 
     public var description: String {
         switch self {
-        case .leading: return "leading"
-        case .trailing: return "trailing"
+        case .start: return "start"
+        case .end: return "end"
         }
     }
 }

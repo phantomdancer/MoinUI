@@ -110,7 +110,7 @@ Constants.Size.controlHeight  // 32
 
 | 竞品 | 链接 |
 |------|------|
-| Ant Design | https://ant.design |
+| Ant Design | 源码已上下载到本地 ThirdLibs/ant-design 目录 |
 | Element Plus | https://element-plus.org |
 | shadcn/ui | https://ui.shadcn.com |
 

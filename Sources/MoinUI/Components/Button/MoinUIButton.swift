@@ -18,10 +18,29 @@ struct MoinUIButtonShapeStyle: Shape {
     }
 }
 
-/// 图标位置
-public enum MoinUIButtonIconPosition {
-    case leading
-    case trailing
+/// 图标位置 - 与 antd iconPlacement 一致
+public enum MoinUIButtonIconPlacement {
+    case start
+    case end
+}
+
+/// Loading 配置 - 支持 delay 和自定义 icon
+public struct MoinUIButtonLoading: ExpressibleByBooleanLiteral {
+    public let isLoading: Bool
+    public let delay: TimeInterval?
+    public let icon: String?
+
+    public init(_ isLoading: Bool = true, delay: TimeInterval? = nil, icon: String? = nil) {
+        self.isLoading = isLoading
+        self.delay = delay
+        self.icon = icon
+    }
+
+    public init(booleanLiteral value: Bool) {
+        self.isLoading = value
+        self.delay = nil
+        self.icon = nil
+    }
 }
 
 /// MoinUI Button Component
@@ -32,22 +51,23 @@ public struct MoinUIButton<Label: View>: View {
     private let size: MoinUIButtonSize
     private let variant: MoinUIButtonVariant
     private let shape: MoinUIButtonShape
-    private let isLoading: Bool
+    private let loadingConfig: MoinUIButtonLoading
     private let isDisabled: Bool
     private let isBlock: Bool
+    private let isGhost: Bool
     private let icon: String?
-    private let iconPosition: MoinUIButtonIconPosition
+    private let iconPlacement: MoinUIButtonIconPlacement
     private let href: URL?
     private let target: String?
     private let color: Color?
+    private let gradient: LinearGradient?
 
     @State private var isHovered = false
     @State private var isPressed = false
+    @State private var showLoading = false
+    @State private var loadingRotation: Double = 0
 
-    /// Observe config changes for real-time updates
     @ObservedObject private var configProvider = MoinUIConfigProvider.shared
-
-    /// Access global token
     private var token: MoinUIToken { configProvider.token }
 
     public init(
@@ -56,13 +76,15 @@ public struct MoinUIButton<Label: View>: View {
         variant: MoinUIButtonVariant = .solid,
         shape: MoinUIButtonShape = .default,
         icon: String? = nil,
-        iconPosition: MoinUIButtonIconPosition = .leading,
-        isLoading: Bool = false,
+        iconPlacement: MoinUIButtonIconPlacement = .start,
+        loading: MoinUIButtonLoading = false,
         isDisabled: Bool = false,
         isBlock: Bool = false,
+        isGhost: Bool = false,
         href: URL? = nil,
         target: String? = nil,
         color: Color? = nil,
+        gradient: LinearGradient? = nil,
         action: (() -> Void)? = nil,
         @ViewBuilder label: () -> Label
     ) {
@@ -71,36 +93,51 @@ public struct MoinUIButton<Label: View>: View {
         self.variant = variant
         self.shape = shape
         self.icon = icon
-        self.iconPosition = iconPosition
-        self.isLoading = isLoading
+        self.iconPlacement = iconPlacement
+        self.loadingConfig = loading
         self.isDisabled = isDisabled
         self.isBlock = isBlock
+        self.isGhost = isGhost
         self.href = href
         self.target = target
         self.color = color
+        self.gradient = gradient
         self.action = action
         self.label = label()
     }
 
-    /// 有色按钮禁用时是否需要整体降低透明度
-    private var shouldApplyDisabledOpacity: Bool {
-        effectiveDisabled && (hasCustomColor || type != .default)
+    // MARK: - Computed Properties
+
+    private var isLoading: Bool { showLoading }
+
+    private var effectiveDisabled: Bool {
+        isDisabled || isLoading
     }
+
+    private var shouldApplyDisabledOpacity: Bool {
+        effectiveDisabled && (hasCustomColor || type != .default || gradient != nil)
+    }
+
+    private var hasCustomColor: Bool {
+        color != nil
+    }
+
+    private var baseColor: Color {
+        if let color = color { return color }
+        return colorForType(type)
+    }
+
+    // MARK: - Body
 
     public var body: some View {
         Group {
             if let href = href {
-                Link(destination: href) {
-                    buttonContent
-                }
+                Link(destination: href) { buttonContent }
             } else {
-                Button(action: handleAction) {
-                    buttonContent
-                }
+                Button(action: handleAction) { buttonContent }
             }
         }
         .buttonStyle(.plain)
-        // 有色按钮禁用时用 allowsHitTesting 阻止交互，避免 disabled 自带的变淡效果
         .disabled(effectiveDisabled && !shouldApplyDisabledOpacity)
         .allowsHitTesting(!effectiveDisabled)
         .opacity(shouldApplyDisabledOpacity ? 0.65 : 1)
@@ -108,42 +145,38 @@ public struct MoinUIButton<Label: View>: View {
         .animation(.easeInOut(duration: token.motionDuration / 2), value: isPressed)
         .onHover { hovering in
             isHovered = hovering
-            // 鼠标离开时重置按压状态
-            if !hovering {
-                isPressed = false
-            }
-            // 设置鼠标指针样式
-            if effectiveDisabled {
-                if hovering {
-                    NSCursor.operationNotAllowed.push()
-                } else {
-                    NSCursor.pop()
-                }
-            } else {
-                if hovering {
-                    NSCursor.pointingHand.push()
-                } else {
-                    NSCursor.pop()
-                }
-            }
+            if !hovering { isPressed = false }
+            updateCursor(hovering: hovering)
         }
         .simultaneousGesture(
             DragGesture(minimumDistance: 0)
                 .onChanged { _ in isPressed = true }
                 .onEnded { _ in isPressed = false }
         )
+        .onChange(of: loadingConfig.isLoading) { newValue in
+            handleLoadingChange(newValue)
+        }
+        .onAppear {
+            if loadingConfig.isLoading {
+                handleLoadingChange(true)
+            }
+        }
     }
+
+    // MARK: - Button Content
 
     @ViewBuilder
     private var buttonContent: some View {
         HStack(spacing: Constants.Button.iconSpacing) {
-            if isLoading {
+            if isLoading && iconPlacement == .start {
                 loadingIndicator
-            } else if let icon = icon, iconPosition == .leading {
+            } else if let icon = icon, iconPlacement == .start {
                 iconView(icon)
             }
             label
-            if !isLoading, let icon = icon, iconPosition == .trailing {
+            if isLoading && iconPlacement == .end {
+                loadingIndicator
+            } else if let icon = icon, iconPlacement == .end, !isLoading {
                 iconView(icon)
             }
         }
@@ -153,9 +186,18 @@ public struct MoinUIButton<Label: View>: View {
         .frame(maxWidth: isBlock ? .infinity : nil)
         .frame(minWidth: shape == .circle ? controlHeight : nil)
         .padding(.horizontal, shape == .circle ? 0 : horizontalPadding)
-        .background(backgroundColor)
+        .background(backgroundView)
         .clipShape(buttonShape)
         .overlay(borderOverlay)
+    }
+
+    @ViewBuilder
+    private var backgroundView: some View {
+        if let gradient = gradient, variant == .solid {
+            gradient
+        } else {
+            backgroundColor
+        }
     }
 
     @ViewBuilder
@@ -164,6 +206,38 @@ public struct MoinUIButton<Label: View>: View {
             .font(.system(size: iconSize))
     }
 
+    @ViewBuilder
+    private var loadingIndicator: some View {
+        let loadingIcon = loadingConfig.icon ?? "arrow.trianglehead.2.clockwise"
+        Image(systemName: loadingIcon)
+            .font(.system(size: iconSize))
+            .rotationEffect(.degrees(loadingRotation))
+            .id(isLoading)
+            .onAppear {
+                loadingRotation = 0
+                withAnimation(.linear(duration: 1).repeatForever(autoreverses: false)) {
+                    loadingRotation = 360
+                }
+            }
+    }
+
+    private var buttonShape: MoinUIButtonShapeStyle {
+        MoinUIButtonShapeStyle(shapeType: shape, cornerRadius: cornerRadius)
+    }
+
+    @ViewBuilder
+    private var borderOverlay: some View {
+        if variant == .dashed {
+            buttonShape
+                .stroke(borderColor, style: StrokeStyle(lineWidth: Constants.Button.borderWidth, dash: [4, 3]))
+        } else {
+            buttonShape
+                .stroke(borderColor, lineWidth: Constants.Button.borderWidth)
+        }
+    }
+
+    // MARK: - Sizing
+
     private var iconSize: CGFloat {
         switch size {
         case .small: return token.fontSizeSM
@@ -171,8 +245,6 @@ public struct MoinUIButton<Label: View>: View {
         case .large: return token.fontSizeLG
         }
     }
-
-    // MARK: - Token-based sizing
 
     private var fontSize: CGFloat {
         switch size {
@@ -206,20 +278,7 @@ public struct MoinUIButton<Label: View>: View {
         }
     }
 
-    // MARK: - Token-based colors
-
-    /// 获取按钮基础颜色（自定义颜色优先）
-    private var baseColor: Color {
-        if let color = color {
-            return color
-        }
-        return colorForType(type)
-    }
-
-    /// 是否使用自定义颜色
-    private var hasCustomColor: Bool {
-        color != nil
-    }
+    // MARK: - Colors
 
     private func colorForType(_ buttonType: MoinUIButtonType) -> Color {
         switch buttonType {
@@ -232,82 +291,8 @@ public struct MoinUIButton<Label: View>: View {
         }
     }
 
-    private var effectiveDisabled: Bool {
-        isDisabled || isLoading
-    }
-
-    private func handleAction() {
-        guard !effectiveDisabled else { return }
-        action?()
-    }
-
-    @ViewBuilder
-    private var loadingIndicator: some View {
-        ProgressView()
-            .controlSize(.small)
-            .progressViewStyle(.circular)
-    }
-
-    private var buttonShape: MoinUIButtonShapeStyle {
-        MoinUIButtonShapeStyle(shapeType: shape, cornerRadius: cornerRadius)
-    }
-
-    @ViewBuilder
-    private var borderOverlay: some View {
-        buttonShape
-            .stroke(borderColor, lineWidth: Constants.Button.borderWidth)
-    }
-
-    private var backgroundColor: Color {
-        // 禁用状态：有色按钮通过整体 opacity 处理，default 用灰色
-        if effectiveDisabled {
-            switch variant {
-            case .solid:
-                if hasCustomColor || type != .default {
-                    return baseColor
-                }
-                return token.colorBgDisabled
-            case .outline, .text, .link, .ghost:
-                return .clear
-            }
-        }
-
-        switch variant {
-        case .solid:
-            // 无自定义颜色且 type 为 default
-            if !hasCustomColor && type == .default {
-                if isPressed {
-                    return token.colorBgContainer.opacity(0.85)
-                } else if isHovered {
-                    return token.colorBgHover
-                }
-                return token.colorBgContainer
-            }
-            // 有色按钮（自定义颜色或语义色）
-            if isPressed {
-                return activeColorForType(type)
-            } else if isHovered {
-                return hoverColorForType(type)
-            }
-            return baseColor
-        case .outline, .text, .ghost:
-            if isPressed {
-                return baseColor.opacity(0.15)
-            } else if isHovered {
-                return baseColor.opacity(0.1)
-            }
-            return .clear
-        case .link:
-            return .clear
-        }
-    }
-
-    /// 获取 hover 状态的颜色
     private func hoverColorForType(_ buttonType: MoinUIButtonType) -> Color {
-        // 自定义颜色使用 lighten
-        if hasCustomColor {
-            return baseColor.lightened(by: 0.08)
-        }
+        if hasCustomColor { return baseColor.lightened(by: 0.08) }
         switch buttonType {
         case .default: return token.colorBgHover
         case .primary: return token.colorPrimaryHover
@@ -318,40 +303,84 @@ public struct MoinUIButton<Label: View>: View {
         }
     }
 
-    /// 获取 active 状态的颜色
     private func activeColorForType(_ buttonType: MoinUIButtonType) -> Color {
-        if hasCustomColor {
-            return baseColor.darkened(by: 0.08)
-        }
+        if hasCustomColor { return baseColor.darkened(by: 0.08) }
         return hoverColorForType(buttonType).darkened(by: 0.1)
     }
 
+    private var backgroundColor: Color {
+        // Ghost 模式背景透明，hover 时白色半透明
+        if isGhost {
+            if isPressed { return Color.white.opacity(0.25) }
+            else if isHovered { return Color.white.opacity(0.15) }
+            return .clear
+        }
+
+        // 禁用状态
+        if effectiveDisabled {
+            switch variant {
+            case .solid:
+                if hasCustomColor || type != .default { return baseColor }
+                return token.colorBgDisabled
+            case .filled:
+                return baseColor.opacity(0.15)
+            case .outlined, .dashed, .text, .link:
+                return .clear
+            }
+        }
+
+        switch variant {
+        case .solid:
+            if !hasCustomColor && type == .default {
+                if isPressed { return token.colorBgContainer.opacity(0.85) }
+                else if isHovered { return token.colorBgHover }
+                return token.colorBgContainer
+            }
+            if isPressed { return activeColorForType(type) }
+            else if isHovered { return hoverColorForType(type) }
+            return baseColor
+
+        case .filled:
+            if isPressed { return baseColor.opacity(0.25) }
+            else if isHovered { return baseColor.opacity(0.2) }
+            return baseColor.opacity(0.15)
+
+        case .outlined, .dashed, .text:
+            if isPressed { return baseColor.opacity(0.15) }
+            else if isHovered { return baseColor.opacity(0.1) }
+            return .clear
+
+        case .link:
+            return .clear
+        }
+    }
+
     private var foregroundColor: Color {
-        // 有色按钮禁用时通过整体 opacity 处理，返回正常颜色
+        // Ghost 模式：default 用白色，有色用原色
+        if isGhost {
+            if effectiveDisabled { return Color.white.opacity(0.5) }
+            return hasCustomColor || type != .default ? baseColor : Color.white
+        }
+
+        // 禁用状态
         if effectiveDisabled {
             if hasCustomColor || type != .default {
-                switch variant {
-                case .solid:
-                    return .white
-                case .outline, .text, .ghost, .link:
-                    return baseColor
-                }
+                return variant == .solid ? .white : baseColor
             }
             return token.colorTextDisabled
         }
 
         switch variant {
         case .solid:
-            // solid 统一白色文字（与 antd 一致），default 类型除外
-            if hasCustomColor {
-                return .white
-            }
+            if hasCustomColor { return .white }
             return type == .default ? token.colorText : .white
-        case .outline, .text, .ghost:
+
+        case .filled, .outlined, .dashed, .text:
             if !hasCustomColor && type == .default {
                 return isHovered ? token.colorPrimary : token.colorText
             }
             return baseColor
+
         case .link:
             if !hasCustomColor && type == .default {
                 return isHovered ? token.colorPrimary.opacity(0.8) : token.colorPrimary
@@ -361,46 +390,74 @@ public struct MoinUIButton<Label: View>: View {
     }
 
     private var borderColor: Color {
-        // 禁用状态：有色按钮通过整体 opacity 处理
+        // Ghost 模式：default 用白色边框，有色用原色边框
+        if isGhost {
+            if effectiveDisabled { return Color.white.opacity(0.3) }
+            return hasCustomColor || type != .default ? baseColor : Color.white
+        }
+
+        // 禁用状态
         if effectiveDisabled {
-            if hasCustomColor || type != .default {
-                return baseColor
-            }
+            if hasCustomColor || type != .default { return baseColor }
             switch variant {
-            case .solid, .outline:
+            case .solid, .outlined, .dashed, .filled:
                 return token.colorBorder.opacity(0.5)
             case .text, .link:
                 return .clear
-            case .ghost:
-                return token.colorBorder.opacity(0.3)
             }
         }
 
         switch variant {
         case .solid:
-            // default 类型边框处理
-            if !hasCustomColor && type == .default {
-                return token.colorBorder
-            }
-            // 有色按钮：边框随背景色变化
-            if isPressed {
-                return activeColorForType(type)
-            } else if isHovered {
-                return hoverColorForType(type)
-            }
+            if !hasCustomColor && type == .default { return token.colorBorder }
+            if isPressed { return activeColorForType(type) }
+            else if isHovered { return hoverColorForType(type) }
             return baseColor
-        case .outline:
+
+        case .outlined, .dashed:
             if !hasCustomColor && type == .default {
                 return isHovered ? token.colorBorderHover : token.colorBorder
             }
             return baseColor
+
+        case .filled:
+            return .clear
+
         case .text, .link:
             return .clear
-        case .ghost:
-            if !hasCustomColor && type == .default {
-                return token.colorBorder
+        }
+    }
+
+    // MARK: - Actions
+
+    private func handleAction() {
+        guard !effectiveDisabled else { return }
+        action?()
+    }
+
+    private func handleLoadingChange(_ isLoading: Bool) {
+        if isLoading {
+            if let delay = loadingConfig.delay, delay > 0 {
+                DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
+                    if self.loadingConfig.isLoading {
+                        self.showLoading = true
+                    }
+                }
+            } else {
+                showLoading = true
             }
-            return baseColor.opacity(0.5)
+        } else {
+            showLoading = false
+        }
+    }
+
+    private func updateCursor(hovering: Bool) {
+        if effectiveDisabled {
+            if hovering { NSCursor.operationNotAllowed.push() }
+            else { NSCursor.pop() }
+        } else {
+            if hovering { NSCursor.pointingHand.push() }
+            else { NSCursor.pop() }
         }
     }
 }
@@ -408,7 +465,6 @@ public struct MoinUIButton<Label: View>: View {
 // MARK: - Convenience Initializers
 
 public extension MoinUIButton where Label == Text {
-    /// 创建文本按钮
     init(
         _ title: String,
         type: MoinUIButtonType = .default,
@@ -416,12 +472,14 @@ public extension MoinUIButton where Label == Text {
         variant: MoinUIButtonVariant = .solid,
         shape: MoinUIButtonShape = .default,
         icon: String? = nil,
-        iconPosition: MoinUIButtonIconPosition = .leading,
-        isLoading: Bool = false,
+        iconPlacement: MoinUIButtonIconPlacement = .start,
+        loading: MoinUIButtonLoading = false,
         isDisabled: Bool = false,
         isBlock: Bool = false,
+        isGhost: Bool = false,
         href: URL? = nil,
         color: Color? = nil,
+        gradient: LinearGradient? = nil,
         action: (() -> Void)? = nil
     ) {
         self.init(
@@ -430,12 +488,14 @@ public extension MoinUIButton where Label == Text {
             variant: variant,
             shape: shape,
             icon: icon,
-            iconPosition: iconPosition,
-            isLoading: isLoading,
+            iconPlacement: iconPlacement,
+            loading: loading,
             isDisabled: isDisabled,
             isBlock: isBlock,
+            isGhost: isGhost,
             href: href,
             color: color,
+            gradient: gradient,
             action: action
         ) {
             Text(title)
@@ -444,17 +504,18 @@ public extension MoinUIButton where Label == Text {
 }
 
 public extension MoinUIButton where Label == EmptyView {
-    /// 创建纯图标按钮
     init(
         icon iconName: String,
         type: MoinUIButtonType = .default,
         size: MoinUIButtonSize = .medium,
         variant: MoinUIButtonVariant = .solid,
         shape: MoinUIButtonShape = .circle,
-        isLoading: Bool = false,
+        loading: MoinUIButtonLoading = false,
         isDisabled: Bool = false,
+        isGhost: Bool = false,
         href: URL? = nil,
         color: Color? = nil,
+        gradient: LinearGradient? = nil,
         action: (() -> Void)? = nil
     ) {
         self.init(
@@ -463,12 +524,14 @@ public extension MoinUIButton where Label == EmptyView {
             variant: variant,
             shape: shape,
             icon: iconName,
-            iconPosition: .leading,
-            isLoading: isLoading,
+            iconPlacement: .start,
+            loading: loading,
             isDisabled: isDisabled,
             isBlock: false,
+            isGhost: isGhost,
             href: href,
             color: color,
+            gradient: gradient,
             action: action
         ) {
             EmptyView()

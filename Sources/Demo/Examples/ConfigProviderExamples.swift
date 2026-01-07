@@ -128,7 +128,7 @@ struct ConfigProviderExamples: View {
                 HStack(spacing: Constants.Spacing.md) {
                     MoinUIButton(localization.tr("button.label.primary"), type: .primary) {}
                     MoinUIButton(localization.tr("button.label.default")) {}
-                    MoinUIButton(localization.tr("button.label.primary"), type: .primary, variant: .outline) {}
+                    MoinUIButton(localization.tr("button.label.primary"), type: .primary, variant: .outlined) {}
                 }
             }
         } code: {
@@ -200,7 +200,7 @@ struct ConfigProviderExamples: View {
                 }
 
                 // Reset button
-                MoinUIButton(localization.tr("config.reset"), variant: .outline) {
+                MoinUIButton(localization.tr("config.reset"), variant: .outlined) {
                     configProvider.token = .default
                 }
             }

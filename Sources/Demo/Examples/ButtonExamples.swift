@@ -12,21 +12,24 @@ struct ButtonExamples: View {
     @EnvironmentObject var localization: MoinUILocalization
     @Binding var selectedTab: ButtonExamplesTab
     @State private var isLoading = false
+    @State private var loadings: [Bool] = Array(repeating: false, count: 6)
 
     /// 锚点列表
     private let anchors: [AnchorItem] = [
         AnchorItem(id: "type", titleKey: "button.type"),
-        AnchorItem(id: "color", titleKey: "button.color"),
         AnchorItem(id: "variant", titleKey: "button.variant"),
+        AnchorItem(id: "color_variant", titleKey: "button.color_variant"),
+        AnchorItem(id: "ghost", titleKey: "button.ghost"),
         AnchorItem(id: "size", titleKey: "button.size"),
         AnchorItem(id: "shape", titleKey: "button.shape"),
-        AnchorItem(id: "state", titleKey: "button.state"),
+        AnchorItem(id: "loading", titleKey: "button.loading"),
+        AnchorItem(id: "gradient", titleKey: "button.gradient"),
         AnchorItem(id: "icon", titleKey: "button.icon"),
         AnchorItem(id: "icon_text", titleKey: "button.icon_text"),
-        AnchorItem(id: "link", titleKey: "button.link"),
-        AnchorItem(id: "group", titleKey: "button.group"),
+        AnchorItem(id: "disabled", titleKey: "button.disabled"),
         AnchorItem(id: "block", titleKey: "button.block"),
         AnchorItem(id: "api", titleKey: "API"),
+        AnchorItem(id: "faq", titleKey: "faq.title"),
     ]
 
     var body: some View {
@@ -46,20 +49,25 @@ struct ButtonExamples: View {
         ExamplePageWithAnchor(anchors: anchors) { _ in
             VStack(alignment: .leading, spacing: Constants.Spacing.xl) {
                 typeExample.id("type")
-                colorExample.id("color")
                 variantExample.id("variant")
+                colorVariantExample.id("color_variant")
+                ghostExample.id("ghost")
                 sizeExample.id("size")
                 shapeExample.id("shape")
-                stateExample.id("state")
+                loadingExample.id("loading")
+                gradientExample.id("gradient")
                 iconExample.id("icon")
                 iconTextExample.id("icon_text")
-                linkExample.id("link")
-                groupExample.id("group")
+                disabledExample.id("disabled")
                 blockExample.id("block")
 
                 Divider()
 
-                apiReference.id("api")
+                ButtonAPISection().id("api")
+
+                Divider()
+
+                ButtonFAQSection().id("faq")
             }
         }
     }
@@ -107,28 +115,28 @@ struct ButtonExamples: View {
                 // Pink
                 HStack(spacing: Constants.Spacing.sm) {
                     MoinUIButton(localization.tr("button.label.solid"), variant: .solid, color: Color.pink) {}
-                    MoinUIButton(localization.tr("button.label.outline"), variant: .outline, color: Color.pink) {}
+                    MoinUIButton(localization.tr("button.label.outlined"), variant: .outlined, color: Color.pink) {}
                     MoinUIButton(localization.tr("button.label.text"), variant: .text, color: Color.pink) {}
                     MoinUIButton(localization.tr("button.label.link"), variant: .link, color: Color.pink) {}
                 }
                 // Purple
                 HStack(spacing: Constants.Spacing.sm) {
                     MoinUIButton(localization.tr("button.label.solid"), variant: .solid, color: Color.purple) {}
-                    MoinUIButton(localization.tr("button.label.outline"), variant: .outline, color: Color.purple) {}
+                    MoinUIButton(localization.tr("button.label.outlined"), variant: .outlined, color: Color.purple) {}
                     MoinUIButton(localization.tr("button.label.text"), variant: .text, color: Color.purple) {}
                     MoinUIButton(localization.tr("button.label.link"), variant: .link, color: Color.purple) {}
                 }
                 // Cyan
                 HStack(spacing: Constants.Spacing.sm) {
                     MoinUIButton(localization.tr("button.label.solid"), variant: .solid, color: Color.cyan) {}
-                    MoinUIButton(localization.tr("button.label.outline"), variant: .outline, color: Color.cyan) {}
+                    MoinUIButton(localization.tr("button.label.outlined"), variant: .outlined, color: Color.cyan) {}
                     MoinUIButton(localization.tr("button.label.text"), variant: .text, color: Color.cyan) {}
                     MoinUIButton(localization.tr("button.label.link"), variant: .link, color: Color.cyan) {}
                 }
                 // Orange
                 HStack(spacing: Constants.Spacing.sm) {
                     MoinUIButton(localization.tr("button.label.solid"), variant: .solid, color: Color.orange) {}
-                    MoinUIButton(localization.tr("button.label.outline"), variant: .outline, color: Color.orange) {}
+                    MoinUIButton(localization.tr("button.label.outlined"), variant: .outlined, color: Color.orange) {}
                     MoinUIButton(localization.tr("button.label.text"), variant: .text, color: Color.orange) {}
                     MoinUIButton(localization.tr("button.label.link"), variant: .link, color: Color.orange) {}
                 }
@@ -137,7 +145,7 @@ struct ButtonExamples: View {
             """
             // Pink
             MoinUIButton("\(localization.tr("button.label.solid"))", variant: .solid, color: Color.pink) {}
-            MoinUIButton("\(localization.tr("button.label.outline"))", variant: .outline, color: Color.pink) {}
+            MoinUIButton("\(localization.tr("button.label.outlined"))", variant: .outlined, color: Color.pink) {}
 
             // Purple
             MoinUIButton("\(localization.tr("button.label.solid"))", variant: .solid, color: Color.purple) {}
@@ -155,18 +163,119 @@ struct ButtonExamples: View {
         ) {
             HStack(spacing: Constants.Spacing.md) {
                 MoinUIButton(localization.tr("button.label.solid"), type: .primary, variant: .solid) {}
-                MoinUIButton(localization.tr("button.label.outline"), type: .primary, variant: .outline) {}
+                MoinUIButton(localization.tr("button.label.outlined"), type: .primary, variant: .outlined) {}
+                MoinUIButton(localization.tr("button.label.dashed"), type: .primary, variant: .dashed) {}
+                MoinUIButton(localization.tr("button.label.filled"), type: .primary, variant: .filled) {}
                 MoinUIButton(localization.tr("button.label.text"), type: .primary, variant: .text) {}
                 MoinUIButton(localization.tr("button.label.link"), type: .primary, variant: .link) {}
-                MoinUIButton(localization.tr("button.label.ghost"), type: .primary, variant: .ghost) {}
             }
         } code: {
             """
             MoinUIButton("\(localization.tr("button.label.solid"))", type: .primary, variant: .solid) {}
-            MoinUIButton("\(localization.tr("button.label.outline"))", type: .primary, variant: .outline) {}
+            MoinUIButton("\(localization.tr("button.label.outlined"))", type: .primary, variant: .outlined) {}
+            MoinUIButton("\(localization.tr("button.label.dashed"))", type: .primary, variant: .dashed) {}
+            MoinUIButton("\(localization.tr("button.label.filled"))", type: .primary, variant: .filled) {}
             MoinUIButton("\(localization.tr("button.label.text"))", type: .primary, variant: .text) {}
             MoinUIButton("\(localization.tr("button.label.link"))", type: .primary, variant: .link) {}
-            MoinUIButton("\(localization.tr("button.label.ghost"))", type: .primary, variant: .ghost) {}
+            """
+        }
+    }
+
+    private var colorVariantExample: some View {
+        ExampleSection(
+            title: localization.tr("button.color_variant"),
+            description: localization.tr("button.color_variant_desc")
+        ) {
+            VStack(alignment: .leading, spacing: Constants.Spacing.md) {
+                // Default
+                HStack(spacing: Constants.Spacing.sm) {
+                    MoinUIButton(localization.tr("button.label.solid"), variant: .solid) {}
+                    MoinUIButton(localization.tr("button.label.outlined"), variant: .outlined) {}
+                    MoinUIButton(localization.tr("button.label.dashed"), variant: .dashed) {}
+                    MoinUIButton(localization.tr("button.label.filled"), variant: .filled) {}
+                    MoinUIButton(localization.tr("button.label.text"), variant: .text) {}
+                    MoinUIButton(localization.tr("button.label.link"), variant: .link) {}
+                }
+                // Primary
+                HStack(spacing: Constants.Spacing.sm) {
+                    MoinUIButton(localization.tr("button.label.solid"), type: .primary, variant: .solid) {}
+                    MoinUIButton(localization.tr("button.label.outlined"), type: .primary, variant: .outlined) {}
+                    MoinUIButton(localization.tr("button.label.dashed"), type: .primary, variant: .dashed) {}
+                    MoinUIButton(localization.tr("button.label.filled"), type: .primary, variant: .filled) {}
+                    MoinUIButton(localization.tr("button.label.text"), type: .primary, variant: .text) {}
+                    MoinUIButton(localization.tr("button.label.link"), type: .primary, variant: .link) {}
+                }
+                // Danger
+                HStack(spacing: Constants.Spacing.sm) {
+                    MoinUIButton(localization.tr("button.label.solid"), type: .danger, variant: .solid) {}
+                    MoinUIButton(localization.tr("button.label.outlined"), type: .danger, variant: .outlined) {}
+                    MoinUIButton(localization.tr("button.label.dashed"), type: .danger, variant: .dashed) {}
+                    MoinUIButton(localization.tr("button.label.filled"), type: .danger, variant: .filled) {}
+                    MoinUIButton(localization.tr("button.label.text"), type: .danger, variant: .text) {}
+                    MoinUIButton(localization.tr("button.label.link"), type: .danger, variant: .link) {}
+                }
+                // Custom Color (Pink)
+                HStack(spacing: Constants.Spacing.sm) {
+                    MoinUIButton(localization.tr("button.label.solid"), variant: .solid, color: .pink) {}
+                    MoinUIButton(localization.tr("button.label.outlined"), variant: .outlined, color: .pink) {}
+                    MoinUIButton(localization.tr("button.label.dashed"), variant: .dashed, color: .pink) {}
+                    MoinUIButton(localization.tr("button.label.filled"), variant: .filled, color: .pink) {}
+                    MoinUIButton(localization.tr("button.label.text"), variant: .text, color: .pink) {}
+                    MoinUIButton(localization.tr("button.label.link"), variant: .link, color: .pink) {}
+                }
+                // Custom Color (Purple)
+                HStack(spacing: Constants.Spacing.sm) {
+                    MoinUIButton(localization.tr("button.label.solid"), variant: .solid, color: .purple) {}
+                    MoinUIButton(localization.tr("button.label.outlined"), variant: .outlined, color: .purple) {}
+                    MoinUIButton(localization.tr("button.label.dashed"), variant: .dashed, color: .purple) {}
+                    MoinUIButton(localization.tr("button.label.filled"), variant: .filled, color: .purple) {}
+                    MoinUIButton(localization.tr("button.label.text"), variant: .text, color: .purple) {}
+                    MoinUIButton(localization.tr("button.label.link"), variant: .link, color: .purple) {}
+                }
+            }
+        } code: {
+            """
+            // Default
+            MoinUIButton("\(localization.tr("button.label.solid"))", variant: .solid) {}
+            MoinUIButton("\(localization.tr("button.label.outlined"))", variant: .outlined) {}
+            MoinUIButton("\(localization.tr("button.label.dashed"))", variant: .dashed) {}
+            MoinUIButton("\(localization.tr("button.label.filled"))", variant: .filled) {}
+
+            // Primary
+            MoinUIButton("\(localization.tr("button.label.solid"))", type: .primary, variant: .solid) {}
+
+            // Danger
+            MoinUIButton("\(localization.tr("button.label.solid"))", type: .danger, variant: .solid) {}
+
+            // Custom Color
+            MoinUIButton("\(localization.tr("button.label.solid"))", variant: .solid, color: .pink) {}
+            MoinUIButton("\(localization.tr("button.label.solid"))", variant: .solid, color: .purple) {}
+            """
+        }
+    }
+
+    private var ghostExample: some View {
+        ExampleSection(
+            title: localization.tr("button.ghost"),
+            description: localization.tr("button.ghost_desc")
+        ) {
+            ZStack {
+                Color.gray.opacity(0.3)
+                    .cornerRadius(Constants.Radius.md)
+                HStack(spacing: Constants.Spacing.md) {
+                    MoinUIButton(localization.tr("button.label.primary"), type: .primary, isGhost: true) {}
+                    MoinUIButton(localization.tr("button.label.default"), isGhost: true) {}
+                    MoinUIButton(localization.tr("button.label.dashed"), variant: .dashed, isGhost: true) {}
+                    MoinUIButton(localization.tr("button.label.danger"), type: .danger, isGhost: true) {}
+                }
+                .padding(Constants.Spacing.lg)
+            }
+        } code: {
+            """
+            MoinUIButton("\(localization.tr("button.label.primary"))", type: .primary, isGhost: true) {}
+            MoinUIButton("\(localization.tr("button.label.default"))", isGhost: true) {}
+            MoinUIButton("\(localization.tr("button.label.dashed"))", variant: .dashed, isGhost: true) {}
+            MoinUIButton("\(localization.tr("button.label.danger"))", type: .danger, isGhost: true) {}
             """
         }
     }
@@ -209,26 +318,85 @@ struct ButtonExamples: View {
         }
     }
 
-    private var stateExample: some View {
+    private var loadingExample: some View {
         ExampleSection(
-            title: localization.tr("button.state"),
-            description: localization.tr("button.state_desc")
+            title: localization.tr("button.loading"),
+            description: localization.tr("button.loading_desc")
         ) {
-            HStack(spacing: Constants.Spacing.md) {
-                MoinUIButton(localization.tr("button.label.normal"), type: .primary) {}
-                MoinUIButton(localization.tr("button.label.disabled"), type: .primary, isDisabled: true) {}
-                MoinUIButton(localization.tr("button.label.loading"), type: .primary, isLoading: isLoading) {
-                    isLoading = true
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                        isLoading = false
+            VStack(alignment: .leading, spacing: Constants.Spacing.md) {
+                HStack(spacing: Constants.Spacing.md) {
+                    MoinUIButton(localization.tr("button.label.loading"), type: .primary, loading: true) {}
+                    MoinUIButton(localization.tr("button.label.loading"), type: .primary, size: .small, loading: true) {}
+                    MoinUIButton(icon: "power", type: .primary, loading: true) {}
+                    MoinUIButton(localization.tr("button.label.custom"), type: .primary, loading: MoinUIButtonLoading(true, icon: "arrow.clockwise")) {}
+                }
+                HStack(spacing: Constants.Spacing.md) {
+                    MoinUIButton(localization.tr("button.label.button"), type: .primary, loading: MoinUIButtonLoading(loadings[0])) {
+                        enterLoading(0)
+                    }
+                    MoinUIButton(localization.tr("button.label.button"), type: .primary, iconPlacement: .end, loading: MoinUIButtonLoading(loadings[1])) {
+                        enterLoading(1)
+                    }
+                    MoinUIButton(localization.tr("button.label.button"), type: .primary, loading: MoinUIButtonLoading(loadings[2], delay: 0.5)) {
+                        enterLoading(2)
                     }
                 }
             }
         } code: {
             """
-            MoinUIButton("\(localization.tr("button.label.normal"))", type: .primary) {}
-            MoinUIButton("\(localization.tr("button.label.disabled"))", type: .primary, isDisabled: true) {}
-            MoinUIButton("\(localization.tr("button.label.loading"))", type: .primary, isLoading: true) {}
+            // \(localization.tr("button.label.loading"))
+            MoinUIButton("\(localization.tr("button.label.loading"))", type: .primary, loading: true) {}
+
+            // \(localization.tr("button.label.custom"))
+            MoinUIButton("\(localization.tr("button.label.custom"))", type: .primary, loading: MoinUIButtonLoading(true, icon: "arrow.clockwise")) {}
+
+            // Loading delay 0.5s
+            MoinUIButton("\(localization.tr("button.label.button"))", type: .primary, loading: MoinUIButtonLoading(isLoading, delay: 0.5)) {}
+            """
+        }
+    }
+
+    private func enterLoading(_ index: Int) {
+        loadings[index] = true
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            loadings[index] = false
+        }
+    }
+
+    private var gradientExample: some View {
+        ExampleSection(
+            title: localization.tr("button.gradient"),
+            description: localization.tr("button.gradient_desc")
+        ) {
+            HStack(spacing: Constants.Spacing.md) {
+                MoinUIButton(localization.tr("button.label.primary"), type: .primary, size: .large, icon: "sparkles", gradient: LinearGradient(
+                    colors: [Color(red: 0.38, green: 0.33, blue: 0.88), Color(red: 0.02, green: 0.75, blue: 1.0)],
+                    startPoint: .leading,
+                    endPoint: .trailing
+                )) {}
+                MoinUIButton(localization.tr("button.label.warning"), size: .large, gradient: LinearGradient(
+                    colors: [.orange, .pink],
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                )) {}
+                MoinUIButton(localization.tr("button.label.success"), size: .large, gradient: LinearGradient(
+                    colors: [.green, .teal],
+                    startPoint: .top,
+                    endPoint: .bottom
+                )) {}
+            }
+        } code: {
+            """
+            MoinUIButton(
+                "\(localization.tr("button.label.primary"))",
+                size: .large,
+                icon: "sparkles",
+                gradient: LinearGradient(
+                    colors: [.purple, .blue],
+                    startPoint: .leading,
+                    endPoint: .trailing
+                )
+            ) {}
             """
         }
     }
@@ -262,57 +430,43 @@ struct ButtonExamples: View {
             HStack(spacing: Constants.Spacing.md) {
                 MoinUIButton(localization.tr("button.label.search"), type: .primary, icon: "magnifyingglass") {}
                 MoinUIButton(localization.tr("button.label.download"), type: .success, icon: "arrow.down.circle") {}
-                MoinUIButton(localization.tr("button.label.go"), type: .info, icon: "arrow.right", iconPosition: .trailing) {}
+                MoinUIButton(localization.tr("button.label.go"), type: .info, icon: "arrow.right", iconPlacement: .end) {}
             }
         } code: {
             """
             MoinUIButton("\(localization.tr("button.label.search"))", type: .primary, icon: "magnifyingglass") {}
             MoinUIButton("\(localization.tr("button.label.download"))", type: .success, icon: "arrow.down.circle") {}
-            MoinUIButton("\(localization.tr("button.label.go"))", type: .info, icon: "arrow.right", iconPosition: .trailing) {}
+            MoinUIButton("\(localization.tr("button.label.go"))", type: .info, icon: "arrow.right", iconPlacement: .end) {}
             """
         }
     }
 
-    private var linkExample: some View {
+    private var disabledExample: some View {
         ExampleSection(
-            title: localization.tr("button.link"),
-            description: localization.tr("button.link_desc")
+            title: localization.tr("button.disabled"),
+            description: localization.tr("button.disabled_desc")
         ) {
-            HStack(spacing: Constants.Spacing.md) {
-                MoinUIButton(
-                    "MoinUI",
-                    type: .primary,
-                    icon: "link",
-                    href: URL(string: "https://github.com/phantomdancer/MoinUI.git")
-                )
+            VStack(alignment: .leading, spacing: Constants.Spacing.md) {
+                HStack(spacing: Constants.Spacing.md) {
+                    MoinUIButton(localization.tr("button.label.primary"), type: .primary, isDisabled: true) {}
+                    MoinUIButton(localization.tr("button.label.default"), isDisabled: true) {}
+                    MoinUIButton(localization.tr("button.label.dashed"), variant: .dashed, isDisabled: true) {}
+                    MoinUIButton(localization.tr("button.label.text"), type: .primary, variant: .text, isDisabled: true) {}
+                    MoinUIButton(localization.tr("button.label.link"), type: .primary, variant: .link, isDisabled: true) {}
+                }
+                HStack(spacing: Constants.Spacing.md) {
+                    MoinUIButton(localization.tr("button.label.danger"), type: .danger, isDisabled: true) {}
+                    MoinUIButton(localization.tr("button.label.success"), type: .success, variant: .outlined, isDisabled: true) {}
+                    MoinUIButton(localization.tr("button.label.custom"), variant: .solid, isDisabled: true, color: .purple) {}
+                    MoinUIButton(icon: "plus", type: .primary, isDisabled: true) {}
+                }
             }
         } code: {
             """
-            MoinUIButton(
-                "MoinUI",
-                type: .primary,
-                icon: "link",
-                href: URL(string: "https://github.com/phantomdancer/MoinUI.git")
-            )
-            """
-        }
-    }
-
-    private var groupExample: some View {
-        ExampleSection(
-            title: localization.tr("button.group"),
-            description: localization.tr("button.group_desc")
-        ) {
-            MoinUIButtonGroup {
-                MoinUIButton(icon: "chevron.left", type: .primary, shape: .default) {}
-                MoinUIButton(icon: "chevron.right", type: .primary, shape: .default) {}
-            }
-        } code: {
-            """
-            MoinUIButtonGroup {
-                MoinUIButton(icon: "chevron.left", type: .primary) {}
-                MoinUIButton(icon: "chevron.right", type: .primary) {}
-            }
+            MoinUIButton("\(localization.tr("button.label.primary"))", type: .primary, isDisabled: true) {}
+            MoinUIButton("\(localization.tr("button.label.default"))", isDisabled: true) {}
+            MoinUIButton("\(localization.tr("button.label.dashed"))", variant: .dashed, isDisabled: true) {}
+            MoinUIButton("\(localization.tr("button.label.custom"))", variant: .solid, isDisabled: true, color: .purple) {}
             """
         }
     }
@@ -328,180 +482,5 @@ struct ButtonExamples: View {
             MoinUIButton("\(localization.tr("button.label.block_button"))", type: .primary, isBlock: true) {}
             """
         }
-    }
-
-    // MARK: - API Reference
-
-    private var apiReference: some View {
-        VStack(alignment: .leading, spacing: Constants.Spacing.lg) {
-            Text("API")
-                .font(.title2)
-                .fontWeight(.semibold)
-
-            APITable(
-                headers: (
-                    localization.tr("api.property"),
-                    localization.tr("api.type"),
-                    localization.tr("api.default"),
-                    localization.tr("api.description")
-                ),
-                rows: [
-                    ("type", "MoinUIButtonType", ".default", localization.tr("api.button.type")),
-                    ("size", "MoinUIButtonSize", ".medium", localization.tr("api.button.size")),
-                    ("variant", "MoinUIButtonVariant", ".solid", localization.tr("api.button.variant")),
-                    ("shape", "MoinUIButtonShape", ".default", localization.tr("api.button.shape")),
-                    ("color", "Color?", "nil", localization.tr("api.button.color")),
-                    ("icon", "String?", "nil", localization.tr("api.button.icon")),
-                    ("iconPosition", "MoinUIButtonIconPosition", ".leading", localization.tr("api.button.iconPosition")),
-                    ("isLoading", "Bool", "false", localization.tr("api.button.isLoading")),
-                    ("isDisabled", "Bool", "false", localization.tr("api.button.isDisabled")),
-                    ("isBlock", "Bool", "false", localization.tr("api.button.isBlock")),
-                    ("href", "URL?", "nil", localization.tr("api.button.href")),
-                    ("action", "(() -> Void)?", "nil", localization.tr("api.button.action")),
-                ]
-            )
-
-            Text("MoinUIButtonType")
-                .font(.headline)
-                .padding(.top, Constants.Spacing.md)
-
-            APITable(
-                headers: (
-                    localization.tr("api.value"),
-                    localization.tr("api.type"),
-                    localization.tr("api.default"),
-                    localization.tr("api.description")
-                ),
-                rows: [
-                    ("default", "-", "-", localization.tr("api.type_values.default")),
-                    ("primary", "-", "-", localization.tr("api.type_values.primary")),
-                    ("success", "-", "-", localization.tr("api.type_values.success")),
-                    ("warning", "-", "-", localization.tr("api.type_values.warning")),
-                    ("danger", "-", "-", localization.tr("api.type_values.danger")),
-                    ("info", "-", "-", localization.tr("api.type_values.info")),
-                ]
-            )
-
-            Text("MoinUIButtonVariant")
-                .font(.headline)
-                .padding(.top, Constants.Spacing.md)
-
-            APITable(
-                headers: (
-                    localization.tr("api.value"),
-                    localization.tr("api.type"),
-                    localization.tr("api.default"),
-                    localization.tr("api.description")
-                ),
-                rows: [
-                    ("solid", "-", "-", localization.tr("api.variant_values.solid")),
-                    ("outline", "-", "-", localization.tr("api.variant_values.outline")),
-                    ("text", "-", "-", localization.tr("api.variant_values.text")),
-                    ("link", "-", "-", localization.tr("api.variant_values.link")),
-                    ("ghost", "-", "-", localization.tr("api.variant_values.ghost")),
-                ]
-            )
-        }
-    }
-}
-
-// MARK: - Helper Views
-
-/// 示例区块：上下布局，效果在上，代码在下
-struct ExampleSection<Content: View>: View {
-    let title: String
-    let description: String
-    @ViewBuilder let content: () -> Content
-    let code: () -> String
-
-    @ObservedObject private var config = MoinUIConfigProvider.shared
-
-    var body: some View {
-        VStack(alignment: .leading, spacing: Constants.Spacing.md) {
-            // 标题和描述
-            Text(title)
-                .font(.title3)
-                .fontWeight(.semibold)
-
-            Text(description)
-                .font(.body)
-                .foregroundStyle(.secondary)
-
-            // 效果预览
-            GroupBox {
-                content()
-                    .padding(Constants.Spacing.sm)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-            }
-
-            // 代码展示
-            ScrollView(.horizontal, showsIndicators: false) {
-                HighlightedCodeView(code: code(), fontSize: 12)
-                    .padding(Constants.Spacing.sm)
-            }
-            .background(config.isDarkMode ? Color(white: 0.08) : Color(white: 0.96))
-            .cornerRadius(Constants.Radius.sm)
-        }
-    }
-}
-
-struct APITable: View {
-    let headers: (String, String, String, String)
-    let rows: [(String, String, String, String)]
-
-    var body: some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            VStack(spacing: 0) {
-                // Header
-                HStack(spacing: 0) {
-                    headerCell(headers.0, width: 140)
-                    headerCell(headers.1, width: 180)
-                    headerCell(headers.2, width: 100)
-                    headerCell(headers.3, width: 220)
-                }
-
-                Divider()
-
-                // Rows
-                ForEach(rows.indices, id: \.self) { index in
-                    HStack(spacing: 0) {
-                        bodyCell(rows[index].0, isCode: true, width: 140)
-                        bodyCell(rows[index].1, isCode: true, width: 180)
-                        bodyCell(rows[index].2, width: 100)
-                        bodyCell(rows[index].3, width: 220)
-                    }
-                    .background(index % 2 == 1 ? Color.primary.opacity(0.03) : Color.clear)
-
-                    if index < rows.count - 1 {
-                        Divider()
-                    }
-                }
-            }
-            .frame(minWidth: 640)
-        }
-        .background(Color(nsColor: .controlBackgroundColor))
-        .cornerRadius(Constants.Radius.md)
-        .overlay(
-            RoundedRectangle(cornerRadius: Constants.Radius.md)
-                .stroke(Color.primary.opacity(0.1), lineWidth: 1)
-        )
-    }
-
-    private func headerCell(_ text: String, width: CGFloat) -> some View {
-        Text(text)
-            .font(.system(.caption, weight: .medium))
-            .foregroundStyle(.secondary)
-            .frame(width: width, alignment: .leading)
-            .padding(.horizontal, Constants.Spacing.sm)
-            .padding(.vertical, Constants.Spacing.xs)
-    }
-
-    private func bodyCell(_ text: String, isCode: Bool = false, width: CGFloat) -> some View {
-        Text(text)
-            .font(isCode ? .system(.caption, design: .monospaced) : .caption)
-            .foregroundStyle(isCode ? Color.accentColor : .primary)
-            .frame(width: width, alignment: .leading)
-            .padding(.horizontal, Constants.Spacing.sm)
-            .padding(.vertical, Constants.Spacing.xs)
     }
 }

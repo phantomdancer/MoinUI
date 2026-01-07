@@ -122,7 +122,7 @@ struct ThemeView: View {
                         MoinUIButton(
                             theme.displayName,
                             type: config.theme == theme ? .primary : .default,
-                            variant: config.theme == theme ? .solid : .outline
+                            variant: config.theme == theme ? .solid : .outlined
                         ) {
                             config.applyTheme(theme)
                         }

@@ -1,15 +1,17 @@
 import SwiftUI
 
-/// Button variant (style)
+/// Button variant (style) - 与 antd 保持一致
 public enum MoinUIButtonVariant {
-    /// Solid filled button
+    /// Solid filled button (实心按钮)
     case solid
-    /// Outlined button with border
-    case outline
-    /// Plain text button without background
+    /// Outlined button with border (描边按钮)
+    case outlined
+    /// Dashed border button (虚线按钮)
+    case dashed
+    /// Filled button with light background (填充按钮，比 solid 淡)
+    case filled
+    /// Plain text button without background (文本按钮)
     case text
-    /// Link style button
+    /// Link style button (链接按钮)
     case link
-    /// Ghost button (transparent background, visible on dark backgrounds)
-    case ghost
 }

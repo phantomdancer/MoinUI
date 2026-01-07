@@ -67,7 +67,7 @@ private struct HeroSection: View {
                     MoinUIButton(localization.tr("home.get_started"), type: .primary, size: .large) {
                         NavigationManager.shared.navigate(to: .quickStart)
                     }
-                    MoinUIButton(localization.tr("home.github"), size: .large, variant: .outline) {}
+                    MoinUIButton(localization.tr("home.github"), size: .large, variant: .outlined) {}
                 }
                 .padding(.top, Constants.Spacing.sm)
             }
@@ -208,7 +208,7 @@ private struct ComponentsPreviewSection: View {
                     // Variants
                     HStack(spacing: Constants.Spacing.sm) {
                         MoinUIButton(localization.tr("button.label.solid"), type: .primary, variant: .solid) {}
-                        MoinUIButton(localization.tr("button.label.outline"), type: .primary, variant: .outline) {}
+                        MoinUIButton(localization.tr("button.label.outlined"), type: .primary, variant: .outlined) {}
                         MoinUIButton(localization.tr("button.label.text"), type: .primary, variant: .text) {}
                         MoinUIButton(localization.tr("button.label.link"), type: .primary, variant: .link) {}
                     }
