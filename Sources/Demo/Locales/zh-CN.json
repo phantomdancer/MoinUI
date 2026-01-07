@@ -180,7 +180,10 @@
       "download": "下载",
       "go": "前往",
       "github": "GitHub",
-      "custom": "自定义"
+      "custom": "自定义",
+      "click_load": "点击加载",
+      "icon_end": "图标在后",
+      "delay": "延迟加载"
     }
   },
   "config": {

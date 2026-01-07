@@ -180,7 +180,10 @@
       "download": "Download",
       "go": "Go",
       "github": "GitHub",
-      "custom": "Custom"
+      "custom": "Custom",
+      "click_load": "Click to Load",
+      "icon_end": "Icon End",
+      "delay": "Delay Load"
     }
   },
   "config": {
