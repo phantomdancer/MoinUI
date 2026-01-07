@@ -239,7 +239,11 @@
       "loading": "加载中",
       "loading_prop": "isLoading: Bool",
       "block": "块级",
-      "block_prop": "isBlock: Bool"
+      "block_prop": "isBlock: Bool",
+      "custom_color": "自定义颜色",
+      "custom_color_prop": "useCustomColor: Bool",
+      "color": "颜色",
+      "color_prop": "color: Color?"
     },
     "default_text": "按钮"
   },

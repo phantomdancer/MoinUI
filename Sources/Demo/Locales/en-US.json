@@ -239,7 +239,11 @@
       "loading": "Loading",
       "loading_prop": "isLoading: Bool",
       "block": "Block",
-      "block_prop": "isBlock: Bool"
+      "block_prop": "isBlock: Bool",
+      "custom_color": "Custom Color",
+      "custom_color_prop": "useCustomColor: Bool",
+      "color": "Color",
+      "color_prop": "color: Color?"
     },
     "default_text": "Button"
   },

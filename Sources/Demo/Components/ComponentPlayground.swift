@@ -74,6 +74,34 @@ struct TextPropControl: View {
     }
 }
 
+/// 颜色选择控制项
+struct ColorPropControl: View {
+    let label: String
+    let propName: String
+    @Binding var value: Color
+
+    private let colors: [Color] = [.pink, .purple, .cyan, .orange, .mint, .teal, .indigo, .brown]
+
+    var body: some View {
+        PropControl(label: label, propName: propName) {
+            HStack(spacing: 4) {
+                ForEach(colors, id: \.self) { color in
+                    Circle()
+                        .fill(color)
+                        .frame(width: 16, height: 16)
+                        .overlay(
+                            Circle()
+                                .stroke(Color.primary, lineWidth: value == color ? 2 : 0)
+                        )
+                        .onTapGesture {
+                            value = color
+                        }
+                }
+            }
+        }
+    }
+}
+
 /// 按钮 Playground 状态
 class ButtonPlaygroundState: ObservableObject {
     @Published var title: String = ""
@@ -86,6 +114,8 @@ class ButtonPlaygroundState: ObservableObject {
     @Published var isBlock: Bool = false
     @Published var icon: String = ""
     @Published var iconPosition: MoinUIButtonIconPosition = .leading
+    @Published var useCustomColor: Bool = false
+    @Published var customColor: Color = .purple
 
     var hasIcon: Bool { !icon.isEmpty }
 
@@ -98,7 +128,7 @@ class ButtonPlaygroundState: ObservableObject {
         params.append("\"\(displayTitle)\"")
 
         // 类型（非默认值才显示）
-        if type != .default {
+        if type != .default && !useCustomColor {
             params.append("type: .\(type)")
         }
 
@@ -136,7 +166,27 @@ class ButtonPlaygroundState: ObservableObject {
             params.append("isBlock: true")
         }
 
+        // 自定义颜色
+        if useCustomColor {
+            params.append("color: .\(colorName)")
+        }
+
         return "MoinUIButton(\(params.joined(separator: ", "))) {}"
+    }
+
+    /// 颜色名称
+    var colorName: String {
+        switch customColor {
+        case .pink: return "pink"
+        case .purple: return "purple"
+        case .cyan: return "cyan"
+        case .orange: return "orange"
+        case .mint: return "mint"
+        case .teal: return "teal"
+        case .indigo: return "indigo"
+        case .brown: return "brown"
+        default: return "purple"
+        }
     }
 }
 
@@ -202,7 +252,8 @@ struct ButtonPlayground: View {
                     variant: state.variant,
                     shape: state.shape,
                     isLoading: state.isLoading,
-                    isDisabled: state.isDisabled
+                    isDisabled: state.isDisabled,
+                    color: state.useCustomColor ? state.customColor : nil
                 ) {}
             } else {
                 MoinUIButton(
@@ -215,7 +266,8 @@ struct ButtonPlayground: View {
                     iconPosition: state.iconPosition,
                     isLoading: state.isLoading,
                     isDisabled: state.isDisabled,
-                    isBlock: state.isBlock
+                    isBlock: state.isBlock,
+                    color: state.useCustomColor ? state.customColor : nil
                 ) {}
                 .frame(maxWidth: state.isBlock ? .infinity : nil)
                 .padding(.horizontal, state.isBlock ? Constants.Spacing.xl : 0)
@@ -256,6 +308,22 @@ struct ButtonPlayground: View {
                         options: MoinUIButtonType.allCases,
                         value: $state.type
                     )
+                    .disabled(state.useCustomColor)
+                    .opacity(state.useCustomColor ? 0.5 : 1)
+
+                    TogglePropControl(
+                        label: localization.tr("playground.prop.custom_color"),
+                        propName: localization.tr("playground.prop.custom_color_prop"),
+                        value: $state.useCustomColor
+                    )
+
+                    if state.useCustomColor {
+                        ColorPropControl(
+                            label: localization.tr("playground.prop.color"),
+                            propName: localization.tr("playground.prop.color_prop"),
+                            value: $state.customColor
+                        )
+                    }
 
                     SelectPropControl(
                         label: localization.tr("playground.prop.variant"),
