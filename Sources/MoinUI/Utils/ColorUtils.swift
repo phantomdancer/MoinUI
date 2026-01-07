@@ -29,20 +29,6 @@ public extension Color {
         return Color(red: r, green: g, blue: b, opacity: a)
     }
 
-    /// 计算相对亮度
-    var luminance: CGFloat {
-        guard let components = nsColor.cgColor.components, components.count >= 3 else {
-            return 0.5
-        }
-        // 使用 sRGB 亮度公式
-        return 0.299 * components[0] + 0.587 * components[1] + 0.114 * components[2]
-    }
-
-    /// 根据背景色返回对比文字颜色
-    var contrastingTextColor: Color {
-        luminance > 0.5 ? .black : .white
-    }
-
     /// 获取 NSColor
     private var nsColor: NSColor {
         NSColor(self)

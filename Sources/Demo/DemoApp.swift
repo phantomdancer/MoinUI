@@ -159,7 +159,7 @@ struct ContentView: View {
                                 Text(localization.tr("tab.playground")).tag(ButtonExamplesTab.playground)
                             }
                             .pickerStyle(.segmented)
-                            .frame(width: 140)
+                            .fixedSize()
                         }
 
                         Spacer()

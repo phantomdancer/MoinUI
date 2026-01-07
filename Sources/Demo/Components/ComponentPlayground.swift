@@ -171,7 +171,12 @@ class ButtonPlaygroundState: ObservableObject {
             params.append("color: .\(colorName)")
         }
 
-        return "MoinUIButton(\(params.joined(separator: ", "))) {}"
+        if params.count <= 2 {
+            return "MoinUIButton(\(params.joined(separator: ", "))) {}"
+        } else {
+            let indent = "    "
+            return "MoinUIButton(\n\(indent)\(params.joined(separator: ",\n\(indent)"))\n) {}"
+        }
     }
 
     /// 颜色名称
