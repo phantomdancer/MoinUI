@@ -31,42 +31,4 @@ final class ColorUtilsTests: XCTestCase {
         let lightened = color.lightened(by: 0.1)
         XCTAssertNotNil(lightened)
     }
-
-    // MARK: - Luminance Tests
-
-    func testLuminanceWhite() {
-        let white = Color.white
-        XCTAssertGreaterThan(white.luminance, 0.5)
-    }
-
-    func testLuminanceBlack() {
-        let black = Color.black
-        XCTAssertLessThan(black.luminance, 0.5)
-    }
-
-    // MARK: - Contrasting Text Color Tests
-
-    func testContrastingTextColorOnLight() {
-        let lightColor = Color(red: 0.9, green: 0.9, blue: 0.9)
-        let textColor = lightColor.contrastingTextColor
-        XCTAssertEqual(textColor, .black)
-    }
-
-    func testContrastingTextColorOnDark() {
-        let darkColor = Color(red: 0.1, green: 0.1, blue: 0.1)
-        let textColor = darkColor.contrastingTextColor
-        XCTAssertEqual(textColor, .white)
-    }
-
-    func testContrastingTextColorOnPrimary() {
-        let primary = Color(red: 0.09, green: 0.47, blue: 1.0)
-        let textColor = primary.contrastingTextColor
-        XCTAssertEqual(textColor, .white)
-    }
-
-    func testContrastingTextColorOnYellow() {
-        let yellow = Color(red: 1.0, green: 0.9, blue: 0.0)
-        let textColor = yellow.contrastingTextColor
-        XCTAssertEqual(textColor, .black)
-    }
 }

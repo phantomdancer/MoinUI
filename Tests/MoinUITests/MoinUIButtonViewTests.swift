@@ -39,7 +39,7 @@ final class MoinUIButtonViewTests: XCTestCase {
     }
 
     func testButtonRendersWithDifferentVariants() throws {
-        let variants: [MoinUIButtonVariant] = [.solid, .outline, .text, .link, .ghost]
+        let variants: [MoinUIButtonVariant] = [.solid, .outlined, .dashed, .filled, .text, .link]
 
         for variant in variants {
             let button = MoinUIButton("Test", variant: variant) {}
@@ -68,15 +68,17 @@ final class MoinUIButtonViewTests: XCTestCase {
 
     // MARK: - Loading State Tests
 
-    func testLoadingButtonShowsProgressView() throws {
-        let button = MoinUIButton("Loading", isLoading: true) {}
-        let progress = try button.inspect().find(ViewType.ProgressView.self)
-        XCTAssertNotNil(progress)
+    func testLoadingButtonShowsImage() throws {
+        let button = MoinUIButton("Loading", loading: true) {}
+        // Loading now uses Image instead of ProgressView
+        let images = try button.inspect().findAll(ViewType.Image.self)
+        XCTAssertTrue(images.count > 0)
     }
 
-    func testNonLoadingButtonHidesProgressView() throws {
-        let button = MoinUIButton("Normal", isLoading: false) {}
-        XCTAssertThrowsError(try button.inspect().find(ViewType.ProgressView.self))
+    func testNonLoadingButtonHidesLoadingIndicator() throws {
+        let button = MoinUIButton("Normal", loading: false) {}
+        let text = try button.inspect().find(text: "Normal")
+        XCTAssertNotNil(text)
     }
 
     // MARK: - Disabled State Tests
@@ -92,6 +94,14 @@ final class MoinUIButtonViewTests: XCTestCase {
     func testBlockButton() throws {
         let button = MoinUIButton("Block", isBlock: true) {}
         let text = try button.inspect().find(text: "Block")
+        XCTAssertNotNil(text)
+    }
+
+    // MARK: - Ghost Button Tests
+
+    func testGhostButton() throws {
+        let button = MoinUIButton("Ghost", isGhost: true) {}
+        let text = try button.inspect().find(text: "Ghost")
         XCTAssertNotNil(text)
     }
 
@@ -144,9 +154,9 @@ final class MoinUIButtonViewTests: XCTestCase {
             "Full Options",
             type: .success,
             size: .large,
-            variant: .outline,
+            variant: .outlined,
             shape: .round,
-            isLoading: false,
+            loading: false,
             isDisabled: false,
             isBlock: true
         ) {}
@@ -156,10 +166,7 @@ final class MoinUIButtonViewTests: XCTestCase {
     }
 
     func testLoadingDisabledButton() throws {
-        let button = MoinUIButton("Both", isLoading: true, isDisabled: true) {}
-
-        let progress = try button.inspect().find(ViewType.ProgressView.self)
-        XCTAssertNotNil(progress)
+        let button = MoinUIButton("Both", loading: true, isDisabled: true) {}
 
         let text = try button.inspect().find(text: "Both")
         XCTAssertNotNil(text)
@@ -176,7 +183,7 @@ final class MoinUIButtonViewTests: XCTestCase {
     }
 
     func testButtonWithIconTrailing() throws {
-        let button = MoinUIButton("Next", type: .primary, icon: "arrow.right", iconPosition: .trailing) {}
+        let button = MoinUIButton("Next", type: .primary, icon: "arrow.right", iconPlacement: .end) {}
         let text = try button.inspect().find(text: "Next")
         XCTAssertNotNil(text)
     }

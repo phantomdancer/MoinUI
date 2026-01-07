@@ -240,7 +240,7 @@ final class MoinUIButtonTests: XCTestCase {
     }
 
     func testIconOnlyButtonAllVariants() {
-        let variants: [MoinUIButtonVariant] = [.solid, .outline, .text, .link, .ghost]
+        let variants: [MoinUIButtonVariant] = [.solid, .outlined, .dashed, .filled, .text, .link]
         for variant in variants {
             let button = MoinUIButton(
                 icon: "star",
@@ -287,7 +287,7 @@ final class MoinUIButtonTests: XCTestCase {
     // MARK: - Button All Variants Tests
 
     func testButtonAllVariants() {
-        let variants: [MoinUIButtonVariant] = [.solid, .outline, .text, .link, .ghost]
+        let variants: [MoinUIButtonVariant] = [.solid, .outlined, .dashed, .filled, .text, .link]
         for variant in variants {
             let button = MoinUIButton(
                 "Button",
@@ -325,7 +325,7 @@ final class MoinUIButtonTests: XCTestCase {
 
     func testButtonWithCustomColorAndVariants() {
         let customColor = Color(red: 1.0, green: 0.4, blue: 0.6)
-        let variants: [MoinUIButtonVariant] = [.solid, .outline, .text, .ghost]
+        let variants: [MoinUIButtonVariant] = [.solid, .outlined, .text, .link]
         for variant in variants {
             let button = MoinUIButton(
                 "Custom",

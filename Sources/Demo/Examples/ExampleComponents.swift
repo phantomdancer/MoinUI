@@ -22,11 +22,8 @@ struct ExampleSection<Content: View>: View {
                 .font(.body)
                 .foregroundStyle(.secondary)
 
-            GroupBox {
-                content()
-                    .padding(Constants.Spacing.sm)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-            }
+            content()
+                .frame(maxWidth: .infinity, alignment: .leading)
 
             ScrollView(.horizontal, showsIndicators: false) {
                 HighlightedCodeView(code: code(), fontSize: 12)
