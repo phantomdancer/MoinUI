@@ -319,9 +319,9 @@ public struct MoinUIButton<Label: View>: View {
 
         switch variant {
         case .solid:
-            // 自定义颜色：自动计算对比色
+            // solid 统一白色文字（与 antd 一致），default 类型除外
             if hasCustomColor {
-                return baseColor.contrastingTextColor
+                return .white
             }
             return type == .default ? token.colorText : .white
         case .outline, .text, .ghost:

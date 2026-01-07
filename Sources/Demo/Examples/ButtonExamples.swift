@@ -89,27 +89,46 @@ struct ButtonExamples: View {
             description: localization.tr("button.color_desc")
         ) {
             VStack(alignment: .leading, spacing: Constants.Spacing.md) {
-                HStack(spacing: Constants.Spacing.md) {
-                    MoinUIButton(localization.tr("button.label.custom"), color: Color(red: 0.6, green: 0.2, blue: 0.8)) {}
-                    MoinUIButton(localization.tr("button.label.custom"), color: Color(red: 1.0, green: 0.4, blue: 0.6)) {}
-                    MoinUIButton(localization.tr("button.label.custom"), color: Color(red: 0.0, green: 0.8, blue: 0.6)) {}
-                    MoinUIButton(localization.tr("button.label.custom"), color: Color(red: 1.0, green: 0.6, blue: 0.0)) {}
+                // Pink
+                HStack(spacing: Constants.Spacing.sm) {
+                    MoinUIButton(localization.tr("button.label.solid"), variant: .solid, color: Color.pink) {}
+                    MoinUIButton(localization.tr("button.label.outline"), variant: .outline, color: Color.pink) {}
+                    MoinUIButton(localization.tr("button.label.text"), variant: .text, color: Color.pink) {}
+                    MoinUIButton(localization.tr("button.label.link"), variant: .link, color: Color.pink) {}
                 }
-                HStack(spacing: Constants.Spacing.md) {
-                    MoinUIButton(localization.tr("button.label.custom"), variant: .outline, color: Color(red: 0.6, green: 0.2, blue: 0.8)) {}
-                    MoinUIButton(localization.tr("button.label.custom"), variant: .text, color: Color(red: 1.0, green: 0.4, blue: 0.6)) {}
-                    MoinUIButton(localization.tr("button.label.custom"), variant: .ghost, color: Color(red: 0.0, green: 0.8, blue: 0.6)) {}
+                // Purple
+                HStack(spacing: Constants.Spacing.sm) {
+                    MoinUIButton(localization.tr("button.label.solid"), variant: .solid, color: Color.purple) {}
+                    MoinUIButton(localization.tr("button.label.outline"), variant: .outline, color: Color.purple) {}
+                    MoinUIButton(localization.tr("button.label.text"), variant: .text, color: Color.purple) {}
+                    MoinUIButton(localization.tr("button.label.link"), variant: .link, color: Color.purple) {}
+                }
+                // Cyan
+                HStack(spacing: Constants.Spacing.sm) {
+                    MoinUIButton(localization.tr("button.label.solid"), variant: .solid, color: Color.cyan) {}
+                    MoinUIButton(localization.tr("button.label.outline"), variant: .outline, color: Color.cyan) {}
+                    MoinUIButton(localization.tr("button.label.text"), variant: .text, color: Color.cyan) {}
+                    MoinUIButton(localization.tr("button.label.link"), variant: .link, color: Color.cyan) {}
+                }
+                // Orange
+                HStack(spacing: Constants.Spacing.sm) {
+                    MoinUIButton(localization.tr("button.label.solid"), variant: .solid, color: Color.orange) {}
+                    MoinUIButton(localization.tr("button.label.outline"), variant: .outline, color: Color.orange) {}
+                    MoinUIButton(localization.tr("button.label.text"), variant: .text, color: Color.orange) {}
+                    MoinUIButton(localization.tr("button.label.link"), variant: .link, color: Color.orange) {}
                 }
             }
         } code: {
             """
-            // solid
-            MoinUIButton("\(localization.tr("button.label.custom"))", color: Color(red: 0.6, green: 0.2, blue: 0.8)) {}
-            MoinUIButton("\(localization.tr("button.label.custom"))", color: Color(red: 1.0, green: 0.4, blue: 0.6)) {}
+            // Pink
+            MoinUIButton("\(localization.tr("button.label.solid"))", variant: .solid, color: Color.pink) {}
+            MoinUIButton("\(localization.tr("button.label.outline"))", variant: .outline, color: Color.pink) {}
 
-            // outline / text / ghost
-            MoinUIButton("\(localization.tr("button.label.custom"))", variant: .outline, color: Color(red: 0.6, green: 0.2, blue: 0.8)) {}
-            MoinUIButton("\(localization.tr("button.label.custom"))", variant: .text, color: Color(red: 1.0, green: 0.4, blue: 0.6)) {}
+            // Purple
+            MoinUIButton("\(localization.tr("button.label.solid"))", variant: .solid, color: Color.purple) {}
+
+            // Cyan
+            MoinUIButton("\(localization.tr("button.label.solid"))", variant: .solid, color: Color.cyan) {}
             """
         }
     }
