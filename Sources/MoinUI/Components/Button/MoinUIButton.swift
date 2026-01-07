@@ -82,6 +82,11 @@ public struct MoinUIButton<Label: View>: View {
         self.label = label()
     }
 
+    /// 有色按钮禁用时是否需要整体降低透明度
+    private var shouldApplyDisabledOpacity: Bool {
+        effectiveDisabled && (hasCustomColor || type != .default)
+    }
+
     public var body: some View {
         Group {
             if let href = href {
@@ -95,11 +100,18 @@ public struct MoinUIButton<Label: View>: View {
             }
         }
         .buttonStyle(.plain)
-        .disabled(effectiveDisabled)
+        // 有色按钮禁用时用 allowsHitTesting 阻止交互，避免 disabled 自带的变淡效果
+        .disabled(effectiveDisabled && !shouldApplyDisabledOpacity)
+        .allowsHitTesting(!effectiveDisabled)
+        .opacity(shouldApplyDisabledOpacity ? 0.65 : 1)
         .animation(.easeInOut(duration: token.motionDuration / 2), value: isHovered)
         .animation(.easeInOut(duration: token.motionDuration / 2), value: isPressed)
         .onHover { hovering in
             isHovered = hovering
+            // 鼠标离开时重置按压状态
+            if !hovering {
+                isPressed = false
+            }
             // 设置鼠标指针样式
             if effectiveDisabled {
                 if hovering {
@@ -131,7 +143,6 @@ public struct MoinUIButton<Label: View>: View {
                 iconView(icon)
             }
             label
-                .opacity(isLoading ? 0.7 : 1)
             if !isLoading, let icon = icon, iconPosition == .trailing {
                 iconView(icon)
             }
@@ -248,10 +259,13 @@ public struct MoinUIButton<Label: View>: View {
     }
 
     private var backgroundColor: Color {
-        // 禁用状态：使用专门的禁用背景色
+        // 禁用状态：有色按钮通过整体 opacity 处理，default 用灰色
         if effectiveDisabled {
             switch variant {
             case .solid:
+                if hasCustomColor || type != .default {
+                    return baseColor
+                }
                 return token.colorBgDisabled
             case .outline, .text, .link, .ghost:
                 return .clear
@@ -313,7 +327,16 @@ public struct MoinUIButton<Label: View>: View {
     }
 
     private var foregroundColor: Color {
-        guard !effectiveDisabled else {
+        // 有色按钮禁用时通过整体 opacity 处理，返回正常颜色
+        if effectiveDisabled {
+            if hasCustomColor || type != .default {
+                switch variant {
+                case .solid:
+                    return .white
+                case .outline, .text, .ghost, .link:
+                    return baseColor
+                }
+            }
             return token.colorTextDisabled
         }
 
@@ -338,8 +361,11 @@ public struct MoinUIButton<Label: View>: View {
     }
 
     private var borderColor: Color {
-        // 禁用状态：使用专门的禁用边框色
+        // 禁用状态：有色按钮通过整体 opacity 处理
         if effectiveDisabled {
+            if hasCustomColor || type != .default {
+                return baseColor
+            }
             switch variant {
             case .solid, .outline:
                 return token.colorBorder.opacity(0.5)
@@ -352,10 +378,17 @@ public struct MoinUIButton<Label: View>: View {
 
         switch variant {
         case .solid:
-            if hasCustomColor {
-                return baseColor
+            // default 类型边框处理
+            if !hasCustomColor && type == .default {
+                return token.colorBorder
             }
-            return type == .default ? token.colorBorder : baseColor
+            // 有色按钮：边框随背景色变化
+            if isPressed {
+                return activeColorForType(type)
+            } else if isHovered {
+                return hoverColorForType(type)
+            }
+            return baseColor
         case .outline:
             if !hasCustomColor && type == .default {
                 return isHovered ? token.colorBorderHover : token.colorBorder
