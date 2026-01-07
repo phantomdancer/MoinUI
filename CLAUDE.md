@@ -26,11 +26,6 @@ swift package clean && swift build  # 清理重建
 Sources/
 ├── MoinUI/                    # 组件库
 │   ├── Components/            # 组件（Button、Input...）
-│   │   └── Button/
-│   │       ├── MoinUIButton.swift
-│   │       ├── MoinUIButtonType.swift
-│   │       ├── MoinUIButtonSize.swift
-│   │       └── MoinUIButtonVariant.swift
 │   ├── Config/                # 配置（Theme、ConfigProvider）
 │   ├── Localization/          # 国际化
 │   ├── Locales/               # 翻译文件 (JSON)
@@ -52,7 +47,7 @@ Tests/MoinUITests/             # 测试
 - **Token**: 使用 `config.token` 获取样式，禁止硬编码颜色
 - **编译**: 每次修改后 `swift build`，零警告
 - **测试**: 完整测试，高覆盖率
-- **示例**: Demo 中有完整示例
+- **示例**: Demo 中有完整示例，代码字符串用 `\(localization.tr(...))` 插值
 
 ### 代码风格
 
@@ -84,12 +79,25 @@ Constants.Size.controlHeight  // 32
 
 ## 工作流程
 
-1. 编写代码
-2. `swift build` 确保无警告
-3. `swift test` 确保测试通过
-4. Demo 中添加示例
-5. 添加中英文翻译
-6. 完成后回复"毕。"
+1. **开始前**：读取 `.claude/context/` 了解当前状态
+2. 编写代码
+3. `swift build` 确保无警告
+4. `swift test` 确保测试通过
+5. Demo 中添加示例
+6. 添加中英文翻译
+7. **完成后**：更新 `.claude/context/` 相关文件
+8. 回复"毕。"
+
+## 项目上下文（重要）
+
+`.claude/context/` 目录记录项目持续状态，**每次任务开始时读取，完成后更新**：
+
+| 文件 | 用途 |
+|------|------|
+| `status.md` | 当前任务、最近完成、待处理 |
+| `components.md` | 已完成组件清单及功能 |
+| `roadmap.md` | 待开发组件规划 |
+| `component-template.md` | 新组件开发模板 |
 
 ## 国际化
 
@@ -98,15 +106,19 @@ Constants.Size.controlHeight  // 32
 - Demo翻译: `Sources/Demo/Locales/`
 - 使用 `localization.tr("key")` 获取翻译
 
-## Skills（斜杠命令）
-
-- `/new-component` - 创建新组件模板和规范
-- `/compare-competitors` - 竞品功能对比表
-
 ## 竞品参考
 
-- [Ant Design](https://ant.design)
-- [Element Plus](https://element-plus.org)
-- [shadcn/ui](https://ui.shadcn.com)
+| 竞品 | 链接 |
+|------|------|
+| Ant Design | https://ant.design |
+| Element Plus | https://element-plus.org |
+| shadcn/ui | https://ui.shadcn.com |
+
+### 设计原则
+
+- **跟随主流**：antd 和 el 都有的功能优先实现
+- **取长补短**：el 有而 antd 没有的语义色保留
+- **简化优先**：shadcn 没有的复杂功能可简化
+- **原生适配**：利用 SwiftUI 原生能力
 
 使用 context7 工具查询竞品文档。

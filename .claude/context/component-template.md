@@ -1,10 +1,6 @@
-# 创建新组件
+# 新组件开发模板
 
-创建 MoinUI 新组件，遵循现有架构和规范。
-
-## 组件命名
-
-所有组件以 `MoinUI` 开头，如 `MoinUIButton`、`MoinUIInput`。
+创建新组件时参考此模板。
 
 ## 目录结构
 
@@ -16,9 +12,7 @@ Sources/MoinUI/Components/{ComponentName}/
 └── MoinUI{ComponentName}Variant.swift # 变体枚举（可选）
 ```
 
-## 必要文件
-
-### 1. 主组件 (MoinUI{ComponentName}.swift)
+## 主组件模板
 
 ```swift
 import SwiftUI
@@ -28,7 +22,6 @@ public struct MoinUI{ComponentName}: View {
     @ObservedObject private var config = MoinUIConfigProvider.shared
     private var token: MoinUIToken { config.token }
 
-    // 属性
     private let title: String
     private let type: MoinUI{ComponentName}Type
     private let size: MoinUI{ComponentName}Size
@@ -55,26 +48,17 @@ public struct MoinUI{ComponentName}: View {
 }
 ```
 
-### 2. 类型枚举 (MoinUI{ComponentName}Type.swift)
+## 枚举模板
 
 ```swift
+// Type
 public enum MoinUI{ComponentName}Type {
-    case `default`
-    case primary
-    case success
-    case warning
-    case danger
-    case info
+    case `default`, primary, success, warning, danger, info
 }
-```
 
-### 3. 尺寸枚举 (MoinUI{ComponentName}Size.swift)
-
-```swift
+// Size
 public enum MoinUI{ComponentName}Size {
-    case small
-    case medium
-    case large
+    case small, medium, large
 
     var height: CGFloat {
         switch self {
@@ -83,95 +67,28 @@ public enum MoinUI{ComponentName}Size {
         case .large: return Constants.Size.controlHeightLG
         }
     }
-
-    var fontSize: CGFloat {
-        switch self {
-        case .small: return Constants.Font.fontSizeSM
-        case .medium: return Constants.Font.fontSize
-        case .large: return Constants.Font.fontSizeLG
-        }
-    }
 }
 ```
 
-## Token 使用规范
-
-使用 `config.token` 获取样式值，不要硬编码：
+## 测试模板
 
 ```swift
-// ✅ 正确
-.foregroundStyle(token.colorPrimary)
-.background(token.colorBgContainer)
-.cornerRadius(token.borderRadius)
-
-// ❌ 错误
-.foregroundStyle(Color.blue)
-.background(Color.white)
-.cornerRadius(6)
-```
-
-## 常量使用
-
-使用 `Constants` 中定义的常量：
-
-```swift
-// 间距
-Constants.Spacing.xs  // 4
-Constants.Spacing.sm  // 8
-Constants.Spacing.md  // 12
-Constants.Spacing.lg  // 16
-Constants.Spacing.xl  // 24
-
-// 圆角
-Constants.Radius.sm   // 4
-Constants.Radius.md   // 6
-Constants.Radius.lg   // 8
-
-// 控件高度
-Constants.Size.controlHeightSM  // 24
-Constants.Size.controlHeight    // 32
-Constants.Size.controlHeightLG  // 40
-
-// 字体
-Constants.Font.fontSizeSM  // 12
-Constants.Font.fontSize    // 14
-Constants.Font.fontSizeLG  // 16
-```
-
-## 测试要求
-
-在 `Tests/MoinUITests/` 创建测试文件：
-
-```swift
-// MoinUI{ComponentName}Tests.swift
+// Tests/MoinUITests/MoinUI{ComponentName}Tests.swift
 import XCTest
 @testable import MoinUI
 
 final class MoinUI{ComponentName}Tests: XCTestCase {
-    func testDefaultInit() {
-        // 测试默认初始化
-    }
-
-    func testAllTypes() {
-        // 测试所有类型
-    }
-
-    func testAllSizes() {
-        // 测试所有尺寸
-    }
-
-    func testDisabledState() {
-        // 测试禁用状态
-    }
+    func testDefaultInit() {}
+    func testAllTypes() {}
+    func testAllSizes() {}
+    func testDisabledState() {}
 }
 ```
 
-## Demo 示例
-
-在 `Sources/Demo/Examples/` 创建示例文件：
+## Demo 示例模板
 
 ```swift
-// {ComponentName}Examples.swift
+// Sources/Demo/Examples/{ComponentName}Examples.swift
 struct {ComponentName}Examples: View {
     @EnvironmentObject var localization: MoinUILocalization
 
@@ -180,23 +97,20 @@ struct {ComponentName}Examples: View {
             VStack(alignment: .leading, spacing: Constants.Spacing.xl) {
                 typeExample
                 sizeExample
-                // ... 其他示例
                 apiReference
             }
             .padding(Constants.Spacing.xl)
         }
     }
 
-    // 使用 ExampleSection 包装每个示例
     private var typeExample: some View {
         ExampleSection(
             title: localization.tr("{component}.type"),
             description: localization.tr("{component}.type_desc")
         ) {
-            // 示例组件
             MoinUI{Component}(localization.tr("{component}.label.default")) {}
         } code: {
-            // 示例代码中的字符串必须使用 \() 插值国际化
+            // 示例代码字符串必须使用 \() 插值
             """
             MoinUI{Component}("\(localization.tr("{component}.label.default"))") {}
             """
@@ -205,55 +119,25 @@ struct {ComponentName}Examples: View {
 }
 ```
 
-## 国际化
-
-1. 在 `Sources/MoinUI/Locales/` 添加翻译：
-
-```json
-// zh-CN.json
-{
-  "{component}": {
-    "label": {
-      "default": "默认",
-      "primary": "主要"
-    }
-  }
-}
-```
-
-2. 在 `Sources/Demo/Locales/` 添加 Demo 翻译
-
 ## 导航注册
 
-在 `Sources/Demo/DemoApp.swift` 中：
+在 `Sources/Demo/DemoApp.swift`：
 
-1. 添加 NavItem：
 ```swift
-enum NavItem {
-    case {componentName}  // 添加
-}
-```
+// 1. NavItem 添加 case
+case {componentName}
 
-2. 添加图标和标题：
-```swift
-var icon: String {
-    case .{componentName}: return "icon.name"
-}
+// 2. icon
+case .{componentName}: return "icon.name"
 
-var titleKey: String {
-    case .{componentName}: return "component.{componentName}"
-}
-```
+// 3. titleKey
+case .{componentName}: return "component.{componentName}"
 
-3. 添加到组件列表：
-```swift
+// 4. components 列表
 static var components: [NavItem] { [.button, .{componentName}] }
-```
 
-4. 添加路由：
-```swift
-case .{componentName}:
-    {ComponentName}Examples()
+// 5. DetailView 路由
+case .{componentName}: {ComponentName}Examples()
 ```
 
 ## 检查清单
