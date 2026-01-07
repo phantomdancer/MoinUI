@@ -206,6 +206,40 @@
     "copy": "Copy",
     "copied": "Copied"
   },
+  "tab": {
+    "examples": "Examples",
+    "playground": "Playground"
+  },
+  "playground": {
+    "title": "Playground",
+    "desc": "Adjust props to preview changes in real-time",
+    "preview": "Preview",
+    "props": "Props",
+    "code": "Code",
+    "prop": {
+      "title": "Text",
+      "title_prop": "title: String",
+      "type": "Type",
+      "type_prop": "type: MoinUIButtonType",
+      "variant": "Variant",
+      "variant_prop": "variant: MoinUIButtonVariant",
+      "size": "Size",
+      "size_prop": "size: MoinUIButtonSize",
+      "shape": "Shape",
+      "shape_prop": "shape: MoinUIButtonShape",
+      "icon": "Icon",
+      "icon_prop": "icon: String?",
+      "icon_position": "Icon Position",
+      "icon_position_prop": "iconPosition: MoinUIButtonIconPosition",
+      "disabled": "Disabled",
+      "disabled_prop": "isDisabled: Bool",
+      "loading": "Loading",
+      "loading_prop": "isLoading: Bool",
+      "block": "Block",
+      "block_prop": "isBlock: Bool"
+    },
+    "default_text": "Button"
+  },
   "locale": {
     "zh": "中文",
     "en": "EN"

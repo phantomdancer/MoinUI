@@ -1,20 +1,34 @@
 import SwiftUI
 import MoinUI
 
+/// 按钮组件文档页面 Tab
+enum ButtonExamplesTab: String, CaseIterable {
+    case examples
+    case playground
+}
+
 /// Button component examples
 struct ButtonExamples: View {
     @EnvironmentObject var localization: MoinUILocalization
+    @Binding var selectedTab: ButtonExamplesTab
     @State private var isLoading = false
 
     var body: some View {
+        Group {
+            switch selectedTab {
+            case .examples:
+                examplesContent
+            case .playground:
+                playgroundContent
+            }
+        }
+    }
+
+    // MARK: - Examples Content
+
+    private var examplesContent: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: Constants.Spacing.xl) {
-                introduction
-
-                Divider()
-
-                // 示例区域（单列显示）
-                basicExample
                 typeExample
                 variantExample
                 sizeExample
@@ -34,38 +48,14 @@ struct ButtonExamples: View {
         }
     }
 
-    // MARK: - Introduction
+    // MARK: - Playground Content
 
-    private var introduction: some View {
-        VStack(alignment: .leading, spacing: Constants.Spacing.md) {
-            Text(localization.tr("button.title"))
-                .font(.largeTitle)
-                .fontWeight(.bold)
-
-            Text(localization.tr("button.description"))
-                .font(.body)
-                .foregroundStyle(.secondary)
-        }
+    private var playgroundContent: some View {
+        ButtonPlayground()
+            .padding(Constants.Spacing.xl)
     }
 
     // MARK: - Examples
-
-    private var basicExample: some View {
-        ExampleSection(
-            title: localization.tr("button.basic"),
-            description: localization.tr("button.basic_desc")
-        ) {
-            HStack(spacing: Constants.Spacing.md) {
-                MoinUIButton(localization.tr("button.label.button")) {}
-                MoinUIButton(localization.tr("button.label.primary"), type: .primary) {}
-            }
-        } code: {
-            """
-            MoinUIButton("\(localization.tr("button.label.button"))") {}
-            MoinUIButton("\(localization.tr("button.label.primary"))", type: .primary) {}
-            """
-        }
-    }
 
     private var typeExample: some View {
         ExampleSection(
@@ -82,12 +72,12 @@ struct ButtonExamples: View {
             }
         } code: {
             """
-            MoinUIButton("\(localization.tr("button.label.default"))") {}
-            MoinUIButton("\(localization.tr("button.label.primary"))", type: .primary) {}
-            MoinUIButton("\(localization.tr("button.label.success"))", type: .success) {}
-            MoinUIButton("\(localization.tr("button.label.warning"))", type: .warning) {}
-            MoinUIButton("\(localization.tr("button.label.danger"))", type: .danger) {}
-            MoinUIButton("\(localization.tr("button.label.info"))", type: .info) {}
+            MoinUIButton("Default") {}
+            MoinUIButton("Primary", type: .primary) {}
+            MoinUIButton("Success", type: .success) {}
+            MoinUIButton("Warning", type: .warning) {}
+            MoinUIButton("Danger", type: .danger) {}
+            MoinUIButton("Info", type: .info) {}
             """
         }
     }
@@ -106,11 +96,11 @@ struct ButtonExamples: View {
             }
         } code: {
             """
-            MoinUIButton("\(localization.tr("button.label.solid"))", type: .primary, variant: .solid) {}
-            MoinUIButton("\(localization.tr("button.label.outline"))", type: .primary, variant: .outline) {}
-            MoinUIButton("\(localization.tr("button.label.text"))", type: .primary, variant: .text) {}
-            MoinUIButton("\(localization.tr("button.label.link"))", type: .primary, variant: .link) {}
-            MoinUIButton("\(localization.tr("button.label.ghost"))", type: .primary, variant: .ghost) {}
+            MoinUIButton("Solid", type: .primary, variant: .solid) {}
+            MoinUIButton("Outline", type: .primary, variant: .outline) {}
+            MoinUIButton("Text", type: .primary, variant: .text) {}
+            MoinUIButton("Link", type: .primary, variant: .link) {}
+            MoinUIButton("Ghost", type: .primary, variant: .ghost) {}
             """
         }
     }
@@ -127,9 +117,9 @@ struct ButtonExamples: View {
             }
         } code: {
             """
-            MoinUIButton("\(localization.tr("button.label.small"))", type: .primary, size: .small) {}
-            MoinUIButton("\(localization.tr("button.label.medium"))", type: .primary, size: .medium) {}
-            MoinUIButton("\(localization.tr("button.label.large"))", type: .primary, size: .large) {}
+            MoinUIButton("Small", type: .primary, size: .small) {}
+            MoinUIButton("Medium", type: .primary, size: .medium) {}
+            MoinUIButton("Large", type: .primary, size: .large) {}
             """
         }
     }
@@ -146,8 +136,8 @@ struct ButtonExamples: View {
             }
         } code: {
             """
-            MoinUIButton("\(localization.tr("button.label.default"))", type: .primary, shape: .default) {}
-            MoinUIButton("\(localization.tr("button.label.round"))", type: .primary, shape: .round) {}
+            MoinUIButton("Default", type: .primary, shape: .default) {}
+            MoinUIButton("Round", type: .primary, shape: .round) {}
             MoinUIButton(icon: "plus", type: .primary, shape: .circle) {}
             """
         }
@@ -170,11 +160,9 @@ struct ButtonExamples: View {
             }
         } code: {
             """
-            MoinUIButton("\(localization.tr("button.label.normal"))", type: .primary) {}
-            MoinUIButton("\(localization.tr("button.label.disabled"))", type: .primary, isDisabled: true) {}
-            MoinUIButton("\(localization.tr("button.label.loading"))", type: .primary, isLoading: isLoading) {
-                isLoading = true
-            }
+            MoinUIButton("Normal", type: .primary) {}
+            MoinUIButton("Disabled", type: .primary, isDisabled: true) {}
+            MoinUIButton("Loading", type: .primary, isLoading: true) {}
             """
         }
     }
@@ -212,9 +200,9 @@ struct ButtonExamples: View {
             }
         } code: {
             """
-            MoinUIButton("\(localization.tr("button.label.search"))", type: .primary, icon: "magnifyingglass") {}
-            MoinUIButton("\(localization.tr("button.label.download"))", type: .success, icon: "arrow.down.circle") {}
-            MoinUIButton("\(localization.tr("button.label.go"))", type: .info, icon: "arrow.right", iconPosition: .trailing) {}
+            MoinUIButton("Search", type: .primary, icon: "magnifyingglass") {}
+            MoinUIButton("Download", type: .success, icon: "arrow.down.circle") {}
+            MoinUIButton("Go", type: .info, icon: "arrow.right", iconPosition: .trailing) {}
             """
         }
     }
@@ -229,7 +217,7 @@ struct ButtonExamples: View {
                     "MoinUI",
                     type: .primary,
                     icon: "link",
-                    href: URL(string: "https://github.com/phantomdancer/MoinUI")
+                    href: URL(string: "https://github.com/aspect-fi/MoinUI")
                 )
             }
         } code: {
@@ -238,7 +226,7 @@ struct ButtonExamples: View {
                 "MoinUI",
                 type: .primary,
                 icon: "link",
-                href: URL(string: "https://github.com/phantomdancer/MoinUI")
+                href: URL(string: "https://github.com/aspect-fi/MoinUI")
             )
             """
         }
@@ -256,8 +244,8 @@ struct ButtonExamples: View {
         } code: {
             """
             MoinUIButtonGroup {
-                MoinUIButton(icon: "chevron.left", type: .primary, shape: .default) {}
-                MoinUIButton(icon: "chevron.right", type: .primary, shape: .default) {}
+                MoinUIButton(icon: "chevron.left", type: .primary) {}
+                MoinUIButton(icon: "chevron.right", type: .primary) {}
             }
             """
         }
@@ -271,7 +259,7 @@ struct ButtonExamples: View {
             MoinUIButton(localization.tr("button.label.block_button"), type: .primary, isBlock: true) {}
         } code: {
             """
-            MoinUIButton("\(localization.tr("button.label.block_button"))", type: .primary, isBlock: true) {}
+            MoinUIButton("Block Button", type: .primary, isBlock: true) {}
             """
         }
     }
@@ -352,18 +340,18 @@ struct ButtonExamples: View {
 
 // MARK: - Helper Views
 
+/// 示例区块：上下布局，效果在上，代码在下
 struct ExampleSection<Content: View>: View {
     let title: String
     let description: String
     @ViewBuilder let content: () -> Content
     let code: () -> String
 
-    @EnvironmentObject private var localization: MoinUILocalization
-    @State private var showCode = false
     @ObservedObject private var config = MoinUIConfigProvider.shared
 
     var body: some View {
         VStack(alignment: .leading, spacing: Constants.Spacing.md) {
+            // 标题和描述
             Text(title)
                 .font(.title3)
                 .fontWeight(.semibold)
@@ -372,37 +360,20 @@ struct ExampleSection<Content: View>: View {
                 .font(.body)
                 .foregroundStyle(.secondary)
 
+            // 效果预览
             GroupBox {
-                VStack(alignment: .leading, spacing: Constants.Spacing.md) {
-                    content()
-                        .padding(Constants.Spacing.sm)
-
-                    Divider()
-
-                    // 左对齐显示代码按钮，整行可点击
-                    Button(action: { showCode.toggle() }) {
-                        HStack(spacing: Constants.Spacing.xs) {
-                            Image(systemName: showCode ? "chevron.up" : "chevron.down")
-                            Text(showCode ? localization.tr("code.hide") : localization.tr("code.show"))
-                            Spacer()
-                        }
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-                        .padding(.vertical, Constants.Spacing.xs)
-                        .contentShape(Rectangle())
-                    }
-                    .buttonStyle(.plain)
-
-                    if showCode {
-                        ScrollView(.horizontal, showsIndicators: false) {
-                            HighlightedCodeView(code: code())
-                                .padding(Constants.Spacing.sm)
-                        }
-                        .background(config.isDarkMode ? Color(white: 0.08) : Color(white: 0.96))
-                        .cornerRadius(Constants.Radius.sm)
-                    }
-                }
+                content()
+                    .padding(Constants.Spacing.sm)
+                    .frame(maxWidth: .infinity, alignment: .leading)
             }
+
+            // 代码展示
+            ScrollView(.horizontal, showsIndicators: false) {
+                HighlightedCodeView(code: code(), fontSize: 12)
+                    .padding(Constants.Spacing.sm)
+            }
+            .background(config.isDarkMode ? Color(white: 0.08) : Color(white: 0.96))
+            .cornerRadius(Constants.Radius.sm)
         }
     }
 }

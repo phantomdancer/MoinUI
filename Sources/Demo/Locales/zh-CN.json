@@ -206,6 +206,40 @@
     "copy": "复制",
     "copied": "已复制"
   },
+  "tab": {
+    "examples": "示例",
+    "playground": "演练场"
+  },
+  "playground": {
+    "title": "演练场",
+    "desc": "调整属性实时预览效果",
+    "preview": "预览",
+    "props": "属性",
+    "code": "代码",
+    "prop": {
+      "title": "文本",
+      "title_prop": "title: String",
+      "type": "类型",
+      "type_prop": "type: MoinUIButtonType",
+      "variant": "变体",
+      "variant_prop": "variant: MoinUIButtonVariant",
+      "size": "尺寸",
+      "size_prop": "size: MoinUIButtonSize",
+      "shape": "形状",
+      "shape_prop": "shape: MoinUIButtonShape",
+      "icon": "图标",
+      "icon_prop": "icon: String?",
+      "icon_position": "图标位置",
+      "icon_position_prop": "iconPosition: MoinUIButtonIconPosition",
+      "disabled": "禁用",
+      "disabled_prop": "isDisabled: Bool",
+      "loading": "加载中",
+      "loading_prop": "isLoading: Bool",
+      "block": "块级",
+      "block_prop": "isBlock: Bool"
+    },
+    "default_text": "按钮"
+  },
   "locale": {
     "zh": "中文",
     "en": "EN"

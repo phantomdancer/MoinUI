@@ -1,0 +1,417 @@
+import SwiftUI
+import MoinUI
+
+/// 属性控制项：带参数名显示
+struct PropControl<Content: View>: View {
+    let label: String
+    let propName: String
+    @ViewBuilder let content: () -> Content
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 2) {
+            HStack {
+                Text(label)
+                    .font(.system(size: 12))
+                Spacer()
+                content()
+            }
+            Text(propName)
+                .font(.system(size: 10, design: .monospaced))
+                .foregroundStyle(.tertiary)
+        }
+    }
+}
+
+/// 选择器控制项
+struct SelectPropControl<T: Hashable & CustomStringConvertible>: View {
+    let label: String
+    let propName: String
+    let options: [T]
+    @Binding var value: T
+
+    var body: some View {
+        PropControl(label: label, propName: propName) {
+            Picker("", selection: $value) {
+                ForEach(options, id: \.self) { option in
+                    Text(option.description).tag(option)
+                }
+            }
+            .labelsHidden()
+            .pickerStyle(.menu)
+            .frame(width: 100)
+        }
+    }
+}
+
+/// 开关控制项
+struct TogglePropControl: View {
+    let label: String
+    let propName: String
+    @Binding var value: Bool
+
+    var body: some View {
+        PropControl(label: label, propName: propName) {
+            Toggle("", isOn: $value)
+                .labelsHidden()
+                .toggleStyle(.switch)
+                .controlSize(.small)
+        }
+    }
+}
+
+/// 文本输入控制项
+struct TextPropControl: View {
+    let label: String
+    let propName: String
+    @Binding var value: String
+
+    var body: some View {
+        PropControl(label: label, propName: propName) {
+            TextField("", text: $value)
+                .textFieldStyle(.roundedBorder)
+                .frame(width: 100)
+        }
+    }
+}
+
+/// 按钮 Playground 状态
+class ButtonPlaygroundState: ObservableObject {
+    @Published var title: String = ""
+    @Published var type: MoinUIButtonType = .primary
+    @Published var variant: MoinUIButtonVariant = .solid
+    @Published var size: MoinUIButtonSize = .medium
+    @Published var shape: MoinUIButtonShape = .default
+    @Published var isDisabled: Bool = false
+    @Published var isLoading: Bool = false
+    @Published var isBlock: Bool = false
+    @Published var icon: String = ""
+    @Published var iconPosition: MoinUIButtonIconPosition = .leading
+
+    var hasIcon: Bool { !icon.isEmpty }
+
+    /// 生成代码
+    func generateCode(defaultText: String) -> String {
+        var params: [String] = []
+        let displayTitle = title.isEmpty ? defaultText : title
+
+        // 标题
+        params.append("\"\(displayTitle)\"")
+
+        // 类型（非默认值才显示）
+        if type != .default {
+            params.append("type: .\(type)")
+        }
+
+        // 变体
+        if variant != .solid {
+            params.append("variant: .\(variant)")
+        }
+
+        // 尺寸
+        if size != .medium {
+            params.append("size: .\(size)")
+        }
+
+        // 形状
+        if shape != .default {
+            params.append("shape: .\(shape)")
+        }
+
+        // 图标
+        if hasIcon {
+            params.append("icon: \"\(icon)\"")
+            if iconPosition != .leading {
+                params.append("iconPosition: .\(iconPosition)")
+            }
+        }
+
+        // 状态
+        if isLoading {
+            params.append("isLoading: true")
+        }
+        if isDisabled {
+            params.append("isDisabled: true")
+        }
+        if isBlock {
+            params.append("isBlock: true")
+        }
+
+        return "MoinUIButton(\(params.joined(separator: ", "))) {}"
+    }
+}
+
+/// 按钮 Playground 视图
+struct ButtonPlayground: View {
+    @EnvironmentObject var localization: MoinUILocalization
+    @StateObject private var state = ButtonPlaygroundState()
+    @ObservedObject private var config = MoinUIConfigProvider.shared
+
+    private var defaultText: String {
+        localization.tr("playground.default_text")
+    }
+
+    var body: some View {
+        VStack(spacing: 0) {
+            // 预览区域
+            previewSection
+                .frame(height: 200)
+
+            Divider()
+
+            // 下方：控制面板和代码
+            HStack(alignment: .top, spacing: 0) {
+                // 控制面板
+                controlPanel
+                    .frame(width: 280)
+
+                Divider()
+
+                // 代码预览
+                codeSection
+            }
+        }
+        .background(Color(nsColor: .controlBackgroundColor))
+        .cornerRadius(Constants.Radius.md)
+        .overlay(
+            RoundedRectangle(cornerRadius: Constants.Radius.md)
+                .stroke(Color.primary.opacity(0.1), lineWidth: 1)
+        )
+    }
+
+    // MARK: - Preview Section
+
+    private var previewSection: some View {
+        VStack(spacing: Constants.Spacing.sm) {
+            HStack {
+                Text(localization.tr("playground.preview"))
+                    .font(.system(size: 11, weight: .medium))
+                    .foregroundStyle(.secondary)
+                Spacer()
+            }
+            .padding(.horizontal, Constants.Spacing.md)
+            .padding(.top, Constants.Spacing.md)
+
+            Spacer()
+
+            // 按钮预览
+            if state.hasIcon && state.title.isEmpty {
+                MoinUIButton(
+                    icon: state.icon,
+                    type: state.type,
+                    size: state.size,
+                    variant: state.variant,
+                    shape: state.shape,
+                    isLoading: state.isLoading,
+                    isDisabled: state.isDisabled
+                ) {}
+            } else {
+                MoinUIButton(
+                    state.title.isEmpty ? defaultText : state.title,
+                    type: state.type,
+                    size: state.size,
+                    variant: state.variant,
+                    shape: state.shape,
+                    icon: state.hasIcon ? state.icon : nil,
+                    iconPosition: state.iconPosition,
+                    isLoading: state.isLoading,
+                    isDisabled: state.isDisabled,
+                    isBlock: state.isBlock
+                ) {}
+                .frame(maxWidth: state.isBlock ? .infinity : nil)
+                .padding(.horizontal, state.isBlock ? Constants.Spacing.xl : 0)
+            }
+
+            Spacer()
+        }
+        .frame(maxWidth: .infinity)
+        .background(
+            config.isDarkMode
+                ? Color(white: 0.12)
+                : Color(white: 0.98)
+        )
+    }
+
+    // MARK: - Control Panel
+
+    private var controlPanel: some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: Constants.Spacing.md) {
+                HStack {
+                    Text(localization.tr("playground.props"))
+                        .font(.system(size: 11, weight: .medium))
+                        .foregroundStyle(.secondary)
+                    Spacer()
+                }
+
+                VStack(spacing: Constants.Spacing.sm) {
+                    TextPropControl(
+                        label: localization.tr("playground.prop.title"),
+                        propName: localization.tr("playground.prop.title_prop"),
+                        value: $state.title
+                    )
+
+                    SelectPropControl(
+                        label: localization.tr("playground.prop.type"),
+                        propName: localization.tr("playground.prop.type_prop"),
+                        options: MoinUIButtonType.allCases,
+                        value: $state.type
+                    )
+
+                    SelectPropControl(
+                        label: localization.tr("playground.prop.variant"),
+                        propName: localization.tr("playground.prop.variant_prop"),
+                        options: MoinUIButtonVariant.allCases,
+                        value: $state.variant
+                    )
+
+                    SelectPropControl(
+                        label: localization.tr("playground.prop.size"),
+                        propName: localization.tr("playground.prop.size_prop"),
+                        options: MoinUIButtonSize.allCases,
+                        value: $state.size
+                    )
+
+                    SelectPropControl(
+                        label: localization.tr("playground.prop.shape"),
+                        propName: localization.tr("playground.prop.shape_prop"),
+                        options: MoinUIButtonShape.allCases,
+                        value: $state.shape
+                    )
+
+                    TextPropControl(
+                        label: localization.tr("playground.prop.icon"),
+                        propName: localization.tr("playground.prop.icon_prop"),
+                        value: $state.icon
+                    )
+
+                    if state.hasIcon {
+                        SelectPropControl(
+                            label: localization.tr("playground.prop.icon_position"),
+                            propName: localization.tr("playground.prop.icon_position_prop"),
+                            options: MoinUIButtonIconPosition.allCases,
+                            value: $state.iconPosition
+                        )
+                    }
+
+                    Divider()
+                        .padding(.vertical, Constants.Spacing.xs)
+
+                    TogglePropControl(
+                        label: localization.tr("playground.prop.disabled"),
+                        propName: localization.tr("playground.prop.disabled_prop"),
+                        value: $state.isDisabled
+                    )
+
+                    TogglePropControl(
+                        label: localization.tr("playground.prop.loading"),
+                        propName: localization.tr("playground.prop.loading_prop"),
+                        value: $state.isLoading
+                    )
+
+                    TogglePropControl(
+                        label: localization.tr("playground.prop.block"),
+                        propName: localization.tr("playground.prop.block_prop"),
+                        value: $state.isBlock
+                    )
+                }
+            }
+            .padding(Constants.Spacing.md)
+        }
+    }
+
+    // MARK: - Code Section
+
+    private var codeSection: some View {
+        VStack(alignment: .leading, spacing: Constants.Spacing.sm) {
+            HStack {
+                Text(localization.tr("playground.code"))
+                    .font(.system(size: 11, weight: .medium))
+                    .foregroundStyle(.secondary)
+                Spacer()
+            }
+
+            ScrollView(.horizontal, showsIndicators: false) {
+                HighlightedCodeView(code: state.generateCode(defaultText: defaultText), fontSize: 12)
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        }
+        .padding(Constants.Spacing.md)
+        .background(config.isDarkMode ? Color(white: 0.08) : Color(white: 0.96))
+    }
+}
+
+// MARK: - 扩展枚举以支持 Playground
+
+extension MoinUIButtonType: CaseIterable, CustomStringConvertible {
+    public static var allCases: [MoinUIButtonType] {
+        [.default, .primary, .success, .warning, .danger, .info]
+    }
+
+    public var description: String {
+        switch self {
+        case .default: return "default"
+        case .primary: return "primary"
+        case .success: return "success"
+        case .warning: return "warning"
+        case .danger: return "danger"
+        case .info: return "info"
+        }
+    }
+}
+
+extension MoinUIButtonVariant: CaseIterable, CustomStringConvertible {
+    public static var allCases: [MoinUIButtonVariant] {
+        [.solid, .outline, .text, .link, .ghost]
+    }
+
+    public var description: String {
+        switch self {
+        case .solid: return "solid"
+        case .outline: return "outline"
+        case .text: return "text"
+        case .link: return "link"
+        case .ghost: return "ghost"
+        }
+    }
+}
+
+extension MoinUIButtonSize: CaseIterable, CustomStringConvertible {
+    public static var allCases: [MoinUIButtonSize] {
+        [.small, .medium, .large]
+    }
+
+    public var description: String {
+        switch self {
+        case .small: return "small"
+        case .medium: return "medium"
+        case .large: return "large"
+        }
+    }
+}
+
+extension MoinUIButtonShape: CaseIterable, CustomStringConvertible {
+    public static var allCases: [MoinUIButtonShape] {
+        [.default, .round, .circle]
+    }
+
+    public var description: String {
+        switch self {
+        case .default: return "default"
+        case .round: return "round"
+        case .circle: return "circle"
+        }
+    }
+}
+
+extension MoinUIButtonIconPosition: CaseIterable, CustomStringConvertible {
+    public static var allCases: [MoinUIButtonIconPosition] {
+        [.leading, .trailing]
+    }
+
+    public var description: String {
+        switch self {
+        case .leading: return "leading"
+        case .trailing: return "trailing"
+        }
+    }
+}

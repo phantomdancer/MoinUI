@@ -141,44 +141,64 @@ struct ContentView: View {
     @StateObject private var navManager = NavigationManager.shared
     @EnvironmentObject var configProvider: MoinUIConfigProvider
     @EnvironmentObject var localization: MoinUILocalization
+    @State private var buttonTab: ButtonExamplesTab = .examples
 
     var body: some View {
         NavigationSplitView {
             Sidebar(selection: $navManager.selectedItem)
                 .modifier(HideSidebarToggleModifier())
         } detail: {
-            DetailView(item: navManager.selectedItem)
+            DetailView(item: navManager.selectedItem, buttonTab: $buttonTab)
+                .navigationTitle(navManager.selectedItem.map { localization.tr($0.titleKey) } ?? "MoinUI")
+                .toolbar {
+                    ToolbarItemGroup(placement: .primaryAction) {
+                        // 按钮页面显示 Tab 切换（文字按钮样式）
+                        if navManager.selectedItem == .button {
+                            HStack(spacing: Constants.Spacing.sm) {
+                                Button {
+                                    buttonTab = .examples
+                                } label: {
+                                    Text(localization.tr("tab.examples"))
+                                        .fontWeight(buttonTab == .examples ? .semibold : .regular)
+                                        .foregroundStyle(buttonTab == .examples ? .primary : .secondary)
+                                }
+                                .buttonStyle(.plain)
+
+                                Text("/")
+                                    .foregroundStyle(.tertiary)
+
+                                Button {
+                                    buttonTab = .playground
+                                } label: {
+                                    Text(localization.tr("tab.playground"))
+                                        .fontWeight(buttonTab == .playground ? .semibold : .regular)
+                                        .foregroundStyle(buttonTab == .playground ? .primary : .secondary)
+                                }
+                                .buttonStyle(.plain)
+                            }
+                        }
+
+                        Spacer()
+
+                        Button {
+                            configProvider.toggleTheme()
+                        } label: {
+                            Image(systemName: configProvider.isDarkMode ? "sun.max.fill" : "moon.fill")
+                                .font(.system(size: 14))
+                        }
+                        .help(localization.tr(configProvider.isDarkMode ? "toolbar.switch_light" : "toolbar.switch_dark"))
+
+                        Picker("", selection: $localization.locale) {
+                            Text(localization.tr("toolbar.lang_zh")).tag(MoinUILocale.zhCN)
+                            Text(localization.tr("toolbar.lang_en")).tag(MoinUILocale.enUS)
+                        }
+                        .pickerStyle(.segmented)
+                        .frame(width: 100)
+                    }
+                }
         }
         .navigationSplitViewStyle(.balanced)
         .frame(minWidth: 1100, minHeight: 700)
-        .toolbar {
-            ToolbarItemGroup(placement: .automatic) {
-                Link(destination: URL(string: "https://github.com/phantomdancer/MoinUI")!) {
-                    if let image = Bundle.module.image(forResource: "github-fill") {
-                        Image(nsImage: image)
-                            .resizable()
-                            .aspectRatio(1, contentMode: .fit)
-                            .frame(width: 16, height: 16)
-                    }
-                }
-                .help("GitHub")
-
-                Button {
-                    configProvider.toggleTheme()
-                } label: {
-                    Image(systemName: configProvider.isDarkMode ? "sun.max.fill" : "moon.fill")
-                        .font(.system(size: 14))
-                }
-                .help(localization.tr(configProvider.isDarkMode ? "toolbar.switch_light" : "toolbar.switch_dark"))
-
-                Picker("", selection: $localization.locale) {
-                    Text(localization.tr("toolbar.lang_zh")).tag(MoinUILocale.zhCN)
-                    Text(localization.tr("toolbar.lang_en")).tag(MoinUILocale.enUS)
-                }
-                .pickerStyle(.segmented)
-                .frame(width: 100)
-            }
-        }
     }
 }
 
@@ -268,6 +288,7 @@ struct Sidebar: View {
 
 struct DetailView: View {
     let item: NavItem?
+    @Binding var buttonTab: ButtonExamplesTab
     @EnvironmentObject var localization: MoinUILocalization
 
     var body: some View {
@@ -280,7 +301,7 @@ struct DetailView: View {
             case .theme:
                 ThemeView()
             case .button:
-                ButtonExamples()
+                ButtonExamples(selectedTab: $buttonTab)
             case .configProvider:
                 ConfigProviderExamples()
             case .localization:
