@@ -25,6 +25,7 @@
 | Variant (solid/outline/text/link/ghost) | ✅ |
 | Size (small/medium/large) | ✅ |
 | Shape (default/round/circle) | ✅ |
+| Color (自定义颜色) | ✅ |
 | Icon + Text | ✅ |
 | Icon Position (leading/trailing) | ✅ |
 | Loading | ✅ |

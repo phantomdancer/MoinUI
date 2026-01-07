@@ -123,6 +123,8 @@
     "basic_desc": "基础按钮的默认设置。",
     "type": "按钮类型",
     "type_desc": "不同场景下使用不同类型的按钮。",
+    "color": "自定义颜色",
+    "color_desc": "使用 color 属性自定义按钮颜色。",
     "variant": "按钮变体",
     "variant_desc": "按钮的不同视觉样式。",
     "size": "按钮尺寸",
@@ -165,7 +167,8 @@
       "search": "搜索",
       "download": "下载",
       "go": "前往",
-      "github": "GitHub"
+      "github": "GitHub",
+      "custom": "自定义"
     }
   },
   "config": {
@@ -256,6 +259,7 @@
       "size": "按钮尺寸",
       "variant": "按钮样式变体",
       "shape": "按钮形状",
+      "color": "自定义颜色，优先级高于 type",
       "icon": "图标名称 (SF Symbols)",
       "iconPosition": "图标位置",
       "isLoading": "加载状态",

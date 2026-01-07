@@ -39,6 +39,7 @@ public struct MoinUIButton<Label: View>: View {
     private let iconPosition: MoinUIButtonIconPosition
     private let href: URL?
     private let target: String?
+    private let color: Color?
 
     @State private var isHovered = false
     @State private var isPressed = false
@@ -61,6 +62,7 @@ public struct MoinUIButton<Label: View>: View {
         isBlock: Bool = false,
         href: URL? = nil,
         target: String? = nil,
+        color: Color? = nil,
         action: (() -> Void)? = nil,
         @ViewBuilder label: () -> Label
     ) {
@@ -75,6 +77,7 @@ public struct MoinUIButton<Label: View>: View {
         self.isBlock = isBlock
         self.href = href
         self.target = target
+        self.color = color
         self.action = action
         self.label = label()
     }
@@ -194,6 +197,19 @@ public struct MoinUIButton<Label: View>: View {
 
     // MARK: - Token-based colors
 
+    /// 获取按钮基础颜色（自定义颜色优先）
+    private var baseColor: Color {
+        if let color = color {
+            return color
+        }
+        return colorForType(type)
+    }
+
+    /// 是否使用自定义颜色
+    private var hasCustomColor: Bool {
+        color != nil
+    }
+
     private func colorForType(_ buttonType: MoinUIButtonType) -> Color {
         switch buttonType {
         case .default: return Color.gray
@@ -242,11 +258,10 @@ public struct MoinUIButton<Label: View>: View {
             }
         }
 
-        let baseColor = colorForType(type)
-
         switch variant {
         case .solid:
-            if type == .default {
+            // 无自定义颜色且 type 为 default
+            if !hasCustomColor && type == .default {
                 if isPressed {
                     return token.colorBgContainer.opacity(0.85)
                 } else if isHovered {
@@ -254,9 +269,9 @@ public struct MoinUIButton<Label: View>: View {
                 }
                 return token.colorBgContainer
             }
-            // 有色按钮使用专门的 hover/active 颜色
+            // 有色按钮（自定义颜色或语义色）
             if isPressed {
-                return hoverColorForType(type).opacity(0.85)
+                return activeColorForType(type)
             } else if isHovered {
                 return hoverColorForType(type)
             }
@@ -275,6 +290,10 @@ public struct MoinUIButton<Label: View>: View {
 
     /// 获取 hover 状态的颜色
     private func hoverColorForType(_ buttonType: MoinUIButtonType) -> Color {
+        // 自定义颜色使用 lighten
+        if hasCustomColor {
+            return baseColor.lightened(by: 0.08)
+        }
         switch buttonType {
         case .default: return token.colorBgHover
         case .primary: return token.colorPrimaryHover
@@ -285,23 +304,33 @@ public struct MoinUIButton<Label: View>: View {
         }
     }
 
+    /// 获取 active 状态的颜色
+    private func activeColorForType(_ buttonType: MoinUIButtonType) -> Color {
+        if hasCustomColor {
+            return baseColor.darkened(by: 0.08)
+        }
+        return hoverColorForType(buttonType).darkened(by: 0.1)
+    }
+
     private var foregroundColor: Color {
         guard !effectiveDisabled else {
             return token.colorTextDisabled
         }
 
-        let baseColor = colorForType(type)
-
         switch variant {
         case .solid:
+            // 自定义颜色：自动计算对比色
+            if hasCustomColor {
+                return baseColor.contrastingTextColor
+            }
             return type == .default ? token.colorText : .white
         case .outline, .text, .ghost:
-            if type == .default {
+            if !hasCustomColor && type == .default {
                 return isHovered ? token.colorPrimary : token.colorText
             }
             return baseColor
         case .link:
-            if type == .default {
+            if !hasCustomColor && type == .default {
                 return isHovered ? token.colorPrimary.opacity(0.8) : token.colorPrimary
             }
             return isHovered ? baseColor.opacity(0.8) : baseColor
@@ -321,20 +350,21 @@ public struct MoinUIButton<Label: View>: View {
             }
         }
 
-        let baseColor = colorForType(type)
-
         switch variant {
         case .solid:
+            if hasCustomColor {
+                return baseColor
+            }
             return type == .default ? token.colorBorder : baseColor
         case .outline:
-            if type == .default {
+            if !hasCustomColor && type == .default {
                 return isHovered ? token.colorBorderHover : token.colorBorder
             }
             return baseColor
         case .text, .link:
             return .clear
         case .ghost:
-            if type == .default {
+            if !hasCustomColor && type == .default {
                 return token.colorBorder
             }
             return baseColor.opacity(0.5)
@@ -358,6 +388,7 @@ public extension MoinUIButton where Label == Text {
         isDisabled: Bool = false,
         isBlock: Bool = false,
         href: URL? = nil,
+        color: Color? = nil,
         action: (() -> Void)? = nil
     ) {
         self.init(
@@ -371,6 +402,7 @@ public extension MoinUIButton where Label == Text {
             isDisabled: isDisabled,
             isBlock: isBlock,
             href: href,
+            color: color,
             action: action
         ) {
             Text(title)
@@ -389,6 +421,7 @@ public extension MoinUIButton where Label == EmptyView {
         isLoading: Bool = false,
         isDisabled: Bool = false,
         href: URL? = nil,
+        color: Color? = nil,
         action: (() -> Void)? = nil
     ) {
         self.init(
@@ -402,6 +435,7 @@ public extension MoinUIButton where Label == EmptyView {
             isDisabled: isDisabled,
             isBlock: false,
             href: href,
+            color: color,
             action: action
         ) {
             EmptyView()

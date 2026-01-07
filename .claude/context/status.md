@@ -8,10 +8,11 @@
 
 ## 最近完成
 
+- 2026-01-07: Button 添加 color 自定义颜色属性
+- 2026-01-07: 添加 ColorUtils 颜色工具（darken/lighten/contrastingTextColor）
+- 2026-01-07: 创建主题系统文档 (.claude/context/theme.md)
 - 2026-01-07: 创建 skills 目录结构（new-component, compare-competitors）
 - 2026-01-07: 优化 CLAUDE.md，移除 doc 目录
-- 2026-01-07: 示例代码字符串国际化（ButtonExamples）
-- 2026-01-07: Tab 样式改为 segmented（DemoApp）
 
 ## 待处理
 

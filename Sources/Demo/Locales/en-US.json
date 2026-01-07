@@ -123,6 +123,8 @@
     "basic_desc": "Basic button with default settings.",
     "type": "Type",
     "type_desc": "Different button types for various scenarios.",
+    "color": "Custom Color",
+    "color_desc": "Use color property to customize button color.",
     "variant": "Variant",
     "variant_desc": "Different visual styles for buttons.",
     "size": "Size",
@@ -165,7 +167,8 @@
       "search": "Search",
       "download": "Download",
       "go": "Go",
-      "github": "GitHub"
+      "github": "GitHub",
+      "custom": "Custom"
     }
   },
   "config": {
@@ -256,6 +259,7 @@
       "size": "Button size",
       "variant": "Button style variant",
       "shape": "Button shape",
+      "color": "Custom color, overrides type",
       "icon": "Icon name (SF Symbols)",
       "iconPosition": "Icon position",
       "isLoading": "Loading state",

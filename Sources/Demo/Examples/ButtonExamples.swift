@@ -30,6 +30,7 @@ struct ButtonExamples: View {
         ScrollView {
             VStack(alignment: .leading, spacing: Constants.Spacing.xl) {
                 typeExample
+                colorExample
                 variantExample
                 sizeExample
                 shapeExample
@@ -78,6 +79,37 @@ struct ButtonExamples: View {
             MoinUIButton("\(localization.tr("button.label.warning"))", type: .warning) {}
             MoinUIButton("\(localization.tr("button.label.danger"))", type: .danger) {}
             MoinUIButton("\(localization.tr("button.label.info"))", type: .info) {}
+            """
+        }
+    }
+
+    private var colorExample: some View {
+        ExampleSection(
+            title: localization.tr("button.color"),
+            description: localization.tr("button.color_desc")
+        ) {
+            VStack(alignment: .leading, spacing: Constants.Spacing.md) {
+                HStack(spacing: Constants.Spacing.md) {
+                    MoinUIButton(localization.tr("button.label.custom"), color: Color(red: 0.6, green: 0.2, blue: 0.8)) {}
+                    MoinUIButton(localization.tr("button.label.custom"), color: Color(red: 1.0, green: 0.4, blue: 0.6)) {}
+                    MoinUIButton(localization.tr("button.label.custom"), color: Color(red: 0.0, green: 0.8, blue: 0.6)) {}
+                    MoinUIButton(localization.tr("button.label.custom"), color: Color(red: 1.0, green: 0.6, blue: 0.0)) {}
+                }
+                HStack(spacing: Constants.Spacing.md) {
+                    MoinUIButton(localization.tr("button.label.custom"), variant: .outline, color: Color(red: 0.6, green: 0.2, blue: 0.8)) {}
+                    MoinUIButton(localization.tr("button.label.custom"), variant: .text, color: Color(red: 1.0, green: 0.4, blue: 0.6)) {}
+                    MoinUIButton(localization.tr("button.label.custom"), variant: .ghost, color: Color(red: 0.0, green: 0.8, blue: 0.6)) {}
+                }
+            }
+        } code: {
+            """
+            // solid
+            MoinUIButton("\(localization.tr("button.label.custom"))", color: Color(red: 0.6, green: 0.2, blue: 0.8)) {}
+            MoinUIButton("\(localization.tr("button.label.custom"))", color: Color(red: 1.0, green: 0.4, blue: 0.6)) {}
+
+            // outline / text / ghost
+            MoinUIButton("\(localization.tr("button.label.custom"))", variant: .outline, color: Color(red: 0.6, green: 0.2, blue: 0.8)) {}
+            MoinUIButton("\(localization.tr("button.label.custom"))", variant: .text, color: Color(red: 1.0, green: 0.4, blue: 0.6)) {}
             """
         }
     }
@@ -284,6 +316,7 @@ struct ButtonExamples: View {
                     ("size", "MoinUIButtonSize", ".medium", localization.tr("api.button.size")),
                     ("variant", "MoinUIButtonVariant", ".solid", localization.tr("api.button.variant")),
                     ("shape", "MoinUIButtonShape", ".default", localization.tr("api.button.shape")),
+                    ("color", "Color?", "nil", localization.tr("api.button.color")),
                     ("icon", "String?", "nil", localization.tr("api.button.icon")),
                     ("iconPosition", "MoinUIButtonIconPosition", ".leading", localization.tr("api.button.iconPosition")),
                     ("isLoading", "Bool", "false", localization.tr("api.button.isLoading")),

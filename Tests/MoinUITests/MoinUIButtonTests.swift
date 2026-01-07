@@ -311,4 +311,47 @@ final class MoinUIButtonTests: XCTestCase {
             XCTAssertNotNil(button)
         }
     }
+
+    // MARK: - Custom Color Tests
+
+    func testButtonWithCustomColor() {
+        let customColor = Color(red: 0.6, green: 0.2, blue: 0.8)
+        let button = MoinUIButton(
+            "Custom",
+            color: customColor
+        ) {}
+        XCTAssertNotNil(button)
+    }
+
+    func testButtonWithCustomColorAndVariants() {
+        let customColor = Color(red: 1.0, green: 0.4, blue: 0.6)
+        let variants: [MoinUIButtonVariant] = [.solid, .outline, .text, .ghost]
+        for variant in variants {
+            let button = MoinUIButton(
+                "Custom",
+                variant: variant,
+                color: customColor
+            ) {}
+            XCTAssertNotNil(button)
+        }
+    }
+
+    func testIconButtonWithCustomColor() {
+        let customColor = Color(red: 0.0, green: 0.8, blue: 0.6)
+        let button = MoinUIButton(
+            icon: "star",
+            color: customColor
+        ) {}
+        XCTAssertNotNil(button)
+    }
+
+    func testButtonCustomColorOverridesType() {
+        let customColor = Color.purple
+        let button = MoinUIButton(
+            "Test",
+            type: .primary,
+            color: customColor
+        ) {}
+        XCTAssertNotNil(button)
+    }
 }
