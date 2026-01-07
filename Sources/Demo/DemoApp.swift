@@ -152,30 +152,14 @@ struct ContentView: View {
                 .navigationTitle(navManager.selectedItem.map { localization.tr($0.titleKey) } ?? "MoinUI")
                 .toolbar {
                     ToolbarItemGroup(placement: .primaryAction) {
-                        // 按钮页面显示 Tab 切换（文字按钮样式）
+                        // 按钮页面显示 Tab 切换（分段控件样式）
                         if navManager.selectedItem == .button {
-                            HStack(spacing: Constants.Spacing.sm) {
-                                Button {
-                                    buttonTab = .examples
-                                } label: {
-                                    Text(localization.tr("tab.examples"))
-                                        .fontWeight(buttonTab == .examples ? .semibold : .regular)
-                                        .foregroundStyle(buttonTab == .examples ? .primary : .secondary)
-                                }
-                                .buttonStyle(.plain)
-
-                                Text("/")
-                                    .foregroundStyle(.tertiary)
-
-                                Button {
-                                    buttonTab = .playground
-                                } label: {
-                                    Text(localization.tr("tab.playground"))
-                                        .fontWeight(buttonTab == .playground ? .semibold : .regular)
-                                        .foregroundStyle(buttonTab == .playground ? .primary : .secondary)
-                                }
-                                .buttonStyle(.plain)
+                            Picker("", selection: $buttonTab) {
+                                Text(localization.tr("tab.examples")).tag(ButtonExamplesTab.examples)
+                                Text(localization.tr("tab.playground")).tag(ButtonExamplesTab.playground)
                             }
+                            .pickerStyle(.segmented)
+                            .frame(width: 140)
                         }
 
                         Spacer()

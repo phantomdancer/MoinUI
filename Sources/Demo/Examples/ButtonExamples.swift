@@ -72,12 +72,12 @@ struct ButtonExamples: View {
             }
         } code: {
             """
-            MoinUIButton("Default") {}
-            MoinUIButton("Primary", type: .primary) {}
-            MoinUIButton("Success", type: .success) {}
-            MoinUIButton("Warning", type: .warning) {}
-            MoinUIButton("Danger", type: .danger) {}
-            MoinUIButton("Info", type: .info) {}
+            MoinUIButton("\(localization.tr("button.label.default"))") {}
+            MoinUIButton("\(localization.tr("button.label.primary"))", type: .primary) {}
+            MoinUIButton("\(localization.tr("button.label.success"))", type: .success) {}
+            MoinUIButton("\(localization.tr("button.label.warning"))", type: .warning) {}
+            MoinUIButton("\(localization.tr("button.label.danger"))", type: .danger) {}
+            MoinUIButton("\(localization.tr("button.label.info"))", type: .info) {}
             """
         }
     }
@@ -96,11 +96,11 @@ struct ButtonExamples: View {
             }
         } code: {
             """
-            MoinUIButton("Solid", type: .primary, variant: .solid) {}
-            MoinUIButton("Outline", type: .primary, variant: .outline) {}
-            MoinUIButton("Text", type: .primary, variant: .text) {}
-            MoinUIButton("Link", type: .primary, variant: .link) {}
-            MoinUIButton("Ghost", type: .primary, variant: .ghost) {}
+            MoinUIButton("\(localization.tr("button.label.solid"))", type: .primary, variant: .solid) {}
+            MoinUIButton("\(localization.tr("button.label.outline"))", type: .primary, variant: .outline) {}
+            MoinUIButton("\(localization.tr("button.label.text"))", type: .primary, variant: .text) {}
+            MoinUIButton("\(localization.tr("button.label.link"))", type: .primary, variant: .link) {}
+            MoinUIButton("\(localization.tr("button.label.ghost"))", type: .primary, variant: .ghost) {}
             """
         }
     }
@@ -117,9 +117,9 @@ struct ButtonExamples: View {
             }
         } code: {
             """
-            MoinUIButton("Small", type: .primary, size: .small) {}
-            MoinUIButton("Medium", type: .primary, size: .medium) {}
-            MoinUIButton("Large", type: .primary, size: .large) {}
+            MoinUIButton("\(localization.tr("button.label.small"))", type: .primary, size: .small) {}
+            MoinUIButton("\(localization.tr("button.label.medium"))", type: .primary, size: .medium) {}
+            MoinUIButton("\(localization.tr("button.label.large"))", type: .primary, size: .large) {}
             """
         }
     }
@@ -136,8 +136,8 @@ struct ButtonExamples: View {
             }
         } code: {
             """
-            MoinUIButton("Default", type: .primary, shape: .default) {}
-            MoinUIButton("Round", type: .primary, shape: .round) {}
+            MoinUIButton("\(localization.tr("button.label.default"))", type: .primary, shape: .default) {}
+            MoinUIButton("\(localization.tr("button.label.round"))", type: .primary, shape: .round) {}
             MoinUIButton(icon: "plus", type: .primary, shape: .circle) {}
             """
         }
@@ -160,9 +160,9 @@ struct ButtonExamples: View {
             }
         } code: {
             """
-            MoinUIButton("Normal", type: .primary) {}
-            MoinUIButton("Disabled", type: .primary, isDisabled: true) {}
-            MoinUIButton("Loading", type: .primary, isLoading: true) {}
+            MoinUIButton("\(localization.tr("button.label.normal"))", type: .primary) {}
+            MoinUIButton("\(localization.tr("button.label.disabled"))", type: .primary, isDisabled: true) {}
+            MoinUIButton("\(localization.tr("button.label.loading"))", type: .primary, isLoading: true) {}
             """
         }
     }
@@ -200,9 +200,9 @@ struct ButtonExamples: View {
             }
         } code: {
             """
-            MoinUIButton("Search", type: .primary, icon: "magnifyingglass") {}
-            MoinUIButton("Download", type: .success, icon: "arrow.down.circle") {}
-            MoinUIButton("Go", type: .info, icon: "arrow.right", iconPosition: .trailing) {}
+            MoinUIButton("\(localization.tr("button.label.search"))", type: .primary, icon: "magnifyingglass") {}
+            MoinUIButton("\(localization.tr("button.label.download"))", type: .success, icon: "arrow.down.circle") {}
+            MoinUIButton("\(localization.tr("button.label.go"))", type: .info, icon: "arrow.right", iconPosition: .trailing) {}
             """
         }
     }
@@ -217,7 +217,7 @@ struct ButtonExamples: View {
                     "MoinUI",
                     type: .primary,
                     icon: "link",
-                    href: URL(string: "https://github.com/aspect-fi/MoinUI")
+                    href: URL(string: "https://github.com/phantomdancer/MoinUI.git")
                 )
             }
         } code: {
@@ -226,7 +226,7 @@ struct ButtonExamples: View {
                 "MoinUI",
                 type: .primary,
                 icon: "link",
-                href: URL(string: "https://github.com/aspect-fi/MoinUI")
+                href: URL(string: "https://github.com/phantomdancer/MoinUI.git")
             )
             """
         }
@@ -259,7 +259,7 @@ struct ButtonExamples: View {
             MoinUIButton(localization.tr("button.label.block_button"), type: .primary, isBlock: true) {}
         } code: {
             """
-            MoinUIButton("Block Button", type: .primary, isBlock: true) {}
+            MoinUIButton("\(localization.tr("button.label.block_button"))", type: .primary, isBlock: true) {}
             """
         }
     }

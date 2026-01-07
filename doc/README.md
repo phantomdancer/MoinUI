@@ -37,7 +37,7 @@ doc/
 ```swift
 // Package.swift
 dependencies: [
-    .package(url: "https://github.com/anthropics/moin-ui.git", from: "1.0.0")
+    .package(url: "https://github.com/phantomdancer/MoinUI.git", from: "1.0.0")
 ]
 ```
 
@@ -95,7 +95,7 @@ struct ContentView: View {
 
 ## 相关链接
 
-- [GitHub](https://github.com/anthropics/moin-ui)
+- [GitHub](https://github.com/phantomdancer/MoinUI)
 - [Ant Design](https://ant.design)
 - [Element Plus](https://element-plus.org)
 - [shadcn/ui](https://ui.shadcn.com)
