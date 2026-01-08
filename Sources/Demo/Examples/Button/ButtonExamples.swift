@@ -28,6 +28,8 @@ struct ButtonExamples: View {
         AnchorItem(id: "disabled", titleKey: "button.disabled"),
         AnchorItem(id: "block", titleKey: "button.block"),
         AnchorItem(id: "api", titleKey: "API"),
+        AnchorItem(id: "component_token", titleKey: "api.component_token"),
+        AnchorItem(id: "global_token", titleKey: "api.global_token"),
     ]
 
     var body: some View {
@@ -45,24 +47,22 @@ struct ButtonExamples: View {
     // MARK: - Examples Content
 
     private var examplesContent: some View {
-        ExamplePageWithAnchor(anchors: anchors) { _ in
-            VStack(alignment: .leading, spacing: MoinUIConstants.Spacing.xl) {
-                colorVariantExample.id("color_variant")
-                ghostExample.id("ghost")
-                sizeExample.id("size")
-                shapeExample.id("shape")
-                loadingExample.id("loading")
-                gradientExample.id("gradient")
-                iconExample.id("icon")
-                iconTextExample.id("icon_text")
-                customContentExample.id("custom_content")
-                disabledExample.id("disabled")
-                blockExample.id("block")
+        ExamplePageWithAnchor(pageName: "Button", anchors: anchors) { _ in
+            colorVariantExample.id("color_variant")
+            ghostExample.id("ghost")
+            sizeExample.id("size")
+            shapeExample.id("shape")
+            loadingExample.id("loading")
+            gradientExample.id("gradient")
+            iconExample.id("icon")
+            iconTextExample.id("icon_text")
+            customContentExample.id("custom_content")
+            disabledExample.id("disabled")
+            blockExample.id("block")
 
-                Divider()
+            Divider()
 
-                ButtonAPISection().id("api")
-            }
+            ButtonAPISection().id("api")
         }
     }
 

@@ -50,6 +50,7 @@ struct ThemeView: View {
         }
         .frame(maxWidth: .infinity)
         .background(token.colorBgContainer)
+        .measureRenderTime("Theme")
     }
 
     // MARK: - Theme Root Section

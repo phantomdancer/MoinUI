@@ -17,6 +17,7 @@ struct HomeView: View {
             }
         }
         .background(token.colorBgContainer)
+        .measureRenderTime("Home")
     }
 }
 

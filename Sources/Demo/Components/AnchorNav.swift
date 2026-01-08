@@ -1,7 +1,34 @@
 import SwiftUI
 import MoinUI
 
-/// 锚点项
+// MARK: - Render Time Modifier
+
+struct RenderTimeModifier: ViewModifier {
+    let pageName: String
+    @State private var startTime: CFAbsoluteTime?
+
+    init(pageName: String) {
+        self.pageName = pageName
+    }
+
+    func body(content: Content) -> some View {
+        let now = CFAbsoluteTimeGetCurrent()
+
+        return content
+            .onAppear {
+                let elapsed = CFAbsoluteTimeGetCurrent() - now
+                print("📊 [\(pageName)] render: \(String(format: "%.1f", elapsed * 1000))ms")
+            }
+    }
+}
+
+extension View {
+    func measureRenderTime(_ pageName: String) -> some View {
+        modifier(RenderTimeModifier(pageName: pageName))
+    }
+}
+
+// MARK: - AnchorItem
 struct AnchorItem: Identifiable, Hashable {
     let id: String
     let titleKey: String
@@ -50,17 +77,32 @@ struct AnchorNav: View {
 
 /// 带锚点导航的示例页面容器
 struct ExamplePageWithAnchor<Content: View>: View {
+    let pageName: String
     let anchors: [AnchorItem]
     @ViewBuilder let content: (ScrollViewProxy) -> Content
     @State private var activeAnchor: String?
+    private let renderStartTime: CFAbsoluteTime
+
+    init(pageName: String = "Unknown", anchors: [AnchorItem], @ViewBuilder content: @escaping (ScrollViewProxy) -> Content) {
+        self.pageName = pageName
+        self.anchors = anchors
+        self.content = content
+        self.renderStartTime = CFAbsoluteTimeGetCurrent()
+    }
 
     var body: some View {
         ScrollViewReader { proxy in
             HStack(alignment: .top, spacing: 0) {
                 // 左侧内容区
                 ScrollView {
-                    content(proxy)
-                        .padding(MoinUIConstants.Spacing.xl)
+                    VStack(alignment: .leading, spacing: MoinUIConstants.Spacing.xl) {
+                        content(proxy)
+                    }
+                    .padding(MoinUIConstants.Spacing.xl)
+                    .onAppear {
+                        let elapsed = CFAbsoluteTimeGetCurrent() - renderStartTime
+                        print("📊 [\(pageName)] render: \(String(format: "%.1f", elapsed * 1000))ms")
+                    }
                 }
 
                 Divider()

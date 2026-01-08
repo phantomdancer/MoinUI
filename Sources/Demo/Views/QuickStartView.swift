@@ -95,6 +95,7 @@ struct QuickStartView: View {
         }
         .frame(maxWidth: .infinity)
         .background(token.colorBgContainer)
+        .measureRenderTime("QuickStart")
     }
 }
 

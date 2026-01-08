@@ -23,6 +23,7 @@ struct LocalizationExamples: View {
             }
             .padding(MoinUIConstants.Spacing.xl)
         }
+        .measureRenderTime("Localization")
     }
 
     // MARK: - Introduction

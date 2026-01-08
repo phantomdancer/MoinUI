@@ -8,6 +8,7 @@
 
 ## 最近完成
 
+- 2026-01-08: Button API 文档添加组件 Token、全局 Token 章节（参照 antd）
 - 2026-01-08: MoinUIButtonToken 扩展完整 antd ComponentToken（支持浅暗色主题）
 - 2026-01-08: Button 组件改用 ButtonToken 取代硬编码样式
 - 2026-01-08: Button 添加 fontColor 参数（自定义文字颜色）

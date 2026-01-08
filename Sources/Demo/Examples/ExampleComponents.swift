@@ -42,25 +42,26 @@ struct ExampleSection<Content: View>: View {
 struct APITable: View {
     let headers: (String, String, String, String)
     let rows: [(String, String, String, String)]
+    var columnWidths: (CGFloat, CGFloat, CGFloat, CGFloat) = (140, 180, 100, 220)
 
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             VStack(spacing: 0) {
                 HStack(spacing: 0) {
-                    headerCell(headers.0, width: 140)
-                    headerCell(headers.1, width: 180)
-                    headerCell(headers.2, width: 100)
-                    headerCell(headers.3, width: 220)
+                    headerCell(headers.0, width: columnWidths.0)
+                    headerCell(headers.1, width: columnWidths.1)
+                    headerCell(headers.2, width: columnWidths.2)
+                    headerCell(headers.3, width: columnWidths.3)
                 }
 
                 Divider()
 
                 ForEach(rows.indices, id: \.self) { index in
                     HStack(spacing: 0) {
-                        bodyCell(rows[index].0, isCode: true, width: 140)
-                        bodyCell(rows[index].1, isCode: true, width: 180)
-                        bodyCell(rows[index].2, width: 100)
-                        bodyCell(rows[index].3, width: 220)
+                        bodyCell(rows[index].0, isCode: true, width: columnWidths.0)
+                        bodyCell(rows[index].1, isCode: true, width: columnWidths.1)
+                        bodyCell(rows[index].2, width: columnWidths.2)
+                        bodyCell(rows[index].3, width: columnWidths.3)
                     }
                     .background(index % 2 == 1 ? Color.primary.opacity(0.03) : Color.clear)
 
@@ -69,7 +70,7 @@ struct APITable: View {
                     }
                 }
             }
-            .frame(minWidth: 640)
+            .frame(minWidth: columnWidths.0 + columnWidths.1 + columnWidths.2 + columnWidths.3)
         }
         .background(Color(nsColor: .controlBackgroundColor))
         .cornerRadius(MoinUIConstants.Radius.md)

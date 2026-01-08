@@ -25,6 +25,7 @@ struct ConfigProviderExamples: View {
             }
             .padding(MoinUIConstants.Spacing.xl)
         }
+        .measureRenderTime("ConfigProvider")
     }
 
     // MARK: - Introduction
