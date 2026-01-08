@@ -24,6 +24,7 @@ struct ExampleSection<Content: View>: View {
 
             content()
                 .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.vertical, Constants.Spacing.lg)
 
             ScrollView(.horizontal, showsIndicators: false) {
                 HighlightedCodeView(code: code(), fontSize: 12)

@@ -84,17 +84,28 @@ struct ButtonExamples: View {
             title: localization.tr("button.type"),
             description: localization.tr("button.type_desc")
         ) {
-            HStack(spacing: Constants.Spacing.md) {
-                MoinUIButton(localization.tr("button.label.default")) {}
-                MoinUIButton(localization.tr("button.label.primary"), type: .primary) {}
-                MoinUIButton(localization.tr("button.label.success"), type: .success) {}
-                MoinUIButton(localization.tr("button.label.warning"), type: .warning) {}
-                MoinUIButton(localization.tr("button.label.danger"), type: .danger) {}
-                MoinUIButton(localization.tr("button.label.info"), type: .info) {}
+            VStack(alignment: .leading, spacing: Constants.Spacing.md) {
+                HStack(spacing: Constants.Spacing.md) {
+                    MoinUIButton(localization.tr("button.label.default")) {}
+                    MoinUIButton(localization.tr("button.label.dashed"), variant: .dashed) {}
+                    MoinUIButton(localization.tr("button.label.text"), variant: .text) {}
+                    MoinUIButton(localization.tr("button.label.link"), variant: .link) {}
+                }
+                HStack(spacing: Constants.Spacing.md) {
+                    MoinUIButton(localization.tr("button.label.primary"), type: .primary) {}
+                    MoinUIButton(localization.tr("button.label.success"), type: .success) {}
+                    MoinUIButton(localization.tr("button.label.warning"), type: .warning) {}
+                    MoinUIButton(localization.tr("button.label.danger"), type: .danger) {}
+                    MoinUIButton(localization.tr("button.label.info"), type: .info) {}
+                }
             }
         } code: {
             """
             MoinUIButton("\(localization.tr("button.label.default"))") {}
+            MoinUIButton("\(localization.tr("button.label.dashed"))", variant: .dashed) {}
+            MoinUIButton("\(localization.tr("button.label.text"))", variant: .text) {}
+            MoinUIButton("\(localization.tr("button.label.link"))", variant: .link) {}
+
             MoinUIButton("\(localization.tr("button.label.primary"))", type: .primary) {}
             MoinUIButton("\(localization.tr("button.label.success"))", type: .success) {}
             MoinUIButton("\(localization.tr("button.label.warning"))", type: .warning) {}
@@ -137,23 +148,14 @@ struct ButtonExamples: View {
                     MoinUIButton(localization.tr("button.label.text"), type: .danger, variant: .text) {}
                     MoinUIButton(localization.tr("button.label.link"), type: .danger, variant: .link) {}
                 }
-                // Custom Color (Pink)
+                // Custom Color (Cyan)
                 HStack(spacing: Constants.Spacing.sm) {
-                    MoinUIButton(localization.tr("button.label.solid"), variant: .solid, color: PresetColors.pink) {}
-                    MoinUIButton(localization.tr("button.label.outlined"), variant: .outlined, color: PresetColors.pink) {}
-                    MoinUIButton(localization.tr("button.label.dashed"), variant: .dashed, color: PresetColors.pink) {}
-                    MoinUIButton(localization.tr("button.label.filled"), variant: .filled, color: PresetColors.pink) {}
-                    MoinUIButton(localization.tr("button.label.text"), variant: .text, color: PresetColors.pink) {}
-                    MoinUIButton(localization.tr("button.label.link"), variant: .link, color: PresetColors.pink) {}
-                }
-                // Custom Color (Purple)
-                HStack(spacing: Constants.Spacing.sm) {
-                    MoinUIButton(localization.tr("button.label.solid"), variant: .solid, color: PresetColors.purple) {}
-                    MoinUIButton(localization.tr("button.label.outlined"), variant: .outlined, color: PresetColors.purple) {}
-                    MoinUIButton(localization.tr("button.label.dashed"), variant: .dashed, color: PresetColors.purple) {}
-                    MoinUIButton(localization.tr("button.label.filled"), variant: .filled, color: PresetColors.purple) {}
-                    MoinUIButton(localization.tr("button.label.text"), variant: .text, color: PresetColors.purple) {}
-                    MoinUIButton(localization.tr("button.label.link"), variant: .link, color: PresetColors.purple) {}
+                    MoinUIButton(localization.tr("button.label.solid"), variant: .solid, color: PresetColors.cyan) {}
+                    MoinUIButton(localization.tr("button.label.outlined"), variant: .outlined, color: PresetColors.cyan) {}
+                    MoinUIButton(localization.tr("button.label.dashed"), variant: .dashed, color: PresetColors.cyan) {}
+                    MoinUIButton(localization.tr("button.label.filled"), variant: .filled, color: PresetColors.cyan) {}
+                    MoinUIButton(localization.tr("button.label.text"), variant: .text, color: PresetColors.cyan) {}
+                    MoinUIButton(localization.tr("button.label.link"), variant: .link, color: PresetColors.cyan) {}
                 }
             }
         } code: {
@@ -163,16 +165,21 @@ struct ButtonExamples: View {
             MoinUIButton("\(localization.tr("button.label.outlined"))", variant: .outlined) {}
             MoinUIButton("\(localization.tr("button.label.dashed"))", variant: .dashed) {}
             MoinUIButton("\(localization.tr("button.label.filled"))", variant: .filled) {}
+            MoinUIButton("\(localization.tr("button.label.text"))", variant: .text) {}
+            MoinUIButton("\(localization.tr("button.label.link"))", variant: .link) {}
 
             // Primary
             MoinUIButton("\(localization.tr("button.label.solid"))", type: .primary, variant: .solid) {}
+            MoinUIButton("\(localization.tr("button.label.outlined"))", type: .primary, variant: .outlined) {}
+            // ...
 
             // Danger
             MoinUIButton("\(localization.tr("button.label.solid"))", type: .danger, variant: .solid) {}
+            // ...
 
-            // Custom Color
-            MoinUIButton("\(localization.tr("button.label.solid"))", variant: .solid, color: PresetColors.pink) {}
-            MoinUIButton("\(localization.tr("button.label.solid"))", variant: .solid, color: PresetColors.purple) {}
+            // Cyan
+            MoinUIButton("\(localization.tr("button.label.solid"))", variant: .solid, color: PresetColors.cyan) {}
+            // ...
             """
         }
     }
@@ -251,7 +258,7 @@ struct ButtonExamples: View {
                     MoinUIButton(localization.tr("button.label.loading"), type: .primary, loading: true) {}
                     MoinUIButton(localization.tr("button.label.loading"), type: .primary, size: .small, loading: true) {}
                     MoinUIButton(icon: "power", type: .primary, loading: true) {}
-                    MoinUIButton(localization.tr("button.label.custom"), type: .primary, loading: MoinUIButtonLoading(true, icon: "arrow.clockwise")) {}
+                    MoinUIButton(localization.tr("button.label.custom"), type: .primary, loading: MoinUIButtonLoading(true, icon: "face.smiling")) {}
                 }
                 HStack(spacing: Constants.Spacing.md) {
                     MoinUIButton(localization.tr("button.label.click_load"), type: .primary, loading: MoinUIButtonLoading(loadings[0])) {
@@ -271,7 +278,7 @@ struct ButtonExamples: View {
             MoinUIButton("\(localization.tr("button.label.loading"))", type: .primary, loading: true) {}
 
             // \(localization.tr("button.label.custom"))
-            MoinUIButton("\(localization.tr("button.label.custom"))", type: .primary, loading: MoinUIButtonLoading(true, icon: "arrow.clockwise")) {}
+            MoinUIButton("\(localization.tr("button.label.custom"))", type: .primary, loading: MoinUIButtonLoading(true, icon: "face.smiling")) {}
 
             // \(localization.tr("button.label.delay"))
             MoinUIButton("\(localization.tr("button.label.delay"))", type: .primary, loading: MoinUIButtonLoading(isLoading, delay: 0.5)) {}
@@ -389,7 +396,13 @@ struct ButtonExamples: View {
             MoinUIButton("\(localization.tr("button.label.primary"))", type: .primary, isDisabled: true) {}
             MoinUIButton("\(localization.tr("button.label.default"))", isDisabled: true) {}
             MoinUIButton("\(localization.tr("button.label.dashed"))", variant: .dashed, isDisabled: true) {}
+            MoinUIButton("\(localization.tr("button.label.text"))", type: .primary, variant: .text, isDisabled: true) {}
+            MoinUIButton("\(localization.tr("button.label.link"))", type: .primary, variant: .link, isDisabled: true) {}
+
+            MoinUIButton("\(localization.tr("button.label.danger"))", type: .danger, isDisabled: true) {}
+            MoinUIButton("\(localization.tr("button.label.success"))", type: .success, variant: .outlined, isDisabled: true) {}
             MoinUIButton("\(localization.tr("button.label.custom"))", variant: .solid, isDisabled: true, color: PresetColors.purple) {}
+            MoinUIButton(icon: "plus", type: .primary, isDisabled: true) {}
             """
         }
     }
@@ -403,7 +416,6 @@ struct ButtonExamples: View {
                 MoinUIButton(localization.tr("button.label.primary"), type: .primary, isBlock: true) {}
                 MoinUIButton(localization.tr("button.label.default"), isBlock: true) {}
                 MoinUIButton(localization.tr("button.label.dashed"), variant: .dashed, isBlock: true) {}
-                MoinUIButton(localization.tr("button.label.disabled"), isDisabled: true, isBlock: true) {}
                 MoinUIButton(localization.tr("button.label.text"), variant: .text, isBlock: true) {}
                 MoinUIButton(localization.tr("button.label.link"), variant: .link, isBlock: true) {}
             }
@@ -412,7 +424,6 @@ struct ButtonExamples: View {
             MoinUIButton("\(localization.tr("button.label.primary"))", type: .primary, isBlock: true) {}
             MoinUIButton("\(localization.tr("button.label.default"))", isBlock: true) {}
             MoinUIButton("\(localization.tr("button.label.dashed"))", variant: .dashed, isBlock: true) {}
-            MoinUIButton("\(localization.tr("button.label.disabled"))", isDisabled: true, isBlock: true) {}
             MoinUIButton("\(localization.tr("button.label.text"))", variant: .text, isBlock: true) {}
             MoinUIButton("\(localization.tr("button.label.link"))", variant: .link, isBlock: true) {}
             """

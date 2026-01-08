@@ -287,11 +287,6 @@ struct ButtonPlayground: View {
             Spacer()
         }
         .frame(maxWidth: .infinity)
-        .background(
-            config.isDarkMode
-                ? Color(white: 0.12)
-                : Color(white: 0.98)
-        )
     }
 
     // MARK: - Control Panel

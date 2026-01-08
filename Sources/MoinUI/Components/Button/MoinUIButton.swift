@@ -25,7 +25,7 @@ public enum MoinUIButtonIconPlacement {
 }
 
 /// Loading 配置 - 支持 delay 和自定义 icon
-public struct MoinUIButtonLoading: ExpressibleByBooleanLiteral {
+public struct MoinUIButtonLoading: ExpressibleByBooleanLiteral, Equatable {
     public let isLoading: Bool
     public let delay: TimeInterval?
     public let icon: String?
@@ -153,13 +153,8 @@ public struct MoinUIButton<Label: View>: View {
                 .onChanged { _ in isPressed = true }
                 .onEnded { _ in isPressed = false }
         )
-        .onChange(of: loadingConfig.isLoading) { newValue in
-            handleLoadingChange(newValue)
-        }
-        .onAppear {
-            if loadingConfig.isLoading {
-                handleLoadingChange(true)
-            }
+        .task(id: loadingConfig) {
+            handleLoadingChange(loadingConfig.isLoading)
         }
     }
 

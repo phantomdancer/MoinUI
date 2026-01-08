@@ -85,12 +85,12 @@ Constants.Size.controlHeight  // 32
 4. `swift test` 确保测试通过
 5. Demo 中添加示例
 6. 添加中英文翻译
-7. **完成后**：更新 `.claude/context/` 相关文件
+7. **完成后**：更新 `.claude/context/` 相关文件（使用极简文言文写入）
 8. 回复"毕。"
 
 ## 项目上下文（重要）
 
-`.claude/context/` 目录记录项目持续状态，**每次任务开始时读取，完成后更新**：
+`.claude/context/` 目录记录项目持续状态，**每次任务开始时读取，完成后用极简文言文更新**：
 
 | 文件 | 用途 |
 |------|------|
@@ -105,12 +105,13 @@ Constants.Size.controlHeight  // 32
 - 组件翻译: `Sources/MoinUI/Locales/`
 - Demo翻译: `Sources/Demo/Locales/`
 - 使用 `localization.tr("key")` 获取翻译
+- 示例代码中的code内也需要国际化
 
 ## 竞品参考
 
 | 竞品 | 链接 |
 |------|------|
-| Ant Design | 源码已上下载到本地 ThirdLibs/ant-design 目录 |
+| Ant Design | 源码已上下载到本地 ThirdLibs/ant-design 目录，若不存在，需git clone https://github.com/ant-design/ant-design.git放入 |
 | Element Plus | https://element-plus.org |
 | shadcn/ui | https://ui.shadcn.com |
 

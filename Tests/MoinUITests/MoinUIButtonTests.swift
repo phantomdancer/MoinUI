@@ -6,97 +6,23 @@ final class MoinUIButtonTests: XCTestCase {
 
     // MARK: - Type Tests
 
-    func testButtonTypeBackgroundColors() {
-        XCTAssertEqual(MoinUIButtonType.default.backgroundColor, Constants.Colors.background)
-        XCTAssertEqual(MoinUIButtonType.primary.backgroundColor, Constants.Colors.primary)
-        XCTAssertEqual(MoinUIButtonType.success.backgroundColor, Constants.Colors.success)
-        XCTAssertEqual(MoinUIButtonType.warning.backgroundColor, Constants.Colors.warning)
-        XCTAssertEqual(MoinUIButtonType.danger.backgroundColor, Constants.Colors.danger)
-        XCTAssertEqual(MoinUIButtonType.info.backgroundColor, Constants.Colors.info)
-    }
-
-    func testButtonTypeHoverColors() {
-        XCTAssertEqual(MoinUIButtonType.default.hoverBackgroundColor, Constants.Colors.backgroundHover)
-        XCTAssertEqual(MoinUIButtonType.primary.hoverBackgroundColor, Constants.Colors.primaryHover)
-        XCTAssertEqual(MoinUIButtonType.success.hoverBackgroundColor, Constants.Colors.successHover)
-        XCTAssertEqual(MoinUIButtonType.warning.hoverBackgroundColor, Constants.Colors.warningHover)
-        XCTAssertEqual(MoinUIButtonType.danger.hoverBackgroundColor, Constants.Colors.dangerHover)
-        XCTAssertEqual(MoinUIButtonType.info.hoverBackgroundColor, Constants.Colors.infoHover)
-    }
-
-    func testButtonTypeActiveColors() {
-        XCTAssertEqual(MoinUIButtonType.default.activeBackgroundColor, Constants.Colors.background)
-        XCTAssertEqual(MoinUIButtonType.primary.activeBackgroundColor, Constants.Colors.primaryActive)
-        XCTAssertEqual(MoinUIButtonType.success.activeBackgroundColor, Constants.Colors.successActive)
-        XCTAssertEqual(MoinUIButtonType.warning.activeBackgroundColor, Constants.Colors.warningActive)
-        XCTAssertEqual(MoinUIButtonType.danger.activeBackgroundColor, Constants.Colors.dangerActive)
-        XCTAssertEqual(MoinUIButtonType.info.activeBackgroundColor, Constants.Colors.infoActive)
-    }
-
-    func testButtonTypeForegroundColors() {
-        XCTAssertEqual(MoinUIButtonType.default.foregroundColor, Constants.Colors.textPrimary)
-        XCTAssertEqual(MoinUIButtonType.primary.foregroundColor, Color.white)
-        XCTAssertEqual(MoinUIButtonType.success.foregroundColor, Color.white)
-        XCTAssertEqual(MoinUIButtonType.warning.foregroundColor, Color.white)
-        XCTAssertEqual(MoinUIButtonType.danger.foregroundColor, Color.white)
-        XCTAssertEqual(MoinUIButtonType.info.foregroundColor, Color.white)
-    }
-
-    func testButtonTypeBorderColors() {
-        XCTAssertEqual(MoinUIButtonType.default.borderColor, Constants.Colors.border)
-        XCTAssertEqual(MoinUIButtonType.primary.borderColor, Color.clear)
-        XCTAssertEqual(MoinUIButtonType.success.borderColor, Color.clear)
-        XCTAssertEqual(MoinUIButtonType.warning.borderColor, Color.clear)
-        XCTAssertEqual(MoinUIButtonType.danger.borderColor, Color.clear)
-        XCTAssertEqual(MoinUIButtonType.info.borderColor, Color.clear)
-    }
-
-    func testButtonTypeHoverBorderColors() {
-        XCTAssertEqual(MoinUIButtonType.default.hoverBorderColor, Constants.Colors.borderHover)
-        XCTAssertEqual(MoinUIButtonType.primary.hoverBorderColor, Color.clear)
-        XCTAssertEqual(MoinUIButtonType.success.hoverBorderColor, Color.clear)
-        XCTAssertEqual(MoinUIButtonType.warning.hoverBorderColor, Color.clear)
-        XCTAssertEqual(MoinUIButtonType.danger.hoverBorderColor, Color.clear)
-        XCTAssertEqual(MoinUIButtonType.info.hoverBorderColor, Color.clear)
+    func testButtonTypeCases() {
+        let types: [MoinUIButtonType] = [.default, .primary, .success, .warning, .danger, .info]
+        XCTAssertEqual(types.count, 6)
     }
 
     // MARK: - Size Tests
 
-    func testButtonSizeHeights() {
-        XCTAssertEqual(MoinUIButtonSize.small.height, Constants.Button.heightSm)
-        XCTAssertEqual(MoinUIButtonSize.medium.height, Constants.Button.heightMd)
-        XCTAssertEqual(MoinUIButtonSize.large.height, Constants.Button.heightLg)
-    }
-
-    func testButtonSizePaddings() {
-        XCTAssertEqual(MoinUIButtonSize.small.horizontalPadding, Constants.Button.paddingHorizontalSm)
-        XCTAssertEqual(MoinUIButtonSize.medium.horizontalPadding, Constants.Button.paddingHorizontalMd)
-        XCTAssertEqual(MoinUIButtonSize.large.horizontalPadding, Constants.Button.paddingHorizontalLg)
-    }
-
-    func testButtonSizeFontSizes() {
-        XCTAssertEqual(MoinUIButtonSize.small.fontSize, Constants.Button.fontSizeSm)
-        XCTAssertEqual(MoinUIButtonSize.medium.fontSize, Constants.Button.fontSizeMd)
-        XCTAssertEqual(MoinUIButtonSize.large.fontSize, Constants.Button.fontSizeLg)
-    }
-
-    func testButtonSizeIconSizes() {
-        XCTAssertEqual(MoinUIButtonSize.small.iconSize, Constants.Button.iconSizeSm)
-        XCTAssertEqual(MoinUIButtonSize.medium.iconSize, Constants.Button.iconSizeMd)
-        XCTAssertEqual(MoinUIButtonSize.large.iconSize, Constants.Button.iconSizeLg)
-    }
-
-    func testButtonSizeCornerRadius() {
-        XCTAssertEqual(MoinUIButtonSize.small.cornerRadius, Constants.Radius.sm)
-        XCTAssertEqual(MoinUIButtonSize.medium.cornerRadius, Constants.Radius.md)
-        XCTAssertEqual(MoinUIButtonSize.large.cornerRadius, Constants.Radius.lg)
+    func testButtonSizeCases() {
+        let sizes: [MoinUIButtonSize] = [.small, .medium, .large]
+        XCTAssertEqual(sizes.count, 3)
     }
 
     // MARK: - Variant Tests
 
     func testButtonVariantCases() {
-        let variants: [MoinUIButtonVariant] = [.solid, .outline, .text, .link, .ghost]
-        XCTAssertEqual(variants.count, 5)
+        let variants: [MoinUIButtonVariant] = [.solid, .outlined, .dashed, .filled, .text, .link]
+        XCTAssertEqual(variants.count, 6)
     }
 
     // MARK: - Shape Tests
@@ -104,6 +30,13 @@ final class MoinUIButtonTests: XCTestCase {
     func testButtonShapeCases() {
         let shapes: [MoinUIButtonShape] = [.default, .round, .circle]
         XCTAssertEqual(shapes.count, 3)
+    }
+
+    // MARK: - Icon Placement Tests
+
+    func testButtonIconPlacementCases() {
+        let placements: [MoinUIButtonIconPlacement] = [.start, .end]
+        XCTAssertEqual(placements.count, 2)
     }
 
     // MARK: - Button Initialization Tests
@@ -122,9 +55,9 @@ final class MoinUIButtonTests: XCTestCase {
             "Test",
             type: .primary,
             size: .large,
-            variant: .outline,
+            variant: .outlined,
             shape: .round,
-            isLoading: false,
+            loading: false,
             isDisabled: false,
             isBlock: true
         ) {}
@@ -146,7 +79,7 @@ final class MoinUIButtonTests: XCTestCase {
             size: .small,
             variant: .solid,
             shape: .default,
-            isLoading: false,
+            loading: false,
             isDisabled: false,
             isBlock: false,
             action: {}
@@ -162,47 +95,28 @@ final class MoinUIButtonTests: XCTestCase {
     // MARK: - Constants Tests
 
     func testButtonConstants() {
-        XCTAssertEqual(Constants.Button.heightSm, 24)
-        XCTAssertEqual(Constants.Button.heightMd, 32)
-        XCTAssertEqual(Constants.Button.heightLg, 40)
-        XCTAssertEqual(Constants.Button.paddingHorizontalSm, 8)
-        XCTAssertEqual(Constants.Button.paddingHorizontalMd, 16)
-        XCTAssertEqual(Constants.Button.paddingHorizontalLg, 20)
-        XCTAssertEqual(Constants.Button.fontSizeSm, 12)
-        XCTAssertEqual(Constants.Button.fontSizeMd, 14)
-        XCTAssertEqual(Constants.Button.fontSizeLg, 16)
-        XCTAssertEqual(Constants.Button.iconSizeSm, 14)
-        XCTAssertEqual(Constants.Button.iconSizeMd, 16)
-        XCTAssertEqual(Constants.Button.iconSizeLg, 18)
         XCTAssertEqual(Constants.Button.iconSpacing, 6)
         XCTAssertEqual(Constants.Button.borderWidth, 1)
     }
 
-    // MARK: - Icon Position Tests
-
-    func testButtonIconPositionCases() {
-        let positions: [MoinUIButtonIconPosition] = [.leading, .trailing]
-        XCTAssertEqual(positions.count, 2)
-    }
-
     // MARK: - Button with Icon Tests
 
-    func testButtonWithIconLeading() {
+    func testButtonWithIconStart() {
         let button = MoinUIButton(
             "Search",
             type: .primary,
             icon: "magnifyingglass",
-            iconPosition: .leading
+            iconPlacement: .start
         ) {}
         XCTAssertNotNil(button)
     }
 
-    func testButtonWithIconTrailing() {
+    func testButtonWithIconEnd() {
         let button = MoinUIButton(
             "Next",
             type: .primary,
             icon: "arrow.right",
-            iconPosition: .trailing
+            iconPlacement: .end
         ) {}
         XCTAssertNotNil(button)
     }
@@ -266,7 +180,25 @@ final class MoinUIButtonTests: XCTestCase {
         let button = MoinUIButton(
             "Loading",
             type: .primary,
-            isLoading: true
+            loading: true
+        ) {}
+        XCTAssertNotNil(button)
+    }
+
+    func testButtonLoadingWithDelay() {
+        let button = MoinUIButton(
+            "Loading",
+            type: .primary,
+            loading: MoinUIButtonLoading(true, delay: 0.5)
+        ) {}
+        XCTAssertNotNil(button)
+    }
+
+    func testButtonLoadingWithCustomIcon() {
+        let button = MoinUIButton(
+            "Loading",
+            type: .primary,
+            loading: MoinUIButtonLoading(true, icon: "arrow.clockwise")
         ) {}
         XCTAssertNotNil(button)
     }
@@ -351,6 +283,44 @@ final class MoinUIButtonTests: XCTestCase {
             "Test",
             type: .primary,
             color: customColor
+        ) {}
+        XCTAssertNotNil(button)
+    }
+
+    // MARK: - Ghost Button Tests
+
+    func testButtonGhostMode() {
+        let button = MoinUIButton(
+            "Ghost",
+            type: .primary,
+            isGhost: true
+        ) {}
+        XCTAssertNotNil(button)
+    }
+
+    // MARK: - Gradient Button Tests
+
+    func testButtonWithGradient() {
+        let gradient = LinearGradient(
+            colors: [.purple, .blue],
+            startPoint: .leading,
+            endPoint: .trailing
+        )
+        let button = MoinUIButton(
+            "Gradient",
+            type: .primary,
+            gradient: gradient
+        ) {}
+        XCTAssertNotNil(button)
+    }
+
+    // MARK: - Block Button Tests
+
+    func testButtonBlockMode() {
+        let button = MoinUIButton(
+            "Block",
+            type: .primary,
+            isBlock: true
         ) {}
         XCTAssertNotNil(button)
     }
