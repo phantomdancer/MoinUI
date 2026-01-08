@@ -10,6 +10,9 @@ struct ButtonAPISection: View {
                 .font(.title2)
                 .fontWeight(.semibold)
 
+            Text("MoinUIButton")
+                .font(.headline)
+
             APITable(
                 headers: (
                     localization.tr("api.property"),
@@ -18,11 +21,11 @@ struct ButtonAPISection: View {
                     localization.tr("api.description")
                 ),
                 rows: [
-                    ("type", "MoinUIButtonColor", ".default", localization.tr("api.button.type")),
+                    ("label", "@ViewBuilder () -> View", "-", localization.tr("api.button.label")),
+                    ("color", "MoinUIButtonColor", ".default", localization.tr("api.button.type")),
                     ("size", "MoinUIButtonSize", ".medium", localization.tr("api.button.size")),
                     ("variant", "MoinUIButtonVariant", ".solid", localization.tr("api.button.variant")),
                     ("shape", "MoinUIButtonShape", ".default", localization.tr("api.button.shape")),
-                    ("color", "Color?", "nil", localization.tr("api.button.color")),
                     ("gradient", "LinearGradient?", "nil", localization.tr("api.button.gradient")),
                     ("fontColor", "Color?", "nil", localization.tr("api.button.fontColor")),
                     ("icon", "String?", "nil", localization.tr("api.button.icon")),

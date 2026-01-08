@@ -24,6 +24,7 @@ struct ButtonExamples: View {
         AnchorItem(id: "gradient", titleKey: "button.gradient"),
         AnchorItem(id: "icon", titleKey: "button.icon"),
         AnchorItem(id: "icon_text", titleKey: "button.icon_text"),
+        AnchorItem(id: "custom_content", titleKey: "button.custom_content"),
         AnchorItem(id: "disabled", titleKey: "button.disabled"),
         AnchorItem(id: "block", titleKey: "button.block"),
         AnchorItem(id: "api", titleKey: "API"),
@@ -54,6 +55,7 @@ struct ButtonExamples: View {
                 gradientExample.id("gradient")
                 iconExample.id("icon")
                 iconTextExample.id("icon_text")
+                customContentExample.id("custom_content")
                 disabledExample.id("disabled")
                 blockExample.id("block")
 
@@ -341,6 +343,50 @@ struct ButtonExamples: View {
             MoinUIButton("\(localization.tr("button.label.search"))", color: .primary, icon: "magnifyingglass") {}
             MoinUIButton("\(localization.tr("button.label.download"))", color: .success, icon: "arrow.down.circle") {}
             MoinUIButton("\(localization.tr("button.label.go"))", color: .info, icon: "arrow.right", iconPlacement: .end) {}
+            """
+        }
+    }
+
+    private var customContentExample: some View {
+        ExampleSection(
+            title: localization.tr("button.custom_content"),
+            description: localization.tr("button.custom_content_desc")
+        ) {
+            HStack(spacing: MoinUIConstants.Spacing.md) {
+                MoinUIButton(color: .primary) {
+                    HStack(spacing: MoinUIConstants.Spacing.xs) {
+                        Image(systemName: "star.fill")
+                            .foregroundStyle(.yellow)
+                        Text(localization.tr("button.label.favorite"))
+                    }
+                }
+                MoinUIButton(color: .success, variant: .outlined) {
+                    HStack(spacing: MoinUIConstants.Spacing.xs) {
+                        Circle()
+                            .fill(.green)
+                            .frame(width: 8, height: 8)
+                        Text(localization.tr("button.label.online"))
+                    }
+                }
+            }
+        } code: {
+            """
+            MoinUIButton(color: .primary) {
+                HStack(spacing: MoinUIConstants.Spacing.xs) {
+                    Image(systemName: "star.fill")
+                        .foregroundStyle(.yellow)
+                    Text("\(localization.tr("button.label.favorite"))")
+                }
+            }
+
+            MoinUIButton(color: .success, variant: .outlined) {
+                HStack(spacing: MoinUIConstants.Spacing.xs) {
+                    Circle()
+                        .fill(.green)
+                        .frame(width: 8, height: 8)
+                    Text("\(localization.tr("button.label.online"))")
+                }
+            }
             """
         }
     }

@@ -141,6 +141,8 @@
     "icon_desc": "使用 SF Symbols 的纯图标按钮。",
     "icon_text": "图标+文字",
     "icon_text_desc": "按钮可以包含图标和文字，图标可在前或后。",
+    "custom_content": "自定义内容",
+    "custom_content_desc": "使用 @ViewBuilder 传入任意子视图作为按钮内容。",
     "disabled": "禁用状态",
     "disabled_desc": "禁用状态下按钮不可点击，有色按钮保持颜色但降低透明度。",
     "link": "链接按钮",
@@ -179,7 +181,9 @@
       "custom": "自定义",
       "click_load": "点击加载",
       "icon_end": "图标在后",
-      "delay": "延迟加载"
+      "delay": "延迟加载",
+      "favorite": "收藏",
+      "online": "在线"
     }
   },
   "config": {
@@ -273,6 +277,7 @@
     "value": "值",
     "button": {
       "type": "按钮颜色类型",
+      "label": "按钮内容，支持自定义子视图",
       "size": "按钮尺寸",
       "variant": "按钮样式变体",
       "shape": "按钮形状",

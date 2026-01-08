@@ -141,6 +141,8 @@
     "icon_desc": "Icon-only buttons using SF Symbols.",
     "icon_text": "Icon + Text",
     "icon_text_desc": "Button can contain both icon and text. Icon can be placed on left or right.",
+    "custom_content": "Custom Content",
+    "custom_content_desc": "Use @ViewBuilder to pass any child view as button content.",
     "disabled": "Disabled",
     "disabled_desc": "Disabled buttons are not clickable. Colored buttons keep color with reduced opacity.",
     "link": "Link Button",
@@ -179,7 +181,9 @@
       "custom": "Custom",
       "click_load": "Click to Load",
       "icon_end": "Icon End",
-      "delay": "Delay Load"
+      "delay": "Delay Load",
+      "favorite": "Favorite",
+      "online": "Online"
     }
   },
   "config": {
@@ -273,6 +277,7 @@
     "value": "Value",
     "button": {
       "type": "Button color type",
+      "label": "Button content, supports custom child views",
       "size": "Button size",
       "variant": "Button style variant",
       "shape": "Button shape",
