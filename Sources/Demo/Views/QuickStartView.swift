@@ -136,7 +136,7 @@ private struct CodeBlock: View {
                 .buttonStyle(.plain)
             }
 
-            HighlightedCodeView(code: code)
+            HighlightedCodeView(code: code, fontSize: 12)
                 .padding(MoinUIConstants.Spacing.lg)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .background(config.isDarkMode ? Color(white: 0.08) : Color(white: 0.96))

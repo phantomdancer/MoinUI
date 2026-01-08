@@ -226,11 +226,20 @@ struct ThemeView: View {
                     .font(.headline)
                     .foregroundStyle(token.colorText)
 
-                ThemeAPITable(rows: [
-                    (".light", localization.tr("theme.api.light")),
-                    (".dark", localization.tr("theme.api.dark")),
-                    (".system", localization.tr("theme.api.system"))
-                ])
+                APITable(
+                    headers: (
+                        localization.tr("api.value"),
+                        localization.tr("api.type"),
+                        localization.tr("api.default"),
+                        localization.tr("api.description")
+                    ),
+                    rows: [
+                        (".light", "-", "-", localization.tr("theme.api.light")),
+                        (".dark", "-", "-", localization.tr("theme.api.dark")),
+                        (".system", "-", "-", localization.tr("theme.api.system"))
+                    ],
+                    columnWidths: (180, 80, 80, 300)
+                )
             }
 
             // ConfigProvider Theme Methods
@@ -239,12 +248,21 @@ struct ThemeView: View {
                     .font(.headline)
                     .foregroundStyle(token.colorText)
 
-                ThemeAPITable(rows: [
-                    ("theme", localization.tr("theme.api.theme_prop")),
-                    ("isDarkMode", localization.tr("theme.api.is_dark")),
-                    ("applyTheme(_:)", localization.tr("theme.api.apply")),
-                    ("toggleTheme()", localization.tr("theme.api.toggle"))
-                ])
+                APITable(
+                    headers: (
+                        localization.tr("api.property"),
+                        localization.tr("api.type"),
+                        localization.tr("api.default"),
+                        localization.tr("api.description")
+                    ),
+                    rows: [
+                        ("applyTheme(_:)", "Method", "-", localization.tr("theme.api.apply")),
+                        ("isDarkMode", "Bool", "-", localization.tr("theme.api.is_dark")),
+                        ("theme", "MoinUITheme", ".system", localization.tr("theme.api.theme_prop")),
+                        ("toggleTheme()", "Method", "-", localization.tr("theme.api.toggle"))
+                    ],
+                    columnWidths: (180, 120, 80, 260)
+                )
             }
 
             // View Modifier
@@ -253,10 +271,19 @@ struct ThemeView: View {
                     .font(.headline)
                     .foregroundStyle(token.colorText)
 
-                ThemeAPITable(rows: [
-                    (".moinUIThemeRoot()", localization.tr("theme.api.theme_root")),
-                    (".moinUITheme(_:)", localization.tr("theme.api.theme_modifier"))
-                ])
+                APITable(
+                    headers: (
+                        localization.tr("api.property"),
+                        localization.tr("api.type"),
+                        localization.tr("api.default"),
+                        localization.tr("api.description")
+                    ),
+                    rows: [
+                        (".moinUITheme(_:)", "Modifier", "-", localization.tr("theme.api.theme_modifier")),
+                        (".moinUIThemeRoot()", "Modifier", "-", localization.tr("theme.api.theme_root"))
+                    ],
+                    columnWidths: (180, 100, 80, 280)
+                )
             }
         }
     }
@@ -285,40 +312,6 @@ private struct TokenColorPreview: View {
                 .font(.caption)
                 .foregroundStyle(token.colorTextSecondary)
         }
-    }
-}
-
-private struct ThemeAPITable: View {
-    let rows: [(String, String)]
-    @ObservedObject private var config = MoinUIConfigProvider.shared
-
-    private var token: MoinUIToken { config.token }
-
-    var body: some View {
-        VStack(spacing: 0) {
-            ForEach(Array(rows.enumerated()), id: \.offset) { index, row in
-                HStack {
-                    Text(row.0)
-                        .font(.system(.body, design: .monospaced))
-                        .foregroundStyle(token.colorPrimary)
-                        .frame(width: 180, alignment: .leading)
-
-                    Text(row.1)
-                        .font(.body)
-                        .foregroundStyle(token.colorTextSecondary)
-
-                    Spacer()
-                }
-                .padding(.vertical, MoinUIConstants.Spacing.sm)
-                .padding(.horizontal, MoinUIConstants.Spacing.md)
-                .background(index % 2 == 0 ? token.colorBgElevated : token.colorBgContainer)
-            }
-        }
-        .clipShape(RoundedRectangle(cornerRadius: 8))
-        .overlay(
-            RoundedRectangle(cornerRadius: 8)
-                .stroke(token.colorBorder, lineWidth: 1)
-        )
     }
 }
 
@@ -358,7 +351,7 @@ private struct CodeBlock: View {
                 .buttonStyle(.plain)
             }
 
-            HighlightedCodeView(code: code)
+            HighlightedCodeView(code: code, fontSize: 12)
                 .padding(MoinUIConstants.Spacing.lg)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .background(config.isDarkMode ? Color(white: 0.08) : Color(white: 0.96))

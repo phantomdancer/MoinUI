@@ -44,6 +44,11 @@ struct APITable: View {
     let rows: [(String, String, String, String)]
     var columnWidths: (CGFloat, CGFloat, CGFloat, CGFloat) = (140, 180, 100, 220)
 
+    /// 按首列字母排序
+    private var sortedRows: [(String, String, String, String)] {
+        rows.sorted { $0.0.lowercased() < $1.0.lowercased() }
+    }
+
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             VStack(spacing: 0) {
@@ -56,16 +61,16 @@ struct APITable: View {
 
                 Divider()
 
-                ForEach(rows.indices, id: \.self) { index in
+                ForEach(sortedRows.indices, id: \.self) { index in
                     HStack(spacing: 0) {
-                        bodyCell(rows[index].0, isCode: true, width: columnWidths.0)
-                        bodyCell(rows[index].1, isCode: true, width: columnWidths.1)
-                        bodyCell(rows[index].2, width: columnWidths.2)
-                        bodyCell(rows[index].3, width: columnWidths.3)
+                        bodyCell(sortedRows[index].0, isCode: true, width: columnWidths.0)
+                        bodyCell(sortedRows[index].1, isCode: true, width: columnWidths.1)
+                        bodyCell(sortedRows[index].2, width: columnWidths.2)
+                        bodyCell(sortedRows[index].3, width: columnWidths.3)
                     }
                     .background(index % 2 == 1 ? Color.primary.opacity(0.03) : Color.clear)
 
-                    if index < rows.count - 1 {
+                    if index < sortedRows.count - 1 {
                         Divider()
                     }
                 }
