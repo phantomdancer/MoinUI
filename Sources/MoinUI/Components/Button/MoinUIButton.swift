@@ -144,12 +144,12 @@ public struct MoinUIButton<Label: View>: View {
         .disabled(effectiveDisabled && !shouldApplyDisabledOpacity)
         .allowsHitTesting(!effectiveDisabled)
         .opacity(shouldApplyDisabledOpacity ? 0.65 : 1)
+        .moinUICursor(effectiveDisabled ? .operationNotAllowed : .pointingHand)
         .animation(.easeInOut(duration: token.motionDuration / 2), value: isHovered)
         .animation(.easeInOut(duration: token.motionDuration / 2), value: isPressed)
         .onHover { hovering in
             isHovered = hovering
             if !hovering { isPressed = false }
-            updateCursor(hovering: hovering)
         }
         .simultaneousGesture(
             DragGesture(minimumDistance: 0)
@@ -187,6 +187,7 @@ public struct MoinUIButton<Label: View>: View {
         .background(backgroundView)
         .clipShape(buttonShape)
         .overlay(borderOverlay)
+        .contentShape(Rectangle())
     }
 
     @ViewBuilder
@@ -430,16 +431,6 @@ public struct MoinUIButton<Label: View>: View {
             }
         } else {
             showLoading = false
-        }
-    }
-
-    private func updateCursor(hovering: Bool) {
-        if effectiveDisabled {
-            if hovering { NSCursor.operationNotAllowed.push() }
-            else { NSCursor.pop() }
-        } else {
-            if hovering { NSCursor.pointingHand.push() }
-            else { NSCursor.pop() }
         }
     }
 }
