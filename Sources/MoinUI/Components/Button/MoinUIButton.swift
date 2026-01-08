@@ -146,11 +146,11 @@ public struct MoinUIButton<Label: View>: View {
         .allowsHitTesting(!effectiveDisabled)
         .opacity(shouldApplyDisabledOpacity ? 0.65 : 1)
         .onHover { hovering in
+            guard isHovered != hovering else { return }
             withAnimation(.easeInOut(duration: token.motionDuration / 2)) {
                 isHovered = hovering
                 if !hovering { isPressed = false }
             }
-            // 光标处理
             if hovering {
                 let cursor: NSCursor = effectiveDisabled ? .operationNotAllowed : .pointingHand
                 cursor.set()
