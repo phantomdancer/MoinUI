@@ -24,7 +24,7 @@ struct AnchorNav: View {
                     }
                     activeAnchor = anchor.id
                 } label: {
-                    HStack(spacing: Constants.Spacing.sm) {
+                    HStack(spacing: MoinUIConstants.Spacing.sm) {
                         // 左侧指示条
                         RoundedRectangle(cornerRadius: 1)
                             .fill(activeAnchor == anchor.id ? Color.accentColor : Color.clear)
@@ -40,10 +40,10 @@ struct AnchorNav: View {
                     .contentShape(Rectangle())
                 }
                 .buttonStyle(.plain)
-                .padding(.vertical, Constants.Spacing.xs)
+                .padding(.vertical, MoinUIConstants.Spacing.xs)
             }
         }
-        .padding(.horizontal, Constants.Spacing.sm)
+        .padding(.horizontal, MoinUIConstants.Spacing.sm)
         .frame(width: 140)
     }
 }
@@ -60,7 +60,7 @@ struct ExamplePageWithAnchor<Content: View>: View {
                 // 左侧内容区
                 ScrollView {
                     content(proxy)
-                        .padding(Constants.Spacing.xl)
+                        .padding(MoinUIConstants.Spacing.xl)
                 }
 
                 Divider()
@@ -72,7 +72,7 @@ struct ExamplePageWithAnchor<Content: View>: View {
                         scrollProxy: proxy,
                         activeAnchor: $activeAnchor
                     )
-                    .padding(.top, Constants.Spacing.xl)
+                    .padding(.top, MoinUIConstants.Spacing.xl)
 
                     Spacer()
                 }

@@ -8,7 +8,7 @@ struct ConfigProviderExamples: View {
 
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: Constants.Spacing.xl) {
+            VStack(alignment: .leading, spacing: MoinUIConstants.Spacing.xl) {
                 introduction
 
                 Divider()
@@ -23,14 +23,14 @@ struct ConfigProviderExamples: View {
 
                 apiReference
             }
-            .padding(Constants.Spacing.xl)
+            .padding(MoinUIConstants.Spacing.xl)
         }
     }
 
     // MARK: - Introduction
 
     private var introduction: some View {
-        VStack(alignment: .leading, spacing: Constants.Spacing.md) {
+        VStack(alignment: .leading, spacing: MoinUIConstants.Spacing.md) {
             Text(localization.tr("config.title"))
                 .font(.largeTitle)
                 .fontWeight(.bold)
@@ -73,7 +73,7 @@ struct ConfigProviderExamples: View {
             title: localization.tr("config.locale"),
             description: localization.tr("config.locale_desc")
         ) {
-            HStack(spacing: Constants.Spacing.md) {
+            HStack(spacing: MoinUIConstants.Spacing.md) {
                 MoinUIButton(localization.tr("config.switch_zh"), color: .primary) {
                     localization.locale = .zhCN
                 }
@@ -101,9 +101,9 @@ struct ConfigProviderExamples: View {
             title: localization.tr("config.theme"),
             description: localization.tr("config.theme_desc")
         ) {
-            VStack(alignment: .leading, spacing: Constants.Spacing.md) {
+            VStack(alignment: .leading, spacing: MoinUIConstants.Spacing.md) {
                 // Color picker buttons
-                HStack(spacing: Constants.Spacing.sm) {
+                HStack(spacing: MoinUIConstants.Spacing.sm) {
                     Text(localization.tr("config.primary_color"))
                         .font(.caption)
                         .foregroundStyle(.secondary)
@@ -125,7 +125,7 @@ struct ConfigProviderExamples: View {
                 }
 
                 // Preview buttons
-                HStack(spacing: Constants.Spacing.md) {
+                HStack(spacing: MoinUIConstants.Spacing.md) {
                     MoinUIButton(localization.tr("button.label.primary"), color: .primary) {}
                     MoinUIButton(localization.tr("button.label.default")) {}
                     MoinUIButton(localization.tr("button.label.primary"), color: .primary, variant: .outlined) {}
@@ -153,9 +153,9 @@ struct ConfigProviderExamples: View {
             title: localization.tr("config.token"),
             description: localization.tr("config.token_desc")
         ) {
-            VStack(alignment: .leading, spacing: Constants.Spacing.md) {
+            VStack(alignment: .leading, spacing: MoinUIConstants.Spacing.md) {
                 // Border radius slider
-                HStack(spacing: Constants.Spacing.sm) {
+                HStack(spacing: MoinUIConstants.Spacing.sm) {
                     Text(localization.tr("config.border_radius"))
                         .font(.caption)
                         .foregroundStyle(.secondary)
@@ -174,7 +174,7 @@ struct ConfigProviderExamples: View {
                 }
 
                 // Control height slider
-                HStack(spacing: Constants.Spacing.sm) {
+                HStack(spacing: MoinUIConstants.Spacing.sm) {
                     Text(localization.tr("config.control_height"))
                         .font(.caption)
                         .foregroundStyle(.secondary)
@@ -193,7 +193,7 @@ struct ConfigProviderExamples: View {
                 }
 
                 // Preview buttons
-                HStack(spacing: Constants.Spacing.md) {
+                HStack(spacing: MoinUIConstants.Spacing.md) {
                     MoinUIButton(localization.tr("button.label.primary"), color: .primary) {}
                     MoinUIButton(localization.tr("button.label.success"), color: .success) {}
                     MoinUIButton(localization.tr("button.label.danger"), color: .danger) {}
@@ -235,7 +235,7 @@ struct ConfigProviderExamples: View {
     // MARK: - API Reference
 
     private var apiReference: some View {
-        VStack(alignment: .leading, spacing: Constants.Spacing.lg) {
+        VStack(alignment: .leading, spacing: MoinUIConstants.Spacing.lg) {
             Text("API")
                 .font(.title2)
                 .fontWeight(.semibold)
@@ -264,7 +264,7 @@ struct ConfigProviderExamples: View {
 
             Text("MoinUILocale")
                 .font(.headline)
-                .padding(.top, Constants.Spacing.md)
+                .padding(.top, MoinUIConstants.Spacing.md)
 
             APITable(
                 headers: (

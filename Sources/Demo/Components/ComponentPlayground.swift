@@ -229,9 +229,9 @@ struct ButtonPlayground: View {
                 .frame(width: 320)
         }
         .background(Color(nsColor: .controlBackgroundColor))
-        .cornerRadius(Constants.Radius.md)
+        .cornerRadius(MoinUIConstants.Radius.md)
         .overlay(
-            RoundedRectangle(cornerRadius: Constants.Radius.md)
+            RoundedRectangle(cornerRadius: MoinUIConstants.Radius.md)
                 .stroke(Color.primary.opacity(0.1), lineWidth: 1)
         )
     }
@@ -239,7 +239,7 @@ struct ButtonPlayground: View {
     // MARK: - Preview Section
 
     private var previewSection: some View {
-        VStack(spacing: Constants.Spacing.sm) {
+        VStack(spacing: MoinUIConstants.Spacing.sm) {
             HStack {
                 Text(localization.tr("playground.preview"))
                     .font(.system(size: 11, weight: .medium))
@@ -276,12 +276,12 @@ struct ButtonPlayground: View {
                     isGhost: state.isGhost
                 ) {}
                 .frame(maxWidth: state.isBlock ? .infinity : nil)
-                .padding(.horizontal, state.isBlock ? Constants.Spacing.xl : 0)
+                .padding(.horizontal, state.isBlock ? MoinUIConstants.Spacing.xl : 0)
             }
 
             Spacer()
         }
-        .padding(Constants.Spacing.md)
+        .padding(MoinUIConstants.Spacing.md)
         .frame(maxWidth: .infinity, minHeight: 120)
     }
 
@@ -289,7 +289,7 @@ struct ButtonPlayground: View {
 
     private var controlPanel: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: Constants.Spacing.md) {
+            VStack(alignment: .leading, spacing: MoinUIConstants.Spacing.md) {
                 HStack {
                     Text(localization.tr("playground.props"))
                         .font(.system(size: 11, weight: .medium))
@@ -297,7 +297,7 @@ struct ButtonPlayground: View {
                     Spacer()
                 }
 
-                VStack(spacing: Constants.Spacing.sm) {
+                VStack(spacing: MoinUIConstants.Spacing.sm) {
                     TextPropControl(
                         label: localization.tr("playground.prop.title"),
                         propName: localization.tr("playground.prop.title_prop"),
@@ -364,7 +364,7 @@ struct ButtonPlayground: View {
                     }
 
                     Divider()
-                        .padding(.vertical, Constants.Spacing.xs)
+                        .padding(.vertical, MoinUIConstants.Spacing.xs)
 
                     TogglePropControl(
                         label: localization.tr("playground.prop.disabled"),
@@ -391,14 +391,14 @@ struct ButtonPlayground: View {
                     )
                 }
             }
-            .padding(Constants.Spacing.md)
+            .padding(MoinUIConstants.Spacing.md)
         }
     }
 
     // MARK: - Code Section
 
     private var codeSection: some View {
-        VStack(alignment: .leading, spacing: Constants.Spacing.sm) {
+        VStack(alignment: .leading, spacing: MoinUIConstants.Spacing.sm) {
             HStack {
                 Text(localization.tr("playground.code"))
                     .font(.system(size: 11, weight: .medium))
@@ -411,7 +411,7 @@ struct ButtonPlayground: View {
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         }
-        .padding(Constants.Spacing.md)
+        .padding(MoinUIConstants.Spacing.md)
         .background(config.isDarkMode ? Color(white: 0.08) : Color(white: 0.96))
     }
 }

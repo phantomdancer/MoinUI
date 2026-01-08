@@ -13,7 +13,7 @@ struct ExampleSection<Content: View>: View {
     @ObservedObject private var config = MoinUIConfigProvider.shared
 
     var body: some View {
-        VStack(alignment: .leading, spacing: Constants.Spacing.md) {
+        VStack(alignment: .leading, spacing: MoinUIConstants.Spacing.md) {
             Text(title)
                 .font(.title3)
                 .fontWeight(.semibold)
@@ -24,14 +24,14 @@ struct ExampleSection<Content: View>: View {
 
             content()
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.vertical, Constants.Spacing.lg)
+                .padding(.vertical, MoinUIConstants.Spacing.lg)
 
             ScrollView(.horizontal, showsIndicators: false) {
                 HighlightedCodeView(code: code(), fontSize: 12)
-                    .padding(Constants.Spacing.sm)
+                    .padding(MoinUIConstants.Spacing.sm)
             }
             .background(config.isDarkMode ? Color(white: 0.08) : Color(white: 0.96))
-            .cornerRadius(Constants.Radius.sm)
+            .cornerRadius(MoinUIConstants.Radius.sm)
         }
     }
 }
@@ -71,9 +71,9 @@ struct APITable: View {
             .frame(minWidth: 640)
         }
         .background(Color(nsColor: .controlBackgroundColor))
-        .cornerRadius(Constants.Radius.md)
+        .cornerRadius(MoinUIConstants.Radius.md)
         .overlay(
-            RoundedRectangle(cornerRadius: Constants.Radius.md)
+            RoundedRectangle(cornerRadius: MoinUIConstants.Radius.md)
                 .stroke(Color.primary.opacity(0.1), lineWidth: 1)
         )
     }
@@ -83,8 +83,8 @@ struct APITable: View {
             .font(.system(.caption, weight: .medium))
             .foregroundStyle(.secondary)
             .frame(width: width, alignment: .leading)
-            .padding(.horizontal, Constants.Spacing.sm)
-            .padding(.vertical, Constants.Spacing.xs)
+            .padding(.horizontal, MoinUIConstants.Spacing.sm)
+            .padding(.vertical, MoinUIConstants.Spacing.xs)
     }
 
     private func bodyCell(_ text: String, isCode: Bool = false, width: CGFloat) -> some View {
@@ -92,8 +92,8 @@ struct APITable: View {
             .font(isCode ? .system(.caption, design: .monospaced) : .caption)
             .foregroundStyle(isCode ? Color.accentColor : .primary)
             .frame(width: width, alignment: .leading)
-            .padding(.horizontal, Constants.Spacing.sm)
-            .padding(.vertical, Constants.Spacing.xs)
+            .padding(.horizontal, MoinUIConstants.Spacing.sm)
+            .padding(.vertical, MoinUIConstants.Spacing.xs)
     }
 }
 
@@ -105,7 +105,7 @@ struct FAQItem<Content: View>: View {
     @ObservedObject private var config = MoinUIConfigProvider.shared
 
     var body: some View {
-        VStack(alignment: .leading, spacing: Constants.Spacing.md) {
+        VStack(alignment: .leading, spacing: MoinUIConstants.Spacing.md) {
             Text(question)
                 .font(.headline)
                 .foregroundStyle(config.token.colorText)
@@ -114,9 +114,9 @@ struct FAQItem<Content: View>: View {
                 .font(.body)
                 .foregroundStyle(config.token.colorTextSecondary)
         }
-        .padding(Constants.Spacing.lg)
+        .padding(MoinUIConstants.Spacing.lg)
         .background(config.token.colorBgElevated)
-        .cornerRadius(Constants.Radius.md)
+        .cornerRadius(MoinUIConstants.Radius.md)
     }
 }
 
@@ -128,7 +128,7 @@ struct BulletPoint: View {
     }
 
     var body: some View {
-        HStack(alignment: .top, spacing: Constants.Spacing.sm) {
+        HStack(alignment: .top, spacing: MoinUIConstants.Spacing.sm) {
             Text("•")
             Text(text)
         }

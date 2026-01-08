@@ -7,7 +7,7 @@ struct LocalizationExamples: View {
 
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: Constants.Spacing.xl) {
+            VStack(alignment: .leading, spacing: MoinUIConstants.Spacing.xl) {
                 introduction
 
                 Divider()
@@ -21,14 +21,14 @@ struct LocalizationExamples: View {
 
                 apiReference
             }
-            .padding(Constants.Spacing.xl)
+            .padding(MoinUIConstants.Spacing.xl)
         }
     }
 
     // MARK: - Introduction
 
     private var introduction: some View {
-        VStack(alignment: .leading, spacing: Constants.Spacing.md) {
+        VStack(alignment: .leading, spacing: MoinUIConstants.Spacing.md) {
             Text(localization.tr("i18n.title"))
                 .font(.largeTitle)
                 .fontWeight(.bold)
@@ -46,7 +46,7 @@ struct LocalizationExamples: View {
             title: localization.tr("i18n.basic"),
             description: localization.tr("i18n.basic_desc")
         ) {
-            VStack(alignment: .leading, spacing: Constants.Spacing.sm) {
+            VStack(alignment: .leading, spacing: MoinUIConstants.Spacing.sm) {
                 Text("localization.tr(\"button.title\") = \"\(localization.tr("button.title"))\"")
                     .font(.system(.body, design: .monospaced))
             }
@@ -127,7 +127,7 @@ struct LocalizationExamples: View {
     // MARK: - API Reference
 
     private var apiReference: some View {
-        VStack(alignment: .leading, spacing: Constants.Spacing.lg) {
+        VStack(alignment: .leading, spacing: MoinUIConstants.Spacing.lg) {
             Text("API")
                 .font(.title2)
                 .fontWeight(.semibold)

@@ -14,11 +14,11 @@ public enum MoinUIButtonColor: Hashable {
     public var color: Color {
         switch self {
         case .default: return Color.gray
-        case .primary: return Constants.Colors.primary
-        case .success: return Constants.Colors.success
-        case .warning: return Constants.Colors.warning
-        case .danger: return Constants.Colors.danger
-        case .info: return Constants.Colors.info
+        case .primary: return MoinUIConstants.Colors.primary
+        case .success: return MoinUIConstants.Colors.success
+        case .warning: return MoinUIConstants.Colors.warning
+        case .danger: return MoinUIConstants.Colors.danger
+        case .info: return MoinUIConstants.Colors.info
         case .custom(let color): return color
         }
     }

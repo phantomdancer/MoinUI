@@ -5,7 +5,7 @@ struct ButtonAPISection: View {
     @ObservedObject private var localization = MoinUILocalization.shared
 
     var body: some View {
-        VStack(alignment: .leading, spacing: Constants.Spacing.lg) {
+        VStack(alignment: .leading, spacing: MoinUIConstants.Spacing.lg) {
             Text("API")
                 .font(.title2)
                 .fontWeight(.semibold)
@@ -38,7 +38,7 @@ struct ButtonAPISection: View {
 
             Text("MoinUIButtonColor")
                 .font(.headline)
-                .padding(.top, Constants.Spacing.md)
+                .padding(.top, MoinUIConstants.Spacing.md)
 
             APITable(
                 headers: (
@@ -59,7 +59,7 @@ struct ButtonAPISection: View {
 
             Text("MoinUIButtonVariant")
                 .font(.headline)
-                .padding(.top, Constants.Spacing.md)
+                .padding(.top, MoinUIConstants.Spacing.md)
 
             APITable(
                 headers: (

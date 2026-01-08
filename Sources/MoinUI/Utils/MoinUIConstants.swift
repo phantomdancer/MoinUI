@@ -1,7 +1,7 @@
 import SwiftUI
 
 /// Constants definition
-public enum Constants {
+public enum MoinUIConstants {
     /// Spacing
     public enum Spacing {
         public static let xs: CGFloat = 4

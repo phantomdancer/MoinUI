@@ -10,9 +10,9 @@ struct ThemeView: View {
 
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: Constants.Spacing.xl) {
+            VStack(alignment: .leading, spacing: MoinUIConstants.Spacing.xl) {
                 // Title
-                VStack(alignment: .leading, spacing: Constants.Spacing.sm) {
+                VStack(alignment: .leading, spacing: MoinUIConstants.Spacing.sm) {
                     Text(localization.tr("theme.title"))
                         .font(.largeTitle)
                         .fontWeight(.bold)
@@ -45,7 +45,7 @@ struct ThemeView: View {
 
                 Spacer(minLength: 40)
             }
-            .padding(Constants.Spacing.xl)
+            .padding(MoinUIConstants.Spacing.xl)
             .frame(maxWidth: .infinity, alignment: .leading)
         }
         .frame(maxWidth: .infinity)
@@ -55,7 +55,7 @@ struct ThemeView: View {
     // MARK: - Theme Root Section
 
     private var themeRootSection: some View {
-        VStack(alignment: .leading, spacing: Constants.Spacing.lg) {
+        VStack(alignment: .leading, spacing: MoinUIConstants.Spacing.lg) {
             Text(localization.tr("theme.root.title"))
                 .font(.title2)
                 .fontWeight(.semibold)
@@ -84,7 +84,7 @@ struct ThemeView: View {
             )
 
             // Info card
-            HStack(alignment: .top, spacing: Constants.Spacing.md) {
+            HStack(alignment: .top, spacing: MoinUIConstants.Spacing.md) {
                 Image(systemName: "info.circle.fill")
                     .foregroundStyle(token.colorPrimary)
 
@@ -92,7 +92,7 @@ struct ThemeView: View {
                     .font(.callout)
                     .foregroundStyle(token.colorTextSecondary)
             }
-            .padding(Constants.Spacing.md)
+            .padding(MoinUIConstants.Spacing.md)
             .background(token.colorPrimary.opacity(0.1))
             .clipShape(RoundedRectangle(cornerRadius: 8))
         }
@@ -101,7 +101,7 @@ struct ThemeView: View {
     // MARK: - Theme Switch Section
 
     private var themeSwitchSection: some View {
-        VStack(alignment: .leading, spacing: Constants.Spacing.lg) {
+        VStack(alignment: .leading, spacing: MoinUIConstants.Spacing.lg) {
             Text(localization.tr("theme.switch.title"))
                 .font(.title2)
                 .fontWeight(.semibold)
@@ -112,12 +112,12 @@ struct ThemeView: View {
                 .foregroundStyle(token.colorTextSecondary)
 
             // Demo
-            VStack(alignment: .leading, spacing: Constants.Spacing.md) {
+            VStack(alignment: .leading, spacing: MoinUIConstants.Spacing.md) {
                 Text(localization.tr("theme.switch.current"))
                     .font(.subheadline)
                     .foregroundStyle(token.colorTextSecondary)
 
-                HStack(spacing: Constants.Spacing.md) {
+                HStack(spacing: MoinUIConstants.Spacing.md) {
                     ForEach(MoinUITheme.allCases, id: \.self) { theme in
                         MoinUIButton(
                             theme.displayName,
@@ -129,7 +129,7 @@ struct ThemeView: View {
                     }
                 }
             }
-            .padding(Constants.Spacing.lg)
+            .padding(MoinUIConstants.Spacing.lg)
             .background(token.colorBgElevated)
             .clipShape(RoundedRectangle(cornerRadius: 12))
 
@@ -156,7 +156,7 @@ struct ThemeView: View {
     // MARK: - Token Section
 
     private var tokenSection: some View {
-        VStack(alignment: .leading, spacing: Constants.Spacing.lg) {
+        VStack(alignment: .leading, spacing: MoinUIConstants.Spacing.lg) {
             Text(localization.tr("theme.token.title"))
                 .font(.title2)
                 .fontWeight(.semibold)
@@ -167,7 +167,7 @@ struct ThemeView: View {
                 .foregroundStyle(token.colorTextSecondary)
 
             // Token color preview
-            VStack(alignment: .leading, spacing: Constants.Spacing.md) {
+            VStack(alignment: .leading, spacing: MoinUIConstants.Spacing.md) {
                 Text(localization.tr("theme.token.colors"))
                     .font(.subheadline)
                     .fontWeight(.medium)
@@ -177,7 +177,7 @@ struct ThemeView: View {
                     GridItem(.flexible()),
                     GridItem(.flexible()),
                     GridItem(.flexible())
-                ], spacing: Constants.Spacing.md) {
+                ], spacing: MoinUIConstants.Spacing.md) {
                     TokenColorPreview(name: "colorPrimary", color: token.colorPrimary)
                     TokenColorPreview(name: "colorSuccess", color: token.colorSuccess)
                     TokenColorPreview(name: "colorWarning", color: token.colorWarning)
@@ -186,7 +186,7 @@ struct ThemeView: View {
                     TokenColorPreview(name: "colorText", color: token.colorText)
                 }
             }
-            .padding(Constants.Spacing.lg)
+            .padding(MoinUIConstants.Spacing.lg)
             .background(token.colorBgElevated)
             .clipShape(RoundedRectangle(cornerRadius: 12))
 
@@ -213,14 +213,14 @@ struct ThemeView: View {
     // MARK: - API Section
 
     private var apiSection: some View {
-        VStack(alignment: .leading, spacing: Constants.Spacing.lg) {
+        VStack(alignment: .leading, spacing: MoinUIConstants.Spacing.lg) {
             Text("API")
                 .font(.title2)
                 .fontWeight(.semibold)
                 .foregroundStyle(token.colorText)
 
             // MoinUITheme
-            VStack(alignment: .leading, spacing: Constants.Spacing.md) {
+            VStack(alignment: .leading, spacing: MoinUIConstants.Spacing.md) {
                 Text("MoinUITheme")
                     .font(.headline)
                     .foregroundStyle(token.colorText)
@@ -233,7 +233,7 @@ struct ThemeView: View {
             }
 
             // ConfigProvider Theme Methods
-            VStack(alignment: .leading, spacing: Constants.Spacing.md) {
+            VStack(alignment: .leading, spacing: MoinUIConstants.Spacing.md) {
                 Text("MoinUIConfigProvider")
                     .font(.headline)
                     .foregroundStyle(token.colorText)
@@ -247,7 +247,7 @@ struct ThemeView: View {
             }
 
             // View Modifier
-            VStack(alignment: .leading, spacing: Constants.Spacing.md) {
+            VStack(alignment: .leading, spacing: MoinUIConstants.Spacing.md) {
                 Text("View Modifier")
                     .font(.headline)
                     .foregroundStyle(token.colorText)
@@ -271,7 +271,7 @@ private struct TokenColorPreview: View {
     private var token: MoinUIToken { config.token }
 
     var body: some View {
-        VStack(spacing: Constants.Spacing.xs) {
+        VStack(spacing: MoinUIConstants.Spacing.xs) {
             RoundedRectangle(cornerRadius: 8)
                 .fill(color)
                 .frame(height: 40)
@@ -308,8 +308,8 @@ private struct ThemeAPITable: View {
 
                     Spacer()
                 }
-                .padding(.vertical, Constants.Spacing.sm)
-                .padding(.horizontal, Constants.Spacing.md)
+                .padding(.vertical, MoinUIConstants.Spacing.sm)
+                .padding(.horizontal, MoinUIConstants.Spacing.md)
                 .background(index % 2 == 0 ? token.colorBgElevated : token.colorBgContainer)
             }
         }
@@ -330,7 +330,7 @@ private struct CodeBlock: View {
     private var token: MoinUIToken { config.token }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: Constants.Spacing.sm) {
+        VStack(alignment: .leading, spacing: MoinUIConstants.Spacing.sm) {
             HStack {
                 Text(title)
                     .font(.subheadline)
@@ -358,7 +358,7 @@ private struct CodeBlock: View {
             }
 
             HighlightedCodeView(code: code)
-                .padding(Constants.Spacing.lg)
+                .padding(MoinUIConstants.Spacing.lg)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .background(config.isDarkMode ? Color(white: 0.08) : Color(white: 0.96))
                 .clipShape(RoundedRectangle(cornerRadius: 8))

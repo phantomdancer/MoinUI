@@ -34,10 +34,10 @@ private struct HeroSection: View {
     ]
 
     var body: some View {
-        HStack(spacing: Constants.Spacing.xxl) {
+        HStack(spacing: MoinUIConstants.Spacing.xxl) {
             // 左侧文字区域
-            VStack(alignment: .leading, spacing: Constants.Spacing.lg) {
-                HStack(spacing: Constants.Spacing.sm) {
+            VStack(alignment: .leading, spacing: MoinUIConstants.Spacing.lg) {
+                HStack(spacing: MoinUIConstants.Spacing.sm) {
                     Text("MoinUI")
                         .font(.system(size: 42, weight: .bold, design: .rounded))
                         .foregroundStyle(
@@ -63,13 +63,13 @@ private struct HeroSection: View {
                     .font(.title3)
                     .foregroundStyle(token.colorTextSecondary)
 
-                HStack(spacing: Constants.Spacing.md) {
+                HStack(spacing: MoinUIConstants.Spacing.md) {
                     MoinUIButton(localization.tr("home.get_started"), color: .primary, size: .large) {
                         NavigationManager.shared.navigate(to: .quickStart)
                     }
                     MoinUIButton(localization.tr("home.github"), size: .large, variant: .outlined) {}
                 }
-                .padding(.top, Constants.Spacing.sm)
+                .padding(.top, MoinUIConstants.Spacing.sm)
             }
 
             Spacer(minLength: 0)
@@ -90,8 +90,8 @@ private struct HeroSection: View {
                 AppIcon()
             }
         }
-        .padding(.horizontal, Constants.Spacing.xxl)
-        .padding(.vertical, Constants.Spacing.xxl)
+        .padding(.horizontal, MoinUIConstants.Spacing.xxl)
+        .padding(.vertical, MoinUIConstants.Spacing.xxl)
         .frame(maxWidth: .infinity)
         .background(token.colorBgElevated)
     }
@@ -121,8 +121,8 @@ private struct FeaturesSection: View {
                 )
             }
         }
-        .padding(.horizontal, Constants.Spacing.xxl)
-        .padding(.vertical, Constants.Spacing.xl)
+        .padding(.horizontal, MoinUIConstants.Spacing.xxl)
+        .padding(.vertical, MoinUIConstants.Spacing.xl)
         .background(token.colorBgContainer)
     }
 }
@@ -137,8 +137,8 @@ private struct FeatureCard: View {
     private var token: MoinUIToken { config.token }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: Constants.Spacing.md) {
-            HStack(spacing: Constants.Spacing.sm) {
+        VStack(alignment: .leading, spacing: MoinUIConstants.Spacing.md) {
+            HStack(spacing: MoinUIConstants.Spacing.sm) {
                 Image(systemName: icon)
                     .font(.system(size: 20))
                     .foregroundStyle(token.colorPrimary)
@@ -155,7 +155,7 @@ private struct FeatureCard: View {
                 .lineLimit(3)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(Constants.Spacing.xl)
+        .padding(MoinUIConstants.Spacing.xl)
         .background(
             RoundedRectangle(cornerRadius: 12)
                 .fill(token.colorBgElevated)
@@ -176,9 +176,9 @@ private struct ComponentsPreviewSection: View {
     private var token: MoinUIToken { config.token }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: Constants.Spacing.xl) {
+        VStack(alignment: .leading, spacing: MoinUIConstants.Spacing.xl) {
             // 标题
-            VStack(alignment: .leading, spacing: Constants.Spacing.xs) {
+            VStack(alignment: .leading, spacing: MoinUIConstants.Spacing.xs) {
                 Text(localization.tr("home.components"))
                     .font(.title2)
                     .fontWeight(.semibold)
@@ -190,14 +190,14 @@ private struct ComponentsPreviewSection: View {
             }
 
             // Button 预览
-            VStack(alignment: .leading, spacing: Constants.Spacing.lg) {
+            VStack(alignment: .leading, spacing: MoinUIConstants.Spacing.lg) {
                 Text("Button")
                     .font(.headline)
                     .foregroundStyle(token.colorText)
 
-                VStack(alignment: .leading, spacing: Constants.Spacing.md) {
+                VStack(alignment: .leading, spacing: MoinUIConstants.Spacing.md) {
                     // Types
-                    HStack(spacing: Constants.Spacing.sm) {
+                    HStack(spacing: MoinUIConstants.Spacing.sm) {
                         MoinUIButton(localization.tr("button.label.primary"), color: .primary) {}
                         MoinUIButton(localization.tr("button.label.success"), color: .success) {}
                         MoinUIButton(localization.tr("button.label.warning"), color: .warning) {}
@@ -206,7 +206,7 @@ private struct ComponentsPreviewSection: View {
                     }
 
                     // Variants
-                    HStack(spacing: Constants.Spacing.sm) {
+                    HStack(spacing: MoinUIConstants.Spacing.sm) {
                         MoinUIButton(localization.tr("button.label.solid"), color: .primary, variant: .solid) {}
                         MoinUIButton(localization.tr("button.label.outlined"), color: .primary, variant: .outlined) {}
                         MoinUIButton(localization.tr("button.label.text"), color: .primary, variant: .text) {}
@@ -214,7 +214,7 @@ private struct ComponentsPreviewSection: View {
                     }
 
                     // Sizes & Icons
-                    HStack(spacing: Constants.Spacing.sm) {
+                    HStack(spacing: MoinUIConstants.Spacing.sm) {
                         MoinUIButton(localization.tr("button.label.large"), color: .primary, size: .large) {}
                         MoinUIButton(localization.tr("button.label.medium"), color: .primary, size: .medium) {}
                         MoinUIButton(localization.tr("button.label.small"), color: .primary, size: .small) {}
@@ -222,15 +222,15 @@ private struct ComponentsPreviewSection: View {
                     }
                 }
             }
-            .padding(Constants.Spacing.xl)
+            .padding(MoinUIConstants.Spacing.xl)
             .frame(maxWidth: .infinity, alignment: .leading)
             .background(
                 RoundedRectangle(cornerRadius: 12)
                     .fill(token.colorBgElevated)
             )
         }
-        .padding(.horizontal, Constants.Spacing.xxl)
-        .padding(.vertical, Constants.Spacing.xl)
+        .padding(.horizontal, MoinUIConstants.Spacing.xxl)
+        .padding(.vertical, MoinUIConstants.Spacing.xl)
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(token.colorBgHover.opacity(0.5))
     }

@@ -165,7 +165,7 @@ public struct MoinUIButton<Label: View>: View {
 
     @ViewBuilder
     private var buttonContent: some View {
-        HStack(spacing: Constants.Button.iconSpacing) {
+        HStack(spacing: MoinUIConstants.Button.iconSpacing) {
             if isLoading && iconPlacement == .start {
                 loadingIndicator
             } else if let icon = icon, iconPlacement == .start {
@@ -227,10 +227,10 @@ public struct MoinUIButton<Label: View>: View {
     private var borderOverlay: some View {
         if variant == .dashed {
             buttonShape
-                .stroke(borderColor, style: StrokeStyle(lineWidth: Constants.Button.borderWidth, dash: [4, 3]))
+                .stroke(borderColor, style: StrokeStyle(lineWidth: MoinUIConstants.Button.borderWidth, dash: [4, 3]))
         } else {
             buttonShape
-                .stroke(borderColor, lineWidth: Constants.Button.borderWidth)
+                .stroke(borderColor, lineWidth: MoinUIConstants.Button.borderWidth)
         }
     }
 
