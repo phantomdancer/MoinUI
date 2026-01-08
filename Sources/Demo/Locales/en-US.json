@@ -342,9 +342,6 @@
     "button_token": {
       "fontWeight": "Font weight",
       "iconGap": "Icon text gap",
-      "defaultShadow": "Default button shadow",
-      "primaryShadow": "Primary button shadow",
-      "dangerShadow": "Danger button shadow",
       "defaultColor": "Default button text color",
       "defaultBg": "Default button background",
       "defaultBorderColor": "Default button border color",

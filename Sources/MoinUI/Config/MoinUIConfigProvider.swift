@@ -126,14 +126,6 @@ public struct MoinUIButtonToken {
     /// 图标文字间距
     public var iconGap: CGFloat
 
-    // MARK: - 阴影
-    /// 默认按钮阴影
-    public var defaultShadow: String
-    /// 主要按钮阴影
-    public var primaryShadow: String
-    /// 危险按钮阴影
-    public var dangerShadow: String
-
     // MARK: - 默认按钮
     /// 默认按钮文本颜色
     public var defaultColor: Color
@@ -226,9 +218,6 @@ public struct MoinUIButtonToken {
     public static let light = MoinUIButtonToken(
         fontWeight: .medium,
         iconGap: MoinUIConstants.Spacing.xs + 2, // 6
-        defaultShadow: "",
-        primaryShadow: "",
-        dangerShadow: "",
         defaultColor: MoinUIConstants.Colors.textPrimary,
         defaultBg: MoinUIConstants.Colors.background,
         defaultBorderColor: MoinUIConstants.Colors.border,
@@ -269,9 +258,6 @@ public struct MoinUIButtonToken {
     public static let dark = MoinUIButtonToken(
         fontWeight: .medium,
         iconGap: MoinUIConstants.Spacing.xs + 2,
-        defaultShadow: "",
-        primaryShadow: "",
-        dangerShadow: "",
         defaultColor: DarkColors.textPrimary,
         defaultBg: DarkColors.background,
         defaultBorderColor: DarkColors.border,

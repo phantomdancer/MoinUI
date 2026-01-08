@@ -342,9 +342,6 @@
     "button_token": {
       "fontWeight": "文字字重",
       "iconGap": "图标文字间距",
-      "defaultShadow": "默认按钮阴影",
-      "primaryShadow": "主要按钮阴影",
-      "dangerShadow": "危险按钮阴影",
       "defaultColor": "默认按钮文本颜色",
       "defaultBg": "默认按钮背景色",
       "defaultBorderColor": "默认按钮边框颜色",

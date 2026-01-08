@@ -197,9 +197,10 @@ public struct MoinUIButton<Label: View>: View {
         }
         .font(.system(size: fontSize, weight: buttonToken.fontWeight))
         .foregroundColor(foregroundColor)
-        .frame(height: controlHeight)
+        .frame(height: verticalPadding > 0 ? nil : controlHeight)
         .frame(maxWidth: isBlock ? .infinity : nil)
         .frame(minWidth: shape == .circle ? controlHeight : nil)
+        .padding(.vertical, verticalPadding > 0 ? verticalPadding : 0)
         .padding(.horizontal, shape == .circle ? 0 : horizontalPadding)
         .background(backgroundView)
         .clipShape(buttonShape)
@@ -281,6 +282,14 @@ public struct MoinUIButton<Label: View>: View {
         case .small: return buttonToken.paddingInlineSM
         case .medium: return buttonToken.paddingInline
         case .large: return buttonToken.paddingInlineLG
+        }
+    }
+
+    private var verticalPadding: CGFloat {
+        switch size {
+        case .small: return buttonToken.paddingBlockSM
+        case .medium: return buttonToken.paddingBlock
+        case .large: return buttonToken.paddingBlockLG
         }
     }
 
