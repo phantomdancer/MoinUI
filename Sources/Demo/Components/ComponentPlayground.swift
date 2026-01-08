@@ -199,7 +199,7 @@ struct TokenDisplayRow: View {
 
 /// 按钮 Playground 状态
 class ButtonPlaygroundState: ObservableObject {
-    @Published var title: String = ""
+    @Published var title: String = "按钮 Button"
     @Published var color: MoinUIButtonColor = .primary
     @Published var variant: MoinUIButtonVariant = .solid
     @Published var size: MoinUIButtonSize = .medium
@@ -208,7 +208,7 @@ class ButtonPlaygroundState: ObservableObject {
     @Published var isLoading: Bool = false
     @Published var isBlock: Bool = false
     @Published var isGhost: Bool = false
-    @Published var icon: String = ""
+    @Published var icon: String = "arrow.left"
     @Published var iconPlacement: MoinUIButtonIconPlacement = .start
     @Published var useCustomColor: Bool = false
     @Published var customColor: Color = .purple
