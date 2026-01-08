@@ -126,7 +126,7 @@
     "color_variant": "Color & Variant",
     "color_variant_desc": "Use color for semantic colors (primary/success/danger etc.), variant for styles (solid/outlined/text etc.). Semantic colors can be configured globally via theme.",
     "ghost": "Ghost Button",
-    "ghost_desc": "Ghost buttons are used on colored backgrounds with transparent background.",
+    "ghost_desc": "Ghost buttons are for colored backgrounds - border and text turn white for visibility. Use outlined on normal backgrounds.",
     "size": "Size",
     "size_desc": "Three sizes available: small, medium (default), large.",
     "shape": "Shape",
@@ -213,16 +213,6 @@
     "json": "JSON Files",
     "json_desc": "Load translations from JSON files with nested structure support.",
     "json_demo": "Use registerFromJSON() to load JSON translation files"
-  },
-  "faq": {
-    "title": "FAQ",
-    "ghost_vs_outlined": {
-      "q": "What's the difference between ghost and outlined?",
-      "a1": "They're designed for different scenarios:",
-      "a1_outlined": "outlined: For normal backgrounds, border and text keep original color",
-      "a1_ghost": "ghost: For dark/colored backgrounds, border and text turn white/light for visibility",
-      "a2": "In short: Use ghost on colored backgrounds, outlined on normal backgrounds."
-    }
   },
   "code": {
     "show": "Show Code",

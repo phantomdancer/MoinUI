@@ -126,7 +126,7 @@
     "color_variant": "颜色与变体",
     "color_variant_desc": "用 color 指定语义颜色（primary/success/danger 等），用 variant 指定样式（solid/outlined/text 等）。语义颜色可通过主题全局配置。",
     "ghost": "幽灵按钮",
-    "ghost_desc": "幽灵按钮常用于有色背景上，背景透明。",
+    "ghost_desc": "幽灵按钮用于有色背景，边框和文字会变为白色以确保可见性。普通背景请用 outlined。",
     "size": "按钮尺寸",
     "size_desc": "提供三种尺寸：小、中（默认）、大。",
     "shape": "按钮形状",
@@ -213,16 +213,6 @@
     "json": "JSON 文件",
     "json_desc": "从 JSON 文件加载翻译，支持嵌套结构。",
     "json_demo": "使用 registerFromJSON() 加载 JSON 翻译文件"
-  },
-  "faq": {
-    "title": "常见问题",
-    "ghost_vs_outlined": {
-      "q": "ghost 和 outlined 有什么区别？",
-      "a1": "两者用于不同场景：",
-      "a1_outlined": "outlined：用于普通背景，边框和文字保持原有颜色",
-      "a1_ghost": "ghost：用于深色/有色背景，边框和文字会变为白色或浅色，确保可见性",
-      "a2": "简言之：在有色背景上使用 ghost，普通背景上使用 outlined。"
-    }
   },
   "code": {
     "show": "显示代码",

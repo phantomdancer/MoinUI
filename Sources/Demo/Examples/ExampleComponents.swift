@@ -32,6 +32,7 @@ struct ExampleSection<Content: View>: View {
             }
             .background(config.isDarkMode ? Color(white: 0.08) : Color(white: 0.96))
             .cornerRadius(MoinUIConstants.Radius.sm)
+            .id(code())
         }
     }
 }

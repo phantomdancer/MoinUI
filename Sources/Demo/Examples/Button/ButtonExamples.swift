@@ -27,17 +27,17 @@ struct ButtonExamples: View {
         AnchorItem(id: "disabled", titleKey: "button.disabled"),
         AnchorItem(id: "block", titleKey: "button.block"),
         AnchorItem(id: "api", titleKey: "API"),
-        AnchorItem(id: "faq", titleKey: "faq.title"),
     ]
 
     var body: some View {
-        Group {
-            switch selectedTab {
-            case .examples:
-                examplesContent
-            case .playground:
-                playgroundContent
-            }
+        ZStack {
+            examplesContent
+                .opacity(selectedTab == .examples ? 1 : 0)
+                .allowsHitTesting(selectedTab == .examples)
+
+            playgroundContent
+                .opacity(selectedTab == .playground ? 1 : 0)
+                .allowsHitTesting(selectedTab == .playground)
         }
     }
 
@@ -60,10 +60,6 @@ struct ButtonExamples: View {
                 Divider()
 
                 ButtonAPISection().id("api")
-
-                Divider()
-
-                ButtonFAQSection().id("faq")
             }
         }
     }
@@ -280,15 +276,9 @@ struct ButtonExamples: View {
                     startPoint: .topLeading,
                     endPoint: .bottomTrailing
                 ), fontColor: .white) {}
-                MoinUIButton(localization.tr("button.label.success"), size: .large, gradient: LinearGradient(
-                    colors: [Color(hex: "#4facfe"), Color(hex: "#00f2fe")],
-                    startPoint: .top,
-                    endPoint: .bottom
-                ), fontColor: .white) {}
             }
         } code: {
             """
-            // \(localization.tr("button.label.primary"))
             MoinUIButton(
                 "\(localization.tr("button.label.primary"))",
                 size: .large,
@@ -301,7 +291,6 @@ struct ButtonExamples: View {
                 fontColor: .white
             ) {}
 
-            // \(localization.tr("button.label.warning"))
             MoinUIButton(
                 "\(localization.tr("button.label.warning"))",
                 size: .large,
@@ -309,18 +298,6 @@ struct ButtonExamples: View {
                     colors: [Color(hex: "#f093fb"), Color(hex: "#f5576c")],
                     startPoint: .topLeading,
                     endPoint: .bottomTrailing
-                ),
-                fontColor: .white
-            ) {}
-
-            // \(localization.tr("button.label.success"))
-            MoinUIButton(
-                "\(localization.tr("button.label.success"))",
-                size: .large,
-                gradient: LinearGradient(
-                    colors: [Color(hex: "#4facfe"), Color(hex: "#00f2fe")],
-                    startPoint: .top,
-                    endPoint: .bottom
                 ),
                 fontColor: .white
             ) {}
