@@ -29,7 +29,11 @@
     "register_custom_translations": "注册自定义翻译",
     "register_english": "注册英文翻译",
     "flattened_keys": "扁平化 key",
-    "load_json_file": "加载 JSON 文件"
+    "load_json_file": "加载 JSON 文件",
+    "semantic_colors": "语义颜色",
+    "variants": "样式变体",
+    "color_with_variant": "颜色 + 变体",
+    "custom_color": "自定义颜色"
   },
   "nav": {
     "overview": "概览",
@@ -119,16 +123,8 @@
   "button": {
     "title": "Button 按钮",
     "description": "按钮用于触发一个操作或事件。",
-    "basic": "基础用法",
-    "basic_desc": "基础按钮的默认设置。",
-    "type": "按钮类型",
-    "type_desc": "不同场景下使用不同类型的按钮。",
-    "color": "自定义颜色",
-    "color_desc": "使用 color 属性自定义按钮颜色。",
-    "variant": "按钮变体",
-    "variant_desc": "按钮的不同视觉样式：solid、outlined、dashed、filled、text、link。",
     "color_variant": "颜色与变体",
-    "color_variant_desc": "不同颜色类型与变体的组合效果。",
+    "color_variant_desc": "用 color 指定语义颜色（primary/success/danger 等），用 variant 指定样式（solid/outlined/text 等）。语义颜色可通过主题全局配置。",
     "ghost": "幽灵按钮",
     "ghost_desc": "幽灵按钮常用于有色背景上，背景透明。",
     "size": "按钮尺寸",
@@ -220,15 +216,6 @@
   },
   "faq": {
     "title": "常见问题",
-    "type_vs_color": {
-      "q": "type 和 color 如何选择？",
-      "a1": "type 是 color + variant 的语法糖。例如 type: .primary 等同于 color: .primary, variant: .solid。",
-      "a2": "type 的优势：",
-      "a2_1": "语义清晰：primary/success/danger 表达意图，而非具体颜色",
-      "a2_2": "主题可控：primary 颜色可通过主题全局配置",
-      "a2_3": "简洁常用：.primary 比指定具体颜色更简洁",
-      "a3": "建议：常规场景用 type，需要自定义颜色时用 color。两者同时存在时，color 优先。"
-    },
     "ghost_vs_outlined": {
       "q": "ghost 和 outlined 有什么区别？",
       "a1": "两者用于不同场景：",

@@ -29,7 +29,11 @@
     "register_custom_translations": "Register custom translations",
     "register_english": "Register English",
     "flattened_keys": "Flattened keys",
-    "load_json_file": "Load JSON file"
+    "load_json_file": "Load JSON file",
+    "semantic_colors": "Semantic colors",
+    "variants": "Style variants",
+    "color_with_variant": "Color + Variant",
+    "custom_color": "Custom color"
   },
   "nav": {
     "overview": "Overview",
@@ -119,16 +123,8 @@
   "button": {
     "title": "Button",
     "description": "A button triggers an action or event when clicked.",
-    "basic": "Basic Usage",
-    "basic_desc": "Basic button with default settings.",
-    "type": "Type",
-    "type_desc": "Different button types for various scenarios.",
-    "color": "Custom Color",
-    "color_desc": "Use color property to customize button color.",
-    "variant": "Variant",
-    "variant_desc": "Different visual styles: solid, outlined, dashed, filled, text, link.",
     "color_variant": "Color & Variant",
-    "color_variant_desc": "Combinations of different color types and variants.",
+    "color_variant_desc": "Use color for semantic colors (primary/success/danger etc.), variant for styles (solid/outlined/text etc.). Semantic colors can be configured globally via theme.",
     "ghost": "Ghost Button",
     "ghost_desc": "Ghost buttons are used on colored backgrounds with transparent background.",
     "size": "Size",
@@ -220,15 +216,6 @@
   },
   "faq": {
     "title": "FAQ",
-    "type_vs_color": {
-      "q": "How to choose between type and color?",
-      "a1": "type is syntactic sugar for color + variant. For example, type: .primary equals color: .primary, variant: .solid.",
-      "a2": "Advantages of type:",
-      "a2_1": "Semantic clarity: primary/success/danger express intent, not specific colors",
-      "a2_2": "Theme control: primary color can be configured globally via theme",
-      "a2_3": "Concise: .primary is simpler than specifying exact colors",
-      "a3": "Recommendation: Use type for common cases, color for custom colors. When both exist, color takes priority."
-    },
     "ghost_vs_outlined": {
       "q": "What's the difference between ghost and outlined?",
       "a1": "They're designed for different scenarios:",
