@@ -8,6 +8,8 @@
 
 ## 最近完成
 
+- 2026-01-08: MoinUIButtonToken 扩展完整 antd ComponentToken（支持浅暗色主题）
+- 2026-01-08: Button 组件改用 ButtonToken 取代硬编码样式
 - 2026-01-08: Button 添加 fontColor 参数（自定义文字颜色）
 - 2026-01-08: Color(hex:) 扩展支持字符串格式（如 "#f093fb"）
 - 2026-01-08: 优化渐变按钮示例配色

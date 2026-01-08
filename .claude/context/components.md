@@ -36,3 +36,4 @@
 | Ghost (透明背景) | ✅ |
 | href Link | ✅ |
 | ButtonGroup | ✅ |
+| **ButtonToken（完整 antd ComponentToken）** | ✅ |

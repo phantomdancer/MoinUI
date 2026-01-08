@@ -69,6 +69,7 @@ public struct MoinUIButton<Label: View>: View {
 
     @ObservedObject private var configProvider = MoinUIConfigProvider.shared
     private var token: MoinUIToken { configProvider.token }
+    private var buttonToken: MoinUIButtonToken { configProvider.components.button }
 
     public init(
         color: MoinUIButtonColor = .default,
@@ -165,7 +166,7 @@ public struct MoinUIButton<Label: View>: View {
 
     @ViewBuilder
     private var buttonContent: some View {
-        HStack(spacing: MoinUIConstants.Button.iconSpacing) {
+        HStack(spacing: buttonToken.iconGap) {
             if isLoading && iconPlacement == .start {
                 loadingIndicator
             } else if let icon = icon, iconPlacement == .start {
@@ -178,7 +179,7 @@ public struct MoinUIButton<Label: View>: View {
                 iconView(icon)
             }
         }
-        .font(.system(size: fontSize, weight: .medium))
+        .font(.system(size: fontSize, weight: buttonToken.fontWeight))
         .foregroundColor(foregroundColor)
         .frame(height: controlHeight)
         .frame(maxWidth: isBlock ? .infinity : nil)
@@ -239,17 +240,17 @@ public struct MoinUIButton<Label: View>: View {
 
     private var iconSize: CGFloat {
         switch size {
-        case .small: return token.fontSizeSM
-        case .medium: return token.fontSize
-        case .large: return token.fontSizeLG
+        case .small: return buttonToken.onlyIconSizeSM
+        case .medium: return buttonToken.onlyIconSize
+        case .large: return buttonToken.onlyIconSizeLG
         }
     }
 
     private var fontSize: CGFloat {
         switch size {
-        case .small: return token.fontSizeSM
-        case .medium: return token.fontSize
-        case .large: return token.fontSizeLG
+        case .small: return buttonToken.contentFontSizeSM
+        case .medium: return buttonToken.contentFontSize
+        case .large: return buttonToken.contentFontSizeLG
         }
     }
 
@@ -263,9 +264,9 @@ public struct MoinUIButton<Label: View>: View {
 
     private var horizontalPadding: CGFloat {
         switch size {
-        case .small: return token.paddingSM
-        case .medium: return token.padding
-        case .large: return token.paddingLG
+        case .small: return buttonToken.paddingInlineSM
+        case .medium: return buttonToken.paddingInline
+        case .large: return buttonToken.paddingInlineLG
         }
     }
 
@@ -292,7 +293,7 @@ public struct MoinUIButton<Label: View>: View {
         if isGhost {
             if isPressed { return Color.white.opacity(0.25) }
             else if isHovered { return Color.white.opacity(0.15) }
-            return .clear
+            return buttonToken.ghostBg
         }
 
         // 禁用状态
@@ -300,7 +301,7 @@ public struct MoinUIButton<Label: View>: View {
             switch variant {
             case .solid:
                 if !color.isDefault { return baseColor }
-                return token.colorBgDisabled
+                return buttonToken.defaultBgDisabled
             case .filled:
                 return baseColor.opacity(0.15)
             case .outlined, .dashed, .text, .link:
@@ -311,9 +312,9 @@ public struct MoinUIButton<Label: View>: View {
         switch variant {
         case .solid:
             if color.isDefault {
-                if isPressed { return token.colorBgContainer.opacity(0.85) }
-                else if isHovered { return token.colorBgHover }
-                return token.colorBgContainer
+                if isPressed { return buttonToken.defaultActiveBg }
+                else if isHovered { return buttonToken.defaultHoverBg }
+                return buttonToken.defaultBg
             }
             if isPressed { return activeColor }
             else if isHovered { return hoverColor }
@@ -324,13 +325,18 @@ public struct MoinUIButton<Label: View>: View {
             else if isHovered { return baseColor.opacity(0.2) }
             return baseColor.opacity(0.15)
 
-        case .outlined, .dashed, .text:
+        case .outlined, .dashed:
             if isPressed { return baseColor.opacity(0.15) }
             else if isHovered { return baseColor.opacity(0.1) }
             return .clear
 
-        case .link:
+        case .text:
+            if isPressed { return buttonToken.textHoverBg.opacity(1.5) }
+            else if isHovered { return buttonToken.textHoverBg }
             return .clear
+
+        case .link:
+            return buttonToken.linkHoverBg
         }
     }
 
@@ -342,25 +348,36 @@ public struct MoinUIButton<Label: View>: View {
 
         // Ghost 模式：default 用白色，有色用原色
         if isGhost {
-            if effectiveDisabled { return Color.white.opacity(0.5) }
-            return color.isDefault ? Color.white : baseColor
+            if effectiveDisabled { return buttonToken.defaultGhostColor.opacity(0.5) }
+            return color.isDefault ? buttonToken.defaultGhostColor : baseColor
         }
 
         // 禁用状态
         if effectiveDisabled {
             if !color.isDefault {
-                return variant == .solid ? .white : baseColor
+                return variant == .solid ? buttonToken.solidTextColor : baseColor
             }
             return token.colorTextDisabled
         }
 
         switch variant {
         case .solid:
-            return color.isDefault ? token.colorText : .white
+            if color.isDefault { return buttonToken.defaultColor }
+            return color == .danger ? buttonToken.dangerColor : buttonToken.primaryColor
 
-        case .filled, .outlined, .dashed, .text:
+        case .filled, .outlined, .dashed:
             if color.isDefault {
-                return isHovered ? token.colorPrimary : token.colorText
+                if isPressed { return buttonToken.defaultActiveColor }
+                else if isHovered { return buttonToken.defaultHoverColor }
+                return buttonToken.defaultColor
+            }
+            return baseColor
+
+        case .text:
+            if color.isDefault {
+                if isPressed { return buttonToken.textTextActiveColor }
+                else if isHovered { return buttonToken.textTextHoverColor }
+                return buttonToken.textTextColor
             }
             return baseColor
 
@@ -375,8 +392,8 @@ public struct MoinUIButton<Label: View>: View {
     private var borderColor: Color {
         // Ghost 模式：default 用白色边框，有色用原色边框
         if isGhost {
-            if effectiveDisabled { return Color.white.opacity(0.3) }
-            return color.isDefault ? Color.white : baseColor
+            if effectiveDisabled { return buttonToken.defaultGhostBorderColor.opacity(0.3) }
+            return color.isDefault ? buttonToken.defaultGhostBorderColor : baseColor
         }
 
         // 禁用状态
@@ -384,7 +401,7 @@ public struct MoinUIButton<Label: View>: View {
             if !color.isDefault { return baseColor }
             switch variant {
             case .solid, .outlined, .dashed, .filled:
-                return token.colorBorder.opacity(0.5)
+                return buttonToken.borderColorDisabled
             case .text, .link:
                 return .clear
             }
@@ -392,14 +409,20 @@ public struct MoinUIButton<Label: View>: View {
 
         switch variant {
         case .solid:
-            if color.isDefault { return token.colorBorder }
+            if color.isDefault {
+                if isPressed { return buttonToken.defaultActiveBorderColor }
+                else if isHovered { return buttonToken.defaultHoverBorderColor }
+                return buttonToken.defaultBorderColor
+            }
             if isPressed { return activeColor }
             else if isHovered { return hoverColor }
             return baseColor
 
         case .outlined, .dashed:
             if color.isDefault {
-                return isHovered ? token.colorBorderHover : token.colorBorder
+                if isPressed { return buttonToken.defaultActiveBorderColor }
+                else if isHovered { return buttonToken.defaultHoverBorderColor }
+                return buttonToken.defaultBorderColor
             }
             return baseColor
 

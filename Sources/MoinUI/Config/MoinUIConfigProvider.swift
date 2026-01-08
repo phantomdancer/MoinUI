@@ -118,27 +118,197 @@ public struct MoinUIToken {
 
 // MARK: - Button Token
 
-/// Button-specific token
+/// Button-specific token (参照 antd ComponentToken)
 public struct MoinUIButtonToken {
-    public var defaultBg: Color
-    public var defaultBorderColor: Color
-    public var defaultColor: Color
-    public var primaryColor: Color
+    // MARK: - 字体
+    /// 文字字重
     public var fontWeight: Font.Weight
-    public var contentFontSize: CGFloat?
-    public var contentFontSizeLG: CGFloat?
-    public var contentFontSizeSM: CGFloat?
+    /// 图标文字间距
+    public var iconGap: CGFloat
 
-    public static let `default` = MoinUIButtonToken(
-        defaultBg: Color(nsColor: .controlBackgroundColor),
-        defaultBorderColor: Color.gray.opacity(0.3),
-        defaultColor: Color.primary,
-        primaryColor: .white,
+    // MARK: - 阴影
+    /// 默认按钮阴影
+    public var defaultShadow: String
+    /// 主要按钮阴影
+    public var primaryShadow: String
+    /// 危险按钮阴影
+    public var dangerShadow: String
+
+    // MARK: - 默认按钮
+    /// 默认按钮文本颜色
+    public var defaultColor: Color
+    /// 默认按钮背景色
+    public var defaultBg: Color
+    /// 默认按钮边框颜色
+    public var defaultBorderColor: Color
+    /// 默认按钮悬浮态背景色
+    public var defaultHoverBg: Color
+    /// 默认按钮悬浮态文本颜色
+    public var defaultHoverColor: Color
+    /// 默认按钮悬浮态边框颜色
+    public var defaultHoverBorderColor: Color
+    /// 默认按钮激活态背景色
+    public var defaultActiveBg: Color
+    /// 默认按钮激活态文字颜色
+    public var defaultActiveColor: Color
+    /// 默认按钮激活态边框颜色
+    public var defaultActiveBorderColor: Color
+
+    // MARK: - 主要按钮
+    /// 主要按钮文本颜色
+    public var primaryColor: Color
+
+    // MARK: - 危险按钮
+    /// 危险按钮文本颜色
+    public var dangerColor: Color
+
+    // MARK: - Ghost 按钮
+    /// 幽灵按钮背景色
+    public var ghostBg: Color
+    /// 默认幽灵按钮文本颜色
+    public var defaultGhostColor: Color
+    /// 默认幽灵按钮边框颜色
+    public var defaultGhostBorderColor: Color
+
+    // MARK: - Solid 按钮
+    /// 默认实心按钮的文本色
+    public var solidTextColor: Color
+
+    // MARK: - Text 按钮
+    /// 默认文本按钮的文本色
+    public var textTextColor: Color
+    /// 默认文本按钮悬浮态文本颜色
+    public var textTextHoverColor: Color
+    /// 默认文本按钮激活态文字颜色
+    public var textTextActiveColor: Color
+    /// 文本按钮悬浮态背景色
+    public var textHoverBg: Color
+    /// 链接按钮悬浮态背景色
+    public var linkHoverBg: Color
+
+    // MARK: - 内边距
+    /// 按钮横向内间距
+    public var paddingInline: CGFloat
+    /// 大号按钮横向内间距
+    public var paddingInlineLG: CGFloat
+    /// 小号按钮横向内间距
+    public var paddingInlineSM: CGFloat
+    /// 按钮纵向内间距
+    public var paddingBlock: CGFloat
+    /// 大号按钮纵向内间距
+    public var paddingBlockLG: CGFloat
+    /// 小号按钮纵向内间距
+    public var paddingBlockSM: CGFloat
+
+    // MARK: - 图标尺寸
+    /// 只有图标的按钮图标尺寸
+    public var onlyIconSize: CGFloat
+    /// 大号只有图标的按钮图标尺寸
+    public var onlyIconSizeLG: CGFloat
+    /// 小号只有图标的按钮图标尺寸
+    public var onlyIconSizeSM: CGFloat
+
+    // MARK: - 字体尺寸
+    /// 按钮内容字体大小
+    public var contentFontSize: CGFloat
+    /// 大号按钮内容字体大小
+    public var contentFontSizeLG: CGFloat
+    /// 小号按钮内容字体大小
+    public var contentFontSizeSM: CGFloat
+
+    // MARK: - 禁用态
+    /// 禁用状态边框颜色
+    public var borderColorDisabled: Color
+    /// type='default' 禁用状态下的背景颜色
+    public var defaultBgDisabled: Color
+
+    // MARK: - 浅色主题默认值
+    public static let light = MoinUIButtonToken(
         fontWeight: .medium,
-        contentFontSize: nil,
-        contentFontSizeLG: nil,
-        contentFontSizeSM: nil
+        iconGap: MoinUIConstants.Spacing.xs + 2, // 6
+        defaultShadow: "",
+        primaryShadow: "",
+        dangerShadow: "",
+        defaultColor: MoinUIConstants.Colors.textPrimary,
+        defaultBg: MoinUIConstants.Colors.background,
+        defaultBorderColor: MoinUIConstants.Colors.border,
+        defaultHoverBg: MoinUIConstants.Colors.background,
+        defaultHoverColor: MoinUIConstants.Colors.primaryHover,
+        defaultHoverBorderColor: MoinUIConstants.Colors.primaryHover,
+        defaultActiveBg: MoinUIConstants.Colors.background,
+        defaultActiveColor: MoinUIConstants.Colors.primaryActive,
+        defaultActiveBorderColor: MoinUIConstants.Colors.primaryActive,
+        primaryColor: .white,
+        dangerColor: .white,
+        ghostBg: .clear,
+        defaultGhostColor: .white,
+        defaultGhostBorderColor: .white,
+        solidTextColor: .white,
+        textTextColor: MoinUIConstants.Colors.textPrimary,
+        textTextHoverColor: MoinUIConstants.Colors.textPrimary,
+        textTextActiveColor: MoinUIConstants.Colors.textPrimary,
+        textHoverBg: Color.black.opacity(0.04),
+        linkHoverBg: .clear,
+        paddingInline: MoinUIConstants.Spacing.md + 3, // 15
+        paddingInlineLG: MoinUIConstants.Spacing.md + 3,
+        paddingInlineSM: MoinUIConstants.Spacing.sm - 1, // 7
+        paddingBlock: 0,
+        paddingBlockLG: 0,
+        paddingBlockSM: 0,
+        onlyIconSize: 16,
+        onlyIconSizeLG: 18,
+        onlyIconSizeSM: 14,
+        contentFontSize: 14,
+        contentFontSizeLG: 16,
+        contentFontSizeSM: 12,
+        borderColorDisabled: MoinUIConstants.Colors.border.opacity(0.5),
+        defaultBgDisabled: MoinUIConstants.Colors.backgroundDisabled
     )
+
+    // MARK: - 暗色主题默认值
+    public static let dark = MoinUIButtonToken(
+        fontWeight: .medium,
+        iconGap: MoinUIConstants.Spacing.xs + 2,
+        defaultShadow: "",
+        primaryShadow: "",
+        dangerShadow: "",
+        defaultColor: DarkColors.textPrimary,
+        defaultBg: DarkColors.background,
+        defaultBorderColor: DarkColors.border,
+        defaultHoverBg: DarkColors.background,
+        defaultHoverColor: DarkColors.primaryHover,
+        defaultHoverBorderColor: DarkColors.primaryHover,
+        defaultActiveBg: DarkColors.background,
+        defaultActiveColor: DarkColors.primaryActive,
+        defaultActiveBorderColor: DarkColors.primaryActive,
+        primaryColor: .white,
+        dangerColor: .white,
+        ghostBg: .clear,
+        defaultGhostColor: .white,
+        defaultGhostBorderColor: .white,
+        solidTextColor: .white,
+        textTextColor: DarkColors.textPrimary,
+        textTextHoverColor: DarkColors.textPrimary,
+        textTextActiveColor: DarkColors.textPrimary,
+        textHoverBg: Color.white.opacity(0.08),
+        linkHoverBg: .clear,
+        paddingInline: MoinUIConstants.Spacing.md + 3,
+        paddingInlineLG: MoinUIConstants.Spacing.md + 3,
+        paddingInlineSM: MoinUIConstants.Spacing.sm - 1,
+        paddingBlock: 0,
+        paddingBlockLG: 0,
+        paddingBlockSM: 0,
+        onlyIconSize: 16,
+        onlyIconSizeLG: 18,
+        onlyIconSizeSM: 14,
+        contentFontSize: 14,
+        contentFontSizeLG: 16,
+        contentFontSizeSM: 12,
+        borderColorDisabled: DarkColors.border.opacity(0.5),
+        defaultBgDisabled: DarkColors.backgroundDisabled
+    )
+
+    public static let `default` = light
 }
 
 // MARK: - Component Token
@@ -147,9 +317,15 @@ public struct MoinUIButtonToken {
 public struct MoinUIComponentToken {
     public var button: MoinUIButtonToken
 
-    public static let `default` = MoinUIComponentToken(
-        button: .default
+    public static let light = MoinUIComponentToken(
+        button: .light
     )
+
+    public static let dark = MoinUIComponentToken(
+        button: .dark
+    )
+
+    public static let `default` = light
 }
 
 // MARK: - Config
@@ -209,6 +385,7 @@ public final class MoinUIConfigProvider: ObservableObject {
         }
         // 初始化时应用系统主题
         self.config.token = systemIsDark ? .dark : .light
+        self.config.components = systemIsDark ? .dark : .light
         observeSystemAppearance()
     }
 
@@ -255,14 +432,17 @@ public final class MoinUIConfigProvider: ObservableObject {
         switch theme {
         case .light:
             config.token = .light
+            config.components = .light
         case .dark:
             config.token = .dark
+            config.components = .dark
         case .system:
             // 重新获取系统当前状态
             if let app = NSApp {
                 systemIsDark = app.effectiveAppearance.bestMatch(from: [.darkAqua, .aqua]) == .darkAqua
             }
             config.token = systemIsDark ? .dark : .light
+            config.components = systemIsDark ? .dark : .light
         }
     }
 
