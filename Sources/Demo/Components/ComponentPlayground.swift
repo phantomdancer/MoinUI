@@ -210,24 +210,23 @@ struct ButtonPlayground: View {
     }
 
     var body: some View {
-        VStack(spacing: 0) {
-            // 预览区域
-            previewSection
-                .frame(height: 200)
-
-            Divider()
-
-            // 下方：控制面板和代码
-            HStack(alignment: .top, spacing: 0) {
-                // 控制面板
-                controlPanel
-                    .frame(width: 280)
+        HStack(spacing: 0) {
+            // 左侧：预览 + 代码
+            VStack(spacing: 0) {
+                // 预览区域
+                previewSection
 
                 Divider()
 
                 // 代码预览
                 codeSection
             }
+
+            Divider()
+
+            // 右侧：属性控制面板
+            controlPanel
+                .frame(width: 320)
         }
         .background(Color(nsColor: .controlBackgroundColor))
         .cornerRadius(Constants.Radius.md)
@@ -247,8 +246,6 @@ struct ButtonPlayground: View {
                     .foregroundStyle(.secondary)
                 Spacer()
             }
-            .padding(.horizontal, Constants.Spacing.md)
-            .padding(.top, Constants.Spacing.md)
 
             Spacer()
 
@@ -284,7 +281,8 @@ struct ButtonPlayground: View {
 
             Spacer()
         }
-        .frame(maxWidth: .infinity)
+        .padding(Constants.Spacing.md)
+        .frame(maxWidth: .infinity, minHeight: 120)
     }
 
     // MARK: - Control Panel

@@ -151,7 +151,7 @@
     "block_desc": "占满整行宽度的按钮。",
     "label": {
       "button": "按钮",
-      "primary": "主要按钮",
+      "primary": "主要",
       "default": "默认",
       "success": "成功",
       "warning": "警告",
