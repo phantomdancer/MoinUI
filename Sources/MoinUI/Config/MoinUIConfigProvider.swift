@@ -537,10 +537,28 @@ private struct MoinUIConfigProviderKey: EnvironmentKey {
     static let defaultValue = MoinUIConfigProvider.shared
 }
 
+private struct MoinUITokenKey: EnvironmentKey {
+    static let defaultValue = MoinUIToken.default
+}
+
+private struct MoinUIButtonTokenKey: EnvironmentKey {
+    static let defaultValue = MoinUIButtonToken.default
+}
+
 public extension EnvironmentValues {
     var moinConfig: MoinUIConfigProvider {
         get { self[MoinUIConfigProviderKey.self] }
         set { self[MoinUIConfigProviderKey.self] = newValue }
+    }
+
+    var moinUIToken: MoinUIToken {
+        get { self[MoinUITokenKey.self] }
+        set { self[MoinUITokenKey.self] = newValue }
+    }
+
+    var moinUIButtonToken: MoinUIButtonToken {
+        get { self[MoinUIButtonTokenKey.self] }
+        set { self[MoinUIButtonTokenKey.self] = newValue }
     }
 }
 
@@ -588,6 +606,8 @@ public struct MoinUIThemeRoot: ViewModifier {
     public func body(content: Content) -> some View {
         content
             .preferredColorScheme(colorScheme)
+            .environment(\.moinUIToken, config.token)
+            .environment(\.moinUIButtonToken, config.components.button)
             .environmentObject(config)
             .environmentObject(config.localization)
     }

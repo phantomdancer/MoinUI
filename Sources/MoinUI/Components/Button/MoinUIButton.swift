@@ -65,11 +65,11 @@ public struct MoinUIButton<Label: View>: View {
     @State private var isHovered = false
     @State private var isPressed = false
     @State private var showLoading = false
-    @State private var loadingRotation: Double = 0
+    @State private var rotationAngle: Double = 0
 
-    @ObservedObject private var configProvider = MoinUIConfigProvider.shared
-    private var token: MoinUIToken { configProvider.token }
-    private var buttonToken: MoinUIButtonToken { configProvider.components.button }
+    // 使用 Environment 获取配置，避免每个按钮都订阅 ObservedObject
+    @Environment(\.moinUIToken) private var token
+    @Environment(\.moinUIButtonToken) private var buttonToken
 
     public init(
         color: MoinUIButtonColor = .default,
@@ -145,19 +145,35 @@ public struct MoinUIButton<Label: View>: View {
         .disabled(effectiveDisabled && !shouldApplyDisabledOpacity)
         .allowsHitTesting(!effectiveDisabled)
         .opacity(shouldApplyDisabledOpacity ? 0.65 : 1)
-        .moinUICursor(effectiveDisabled ? .operationNotAllowed : .pointingHand)
-        .animation(.easeInOut(duration: token.motionDuration / 2), value: isHovered)
-        .animation(.easeInOut(duration: token.motionDuration / 2), value: isPressed)
         .onHover { hovering in
-            isHovered = hovering
-            if !hovering { isPressed = false }
+            withAnimation(.easeInOut(duration: token.motionDuration / 2)) {
+                isHovered = hovering
+                if !hovering { isPressed = false }
+            }
+            // 光标处理
+            if hovering {
+                let cursor: NSCursor = effectiveDisabled ? .operationNotAllowed : .pointingHand
+                cursor.set()
+            } else {
+                NSCursor.arrow.set()
+            }
         }
         .simultaneousGesture(
             DragGesture(minimumDistance: 0)
-                .onChanged { _ in isPressed = true }
-                .onEnded { _ in isPressed = false }
+                .onChanged { _ in
+                    if !isPressed {
+                        withAnimation(.easeInOut(duration: token.motionDuration / 2)) {
+                            isPressed = true
+                        }
+                    }
+                }
+                .onEnded { _ in
+                    withAnimation(.easeInOut(duration: token.motionDuration / 2)) {
+                        isPressed = false
+                    }
+                }
         )
-        .task(id: loadingConfig) {
+        .task(id: loadingConfig.isLoading) {
             handleLoadingChange(loadingConfig.isLoading)
         }
     }
@@ -211,12 +227,10 @@ public struct MoinUIButton<Label: View>: View {
         let loadingIcon = loadingConfig.icon ?? "arrow.trianglehead.2.clockwise"
         Image(systemName: loadingIcon)
             .font(.system(size: iconSize))
-            .rotationEffect(.degrees(loadingRotation))
-            .id(isLoading)
+            .rotationEffect(.degrees(rotationAngle))
             .onAppear {
-                loadingRotation = 0
                 withAnimation(.linear(duration: 1).repeatForever(autoreverses: false)) {
-                    loadingRotation = 360
+                    rotationAngle = 360
                 }
             }
     }
@@ -454,6 +468,7 @@ public struct MoinUIButton<Label: View>: View {
             }
         } else {
             showLoading = false
+            rotationAngle = 0
         }
     }
 }

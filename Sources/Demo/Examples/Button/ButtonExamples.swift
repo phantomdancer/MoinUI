@@ -33,14 +33,12 @@ struct ButtonExamples: View {
     ]
 
     var body: some View {
-        ZStack {
-            examplesContent
-                .opacity(selectedTab == .examples ? 1 : 0)
-                .allowsHitTesting(selectedTab == .examples)
-
-            playgroundContent
-                .opacity(selectedTab == .playground ? 1 : 0)
-                .allowsHitTesting(selectedTab == .playground)
+        Group {
+            if selectedTab == .examples {
+                examplesContent
+            } else {
+                playgroundContent
+            }
         }
     }
 
