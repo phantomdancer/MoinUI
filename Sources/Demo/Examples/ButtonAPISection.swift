@@ -18,7 +18,7 @@ struct ButtonAPISection: View {
                     localization.tr("api.description")
                 ),
                 rows: [
-                    ("type", "MoinUIButtonType", ".default", localization.tr("api.button.type")),
+                    ("type", "MoinUIButtonColor", ".default", localization.tr("api.button.type")),
                     ("size", "MoinUIButtonSize", ".medium", localization.tr("api.button.size")),
                     ("variant", "MoinUIButtonVariant", ".solid", localization.tr("api.button.variant")),
                     ("shape", "MoinUIButtonShape", ".default", localization.tr("api.button.shape")),
@@ -35,7 +35,7 @@ struct ButtonAPISection: View {
                 ]
             )
 
-            Text("MoinUIButtonType")
+            Text("MoinUIButtonColor")
                 .font(.headline)
                 .padding(.top, Constants.Spacing.md)
 

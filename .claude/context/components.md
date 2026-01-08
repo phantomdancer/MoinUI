@@ -21,11 +21,11 @@
 
 | 功能 | 状态 |
 |------|------|
-| Type (default/primary/success/warning/danger/info) | ✅ |
+| Color (default/primary/success/warning/danger/info/custom) | ✅ |
 | Variant (solid/outlined/dashed/filled/text/link) | ✅ |
 | Size (small/medium/large) | ✅ |
 | Shape (default/round/circle) | ✅ |
-| Color (自定义颜色) | ✅ |
+| Custom Color (.custom(Color)) | ✅ |
 | Gradient (渐变背景) | ✅ |
 | Icon + Text | ✅ |
 | Icon Placement (start/end) | ✅ |

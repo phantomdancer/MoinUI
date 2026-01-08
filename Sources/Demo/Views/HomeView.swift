@@ -64,7 +64,7 @@ private struct HeroSection: View {
                     .foregroundStyle(token.colorTextSecondary)
 
                 HStack(spacing: Constants.Spacing.md) {
-                    MoinUIButton(localization.tr("home.get_started"), type: .primary, size: .large) {
+                    MoinUIButton(localization.tr("home.get_started"), color: .primary, size: .large) {
                         NavigationManager.shared.navigate(to: .quickStart)
                     }
                     MoinUIButton(localization.tr("home.github"), size: .large, variant: .outlined) {}
@@ -198,27 +198,27 @@ private struct ComponentsPreviewSection: View {
                 VStack(alignment: .leading, spacing: Constants.Spacing.md) {
                     // Types
                     HStack(spacing: Constants.Spacing.sm) {
-                        MoinUIButton(localization.tr("button.label.primary"), type: .primary) {}
-                        MoinUIButton(localization.tr("button.label.success"), type: .success) {}
-                        MoinUIButton(localization.tr("button.label.warning"), type: .warning) {}
-                        MoinUIButton(localization.tr("button.label.danger"), type: .danger) {}
+                        MoinUIButton(localization.tr("button.label.primary"), color: .primary) {}
+                        MoinUIButton(localization.tr("button.label.success"), color: .success) {}
+                        MoinUIButton(localization.tr("button.label.warning"), color: .warning) {}
+                        MoinUIButton(localization.tr("button.label.danger"), color: .danger) {}
                         MoinUIButton(localization.tr("button.label.default")) {}
                     }
 
                     // Variants
                     HStack(spacing: Constants.Spacing.sm) {
-                        MoinUIButton(localization.tr("button.label.solid"), type: .primary, variant: .solid) {}
-                        MoinUIButton(localization.tr("button.label.outlined"), type: .primary, variant: .outlined) {}
-                        MoinUIButton(localization.tr("button.label.text"), type: .primary, variant: .text) {}
-                        MoinUIButton(localization.tr("button.label.link"), type: .primary, variant: .link) {}
+                        MoinUIButton(localization.tr("button.label.solid"), color: .primary, variant: .solid) {}
+                        MoinUIButton(localization.tr("button.label.outlined"), color: .primary, variant: .outlined) {}
+                        MoinUIButton(localization.tr("button.label.text"), color: .primary, variant: .text) {}
+                        MoinUIButton(localization.tr("button.label.link"), color: .primary, variant: .link) {}
                     }
 
                     // Sizes & Icons
                     HStack(spacing: Constants.Spacing.sm) {
-                        MoinUIButton(localization.tr("button.label.large"), type: .primary, size: .large) {}
-                        MoinUIButton(localization.tr("button.label.medium"), type: .primary, size: .medium) {}
-                        MoinUIButton(localization.tr("button.label.small"), type: .primary, size: .small) {}
-                        MoinUIButton(icon: "plus", type: .primary, shape: .circle) {}
+                        MoinUIButton(localization.tr("button.label.large"), color: .primary, size: .large) {}
+                        MoinUIButton(localization.tr("button.label.medium"), color: .primary, size: .medium) {}
+                        MoinUIButton(localization.tr("button.label.small"), color: .primary, size: .small) {}
+                        MoinUIButton(icon: "plus", color: .primary, shape: .circle) {}
                     }
                 }
             }

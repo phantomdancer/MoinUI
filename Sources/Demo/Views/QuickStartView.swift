@@ -53,7 +53,7 @@ struct QuickStartView: View {
 
                         struct ContentView: View {
                             var body: some View {
-                                MoinUIButton("\(localization.tr("quick_start.click_me"))", type: .primary) {
+                                MoinUIButton("\(localization.tr("quick_start.click_me"))", color: .primary) {
                                     print("\(localization.tr("quick_start.hello_moinui"))")
                                 }
                             }

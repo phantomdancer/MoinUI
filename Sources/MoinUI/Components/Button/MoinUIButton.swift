@@ -47,7 +47,7 @@ public struct MoinUIButtonLoading: ExpressibleByBooleanLiteral, Equatable {
 public struct MoinUIButton<Label: View>: View {
     private let action: (() -> Void)?
     private let label: Label
-    private let type: MoinUIButtonType
+    private let color: MoinUIButtonColor
     private let size: MoinUIButtonSize
     private let variant: MoinUIButtonVariant
     private let shape: MoinUIButtonShape
@@ -59,7 +59,6 @@ public struct MoinUIButton<Label: View>: View {
     private let iconPlacement: MoinUIButtonIconPlacement
     private let href: URL?
     private let target: String?
-    private let color: Color?
     private let gradient: LinearGradient?
 
     @State private var isHovered = false
@@ -71,7 +70,7 @@ public struct MoinUIButton<Label: View>: View {
     private var token: MoinUIToken { configProvider.token }
 
     public init(
-        type: MoinUIButtonType = .default,
+        color: MoinUIButtonColor = .default,
         size: MoinUIButtonSize = .medium,
         variant: MoinUIButtonVariant = .solid,
         shape: MoinUIButtonShape = .default,
@@ -83,12 +82,11 @@ public struct MoinUIButton<Label: View>: View {
         isGhost: Bool = false,
         href: URL? = nil,
         target: String? = nil,
-        color: Color? = nil,
         gradient: LinearGradient? = nil,
         action: (() -> Void)? = nil,
         @ViewBuilder label: () -> Label
     ) {
-        self.type = type
+        self.color = color
         self.size = size
         self.variant = variant
         self.shape = shape
@@ -100,7 +98,6 @@ public struct MoinUIButton<Label: View>: View {
         self.isGhost = isGhost
         self.href = href
         self.target = target
-        self.color = color
         self.gradient = gradient
         self.action = action
         self.label = label()
@@ -115,16 +112,19 @@ public struct MoinUIButton<Label: View>: View {
     }
 
     private var shouldApplyDisabledOpacity: Bool {
-        effectiveDisabled && (hasCustomColor || type != .default || gradient != nil)
-    }
-
-    private var hasCustomColor: Bool {
-        color != nil
+        effectiveDisabled && (!color.isDefault || gradient != nil)
     }
 
     private var baseColor: Color {
-        if let color = color { return color }
-        return colorForType(type)
+        switch color {
+        case .default: return Color.gray
+        case .primary: return token.colorPrimary
+        case .success: return token.colorSuccess
+        case .warning: return token.colorWarning
+        case .danger: return token.colorDanger
+        case .info: return token.colorInfo
+        case .custom(let c): return c
+        }
     }
 
     // MARK: - Body
@@ -275,32 +275,12 @@ public struct MoinUIButton<Label: View>: View {
 
     // MARK: - Colors
 
-    private func colorForType(_ buttonType: MoinUIButtonType) -> Color {
-        switch buttonType {
-        case .default: return Color.gray
-        case .primary: return token.colorPrimary
-        case .success: return token.colorSuccess
-        case .warning: return token.colorWarning
-        case .danger: return token.colorDanger
-        case .info: return token.colorInfo
-        }
+    private var hoverColor: Color {
+        baseColor.lightened(by: 0.08)
     }
 
-    private func hoverColorForType(_ buttonType: MoinUIButtonType) -> Color {
-        if hasCustomColor { return baseColor.lightened(by: 0.08) }
-        switch buttonType {
-        case .default: return token.colorBgHover
-        case .primary: return token.colorPrimaryHover
-        case .success: return Color(red: 0.45, green: 0.80, blue: 0.40)
-        case .warning: return Color(red: 1.0, green: 0.78, blue: 0.40)
-        case .danger: return Color(red: 1.0, green: 0.47, blue: 0.47)
-        case .info: return Color(red: 0.65, green: 0.65, blue: 0.65)
-        }
-    }
-
-    private func activeColorForType(_ buttonType: MoinUIButtonType) -> Color {
-        if hasCustomColor { return baseColor.darkened(by: 0.08) }
-        return hoverColorForType(buttonType).darkened(by: 0.1)
+    private var activeColor: Color {
+        baseColor.darkened(by: 0.08)
     }
 
     private var backgroundColor: Color {
@@ -315,7 +295,7 @@ public struct MoinUIButton<Label: View>: View {
         if effectiveDisabled {
             switch variant {
             case .solid:
-                if hasCustomColor || type != .default { return baseColor }
+                if !color.isDefault { return baseColor }
                 return token.colorBgDisabled
             case .filled:
                 return baseColor.opacity(0.15)
@@ -326,13 +306,13 @@ public struct MoinUIButton<Label: View>: View {
 
         switch variant {
         case .solid:
-            if !hasCustomColor && type == .default {
+            if color.isDefault {
                 if isPressed { return token.colorBgContainer.opacity(0.85) }
                 else if isHovered { return token.colorBgHover }
                 return token.colorBgContainer
             }
-            if isPressed { return activeColorForType(type) }
-            else if isHovered { return hoverColorForType(type) }
+            if isPressed { return activeColor }
+            else if isHovered { return hoverColor }
             return baseColor
 
         case .filled:
@@ -354,12 +334,12 @@ public struct MoinUIButton<Label: View>: View {
         // Ghost 模式：default 用白色，有色用原色
         if isGhost {
             if effectiveDisabled { return Color.white.opacity(0.5) }
-            return hasCustomColor || type != .default ? baseColor : Color.white
+            return color.isDefault ? Color.white : baseColor
         }
 
         // 禁用状态
         if effectiveDisabled {
-            if hasCustomColor || type != .default {
+            if !color.isDefault {
                 return variant == .solid ? .white : baseColor
             }
             return token.colorTextDisabled
@@ -367,17 +347,16 @@ public struct MoinUIButton<Label: View>: View {
 
         switch variant {
         case .solid:
-            if hasCustomColor { return .white }
-            return type == .default ? token.colorText : .white
+            return color.isDefault ? token.colorText : .white
 
         case .filled, .outlined, .dashed, .text:
-            if !hasCustomColor && type == .default {
+            if color.isDefault {
                 return isHovered ? token.colorPrimary : token.colorText
             }
             return baseColor
 
         case .link:
-            if !hasCustomColor && type == .default {
+            if color.isDefault {
                 return isHovered ? token.colorPrimary.opacity(0.8) : token.colorPrimary
             }
             return isHovered ? baseColor.opacity(0.8) : baseColor
@@ -388,12 +367,12 @@ public struct MoinUIButton<Label: View>: View {
         // Ghost 模式：default 用白色边框，有色用原色边框
         if isGhost {
             if effectiveDisabled { return Color.white.opacity(0.3) }
-            return hasCustomColor || type != .default ? baseColor : Color.white
+            return color.isDefault ? Color.white : baseColor
         }
 
         // 禁用状态
         if effectiveDisabled {
-            if hasCustomColor || type != .default { return baseColor }
+            if !color.isDefault { return baseColor }
             switch variant {
             case .solid, .outlined, .dashed, .filled:
                 return token.colorBorder.opacity(0.5)
@@ -404,13 +383,13 @@ public struct MoinUIButton<Label: View>: View {
 
         switch variant {
         case .solid:
-            if !hasCustomColor && type == .default { return token.colorBorder }
-            if isPressed { return activeColorForType(type) }
-            else if isHovered { return hoverColorForType(type) }
+            if color.isDefault { return token.colorBorder }
+            if isPressed { return activeColor }
+            else if isHovered { return hoverColor }
             return baseColor
 
         case .outlined, .dashed:
-            if !hasCustomColor && type == .default {
+            if color.isDefault {
                 return isHovered ? token.colorBorderHover : token.colorBorder
             }
             return baseColor
@@ -462,7 +441,7 @@ public struct MoinUIButton<Label: View>: View {
 public extension MoinUIButton where Label == Text {
     init(
         _ title: String,
-        type: MoinUIButtonType = .default,
+        color: MoinUIButtonColor = .default,
         size: MoinUIButtonSize = .medium,
         variant: MoinUIButtonVariant = .solid,
         shape: MoinUIButtonShape = .default,
@@ -473,12 +452,11 @@ public extension MoinUIButton where Label == Text {
         isBlock: Bool = false,
         isGhost: Bool = false,
         href: URL? = nil,
-        color: Color? = nil,
         gradient: LinearGradient? = nil,
         action: (() -> Void)? = nil
     ) {
         self.init(
-            type: type,
+            color: color,
             size: size,
             variant: variant,
             shape: shape,
@@ -489,7 +467,6 @@ public extension MoinUIButton where Label == Text {
             isBlock: isBlock,
             isGhost: isGhost,
             href: href,
-            color: color,
             gradient: gradient,
             action: action
         ) {
@@ -501,7 +478,7 @@ public extension MoinUIButton where Label == Text {
 public extension MoinUIButton where Label == EmptyView {
     init(
         icon iconName: String,
-        type: MoinUIButtonType = .default,
+        color: MoinUIButtonColor = .default,
         size: MoinUIButtonSize = .medium,
         variant: MoinUIButtonVariant = .solid,
         shape: MoinUIButtonShape = .circle,
@@ -509,12 +486,11 @@ public extension MoinUIButton where Label == EmptyView {
         isDisabled: Bool = false,
         isGhost: Bool = false,
         href: URL? = nil,
-        color: Color? = nil,
         gradient: LinearGradient? = nil,
         action: (() -> Void)? = nil
     ) {
         self.init(
-            type: type,
+            color: color,
             size: size,
             variant: variant,
             shape: shape,
@@ -525,7 +501,6 @@ public extension MoinUIButton where Label == EmptyView {
             isBlock: false,
             isGhost: isGhost,
             href: href,
-            color: color,
             gradient: gradient,
             action: action
         ) {

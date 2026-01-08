@@ -1,0 +1,49 @@
+import SwiftUI
+
+/// Button color - 支持预设色和自定义 Color
+public enum MoinUIButtonColor: Hashable {
+    case `default`
+    case primary
+    case success
+    case warning
+    case danger
+    case info
+    case custom(Color)
+
+    /// 获取基础颜色
+    public var color: Color {
+        switch self {
+        case .default: return Color.gray
+        case .primary: return Constants.Colors.primary
+        case .success: return Constants.Colors.success
+        case .warning: return Constants.Colors.warning
+        case .danger: return Constants.Colors.danger
+        case .info: return Constants.Colors.info
+        case .custom(let color): return color
+        }
+    }
+
+    /// 是否为默认颜色
+    public var isDefault: Bool {
+        if case .default = self { return true }
+        return false
+    }
+
+    /// 是否为自定义颜色
+    public var isCustom: Bool {
+        if case .custom = self { return true }
+        return false
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        switch self {
+        case .default: hasher.combine(0)
+        case .primary: hasher.combine(1)
+        case .success: hasher.combine(2)
+        case .warning: hasher.combine(3)
+        case .danger: hasher.combine(4)
+        case .info: hasher.combine(5)
+        case .custom(let color): hasher.combine(color.description)
+        }
+    }
+}

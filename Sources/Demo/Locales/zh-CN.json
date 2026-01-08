@@ -257,7 +257,7 @@
       "title": "文本",
       "title_prop": "title: String",
       "type": "类型",
-      "type_prop": "type: MoinUIButtonType",
+      "type_prop": "color: MoinUIButtonColor",
       "variant": "变体",
       "variant_prop": "variant: MoinUIButtonVariant",
       "size": "尺寸",

@@ -105,7 +105,7 @@ struct ColorPropControl: View {
 /// 按钮 Playground 状态
 class ButtonPlaygroundState: ObservableObject {
     @Published var title: String = ""
-    @Published var type: MoinUIButtonType = .primary
+    @Published var color: MoinUIButtonColor = .primary
     @Published var variant: MoinUIButtonVariant = .solid
     @Published var size: MoinUIButtonSize = .medium
     @Published var shape: MoinUIButtonShape = .default
@@ -129,8 +129,8 @@ class ButtonPlaygroundState: ObservableObject {
         params.append("\"\(displayTitle)\"")
 
         // 类型（非默认值才显示）
-        if type != .default && !useCustomColor {
-            params.append("type: .\(type)")
+        if color != .default && !useCustomColor {
+            params.append("color: .\(color)")
         }
 
         // 变体
@@ -256,19 +256,18 @@ struct ButtonPlayground: View {
             if state.hasIcon && state.title.isEmpty {
                 MoinUIButton(
                     icon: state.icon,
-                    type: state.type,
+                    color: state.useCustomColor ? .custom(state.customColor) : state.color,
                     size: state.size,
                     variant: state.variant,
                     shape: state.shape,
                     loading: MoinUIButtonLoading(state.isLoading),
                     isDisabled: state.isDisabled,
-                    isGhost: state.isGhost,
-                    color: state.useCustomColor ? state.customColor : nil
+                    isGhost: state.isGhost
                 ) {}
             } else {
                 MoinUIButton(
                     state.title.isEmpty ? defaultText : state.title,
-                    type: state.type,
+                    color: state.useCustomColor ? .custom(state.customColor) : state.color,
                     size: state.size,
                     variant: state.variant,
                     shape: state.shape,
@@ -277,8 +276,7 @@ struct ButtonPlayground: View {
                     loading: MoinUIButtonLoading(state.isLoading),
                     isDisabled: state.isDisabled,
                     isBlock: state.isBlock,
-                    isGhost: state.isGhost,
-                    color: state.useCustomColor ? state.customColor : nil
+                    isGhost: state.isGhost
                 ) {}
                 .frame(maxWidth: state.isBlock ? .infinity : nil)
                 .padding(.horizontal, state.isBlock ? Constants.Spacing.xl : 0)
@@ -311,8 +309,8 @@ struct ButtonPlayground: View {
                     SelectPropControl(
                         label: localization.tr("playground.prop.type"),
                         propName: localization.tr("playground.prop.type_prop"),
-                        options: MoinUIButtonType.allCases,
-                        value: $state.type
+                        options: MoinUIButtonColor.allCases,
+                        value: $state.color
                     )
                     .disabled(state.useCustomColor)
                     .opacity(state.useCustomColor ? 0.5 : 1)
@@ -422,8 +420,8 @@ struct ButtonPlayground: View {
 
 // MARK: - 扩展枚举以支持 Playground
 
-extension MoinUIButtonType: CaseIterable, CustomStringConvertible {
-    public static var allCases: [MoinUIButtonType] {
+extension MoinUIButtonColor: CaseIterable, CustomStringConvertible {
+    public static var allCases: [MoinUIButtonColor] {
         [.default, .primary, .success, .warning, .danger, .info]
     }
 
@@ -435,6 +433,7 @@ extension MoinUIButtonType: CaseIterable, CustomStringConvertible {
         case .warning: return "warning"
         case .danger: return "danger"
         case .info: return "info"
+        case .custom: return "custom"
         }
     }
 }

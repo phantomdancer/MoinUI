@@ -74,7 +74,7 @@ struct ConfigProviderExamples: View {
             description: localization.tr("config.locale_desc")
         ) {
             HStack(spacing: Constants.Spacing.md) {
-                MoinUIButton(localization.tr("config.switch_zh"), type: .primary) {
+                MoinUIButton(localization.tr("config.switch_zh"), color: .primary) {
                     localization.locale = .zhCN
                 }
                 MoinUIButton(localization.tr("config.switch_en")) {
@@ -126,9 +126,9 @@ struct ConfigProviderExamples: View {
 
                 // Preview buttons
                 HStack(spacing: Constants.Spacing.md) {
-                    MoinUIButton(localization.tr("button.label.primary"), type: .primary) {}
+                    MoinUIButton(localization.tr("button.label.primary"), color: .primary) {}
                     MoinUIButton(localization.tr("button.label.default")) {}
-                    MoinUIButton(localization.tr("button.label.primary"), type: .primary, variant: .outlined) {}
+                    MoinUIButton(localization.tr("button.label.primary"), color: .primary, variant: .outlined) {}
                 }
             }
         } code: {
@@ -194,9 +194,9 @@ struct ConfigProviderExamples: View {
 
                 // Preview buttons
                 HStack(spacing: Constants.Spacing.md) {
-                    MoinUIButton(localization.tr("button.label.primary"), type: .primary) {}
-                    MoinUIButton(localization.tr("button.label.success"), type: .success) {}
-                    MoinUIButton(localization.tr("button.label.danger"), type: .danger) {}
+                    MoinUIButton(localization.tr("button.label.primary"), color: .primary) {}
+                    MoinUIButton(localization.tr("button.label.success"), color: .success) {}
+                    MoinUIButton(localization.tr("button.label.danger"), color: .danger) {}
                 }
 
                 // Reset button

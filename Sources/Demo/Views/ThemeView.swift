@@ -121,7 +121,7 @@ struct ThemeView: View {
                     ForEach(MoinUITheme.allCases, id: \.self) { theme in
                         MoinUIButton(
                             theme.displayName,
-                            type: config.theme == theme ? .primary : .default,
+                            color: config.theme == theme ? .primary : .default,
                             variant: config.theme == theme ? .solid : .outlined
                         ) {
                             config.applyTheme(theme)

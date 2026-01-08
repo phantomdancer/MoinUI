@@ -8,11 +8,11 @@
 
 ## 最近完成
 
+- 2026-01-08: 删除无用 UI 测试（MoinUIButtonTests、MoinUIButtonGroupTests）
+- 2026-01-08: 移除 type 参数，统一用 color + variant（对齐 antd 5.21+）
+- 2026-01-08: MoinUIButtonColor 支持 .custom(Color) 自定义颜色
+- 2026-01-08: 修复延迟加载（task(id:) 替代 onChange）
 - 2026-01-08: 优化 Demo 示例展示（预览区透明背景、演练场去背景色）
-- 2026-01-08: 重构类型示例（保留 primary、default 等基础类型）
-- 2026-01-08: 颜色与变体示例增加 success、warning、info、cyan、orange 等
-- 2026-01-08: block 示例增加 danger、success、loading 等更多类型
-- 2026-01-08: 更新测试用例适配新 API
 - 2026-01-07: Button API 对齐 antd（iconPlacement、outlined、dashed、filled）
 - 2026-01-07: 实现 MoinUIButtonLoading（delay、自定义 icon）
 - 2026-01-07: 实现渐变按钮（gradient: LinearGradient?）
