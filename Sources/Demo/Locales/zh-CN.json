@@ -234,6 +234,15 @@
     "preview": "预览",
     "props": "属性",
     "code": "代码",
+    "tab": {
+      "props": "属性",
+      "token": "Token"
+    },
+    "token": {
+      "component": "组件 Token",
+      "global": "全局 Token",
+      "reset": "重置"
+    },
     "prop": {
       "title": "文本",
       "title_prop": "title: String",

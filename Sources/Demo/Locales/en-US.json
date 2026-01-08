@@ -234,6 +234,15 @@
     "preview": "Preview",
     "props": "Props",
     "code": "Code",
+    "tab": {
+      "props": "Props",
+      "token": "Token"
+    },
+    "token": {
+      "component": "Component Token",
+      "global": "Global Token",
+      "reset": "Reset"
+    },
     "prop": {
       "title": "Text",
       "title_prop": "title: String",

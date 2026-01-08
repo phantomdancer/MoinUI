@@ -102,6 +102,101 @@ struct ColorPropControl: View {
     }
 }
 
+/// Token 颜色编辑行
+struct TokenColorRow: View {
+    let label: String
+    @Binding var color: Color
+
+    var body: some View {
+        HStack {
+            Text(label)
+                .font(.system(size: 11, design: .monospaced))
+                .foregroundStyle(.secondary)
+            Spacer()
+            ColorPicker("", selection: $color)
+                .labelsHidden()
+                .frame(width: 40)
+        }
+    }
+}
+
+/// Token 颜色展示行（只读）
+struct TokenColorDisplayRow: View {
+    let label: String
+    let color: Color
+
+    var body: some View {
+        HStack {
+            Text(label)
+                .font(.system(size: 11, design: .monospaced))
+                .foregroundStyle(.secondary)
+            Spacer()
+            RoundedRectangle(cornerRadius: 4)
+                .fill(color)
+                .frame(width: 40, height: 20)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 4)
+                        .stroke(Color.primary.opacity(0.2), lineWidth: 1)
+                )
+        }
+    }
+}
+
+/// Token 数值编辑行
+struct TokenValueRow: View {
+    let label: String
+    @Binding var value: CGFloat
+    var range: ClosedRange<CGFloat> = 0...100
+
+    var body: some View {
+        HStack {
+            Text(label)
+                .font(.system(size: 11, design: .monospaced))
+                .foregroundStyle(.secondary)
+            Spacer()
+            HStack(spacing: 4) {
+                Button {
+                    if value > range.lowerBound { value -= 1 }
+                } label: {
+                    Image(systemName: "minus")
+                        .font(.system(size: 10))
+                }
+                .buttonStyle(.plain)
+
+                Text("\(Int(value))")
+                    .font(.system(size: 11, design: .monospaced))
+                    .frame(width: 30)
+
+                Button {
+                    if value < range.upperBound { value += 1 }
+                } label: {
+                    Image(systemName: "plus")
+                        .font(.system(size: 10))
+                }
+                .buttonStyle(.plain)
+            }
+        }
+    }
+}
+
+/// Token 值展示行（只读）
+struct TokenDisplayRow: View {
+    let label: String
+    let value: String
+
+    var body: some View {
+        HStack {
+            Text(label)
+                .font(.system(size: 11, design: .monospaced))
+                .foregroundStyle(.secondary)
+            Spacer()
+            Text(value)
+                .font(.system(size: 11, design: .monospaced))
+                .foregroundStyle(.primary)
+        }
+    }
+}
+
 /// 按钮 Playground 状态
 class ButtonPlaygroundState: ObservableObject {
     @Published var title: String = ""
@@ -199,11 +294,25 @@ class ButtonPlaygroundState: ObservableObject {
     }
 }
 
+/// Playground 右侧面板 Tab
+enum PlaygroundPanelTab: String, CaseIterable {
+    case props
+    case token
+
+    var titleKey: String {
+        switch self {
+        case .props: return "playground.tab.props"
+        case .token: return "playground.tab.token"
+        }
+    }
+}
+
 /// 按钮 Playground 视图
 struct ButtonPlayground: View {
     @EnvironmentObject var localization: MoinUILocalization
     @StateObject private var state = ButtonPlaygroundState()
     @ObservedObject private var config = MoinUIConfigProvider.shared
+    @State private var selectedTab: PlaygroundPanelTab = .props
 
     private var defaultText: String {
         localization.tr("playground.default_text")
@@ -224,9 +333,37 @@ struct ButtonPlayground: View {
 
             Divider()
 
-            // 右侧：属性控制面板
-            controlPanel
-                .frame(width: 320)
+            // 右侧：属性/Token 控制面板
+            VStack(spacing: 0) {
+                // Tab 切换
+                HStack(spacing: 0) {
+                    ForEach(PlaygroundPanelTab.allCases, id: \.self) { tab in
+                        Button {
+                            selectedTab = tab
+                        } label: {
+                            Text(localization.tr(tab.titleKey))
+                                .font(.system(size: 12, weight: selectedTab == tab ? .medium : .regular))
+                                .foregroundStyle(selectedTab == tab ? config.token.colorPrimary : .secondary)
+                                .frame(maxWidth: .infinity)
+                                .padding(.vertical, MoinUIConstants.Spacing.sm)
+                                .contentShape(Rectangle())
+                        }
+                        .buttonStyle(.plain)
+                        .background(selectedTab == tab ? config.token.colorPrimary.opacity(0.1) : .clear)
+                    }
+                }
+                .background(Color(nsColor: .controlBackgroundColor))
+
+                Divider()
+
+                // Tab 内容
+                if selectedTab == .props {
+                    propsPanel
+                } else {
+                    tokenPanel
+                }
+            }
+            .frame(width: 320)
         }
         .background(Color(nsColor: .controlBackgroundColor))
         .cornerRadius(MoinUIConstants.Radius.md)
@@ -285,9 +422,9 @@ struct ButtonPlayground: View {
         .frame(maxWidth: .infinity, minHeight: 120)
     }
 
-    // MARK: - Control Panel
+    // MARK: - Props Panel
 
-    private var controlPanel: some View {
+    private var propsPanel: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: MoinUIConstants.Spacing.md) {
                 HStack {
@@ -388,6 +525,119 @@ struct ButtonPlayground: View {
                         label: localization.tr("playground.prop.ghost"),
                         propName: localization.tr("playground.prop.ghost_prop"),
                         value: $state.isGhost
+                    )
+                }
+            }
+            .padding(MoinUIConstants.Spacing.md)
+        }
+    }
+
+    // MARK: - Token Panel
+
+    private var tokenPanel: some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: MoinUIConstants.Spacing.md) {
+                // 重置按钮
+                HStack {
+                    Spacer()
+                    Button {
+                        config.components.button = config.isDarkMode ? .dark : .light
+                        config.token = config.isDarkMode ? .dark : .light
+                    } label: {
+                        HStack(spacing: 4) {
+                            Image(systemName: "arrow.counterclockwise")
+                            Text(localization.tr("playground.token.reset"))
+                        }
+                        .font(.system(size: 11))
+                        .foregroundStyle(.secondary)
+                    }
+                    .buttonStyle(.plain)
+                }
+
+                // Component Token
+                VStack(alignment: .leading, spacing: MoinUIConstants.Spacing.sm) {
+                    Text(localization.tr("playground.token.component"))
+                        .font(.system(size: 11, weight: .medium))
+                        .foregroundStyle(.secondary)
+
+                    TokenColorRow(
+                        label: "defaultColor",
+                        color: $config.components.button.defaultColor
+                    )
+                    TokenColorRow(
+                        label: "defaultBg",
+                        color: $config.components.button.defaultBg
+                    )
+                    TokenColorRow(
+                        label: "defaultBorderColor",
+                        color: $config.components.button.defaultBorderColor
+                    )
+                    TokenColorRow(
+                        label: "primaryColor",
+                        color: $config.components.button.primaryColor
+                    )
+                    TokenColorRow(
+                        label: "dangerColor",
+                        color: $config.components.button.dangerColor
+                    )
+                    TokenDisplayRow(
+                        label: "fontWeight",
+                        value: ".medium"
+                    )
+                    TokenValueRow(
+                        label: "iconGap",
+                        value: $config.components.button.iconGap,
+                        range: 0...20
+                    )
+                    TokenValueRow(
+                        label: "paddingInline",
+                        value: $config.components.button.paddingInline,
+                        range: 0...30
+                    )
+                    TokenValueRow(
+                        label: "paddingBlock",
+                        value: $config.components.button.paddingBlock,
+                        range: 0...20
+                    )
+                }
+
+                Divider()
+
+                // Global Token
+                VStack(alignment: .leading, spacing: MoinUIConstants.Spacing.sm) {
+                    Text(localization.tr("playground.token.global"))
+                        .font(.system(size: 11, weight: .medium))
+                        .foregroundStyle(.secondary)
+
+                    TokenColorRow(
+                        label: "colorPrimary",
+                        color: $config.token.colorPrimary
+                    )
+                    TokenColorRow(
+                        label: "colorSuccess",
+                        color: $config.token.colorSuccess
+                    )
+                    TokenColorRow(
+                        label: "colorWarning",
+                        color: $config.token.colorWarning
+                    )
+                    TokenColorRow(
+                        label: "colorDanger",
+                        color: $config.token.colorDanger
+                    )
+                    TokenValueRow(
+                        label: "controlHeight",
+                        value: $config.token.controlHeight,
+                        range: 20...60
+                    )
+                    TokenValueRow(
+                        label: "borderRadius",
+                        value: $config.token.borderRadius,
+                        range: 0...20
+                    )
+                    TokenDisplayRow(
+                        label: "motionDuration",
+                        value: "\(config.token.motionDuration)s"
                     )
                 }
             }
