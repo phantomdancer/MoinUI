@@ -8,6 +8,9 @@
 
 ## 最近完成
 
+- 2026-01-08: Button 添加 fontColor 参数（自定义文字颜色）
+- 2026-01-08: Color(hex:) 扩展支持字符串格式（如 "#f093fb"）
+- 2026-01-08: 优化渐变按钮示例配色
 - 2026-01-08: 删除无用 UI 测试（MoinUIButtonTests、MoinUIButtonGroupTests）
 - 2026-01-08: 移除 type 参数，统一用 color + variant（对齐 antd 5.21+）
 - 2026-01-08: MoinUIButtonColor 支持 .custom(Color) 自定义颜色

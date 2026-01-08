@@ -24,6 +24,7 @@ struct ButtonAPISection: View {
                     ("shape", "MoinUIButtonShape", ".default", localization.tr("api.button.shape")),
                     ("color", "Color?", "nil", localization.tr("api.button.color")),
                     ("gradient", "LinearGradient?", "nil", localization.tr("api.button.gradient")),
+                    ("fontColor", "Color?", "nil", localization.tr("api.button.fontColor")),
                     ("icon", "String?", "nil", localization.tr("api.button.icon")),
                     ("iconPlacement", "MoinUIButtonIconPlacement", ".start", localization.tr("api.button.iconPlacement")),
                     ("loading", "MoinUIButtonLoading", "false", localization.tr("api.button.loading")),

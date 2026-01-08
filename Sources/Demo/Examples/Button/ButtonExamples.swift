@@ -270,33 +270,59 @@ struct ButtonExamples: View {
             description: localization.tr("button.gradient_desc")
         ) {
             HStack(spacing: Constants.Spacing.md) {
-                MoinUIButton(localization.tr("button.label.primary"), color: .primary, size: .large, icon: "sparkles", gradient: LinearGradient(
-                    colors: [PresetColors.purple, PresetColors.blue],
+                MoinUIButton(localization.tr("button.label.primary"), size: .large, icon: "sparkles", gradient: LinearGradient(
+                    colors: [Color(hex: "#667eea"), Color(hex: "#764ba2")],
                     startPoint: .leading,
                     endPoint: .trailing
-                )) {}
+                ), fontColor: .white) {}
                 MoinUIButton(localization.tr("button.label.warning"), size: .large, gradient: LinearGradient(
-                    colors: [PresetColors.orange, PresetColors.pink],
+                    colors: [Color(hex: "#f093fb"), Color(hex: "#f5576c")],
                     startPoint: .topLeading,
                     endPoint: .bottomTrailing
-                )) {}
+                ), fontColor: .white) {}
                 MoinUIButton(localization.tr("button.label.success"), size: .large, gradient: LinearGradient(
-                    colors: [PresetColors.green, PresetColors.cyan],
+                    colors: [Color(hex: "#4facfe"), Color(hex: "#00f2fe")],
                     startPoint: .top,
                     endPoint: .bottom
-                )) {}
+                ), fontColor: .white) {}
             }
         } code: {
             """
+            // \(localization.tr("button.label.primary"))
             MoinUIButton(
                 "\(localization.tr("button.label.primary"))",
                 size: .large,
                 icon: "sparkles",
                 gradient: LinearGradient(
-                    colors: [PresetColors.purple, PresetColors.blue],
+                    colors: [Color(hex: "#667eea"), Color(hex: "#764ba2")],
                     startPoint: .leading,
                     endPoint: .trailing
-                )
+                ),
+                fontColor: .white
+            ) {}
+
+            // \(localization.tr("button.label.warning"))
+            MoinUIButton(
+                "\(localization.tr("button.label.warning"))",
+                size: .large,
+                gradient: LinearGradient(
+                    colors: [Color(hex: "#f093fb"), Color(hex: "#f5576c")],
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                ),
+                fontColor: .white
+            ) {}
+
+            // \(localization.tr("button.label.success"))
+            MoinUIButton(
+                "\(localization.tr("button.label.success"))",
+                size: .large,
+                gradient: LinearGradient(
+                    colors: [Color(hex: "#4facfe"), Color(hex: "#00f2fe")],
+                    startPoint: .top,
+                    endPoint: .bottom
+                ),
+                fontColor: .white
             ) {}
             """
         }

@@ -60,6 +60,7 @@ public struct MoinUIButton<Label: View>: View {
     private let href: URL?
     private let target: String?
     private let gradient: LinearGradient?
+    private let fontColor: Color?
 
     @State private var isHovered = false
     @State private var isPressed = false
@@ -83,6 +84,7 @@ public struct MoinUIButton<Label: View>: View {
         href: URL? = nil,
         target: String? = nil,
         gradient: LinearGradient? = nil,
+        fontColor: Color? = nil,
         action: (() -> Void)? = nil,
         @ViewBuilder label: () -> Label
     ) {
@@ -99,6 +101,7 @@ public struct MoinUIButton<Label: View>: View {
         self.href = href
         self.target = target
         self.gradient = gradient
+        self.fontColor = fontColor
         self.action = action
         self.label = label()
     }
@@ -331,6 +334,11 @@ public struct MoinUIButton<Label: View>: View {
     }
 
     private var foregroundColor: Color {
+        // 优先使用自定义 fontColor
+        if let fontColor = fontColor {
+            return effectiveDisabled ? fontColor.opacity(0.65) : fontColor
+        }
+
         // Ghost 模式：default 用白色，有色用原色
         if isGhost {
             if effectiveDisabled { return Color.white.opacity(0.5) }
@@ -453,6 +461,7 @@ public extension MoinUIButton where Label == Text {
         isGhost: Bool = false,
         href: URL? = nil,
         gradient: LinearGradient? = nil,
+        fontColor: Color? = nil,
         action: (() -> Void)? = nil
     ) {
         self.init(
@@ -468,6 +477,7 @@ public extension MoinUIButton where Label == Text {
             isGhost: isGhost,
             href: href,
             gradient: gradient,
+            fontColor: fontColor,
             action: action
         ) {
             Text(title)
@@ -487,6 +497,7 @@ public extension MoinUIButton where Label == EmptyView {
         isGhost: Bool = false,
         href: URL? = nil,
         gradient: LinearGradient? = nil,
+        fontColor: Color? = nil,
         action: (() -> Void)? = nil
     ) {
         self.init(
@@ -502,6 +513,7 @@ public extension MoinUIButton where Label == EmptyView {
             isGhost: isGhost,
             href: href,
             gradient: gradient,
+            fontColor: fontColor,
             action: action
         ) {
             EmptyView()

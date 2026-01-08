@@ -288,6 +288,7 @@
       "shape": "按钮形状",
       "color": "自定义颜色，优先级高于 type",
       "gradient": "渐变背景",
+      "fontColor": "自定义文字颜色",
       "icon": "图标名称 (SF Symbols)",
       "iconPlacement": "图标位置",
       "loading": "加载状态配置",

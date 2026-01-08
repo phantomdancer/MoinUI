@@ -47,12 +47,45 @@ public enum PresetColors {
 
 // MARK: - Color Hex Extension
 
-extension Color {
+public extension Color {
     /// 从 16 进制整数创建颜色
     init(hex: UInt32, alpha: Double = 1.0) {
         let red = Double((hex >> 16) & 0xFF) / 255.0
         let green = Double((hex >> 8) & 0xFF) / 255.0
         let blue = Double(hex & 0xFF) / 255.0
         self.init(red: red, green: green, blue: blue, opacity: alpha)
+    }
+
+    /// 从 16 进制字符串创建颜色
+    /// 支持格式：#RGB, #RRGGBB, #RRGGBBAA
+    init(hex: String, alpha: Double = 1.0) {
+        var hexString = hex.trimmingCharacters(in: .whitespacesAndNewlines)
+        if hexString.hasPrefix("#") {
+            hexString.removeFirst()
+        }
+
+        var hexValue: UInt64 = 0
+        guard Scanner(string: hexString).scanHexInt64(&hexValue) else {
+            self.init(red: 0, green: 0, blue: 0, opacity: alpha)
+            return
+        }
+
+        switch hexString.count {
+        case 3: // RGB
+            let r = Double((hexValue >> 8) & 0xF) / 15.0
+            let g = Double((hexValue >> 4) & 0xF) / 15.0
+            let b = Double(hexValue & 0xF) / 15.0
+            self.init(red: r, green: g, blue: b, opacity: alpha)
+        case 6: // RRGGBB
+            self.init(hex: UInt32(hexValue), alpha: alpha)
+        case 8: // RRGGBBAA
+            let r = Double((hexValue >> 24) & 0xFF) / 255.0
+            let g = Double((hexValue >> 16) & 0xFF) / 255.0
+            let b = Double((hexValue >> 8) & 0xFF) / 255.0
+            let a = Double(hexValue & 0xFF) / 255.0
+            self.init(red: r, green: g, blue: b, opacity: a)
+        default:
+            self.init(red: 0, green: 0, blue: 0, opacity: alpha)
+        }
     }
 }

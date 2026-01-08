@@ -288,6 +288,7 @@
       "shape": "Button shape",
       "color": "Custom color, overrides type",
       "gradient": "Gradient background",
+      "fontColor": "Custom font color",
       "icon": "Icon name (SF Symbols)",
       "iconPlacement": "Icon placement",
       "loading": "Loading configuration",

@@ -27,6 +27,7 @@
 | Shape (default/round/circle) | ✅ |
 | Custom Color (.custom(Color)) | ✅ |
 | Gradient (渐变背景) | ✅ |
+| fontColor (自定义文字颜色) | ✅ |
 | Icon + Text | ✅ |
 | Icon Placement (start/end) | ✅ |
 | Loading (delay, 自定义 icon) | ✅ |
