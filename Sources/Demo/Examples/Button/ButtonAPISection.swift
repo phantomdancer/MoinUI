@@ -141,7 +141,7 @@ struct ButtonAPISection: View {
             Divider()
                 .padding(.top, MoinUIConstants.Spacing.lg)
 
-            Text(localization.tr("api.global_token"))
+            Text(localization.tr("api.global_token_title"))
                 .font(.title2)
                 .fontWeight(.semibold)
                 .id("global_token")
@@ -158,9 +158,9 @@ struct ButtonAPISection: View {
                     localization.tr("api.description")
                 ),
                 rows: [
-                    ("colorPrimary", "Color", "#1677ff", localization.tr("api.global_token.colorPrimary")),
-                    ("colorPrimaryHover", "Color", "#4096ff", localization.tr("api.global_token.colorPrimaryHover")),
-                    ("colorPrimaryActive", "Color", "#0958d9", localization.tr("api.global_token.colorPrimaryActive")),
+                    ("colorPrimary", "Color", "primary", localization.tr("api.global_token.colorPrimary")),
+                    ("colorPrimaryHover", "Color", "primaryHover", localization.tr("api.global_token.colorPrimaryHover")),
+                    ("colorPrimaryActive", "Color", "primaryActive", localization.tr("api.global_token.colorPrimaryActive")),
                     ("borderRadius", "CGFloat", "6", localization.tr("api.global_token.borderRadius")),
                     ("borderRadiusLG", "CGFloat", "8", localization.tr("api.global_token.borderRadiusLG")),
                     ("borderRadiusSM", "CGFloat", "4", localization.tr("api.global_token.borderRadiusSM")),

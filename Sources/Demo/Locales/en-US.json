@@ -277,7 +277,7 @@
     "value": "Value",
     "component_token": "Component Token",
     "component_token_desc": "Below are the design tokens for the Button component. Override via ConfigProvider.",
-    "global_token": "Global Token",
+    "global_token_title": "Global Token",
     "global_token_desc": "Below are the global tokens used by Button. Configure via ConfigProvider.",
     "button": {
       "type": "Button color type",

@@ -29,7 +29,7 @@ struct ButtonExamples: View {
         AnchorItem(id: "block", titleKey: "button.block"),
         AnchorItem(id: "api", titleKey: "API"),
         AnchorItem(id: "component_token", titleKey: "api.component_token"),
-        AnchorItem(id: "global_token", titleKey: "api.global_token"),
+        AnchorItem(id: "global_token", titleKey: "api.global_token_title"),
     ]
 
     var body: some View {
