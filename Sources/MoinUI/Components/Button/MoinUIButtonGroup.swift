@@ -1,51 +1,59 @@
 import SwiftUI
 
-/// 按钮组组件
-public struct MoinUIButtonGroup<Content: View>: View {
-    private let size: MoinUIButtonSize
-    private let content: Content
+// MARK: - Moin.ButtonGroup
 
-    public init(
-        size: MoinUIButtonSize = .medium,
-        @ViewBuilder content: () -> Content
-    ) {
-        self.size = size
-        self.content = content()
-    }
+public extension Moin {
+    /// 按钮组组件
+    struct ButtonGroup<Content: View>: View {
+        private let size: Moin.ButtonSize
+        private let content: Content
 
-    public var body: some View {
-        HStack(spacing: -1) {
-            content
+        public init(
+            size: Moin.ButtonSize = .medium,
+            @ViewBuilder content: () -> Content
+        ) {
+            self.size = size
+            self.content = content()
         }
-        .environment(\.moinUIButtonGroupSize, size)
-        .environment(\.moinUIButtonGroupPosition, .middle)
+
+        public var body: some View {
+            HStack(spacing: -1) {
+                content
+            }
+            .environment(\.moinButtonGroupSize, size)
+            .environment(\.moinButtonGroupPosition, .middle)
+        }
     }
 }
 
+/// 旧名别名（已弃用）
+@available(*, deprecated, renamed: "Moin.ButtonGroup")
+public typealias MoinUIButtonGroup = Moin.ButtonGroup
+
 // MARK: - 按钮组位置
 
-enum MoinUIButtonGroupPosition {
+enum MoinButtonGroupPosition {
     case middle
 }
 
 // MARK: - 环境变量
 
-private struct MoinUIButtonGroupSizeKey: EnvironmentKey {
-    static let defaultValue: MoinUIButtonSize? = nil
+private struct MoinButtonGroupSizeKey: EnvironmentKey {
+    static let defaultValue: Moin.ButtonSize? = nil
 }
 
-private struct MoinUIButtonGroupPositionKey: EnvironmentKey {
-    static let defaultValue: MoinUIButtonGroupPosition? = nil
+private struct MoinButtonGroupPositionKey: EnvironmentKey {
+    static let defaultValue: MoinButtonGroupPosition? = nil
 }
 
 extension EnvironmentValues {
-    var moinUIButtonGroupSize: MoinUIButtonSize? {
-        get { self[MoinUIButtonGroupSizeKey.self] }
-        set { self[MoinUIButtonGroupSizeKey.self] = newValue }
+    var moinButtonGroupSize: Moin.ButtonSize? {
+        get { self[MoinButtonGroupSizeKey.self] }
+        set { self[MoinButtonGroupSizeKey.self] = newValue }
     }
 
-    var moinUIButtonGroupPosition: MoinUIButtonGroupPosition? {
-        get { self[MoinUIButtonGroupPositionKey.self] }
-        set { self[MoinUIButtonGroupPositionKey.self] = newValue }
+    var moinButtonGroupPosition: MoinButtonGroupPosition? {
+        get { self[MoinButtonGroupPositionKey.self] }
+        set { self[MoinButtonGroupPositionKey.self] = newValue }
     }
 }
