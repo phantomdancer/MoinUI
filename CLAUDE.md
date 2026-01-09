@@ -14,7 +14,7 @@ MoinUI（墨影UI）- macOS SwiftUI 组件库。
 ## 命令
 
 ```bash
-yarn dev          # 启动开发（推荐）
+pnpm dev          # 启动开发（推荐）
 swift build       # 构建
 swift test        # 测试
 swift package clean && swift build  # 清理重建
