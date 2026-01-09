@@ -372,15 +372,11 @@ public extension Moin {
 
         @Published public var config: Moin.Config
 
-        /// Localization manager
-        public let localization: Moin.Localization
-
         /// 系统外观监听
         @Published public var systemIsDark: Bool = false
 
         private init() {
             self.config = .default
-            self.localization = Moin.Localization.shared
             if let app = NSApp {
                 self.systemIsDark = app.effectiveAppearance.bestMatch(from: [.darkAqua, .aqua]) == .darkAqua
             }
@@ -461,10 +457,7 @@ public extension Moin {
         /// Current locale
         public var locale: Moin.Locale {
             get { config.locale }
-            set {
-                config.locale = newValue
-                localization.setLocale(newValue)
-            }
+            set { config.locale = newValue }
         }
 
         /// Global token
@@ -501,7 +494,7 @@ public extension Moin {
 
         /// Translate string using current locale
         public func tr(_ key: String) -> String {
-            localization.tr(key)
+            Moin.Localization.shared.tr(key, locale: config.locale)
         }
 
         // MARK: - Configuration methods
@@ -510,11 +503,6 @@ public extension Moin {
         public func configure(_ updates: (inout Moin.Config) -> Void) {
             var newConfig = config
             updates(&newConfig)
-
-            // Sync locale to localization manager
-            if newConfig.locale != config.locale {
-                localization.setLocale(newConfig.locale)
-            }
 
             // Sync theme
             if newConfig.theme != config.theme {
@@ -528,7 +516,6 @@ public extension Moin {
         /// Reset to default configuration
         public func reset() {
             config = .default
-            localization.setLocale(.default)
         }
     }
 }
@@ -578,9 +565,10 @@ public extension View {
 
     /// Set Moin locale
     func moinLocale(_ locale: Moin.Locale) -> some View {
-        onAppear {
-            Moin.ConfigProvider.shared.locale = locale
-        }
+        self.environment(\.moinLocale, locale)
+            .onAppear {
+                Moin.ConfigProvider.shared.locale = locale
+            }
     }
 
     /// Set Moin primary color
@@ -610,10 +598,10 @@ public extension Moin {
         public func body(content: Content) -> some View {
             content
                 .preferredColorScheme(colorScheme)
+                .environment(\.moinLocale, config.locale)
                 .environment(\.moinToken, config.token)
                 .environment(\.moinButtonToken, config.components.button)
                 .environmentObject(config)
-                .environmentObject(config.localization)
         }
 
         private var colorScheme: ColorScheme? {

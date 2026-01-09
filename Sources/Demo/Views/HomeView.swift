@@ -3,7 +3,6 @@ import MoinUI
 
 /// Homepage inspired by Ant Design, Element Plus, shadcn/ui
 struct HomeView: View {
-    @EnvironmentObject var localization: Moin.Localization
     @ObservedObject private var config = Moin.ConfigProvider.shared
 
     private var token: Moin.Token { config.token }
@@ -24,7 +23,7 @@ struct HomeView: View {
 // MARK: - Hero Section
 
 private struct HeroSection: View {
-    @EnvironmentObject var localization: Moin.Localization
+    @Localized var tr
     @ObservedObject private var config = Moin.ConfigProvider.shared
 
     private var token: Moin.Token { config.token }
@@ -60,15 +59,15 @@ private struct HeroSection: View {
                         .clipShape(Capsule())
                 }
 
-                Text(localization.tr("home.tagline"))
+                Text(tr("home.tagline"))
                     .font(.title3)
                     .foregroundStyle(token.colorTextSecondary)
 
                 HStack(spacing: Moin.Constants.Spacing.md) {
-                    Moin.Button(localization.tr("home.get_started"), color: .primary, size: .large) {
+                    Moin.Button(tr("home.get_started"), color: .primary, size: .large) {
                         NavigationManager.shared.navigate(to: .quickStart)
                     }
-                    Moin.Button(localization.tr("home.github"), size: .large, variant: .outlined) {}
+                    Moin.Button(tr("home.github"), size: .large, variant: .outlined) {}
                 }
                 .padding(.top, Moin.Constants.Spacing.sm)
             }
@@ -101,7 +100,7 @@ private struct HeroSection: View {
 // MARK: - Features Section
 
 private struct FeaturesSection: View {
-    @EnvironmentObject var localization: Moin.Localization
+    @Localized var tr
     @ObservedObject private var config = Moin.ConfigProvider.shared
 
     private var token: Moin.Token { config.token }
@@ -117,8 +116,8 @@ private struct FeaturesSection: View {
             ForEach(features, id: \.titleKey) { feature in
                 FeatureCard(
                     icon: feature.icon,
-                    title: localization.tr(feature.titleKey),
-                    description: localization.tr(feature.descKey)
+                    title: tr(feature.titleKey),
+                    description: tr(feature.descKey)
                 )
             }
         }
@@ -171,7 +170,7 @@ private struct FeatureCard: View {
 // MARK: - Components Preview Section
 
 private struct ComponentsPreviewSection: View {
-    @EnvironmentObject var localization: Moin.Localization
+    @Localized var tr
     @ObservedObject private var config = Moin.ConfigProvider.shared
 
     private var token: Moin.Token { config.token }
@@ -180,12 +179,12 @@ private struct ComponentsPreviewSection: View {
         VStack(alignment: .leading, spacing: Moin.Constants.Spacing.xl) {
             // 标题
             VStack(alignment: .leading, spacing: Moin.Constants.Spacing.xs) {
-                Text(localization.tr("home.components"))
+                Text(tr("home.components"))
                     .font(.title2)
                     .fontWeight(.semibold)
                     .foregroundStyle(token.colorText)
 
-                Text(localization.tr("home.components_desc"))
+                Text(tr("home.components_desc"))
                     .font(.subheadline)
                     .foregroundStyle(token.colorTextSecondary)
             }
@@ -199,26 +198,26 @@ private struct ComponentsPreviewSection: View {
                 VStack(alignment: .leading, spacing: Moin.Constants.Spacing.md) {
                     // Types
                     HStack(spacing: Moin.Constants.Spacing.sm) {
-                        Moin.Button(localization.tr("button.label.primary"), color: .primary) {}
-                        Moin.Button(localization.tr("button.label.success"), color: .success) {}
-                        Moin.Button(localization.tr("button.label.warning"), color: .warning) {}
-                        Moin.Button(localization.tr("button.label.danger"), color: .danger) {}
-                        Moin.Button(localization.tr("button.label.default")) {}
+                        Moin.Button(tr("button.label.primary"), color: .primary) {}
+                        Moin.Button(tr("button.label.success"), color: .success) {}
+                        Moin.Button(tr("button.label.warning"), color: .warning) {}
+                        Moin.Button(tr("button.label.danger"), color: .danger) {}
+                        Moin.Button(tr("button.label.default")) {}
                     }
 
                     // Variants
                     HStack(spacing: Moin.Constants.Spacing.sm) {
-                        Moin.Button(localization.tr("button.label.solid"), color: .primary, variant: .solid) {}
-                        Moin.Button(localization.tr("button.label.outlined"), color: .primary, variant: .outlined) {}
-                        Moin.Button(localization.tr("button.label.text"), color: .primary, variant: .text) {}
-                        Moin.Button(localization.tr("button.label.link"), color: .primary, variant: .link) {}
+                        Moin.Button(tr("button.label.solid"), color: .primary, variant: .solid) {}
+                        Moin.Button(tr("button.label.outlined"), color: .primary, variant: .outlined) {}
+                        Moin.Button(tr("button.label.text"), color: .primary, variant: .text) {}
+                        Moin.Button(tr("button.label.link"), color: .primary, variant: .link) {}
                     }
 
                     // Sizes & Icons
                     HStack(spacing: Moin.Constants.Spacing.sm) {
-                        Moin.Button(localization.tr("button.label.large"), color: .primary, size: .large) {}
-                        Moin.Button(localization.tr("button.label.medium"), color: .primary, size: .medium) {}
-                        Moin.Button(localization.tr("button.label.small"), color: .primary, size: .small) {}
+                        Moin.Button(tr("button.label.large"), color: .primary, size: .large) {}
+                        Moin.Button(tr("button.label.medium"), color: .primary, size: .medium) {}
+                        Moin.Button(tr("button.label.small"), color: .primary, size: .small) {}
                         Moin.Button(icon: "plus", color: .primary, shape: .circle) {}
                     }
                 }

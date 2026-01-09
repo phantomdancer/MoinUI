@@ -140,7 +140,7 @@ class NavigationManager: ObservableObject {
 struct ContentView: View {
     @StateObject private var navManager = NavigationManager.shared
     @EnvironmentObject var configProvider: Moin.ConfigProvider
-    @EnvironmentObject var localization: Moin.Localization
+    @Localized var tr
     @State private var buttonTab: ButtonExamplesTab = .examples
 
     var body: some View {
@@ -149,14 +149,14 @@ struct ContentView: View {
                 .modifier(HideSidebarToggleModifier())
         } detail: {
             DetailView(item: navManager.selectedItem, buttonTab: $buttonTab)
-                .navigationTitle(navManager.selectedItem.map { localization.tr($0.titleKey) } ?? "MoinUI")
+                .navigationTitle(navManager.selectedItem.map { tr($0.titleKey) } ?? "MoinUI")
                 .toolbar {
                     ToolbarItemGroup(placement: .primaryAction) {
                         // 按钮页面显示 Tab 切换（分段控件样式）
                         if navManager.selectedItem == .button {
                             Picker("", selection: $buttonTab) {
-                                Text(localization.tr("tab.examples")).tag(ButtonExamplesTab.examples)
-                                Text(localization.tr("tab.playground")).tag(ButtonExamplesTab.playground)
+                                Text(tr("tab.examples")).tag(ButtonExamplesTab.examples)
+                                Text(tr("tab.playground")).tag(ButtonExamplesTab.playground)
                             }
                             .pickerStyle(.segmented)
                             .fixedSize()
@@ -170,11 +170,11 @@ struct ContentView: View {
                             Image(systemName: configProvider.isDarkMode ? "sun.max.fill" : "moon.fill")
                                 .font(.system(size: 14))
                         }
-                        .help(localization.tr(configProvider.isDarkMode ? "toolbar.switch_light" : "toolbar.switch_dark"))
+                        .help(tr(configProvider.isDarkMode ? "toolbar.switch_light" : "toolbar.switch_dark"))
 
-                        Picker("", selection: $localization.locale) {
-                            Text(localization.tr("toolbar.lang_zh")).tag(Moin.Locale.zhCN)
-                            Text(localization.tr("toolbar.lang_en")).tag(Moin.Locale.enUS)
+                        Picker("", selection: $configProvider.locale) {
+                            Text(tr("toolbar.lang_zh")).tag(Moin.Locale.zhCN)
+                            Text(tr("toolbar.lang_en")).tag(Moin.Locale.enUS)
                         }
                         .pickerStyle(.segmented)
                         .frame(width: 100)
@@ -234,30 +234,30 @@ enum NavItem: String, Identifiable {
 
 struct Sidebar: View {
     @Binding var selection: NavItem?
-    @EnvironmentObject var localization: Moin.Localization
+    @Localized var tr
 
     var body: some View {
         List(selection: $selection) {
-            Section(localization.tr("nav.overview")) {
+            Section(tr("nav.overview")) {
                 ForEach(NavItem.overview) { item in
                     NavigationLink(value: item) {
-                        Label(localization.tr(item.titleKey), systemImage: item.icon)
+                        Label(tr(item.titleKey), systemImage: item.icon)
                     }
                 }
             }
 
-            Section(localization.tr("nav.development")) {
+            Section(tr("nav.development")) {
                 ForEach(NavItem.development) { item in
                     NavigationLink(value: item) {
-                        Label(localization.tr(item.titleKey), systemImage: item.icon)
+                        Label(tr(item.titleKey), systemImage: item.icon)
                     }
                 }
             }
 
-            Section(localization.tr("nav.components")) {
+            Section(tr("nav.components")) {
                 ForEach(NavItem.components) { item in
                     NavigationLink(value: item) {
-                        Label(localization.tr(item.titleKey), systemImage: item.icon)
+                        Label(tr(item.titleKey), systemImage: item.icon)
                     }
                 }
             }
@@ -273,7 +273,6 @@ struct Sidebar: View {
 struct DetailView: View {
     let item: NavItem?
     @Binding var buttonTab: ButtonExamplesTab
-    @EnvironmentObject var localization: Moin.Localization
 
     var body: some View {
         Group {

@@ -65,11 +65,11 @@ final class ConfigProviderTests: XCTestCase {
 
         provider.locale = .enUS
         XCTAssertEqual(provider.locale, .enUS)
-        XCTAssertEqual(provider.localization.locale, .enUS)
+        XCTAssertEqual(provider.config.locale, .enUS)
 
         provider.locale = .zhCN
         XCTAssertEqual(provider.locale, .zhCN)
-        XCTAssertEqual(provider.localization.locale, .zhCN)
+        XCTAssertEqual(provider.config.locale, .zhCN)
     }
 
     func testPrimaryColorAccessor() {
@@ -271,7 +271,7 @@ final class ConfigProviderTests: XCTestCase {
         }
 
         XCTAssertEqual(provider.locale, .enUS)
-        XCTAssertEqual(provider.localization.locale, .enUS)
+        XCTAssertEqual(provider.config.locale, .enUS)
     }
 
     // MARK: - Dark Token Tests

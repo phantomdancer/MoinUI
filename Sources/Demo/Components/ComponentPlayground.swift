@@ -309,13 +309,13 @@ enum PlaygroundPanelTab: String, CaseIterable {
 
 /// 按钮 Playground 视图
 struct ButtonPlayground: View {
-    @EnvironmentObject var localization: Moin.Localization
+    @Localized var tr
     @StateObject private var state = ButtonPlaygroundState()
     @ObservedObject private var config = Moin.ConfigProvider.shared
     @State private var selectedTab: PlaygroundPanelTab = .props
 
     private var defaultText: String {
-        localization.tr("playground.default_text")
+        tr("playground.default_text")
     }
 
     var body: some View {
@@ -341,7 +341,7 @@ struct ButtonPlayground: View {
                         Button {
                             selectedTab = tab
                         } label: {
-                            Text(localization.tr(tab.titleKey))
+                            Text(tr(tab.titleKey))
                                 .font(.system(size: 12, weight: selectedTab == tab ? .medium : .regular))
                                 .foregroundStyle(selectedTab == tab ? config.token.colorPrimary : .secondary)
                                 .frame(maxWidth: .infinity)
@@ -378,7 +378,7 @@ struct ButtonPlayground: View {
     private var previewSection: some View {
         VStack(spacing: Moin.Constants.Spacing.sm) {
             HStack {
-                Text(localization.tr("playground.preview"))
+                Text(tr("playground.preview"))
                     .font(.system(size: 11, weight: .medium))
                     .foregroundStyle(.secondary)
                 Spacer()
@@ -428,7 +428,7 @@ struct ButtonPlayground: View {
         ScrollView {
             VStack(alignment: .leading, spacing: Moin.Constants.Spacing.md) {
                 HStack {
-                    Text(localization.tr("playground.props"))
+                    Text(tr("playground.props"))
                         .font(.system(size: 11, weight: .medium))
                         .foregroundStyle(.secondary)
                     Spacer()
@@ -436,14 +436,14 @@ struct ButtonPlayground: View {
 
                 VStack(spacing: Moin.Constants.Spacing.sm) {
                     TextPropControl(
-                        label: localization.tr("playground.prop.title"),
-                        propName: localization.tr("playground.prop.title_prop"),
+                        label: tr("playground.prop.title"),
+                        propName: tr("playground.prop.title_prop"),
                         value: $state.title
                     )
 
                     SelectPropControl(
-                        label: localization.tr("playground.prop.type"),
-                        propName: localization.tr("playground.prop.type_prop"),
+                        label: tr("playground.prop.type"),
+                        propName: tr("playground.prop.type_prop"),
                         options: Moin.ButtonColor.allCases,
                         value: $state.color
                     )
@@ -451,50 +451,50 @@ struct ButtonPlayground: View {
                     .opacity(state.useCustomColor ? 0.5 : 1)
 
                     TogglePropControl(
-                        label: localization.tr("playground.prop.custom_color"),
-                        propName: localization.tr("playground.prop.custom_color_prop"),
+                        label: tr("playground.prop.custom_color"),
+                        propName: tr("playground.prop.custom_color_prop"),
                         value: $state.useCustomColor
                     )
 
                     if state.useCustomColor {
                         ColorPropControl(
-                            label: localization.tr("playground.prop.color"),
-                            propName: localization.tr("playground.prop.color_prop"),
+                            label: tr("playground.prop.color"),
+                            propName: tr("playground.prop.color_prop"),
                             value: $state.customColor
                         )
                     }
 
                     SelectPropControl(
-                        label: localization.tr("playground.prop.variant"),
-                        propName: localization.tr("playground.prop.variant_prop"),
+                        label: tr("playground.prop.variant"),
+                        propName: tr("playground.prop.variant_prop"),
                         options: Moin.ButtonVariant.allCases,
                         value: $state.variant
                     )
 
                     SelectPropControl(
-                        label: localization.tr("playground.prop.size"),
-                        propName: localization.tr("playground.prop.size_prop"),
+                        label: tr("playground.prop.size"),
+                        propName: tr("playground.prop.size_prop"),
                         options: Moin.ButtonSize.allCases,
                         value: $state.size
                     )
 
                     SelectPropControl(
-                        label: localization.tr("playground.prop.shape"),
-                        propName: localization.tr("playground.prop.shape_prop"),
+                        label: tr("playground.prop.shape"),
+                        propName: tr("playground.prop.shape_prop"),
                         options: Moin.ButtonShape.allCases,
                         value: $state.shape
                     )
 
                     TextPropControl(
-                        label: localization.tr("playground.prop.icon"),
-                        propName: localization.tr("playground.prop.icon_prop"),
+                        label: tr("playground.prop.icon"),
+                        propName: tr("playground.prop.icon_prop"),
                         value: $state.icon
                     )
 
                     if state.hasIcon {
                         SelectPropControl(
-                            label: localization.tr("playground.prop.icon_placement"),
-                            propName: localization.tr("playground.prop.icon_placement_prop"),
+                            label: tr("playground.prop.icon_placement"),
+                            propName: tr("playground.prop.icon_placement_prop"),
                             options: Moin.ButtonIconPlacement.allCases,
                             value: $state.iconPlacement
                         )
@@ -504,26 +504,26 @@ struct ButtonPlayground: View {
                         .padding(.vertical, Moin.Constants.Spacing.xs)
 
                     TogglePropControl(
-                        label: localization.tr("playground.prop.disabled"),
-                        propName: localization.tr("playground.prop.disabled_prop"),
+                        label: tr("playground.prop.disabled"),
+                        propName: tr("playground.prop.disabled_prop"),
                         value: $state.isDisabled
                     )
 
                     TogglePropControl(
-                        label: localization.tr("playground.prop.loading"),
-                        propName: localization.tr("playground.prop.loading_prop"),
+                        label: tr("playground.prop.loading"),
+                        propName: tr("playground.prop.loading_prop"),
                         value: $state.isLoading
                     )
 
                     TogglePropControl(
-                        label: localization.tr("playground.prop.block"),
-                        propName: localization.tr("playground.prop.block_prop"),
+                        label: tr("playground.prop.block"),
+                        propName: tr("playground.prop.block_prop"),
                         value: $state.isBlock
                     )
 
                     TogglePropControl(
-                        label: localization.tr("playground.prop.ghost"),
-                        propName: localization.tr("playground.prop.ghost_prop"),
+                        label: tr("playground.prop.ghost"),
+                        propName: tr("playground.prop.ghost_prop"),
                         value: $state.isGhost
                     )
                 }
@@ -546,7 +546,7 @@ struct ButtonPlayground: View {
                     } label: {
                         HStack(spacing: 4) {
                             Image(systemName: "arrow.counterclockwise")
-                            Text(localization.tr("playground.token.reset"))
+                            Text(tr("playground.token.reset"))
                         }
                         .font(.system(size: 11))
                         .foregroundStyle(.secondary)
@@ -556,7 +556,7 @@ struct ButtonPlayground: View {
 
                 // Component Token
                 VStack(alignment: .leading, spacing: Moin.Constants.Spacing.sm) {
-                    Text(localization.tr("playground.token.component"))
+                    Text(tr("playground.token.component"))
                         .font(.system(size: 11, weight: .medium))
                         .foregroundStyle(.secondary)
 
@@ -605,7 +605,7 @@ struct ButtonPlayground: View {
 
                 // Global Token
                 VStack(alignment: .leading, spacing: Moin.Constants.Spacing.sm) {
-                    Text(localization.tr("playground.token.global"))
+                    Text(tr("playground.token.global"))
                         .font(.system(size: 11, weight: .medium))
                         .foregroundStyle(.secondary)
 
@@ -650,7 +650,7 @@ struct ButtonPlayground: View {
     private var codeSection: some View {
         VStack(alignment: .leading, spacing: Moin.Constants.Spacing.sm) {
             HStack {
-                Text(localization.tr("playground.code"))
+                Text(tr("playground.code"))
                     .font(.system(size: 11, weight: .medium))
                     .foregroundStyle(.secondary)
                 Spacer()

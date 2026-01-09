@@ -39,7 +39,7 @@ struct AnchorNav: View {
     let anchors: [AnchorItem]
     let scrollProxy: ScrollViewProxy
     @Binding var activeAnchor: String?
-    @EnvironmentObject var localization: Moin.Localization
+    @Localized var tr
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -57,7 +57,7 @@ struct AnchorNav: View {
                             .fill(activeAnchor == anchor.id ? Color.accentColor : Color.clear)
                             .frame(width: 2, height: 16)
 
-                        Text(localization.tr(anchor.titleKey))
+                        Text(tr(anchor.titleKey))
                             .font(.system(size: 12))
                             .foregroundStyle(activeAnchor == anchor.id ? Color.accentColor : .secondary)
                             .lineLimit(1)

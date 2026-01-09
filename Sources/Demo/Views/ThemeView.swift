@@ -3,7 +3,7 @@ import MoinUI
 
 /// Theme Configuration Page
 struct ThemeView: View {
-    @EnvironmentObject var localization: Moin.Localization
+    @Localized var tr
     @ObservedObject private var config = Moin.ConfigProvider.shared
 
     private var token: Moin.Token { config.token }
@@ -13,12 +13,12 @@ struct ThemeView: View {
             VStack(alignment: .leading, spacing: Moin.Constants.Spacing.xl) {
                 // Title
                 VStack(alignment: .leading, spacing: Moin.Constants.Spacing.sm) {
-                    Text(localization.tr("theme.title"))
+                    Text(tr("theme.title"))
                         .font(.largeTitle)
                         .fontWeight(.bold)
                         .foregroundStyle(token.colorText)
 
-                    Text(localization.tr("theme.description"))
+                    Text(tr("theme.description"))
                         .font(.body)
                         .foregroundStyle(token.colorTextSecondary)
                 }
@@ -57,12 +57,12 @@ struct ThemeView: View {
 
     private var themeRootSection: some View {
         VStack(alignment: .leading, spacing: Moin.Constants.Spacing.lg) {
-            Text(localization.tr("theme.root.title"))
+            Text(tr("theme.root.title"))
                 .font(.title2)
                 .fontWeight(.semibold)
                 .foregroundStyle(token.colorText)
 
-            Text(localization.tr("theme.root.desc"))
+            Text(tr("theme.root.desc"))
                 .font(.body)
                 .foregroundStyle(token.colorTextSecondary)
 
@@ -77,7 +77,7 @@ struct ThemeView: View {
                     var body: some Scene {
                         WindowGroup {
                             ContentView()
-                                .moinThemeRoot()  // \(localization.tr("code_comment.enable_global_theme"))
+                                .moinThemeRoot()  // \(tr("code_comment.enable_global_theme"))
                         }
                     }
                 }
@@ -89,7 +89,7 @@ struct ThemeView: View {
                 Image(systemName: "info.circle.fill")
                     .foregroundStyle(token.colorPrimary)
 
-                Text(localization.tr("theme.root.note"))
+                Text(tr("theme.root.note"))
                     .font(.callout)
                     .foregroundStyle(token.colorTextSecondary)
             }
@@ -103,18 +103,18 @@ struct ThemeView: View {
 
     private var themeSwitchSection: some View {
         VStack(alignment: .leading, spacing: Moin.Constants.Spacing.lg) {
-            Text(localization.tr("theme.switch.title"))
+            Text(tr("theme.switch.title"))
                 .font(.title2)
                 .fontWeight(.semibold)
                 .foregroundStyle(token.colorText)
 
-            Text(localization.tr("theme.switch.desc"))
+            Text(tr("theme.switch.desc"))
                 .font(.body)
                 .foregroundStyle(token.colorTextSecondary)
 
             // Demo
             VStack(alignment: .leading, spacing: Moin.Constants.Spacing.md) {
-                Text(localization.tr("theme.switch.current"))
+                Text(tr("theme.switch.current"))
                     .font(.subheadline)
                     .foregroundStyle(token.colorTextSecondary)
 
@@ -135,19 +135,19 @@ struct ThemeView: View {
             .clipShape(RoundedRectangle(cornerRadius: 12))
 
             CodeBlock(
-                title: localization.tr("theme.switch.code_title"),
+                title: tr("theme.switch.code_title"),
                 code: """
-                // \(localization.tr("code_comment.method1_set_theme"))
+                // \(tr("code_comment.method1_set_theme"))
                 Moin.ConfigProvider.shared.applyTheme(.dark)
                 Moin.ConfigProvider.shared.applyTheme(.light)
                 Moin.ConfigProvider.shared.applyTheme(.system)
 
-                // \(localization.tr("code_comment.method2_toggle"))
+                // \(tr("code_comment.method2_toggle"))
                 Moin.ConfigProvider.shared.toggleTheme()
 
-                // \(localization.tr("code_comment.method3_check"))
+                // \(tr("code_comment.method3_check"))
                 if Moin.ConfigProvider.shared.isDarkMode {
-                    // \(localization.tr("code_comment.is_dark_mode"))
+                    // \(tr("code_comment.is_dark_mode"))
                 }
                 """
             )
@@ -158,18 +158,18 @@ struct ThemeView: View {
 
     private var tokenSection: some View {
         VStack(alignment: .leading, spacing: Moin.Constants.Spacing.lg) {
-            Text(localization.tr("theme.token.title"))
+            Text(tr("theme.token.title"))
                 .font(.title2)
                 .fontWeight(.semibold)
                 .foregroundStyle(token.colorText)
 
-            Text(localization.tr("theme.token.desc"))
+            Text(tr("theme.token.desc"))
                 .font(.body)
                 .foregroundStyle(token.colorTextSecondary)
 
             // Token color preview
             VStack(alignment: .leading, spacing: Moin.Constants.Spacing.md) {
-                Text(localization.tr("theme.token.colors"))
+                Text(tr("theme.token.colors"))
                     .font(.subheadline)
                     .fontWeight(.medium)
                     .foregroundStyle(token.colorText)
@@ -192,17 +192,17 @@ struct ThemeView: View {
             .clipShape(RoundedRectangle(cornerRadius: 12))
 
             CodeBlock(
-                title: localization.tr("theme.token.code_title"),
+                title: tr("theme.token.code_title"),
                 code: """
-                // \(localization.tr("code_comment.access_token"))
+                // \(tr("code_comment.access_token"))
                 let token = Moin.ConfigProvider.shared.token
 
-                // \(localization.tr("code_comment.use_token_color"))
+                // \(tr("code_comment.use_token_color"))
                 Text("Hello")
                     .foregroundStyle(token.colorText)
                     .background(token.colorBgContainer)
 
-                // \(localization.tr("code_comment.custom_token"))
+                // \(tr("code_comment.custom_token"))
                 var customToken = Moin.Token.light
                 customToken.colorPrimary = .purple
                 Moin.ConfigProvider.shared.token = customToken
@@ -228,15 +228,15 @@ struct ThemeView: View {
 
                 APITable(
                     headers: (
-                        localization.tr("api.value"),
-                        localization.tr("api.type"),
-                        localization.tr("api.default"),
-                        localization.tr("api.description")
+                        tr("api.value"),
+                        tr("api.type"),
+                        tr("api.default"),
+                        tr("api.description")
                     ),
                     rows: [
-                        (".light", "-", "-", localization.tr("theme.api.light")),
-                        (".dark", "-", "-", localization.tr("theme.api.dark")),
-                        (".system", "-", "-", localization.tr("theme.api.system"))
+                        (".light", "-", "-", tr("theme.api.light")),
+                        (".dark", "-", "-", tr("theme.api.dark")),
+                        (".system", "-", "-", tr("theme.api.system"))
                     ],
                     columnWidths: (180, 80, 80, 300)
                 )
@@ -250,16 +250,16 @@ struct ThemeView: View {
 
                 APITable(
                     headers: (
-                        localization.tr("api.property"),
-                        localization.tr("api.type"),
-                        localization.tr("api.default"),
-                        localization.tr("api.description")
+                        tr("api.property"),
+                        tr("api.type"),
+                        tr("api.default"),
+                        tr("api.description")
                     ),
                     rows: [
-                        ("applyTheme(_:)", "Method", "-", localization.tr("theme.api.apply")),
-                        ("isDarkMode", "Bool", "-", localization.tr("theme.api.is_dark")),
-                        ("theme", "Moin.Theme", ".system", localization.tr("theme.api.theme_prop")),
-                        ("toggleTheme()", "Method", "-", localization.tr("theme.api.toggle"))
+                        ("applyTheme(_:)", "Method", "-", tr("theme.api.apply")),
+                        ("isDarkMode", "Bool", "-", tr("theme.api.is_dark")),
+                        ("theme", "Moin.Theme", ".system", tr("theme.api.theme_prop")),
+                        ("toggleTheme()", "Method", "-", tr("theme.api.toggle"))
                     ],
                     columnWidths: (180, 120, 80, 260)
                 )
@@ -273,14 +273,14 @@ struct ThemeView: View {
 
                 APITable(
                     headers: (
-                        localization.tr("api.property"),
-                        localization.tr("api.type"),
-                        localization.tr("api.default"),
-                        localization.tr("api.description")
+                        tr("api.property"),
+                        tr("api.type"),
+                        tr("api.default"),
+                        tr("api.description")
                     ),
                     rows: [
-                        (".moinTheme(_:)", "Modifier", "-", localization.tr("theme.api.theme_modifier")),
-                        (".moinThemeRoot()", "Modifier", "-", localization.tr("theme.api.theme_root"))
+                        (".moinTheme(_:)", "Modifier", "-", tr("theme.api.theme_modifier")),
+                        (".moinThemeRoot()", "Modifier", "-", tr("theme.api.theme_root"))
                     ],
                     columnWidths: (180, 100, 80, 280)
                 )

@@ -2,7 +2,7 @@ import SwiftUI
 import MoinUI
 
 struct ButtonAPISection: View {
-    @ObservedObject private var localization = Moin.Localization.shared
+    @Localized var tr
 
     var body: some View {
         VStack(alignment: .leading, spacing: Moin.Constants.Spacing.lg) {
@@ -15,27 +15,27 @@ struct ButtonAPISection: View {
 
             APITable(
                 headers: (
-                    localization.tr("api.property"),
-                    localization.tr("api.type"),
-                    localization.tr("api.default"),
-                    localization.tr("api.description")
+                    tr("api.property"),
+                    tr("api.type"),
+                    tr("api.default"),
+                    tr("api.description")
                 ),
                 rows: [
-                    ("action", "(() -> Void)?", "nil", localization.tr("api.button.action")),
-                    ("color", "Moin.ButtonColor", ".default", localization.tr("api.button.type")),
-                    ("fontColor", "Color?", "nil", localization.tr("api.button.fontColor")),
-                    ("gradient", "LinearGradient?", "nil", localization.tr("api.button.gradient")),
-                    ("href", "URL?", "nil", localization.tr("api.button.href")),
-                    ("icon", "String?", "nil", localization.tr("api.button.icon")),
-                    ("iconPlacement", "Moin.ButtonIconPlacement", ".start", localization.tr("api.button.iconPlacement")),
-                    ("isBlock", "Bool", "false", localization.tr("api.button.isBlock")),
-                    ("isDisabled", "Bool", "false", localization.tr("api.button.isDisabled")),
-                    ("isGhost", "Bool", "false", localization.tr("api.button.isGhost")),
-                    ("label", "@ViewBuilder () -> View", "-", localization.tr("api.button.label")),
-                    ("loading", "Moin.ButtonLoading", "false", localization.tr("api.button.loading")),
-                    ("shape", "Moin.ButtonShape", ".default", localization.tr("api.button.shape")),
-                    ("size", "Moin.ButtonSize", ".medium", localization.tr("api.button.size")),
-                    ("variant", "Moin.ButtonVariant", ".solid", localization.tr("api.button.variant")),
+                    ("action", "(() -> Void)?", "nil", tr("api.button.action")),
+                    ("color", "Moin.ButtonColor", ".default", tr("api.button.type")),
+                    ("fontColor", "Color?", "nil", tr("api.button.fontColor")),
+                    ("gradient", "LinearGradient?", "nil", tr("api.button.gradient")),
+                    ("href", "URL?", "nil", tr("api.button.href")),
+                    ("icon", "String?", "nil", tr("api.button.icon")),
+                    ("iconPlacement", "Moin.ButtonIconPlacement", ".start", tr("api.button.iconPlacement")),
+                    ("isBlock", "Bool", "false", tr("api.button.isBlock")),
+                    ("isDisabled", "Bool", "false", tr("api.button.isDisabled")),
+                    ("isGhost", "Bool", "false", tr("api.button.isGhost")),
+                    ("label", "@ViewBuilder () -> View", "-", tr("api.button.label")),
+                    ("loading", "Moin.ButtonLoading", "false", tr("api.button.loading")),
+                    ("shape", "Moin.ButtonShape", ".default", tr("api.button.shape")),
+                    ("size", "Moin.ButtonSize", ".medium", tr("api.button.size")),
+                    ("variant", "Moin.ButtonVariant", ".solid", tr("api.button.variant")),
                 ]
             )
 
@@ -45,18 +45,18 @@ struct ButtonAPISection: View {
 
             APITable(
                 headers: (
-                    localization.tr("api.value"),
-                    localization.tr("api.type"),
-                    localization.tr("api.default"),
-                    localization.tr("api.description")
+                    tr("api.value"),
+                    tr("api.type"),
+                    tr("api.default"),
+                    tr("api.description")
                 ),
                 rows: [
-                    ("danger", "-", "-", localization.tr("api.type_values.danger")),
-                    ("default", "-", "-", localization.tr("api.type_values.default")),
-                    ("info", "-", "-", localization.tr("api.type_values.info")),
-                    ("primary", "-", "-", localization.tr("api.type_values.primary")),
-                    ("success", "-", "-", localization.tr("api.type_values.success")),
-                    ("warning", "-", "-", localization.tr("api.type_values.warning")),
+                    ("danger", "-", "-", tr("api.type_values.danger")),
+                    ("default", "-", "-", tr("api.type_values.default")),
+                    ("info", "-", "-", tr("api.type_values.info")),
+                    ("primary", "-", "-", tr("api.type_values.primary")),
+                    ("success", "-", "-", tr("api.type_values.success")),
+                    ("warning", "-", "-", tr("api.type_values.warning")),
                 ]
             )
 
@@ -66,18 +66,18 @@ struct ButtonAPISection: View {
 
             APITable(
                 headers: (
-                    localization.tr("api.value"),
-                    localization.tr("api.type"),
-                    localization.tr("api.default"),
-                    localization.tr("api.description")
+                    tr("api.value"),
+                    tr("api.type"),
+                    tr("api.default"),
+                    tr("api.description")
                 ),
                 rows: [
-                    ("dashed", "-", "-", localization.tr("api.variant_values.dashed")),
-                    ("filled", "-", "-", localization.tr("api.variant_values.filled")),
-                    ("link", "-", "-", localization.tr("api.variant_values.link")),
-                    ("outlined", "-", "-", localization.tr("api.variant_values.outlined")),
-                    ("solid", "-", "-", localization.tr("api.variant_values.solid")),
-                    ("text", "-", "-", localization.tr("api.variant_values.text")),
+                    ("dashed", "-", "-", tr("api.variant_values.dashed")),
+                    ("filled", "-", "-", tr("api.variant_values.filled")),
+                    ("link", "-", "-", tr("api.variant_values.link")),
+                    ("outlined", "-", "-", tr("api.variant_values.outlined")),
+                    ("solid", "-", "-", tr("api.variant_values.solid")),
+                    ("text", "-", "-", tr("api.variant_values.text")),
                 ]
             )
 
@@ -85,56 +85,56 @@ struct ButtonAPISection: View {
             Divider()
                 .padding(.top, Moin.Constants.Spacing.lg)
 
-            Text(localization.tr("api.component_token"))
+            Text(tr("api.component_token"))
                 .font(.title2)
                 .fontWeight(.semibold)
                 .id("component_token")
 
-            Text(localization.tr("api.component_token_desc"))
+            Text(tr("api.component_token_desc"))
                 .foregroundStyle(.secondary)
                 .padding(.bottom, Moin.Constants.Spacing.sm)
 
             APITable(
                 headers: (
-                    localization.tr("api.property"),
-                    localization.tr("api.type"),
-                    localization.tr("api.default"),
-                    localization.tr("api.description")
+                    tr("api.property"),
+                    tr("api.type"),
+                    tr("api.default"),
+                    tr("api.description")
                 ),
                 rows: [
-                    ("borderColorDisabled", "Color", "border.opacity(0.5)", localization.tr("api.button_token.borderColorDisabled")),
-                    ("contentFontSize", "CGFloat", "14", localization.tr("api.button_token.contentFontSize")),
-                    ("contentFontSizeLG", "CGFloat", "16", localization.tr("api.button_token.contentFontSizeLG")),
-                    ("contentFontSizeSM", "CGFloat", "12", localization.tr("api.button_token.contentFontSizeSM")),
-                    ("dangerColor", "Color", ".white", localization.tr("api.button_token.dangerColor")),
-                    ("defaultActiveBg", "Color", "background", localization.tr("api.button_token.defaultActiveBg")),
-                    ("defaultActiveBorderColor", "Color", "primaryActive", localization.tr("api.button_token.defaultActiveBorderColor")),
-                    ("defaultActiveColor", "Color", "primaryActive", localization.tr("api.button_token.defaultActiveColor")),
-                    ("defaultBg", "Color", "background", localization.tr("api.button_token.defaultBg")),
-                    ("defaultBgDisabled", "Color", "backgroundDisabled", localization.tr("api.button_token.defaultBgDisabled")),
-                    ("defaultBorderColor", "Color", "border", localization.tr("api.button_token.defaultBorderColor")),
-                    ("defaultColor", "Color", "textPrimary", localization.tr("api.button_token.defaultColor")),
-                    ("defaultGhostBorderColor", "Color", ".white", localization.tr("api.button_token.defaultGhostBorderColor")),
-                    ("defaultGhostColor", "Color", ".white", localization.tr("api.button_token.defaultGhostColor")),
-                    ("defaultHoverBg", "Color", "background", localization.tr("api.button_token.defaultHoverBg")),
-                    ("defaultHoverBorderColor", "Color", "primaryHover", localization.tr("api.button_token.defaultHoverBorderColor")),
-                    ("defaultHoverColor", "Color", "primaryHover", localization.tr("api.button_token.defaultHoverColor")),
-                    ("fontWeight", "Font.Weight", ".medium", localization.tr("api.button_token.fontWeight")),
-                    ("ghostBg", "Color", ".clear", localization.tr("api.button_token.ghostBg")),
-                    ("iconGap", "CGFloat", "6", localization.tr("api.button_token.iconGap")),
-                    ("linkHoverBg", "Color", ".clear", localization.tr("api.button_token.linkHoverBg")),
-                    ("onlyIconSize", "CGFloat", "16", localization.tr("api.button_token.onlyIconSize")),
-                    ("onlyIconSizeLG", "CGFloat", "18", localization.tr("api.button_token.onlyIconSizeLG")),
-                    ("onlyIconSizeSM", "CGFloat", "14", localization.tr("api.button_token.onlyIconSizeSM")),
-                    ("paddingInline", "CGFloat", "15", localization.tr("api.button_token.paddingInline")),
-                    ("paddingInlineLG", "CGFloat", "15", localization.tr("api.button_token.paddingInlineLG")),
-                    ("paddingInlineSM", "CGFloat", "7", localization.tr("api.button_token.paddingInlineSM")),
-                    ("primaryColor", "Color", ".white", localization.tr("api.button_token.primaryColor")),
-                    ("solidTextColor", "Color", ".white", localization.tr("api.button_token.solidTextColor")),
-                    ("textHoverBg", "Color", "black.opacity(0.04)", localization.tr("api.button_token.textHoverBg")),
-                    ("textTextActiveColor", "Color", "textPrimary", localization.tr("api.button_token.textTextActiveColor")),
-                    ("textTextColor", "Color", "textPrimary", localization.tr("api.button_token.textTextColor")),
-                    ("textTextHoverColor", "Color", "textPrimary", localization.tr("api.button_token.textTextHoverColor")),
+                    ("borderColorDisabled", "Color", "border.opacity(0.5)", tr("api.button_token.borderColorDisabled")),
+                    ("contentFontSize", "CGFloat", "14", tr("api.button_token.contentFontSize")),
+                    ("contentFontSizeLG", "CGFloat", "16", tr("api.button_token.contentFontSizeLG")),
+                    ("contentFontSizeSM", "CGFloat", "12", tr("api.button_token.contentFontSizeSM")),
+                    ("dangerColor", "Color", ".white", tr("api.button_token.dangerColor")),
+                    ("defaultActiveBg", "Color", "background", tr("api.button_token.defaultActiveBg")),
+                    ("defaultActiveBorderColor", "Color", "primaryActive", tr("api.button_token.defaultActiveBorderColor")),
+                    ("defaultActiveColor", "Color", "primaryActive", tr("api.button_token.defaultActiveColor")),
+                    ("defaultBg", "Color", "background", tr("api.button_token.defaultBg")),
+                    ("defaultBgDisabled", "Color", "backgroundDisabled", tr("api.button_token.defaultBgDisabled")),
+                    ("defaultBorderColor", "Color", "border", tr("api.button_token.defaultBorderColor")),
+                    ("defaultColor", "Color", "textPrimary", tr("api.button_token.defaultColor")),
+                    ("defaultGhostBorderColor", "Color", ".white", tr("api.button_token.defaultGhostBorderColor")),
+                    ("defaultGhostColor", "Color", ".white", tr("api.button_token.defaultGhostColor")),
+                    ("defaultHoverBg", "Color", "background", tr("api.button_token.defaultHoverBg")),
+                    ("defaultHoverBorderColor", "Color", "primaryHover", tr("api.button_token.defaultHoverBorderColor")),
+                    ("defaultHoverColor", "Color", "primaryHover", tr("api.button_token.defaultHoverColor")),
+                    ("fontWeight", "Font.Weight", ".medium", tr("api.button_token.fontWeight")),
+                    ("ghostBg", "Color", ".clear", tr("api.button_token.ghostBg")),
+                    ("iconGap", "CGFloat", "6", tr("api.button_token.iconGap")),
+                    ("linkHoverBg", "Color", ".clear", tr("api.button_token.linkHoverBg")),
+                    ("onlyIconSize", "CGFloat", "16", tr("api.button_token.onlyIconSize")),
+                    ("onlyIconSizeLG", "CGFloat", "18", tr("api.button_token.onlyIconSizeLG")),
+                    ("onlyIconSizeSM", "CGFloat", "14", tr("api.button_token.onlyIconSizeSM")),
+                    ("paddingInline", "CGFloat", "15", tr("api.button_token.paddingInline")),
+                    ("paddingInlineLG", "CGFloat", "15", tr("api.button_token.paddingInlineLG")),
+                    ("paddingInlineSM", "CGFloat", "7", tr("api.button_token.paddingInlineSM")),
+                    ("primaryColor", "Color", ".white", tr("api.button_token.primaryColor")),
+                    ("solidTextColor", "Color", ".white", tr("api.button_token.solidTextColor")),
+                    ("textHoverBg", "Color", "black.opacity(0.04)", tr("api.button_token.textHoverBg")),
+                    ("textTextActiveColor", "Color", "textPrimary", tr("api.button_token.textTextActiveColor")),
+                    ("textTextColor", "Color", "textPrimary", tr("api.button_token.textTextColor")),
+                    ("textTextHoverColor", "Color", "textPrimary", tr("api.button_token.textTextHoverColor")),
                 ],
                 columnWidths: (200, 160, 140, 220)
             )
@@ -143,34 +143,34 @@ struct ButtonAPISection: View {
             Divider()
                 .padding(.top, Moin.Constants.Spacing.lg)
 
-            Text(localization.tr("api.global_token_title"))
+            Text(tr("api.global_token_title"))
                 .font(.title2)
                 .fontWeight(.semibold)
                 .id("global_token")
 
-            Text(localization.tr("api.global_token_desc"))
+            Text(tr("api.global_token_desc"))
                 .foregroundStyle(.secondary)
                 .padding(.bottom, Moin.Constants.Spacing.sm)
 
             APITable(
                 headers: (
-                    localization.tr("api.property"),
-                    localization.tr("api.type"),
-                    localization.tr("api.default"),
-                    localization.tr("api.description")
+                    tr("api.property"),
+                    tr("api.type"),
+                    tr("api.default"),
+                    tr("api.description")
                 ),
                 rows: [
-                    ("borderRadius", "CGFloat", "6", localization.tr("api.global_token.borderRadius")),
-                    ("borderRadiusLG", "CGFloat", "8", localization.tr("api.global_token.borderRadiusLG")),
-                    ("borderRadiusSM", "CGFloat", "4", localization.tr("api.global_token.borderRadiusSM")),
-                    ("colorPrimary", "Color", "primary", localization.tr("api.global_token.colorPrimary")),
-                    ("colorPrimaryActive", "Color", "primaryActive", localization.tr("api.global_token.colorPrimaryActive")),
-                    ("colorPrimaryHover", "Color", "primaryHover", localization.tr("api.global_token.colorPrimaryHover")),
-                    ("colorTextDisabled", "Color", "textDisabled", localization.tr("api.global_token.colorTextDisabled")),
-                    ("controlHeight", "CGFloat", "32", localization.tr("api.global_token.controlHeight")),
-                    ("controlHeightLG", "CGFloat", "40", localization.tr("api.global_token.controlHeightLG")),
-                    ("controlHeightSM", "CGFloat", "24", localization.tr("api.global_token.controlHeightSM")),
-                    ("motionDuration", "Double", "0.2", localization.tr("api.global_token.motionDuration")),
+                    ("borderRadius", "CGFloat", "6", tr("api.global_token.borderRadius")),
+                    ("borderRadiusLG", "CGFloat", "8", tr("api.global_token.borderRadiusLG")),
+                    ("borderRadiusSM", "CGFloat", "4", tr("api.global_token.borderRadiusSM")),
+                    ("colorPrimary", "Color", "primary", tr("api.global_token.colorPrimary")),
+                    ("colorPrimaryActive", "Color", "primaryActive", tr("api.global_token.colorPrimaryActive")),
+                    ("colorPrimaryHover", "Color", "primaryHover", tr("api.global_token.colorPrimaryHover")),
+                    ("colorTextDisabled", "Color", "textDisabled", tr("api.global_token.colorTextDisabled")),
+                    ("controlHeight", "CGFloat", "32", tr("api.global_token.controlHeight")),
+                    ("controlHeightLG", "CGFloat", "40", tr("api.global_token.controlHeightLG")),
+                    ("controlHeightSM", "CGFloat", "24", tr("api.global_token.controlHeightSM")),
+                    ("motionDuration", "Double", "0.2", tr("api.global_token.motionDuration")),
                 ],
                 columnWidths: (180, 100, 100, 200)
             )

@@ -19,11 +19,9 @@ public extension Moin {
 // MARK: - Moin.Localization
 
 public extension Moin {
-    /// Localization manager
-    final class Localization: ObservableObject {
+    /// Localization manager (stateless utility)
+    final class Localization {
         public static let shared = Localization()
-
-        @Published public var locale: Moin.Locale = .default
 
         /// Flat translation dictionary for each locale
         private var translations: [Moin.Locale: [String: String]] = [:]
@@ -37,13 +35,8 @@ public extension Moin {
 
         // MARK: - Public API
 
-        /// Set current locale
-        public func setLocale(_ locale: Moin.Locale) {
-            self.locale = locale
-        }
-
-        /// Get translated string for current locale
-        public func tr(_ key: String) -> String {
+        /// Get translated string for specific locale
+        public func tr(_ key: String, locale: Moin.Locale = .default) -> String {
             // Priority: custom > builtin > fallback to English > return key
             if let value = customTranslations[locale]?[key] {
                 return value
@@ -51,22 +44,14 @@ public extension Moin {
             if let value = translations[locale]?[key] {
                 return value
             }
-            if locale != .enUS, let value = translations[.enUS]?[key] {
-                return value
-            }
-            return key
-        }
-
-        /// Get translated string for specific locale
-        public func tr(_ key: String, locale: Moin.Locale) -> String {
-            if let value = customTranslations[locale]?[key] {
-                return value
-            }
-            if let value = translations[locale]?[key] {
-                return value
-            }
-            if locale != .enUS, let value = translations[.enUS]?[key] {
-                return value
+            // Fallback to English for both custom and builtin
+            if locale != .enUS {
+                if let value = customTranslations[.enUS]?[key] {
+                    return value
+                }
+                if let value = translations[.enUS]?[key] {
+                    return value
+                }
             }
             return key
         }
@@ -154,21 +139,57 @@ public enum LocalizationError: Error {
 
 // MARK: - Global shorthand function
 
-/// Translate string using current locale
-/// Usage: tr("key")
-public func tr(_ key: String) -> String {
-    Moin.Localization.shared.tr(key)
+/// Translate string using current locale (requires Environment)
+/// Usage: tr("key", locale: locale)
+public func tr(_ key: String, locale: Moin.Locale) -> String {
+    Moin.Localization.shared.tr(key, locale: locale)
 }
 
 // MARK: - Environment
 
-private struct MoinLocalizationKey: EnvironmentKey {
-    static let defaultValue = Moin.Localization.shared
+private struct MoinLocaleKey: EnvironmentKey {
+    static let defaultValue: Moin.Locale = .default
 }
 
 public extension EnvironmentValues {
-    var moinLocalization: Moin.Localization {
-        get { self[MoinLocalizationKey.self] }
-        set { self[MoinLocalizationKey.self] = newValue }
+    var moinLocale: Moin.Locale {
+        get { self[MoinLocaleKey.self] }
+        set { self[MoinLocaleKey.self] = newValue }
+    }
+}
+
+// MARK: - Localized Property Wrapper
+
+/// 简化本地化调用的 Property Wrapper
+/// 使用方法:
+/// ```swift
+/// @Localized var tr
+/// Text(tr("button.title"))
+/// ```
+@propertyWrapper
+public struct Localized: DynamicProperty {
+    @Environment(\.moinLocale) private var locale
+
+    public init() {}
+
+    public var wrappedValue: (String) -> String {
+        { key in Moin.Localization.shared.tr(key, locale: locale) }
+    }
+}
+
+// MARK: - LocalizedText View
+
+/// 简化本地化 Text 的 View
+/// 使用方法: `LocalizedText("button.title")`
+public struct LocalizedText: View {
+    private let key: String
+    @Environment(\.moinLocale) private var locale
+
+    public init(_ key: String) {
+        self.key = key
+    }
+
+    public var body: some View {
+        Text(Moin.Localization.shared.tr(key, locale: locale))
     }
 }

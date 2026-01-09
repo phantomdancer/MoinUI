@@ -3,7 +3,7 @@ import MoinUI
 
 /// Quick Start Page
 struct QuickStartView: View {
-    @EnvironmentObject var localization: Moin.Localization
+    @Localized var tr
     @ObservedObject private var config = Moin.ConfigProvider.shared
 
     private var token: Moin.Token { config.token }
@@ -12,18 +12,18 @@ struct QuickStartView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: Moin.Constants.Spacing.xl) {
                 // Title
-                Text(localization.tr("nav.quick_start"))
+                Text(tr("nav.quick_start"))
                     .font(.largeTitle)
                     .fontWeight(.bold)
                     .foregroundStyle(token.colorText)
 
-                Text(localization.tr("quick_start.desc"))
+                Text(tr("quick_start.desc"))
                     .font(.body)
                     .foregroundStyle(token.colorTextSecondary)
 
                 // Installation
                 VStack(alignment: .leading, spacing: Moin.Constants.Spacing.md) {
-                    Text(localization.tr("quick_start.installation"))
+                    Text(tr("quick_start.installation"))
                         .font(.title2)
                         .fontWeight(.semibold)
                         .foregroundStyle(token.colorText)
@@ -40,7 +40,7 @@ struct QuickStartView: View {
 
                 // Basic Usage
                 VStack(alignment: .leading, spacing: Moin.Constants.Spacing.md) {
-                    Text(localization.tr("quick_start.basic_usage"))
+                    Text(tr("quick_start.basic_usage"))
                         .font(.title2)
                         .fontWeight(.semibold)
                         .foregroundStyle(token.colorText)
@@ -53,8 +53,8 @@ struct QuickStartView: View {
 
                         struct ContentView: View {
                             var body: some View {
-                                Moin.Button("\(localization.tr("quick_start.click_me"))", color: .primary) {
-                                    print("\(localization.tr("quick_start.hello_moinui"))")
+                                Moin.Button("\(tr("quick_start.click_me"))", color: .primary) {
+                                    print("\(tr("quick_start.hello_moinui"))")
                                 }
                             }
                         }
@@ -64,7 +64,7 @@ struct QuickStartView: View {
 
                 // Theme Config
                 VStack(alignment: .leading, spacing: Moin.Constants.Spacing.md) {
-                    Text(localization.tr("quick_start.theme_config"))
+                    Text(tr("quick_start.theme_config"))
                         .font(.title2)
                         .fontWeight(.semibold)
                         .foregroundStyle(token.colorText)
@@ -80,7 +80,7 @@ struct QuickStartView: View {
                             var body: some Scene {
                                 WindowGroup {
                                     ContentView()
-                                        .moinTheme(.dark)  // \(localization.tr("code_comment.or_light_system"))
+                                        .moinTheme(.dark)  // \(tr("code_comment.or_light_system"))
                                 }
                             }
                         }
@@ -102,7 +102,7 @@ struct QuickStartView: View {
 private struct CodeBlock: View {
     let title: String
     let code: String
-    @EnvironmentObject private var localization: Moin.Localization
+    @Localized var tr
     @State private var isCopied = false
     @ObservedObject private var config = Moin.ConfigProvider.shared
 
@@ -128,7 +128,7 @@ private struct CodeBlock: View {
                 }) {
                     HStack(spacing: 4) {
                         Image(systemName: isCopied ? "checkmark" : "doc.on.doc")
-                        Text(isCopied ? localization.tr("code.copied") : localization.tr("code.copy"))
+                        Text(isCopied ? tr("code.copied") : tr("code.copy"))
                     }
                     .font(.caption)
                     .foregroundStyle(isCopied ? .green : token.colorTextSecondary)
