@@ -80,7 +80,7 @@ struct QuickStartView: View {
                             var body: some Scene {
                                 WindowGroup {
                                     ContentView()
-                                        .moinUITheme(.dark)  // \(localization.tr("code_comment.or_light_system"))
+                                        .moinTheme(.dark)  // \(localization.tr("code_comment.or_light_system"))
                                 }
                             }
                         }

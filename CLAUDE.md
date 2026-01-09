@@ -82,7 +82,7 @@ Moin.Constants.Radius.md    // 6
 
 **✅ 正确:**
 ```swift
-@Environment(\.moinUIToken) private var token
+@Environment(\.moinToken) private var token
 .foregroundStyle(token.colorPrimary)
 .background(token.colorBgContainer)
 ```
@@ -99,7 +99,7 @@ public extension Moin {
     struct 组件名<Label: View>: View {
         // 属性
         @State private var state: Type
-        @Environment(\.moinUIToken) private var token
+        @Environment(\.moinToken) private var token
 
         // 初始化器
         public init(...) { ... }
@@ -210,7 +210,7 @@ token.motionDuration        // 动画时长
 ### 环境值
 ```swift
 @Environment(\.moinConfig) var moinConfig
-@Environment(\.moinUIToken) var token
+@Environment(\.moinToken) var token
 @Environment(\.moinLocalization) var localization
 ```
 
@@ -225,10 +225,10 @@ Moin.Constants.Spacing.xl  // 24
 
 ### 视图修饰器
 ```swift
-.moinUIConfig(config)           // 应用配置
-.moinUILocale(.enUS)           // 设置语言
-.moinUIPrimaryColor(.red)      // 设置主色
-.moinUITheme(.dark)            // 设置主题
+.moinConfig(config)           // 应用配置
+.moinLocale(.enUS)           // 设置语言
+.moinPrimaryColor(.red)      // 设置主色
+.moinTheme(.dark)            // 设置主题
 ```
 
 ## 竞品参考

@@ -554,12 +554,12 @@ public extension EnvironmentValues {
         set { self[MoinConfigProviderKey.self] = newValue }
     }
 
-    var moinUIToken: Moin.Token {
+    var moinToken: Moin.Token {
         get { self[MoinTokenKey.self] }
         set { self[MoinTokenKey.self] = newValue }
     }
 
-    var moinUIButtonToken: Moin.ButtonToken {
+    var moinButtonToken: Moin.ButtonToken {
         get { self[MoinButtonTokenKey.self] }
         set { self[MoinButtonTokenKey.self] = newValue }
     }
@@ -568,30 +568,30 @@ public extension EnvironmentValues {
 // MARK: - View Modifier
 
 public extension View {
-    /// Configure MoinUI with custom settings
-    func moinUIConfig(_ config: Moin.Config) -> some View {
+    /// Configure Moin with custom settings
+    func moinConfig(_ config: Moin.Config) -> some View {
         onAppear {
             Moin.ConfigProvider.shared.configure { $0 = config }
         }
         .environmentObject(Moin.ConfigProvider.shared)
     }
 
-    /// Set MoinUI locale
-    func moinUILocale(_ locale: Moin.Locale) -> some View {
+    /// Set Moin locale
+    func moinLocale(_ locale: Moin.Locale) -> some View {
         onAppear {
             Moin.ConfigProvider.shared.locale = locale
         }
     }
 
-    /// Set MoinUI primary color
-    func moinUIPrimaryColor(_ color: Color) -> some View {
+    /// Set Moin primary color
+    func moinPrimaryColor(_ color: Color) -> some View {
         onAppear {
             Moin.ConfigProvider.shared.primaryColor = color
         }
     }
 
-    /// Set MoinUI theme
-    func moinUITheme(_ theme: Moin.Theme) -> some View {
+    /// Set Moin theme
+    func moinTheme(_ theme: Moin.Theme) -> some View {
         onAppear {
             Moin.ConfigProvider.shared.applyTheme(theme)
         }
@@ -610,8 +610,8 @@ public extension Moin {
         public func body(content: Content) -> some View {
             content
                 .preferredColorScheme(colorScheme)
-                .environment(\.moinUIToken, config.token)
-                .environment(\.moinUIButtonToken, config.components.button)
+                .environment(\.moinToken, config.token)
+                .environment(\.moinButtonToken, config.components.button)
                 .environmentObject(config)
                 .environmentObject(config.localization)
         }
@@ -629,13 +629,13 @@ public extension Moin {
 
 
 public extension View {
-    /// 应用 MoinUI 主题根修饰器，实现全局主题切换
+    /// 应用 Moin 主题根修饰器，实现全局主题切换
     /// 在 App 入口使用：
     /// ```swift
     /// ContentView()
-    ///     .moinUIThemeRoot()
+    ///     .moinThemeRoot()
     /// ```
-    func moinUIThemeRoot() -> some View {
+    func moinThemeRoot() -> some View {
         modifier(Moin.ThemeRoot())
     }
 }

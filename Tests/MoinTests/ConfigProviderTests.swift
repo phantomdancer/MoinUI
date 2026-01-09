@@ -338,22 +338,22 @@ final class ConfigProviderTests: XCTestCase {
     // MARK: - View Modifier Tests
     
     func testViewModifiers() {
-        // 测试moinUIConfig修饰器
+        // 测试moinConfig修饰器
         let testConfig = Moin.Config.default
         let _ = Text("Test")
-            .moinUIConfig(testConfig)
+            .moinConfig(testConfig)
         
-        // 测试moinUILocale修饰器
+        // 测试moinLocale修饰器
         let _ = Text("Test")
-            .moinUILocale(.enUS)
+            .moinLocale(.enUS)
         
-        // 测试moinUIPrimaryColor修饰器
+        // 测试moinPrimaryColor修饰器
         let _ = Text("Test")
-            .moinUIPrimaryColor(.red)
+            .moinPrimaryColor(.red)
         
-        // 测试moinUITheme修饰器
+        // 测试moinTheme修饰器
         let _ = Text("Test")
-            .moinUITheme(.dark)
+            .moinTheme(.dark)
     }
     
     // MARK: - Theme Root Modifier Tests

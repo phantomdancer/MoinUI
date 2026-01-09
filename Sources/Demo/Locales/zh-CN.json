@@ -56,8 +56,8 @@
     "description": "MoinUI 提供完整的主题系统，支持浅色、深色和跟随系统三种模式。",
     "root": {
       "title": "快速开始",
-      "desc": "使用 .moinUIThemeRoot() 修饰器在 App 入口启用全局主题支持。",
-      "note": ".moinUIThemeRoot() 会自动设置 preferredColorScheme，使整个应用（包括系统控件）跟随主题切换。"
+      "desc": "使用 .moinThemeRoot() 修饰器在 App 入口启用全局主题支持。",
+      "note": ".moinThemeRoot() 会自动设置 preferredColorScheme，使整个应用（包括系统控件）跟随主题切换。"
     },
     "switch": {
       "title": "主题切换",

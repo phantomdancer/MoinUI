@@ -19,7 +19,7 @@ import SwiftUI
 
 public extension Moin {
     struct {ComponentName}: View {
-        @Environment(\.moinUIToken) private var token
+        @Environment(\.moinToken) private var token
         @Environment(\.moinLocalization) private var localization
 
         private let title: String

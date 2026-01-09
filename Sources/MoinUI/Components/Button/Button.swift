@@ -95,8 +95,8 @@ public extension Moin {
         @State private var showLoading = false
 
         // 使用 Environment 获取配置，避免每个按钮都订阅 ObservedObject
-        @Environment(\.moinUIToken) private var token
-        @Environment(\.moinUIButtonToken) private var buttonToken
+        @Environment(\.moinToken) private var token
+        @Environment(\.moinButtonToken) private var buttonToken
 
         public init(
             color: Moin.ButtonColor = .default,

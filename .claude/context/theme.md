@@ -60,7 +60,7 @@ struct MyApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .moinUIThemeRoot()  // 一行代码启用
+                .moinThemeRoot()  // 一行代码启用
         }
     }
 }

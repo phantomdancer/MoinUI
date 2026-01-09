@@ -56,8 +56,8 @@
     "description": "MoinUI provides a complete theming system supporting light, dark, and system-following modes.",
     "root": {
       "title": "Quick Start",
-      "desc": "Use .moinUIThemeRoot() modifier at App entry to enable global theme support.",
-      "note": ".moinUIThemeRoot() automatically sets preferredColorScheme, making the entire app (including system controls) follow theme changes."
+      "desc": "Use .moinThemeRoot() modifier at App entry to enable global theme support.",
+      "note": ".moinThemeRoot() automatically sets preferredColorScheme, making the entire app (including system controls) follow theme changes."
     },
     "switch": {
       "title": "Theme Switching",

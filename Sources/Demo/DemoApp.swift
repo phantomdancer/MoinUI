@@ -16,7 +16,7 @@ struct DemoApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .moinUIThemeRoot()
+                .moinThemeRoot()
                 .focusable(false)
                 .modifier(DisableFocusEffectModifier())
                 .textSelection(.enabled)

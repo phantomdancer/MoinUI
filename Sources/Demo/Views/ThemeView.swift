@@ -77,7 +77,7 @@ struct ThemeView: View {
                     var body: some Scene {
                         WindowGroup {
                             ContentView()
-                                .moinUIThemeRoot()  // \(localization.tr("code_comment.enable_global_theme"))
+                                .moinThemeRoot()  // \(localization.tr("code_comment.enable_global_theme"))
                         }
                     }
                 }
@@ -279,8 +279,8 @@ struct ThemeView: View {
                         localization.tr("api.description")
                     ),
                     rows: [
-                        (".moinUITheme(_:)", "Modifier", "-", localization.tr("theme.api.theme_modifier")),
-                        (".moinUIThemeRoot()", "Modifier", "-", localization.tr("theme.api.theme_root"))
+                        (".moinTheme(_:)", "Modifier", "-", localization.tr("theme.api.theme_modifier")),
+                        (".moinThemeRoot()", "Modifier", "-", localization.tr("theme.api.theme_root"))
                     ],
                     columnWidths: (180, 100, 80, 280)
                 )
