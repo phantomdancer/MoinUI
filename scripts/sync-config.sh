@@ -5,10 +5,10 @@ SOURCE="CLAUDE.md"
 TARGETS=("AGENTS.md" ".trae/rules/project_rules.md")
 
 for target in "${TARGETS[@]}"; do
-    if [ ! -f "$target" ]; then
-        echo "警告: $target 不存在，创建新文件"
+    if [ -L "$target" ]; then
+        rm -f "$target"
     fi
-    cp "$SOURCE" "$target"
+    ln -sf "$SOURCE" "$target"
     echo "已同步: $SOURCE -> $target"
 done
 
