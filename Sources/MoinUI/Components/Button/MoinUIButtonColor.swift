@@ -10,28 +10,9 @@ public enum MoinUIButtonColor: Hashable {
     case info
     case custom(Color)
 
-    /// 获取基础颜色
-    public var color: Color {
-        switch self {
-        case .default: return Color.gray
-        case .primary: return MoinUIConstants.Colors.primary
-        case .success: return MoinUIConstants.Colors.success
-        case .warning: return MoinUIConstants.Colors.warning
-        case .danger: return MoinUIConstants.Colors.danger
-        case .info: return MoinUIConstants.Colors.info
-        case .custom(let color): return color
-        }
-    }
-
     /// 是否为默认颜色
     public var isDefault: Bool {
         if case .default = self { return true }
-        return false
-    }
-
-    /// 是否为自定义颜色
-    public var isCustom: Bool {
-        if case .custom = self { return true }
         return false
     }
 

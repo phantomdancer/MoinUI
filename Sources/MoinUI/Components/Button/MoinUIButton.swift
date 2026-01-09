@@ -265,52 +265,36 @@ public struct MoinUIButton<Label: View>: View {
 
     // MARK: - Sizing
 
-    private var iconSize: CGFloat {
+    private func sizedValue<T>(small: T, medium: T, large: T) -> T {
         switch size {
-        case .small: return buttonToken.onlyIconSizeSM
-        case .medium: return buttonToken.onlyIconSize
-        case .large: return buttonToken.onlyIconSizeLG
+        case .small: return small
+        case .medium: return medium
+        case .large: return large
         }
+    }
+
+    private var iconSize: CGFloat {
+        sizedValue(small: buttonToken.onlyIconSizeSM, medium: buttonToken.onlyIconSize, large: buttonToken.onlyIconSizeLG)
     }
 
     private var fontSize: CGFloat {
-        switch size {
-        case .small: return buttonToken.contentFontSizeSM
-        case .medium: return buttonToken.contentFontSize
-        case .large: return buttonToken.contentFontSizeLG
-        }
+        sizedValue(small: buttonToken.contentFontSizeSM, medium: buttonToken.contentFontSize, large: buttonToken.contentFontSizeLG)
     }
 
     private var controlHeight: CGFloat {
-        switch size {
-        case .small: return token.controlHeightSM
-        case .medium: return token.controlHeight
-        case .large: return token.controlHeightLG
-        }
+        sizedValue(small: token.controlHeightSM, medium: token.controlHeight, large: token.controlHeightLG)
     }
 
     private var horizontalPadding: CGFloat {
-        switch size {
-        case .small: return buttonToken.paddingInlineSM
-        case .medium: return buttonToken.paddingInline
-        case .large: return buttonToken.paddingInlineLG
-        }
+        sizedValue(small: buttonToken.paddingInlineSM, medium: buttonToken.paddingInline, large: buttonToken.paddingInlineLG)
     }
 
     private var verticalPadding: CGFloat {
-        switch size {
-        case .small: return buttonToken.paddingBlockSM
-        case .medium: return buttonToken.paddingBlock
-        case .large: return buttonToken.paddingBlockLG
-        }
+        sizedValue(small: buttonToken.paddingBlockSM, medium: buttonToken.paddingBlock, large: buttonToken.paddingBlockLG)
     }
 
     private var cornerRadius: CGFloat {
-        switch size {
-        case .small: return token.borderRadiusSM
-        case .medium: return token.borderRadius
-        case .large: return token.borderRadiusLG
-        }
+        sizedValue(small: token.borderRadiusSM, medium: token.borderRadius, large: token.borderRadiusLG)
     }
 
     // MARK: - Colors
