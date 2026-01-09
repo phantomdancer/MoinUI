@@ -6,7 +6,7 @@ import os
 @main
 struct DemoApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
-    @StateObject private var configProvider = MoinUIConfigProvider.shared
+    @StateObject private var configProvider = Moin.ConfigProvider.shared
 
     init() {
         // Register Demo translations
@@ -139,8 +139,8 @@ class NavigationManager: ObservableObject {
 
 struct ContentView: View {
     @StateObject private var navManager = NavigationManager.shared
-    @EnvironmentObject var configProvider: MoinUIConfigProvider
-    @EnvironmentObject var localization: MoinUILocalization
+    @EnvironmentObject var configProvider: Moin.ConfigProvider
+    @EnvironmentObject var localization: Moin.Localization
     @State private var buttonTab: ButtonExamplesTab = .examples
 
     var body: some View {
@@ -173,8 +173,8 @@ struct ContentView: View {
                         .help(localization.tr(configProvider.isDarkMode ? "toolbar.switch_light" : "toolbar.switch_dark"))
 
                         Picker("", selection: $localization.locale) {
-                            Text(localization.tr("toolbar.lang_zh")).tag(MoinUILocale.zhCN)
-                            Text(localization.tr("toolbar.lang_en")).tag(MoinUILocale.enUS)
+                            Text(localization.tr("toolbar.lang_zh")).tag(Moin.Locale.zhCN)
+                            Text(localization.tr("toolbar.lang_en")).tag(Moin.Locale.enUS)
                         }
                         .pickerStyle(.segmented)
                         .frame(width: 100)
@@ -234,7 +234,7 @@ enum NavItem: String, Identifiable {
 
 struct Sidebar: View {
     @Binding var selection: NavItem?
-    @EnvironmentObject var localization: MoinUILocalization
+    @EnvironmentObject var localization: Moin.Localization
 
     var body: some View {
         List(selection: $selection) {
@@ -273,7 +273,7 @@ struct Sidebar: View {
 struct DetailView: View {
     let item: NavItem?
     @Binding var buttonTab: ButtonExamplesTab
-    @EnvironmentObject var localization: MoinUILocalization
+    @EnvironmentObject var localization: Moin.Localization
 
     var body: some View {
         Group {

@@ -10,10 +10,10 @@ struct ExampleSection<Content: View>: View {
     @ViewBuilder let content: () -> Content
     let code: () -> String
 
-    @ObservedObject private var config = MoinUIConfigProvider.shared
+    @ObservedObject private var config = Moin.ConfigProvider.shared
 
     var body: some View {
-        VStack(alignment: .leading, spacing: MoinUIConstants.Spacing.md) {
+        VStack(alignment: .leading, spacing: Moin.Constants.Spacing.md) {
             Text(title)
                 .font(.title3)
                 .fontWeight(.semibold)
@@ -24,14 +24,14 @@ struct ExampleSection<Content: View>: View {
 
             content()
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.vertical, MoinUIConstants.Spacing.lg)
+                .padding(.vertical, Moin.Constants.Spacing.lg)
 
             ScrollView(.horizontal, showsIndicators: false) {
                 HighlightedCodeView(code: code(), fontSize: 12)
-                    .padding(MoinUIConstants.Spacing.sm)
+                    .padding(Moin.Constants.Spacing.sm)
             }
             .background(config.isDarkMode ? Color(white: 0.08) : Color(white: 0.96))
-            .cornerRadius(MoinUIConstants.Radius.sm)
+            .cornerRadius(Moin.Constants.Radius.sm)
             .id(code())
         }
     }
@@ -78,9 +78,9 @@ struct APITable: View {
             .frame(minWidth: columnWidths.0 + columnWidths.1 + columnWidths.2 + columnWidths.3)
         }
         .background(Color(nsColor: .controlBackgroundColor))
-        .cornerRadius(MoinUIConstants.Radius.md)
+        .cornerRadius(Moin.Constants.Radius.md)
         .overlay(
-            RoundedRectangle(cornerRadius: MoinUIConstants.Radius.md)
+            RoundedRectangle(cornerRadius: Moin.Constants.Radius.md)
                 .stroke(Color.primary.opacity(0.1), lineWidth: 1)
         )
     }
@@ -90,8 +90,8 @@ struct APITable: View {
             .font(.system(.caption, weight: .medium))
             .foregroundStyle(.secondary)
             .frame(width: width, alignment: .leading)
-            .padding(.horizontal, MoinUIConstants.Spacing.sm)
-            .padding(.vertical, MoinUIConstants.Spacing.xs)
+            .padding(.horizontal, Moin.Constants.Spacing.sm)
+            .padding(.vertical, Moin.Constants.Spacing.xs)
     }
 
     private func bodyCell(_ text: String, isCode: Bool = false, width: CGFloat) -> some View {
@@ -99,8 +99,8 @@ struct APITable: View {
             .font(isCode ? .system(.caption, design: .monospaced) : .caption)
             .foregroundStyle(isCode ? Color.accentColor : .primary)
             .frame(width: width, alignment: .leading)
-            .padding(.horizontal, MoinUIConstants.Spacing.sm)
-            .padding(.vertical, MoinUIConstants.Spacing.xs)
+            .padding(.horizontal, Moin.Constants.Spacing.sm)
+            .padding(.vertical, Moin.Constants.Spacing.xs)
     }
 }
 
@@ -109,10 +109,10 @@ struct APITable: View {
 struct FAQItem<Content: View>: View {
     let question: String
     @ViewBuilder let content: () -> Content
-    @ObservedObject private var config = MoinUIConfigProvider.shared
+    @ObservedObject private var config = Moin.ConfigProvider.shared
 
     var body: some View {
-        VStack(alignment: .leading, spacing: MoinUIConstants.Spacing.md) {
+        VStack(alignment: .leading, spacing: Moin.Constants.Spacing.md) {
             Text(question)
                 .font(.headline)
                 .foregroundStyle(config.token.colorText)
@@ -121,9 +121,9 @@ struct FAQItem<Content: View>: View {
                 .font(.body)
                 .foregroundStyle(config.token.colorTextSecondary)
         }
-        .padding(MoinUIConstants.Spacing.lg)
+        .padding(Moin.Constants.Spacing.lg)
         .background(config.token.colorBgElevated)
-        .cornerRadius(MoinUIConstants.Radius.md)
+        .cornerRadius(Moin.Constants.Radius.md)
     }
 }
 
@@ -135,7 +135,7 @@ struct BulletPoint: View {
     }
 
     var body: some View {
-        HStack(alignment: .top, spacing: MoinUIConstants.Spacing.sm) {
+        HStack(alignment: .top, spacing: Moin.Constants.Spacing.sm) {
             Text("•")
             Text(text)
         }

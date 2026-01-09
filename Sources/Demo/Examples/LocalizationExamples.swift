@@ -3,11 +3,11 @@ import MoinUI
 
 /// Localization usage examples
 struct LocalizationExamples: View {
-    @EnvironmentObject var localization: MoinUILocalization
+    @EnvironmentObject var localization: Moin.Localization
 
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: MoinUIConstants.Spacing.xl) {
+            VStack(alignment: .leading, spacing: Moin.Constants.Spacing.xl) {
                 introduction
 
                 Divider()
@@ -21,7 +21,7 @@ struct LocalizationExamples: View {
 
                 apiReference
             }
-            .padding(MoinUIConstants.Spacing.xl)
+            .padding(Moin.Constants.Spacing.xl)
         }
         .measureRenderTime("Localization")
     }
@@ -29,7 +29,7 @@ struct LocalizationExamples: View {
     // MARK: - Introduction
 
     private var introduction: some View {
-        VStack(alignment: .leading, spacing: MoinUIConstants.Spacing.md) {
+        VStack(alignment: .leading, spacing: Moin.Constants.Spacing.md) {
             Text(localization.tr("i18n.title"))
                 .font(.largeTitle)
                 .fontWeight(.bold)
@@ -47,14 +47,14 @@ struct LocalizationExamples: View {
             title: localization.tr("i18n.basic"),
             description: localization.tr("i18n.basic_desc")
         ) {
-            VStack(alignment: .leading, spacing: MoinUIConstants.Spacing.sm) {
+            VStack(alignment: .leading, spacing: Moin.Constants.Spacing.sm) {
                 Text("localization.tr(\"button.title\") = \"\(localization.tr("button.title"))\"")
                     .font(.system(.body, design: .monospaced))
             }
         } code: {
             """
             struct MyView: View {
-                @EnvironmentObject var localization: MoinUILocalization
+                @EnvironmentObject var localization: Moin.Localization
 
                 var body: some View {
                     Text(localization.tr("button.title"))
@@ -74,13 +74,13 @@ struct LocalizationExamples: View {
         } code: {
             """
             // \(localization.tr("code_comment.register_custom_translations"))
-            MoinUILocalization.shared.register([
+            Moin.Localization.shared.register([
                 "my.key": "My Value",
                 "my.other_key": "Other Value"
             ], locale: .zhCN)
 
             // \(localization.tr("code_comment.register_english"))
-            MoinUILocalization.shared.register([
+            Moin.Localization.shared.register([
                 "my.key": "My Value",
                 "my.other_key": "Other Value"
             ], locale: .enUS)
@@ -116,7 +116,7 @@ struct LocalizationExamples: View {
                 subdirectory: "Locales"
             ),
             let data = try? Data(contentsOf: url) {
-                try? MoinUILocalization.shared.registerFromJSON(
+                try? Moin.Localization.shared.registerFromJSON(
                     data,
                     locale: .zhCN
                 )
@@ -128,12 +128,12 @@ struct LocalizationExamples: View {
     // MARK: - API Reference
 
     private var apiReference: some View {
-        VStack(alignment: .leading, spacing: MoinUIConstants.Spacing.lg) {
+        VStack(alignment: .leading, spacing: Moin.Constants.Spacing.lg) {
             Text("API")
                 .font(.title2)
                 .fontWeight(.semibold)
 
-            Text("MoinUILocalization")
+            Text("Moin.Localization")
                 .font(.headline)
 
             APITable(
@@ -145,9 +145,9 @@ struct LocalizationExamples: View {
                 ),
                 rows: [
                     ("tr(_:)", "String -> String", "-", localization.tr("api.i18n.tr")),
-                    ("register(_:locale:)", "([String:String], MoinUILocale)", "-", localization.tr("api.i18n.register")),
-                    ("registerFromJSON(_:locale:)", "(Data, MoinUILocale) throws", "-", localization.tr("api.i18n.registerFromJSON")),
-                    ("locale", "MoinUILocale", ".zhCN", localization.tr("api.i18n.locale")),
+                    ("register(_:locale:)", "([String:String], Moin.Locale)", "-", localization.tr("api.i18n.register")),
+                    ("registerFromJSON(_:locale:)", "(Data, Moin.Locale) throws", "-", localization.tr("api.i18n.registerFromJSON")),
+                    ("locale", "Moin.Locale", ".zhCN", localization.tr("api.i18n.locale")),
                 ]
             )
         }

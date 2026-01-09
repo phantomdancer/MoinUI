@@ -6,27 +6,27 @@ final class MoinUILocalizationTests: XCTestCase {
     override func setUp() {
         super.setUp()
         // Reset to default before each test
-        MoinUILocalization.shared.setLocale(.default)
+        Moin.Localization.shared.setLocale(.default)
     }
     
     // MARK: - Basic Tests
     
     func testSharedInstance() {
-        let instance1 = MoinUILocalization.shared
-        let instance2 = MoinUILocalization.shared
+        let instance1 = Moin.Localization.shared
+        let instance2 = Moin.Localization.shared
         
         XCTAssertTrue(instance1 === instance2, "Should be same instance")
     }
     
     func testDefaultLocale() {
-        let localization = MoinUILocalization.shared
+        let localization = Moin.Localization.shared
         XCTAssertEqual(localization.locale, .zhCN, "Default locale should be zh-CN")
     }
     
     // MARK: - Locale Switching Tests
     
     func testSetLocale() {
-        let localization = MoinUILocalization.shared
+        let localization = Moin.Localization.shared
         
         localization.setLocale(.enUS)
         XCTAssertEqual(localization.locale, .enUS, "Should be able to set locale to en-US")
@@ -38,7 +38,7 @@ final class MoinUILocalizationTests: XCTestCase {
     // MARK: - Translation Tests
     
     func testTranslationZhCN() {
-        let localization = MoinUILocalization.shared
+        let localization = Moin.Localization.shared
         localization.setLocale(.zhCN)
         
         // 先注册一个自定义翻译，然后测试
@@ -49,7 +49,7 @@ final class MoinUILocalizationTests: XCTestCase {
     }
     
     func testTranslationEnUS() {
-        let localization = MoinUILocalization.shared
+        let localization = Moin.Localization.shared
         localization.setLocale(.enUS)
         
         // 先注册一个自定义翻译，然后测试
@@ -60,7 +60,7 @@ final class MoinUILocalizationTests: XCTestCase {
     }
     
     func testTranslationFallback() {
-        let localization = MoinUILocalization.shared
+        let localization = Moin.Localization.shared
         localization.setLocale(.zhCN)
         
         // Test non-existent key
@@ -69,7 +69,7 @@ final class MoinUILocalizationTests: XCTestCase {
     }
     
     func testTranslationForSpecificLocale() {
-        let localization = MoinUILocalization.shared
+        let localization = Moin.Localization.shared
         
         // 先注册自定义翻译，然后测试
         localization.register("test.key", translations: [
@@ -89,7 +89,7 @@ final class MoinUILocalizationTests: XCTestCase {
     // MARK: - Custom Translation Tests
     
     func testRegisterCustomTranslation() {
-        let localization = MoinUILocalization.shared
+        let localization = Moin.Localization.shared
         localization.setLocale(.zhCN)
         
         // Register custom translation
@@ -109,7 +109,7 @@ final class MoinUILocalizationTests: XCTestCase {
     }
     
     func testRegisterAllTranslations() {
-        let localization = MoinUILocalization.shared
+        let localization = Moin.Localization.shared
         
         // Register multiple custom translations
         localization.registerAll([
@@ -137,7 +137,7 @@ final class MoinUILocalizationTests: XCTestCase {
     // MARK: - JSON Registration Tests
     
     func testRegisterFromJSONString() throws {
-        let localization = MoinUILocalization.shared
+        let localization = Moin.Localization.shared
         
         // Test valid JSON string
         let jsonString = "{\"test\": {\"key\": \"Test Value\"}}"
@@ -148,7 +148,7 @@ final class MoinUILocalizationTests: XCTestCase {
     }
     
     func testRegisterFromJSONStringInvalid() {
-        let localization = MoinUILocalization.shared
+        let localization = Moin.Localization.shared
         
         // Test invalid JSON string
         let invalidJSON = "invalid json"
@@ -160,7 +160,7 @@ final class MoinUILocalizationTests: XCTestCase {
     // MARK: - Dictionary Registration Tests
     
     func testRegisterFromDictionary() {
-        let localization = MoinUILocalization.shared
+        let localization = Moin.Localization.shared
         
         // Test nested dictionary registration
         let nestedDict: [String: Any] = [
@@ -183,7 +183,7 @@ final class MoinUILocalizationTests: XCTestCase {
     }
     
     func testRegisterFromJSON() throws {
-        let localization = MoinUILocalization.shared
+        let localization = Moin.Localization.shared
         
         // Test valid JSON data
         let jsonData = "{\"json\": {\"key\": \"JSON Value\"}}".data(using: .utf8)! 
@@ -194,7 +194,7 @@ final class MoinUILocalizationTests: XCTestCase {
     }
     
     func testRegisterFromJSONInvalidData() {
-        let localization = MoinUILocalization.shared
+        let localization = Moin.Localization.shared
         
         // Test invalid JSON data
         let invalidData = Data([0x00, 0x01, 0x02]) // Invalid JSON bytes
@@ -203,7 +203,7 @@ final class MoinUILocalizationTests: XCTestCase {
     }
     
     func testRegisterFromInvalidJSONFormat() {
-        let localization = MoinUILocalization.shared
+        let localization = Moin.Localization.shared
         
         // Test valid JSON but not a dictionary
         let arrayJSON = "[\"value1\", \"value2\"]"
@@ -214,7 +214,7 @@ final class MoinUILocalizationTests: XCTestCase {
     // MARK: - Translation Priority Tests
     
     func testTranslationPriority() {
-        let localization = MoinUILocalization.shared
+        let localization = Moin.Localization.shared
         localization.setLocale(.zhCN)
         
         // Register both builtin and custom translations for the same key
@@ -228,10 +228,10 @@ final class MoinUILocalizationTests: XCTestCase {
     // MARK: - Builtin Locale Loading Tests
     
     func testBuiltinLocalesLoading() {
-        let localization = MoinUILocalization.shared
+        let localization = Moin.Localization.shared
         
         // Test that all locales are loaded (even if no translations are found)
-        for locale in MoinUILocale.allCases {
+        for locale in Moin.Locale.allCases {
             // Just verify we can call the method without errors
             let value = localization.tr("test.key", locale: locale)
             XCTAssertNotNil(value, "Should return non-nil value for any locale")
@@ -241,7 +241,7 @@ final class MoinUILocalizationTests: XCTestCase {
     // MARK: - Edge Case Tests
     
     func testRegisterFromEmptyDictionary() {
-        let localization = MoinUILocalization.shared
+        let localization = Moin.Localization.shared
         
         // Test registering empty dictionary
         let emptyDict: [String: Any] = [:]
@@ -253,7 +253,7 @@ final class MoinUILocalizationTests: XCTestCase {
     }
     
     func testRegisterFromDeepNestedDictionary() {
-        let localization = MoinUILocalization.shared
+        let localization = Moin.Localization.shared
         
         // Test very deep nested dictionary
         let deepDict: [String: Any] = [
@@ -278,7 +278,7 @@ final class MoinUILocalizationTests: XCTestCase {
     }
     
     func testRegisterFromJSONStringWithInvalidData() {
-        let localization = MoinUILocalization.shared
+        let localization = Moin.Localization.shared
         
         // Test with invalid JSON string that can't be converted to Data
         let invalidString = "\u{19}" // Invalid UTF-8 character
@@ -288,7 +288,7 @@ final class MoinUILocalizationTests: XCTestCase {
     // MARK: - Locale Fallback Tests
     
     func testLocaleFallback() {
-        let localization = MoinUILocalization.shared
+        let localization = Moin.Localization.shared
         
         // Register translation only for en-US
         localization.register("fallback.key", translations: [.enUS: "English Only"])

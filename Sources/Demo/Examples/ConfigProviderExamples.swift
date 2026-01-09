@@ -3,12 +3,12 @@ import MoinUI
 
 /// ConfigProvider usage examples
 struct ConfigProviderExamples: View {
-    @EnvironmentObject var localization: MoinUILocalization
-    @EnvironmentObject var configProvider: MoinUIConfigProvider
+    @EnvironmentObject var localization: Moin.Localization
+    @EnvironmentObject var configProvider: Moin.ConfigProvider
 
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: MoinUIConstants.Spacing.xl) {
+            VStack(alignment: .leading, spacing: Moin.Constants.Spacing.xl) {
                 introduction
 
                 Divider()
@@ -23,7 +23,7 @@ struct ConfigProviderExamples: View {
 
                 apiReference
             }
-            .padding(MoinUIConstants.Spacing.xl)
+            .padding(Moin.Constants.Spacing.xl)
         }
         .measureRenderTime("ConfigProvider")
     }
@@ -31,7 +31,7 @@ struct ConfigProviderExamples: View {
     // MARK: - Introduction
 
     private var introduction: some View {
-        VStack(alignment: .leading, spacing: MoinUIConstants.Spacing.md) {
+        VStack(alignment: .leading, spacing: Moin.Constants.Spacing.md) {
             Text(localization.tr("config.title"))
                 .font(.largeTitle)
                 .fontWeight(.bold)
@@ -55,7 +55,7 @@ struct ConfigProviderExamples: View {
             """
             @main
             struct MyApp: App {
-                @StateObject private var configProvider = MoinUIConfigProvider.shared
+                @StateObject private var configProvider = Moin.ConfigProvider.shared
 
                 var body: some Scene {
                     WindowGroup {
@@ -74,11 +74,11 @@ struct ConfigProviderExamples: View {
             title: localization.tr("config.locale"),
             description: localization.tr("config.locale_desc")
         ) {
-            HStack(spacing: MoinUIConstants.Spacing.md) {
-                MoinUIButton(localization.tr("config.switch_zh"), color: .primary) {
+            HStack(spacing: Moin.Constants.Spacing.md) {
+                Moin.Button(localization.tr("config.switch_zh"), color: .primary) {
                     localization.locale = .zhCN
                 }
-                MoinUIButton(localization.tr("config.switch_en")) {
+                Moin.Button(localization.tr("config.switch_en")) {
                     localization.locale = .enUS
                 }
             }
@@ -90,8 +90,8 @@ struct ConfigProviderExamples: View {
 
             // \(localization.tr("code_comment.use_in_swiftui"))
             Picker("", selection: $localization.locale) {
-                Text("\(localization.tr("locale.zh"))").tag(MoinUILocale.zhCN)
-                Text("\(localization.tr("locale.en"))").tag(MoinUILocale.enUS)
+                Text("\(localization.tr("locale.zh"))").tag(Moin.Locale.zhCN)
+                Text("\(localization.tr("locale.en"))").tag(Moin.Locale.enUS)
             }
             """
         }
@@ -102,9 +102,9 @@ struct ConfigProviderExamples: View {
             title: localization.tr("config.theme"),
             description: localization.tr("config.theme_desc")
         ) {
-            VStack(alignment: .leading, spacing: MoinUIConstants.Spacing.md) {
+            VStack(alignment: .leading, spacing: Moin.Constants.Spacing.md) {
                 // Color picker buttons
-                HStack(spacing: MoinUIConstants.Spacing.sm) {
+                HStack(spacing: Moin.Constants.Spacing.sm) {
                     Text(localization.tr("config.primary_color"))
                         .font(.caption)
                         .foregroundStyle(.secondary)
@@ -126,15 +126,15 @@ struct ConfigProviderExamples: View {
                 }
 
                 // Preview buttons
-                HStack(spacing: MoinUIConstants.Spacing.md) {
-                    MoinUIButton(localization.tr("button.label.primary"), color: .primary) {}
-                    MoinUIButton(localization.tr("button.label.default")) {}
-                    MoinUIButton(localization.tr("button.label.primary"), color: .primary, variant: .outlined) {}
+                HStack(spacing: Moin.Constants.Spacing.md) {
+                    Moin.Button(localization.tr("button.label.primary"), color: .primary) {}
+                    Moin.Button(localization.tr("button.label.default")) {}
+                    Moin.Button(localization.tr("button.label.primary"), color: .primary, variant: .outlined) {}
                 }
             }
         } code: {
             """
-            let config = MoinUIConfigProvider.shared
+            let config = Moin.ConfigProvider.shared
 
             // \(localization.tr("code_comment.configure_theme_colors"))
             config.primaryColor = .blue
@@ -154,9 +154,9 @@ struct ConfigProviderExamples: View {
             title: localization.tr("config.token"),
             description: localization.tr("config.token_desc")
         ) {
-            VStack(alignment: .leading, spacing: MoinUIConstants.Spacing.md) {
+            VStack(alignment: .leading, spacing: Moin.Constants.Spacing.md) {
                 // Border radius slider
-                HStack(spacing: MoinUIConstants.Spacing.sm) {
+                HStack(spacing: Moin.Constants.Spacing.sm) {
                     Text(localization.tr("config.border_radius"))
                         .font(.caption)
                         .foregroundStyle(.secondary)
@@ -175,7 +175,7 @@ struct ConfigProviderExamples: View {
                 }
 
                 // Control height slider
-                HStack(spacing: MoinUIConstants.Spacing.sm) {
+                HStack(spacing: Moin.Constants.Spacing.sm) {
                     Text(localization.tr("config.control_height"))
                         .font(.caption)
                         .foregroundStyle(.secondary)
@@ -194,20 +194,20 @@ struct ConfigProviderExamples: View {
                 }
 
                 // Preview buttons
-                HStack(spacing: MoinUIConstants.Spacing.md) {
-                    MoinUIButton(localization.tr("button.label.primary"), color: .primary) {}
-                    MoinUIButton(localization.tr("button.label.success"), color: .success) {}
-                    MoinUIButton(localization.tr("button.label.danger"), color: .danger) {}
+                HStack(spacing: Moin.Constants.Spacing.md) {
+                    Moin.Button(localization.tr("button.label.primary"), color: .primary) {}
+                    Moin.Button(localization.tr("button.label.success"), color: .success) {}
+                    Moin.Button(localization.tr("button.label.danger"), color: .danger) {}
                 }
 
                 // Reset button
-                MoinUIButton(localization.tr("config.reset"), variant: .outlined) {
+                Moin.Button(localization.tr("config.reset"), variant: .outlined) {
                     configProvider.token = .default
                 }
             }
         } code: {
             """
-            let config = MoinUIConfigProvider.shared
+            let config = Moin.ConfigProvider.shared
 
             // \(localization.tr("code_comment.configure_token"))
             config.token.borderRadius = 8
@@ -236,12 +236,12 @@ struct ConfigProviderExamples: View {
     // MARK: - API Reference
 
     private var apiReference: some View {
-        VStack(alignment: .leading, spacing: MoinUIConstants.Spacing.lg) {
+        VStack(alignment: .leading, spacing: Moin.Constants.Spacing.lg) {
             Text("API")
                 .font(.title2)
                 .fontWeight(.semibold)
 
-            Text("MoinUIToken")
+            Text("Moin.Token")
                 .font(.headline)
 
             APITable(
@@ -263,9 +263,9 @@ struct ConfigProviderExamples: View {
                 ]
             )
 
-            Text("MoinUILocale")
+            Text("Moin.Locale")
                 .font(.headline)
-                .padding(.top, MoinUIConstants.Spacing.md)
+                .padding(.top, Moin.Constants.Spacing.md)
 
             APITable(
                 headers: (

@@ -200,16 +200,16 @@ struct TokenDisplayRow: View {
 /// 按钮 Playground 状态
 class ButtonPlaygroundState: ObservableObject {
     @Published var title: String = "按钮 Button"
-    @Published var color: MoinUIButtonColor = .primary
-    @Published var variant: MoinUIButtonVariant = .solid
-    @Published var size: MoinUIButtonSize = .medium
-    @Published var shape: MoinUIButtonShape = .default
+    @Published var color: Moin.ButtonColor = .primary
+    @Published var variant: Moin.ButtonVariant = .solid
+    @Published var size: Moin.ButtonSize = .medium
+    @Published var shape: Moin.ButtonShape = .default
     @Published var isDisabled: Bool = false
     @Published var isLoading: Bool = false
     @Published var isBlock: Bool = false
     @Published var isGhost: Bool = false
     @Published var icon: String = "arrow.left"
-    @Published var iconPlacement: MoinUIButtonIconPlacement = .start
+    @Published var iconPlacement: Moin.ButtonIconPlacement = .start
     @Published var useCustomColor: Bool = false
     @Published var customColor: Color = .purple
 
@@ -271,10 +271,10 @@ class ButtonPlaygroundState: ObservableObject {
         }
 
         if params.count <= 2 {
-            return "MoinUIButton(\(params.joined(separator: ", "))) {}"
+            return "Moin.Button(\(params.joined(separator: ", "))) {}"
         } else {
             let indent = "    "
-            return "MoinUIButton(\n\(indent)\(params.joined(separator: ",\n\(indent)"))\n) {}"
+            return "Moin.Button(\n\(indent)\(params.joined(separator: ",\n\(indent)"))\n) {}"
         }
     }
 
@@ -309,9 +309,9 @@ enum PlaygroundPanelTab: String, CaseIterable {
 
 /// 按钮 Playground 视图
 struct ButtonPlayground: View {
-    @EnvironmentObject var localization: MoinUILocalization
+    @EnvironmentObject var localization: Moin.Localization
     @StateObject private var state = ButtonPlaygroundState()
-    @ObservedObject private var config = MoinUIConfigProvider.shared
+    @ObservedObject private var config = Moin.ConfigProvider.shared
     @State private var selectedTab: PlaygroundPanelTab = .props
 
     private var defaultText: String {
@@ -345,7 +345,7 @@ struct ButtonPlayground: View {
                                 .font(.system(size: 12, weight: selectedTab == tab ? .medium : .regular))
                                 .foregroundStyle(selectedTab == tab ? config.token.colorPrimary : .secondary)
                                 .frame(maxWidth: .infinity)
-                                .padding(.vertical, MoinUIConstants.Spacing.sm)
+                                .padding(.vertical, Moin.Constants.Spacing.sm)
                                 .contentShape(Rectangle())
                         }
                         .buttonStyle(.plain)
@@ -366,9 +366,9 @@ struct ButtonPlayground: View {
             .frame(width: 320)
         }
         .background(Color(nsColor: .controlBackgroundColor))
-        .cornerRadius(MoinUIConstants.Radius.md)
+        .cornerRadius(Moin.Constants.Radius.md)
         .overlay(
-            RoundedRectangle(cornerRadius: MoinUIConstants.Radius.md)
+            RoundedRectangle(cornerRadius: Moin.Constants.Radius.md)
                 .stroke(Color.primary.opacity(0.1), lineWidth: 1)
         )
     }
@@ -376,7 +376,7 @@ struct ButtonPlayground: View {
     // MARK: - Preview Section
 
     private var previewSection: some View {
-        VStack(spacing: MoinUIConstants.Spacing.sm) {
+        VStack(spacing: Moin.Constants.Spacing.sm) {
             HStack {
                 Text(localization.tr("playground.preview"))
                     .font(.system(size: 11, weight: .medium))
@@ -388,18 +388,18 @@ struct ButtonPlayground: View {
 
             // 按钮预览
             if state.hasIcon && state.title.isEmpty {
-                MoinUIButton(
+                Moin.Button(
                     icon: state.icon,
                     color: state.useCustomColor ? .custom(state.customColor) : state.color,
                     size: state.size,
                     variant: state.variant,
                     shape: state.shape,
-                    loading: MoinUIButtonLoading(state.isLoading),
+                    loading: Moin.ButtonLoading(state.isLoading),
                     isDisabled: state.isDisabled,
                     isGhost: state.isGhost
                 ) {}
             } else {
-                MoinUIButton(
+                Moin.Button(
                     state.title.isEmpty ? defaultText : state.title,
                     color: state.useCustomColor ? .custom(state.customColor) : state.color,
                     size: state.size,
@@ -407,18 +407,18 @@ struct ButtonPlayground: View {
                     shape: state.shape,
                     icon: state.hasIcon ? state.icon : nil,
                     iconPlacement: state.iconPlacement,
-                    loading: MoinUIButtonLoading(state.isLoading),
+                    loading: Moin.ButtonLoading(state.isLoading),
                     isDisabled: state.isDisabled,
                     isBlock: state.isBlock,
                     isGhost: state.isGhost
                 ) {}
                 .frame(maxWidth: state.isBlock ? .infinity : nil)
-                .padding(.horizontal, state.isBlock ? MoinUIConstants.Spacing.xl : 0)
+                .padding(.horizontal, state.isBlock ? Moin.Constants.Spacing.xl : 0)
             }
 
             Spacer()
         }
-        .padding(MoinUIConstants.Spacing.md)
+        .padding(Moin.Constants.Spacing.md)
         .frame(maxWidth: .infinity, minHeight: 120)
     }
 
@@ -426,7 +426,7 @@ struct ButtonPlayground: View {
 
     private var propsPanel: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: MoinUIConstants.Spacing.md) {
+            VStack(alignment: .leading, spacing: Moin.Constants.Spacing.md) {
                 HStack {
                     Text(localization.tr("playground.props"))
                         .font(.system(size: 11, weight: .medium))
@@ -434,7 +434,7 @@ struct ButtonPlayground: View {
                     Spacer()
                 }
 
-                VStack(spacing: MoinUIConstants.Spacing.sm) {
+                VStack(spacing: Moin.Constants.Spacing.sm) {
                     TextPropControl(
                         label: localization.tr("playground.prop.title"),
                         propName: localization.tr("playground.prop.title_prop"),
@@ -444,7 +444,7 @@ struct ButtonPlayground: View {
                     SelectPropControl(
                         label: localization.tr("playground.prop.type"),
                         propName: localization.tr("playground.prop.type_prop"),
-                        options: MoinUIButtonColor.allCases,
+                        options: Moin.ButtonColor.allCases,
                         value: $state.color
                     )
                     .disabled(state.useCustomColor)
@@ -467,21 +467,21 @@ struct ButtonPlayground: View {
                     SelectPropControl(
                         label: localization.tr("playground.prop.variant"),
                         propName: localization.tr("playground.prop.variant_prop"),
-                        options: MoinUIButtonVariant.allCases,
+                        options: Moin.ButtonVariant.allCases,
                         value: $state.variant
                     )
 
                     SelectPropControl(
                         label: localization.tr("playground.prop.size"),
                         propName: localization.tr("playground.prop.size_prop"),
-                        options: MoinUIButtonSize.allCases,
+                        options: Moin.ButtonSize.allCases,
                         value: $state.size
                     )
 
                     SelectPropControl(
                         label: localization.tr("playground.prop.shape"),
                         propName: localization.tr("playground.prop.shape_prop"),
-                        options: MoinUIButtonShape.allCases,
+                        options: Moin.ButtonShape.allCases,
                         value: $state.shape
                     )
 
@@ -495,13 +495,13 @@ struct ButtonPlayground: View {
                         SelectPropControl(
                             label: localization.tr("playground.prop.icon_placement"),
                             propName: localization.tr("playground.prop.icon_placement_prop"),
-                            options: MoinUIButtonIconPlacement.allCases,
+                            options: Moin.ButtonIconPlacement.allCases,
                             value: $state.iconPlacement
                         )
                     }
 
                     Divider()
-                        .padding(.vertical, MoinUIConstants.Spacing.xs)
+                        .padding(.vertical, Moin.Constants.Spacing.xs)
 
                     TogglePropControl(
                         label: localization.tr("playground.prop.disabled"),
@@ -528,7 +528,7 @@ struct ButtonPlayground: View {
                     )
                 }
             }
-            .padding(MoinUIConstants.Spacing.md)
+            .padding(Moin.Constants.Spacing.md)
         }
     }
 
@@ -536,7 +536,7 @@ struct ButtonPlayground: View {
 
     private var tokenPanel: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: MoinUIConstants.Spacing.md) {
+            VStack(alignment: .leading, spacing: Moin.Constants.Spacing.md) {
                 // 重置按钮
                 HStack {
                     Spacer()
@@ -555,7 +555,7 @@ struct ButtonPlayground: View {
                 }
 
                 // Component Token
-                VStack(alignment: .leading, spacing: MoinUIConstants.Spacing.sm) {
+                VStack(alignment: .leading, spacing: Moin.Constants.Spacing.sm) {
                     Text(localization.tr("playground.token.component"))
                         .font(.system(size: 11, weight: .medium))
                         .foregroundStyle(.secondary)
@@ -604,7 +604,7 @@ struct ButtonPlayground: View {
                 Divider()
 
                 // Global Token
-                VStack(alignment: .leading, spacing: MoinUIConstants.Spacing.sm) {
+                VStack(alignment: .leading, spacing: Moin.Constants.Spacing.sm) {
                     Text(localization.tr("playground.token.global"))
                         .font(.system(size: 11, weight: .medium))
                         .foregroundStyle(.secondary)
@@ -641,14 +641,14 @@ struct ButtonPlayground: View {
                     )
                 }
             }
-            .padding(MoinUIConstants.Spacing.md)
+            .padding(Moin.Constants.Spacing.md)
         }
     }
 
     // MARK: - Code Section
 
     private var codeSection: some View {
-        VStack(alignment: .leading, spacing: MoinUIConstants.Spacing.sm) {
+        VStack(alignment: .leading, spacing: Moin.Constants.Spacing.sm) {
             HStack {
                 Text(localization.tr("playground.code"))
                     .font(.system(size: 11, weight: .medium))
@@ -661,15 +661,15 @@ struct ButtonPlayground: View {
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         }
-        .padding(MoinUIConstants.Spacing.md)
+        .padding(Moin.Constants.Spacing.md)
         .background(config.isDarkMode ? Color(white: 0.08) : Color(white: 0.96))
     }
 }
 
 // MARK: - 扩展枚举以支持 Playground
 
-extension MoinUIButtonColor: CaseIterable, CustomStringConvertible {
-    public static var allCases: [MoinUIButtonColor] {
+extension Moin.ButtonColor: CaseIterable, CustomStringConvertible {
+    public static var allCases: [Moin.ButtonColor] {
         [.default, .primary, .success, .warning, .danger, .info]
     }
 
@@ -686,8 +686,8 @@ extension MoinUIButtonColor: CaseIterable, CustomStringConvertible {
     }
 }
 
-extension MoinUIButtonVariant: CaseIterable, CustomStringConvertible {
-    public static var allCases: [MoinUIButtonVariant] {
+extension Moin.ButtonVariant: CaseIterable, CustomStringConvertible {
+    public static var allCases: [Moin.ButtonVariant] {
         [.solid, .outlined, .dashed, .filled, .text, .link]
     }
 
@@ -703,8 +703,8 @@ extension MoinUIButtonVariant: CaseIterable, CustomStringConvertible {
     }
 }
 
-extension MoinUIButtonSize: CaseIterable, CustomStringConvertible {
-    public static var allCases: [MoinUIButtonSize] {
+extension Moin.ButtonSize: CaseIterable, CustomStringConvertible {
+    public static var allCases: [Moin.ButtonSize] {
         [.small, .medium, .large]
     }
 
@@ -717,8 +717,8 @@ extension MoinUIButtonSize: CaseIterable, CustomStringConvertible {
     }
 }
 
-extension MoinUIButtonShape: CaseIterable, CustomStringConvertible {
-    public static var allCases: [MoinUIButtonShape] {
+extension Moin.ButtonShape: CaseIterable, CustomStringConvertible {
+    public static var allCases: [Moin.ButtonShape] {
         [.default, .round, .circle]
     }
 
@@ -731,8 +731,8 @@ extension MoinUIButtonShape: CaseIterable, CustomStringConvertible {
     }
 }
 
-extension MoinUIButtonIconPlacement: CaseIterable, CustomStringConvertible {
-    public static var allCases: [MoinUIButtonIconPlacement] {
+extension Moin.ButtonIconPlacement: CaseIterable, CustomStringConvertible {
+    public static var allCases: [Moin.ButtonIconPlacement] {
         [.start, .end]
     }
 

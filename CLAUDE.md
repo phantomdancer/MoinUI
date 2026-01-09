@@ -40,8 +40,8 @@ swift package update       # 更新依赖
 
 ### 命名约定
 - **组件**: `MoinUI` 前缀
-- **常量**: `MoinUIConstants` 枚举，嵌套枚举
-- **配置**: `MoinUIConfig`, `MoinUIToken`, `MoinUI[组件名]Token`
+- **常量**: `Moin.Constants` 枚举，嵌套枚举
+- **配置**: `Moin.Config`, `Moin.Token`, `MoinUI[组件名]Token`
 - **扩展**: 对现有类型使用 `public extension`
 - **枚举**: 小写驼峰命名 (.default, .primary, .success)
 
@@ -68,8 +68,8 @@ Tests/MoinUITests/       # 测试
 ### 常量使用
 **✅ 正确:**
 ```swift
-MoinUIConstants.Spacing.sm   // 8
-MoinUIConstants.Radius.md    // 6
+Moin.Constants.Spacing.sm   // 8
+Moin.Constants.Radius.md    // 6
 ```
 
 **❌ 错误:**
@@ -139,7 +139,7 @@ public extension MoinUI组件名 where Label == Text {
 ### 测试指南
 - 使用 XCTest 框架
 - 测试类继承自 `XCTestCase`
-- 使用 `setUp()` 在每个测试前重置状态: `MoinUIConfigProvider.shared.reset()`
+- 使用 `setUp()` 在每个测试前重置状态: `Moin.ConfigProvider.shared.reset()`
 - 测试命名: `test[方法名][场景]`
 - 覆盖正常路径和边界情况
 - 需要时使用 ViewInspector 测试 SwiftUI 视图
@@ -215,11 +215,11 @@ token.motionDuration        // 动画时长
 
 ### 间距常量
 ```swift
-MoinUIConstants.Spacing.xs  // 4
-MoinUIConstants.Spacing.sm  // 8
-MoinUIConstants.Spacing.md  // 12
-MoinUIConstants.Spacing.lg  // 16
-MoinUIConstants.Spacing.xl  // 24
+Moin.Constants.Spacing.xs  // 4
+Moin.Constants.Spacing.sm  // 8
+Moin.Constants.Spacing.md  // 12
+Moin.Constants.Spacing.lg  // 16
+Moin.Constants.Spacing.xl  // 24
 ```
 
 ### 视图修饰器

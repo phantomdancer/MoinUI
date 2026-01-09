@@ -39,7 +39,7 @@ struct AnchorNav: View {
     let anchors: [AnchorItem]
     let scrollProxy: ScrollViewProxy
     @Binding var activeAnchor: String?
-    @EnvironmentObject var localization: MoinUILocalization
+    @EnvironmentObject var localization: Moin.Localization
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -51,7 +51,7 @@ struct AnchorNav: View {
                     }
                     activeAnchor = anchor.id
                 } label: {
-                    HStack(spacing: MoinUIConstants.Spacing.sm) {
+                    HStack(spacing: Moin.Constants.Spacing.sm) {
                         // 左侧指示条
                         RoundedRectangle(cornerRadius: 1)
                             .fill(activeAnchor == anchor.id ? Color.accentColor : Color.clear)
@@ -67,10 +67,10 @@ struct AnchorNav: View {
                     .contentShape(Rectangle())
                 }
                 .buttonStyle(.plain)
-                .padding(.vertical, MoinUIConstants.Spacing.xs)
+                .padding(.vertical, Moin.Constants.Spacing.xs)
             }
         }
-        .padding(.horizontal, MoinUIConstants.Spacing.sm)
+        .padding(.horizontal, Moin.Constants.Spacing.sm)
         .frame(width: 140)
     }
 }
@@ -95,10 +95,10 @@ struct ExamplePageWithAnchor<Content: View>: View {
             HStack(alignment: .top, spacing: 0) {
                 // 左侧内容区
                 ScrollView {
-                    VStack(alignment: .leading, spacing: MoinUIConstants.Spacing.xl) {
+                    VStack(alignment: .leading, spacing: Moin.Constants.Spacing.xl) {
                         content(proxy)
                     }
-                    .padding(MoinUIConstants.Spacing.xl)
+                    .padding(Moin.Constants.Spacing.xl)
                     .onAppear {
                         let elapsed = CFAbsoluteTimeGetCurrent() - renderStartTime
                         print("📊 [\(pageName)] render: \(String(format: "%.1f", elapsed * 1000))ms")
@@ -114,7 +114,7 @@ struct ExamplePageWithAnchor<Content: View>: View {
                         scrollProxy: proxy,
                         activeAnchor: $activeAnchor
                     )
-                    .padding(.top, MoinUIConstants.Spacing.xl)
+                    .padding(.top, Moin.Constants.Spacing.xl)
 
                     Spacer()
                 }

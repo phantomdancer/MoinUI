@@ -6,16 +6,16 @@
 
 | 组件 | 状态 | 文件 |
 |------|------|------|
-| Button | ✅ | `Components/Button/MoinUIButton.swift` |
-| ButtonGroup | ✅ | `Components/Button/MoinUIButtonGroup.swift` |
+| Button | ✅ | `Components/Button/Moin.Button.swift` |
+| ButtonGroup | ✅ | `Components/Button/Moin.ButtonGroup.swift` |
 
 ## 配置组件
 
 | 组件 | 状态 | 文件 |
 |------|------|------|
-| ConfigProvider | ✅ | `Config/MoinUIConfigProvider.swift` |
-| Theme | ✅ | `Config/MoinUITheme.swift` |
-| Localization | ✅ | `Localization/MoinUILocalization.swift` |
+| ConfigProvider | ✅ | `Config/Moin.ConfigProvider.swift` |
+| Theme | ✅ | `Config/Moin.Theme.swift` |
+| Localization | ✅ | `Localization/Moin.Localization.swift` |
 
 ## Button 功能完成度
 

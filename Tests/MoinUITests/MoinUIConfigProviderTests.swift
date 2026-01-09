@@ -7,13 +7,13 @@ final class MoinUIConfigProviderTests: XCTestCase {
     override func setUp() {
         super.setUp()
         // Reset to default before each test
-        MoinUIConfigProvider.shared.reset()
+        Moin.ConfigProvider.shared.reset()
     }
 
     // MARK: - Token Tests
 
     func testTokenModification() {
-        let provider = MoinUIConfigProvider.shared
+        let provider = Moin.ConfigProvider.shared
 
         provider.token.colorPrimary = .purple
         XCTAssertEqual(provider.token.colorPrimary, .purple)
@@ -32,17 +32,17 @@ final class MoinUIConfigProviderTests: XCTestCase {
     // MARK: - Config Tests
 
     func testDefaultConfig() {
-        let config = MoinUIConfig.default
+        let config = Moin.Config.default
 
         XCTAssertEqual(config.locale, .zhCN)
-        XCTAssertEqual(config.token.colorPrimary, MoinUIConstants.Colors.primary)
+        XCTAssertEqual(config.token.colorPrimary, Moin.Constants.Colors.primary)
     }
 
     func testConfigInitializer() {
-        var token = MoinUIToken.default
+        var token = Moin.Token.default
         token.colorPrimary = .orange
 
-        let config = MoinUIConfig(
+        let config = Moin.Config(
             locale: .enUS,
             token: token
         )
@@ -54,14 +54,14 @@ final class MoinUIConfigProviderTests: XCTestCase {
     // MARK: - ConfigProvider Tests
 
     func testSharedInstance() {
-        let provider1 = MoinUIConfigProvider.shared
-        let provider2 = MoinUIConfigProvider.shared
+        let provider1 = Moin.ConfigProvider.shared
+        let provider2 = Moin.ConfigProvider.shared
 
         XCTAssertTrue(provider1 === provider2)
     }
 
     func testLocaleAccessor() {
-        let provider = MoinUIConfigProvider.shared
+        let provider = Moin.ConfigProvider.shared
 
         provider.locale = .enUS
         XCTAssertEqual(provider.locale, .enUS)
@@ -73,7 +73,7 @@ final class MoinUIConfigProviderTests: XCTestCase {
     }
 
     func testPrimaryColorAccessor() {
-        let provider = MoinUIConfigProvider.shared
+        let provider = Moin.ConfigProvider.shared
 
         provider.primaryColor = .green
         XCTAssertEqual(provider.primaryColor, .green)
@@ -81,7 +81,7 @@ final class MoinUIConfigProviderTests: XCTestCase {
     }
 
     func testBorderRadiusAccessor() {
-        let provider = MoinUIConfigProvider.shared
+        let provider = Moin.ConfigProvider.shared
 
         provider.borderRadius = 12
         XCTAssertEqual(provider.borderRadius, 12)
@@ -89,7 +89,7 @@ final class MoinUIConfigProviderTests: XCTestCase {
     }
 
     func testAnimationDurationAccessor() {
-        let provider = MoinUIConfigProvider.shared
+        let provider = Moin.ConfigProvider.shared
 
         provider.animationDuration = 0.5
         XCTAssertEqual(provider.animationDuration, 0.5)
@@ -97,7 +97,7 @@ final class MoinUIConfigProviderTests: XCTestCase {
     }
 
     func testConfigureMethod() {
-        let provider = MoinUIConfigProvider.shared
+        let provider = Moin.ConfigProvider.shared
 
         provider.configure { config in
             config.locale = .enUS
@@ -109,7 +109,7 @@ final class MoinUIConfigProviderTests: XCTestCase {
     }
 
     func testResetMethod() {
-        let provider = MoinUIConfigProvider.shared
+        let provider = Moin.ConfigProvider.shared
 
         // Modify some values
         provider.locale = .enUS
@@ -120,12 +120,12 @@ final class MoinUIConfigProviderTests: XCTestCase {
         provider.reset()
 
         XCTAssertEqual(provider.locale, .zhCN)
-        XCTAssertEqual(provider.token.colorPrimary, MoinUIConstants.Colors.primary)
-        XCTAssertEqual(provider.token.borderRadius, MoinUIConstants.Radius.md)
+        XCTAssertEqual(provider.token.colorPrimary, Moin.Constants.Colors.primary)
+        XCTAssertEqual(provider.token.borderRadius, Moin.Constants.Radius.md)
     }
 
     func testTranslationShorthand() {
-        let provider = MoinUIConfigProvider.shared
+        let provider = Moin.ConfigProvider.shared
         provider.locale = .zhCN
 
         // Should return the key if translation not found
@@ -136,9 +136,9 @@ final class MoinUIConfigProviderTests: XCTestCase {
     // MARK: - Token Accessor Tests
 
     func testTokenAccessor() {
-        let provider = MoinUIConfigProvider.shared
+        let provider = Moin.ConfigProvider.shared
 
-        var newToken = MoinUIToken.default
+        var newToken = Moin.Token.default
         newToken.colorPrimary = .red
         newToken.borderRadius = 8
 
@@ -149,9 +149,9 @@ final class MoinUIConfigProviderTests: XCTestCase {
     }
 
     func testComponentsAccessor() {
-        let provider = MoinUIConfigProvider.shared
+        let provider = Moin.ConfigProvider.shared
 
-        var newComponents = MoinUIComponentToken.default
+        var newComponents = Moin.ComponentToken.default
         newComponents.button.primaryColor = .black
 
         provider.components = newComponents
@@ -162,7 +162,7 @@ final class MoinUIConfigProviderTests: XCTestCase {
     // MARK: - Theme Tests
 
     func testThemeAccessor() {
-        let provider = MoinUIConfigProvider.shared
+        let provider = Moin.ConfigProvider.shared
 
         provider.theme = .dark
         XCTAssertEqual(provider.theme, .dark)
@@ -175,29 +175,29 @@ final class MoinUIConfigProviderTests: XCTestCase {
     }
 
     func testApplyThemeLight() {
-        let provider = MoinUIConfigProvider.shared
+        let provider = Moin.ConfigProvider.shared
 
         provider.applyTheme(.light)
 
         XCTAssertEqual(provider.theme, .light)
-        XCTAssertEqual(provider.token.colorPrimary, MoinUIConstants.Colors.primary)
-        XCTAssertEqual(provider.token.colorBgContainer, MoinUIConstants.Colors.background)
+        XCTAssertEqual(provider.token.colorPrimary, Moin.Constants.Colors.primary)
+        XCTAssertEqual(provider.token.colorBgContainer, Moin.Constants.Colors.background)
     }
 
     func testApplyThemeDark() {
-        let provider = MoinUIConfigProvider.shared
+        let provider = Moin.ConfigProvider.shared
 
         provider.applyTheme(.dark)
 
         XCTAssertEqual(provider.theme, .dark)
-        XCTAssertEqual(provider.token.colorPrimary, DarkColors.primary)
-        XCTAssertEqual(provider.token.colorBgContainer, DarkColors.background)
+        XCTAssertEqual(provider.token.colorPrimary, Moin.DarkColors.primary)
+        XCTAssertEqual(provider.token.colorBgContainer, Moin.DarkColors.background)
     }
 
     // MARK: - System Appearance Update Test
 
     func testSystemAppearanceUpdate() {
-        let provider = MoinUIConfigProvider.shared
+        let provider = Moin.ConfigProvider.shared
         
         // 应用系统主题
         provider.applyTheme(.system)
@@ -207,33 +207,33 @@ final class MoinUIConfigProviderTests: XCTestCase {
         provider.applyTheme(.system) // 重新应用主题来触发token更新
         
         // 验证token是否根据systemIsDark更新
-        let expectedColor = provider.systemIsDark ? DarkColors.primary : MoinUIConstants.Colors.primary
+        let expectedColor = provider.systemIsDark ? Moin.DarkColors.primary : Moin.Constants.Colors.primary
         XCTAssertEqual(provider.token.colorPrimary, expectedColor)
     }
 
     func testIsDarkModeLight() {
-        let provider = MoinUIConfigProvider.shared
+        let provider = Moin.ConfigProvider.shared
 
         provider.applyTheme(.light)
         XCTAssertFalse(provider.isDarkMode)
     }
 
     func testIsDarkModeDark() {
-        let provider = MoinUIConfigProvider.shared
+        let provider = Moin.ConfigProvider.shared
 
         provider.applyTheme(.dark)
         XCTAssertTrue(provider.isDarkMode)
     }
 
     func testIsDarkModeSystem() {
-        let provider = MoinUIConfigProvider.shared
+        let provider = Moin.ConfigProvider.shared
 
         provider.applyTheme(.system)
         XCTAssertEqual(provider.isDarkMode, provider.systemIsDark)
     }
 
     func testToggleThemeFromLight() {
-        let provider = MoinUIConfigProvider.shared
+        let provider = Moin.ConfigProvider.shared
 
         provider.applyTheme(.light)
         provider.toggleTheme()
@@ -242,7 +242,7 @@ final class MoinUIConfigProviderTests: XCTestCase {
     }
 
     func testToggleThemeFromDark() {
-        let provider = MoinUIConfigProvider.shared
+        let provider = Moin.ConfigProvider.shared
 
         provider.applyTheme(.dark)
         provider.toggleTheme()
@@ -251,7 +251,7 @@ final class MoinUIConfigProviderTests: XCTestCase {
     }
 
     func testConfigureWithThemeChange() {
-        let provider = MoinUIConfigProvider.shared
+        let provider = Moin.ConfigProvider.shared
         provider.applyTheme(.light)
 
         provider.configure { config in
@@ -259,11 +259,11 @@ final class MoinUIConfigProviderTests: XCTestCase {
         }
 
         XCTAssertEqual(provider.theme, .dark)
-        XCTAssertEqual(provider.token.colorPrimary, DarkColors.primary)
+        XCTAssertEqual(provider.token.colorPrimary, Moin.DarkColors.primary)
     }
 
     func testConfigureWithLocaleChange() {
-        let provider = MoinUIConfigProvider.shared
+        let provider = Moin.ConfigProvider.shared
         provider.locale = .zhCN
 
         provider.configure { config in
@@ -279,7 +279,7 @@ final class MoinUIConfigProviderTests: XCTestCase {
     // MARK: - Reset Method Test
 
     func testReset() {
-        let provider = MoinUIConfigProvider.shared
+        let provider = Moin.ConfigProvider.shared
         
         // 修改配置
         provider.theme = .dark
@@ -290,15 +290,15 @@ final class MoinUIConfigProviderTests: XCTestCase {
         provider.reset()
         
         // 验证配置是否恢复默认
-        XCTAssertEqual(provider.theme, MoinUIConfig.default.theme)
-        XCTAssertEqual(provider.locale, MoinUIConfig.default.locale)
-        XCTAssertEqual(provider.token.colorPrimary, MoinUIToken.default.colorPrimary)
+        XCTAssertEqual(provider.theme, Moin.Config.default.theme)
+        XCTAssertEqual(provider.locale, Moin.Config.default.locale)
+        XCTAssertEqual(provider.token.colorPrimary, Moin.Token.default.colorPrimary)
     }
     
     // MARK: - Translation Method Test
     
     func testTrMethod() {
-        let provider = MoinUIConfigProvider.shared
+        let provider = Moin.ConfigProvider.shared
         
         // 测试默认翻译
         let title = provider.tr("nav.overview")
@@ -309,7 +309,7 @@ final class MoinUIConfigProviderTests: XCTestCase {
     // MARK: - System Appearance Update Test
     
     func testUpdateSystemAppearance() {
-        let provider = MoinUIConfigProvider.shared
+        let provider = Moin.ConfigProvider.shared
         
         // 保存当前系统外观
         let currentSystemIsDark = provider.systemIsDark
@@ -330,7 +330,7 @@ final class MoinUIConfigProviderTests: XCTestCase {
     // MARK: - Config Theme Init Test
 
     func testConfigWithTheme() {
-        let config = MoinUIConfig(theme: .dark)
+        let config = Moin.Config(theme: .dark)
 
         XCTAssertEqual(config.theme, .dark)
     }
@@ -339,7 +339,7 @@ final class MoinUIConfigProviderTests: XCTestCase {
     
     func testViewModifiers() {
         // 测试moinUIConfig修饰器
-        let testConfig = MoinUIConfig.default
+        let testConfig = Moin.Config.default
         let _ = Text("Test")
             .moinUIConfig(testConfig)
         
@@ -359,16 +359,16 @@ final class MoinUIConfigProviderTests: XCTestCase {
     // MARK: - Theme Root Modifier Tests
     
     func testThemeRootModifier() {
-        // 测试MoinUIThemeRoot修饰器
+        // 测试Moin.ThemeRoot修饰器
         let _ = Text("Test")
-            .modifier(MoinUIThemeRoot())
+            .modifier(Moin.ThemeRoot())
     }
     
     // MARK: - Environment Values Tests
     
     func testEnvironmentValues() {
         // 测试moinConfig环境值
-        let provider = MoinUIConfigProvider.shared
+        let provider = Moin.ConfigProvider.shared
         let environmentValues = EnvironmentValues()
         // 使用身份比较，检查是否是同一个实例
         XCTAssertTrue(environmentValues.moinConfig === provider)

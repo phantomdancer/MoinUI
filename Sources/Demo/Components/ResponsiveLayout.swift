@@ -19,7 +19,7 @@ struct ResponsiveLayout<Content: View>: View {
     init(
         minItemWidth: CGFloat = 280,
         maxColumns: Int = 3,
-        spacing: CGFloat = MoinUIConstants.Spacing.xl,
+        spacing: CGFloat = Moin.Constants.Spacing.xl,
         @ViewBuilder content: @escaping () -> Content
     ) {
         self.minItemWidth = minItemWidth

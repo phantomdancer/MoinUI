@@ -2,15 +2,15 @@ import SwiftUI
 import MoinUI
 
 struct ButtonAPISection: View {
-    @ObservedObject private var localization = MoinUILocalization.shared
+    @ObservedObject private var localization = Moin.Localization.shared
 
     var body: some View {
-        VStack(alignment: .leading, spacing: MoinUIConstants.Spacing.lg) {
+        VStack(alignment: .leading, spacing: Moin.Constants.Spacing.lg) {
             Text("API")
                 .font(.title2)
                 .fontWeight(.semibold)
 
-            Text("MoinUIButton")
+            Text("Moin.Button")
                 .font(.headline)
 
             APITable(
@@ -22,26 +22,26 @@ struct ButtonAPISection: View {
                 ),
                 rows: [
                     ("action", "(() -> Void)?", "nil", localization.tr("api.button.action")),
-                    ("color", "MoinUIButtonColor", ".default", localization.tr("api.button.type")),
+                    ("color", "Moin.ButtonColor", ".default", localization.tr("api.button.type")),
                     ("fontColor", "Color?", "nil", localization.tr("api.button.fontColor")),
                     ("gradient", "LinearGradient?", "nil", localization.tr("api.button.gradient")),
                     ("href", "URL?", "nil", localization.tr("api.button.href")),
                     ("icon", "String?", "nil", localization.tr("api.button.icon")),
-                    ("iconPlacement", "MoinUIButtonIconPlacement", ".start", localization.tr("api.button.iconPlacement")),
+                    ("iconPlacement", "Moin.ButtonIconPlacement", ".start", localization.tr("api.button.iconPlacement")),
                     ("isBlock", "Bool", "false", localization.tr("api.button.isBlock")),
                     ("isDisabled", "Bool", "false", localization.tr("api.button.isDisabled")),
                     ("isGhost", "Bool", "false", localization.tr("api.button.isGhost")),
                     ("label", "@ViewBuilder () -> View", "-", localization.tr("api.button.label")),
-                    ("loading", "MoinUIButtonLoading", "false", localization.tr("api.button.loading")),
-                    ("shape", "MoinUIButtonShape", ".default", localization.tr("api.button.shape")),
-                    ("size", "MoinUIButtonSize", ".medium", localization.tr("api.button.size")),
-                    ("variant", "MoinUIButtonVariant", ".solid", localization.tr("api.button.variant")),
+                    ("loading", "Moin.ButtonLoading", "false", localization.tr("api.button.loading")),
+                    ("shape", "Moin.ButtonShape", ".default", localization.tr("api.button.shape")),
+                    ("size", "Moin.ButtonSize", ".medium", localization.tr("api.button.size")),
+                    ("variant", "Moin.ButtonVariant", ".solid", localization.tr("api.button.variant")),
                 ]
             )
 
-            Text("MoinUIButtonColor")
+            Text("Moin.ButtonColor")
                 .font(.headline)
-                .padding(.top, MoinUIConstants.Spacing.md)
+                .padding(.top, Moin.Constants.Spacing.md)
 
             APITable(
                 headers: (
@@ -60,9 +60,9 @@ struct ButtonAPISection: View {
                 ]
             )
 
-            Text("MoinUIButtonVariant")
+            Text("Moin.ButtonVariant")
                 .font(.headline)
-                .padding(.top, MoinUIConstants.Spacing.md)
+                .padding(.top, Moin.Constants.Spacing.md)
 
             APITable(
                 headers: (
@@ -83,7 +83,7 @@ struct ButtonAPISection: View {
 
             // MARK: - Component Token
             Divider()
-                .padding(.top, MoinUIConstants.Spacing.lg)
+                .padding(.top, Moin.Constants.Spacing.lg)
 
             Text(localization.tr("api.component_token"))
                 .font(.title2)
@@ -92,7 +92,7 @@ struct ButtonAPISection: View {
 
             Text(localization.tr("api.component_token_desc"))
                 .foregroundStyle(.secondary)
-                .padding(.bottom, MoinUIConstants.Spacing.sm)
+                .padding(.bottom, Moin.Constants.Spacing.sm)
 
             APITable(
                 headers: (
@@ -141,7 +141,7 @@ struct ButtonAPISection: View {
 
             // MARK: - Global Token
             Divider()
-                .padding(.top, MoinUIConstants.Spacing.lg)
+                .padding(.top, Moin.Constants.Spacing.lg)
 
             Text(localization.tr("api.global_token_title"))
                 .font(.title2)
@@ -150,7 +150,7 @@ struct ButtonAPISection: View {
 
             Text(localization.tr("api.global_token_desc"))
                 .foregroundStyle(.secondary)
-                .padding(.bottom, MoinUIConstants.Spacing.sm)
+                .padding(.bottom, Moin.Constants.Spacing.sm)
 
             APITable(
                 headers: (

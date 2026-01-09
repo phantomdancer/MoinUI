@@ -3,14 +3,14 @@ import MoinUI
 
 /// Quick Start Page
 struct QuickStartView: View {
-    @EnvironmentObject var localization: MoinUILocalization
-    @ObservedObject private var config = MoinUIConfigProvider.shared
+    @EnvironmentObject var localization: Moin.Localization
+    @ObservedObject private var config = Moin.ConfigProvider.shared
 
-    private var token: MoinUIToken { config.token }
+    private var token: Moin.Token { config.token }
 
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: MoinUIConstants.Spacing.xl) {
+            VStack(alignment: .leading, spacing: Moin.Constants.Spacing.xl) {
                 // Title
                 Text(localization.tr("nav.quick_start"))
                     .font(.largeTitle)
@@ -22,7 +22,7 @@ struct QuickStartView: View {
                     .foregroundStyle(token.colorTextSecondary)
 
                 // Installation
-                VStack(alignment: .leading, spacing: MoinUIConstants.Spacing.md) {
+                VStack(alignment: .leading, spacing: Moin.Constants.Spacing.md) {
                     Text(localization.tr("quick_start.installation"))
                         .font(.title2)
                         .fontWeight(.semibold)
@@ -39,7 +39,7 @@ struct QuickStartView: View {
                 }
 
                 // Basic Usage
-                VStack(alignment: .leading, spacing: MoinUIConstants.Spacing.md) {
+                VStack(alignment: .leading, spacing: Moin.Constants.Spacing.md) {
                     Text(localization.tr("quick_start.basic_usage"))
                         .font(.title2)
                         .fontWeight(.semibold)
@@ -53,7 +53,7 @@ struct QuickStartView: View {
 
                         struct ContentView: View {
                             var body: some View {
-                                MoinUIButton("\(localization.tr("quick_start.click_me"))", color: .primary) {
+                                Moin.Button("\(localization.tr("quick_start.click_me"))", color: .primary) {
                                     print("\(localization.tr("quick_start.hello_moinui"))")
                                 }
                             }
@@ -63,7 +63,7 @@ struct QuickStartView: View {
                 }
 
                 // Theme Config
-                VStack(alignment: .leading, spacing: MoinUIConstants.Spacing.md) {
+                VStack(alignment: .leading, spacing: Moin.Constants.Spacing.md) {
                     Text(localization.tr("quick_start.theme_config"))
                         .font(.title2)
                         .fontWeight(.semibold)
@@ -90,7 +90,7 @@ struct QuickStartView: View {
 
                 Spacer(minLength: 40)
             }
-            .padding(MoinUIConstants.Spacing.xl)
+            .padding(Moin.Constants.Spacing.xl)
             .frame(maxWidth: .infinity, alignment: .leading)
         }
         .frame(maxWidth: .infinity)
@@ -102,14 +102,14 @@ struct QuickStartView: View {
 private struct CodeBlock: View {
     let title: String
     let code: String
-    @EnvironmentObject private var localization: MoinUILocalization
+    @EnvironmentObject private var localization: Moin.Localization
     @State private var isCopied = false
-    @ObservedObject private var config = MoinUIConfigProvider.shared
+    @ObservedObject private var config = Moin.ConfigProvider.shared
 
-    private var token: MoinUIToken { config.token }
+    private var token: Moin.Token { config.token }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: MoinUIConstants.Spacing.sm) {
+        VStack(alignment: .leading, spacing: Moin.Constants.Spacing.sm) {
             HStack {
                 Text(title)
                     .font(.subheadline)
@@ -137,7 +137,7 @@ private struct CodeBlock: View {
             }
 
             HighlightedCodeView(code: code, fontSize: 12)
-                .padding(MoinUIConstants.Spacing.lg)
+                .padding(Moin.Constants.Spacing.lg)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .background(config.isDarkMode ? Color(white: 0.08) : Color(white: 0.96))
                 .clipShape(RoundedRectangle(cornerRadius: 8))

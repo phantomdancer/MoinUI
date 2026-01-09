@@ -18,9 +18,9 @@ Sources/MoinUI/Components/{ComponentName}/
 import SwiftUI
 
 public struct MoinUI{ComponentName}: View {
-    @EnvironmentObject var localization: MoinUILocalization
-    @ObservedObject private var config = MoinUIConfigProvider.shared
-    private var token: MoinUIToken { config.token }
+    @EnvironmentObject var localization: Moin.Localization
+    @ObservedObject private var config = Moin.ConfigProvider.shared
+    private var token: Moin.Token { config.token }
 
     private let title: String
     private let type: MoinUI{ComponentName}Type
@@ -90,7 +90,7 @@ final class MoinUI{ComponentName}Tests: XCTestCase {
 ```swift
 // Sources/Demo/Examples/{ComponentName}Examples.swift
 struct {ComponentName}Examples: View {
-    @EnvironmentObject var localization: MoinUILocalization
+    @EnvironmentObject var localization: Moin.Localization
 
     var body: some View {
         ScrollView {

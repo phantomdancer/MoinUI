@@ -10,14 +10,14 @@ MoinUI 提供完整的主题系统，支持浅色、深色和跟随系统三种�
 
 | 组件 | 文件 | 说明 |
 |------|------|------|
-| MoinUITheme | `Config/MoinUITheme.swift` | 主题枚举 (light/dark/system) |
-| MoinUIToken | `Config/MoinUITheme.swift` | 设计令牌（颜色、间距、圆角等） |
-| MoinUIConfigProvider | `Config/MoinUIConfigProvider.swift` | 全局配置管理 |
+| Moin.Theme | `Config/Moin.Theme.swift` | 主题枚举 (light/dark/system) |
+| Moin.Token | `Config/Moin.Theme.swift` | 设计令牌（颜色、间距、圆角等） |
+| Moin.ConfigProvider | `Config/Moin.ConfigProvider.swift` | 全局配置管理 |
 
 ## 主题模式
 
 ```swift
-public enum MoinUITheme: String, CaseIterable {
+public enum Moin.Theme: String, CaseIterable {
     case light      // 浅色
     case dark       // 深色
     case system     // 跟随系统（默认）
@@ -28,8 +28,8 @@ public enum MoinUITheme: String, CaseIterable {
 
 ### 预设 Token
 
-- `MoinUIToken.light` - 浅色主题令牌
-- `MoinUIToken.dark` - 暗色主题令牌
+- `Moin.Token.light` - 浅色主题令牌
+- `Moin.Token.dark` - 暗色主题令牌
 
 ### Token 属性
 
@@ -70,18 +70,18 @@ struct MyApp: App {
 
 ```swift
 // 应用指定主题
-MoinUIConfigProvider.shared.applyTheme(.dark)
-MoinUIConfigProvider.shared.applyTheme(.light)
-MoinUIConfigProvider.shared.applyTheme(.system)
+Moin.ConfigProvider.shared.applyTheme(.dark)
+Moin.ConfigProvider.shared.applyTheme(.light)
+Moin.ConfigProvider.shared.applyTheme(.system)
 
 // 切换浅色/深色
-MoinUIConfigProvider.shared.toggleTheme()
+Moin.ConfigProvider.shared.toggleTheme()
 ```
 
 ### 检查当前模式
 
 ```swift
-if MoinUIConfigProvider.shared.isDarkMode {
+if Moin.ConfigProvider.shared.isDarkMode {
     // 当前是深色模式
 }
 ```
@@ -89,7 +89,7 @@ if MoinUIConfigProvider.shared.isDarkMode {
 ### 使用 Token
 
 ```swift
-let token = MoinUIConfigProvider.shared.token
+let token = Moin.ConfigProvider.shared.token
 
 // 在 View 中
 .foregroundStyle(token.colorPrimary)

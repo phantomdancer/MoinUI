@@ -7,7 +7,7 @@ import AppKit
 struct HighlightedCodeView: View {
     let code: String
     var fontSize: CGFloat = 14
-    @ObservedObject private var config = MoinUIConfigProvider.shared
+    @ObservedObject private var config = Moin.ConfigProvider.shared
 
     var body: some View {
         Text(highlightedCode)
