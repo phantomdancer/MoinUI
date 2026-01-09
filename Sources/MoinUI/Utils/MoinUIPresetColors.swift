@@ -1,8 +1,11 @@
 import SwiftUI
 
-/// 预设颜色 - 参考 Ant Design 色彩体系
-/// https://ant.design/docs/spec/colors
-public enum MoinUIPresetColors {
+// MARK: - Moin.PresetColors
+
+public extension Moin {
+    /// 预设颜色 - 参考 Ant Design 色彩体系
+    /// https://ant.design/docs/spec/colors
+    enum PresetColors {
     // MARK: - 主要颜色
 
     /// 蓝色 #1677FF
@@ -43,7 +46,12 @@ public enum MoinUIPresetColors {
 
     /// 青柠 #A0D911
     public static let lime = Color(hex: 0xA0D911)
+    }
 }
+
+/// 旧名别名（已弃用）
+@available(*, deprecated, renamed: "Moin.PresetColors")
+public typealias MoinUIPresetColors = Moin.PresetColors
 
 // MARK: - Color Hex Extension
 
