@@ -211,7 +211,8 @@ token.motionDuration        // 动画时长
 ```swift
 @Environment(\.moinConfig) var moinConfig
 @Environment(\.moinToken) var token
-@Environment(\.moinLocalization) var localization
+@Environment(\.moinLocale) var locale
+@Localized var tr  // 然后用 tr("key")
 ```
 
 ### 间距常量
