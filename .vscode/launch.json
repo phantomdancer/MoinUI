@@ -5,18 +5,18 @@
             "request": "launch",
             "args": [],
             "cwd": "${workspaceFolder:MoinUi}",
-            "name": "Debug MoinUIDemo",
-            "program": "${workspaceFolder:MoinUi}/.build/debug/MoinUIDemo",
-            "preLaunchTask": "swift: Build Debug MoinUIDemo"
+            "name": "Debug Demo",
+            "program": "${workspaceFolder:MoinUi}/.build/debug/Demo",
+            "preLaunchTask": "swift: Build Debug Demo"
         },
         {
             "type": "lldb",
             "request": "launch",
             "args": [],
             "cwd": "${workspaceFolder:MoinUi}",
-            "name": "Release MoinUIDemo",
-            "program": "${workspaceFolder:MoinUi}/.build/release/MoinUIDemo",
-            "preLaunchTask": "swift: Build Release MoinUIDemo"
+            "name": "Release Demo",
+            "program": "${workspaceFolder:MoinUi}/.build/release/Demo",
+            "preLaunchTask": "swift: Build Release Demo"
         }
     ]
 }

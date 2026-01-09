@@ -2,7 +2,7 @@ import Foundation
 import os
 import MoinUI
 
-private let translationsLogger = Logger(subsystem: "MoinUIDemo", category: "Translations")
+private let translationsLogger = Logger(subsystem: "Demo", category: "Translations")
 
 /// Demo app translations loader
 enum DemoTranslations {

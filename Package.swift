@@ -26,7 +26,7 @@ let package = Package(
             ]
         ),
         .executableTarget(
-            name: "MoinUIDemo",
+            name: "Demo",
             dependencies: ["MoinUI", "Splash"],
             path: "Sources/Demo",
             resources: [
@@ -35,11 +35,12 @@ let package = Package(
             ]
         ),
         .testTarget(
-            name: "MoinUITests",
+            name: "MoinTests",
             dependencies: [
                 "MoinUI",
                 "ViewInspector"
-            ]
+            ],
+            path: "Tests/MoinTests"
         ),
     ]
 )

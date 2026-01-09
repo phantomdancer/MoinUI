@@ -111,7 +111,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 class NavigationManager: ObservableObject {
     static let shared = NavigationManager()
 
-    private let selectedItemKey = "MoinUIDemo.selectedNavItem"
+    private let selectedItemKey = "Demo.selectedNavItem"
 
     @Published var selectedItem: NavItem? {
         didSet {

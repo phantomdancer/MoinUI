@@ -1,8 +1,8 @@
 {
   "watch": [
-    ".build/debug/MoinUIDemo"
+    ".build/debug/Demo"
   ],
-  "exec": "pkill -f '.build/debug/MoinUIDemo' 2>/dev/null; .build/debug/MoinUIDemo",
+  "exec": "pkill -f '.build/debug/Demo' 2>/dev/null; .build/debug/Demo",
   "restartable": "rs",
   "ignore": [],
   "verbose": true,

@@ -78,7 +78,7 @@ public extension Moin {
 ## 测试模板
 
 ```swift
-// Tests/MoinUITests/{ComponentName}Tests.swift
+// Tests/MoinTests/{ComponentName}Tests.swift
 import XCTest
 @testable import MoinUI
 

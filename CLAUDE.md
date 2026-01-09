@@ -25,7 +25,7 @@ swift package clean && swift build  # 清理并重新构建
 
 ### 运行单个测试
 ```bash
-swift test --filter MoinUITests/测试类名/测试方法名
+swift test --filter MoinTests/测试类名/测试方法名
 swift test --filter ".*关键词.*"  # 运行匹配模式的测试
 swift test -l              # 列出所有测试
 ```
@@ -57,7 +57,7 @@ Sources/MoinUI/
 Sources/Demo/
 └── Examples/            # 组件示例页
 
-Tests/MoinUITests/       # 测试
+Tests/MoinTests/       # 测试
 ```
 
 ### 导入顺序

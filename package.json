@@ -9,7 +9,7 @@
     "build": "swift build",
     "test": "swift test --enable-code-coverage 2>&1 | grep -v -E '(CoreData|XPC|started|passed|^Test Case|^Test Suite.*passed|^\\s*Executed.*with 0 failure)' | grep -v '^$' || true && pnpm test:coverage",
     "test:coverage": "bash scripts/coverage.sh",
-    "test:coverage:html": "xcrun llvm-cov show .build/debug/MoinUIPackageTests.xctest/Contents/MacOS/MoinUIPackageTests --instr-profile=.build/debug/codecov/default.profdata --sources Sources/MoinUI --format=html > coverage.html && open coverage.html",
+    "test:coverage:html": "xcrun llvm-cov show .build/debug/MoinPackageTests.xctest/Contents/MacOS/MoinPackageTests --instr-profile=.build/debug/codecov/default.profdata --sources Sources/MoinUI --format=html > coverage.html && open coverage.html",
     "clean": "swift package clean",
     "resolve": "swift package resolve",
     "update": "swift package update",
