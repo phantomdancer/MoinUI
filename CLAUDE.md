@@ -231,7 +231,7 @@ MoinUIConstants.Spacing.xl  // 24
 ```
 
 ## 竞品参考
-- **Ant Design**: 已下载到 `ThirdLibs/ant-design/` (如缺失请 clone)
+- **Ant Design**: 已下载到 `ThirdLibs/ant-design/` (如缺失请 clone)；https://context7.com/ant-design/ant-design/llms.txt；
 - **Element Plus**: https://element-plus.org
 - **shadcn/ui**: https://ui.shadcn.com
 

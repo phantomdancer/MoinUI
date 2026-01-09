@@ -4,10 +4,12 @@
 
 ## 当前任务
 
-无
+组件分层规划完成，待实现 Space 组件
 
 ## 最近完成
 
+- 2026-01-09: 代码简化（Button 相关文件删除未用属性、提取泛型辅助方法）
+- 2026-01-09: 组件分层规划（五层依赖结构，见 roadmap.md）
 - 2026-01-08: Button API 文档添加组件 Token、全局 Token 章节（参照 antd）
 - 2026-01-08: MoinUIButtonToken 扩展完整 antd ComponentToken（支持浅暗色主题）
 - 2026-01-08: Button 组件改用 ButtonToken 取代硬编码样式
@@ -25,7 +27,9 @@
 
 ## 待处理
 
-无
+- 实现 Space 组件（第二层首个）
+- 实现 Divider 组件
+- 实现 Typography 组件
 
 ## 阻塞问题
 
