@@ -39,9 +39,9 @@ swift package update       # 更新依赖
 ## 代码风格指南
 
 ### 命名约定
-- **组件**: `MoinUI` 前缀
+- **组件**: `Moin.` 命名空间（如 `Moin.Button`）
 - **常量**: `Moin.Constants` 枚举，嵌套枚举
-- **配置**: `Moin.Config`, `Moin.Token`, `MoinUI[组件名]Token`
+- **配置**: `Moin.Config`, `Moin.Token`, `Moin.[组件名]Token`
 - **扩展**: 对现有类型使用 `public extension`
 - **枚举**: 小写驼峰命名 (.default, .primary, .success)
 
@@ -95,22 +95,24 @@ Moin.Constants.Radius.md    // 6
 
 ### 组件结构模式
 ```swift
-public struct MoinUI组件名<Label: View>: View {
-    // 属性
-    @State private var state: Type
-    @Environment(\.moinUIToken) private var token
+public extension Moin {
+    struct 组件名<Label: View>: View {
+        // 属性
+        @State private var state: Type
+        @Environment(\.moinUIToken) private var token
 
-    // 初始化器
-    public init(...) { ... }
+        // 初始化器
+        public init(...) { ... }
 
-    // 主体
-    public var body: some View { ... }
+        // 主体
+        public var body: some View { ... }
 
-    // 计算属性和辅助方法
+        // 计算属性和辅助方法
+    }
 }
 
 // 便捷初始化器
-public extension MoinUI组件名 where Label == Text {
+public extension Moin.组件名 where Label == Text {
     init(_ title: String, ...) { ... }
 }
 ```

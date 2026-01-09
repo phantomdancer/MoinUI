@@ -6,10 +6,10 @@
 
 ```
 Sources/MoinUI/Components/{ComponentName}/
-├── MoinUI{ComponentName}.swift      # 主组件
-├── MoinUI{ComponentName}Type.swift  # 类型枚举（可选）
-├── MoinUI{ComponentName}Size.swift  # 尺寸枚举（可选）
-└── MoinUI{ComponentName}Variant.swift # 变体枚举（可选）
+├── {ComponentName}.swift           # 主组件
+├── {ComponentName}Type.swift       # 类型枚举（可选）
+├── {ComponentName}Size.swift       # 尺寸枚举（可选）
+└── {ComponentName}Variant.swift    # 变体枚举（可选）
 ```
 
 ## 主组件模板
@@ -17,33 +17,34 @@ Sources/MoinUI/Components/{ComponentName}/
 ```swift
 import SwiftUI
 
-public struct MoinUI{ComponentName}: View {
-    @EnvironmentObject var localization: Moin.Localization
-    @ObservedObject private var config = Moin.ConfigProvider.shared
-    private var token: Moin.Token { config.token }
+public extension Moin {
+    struct {ComponentName}: View {
+        @Environment(\.moinUIToken) private var token
+        @Environment(\.moinLocalization) private var localization
 
-    private let title: String
-    private let type: MoinUI{ComponentName}Type
-    private let size: MoinUI{ComponentName}Size
-    private let isDisabled: Bool
-    private let action: (() -> Void)?
+        private let title: String
+        private let type: Moin.{ComponentName}Type
+        private let size: Moin.{ComponentName}Size
+        private let isDisabled: Bool
+        private let action: (() -> Void)?
 
-    public init(
-        _ title: String,
-        type: MoinUI{ComponentName}Type = .default,
-        size: MoinUI{ComponentName}Size = .medium,
-        isDisabled: Bool = false,
-        action: (() -> Void)? = nil
-    ) {
-        self.title = title
-        self.type = type
-        self.size = size
-        self.isDisabled = isDisabled
-        self.action = action
-    }
+        public init(
+            _ title: String,
+            type: Moin.{ComponentName}Type = .default,
+            size: Moin.{ComponentName}Size = .medium,
+            isDisabled: Bool = false,
+            action: (() -> Void)? = nil
+        ) {
+            self.title = title
+            self.type = type
+            self.size = size
+            self.isDisabled = isDisabled
+            self.action = action
+        }
 
-    public var body: some View {
-        // 实现
+        public var body: some View {
+            // 实现
+        }
     }
 }
 ```
@@ -52,19 +53,23 @@ public struct MoinUI{ComponentName}: View {
 
 ```swift
 // Type
-public enum MoinUI{ComponentName}Type {
-    case `default`, primary, success, warning, danger, info
+public extension Moin {
+    enum {ComponentName}Type {
+        case `default`, primary, success, warning, danger, info
+    }
 }
 
 // Size
-public enum MoinUI{ComponentName}Size {
-    case small, medium, large
+public extension Moin {
+    enum {ComponentName}Size {
+        case small, medium, large
 
-    var height: CGFloat {
-        switch self {
-        case .small: return Constants.Size.controlHeightSM
-        case .medium: return Constants.Size.controlHeight
-        case .large: return Constants.Size.controlHeightLG
+        var height: CGFloat {
+            switch self {
+            case .small: return Moin.Constants.Size.controlHeightSM
+            case .medium: return Moin.Constants.Size.controlHeight
+            case .large: return Moin.Constants.Size.controlHeightLG
+            }
         }
     }
 }
@@ -73,11 +78,11 @@ public enum MoinUI{ComponentName}Size {
 ## 测试模板
 
 ```swift
-// Tests/MoinUITests/MoinUI{ComponentName}Tests.swift
+// Tests/MoinUITests/{ComponentName}Tests.swift
 import XCTest
 @testable import MoinUI
 
-final class MoinUI{ComponentName}Tests: XCTestCase {
+final class {ComponentName}Tests: XCTestCase {
     func testDefaultInit() {}
     func testAllTypes() {}
     func testAllSizes() {}
@@ -90,16 +95,16 @@ final class MoinUI{ComponentName}Tests: XCTestCase {
 ```swift
 // Sources/Demo/Examples/{ComponentName}Examples.swift
 struct {ComponentName}Examples: View {
-    @EnvironmentObject var localization: Moin.Localization
+    @Environment(\.moinLocalization) private var localization
 
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: Constants.Spacing.xl) {
+            VStack(alignment: .leading, spacing: Moin.Constants.Spacing.xl) {
                 typeExample
                 sizeExample
                 apiReference
             }
-            .padding(Constants.Spacing.xl)
+            .padding(Moin.Constants.Spacing.xl)
         }
     }
 
@@ -108,11 +113,11 @@ struct {ComponentName}Examples: View {
             title: localization.tr("{component}.type"),
             description: localization.tr("{component}.type_desc")
         ) {
-            MoinUI{Component}(localization.tr("{component}.label.default")) {}
+            Moin.{Component}(localization.tr("{component}.label.default")) {}
         } code: {
             // 示例代码字符串必须使用 \() 插值
             """
-            MoinUI{Component}("\(localization.tr("{component}.label.default"))") {}
+            Moin.{Component}("\(localization.tr("{component}.label.default"))") {}
             """
         }
     }
