@@ -26,9 +26,6 @@ public extension Moin {
     }
 }
 
-/// 旧名别名（已弃用）
-@available(*, deprecated, renamed: "Moin.ButtonGroup")
-public typealias MoinUIButtonGroup = Moin.ButtonGroup
 
 // MARK: - 按钮组位置
 

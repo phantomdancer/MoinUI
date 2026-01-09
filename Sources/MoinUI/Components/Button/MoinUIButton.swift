@@ -26,9 +26,6 @@ public extension Moin {
     }
 }
 
-/// 旧名别名（已弃用）
-@available(*, deprecated, renamed: "Moin.ButtonIconPlacement")
-public typealias MoinUIButtonIconPlacement = Moin.ButtonIconPlacement
 
 /// Loading 配置 - 支持 delay 和自定义 icon
 public extension Moin {
@@ -51,9 +48,6 @@ public extension Moin {
     }
 }
 
-/// 旧名别名（已弃用）
-@available(*, deprecated, renamed: "Moin.ButtonLoading")
-public typealias MoinUIButtonLoading = Moin.ButtonLoading
 
 // MARK: - Loading Indicator Component
 
@@ -490,9 +484,6 @@ public extension Moin {
     }
 }
 
-/// 旧名别名（已弃用）
-@available(*, deprecated, renamed: "Moin.Button")
-public typealias MoinUIButton = Moin.Button
 
 // MARK: - Convenience Initializers
 

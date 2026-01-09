@@ -99,6 +99,3 @@ public extension Moin {
     }
 }
 
-/// 旧名别名（已弃用）
-@available(*, deprecated, renamed: "Moin.Constants")
-public typealias MoinUIConstants = Moin.Constants

@@ -14,6 +14,3 @@ public extension Moin {
     }
 }
 
-/// 旧名别名（已弃用）
-@available(*, deprecated, renamed: "Moin.ButtonShape")
-public typealias MoinUIButtonShape = Moin.ButtonShape

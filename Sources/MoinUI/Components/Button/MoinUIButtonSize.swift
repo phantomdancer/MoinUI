@@ -11,6 +11,3 @@ public extension Moin {
     }
 }
 
-/// 旧名别名（已弃用）
-@available(*, deprecated, renamed: "Moin.ButtonSize")
-public typealias MoinUIButtonSize = Moin.ButtonSize

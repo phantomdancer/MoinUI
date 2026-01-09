@@ -49,9 +49,6 @@ public extension Moin {
     }
 }
 
-/// 旧名别名（已弃用）
-@available(*, deprecated, renamed: "Moin.PresetColors")
-public typealias MoinUIPresetColors = Moin.PresetColors
 
 // MARK: - Color Hex Extension
 

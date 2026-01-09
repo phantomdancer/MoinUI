@@ -118,9 +118,6 @@ public extension Moin {
     }
 }
 
-/// 旧名别名（已弃用）
-@available(*, deprecated, renamed: "Moin.Token")
-public typealias MoinUIToken = Moin.Token
 
 // MARK: - Moin.ButtonToken
 
@@ -305,9 +302,6 @@ public extension Moin {
     }
 }
 
-/// 旧名别名（已弃用）
-@available(*, deprecated, renamed: "Moin.ButtonToken")
-public typealias MoinUIButtonToken = Moin.ButtonToken
 
 // MARK: - Moin.ComponentToken
 
@@ -328,9 +322,6 @@ public extension Moin {
     }
 }
 
-/// 旧名别名（已弃用）
-@available(*, deprecated, renamed: "Moin.ComponentToken")
-public typealias MoinUIComponentToken = Moin.ComponentToken
 
 // MARK: - Moin.Config
 
@@ -371,9 +362,6 @@ public extension Moin {
     }
 }
 
-/// 旧名别名（已弃用）
-@available(*, deprecated, renamed: "Moin.Config")
-public typealias MoinUIConfig = Moin.Config
 
 // MARK: - Moin.ConfigProvider
 
@@ -545,9 +533,6 @@ public extension Moin {
     }
 }
 
-/// 旧名别名（已弃用）
-@available(*, deprecated, renamed: "Moin.ConfigProvider")
-public typealias MoinUIConfigProvider = Moin.ConfigProvider
 
 // MARK: - Environment Key
 
@@ -642,9 +627,6 @@ public extension Moin {
     }
 }
 
-/// 旧名别名（已弃用）
-@available(*, deprecated, renamed: "Moin.ThemeRoot")
-public typealias MoinUIThemeRoot = Moin.ThemeRoot
 
 public extension View {
     /// 应用 MoinUI 主题根修饰器，实现全局主题切换

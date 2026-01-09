@@ -33,6 +33,3 @@ public extension Moin {
     }
 }
 
-/// 旧名别名（已弃用）
-@available(*, deprecated, renamed: "Moin.ButtonColor")
-public typealias MoinUIButtonColor = Moin.ButtonColor

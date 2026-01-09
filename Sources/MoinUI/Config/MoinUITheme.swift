@@ -32,9 +32,6 @@ public extension Moin {
     }
 }
 
-/// 旧名别名（已弃用）
-@available(*, deprecated, renamed: "Moin.Theme")
-public typealias MoinUITheme = Moin.Theme
 
 // MARK: - Moin.DarkColors
 
@@ -79,6 +76,3 @@ public extension Moin {
     }
 }
 
-/// 旧名别名（已弃用）
-@available(*, deprecated, renamed: "Moin.DarkColors")
-public typealias DarkColors = Moin.DarkColors

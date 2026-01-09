@@ -20,6 +20,3 @@ public extension Moin {
     }
 }
 
-/// 旧名别名（已弃用）
-@available(*, deprecated, renamed: "Moin.ButtonVariant")
-public typealias MoinUIButtonVariant = Moin.ButtonVariant

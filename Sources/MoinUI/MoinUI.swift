@@ -5,6 +5,3 @@ public enum Moin {
     public static let version: String = _MoinVersion
 }
 
-/// MoinUI - 保留旧名作为别名（已弃用）
-@available(*, deprecated, renamed: "Moin")
-public typealias MoinUI = Moin

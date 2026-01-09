@@ -15,9 +15,6 @@ public extension Moin {
     }
 }
 
-/// 旧名别名（已弃用）
-@available(*, deprecated, renamed: "Moin.Locale")
-public typealias MoinUILocale = Moin.Locale
 
 // MARK: - Moin.Localization
 
@@ -147,9 +144,6 @@ public extension Moin {
     }
 }
 
-/// 旧名别名（已弃用）
-@available(*, deprecated, renamed: "Moin.Localization")
-public typealias MoinUILocalization = Moin.Localization
 
 // MARK: - Errors
 
