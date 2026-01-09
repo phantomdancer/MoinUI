@@ -19,29 +19,41 @@ struct MoinUIButtonShapeStyle: Shape {
 }
 
 /// 图标位置 - 与 antd iconPlacement 一致
-public enum MoinUIButtonIconPlacement {
-    case start
-    case end
+public extension Moin {
+    enum ButtonIconPlacement {
+        case start
+        case end
+    }
 }
+
+/// 旧名别名（已弃用）
+@available(*, deprecated, renamed: "Moin.ButtonIconPlacement")
+public typealias MoinUIButtonIconPlacement = Moin.ButtonIconPlacement
 
 /// Loading 配置 - 支持 delay 和自定义 icon
-public struct MoinUIButtonLoading: ExpressibleByBooleanLiteral, Equatable {
-    public let isLoading: Bool
-    public let delay: TimeInterval?
-    public let icon: String?
+public extension Moin {
+    struct ButtonLoading: ExpressibleByBooleanLiteral, Equatable {
+        public let isLoading: Bool
+        public let delay: TimeInterval?
+        public let icon: String?
 
-    public init(_ isLoading: Bool = true, delay: TimeInterval? = nil, icon: String? = nil) {
-        self.isLoading = isLoading
-        self.delay = delay
-        self.icon = icon
-    }
+        public init(_ isLoading: Bool = true, delay: TimeInterval? = nil, icon: String? = nil) {
+            self.isLoading = isLoading
+            self.delay = delay
+            self.icon = icon
+        }
 
-    public init(booleanLiteral value: Bool) {
-        self.isLoading = value
-        self.delay = nil
-        self.icon = nil
+        public init(booleanLiteral value: Bool) {
+            self.isLoading = value
+            self.delay = nil
+            self.icon = nil
+        }
     }
 }
+
+/// 旧名别名（已弃用）
+@available(*, deprecated, renamed: "Moin.ButtonLoading")
+public typealias MoinUIButtonLoading = Moin.ButtonLoading
 
 // MARK: - Loading Indicator Component
 

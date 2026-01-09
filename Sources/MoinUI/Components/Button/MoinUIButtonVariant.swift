@@ -1,17 +1,25 @@
 import SwiftUI
 
-/// Button variant (style) - 与 antd 保持一致
-public enum MoinUIButtonVariant {
-    /// Solid filled button (实心按钮)
-    case solid
-    /// Outlined button with border (描边按钮)
-    case outlined
-    /// Dashed border button (虚线按钮)
-    case dashed
-    /// Filled button with light background (填充按钮，比 solid 淡)
-    case filled
-    /// Plain text button without background (文本按钮)
-    case text
-    /// Link style button (链接按钮)
-    case link
+// MARK: - Moin.ButtonVariant
+
+public extension Moin {
+    /// Button variant (style) - 与 antd 保持一致
+    enum ButtonVariant {
+        /// Solid filled button (实心按钮)
+        case solid
+        /// Outlined button with border (描边按钮)
+        case outlined
+        /// Dashed border button (虚线按钮)
+        case dashed
+        /// Filled button with light background (填充按钮，比 solid 淡)
+        case filled
+        /// Plain text button without background (文本按钮)
+        case text
+        /// Link style button (链接按钮)
+        case link
+    }
 }
+
+/// 旧名别名（已弃用）
+@available(*, deprecated, renamed: "Moin.ButtonVariant")
+public typealias MoinUIButtonVariant = Moin.ButtonVariant
