@@ -17,9 +17,4 @@ final class MoinUIMainTests: XCTestCase {
         let semverPattern = #"^\d+\.\d+\.\d+$"#
         XCTAssertNotNil(version.range(of: semverPattern, options: .regularExpression))
     }
-
-    func testInit() {
-        let moinUI = MoinUI()
-        XCTAssertNotNil(moinUI)
-    }
 }

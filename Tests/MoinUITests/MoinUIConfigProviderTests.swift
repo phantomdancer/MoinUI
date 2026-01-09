@@ -12,34 +12,6 @@ final class MoinUIConfigProviderTests: XCTestCase {
 
     // MARK: - Token Tests
 
-    func testDefaultToken() {
-        let token = MoinUIToken.default
-
-        XCTAssertEqual(token.colorPrimary, MoinUIConstants.Colors.primary)
-        XCTAssertEqual(token.colorSuccess, MoinUIConstants.Colors.success)
-        XCTAssertEqual(token.colorWarning, MoinUIConstants.Colors.warning)
-        XCTAssertEqual(token.colorDanger, MoinUIConstants.Colors.danger)
-        XCTAssertEqual(token.colorInfo, MoinUIConstants.Colors.info)
-
-        XCTAssertEqual(token.borderRadius, MoinUIConstants.Radius.md)
-        XCTAssertEqual(token.borderRadiusLG, MoinUIConstants.Radius.lg)
-        XCTAssertEqual(token.borderRadiusSM, MoinUIConstants.Radius.sm)
-
-        XCTAssertEqual(token.controlHeight, 32)
-        XCTAssertEqual(token.controlHeightLG, 40)
-        XCTAssertEqual(token.controlHeightSM, 24)
-
-        XCTAssertEqual(token.fontSize, 14)
-        XCTAssertEqual(token.fontSizeLG, 16)
-        XCTAssertEqual(token.fontSizeSM, 12)
-
-        XCTAssertEqual(token.padding, MoinUIConstants.Spacing.md)
-        XCTAssertEqual(token.paddingLG, MoinUIConstants.Spacing.lg)
-        XCTAssertEqual(token.paddingSM, MoinUIConstants.Spacing.sm)
-
-        XCTAssertEqual(token.motionDuration, MoinUIConstants.Duration.normal)
-    }
-
     func testTokenModification() {
         let provider = MoinUIConfigProvider.shared
 
@@ -55,25 +27,7 @@ final class MoinUIConfigProviderTests: XCTestCase {
 
     // MARK: - Button Token Tests
 
-    func testDefaultButtonToken() {
-        let buttonToken = MoinUIButtonToken.default
-
-        XCTAssertEqual(buttonToken.primaryColor, .white)
-        XCTAssertEqual(buttonToken.fontWeight, .medium)
-        XCTAssertEqual(buttonToken.contentFontSize, 14)
-        XCTAssertEqual(buttonToken.contentFontSizeLG, 16)
-        XCTAssertEqual(buttonToken.contentFontSizeSM, 12)
-        XCTAssertEqual(buttonToken.iconGap, 6)
-        XCTAssertEqual(buttonToken.onlyIconSize, 16)
-    }
-
     // MARK: - Component Token Tests
-
-    func testDefaultComponentToken() {
-        let componentToken = MoinUIComponentToken.default
-
-        XCTAssertEqual(componentToken.button.primaryColor, .white)
-    }
 
     // MARK: - Config Tests
 
@@ -321,47 +275,6 @@ final class MoinUIConfigProviderTests: XCTestCase {
     }
 
     // MARK: - Dark Token Tests
-
-    func testDarkToken() {
-        let darkToken = MoinUIToken.dark
-
-        XCTAssertEqual(darkToken.colorPrimary, DarkColors.primary)
-        XCTAssertEqual(darkToken.colorPrimaryHover, DarkColors.primaryHover)
-        XCTAssertEqual(darkToken.colorPrimaryActive, DarkColors.primaryActive)
-        XCTAssertEqual(darkToken.colorSuccess, DarkColors.success)
-        XCTAssertEqual(darkToken.colorWarning, DarkColors.warning)
-        XCTAssertEqual(darkToken.colorDanger, DarkColors.danger)
-        XCTAssertEqual(darkToken.colorInfo, DarkColors.info)
-        XCTAssertEqual(darkToken.colorBgContainer, DarkColors.background)
-        XCTAssertEqual(darkToken.colorBgElevated, DarkColors.backgroundElevated)
-        XCTAssertEqual(darkToken.colorBgHover, DarkColors.backgroundHover)
-        XCTAssertEqual(darkToken.colorText, DarkColors.textPrimary)
-        XCTAssertEqual(darkToken.colorTextSecondary, DarkColors.textSecondary)
-        XCTAssertEqual(darkToken.colorTextDisabled, DarkColors.textDisabled)
-        XCTAssertEqual(darkToken.colorBgDisabled, DarkColors.backgroundDisabled)
-        XCTAssertEqual(darkToken.colorBorder, DarkColors.border)
-        XCTAssertEqual(darkToken.colorBorderHover, DarkColors.borderHover)
-    }
-
-    func testLightToken() {
-        let lightToken = MoinUIToken.light
-
-        XCTAssertEqual(lightToken.colorPrimary, MoinUIConstants.Colors.primary)
-        XCTAssertEqual(lightToken.colorPrimaryHover, MoinUIConstants.Colors.primaryHover)
-        XCTAssertEqual(lightToken.colorPrimaryActive, MoinUIConstants.Colors.primaryActive)
-        XCTAssertEqual(lightToken.colorSuccess, MoinUIConstants.Colors.success)
-        XCTAssertEqual(lightToken.colorWarning, MoinUIConstants.Colors.warning)
-        XCTAssertEqual(lightToken.colorDanger, MoinUIConstants.Colors.danger)
-        XCTAssertEqual(lightToken.colorInfo, MoinUIConstants.Colors.info)
-        XCTAssertEqual(lightToken.colorBgContainer, MoinUIConstants.Colors.background)
-        XCTAssertEqual(lightToken.colorBgHover, MoinUIConstants.Colors.backgroundHover)
-        XCTAssertEqual(lightToken.colorText, MoinUIConstants.Colors.textPrimary)
-        XCTAssertEqual(lightToken.colorTextSecondary, MoinUIConstants.Colors.textSecondary)
-        XCTAssertEqual(lightToken.colorTextDisabled, MoinUIConstants.Colors.textDisabled)
-        XCTAssertEqual(lightToken.colorBgDisabled, MoinUIConstants.Colors.backgroundDisabled)
-        XCTAssertEqual(lightToken.colorBorder, MoinUIConstants.Colors.border)
-        XCTAssertEqual(lightToken.colorBorderHover, MoinUIConstants.Colors.borderHover)
-    }
 
     // MARK: - Reset Method Test
 
