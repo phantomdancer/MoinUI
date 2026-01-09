@@ -6,12 +6,12 @@ import XCTest
     // Write your test here and use APIs like `#expect(...)` to check expected conditions.
 }
 
-// MARK: - MoinUI Tests
+// MARK: - Main Tests
 
-final class MoinUIMainTests: XCTestCase {
+final class MainTests: XCTestCase {
 
     func testVersion() {
-        let version = MoinUI.version
+        let version = Moin.version
         XCTAssertFalse(version.isEmpty)
         // Version format: semver (e.g., 0.1.0, 1.0.0)
         let semverPattern = #"^\d+\.\d+\.\d+$"#

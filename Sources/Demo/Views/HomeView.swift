@@ -51,7 +51,7 @@ private struct HeroSection: View {
                         // 关闭大标题的文字选择，保持渐变效果
                         .textSelection(.disabled)
 
-                    Text("v\(MoinUI.version)")
+                    Text("v\(Moin.version)")
                         .font(.caption)
                         .foregroundStyle(token.colorTextSecondary)
                         .padding(.horizontal, 8)

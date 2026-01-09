@@ -2,7 +2,7 @@ import XCTest
 import SwiftUI
 @testable import MoinUI
 
-final class MoinUIConfigProviderTests: XCTestCase {
+final class ConfigProviderTests: XCTestCase {
 
     override func setUp() {
         super.setUp()

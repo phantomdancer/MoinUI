@@ -1,7 +1,7 @@
 import XCTest
 @testable import MoinUI
 
-final class MoinUILocalizationTests: XCTestCase {
+final class LocalizationTests: XCTestCase {
     
     override func setUp() {
         super.setUp()

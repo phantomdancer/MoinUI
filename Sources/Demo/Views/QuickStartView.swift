@@ -32,7 +32,7 @@ struct QuickStartView: View {
                         title: "Package.swift",
                         code: """
                         dependencies: [
-                            .package(url: "https://github.com/phantomdancer/MoinUI.git", from: "\(MoinUI.version)")
+                            .package(url: "https://github.com/phantomdancer/MoinUI.git", from: "\(Moin.version)")
                         ]
                         """
                     )

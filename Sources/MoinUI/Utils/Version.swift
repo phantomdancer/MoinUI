@@ -1,2 +1,2 @@
 // 自动生成，勿手动修改
-public let MoinUIVersion = "0.1.0"
+internal let _MoinVersion = "0.1.0"
