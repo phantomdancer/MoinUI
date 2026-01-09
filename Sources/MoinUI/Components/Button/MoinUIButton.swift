@@ -43,6 +43,26 @@ public struct MoinUIButtonLoading: ExpressibleByBooleanLiteral, Equatable {
     }
 }
 
+// MARK: - Loading Indicator Component
+
+private struct LoadingIndicator: View {
+    let icon: String
+    let size: CGFloat
+
+    @State private var rotationAngle: Double = 0
+
+    var body: some View {
+        Image(systemName: icon)
+            .font(.system(size: size))
+            .rotationEffect(.degrees(rotationAngle))
+            .onAppear {
+                withAnimation(.linear(duration: 1).repeatForever(autoreverses: false)) {
+                    rotationAngle = 360
+                }
+            }
+    }
+}
+
 /// MoinUI Button Component
 public struct MoinUIButton<Label: View>: View {
     private let action: (() -> Void)?
@@ -65,7 +85,6 @@ public struct MoinUIButton<Label: View>: View {
     @State private var isHovered = false
     @State private var isPressed = false
     @State private var showLoading = false
-    @State private var rotationAngle: Double = 0
 
     // 使用 Environment 获取配置，避免每个按钮都订阅 ObservedObject
     @Environment(\.moinUIToken) private var token
@@ -226,14 +245,7 @@ public struct MoinUIButton<Label: View>: View {
     @ViewBuilder
     private var loadingIndicator: some View {
         let loadingIcon = loadingConfig.icon ?? "arrow.trianglehead.2.clockwise"
-        Image(systemName: loadingIcon)
-            .font(.system(size: iconSize))
-            .rotationEffect(.degrees(rotationAngle))
-            .onAppear {
-                withAnimation(.linear(duration: 1).repeatForever(autoreverses: false)) {
-                    rotationAngle = 360
-                }
-            }
+        LoadingIndicator(icon: loadingIcon, size: iconSize)
     }
 
     private var buttonShape: MoinUIButtonShapeStyle {
@@ -477,7 +489,6 @@ public struct MoinUIButton<Label: View>: View {
             }
         } else {
             showLoading = false
-            rotationAngle = 0
         }
     }
 }
