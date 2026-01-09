@@ -14,7 +14,6 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(url: "https://github.com/nalexn/ViewInspector", from: "0.10.3"),
         .package(url: "https://github.com/JohnSundell/Splash", from: "0.16.0")
     ],
     targets: [
@@ -37,8 +36,7 @@ let package = Package(
         .testTarget(
             name: "MoinTests",
             dependencies: [
-                "MoinUI",
-                "ViewInspector"
+                "MoinUI"
             ],
             path: "Tests/MoinTests"
         ),

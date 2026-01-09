@@ -144,7 +144,6 @@ public extension Moin.组件名 where Label == Text {
 - 使用 `setUp()` 在每个测试前重置状态: `Moin.ConfigProvider.shared.reset()`
 - 测试命名: `test[方法名][场景]`
 - 覆盖正常路径和边界情况
-- 需要时使用 ViewInspector 测试 SwiftUI 视图
 
 ### Demo 要求
 - 每个组件必须在 `Sources/Demo/Examples/` 中有完整示例
