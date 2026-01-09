@@ -25,10 +25,7 @@ public struct MoinUIButtonGroup<Content: View>: View {
 // MARK: - 按钮组位置
 
 enum MoinUIButtonGroupPosition {
-    case leading
     case middle
-    case trailing
-    case single
 }
 
 // MARK: - 环境变量

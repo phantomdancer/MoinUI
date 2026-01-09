@@ -602,6 +602,7 @@ public struct MoinUIThemeRoot: ViewModifier {
         switch config.theme {
         case .light: return .light
         case .dark: return .dark
+        // 系统主题，不能 return nil，否则会导致问题，需要返回实际的主题
         case .system: return config.isDarkMode ? .dark : .light
         }
     }

@@ -78,7 +78,6 @@ public struct MoinUIButton<Label: View>: View {
     private let icon: String?
     private let iconPlacement: MoinUIButtonIconPlacement
     private let href: URL?
-    private let target: String?
     private let gradient: LinearGradient?
     private let fontColor: Color?
 
@@ -102,7 +101,6 @@ public struct MoinUIButton<Label: View>: View {
         isBlock: Bool = false,
         isGhost: Bool = false,
         href: URL? = nil,
-        target: String? = nil,
         gradient: LinearGradient? = nil,
         fontColor: Color? = nil,
         action: (() -> Void)? = nil,
@@ -119,7 +117,6 @@ public struct MoinUIButton<Label: View>: View {
         self.isBlock = isBlock
         self.isGhost = isGhost
         self.href = href
-        self.target = target
         self.gradient = gradient
         self.fontColor = fontColor
         self.action = action
