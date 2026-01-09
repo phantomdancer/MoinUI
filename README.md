@@ -10,7 +10,7 @@ Add the dependency in `Package.swift`:
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/phantomdancer/moin-ui.git", from: "0.1.0")
+    .package(url: "https://github.com/phantomdancer/MoinUI.git", from: "0.1.0")
 ]
 ```
 
@@ -27,7 +27,7 @@ Then reference it in your target:
 
 This project includes a Demo app with complete documentation and usage examples.
 
-**Option 1:** Download the pre-built Demo app from [Releases](https://github.com/phantomdancer/moin-ui/releases)
+**Option 1:** Download the pre-built Demo app from [Releases](https://github.com/phantomdancer/MoinUI/releases)
 
 **Option 2:** Build from source:
 

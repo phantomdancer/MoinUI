@@ -10,7 +10,7 @@ macOS SwiftUI 组件库。
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/phantomdancer/moin-ui.git", from: "0.1.0")
+    .package(url: "https://github.com/phantomdancer/MoinUI.git", from: "0.1.0")
 ]
 ```
 
@@ -27,7 +27,7 @@ dependencies: [
 
 本项目包含 Demo 应用，提供完整的文档和使用示例。
 
-**方式一：** 从 [Releases](https://github.com/phantomdancer/moin-ui/releases) 下载预编译的 Demo 应用
+**方式一：** 从 [Releases](https://github.com/phantomdancer/MoinUI/releases) 下载预编译的 Demo 应用
 
 **方式二：** 从源码构建运行：
 
