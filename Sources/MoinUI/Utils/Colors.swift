@@ -85,6 +85,152 @@ public extension Moin {
 
         /// 青柠色板
         public static let limePalette = ColorPalette.generate(from: lime)
+
+        // MARK: - 色板级别便捷访问 (blue1-blue10, etc.)
+
+        // Blue
+        public static var blue1: Color { bluePalette[1] }
+        public static var blue2: Color { bluePalette[2] }
+        public static var blue3: Color { bluePalette[3] }
+        public static var blue4: Color { bluePalette[4] }
+        public static var blue5: Color { bluePalette[5] }
+        public static var blue6: Color { bluePalette[6] }
+        public static var blue7: Color { bluePalette[7] }
+        public static var blue8: Color { bluePalette[8] }
+        public static var blue9: Color { bluePalette[9] }
+        public static var blue10: Color { bluePalette[10] }
+
+        // Purple
+        public static var purple1: Color { purplePalette[1] }
+        public static var purple2: Color { purplePalette[2] }
+        public static var purple3: Color { purplePalette[3] }
+        public static var purple4: Color { purplePalette[4] }
+        public static var purple5: Color { purplePalette[5] }
+        public static var purple6: Color { purplePalette[6] }
+        public static var purple7: Color { purplePalette[7] }
+        public static var purple8: Color { purplePalette[8] }
+        public static var purple9: Color { purplePalette[9] }
+        public static var purple10: Color { purplePalette[10] }
+
+        // Cyan
+        public static var cyan1: Color { cyanPalette[1] }
+        public static var cyan2: Color { cyanPalette[2] }
+        public static var cyan3: Color { cyanPalette[3] }
+        public static var cyan4: Color { cyanPalette[4] }
+        public static var cyan5: Color { cyanPalette[5] }
+        public static var cyan6: Color { cyanPalette[6] }
+        public static var cyan7: Color { cyanPalette[7] }
+        public static var cyan8: Color { cyanPalette[8] }
+        public static var cyan9: Color { cyanPalette[9] }
+        public static var cyan10: Color { cyanPalette[10] }
+
+        // Green
+        public static var green1: Color { greenPalette[1] }
+        public static var green2: Color { greenPalette[2] }
+        public static var green3: Color { greenPalette[3] }
+        public static var green4: Color { greenPalette[4] }
+        public static var green5: Color { greenPalette[5] }
+        public static var green6: Color { greenPalette[6] }
+        public static var green7: Color { greenPalette[7] }
+        public static var green8: Color { greenPalette[8] }
+        public static var green9: Color { greenPalette[9] }
+        public static var green10: Color { greenPalette[10] }
+
+        // Magenta
+        public static var magenta1: Color { magentaPalette[1] }
+        public static var magenta2: Color { magentaPalette[2] }
+        public static var magenta3: Color { magentaPalette[3] }
+        public static var magenta4: Color { magentaPalette[4] }
+        public static var magenta5: Color { magentaPalette[5] }
+        public static var magenta6: Color { magentaPalette[6] }
+        public static var magenta7: Color { magentaPalette[7] }
+        public static var magenta8: Color { magentaPalette[8] }
+        public static var magenta9: Color { magentaPalette[9] }
+        public static var magenta10: Color { magentaPalette[10] }
+
+        // Red
+        public static var red1: Color { redPalette[1] }
+        public static var red2: Color { redPalette[2] }
+        public static var red3: Color { redPalette[3] }
+        public static var red4: Color { redPalette[4] }
+        public static var red5: Color { redPalette[5] }
+        public static var red6: Color { redPalette[6] }
+        public static var red7: Color { redPalette[7] }
+        public static var red8: Color { redPalette[8] }
+        public static var red9: Color { redPalette[9] }
+        public static var red10: Color { redPalette[10] }
+
+        // Orange
+        public static var orange1: Color { orangePalette[1] }
+        public static var orange2: Color { orangePalette[2] }
+        public static var orange3: Color { orangePalette[3] }
+        public static var orange4: Color { orangePalette[4] }
+        public static var orange5: Color { orangePalette[5] }
+        public static var orange6: Color { orangePalette[6] }
+        public static var orange7: Color { orangePalette[7] }
+        public static var orange8: Color { orangePalette[8] }
+        public static var orange9: Color { orangePalette[9] }
+        public static var orange10: Color { orangePalette[10] }
+
+        // Yellow
+        public static var yellow1: Color { yellowPalette[1] }
+        public static var yellow2: Color { yellowPalette[2] }
+        public static var yellow3: Color { yellowPalette[3] }
+        public static var yellow4: Color { yellowPalette[4] }
+        public static var yellow5: Color { yellowPalette[5] }
+        public static var yellow6: Color { yellowPalette[6] }
+        public static var yellow7: Color { yellowPalette[7] }
+        public static var yellow8: Color { yellowPalette[8] }
+        public static var yellow9: Color { yellowPalette[9] }
+        public static var yellow10: Color { yellowPalette[10] }
+
+        // Volcano
+        public static var volcano1: Color { volcanoPalette[1] }
+        public static var volcano2: Color { volcanoPalette[2] }
+        public static var volcano3: Color { volcanoPalette[3] }
+        public static var volcano4: Color { volcanoPalette[4] }
+        public static var volcano5: Color { volcanoPalette[5] }
+        public static var volcano6: Color { volcanoPalette[6] }
+        public static var volcano7: Color { volcanoPalette[7] }
+        public static var volcano8: Color { volcanoPalette[8] }
+        public static var volcano9: Color { volcanoPalette[9] }
+        public static var volcano10: Color { volcanoPalette[10] }
+
+        // Geekblue
+        public static var geekblue1: Color { geekbluePalette[1] }
+        public static var geekblue2: Color { geekbluePalette[2] }
+        public static var geekblue3: Color { geekbluePalette[3] }
+        public static var geekblue4: Color { geekbluePalette[4] }
+        public static var geekblue5: Color { geekbluePalette[5] }
+        public static var geekblue6: Color { geekbluePalette[6] }
+        public static var geekblue7: Color { geekbluePalette[7] }
+        public static var geekblue8: Color { geekbluePalette[8] }
+        public static var geekblue9: Color { geekbluePalette[9] }
+        public static var geekblue10: Color { geekbluePalette[10] }
+
+        // Gold
+        public static var gold1: Color { goldPalette[1] }
+        public static var gold2: Color { goldPalette[2] }
+        public static var gold3: Color { goldPalette[3] }
+        public static var gold4: Color { goldPalette[4] }
+        public static var gold5: Color { goldPalette[5] }
+        public static var gold6: Color { goldPalette[6] }
+        public static var gold7: Color { goldPalette[7] }
+        public static var gold8: Color { goldPalette[8] }
+        public static var gold9: Color { goldPalette[9] }
+        public static var gold10: Color { goldPalette[10] }
+
+        // Lime
+        public static var lime1: Color { limePalette[1] }
+        public static var lime2: Color { limePalette[2] }
+        public static var lime3: Color { limePalette[3] }
+        public static var lime4: Color { limePalette[4] }
+        public static var lime5: Color { limePalette[5] }
+        public static var lime6: Color { limePalette[6] }
+        public static var lime7: Color { limePalette[7] }
+        public static var lime8: Color { limePalette[8] }
+        public static var lime9: Color { limePalette[9] }
+        public static var lime10: Color { limePalette[10] }
     }
 }
 

@@ -250,7 +250,7 @@
     "description": "MoinUI provides a set of colors for quick UI development.",
     "reference_link": "View Color Specification",
     "palette": "Base Color Palettes",
-    "palette_desc": "The base color palette totals 120 colors, including 12 primary colors and their derivative colors. Each primary generates 10 gradient levels (1-10).",
+    "palette_desc": "The base color palette totals 120 colors, including 12 primary colors and their derivative colors. Each primary generates 10 gradient levels (1-10). Level 6 is the primary, with dual shorthand (e.g. .blue6 / .blue).",
     "generator": "Palette Generation Tool",
     "generator_desc": "Select a primary color to generate a complete 10-level palette.",
     "pick_color": "Pick Color",
@@ -276,8 +276,10 @@
       "primary": "Primary",
       "dark": "Dark",
       "custom_palette": "Generate palette from custom color",
+      "button_color_shorthand": "ButtonColor supports palette shorthand",
       "lightest": "Lightest",
-      "darkest": "Darkest"
+      "darkest": "Darkest",
+      "extract_level": "Extract specific level"
     },
     "primary": "Primary",
     "success": "Success",

@@ -197,16 +197,20 @@ struct ColorsExamples: View {
             description: tr("colors.palette_usage_desc")
         ) {
             HStack(spacing: Moin.Constants.Spacing.md) {
-                Moin.Button(tr("colors.level4"), color: .custom(Moin.Colors.bluePalette[4])) {}
-                Moin.Button(tr("colors.level6"), color: .custom(Moin.Colors.bluePalette[6])) {}
-                Moin.Button(tr("colors.level8"), color: .custom(Moin.Colors.bluePalette[8])) {}
+                Moin.Button(tr("colors.level4"), color: .blue4) {}
+                Moin.Button(tr("colors.level6"), color: .blue6) {}
+                Moin.Button(tr("colors.level8"), color: .blue8) {}
             }
         } code: {
             """
             // \(tr("colors.code.palette_level"))
-            Moin.Colors.bluePalette[4]  // \(tr("colors.code.light"))
-            Moin.Colors.bluePalette[6]  // \(tr("colors.code.primary"))
-            Moin.Colors.bluePalette[8]  // \(tr("colors.code.dark"))
+            Moin.Colors.blue4  // \(tr("colors.code.light"))
+            Moin.Colors.blue6  // \(tr("colors.code.primary"))
+            Moin.Colors.blue8  // \(tr("colors.code.dark"))
+
+            // \(tr("colors.code.button_color_shorthand"))
+            Moin.Button("...", color: .blue4) {}
+            Moin.Button("...", color: .cyan6) {}
             """
         }
     }
@@ -234,6 +238,10 @@ struct ColorsExamples: View {
             palette[1]  // \(tr("colors.code.lightest"))
             palette[6]  // \(tr("colors.code.primary"))
             palette[10] // \(tr("colors.code.darkest"))
+
+            // \(tr("colors.code.extract_level"))
+            let myColor5 = palette[5]
+            let myColor10 = palette[10]
             """
         }
     }
@@ -326,8 +334,14 @@ private struct PaletteCard: View {
                     let isPrimary = level == 6
 
                     HStack {
-                        Text("\(name)-\(level)")
+                        Text(".\(name.lowercased())\(level)")
                             .font(.system(.caption, design: .monospaced))
+
+                        if isPrimary {
+                            Text("/ .\(name.lowercased())")
+                                .font(.system(.caption, design: .monospaced))
+                                .opacity(0.7)
+                        }
 
                         Spacer()
 

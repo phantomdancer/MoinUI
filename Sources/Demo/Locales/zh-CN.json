@@ -250,7 +250,7 @@
     "description": "MoinUI 提供一组颜色，用于快速构建美观的界面。",
     "reference_link": "查看色彩规范",
     "palette": "基础色板",
-    "palette_desc": "基础色板共计 120 个颜色，包含 12 个主色以及衍生色。每种主色生成 1-10 共 10 个梯度色。",
+    "palette_desc": "基础色板共计 120 个颜色，包含 12 个主色以及衍生色。每种主色生成 1-10 共 10 个梯度色，第 6 级为主色，支持双写法（如 .blue6 / .blue）。",
     "generator": "色板生成工具",
     "generator_desc": "选择一个主色，自动生成完整的 10 级色板。",
     "pick_color": "选择颜色",
@@ -276,8 +276,10 @@
       "primary": "主色",
       "dark": "深色",
       "custom_palette": "从自定义颜色生成色板",
+      "button_color_shorthand": "ButtonColor 支持调色板简写",
       "lightest": "最浅",
-      "darkest": "最深"
+      "darkest": "最深",
+      "extract_level": "提取特定级别"
     },
     "primary": "主要",
     "success": "成功",
