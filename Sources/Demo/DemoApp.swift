@@ -157,6 +157,7 @@ struct ContentView: View {
                             Picker("", selection: $buttonTab) {
                                 Text(tr("tab.examples")).tag(ButtonExamplesTab.examples)
                                 Text(tr("tab.playground")).tag(ButtonExamplesTab.playground)
+                                Text(tr("tab.api")).tag(ButtonExamplesTab.api)
                             }
                             .pickerStyle(.segmented)
                             .fixedSize()

@@ -5,6 +5,7 @@ import MoinUI
 enum ButtonExamplesTab: String, CaseIterable {
     case examples
     case playground
+    case api
 }
 
 /// Button component examples
@@ -27,17 +28,16 @@ struct ButtonExamples: View {
         AnchorItem(id: "custom_content", titleKey: "button.custom_content"),
         AnchorItem(id: "disabled", titleKey: "button.disabled"),
         AnchorItem(id: "block", titleKey: "button.block"),
-        AnchorItem(id: "api", titleKey: "API"),
-        AnchorItem(id: "component_token", titleKey: "api.component_token"),
-        AnchorItem(id: "global_token", titleKey: "api.global_token_title"),
     ]
 
     var body: some View {
         Group {
             if selectedTab == .examples {
                 examplesContent
-            } else {
+            } else if selectedTab == .playground {
                 playgroundContent
+            } else {
+                apiContent
             }
         }
     }
@@ -57,10 +57,6 @@ struct ButtonExamples: View {
             customContentExample.id("custom_content")
             disabledExample.id("disabled")
             blockExample.id("block")
-
-            Divider()
-
-            ButtonAPISection().id("api")
         }
     }
 
@@ -69,6 +65,12 @@ struct ButtonExamples: View {
     private var playgroundContent: some View {
         ButtonPlayground()
             .padding(Moin.Constants.Spacing.xl)
+    }
+
+    // MARK: - API Content
+
+    private var apiContent: some View {
+        ButtonAPIContent()
     }
 
     // MARK: - Examples

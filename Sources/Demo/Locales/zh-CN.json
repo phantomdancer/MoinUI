@@ -226,7 +226,8 @@
   },
   "tab": {
     "examples": "示例",
-    "playground": "演练场"
+    "playground": "演练场",
+    "api": "API"
   },
   "playground": {
     "title": "演练场",
