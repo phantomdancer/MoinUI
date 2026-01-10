@@ -23,7 +23,7 @@ struct SpaceAPIContent: View {
                         tr("api.description")
                     ),
                     rows: [
-                        ("size", "Moin.SpaceSize", ".middle", tr("api.space.size")),
+                        ("size", "Moin.SpaceSize", ".medium", tr("api.space.size")),
                         ("direction", "Moin.SpaceDirection", ".horizontal", tr("api.space.direction")),
                         ("alignment", "Moin.SpaceAlignment", ".center", tr("api.space.alignment")),
                         ("wrap", "Bool", "false", tr("api.space.wrap")),
@@ -44,7 +44,7 @@ struct SpaceAPIContent: View {
                     ),
                     rows: [
                         ("small", "-", "-", tr("api.space.size_small")),
-                        ("middle", "-", "-", tr("api.space.size_middle")),
+                        ("medium", "-", "-", tr("api.space.size_medium")),
                         ("large", "-", "-", tr("api.space.size_large")),
                         ("custom(CGFloat)", "-", "-", tr("api.space.size_custom")),
                     ]
@@ -106,7 +106,7 @@ struct SpaceAPIContent: View {
                     ),
                     rows: [
                         ("sizeSmall", "CGFloat", "8", tr("api.space.token_small")),
-                        ("sizeMiddle", "CGFloat", "12", tr("api.space.token_middle")),
+                        ("sizeMedium", "CGFloat", "12", tr("api.space.token_medium")),
                         ("sizeLarge", "CGFloat", "16", tr("api.space.token_large")),
                     ]
                 )

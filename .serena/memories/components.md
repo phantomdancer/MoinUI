@@ -4,7 +4,7 @@
 - **文件**: `Sources/MoinUI/Components/Space/`
 - **API**: `Moin.Space(size:direction:alignment:wrap:content:)`
 - **枚举**: SpaceSize, SpaceDirection, SpaceAlignment
-- **Token**: SpaceToken (sizeSmall/Middle/Large)
+- **Token**: SpaceToken (sizeSmall/Medium/Large)
 - **Demo**: `Sources/Demo/Examples/Space/` (Examples, Playground, API)
 
 

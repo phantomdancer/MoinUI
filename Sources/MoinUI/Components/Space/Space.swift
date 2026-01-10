@@ -16,13 +16,13 @@ public extension Moin {
 
         /// Initialize Space component
         /// - Parameters:
-        ///   - size: Spacing size (.small, .middle, .large, .custom)
+        ///   - size: Spacing size (.small, .medium, .large, .custom)
         ///   - direction: Layout direction (.horizontal, .vertical)
         ///   - alignment: Cross-axis alignment (.start, .end, .center)
         ///   - wrap: Enable auto wrap (horizontal only)
         ///   - content: Child views
         public init(
-            size: Moin.SpaceSize = .middle,
+            size: Moin.SpaceSize = .medium,
             direction: Moin.SpaceDirection = .horizontal,
             alignment: Moin.SpaceAlignment = .center,
             wrap: Bool = false,
@@ -60,8 +60,8 @@ public extension Moin {
             switch size {
             case .small:
                 return spaceToken.sizeSmall
-            case .middle:
-                return spaceToken.sizeMiddle
+            case .medium:
+                return spaceToken.sizeMedium
             case .large:
                 return spaceToken.sizeLarge
             case ._custom(let value):

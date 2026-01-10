@@ -342,14 +342,14 @@ public extension Moin {
     struct SpaceToken {
         /// Small spacing (8pt)
         public var sizeSmall: CGFloat
-        /// Middle spacing (12pt)
-        public var sizeMiddle: CGFloat
+        /// Medium spacing (12pt)
+        public var sizeMedium: CGFloat
         /// Large spacing (16pt)
         public var sizeLarge: CGFloat
 
         public static let light = SpaceToken(
             sizeSmall: Moin.Constants.Spacing.sm,
-            sizeMiddle: Moin.Constants.Spacing.md,
+            sizeMedium: Moin.Constants.Spacing.md,
             sizeLarge: Moin.Constants.Spacing.lg
         )
 

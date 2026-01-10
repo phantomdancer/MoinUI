@@ -196,7 +196,7 @@
     "basic": "Basic Usage",
     "basic_desc": "Basic usage for setting horizontal spacing between elements.",
     "size": "Size",
-    "size_desc": "Supports small, middle, large and custom values.",
+    "size_desc": "Supports small, medium, large and custom values.",
     "direction": "Vertical",
     "direction_desc": "Set direction to vertical for vertical layout.",
     "alignment": "Alignment",
@@ -487,7 +487,7 @@
       "wrap": "Auto wrap (horizontal only)",
       "content": "Child view content",
       "size_small": "Small spacing (8pt)",
-      "size_middle": "Middle spacing (12pt)",
+      "size_medium": "Medium spacing (12pt)",
       "size_large": "Large spacing (16pt)",
       "size_custom": "Custom spacing",
       "direction_h": "Horizontal layout",
@@ -497,7 +497,7 @@
       "align_end": "Bottom/End alignment",
       "token_desc": "Below are the design tokens for the Space component. Override via ConfigProvider.",
       "token_small": "Small spacing value",
-      "token_middle": "Middle spacing value",
+      "token_medium": "Medium spacing value",
       "token_large": "Large spacing value"
     },
     "global_token": {

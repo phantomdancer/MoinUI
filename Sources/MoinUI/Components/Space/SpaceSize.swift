@@ -6,7 +6,7 @@ public extension Moin {
     /// Space size
     enum SpaceSize {
         case small
-        case middle
+        case medium
         case large
         /// 内部使用，请直接传数字如 `size: 24`
         case _custom(CGFloat)

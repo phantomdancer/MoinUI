@@ -97,8 +97,8 @@ struct SpaceExamples: View {
                     }
                 }
                 HStack {
-                    Text("middle:").frame(width: 60, alignment: .leading)
-                    Moin.Space(size: .middle) {
+                    Text("medium:").frame(width: 60, alignment: .leading)
+                    Moin.Space(size: .medium) {
                         Moin.Button("Button", color: .primary) {}
                         Moin.Button("Button", color: .primary) {}
                         Moin.Button("Button", color: .primary) {}
@@ -124,7 +124,7 @@ struct SpaceExamples: View {
         } code: {
             """
             Moin.Space(size: .small) { ... }
-            Moin.Space(size: .middle) { ... }
+            Moin.Space(size: .medium) { ... }
             Moin.Space(size: .large) { ... }
             Moin.Space(size: 24) { ... }  // 直接传数字
             """

@@ -3,7 +3,7 @@ import MoinUI
 
 /// Space Playground 状态
 class SpacePlaygroundState: ObservableObject {
-    @Published var size: Moin.SpaceSize = .middle
+    @Published var size: Moin.SpaceSize = .medium
     @Published var direction: Moin.SpaceDirection = .horizontal
     @Published var alignment: Moin.SpaceAlignment = .center
     @Published var wrap: Bool = false
@@ -13,7 +13,7 @@ class SpacePlaygroundState: ObservableObject {
     func generateCode() -> String {
         var params: [String] = []
 
-        if size != .middle {
+        if size != .medium {
             switch size {
             case .small: params.append("size: .small")
             case .large: params.append("size: .large")
@@ -256,8 +256,8 @@ struct SpacePlayground: View {
                         range: 0...40
                     )
                     TokenValueRow(
-                        label: "sizeMiddle",
-                        value: $config.components.space.sizeMiddle,
+                        label: "sizeMedium",
+                        value: $config.components.space.sizeMedium,
                         range: 0...40
                     )
                     TokenValueRow(
@@ -296,13 +296,13 @@ struct SpacePlayground: View {
 
 extension Moin.SpaceSize: CustomStringConvertible {
     static var playgroundCases: [Moin.SpaceSize] {
-        [.small, .middle, .large, ._custom(16)]
+        [.small, .medium, .large, ._custom(16)]
     }
 
     public var description: String {
         switch self {
         case .small: return "small"
-        case .middle: return "middle"
+        case .medium: return "medium"
         case .large: return "large"
         case ._custom: return "custom"
         }
