@@ -86,7 +86,8 @@
   "component": {
     "button": "Button",
     "configProvider": "ConfigProvider",
-    "localization": "Localization"
+    "localization": "Localization",
+    "presetColors": "PresetColors"
   },
   "home": {
     "tagline": "A modern macOS SwiftUI Component Library",
@@ -217,6 +218,41 @@
     "json": "JSON Files",
     "json_desc": "Load translations from JSON files with nested structure support.",
     "json_demo": "Use registerFromJSON() to load JSON translation files"
+  },
+  "preset_colors": {
+    "title": "PresetColors",
+    "description": "MoinUI provides a set of preset colors based on Ant Design color system for quick UI development.",
+    "reference_link": "View Ant Design Color Specification",
+    "palette": "Color Palette",
+    "usage": "Usage",
+    "usage_desc": "Use .custom(Moin.PresetColors.xxx) to apply preset colors.",
+    "basic_usage": "Basic Usage:",
+    "blue": "Blue",
+    "purple": "Purple",
+    "cyan": "Cyan",
+    "green": "Green",
+    "magenta": "Magenta",
+    "pink": "Pink",
+    "red": "Red",
+    "orange": "Orange",
+    "yellow": "Yellow",
+    "volcano": "Volcano",
+    "geekblue": "Geek Blue",
+    "gold": "Gold",
+    "lime": "Lime",
+    "blue_desc": "Blue #1677FF, primary brand color",
+    "purple_desc": "Purple #722ED1",
+    "cyan_desc": "Cyan #13C2C2",
+    "green_desc": "Green #52C41A, success color",
+    "magenta_desc": "Magenta #EB2F96",
+    "pink_desc": "Pink #EB2F96",
+    "red_desc": "Red #F5222D, danger color",
+    "orange_desc": "Orange #FA8C16, warning color",
+    "yellow_desc": "Yellow #FADB14",
+    "volcano_desc": "Volcano #FA541C",
+    "geekblue_desc": "Geek Blue #2F54EB",
+    "gold_desc": "Gold #FAAD14",
+    "lime_desc": "Lime #A0D911"
   },
   "code": {
     "show": "Show Code",
