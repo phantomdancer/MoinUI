@@ -109,12 +109,12 @@ struct ButtonExamples: View {
                 }
                 // Custom Color (Cyan)
                 HStack(spacing: Moin.Constants.Spacing.sm) {
-                    Moin.Button(tr("button.label.solid"), color: .custom(Moin.Colors.cyan), variant: .solid) {}
-                    Moin.Button(tr("button.label.outlined"), color: .custom(Moin.Colors.cyan), variant: .outlined) {}
-                    Moin.Button(tr("button.label.dashed"), color: .custom(Moin.Colors.cyan), variant: .dashed) {}
-                    Moin.Button(tr("button.label.filled"), color: .custom(Moin.Colors.cyan), variant: .filled) {}
-                    Moin.Button(tr("button.label.text"), color: .custom(Moin.Colors.cyan), variant: .text) {}
-                    Moin.Button(tr("button.label.link"), color: .custom(Moin.Colors.cyan), variant: .link) {}
+                    Moin.Button(tr("button.label.solid"), color: .cyan, variant: .solid) {}
+                    Moin.Button(tr("button.label.outlined"), color: .cyan, variant: .outlined) {}
+                    Moin.Button(tr("button.label.dashed"), color: .cyan, variant: .dashed) {}
+                    Moin.Button(tr("button.label.filled"), color: .cyan, variant: .filled) {}
+                    Moin.Button(tr("button.label.text"), color: .cyan, variant: .text) {}
+                    Moin.Button(tr("button.label.link"), color: .cyan, variant: .link) {}
                 }
                 // Custom RGB Color
                 HStack(spacing: Moin.Constants.Spacing.sm) {
@@ -147,7 +147,7 @@ struct ButtonExamples: View {
             Moin.Button("\(tr("button.label.outlined"))", color: .danger, variant: .outlined) {}
 
             // \(tr("code_comment.custom_color"))
-            Moin.Button("\(tr("button.label.solid"))", color: .custom(Moin.Colors.cyan)) {}
+            Moin.Button("\(tr("button.label.solid"))", color: .cyan) {}
             Moin.Button("\(tr("button.label.solid"))", color: .custom(Color(red: 0.6, green: 0.2, blue: 0.8))) {}
             """
         }
@@ -407,7 +407,7 @@ struct ButtonExamples: View {
                 HStack(spacing: Moin.Constants.Spacing.md) {
                     Moin.Button(tr("button.label.danger"), color: .danger, isDisabled: true) {}
                     Moin.Button(tr("button.label.success"), color: .success, variant: .outlined, isDisabled: true) {}
-                    Moin.Button(tr("button.label.custom"), color: .custom(Moin.Colors.purple), variant: .solid, isDisabled: true) {}
+                    Moin.Button(tr("button.label.custom"), color: .purple, variant: .solid, isDisabled: true) {}
                     Moin.Button(icon: "plus", color: .primary, isDisabled: true) {}
                 }
             }
@@ -421,7 +421,7 @@ struct ButtonExamples: View {
 
             Moin.Button("\(tr("button.label.danger"))", color: .danger, isDisabled: true) {}
             Moin.Button("\(tr("button.label.success"))", color: .success, variant: .outlined, isDisabled: true) {}
-            Moin.Button("\(tr("button.label.custom"))", color: .custom(Moin.Colors.purple), variant: .solid, isDisabled: true) {}
+            Moin.Button("\(tr("button.label.custom"))", color: .purple, variant: .solid, isDisabled: true) {}
             Moin.Button(icon: "plus", color: .primary, isDisabled: true) {}
             """
         }

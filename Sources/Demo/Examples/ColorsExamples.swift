@@ -173,18 +173,18 @@ struct ColorsExamples: View {
             description: tr("colors.preset_usage_desc")
         ) {
             HStack(spacing: Moin.Constants.Spacing.md) {
-                Moin.Button(tr("colors.blue"), color: .custom(Moin.Colors.blue)) {}
-                Moin.Button(tr("colors.purple"), color: .custom(Moin.Colors.purple)) {}
-                Moin.Button(tr("colors.cyan"), color: .custom(Moin.Colors.cyan)) {}
-                Moin.Button(tr("colors.gold"), color: .custom(Moin.Colors.gold)) {}
+                Moin.Button(tr("colors.blue"), color: .blue) {}
+                Moin.Button(tr("colors.purple"), color: .purple) {}
+                Moin.Button(tr("colors.cyan"), color: .cyan) {}
+                Moin.Button(tr("colors.gold"), color: .gold) {}
             }
         } code: {
             """
             // \(tr("colors.code.preset"))
-            Moin.Button("\(tr("colors.blue"))", color: .custom(Moin.Colors.blue)) {}
-            Moin.Button("\(tr("colors.purple"))", color: .custom(Moin.Colors.purple)) {}
-            Moin.Button("\(tr("colors.cyan"))", color: .custom(Moin.Colors.cyan)) {}
-            Moin.Button("\(tr("colors.gold"))", color: .custom(Moin.Colors.gold)) {}
+            Moin.Button("\(tr("colors.blue"))", color: .blue) {}
+            Moin.Button("\(tr("colors.purple"))", color: .purple) {}
+            Moin.Button("\(tr("colors.cyan"))", color: .cyan) {}
+            Moin.Button("\(tr("colors.gold"))", color: .gold) {}
             """
         }
     }
