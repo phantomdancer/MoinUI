@@ -17,7 +17,7 @@ class SpacePlaygroundState: ObservableObject {
             switch size {
             case .small: params.append("size: .small")
             case .large: params.append("size: .large")
-            case .custom: params.append("size: .custom(\(Int(customSize)))")
+            case ._custom: params.append("size: \(Int(customSize))")
             default: break
             }
         }
@@ -129,7 +129,7 @@ struct SpacePlayground: View {
             // Space 预览
             let actualSize: Moin.SpaceSize = {
                 switch state.size {
-                case .custom: return .custom(state.customSize)
+                case ._custom: return ._custom(state.customSize)
                 default: return state.size
                 }
             }()
@@ -172,8 +172,8 @@ struct SpacePlayground: View {
                         value: $state.size
                     )
 
-                    if case .custom = state.size {
-                        PropControl(label: tr("space.prop.custom_size"), propName: "size: .custom(CGFloat)") {
+                    if case ._custom = state.size {
+                        PropControl(label: tr("space.prop.custom_size"), propName: "size: CGFloat") {
                             HStack(spacing: 4) {
                                 Button {
                                     if state.customSize > 0 { state.customSize -= 2 }
@@ -296,7 +296,7 @@ struct SpacePlayground: View {
 
 extension Moin.SpaceSize: CustomStringConvertible {
     static var playgroundCases: [Moin.SpaceSize] {
-        [.small, .middle, .large, .custom(16)]
+        [.small, .middle, .large, ._custom(16)]
     }
 
     public var description: String {
@@ -304,7 +304,7 @@ extension Moin.SpaceSize: CustomStringConvertible {
         case .small: return "small"
         case .middle: return "middle"
         case .large: return "large"
-        case .custom: return "custom"
+        case ._custom: return "custom"
         }
     }
 }

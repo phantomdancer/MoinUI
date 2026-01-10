@@ -64,7 +64,7 @@ public extension Moin {
                 return spaceToken.sizeMiddle
             case .large:
                 return spaceToken.sizeLarge
-            case .custom(let value):
+            case ._custom(let value):
                 return value
             }
         }

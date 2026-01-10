@@ -114,7 +114,7 @@ struct SpaceExamples: View {
                 }
                 HStack {
                     Text("custom:").frame(width: 60, alignment: .leading)
-                    Moin.Space(size: .custom(24)) {
+                    Moin.Space(size: 24) {
                         Moin.Button("Button", color: .primary) {}
                         Moin.Button("Button", color: .primary) {}
                         Moin.Button("Button", color: .primary) {}
@@ -126,7 +126,7 @@ struct SpaceExamples: View {
             Moin.Space(size: .small) { ... }
             Moin.Space(size: .middle) { ... }
             Moin.Space(size: .large) { ... }
-            Moin.Space(size: .custom(24)) { ... }
+            Moin.Space(size: 24) { ... }  // 直接传数字
             """
         }
     }
