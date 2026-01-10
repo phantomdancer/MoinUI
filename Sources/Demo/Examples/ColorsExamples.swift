@@ -4,20 +4,20 @@ import MoinUI
 struct ColorsExamples: View {
     @Localized var tr
 
-    private let colors: [(name: String, color: Color, hex: String)] = [
-        ("blue", Moin.Colors.blue, "#1677FF"),
-        ("purple", Moin.Colors.purple, "#722ED1"),
-        ("cyan", Moin.Colors.cyan, "#13C2C2"),
-        ("green", Moin.Colors.green, "#52C41A"),
-        ("magenta", Moin.Colors.magenta, "#EB2F96"),
-        ("pink", Moin.Colors.pink, "#EB2F96"),
-        ("red", Moin.Colors.red, "#F5222D"),
-        ("orange", Moin.Colors.orange, "#FA8C16"),
-        ("yellow", Moin.Colors.yellow, "#FADB14"),
-        ("volcano", Moin.Colors.volcano, "#FA541C"),
-        ("geekblue", Moin.Colors.geekblue, "#2F54EB"),
-        ("gold", Moin.Colors.gold, "#FAAD14"),
-        ("lime", Moin.Colors.lime, "#A0D911"),
+    /// 所有色板
+    private let palettes: [(name: String, palette: Moin.ColorPalette)] = [
+        ("Red", Moin.Colors.redPalette),
+        ("Volcano", Moin.Colors.volcanoPalette),
+        ("Orange", Moin.Colors.orangePalette),
+        ("Gold", Moin.Colors.goldPalette),
+        ("Yellow", Moin.Colors.yellowPalette),
+        ("Lime", Moin.Colors.limePalette),
+        ("Green", Moin.Colors.greenPalette),
+        ("Cyan", Moin.Colors.cyanPalette),
+        ("Blue", Moin.Colors.bluePalette),
+        ("Geekblue", Moin.Colors.geekbluePalette),
+        ("Purple", Moin.Colors.purplePalette),
+        ("Magenta", Moin.Colors.magentaPalette),
     ]
 
     var body: some View {
@@ -27,7 +27,11 @@ struct ColorsExamples: View {
 
                 Divider()
 
-                colorPalette
+                colorPalettes
+
+                Divider()
+
+                paletteGenerator
 
                 Divider()
 
@@ -42,6 +46,8 @@ struct ColorsExamples: View {
         .measureRenderTime("Colors")
     }
 
+    // MARK: - 介绍
+
     private var introduction: some View {
         VStack(alignment: .leading, spacing: Moin.Constants.Spacing.md) {
             Text(tr("colors.title"))
@@ -51,77 +57,214 @@ struct ColorsExamples: View {
             Text(tr("colors.description"))
                 .font(.body)
                 .foregroundStyle(.secondary)
-
-            Link(tr("colors.reference_link"), destination: URL(string: "https://ant.design/docs/spec/colors")!)
-                .font(.caption)
-                .foregroundStyle(.blue)
         }
     }
 
-    private var colorPalette: some View {
-        VStack(alignment: .leading, spacing: Moin.Constants.Spacing.md) {
+    // MARK: - 色板展示
+
+    private var colorPalettes: some View {
+        VStack(alignment: .leading, spacing: Moin.Constants.Spacing.lg) {
             Text(tr("colors.palette"))
                 .font(.title2)
                 .fontWeight(.semibold)
 
+            Text(tr("colors.palette_desc"))
+                .font(.callout)
+                .foregroundStyle(.secondary)
+
+            // 响应式布局：最少 4 列
             LazyVGrid(columns: [
-                GridItem(.adaptive(minimum: 120, maximum: 180), spacing: Moin.Constants.Spacing.md)
+                GridItem(.adaptive(minimum: 160, maximum: 240), spacing: Moin.Constants.Spacing.md)
             ], spacing: Moin.Constants.Spacing.md) {
-                ForEach(colors, id: \.name) { colorInfo in
-                    VStack(spacing: Moin.Constants.Spacing.sm) {
-                        RoundedRectangle(cornerRadius: Moin.Constants.Radius.md)
-                            .fill(colorInfo.color)
-                            .frame(height: 80)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: Moin.Constants.Radius.md)
-                                    .strokeBorder(.quaternary, lineWidth: 1)
-                            )
-
-                        VStack(spacing: Moin.Constants.Spacing.xs) {
-                            Text(colorInfo.name)
-                                .font(.caption)
-                                .foregroundStyle(.secondary)
-
-                            Text(colorInfo.hex)
-                                .font(.caption2)
-                                .foregroundStyle(.secondary)
-                        }
-                    }
+                ForEach(palettes, id: \.name) { item in
+                    PaletteCard(name: item.name, palette: item.palette)
                 }
             }
         }
     }
 
-    private var usageExamples: some View {
-        ExampleSection(
-            title: tr("colors.usage"),
-            description: tr("colors.usage_desc")
-        ) {
-            VStack(alignment: .leading, spacing: Moin.Constants.Spacing.md) {
-                Text(tr("colors.basic_usage"))
-                    .font(.caption)
+    // MARK: - 色板生成器
+
+    @State private var customColor: Color = Moin.Colors.blue
+    @State private var generatedPalette: Moin.ColorPalette?
+
+    private var paletteGenerator: some View {
+        VStack(alignment: .leading, spacing: Moin.Constants.Spacing.md) {
+            Text(tr("colors.generator"))
+                .font(.title2)
+                .fontWeight(.semibold)
+
+            Text(tr("colors.generator_desc"))
+                .font(.callout)
+                .foregroundStyle(.secondary)
+
+            HStack(spacing: Moin.Constants.Spacing.md) {
+                ColorPicker(tr("colors.pick_color"), selection: $customColor)
+                    .labelsHidden()
+
+                Text(customColor.toHex())
+                    .font(.system(.body, design: .monospaced))
                     .foregroundStyle(.secondary)
 
-                HStack(spacing: Moin.Constants.Spacing.md) {
-                    Moin.Button(tr("colors.blue"), color: .custom(Moin.Colors.blue)) {}
-                    Moin.Button(tr("colors.purple"), color: .custom(Moin.Colors.purple)) {}
-                    Moin.Button(tr("colors.cyan"), color: .custom(Moin.Colors.cyan)) {}
+                Spacer()
+
+                Button(tr("colors.generate")) {
+                    generatedPalette = Moin.ColorPalette.generate(from: customColor)
                 }
+            }
+
+            if let palette = generatedPalette {
+                HStack(spacing: 0) {
+                    ForEach(1...10, id: \.self) { level in
+                        Rectangle()
+                            .fill(palette[level])
+                            .frame(height: 44)
+                            .overlay(
+                                Text("\(level)")
+                                    .font(.caption2)
+                                    .foregroundStyle(level <= 5 ? .black.opacity(0.65) : .white)
+                            )
+                    }
+                }
+                .clipShape(RoundedRectangle(cornerRadius: Moin.Constants.Radius.md))
+            }
+        }
+    }
+
+    // MARK: - 使用示例
+
+    private var usageExamples: some View {
+        VStack(alignment: .leading, spacing: Moin.Constants.Spacing.lg) {
+            Text(tr("colors.usage"))
+                .font(.title2)
+                .fontWeight(.semibold)
+
+            Text(tr("colors.usage_desc"))
+                .font(.callout)
+                .foregroundStyle(.secondary)
+
+            // 1. 语义颜色
+            semanticUsageSection
+
+            // 2. 预设颜色
+            presetUsageSection
+
+            // 3. 色板级别
+            paletteUsageSection
+
+            // 4. 动态生成
+            generateUsageSection
+        }
+    }
+
+    // MARK: - 语义颜色章节
+
+    private var semanticUsageSection: some View {
+        ExampleSection(
+            title: tr("colors.semantic_usage"),
+            description: tr("colors.semantic_usage_desc")
+        ) {
+            HStack(spacing: Moin.Constants.Spacing.md) {
+                Moin.Button(tr("colors.primary"), color: .primary) {}
+                Moin.Button(tr("colors.success"), color: .success) {}
+                Moin.Button(tr("colors.warning"), color: .warning) {}
+                Moin.Button(tr("colors.danger"), color: .danger) {}
             }
         } code: {
             """
-            Moin.Button("\(tr("colors.blue"))", color: .custom(Moin.Colors.blue)) {}
-            Moin.Button("\(tr("colors.purple"))", color: .custom(Moin.Colors.purple)) {}
-            Moin.Button("\(tr("colors.cyan"))", color: .custom(Moin.Colors.cyan)) {}
+            // \(tr("colors.code.semantic"))
+            Moin.Button("\(tr("colors.primary"))", color: .primary) {}
+            Moin.Button("\(tr("colors.success"))", color: .success) {}
+            Moin.Button("\(tr("colors.warning"))", color: .warning) {}
+            Moin.Button("\(tr("colors.danger"))", color: .danger) {}
             """
         }
     }
+
+    // MARK: - 预设颜色章节
+
+    private var presetUsageSection: some View {
+        ExampleSection(
+            title: tr("colors.preset_usage"),
+            description: tr("colors.preset_usage_desc")
+        ) {
+            HStack(spacing: Moin.Constants.Spacing.md) {
+                Moin.Button(tr("colors.blue"), color: .custom(Moin.Colors.blue)) {}
+                Moin.Button(tr("colors.purple"), color: .custom(Moin.Colors.purple)) {}
+                Moin.Button(tr("colors.cyan"), color: .custom(Moin.Colors.cyan)) {}
+                Moin.Button(tr("colors.gold"), color: .custom(Moin.Colors.gold)) {}
+            }
+        } code: {
+            """
+            // \(tr("colors.code.preset"))
+            Moin.Button("\(tr("colors.blue"))", color: .custom(Moin.Colors.blue)) {}
+            Moin.Button("\(tr("colors.purple"))", color: .custom(Moin.Colors.purple)) {}
+            Moin.Button("\(tr("colors.cyan"))", color: .custom(Moin.Colors.cyan)) {}
+            Moin.Button("\(tr("colors.gold"))", color: .custom(Moin.Colors.gold)) {}
+            """
+        }
+    }
+
+    // MARK: - 色板级别章节
+
+    private var paletteUsageSection: some View {
+        ExampleSection(
+            title: tr("colors.palette_usage"),
+            description: tr("colors.palette_usage_desc")
+        ) {
+            HStack(spacing: Moin.Constants.Spacing.md) {
+                Moin.Button(tr("colors.level4"), color: .custom(Moin.Colors.bluePalette[4])) {}
+                Moin.Button(tr("colors.level6"), color: .custom(Moin.Colors.bluePalette[6])) {}
+                Moin.Button(tr("colors.level8"), color: .custom(Moin.Colors.bluePalette[8])) {}
+            }
+        } code: {
+            """
+            // \(tr("colors.code.palette_level"))
+            Moin.Colors.bluePalette[4]  // \(tr("colors.code.light"))
+            Moin.Colors.bluePalette[6]  // \(tr("colors.code.primary"))
+            Moin.Colors.bluePalette[8]  // \(tr("colors.code.dark"))
+            """
+        }
+    }
+
+    // MARK: - 动态生成章节
+
+    private var generateUsageSection: some View {
+        ExampleSection(
+            title: tr("colors.generate_usage"),
+            description: tr("colors.generate_usage_desc")
+        ) {
+            let palette = Moin.ColorPalette.generate(from: .orange)
+            HStack(spacing: 0) {
+                ForEach(1...10, id: \.self) { level in
+                    Rectangle()
+                        .fill(palette[level])
+                        .frame(width: 32, height: 32)
+                }
+            }
+            .clipShape(RoundedRectangle(cornerRadius: Moin.Constants.Radius.sm))
+        } code: {
+            """
+            // \(tr("colors.code.custom_palette"))
+            let palette = Moin.ColorPalette.generate(from: myColor)
+            palette[1]  // \(tr("colors.code.lightest"))
+            palette[6]  // \(tr("colors.code.primary"))
+            palette[10] // \(tr("colors.code.darkest"))
+            """
+        }
+    }
+
+    // MARK: - API
 
     private var apiReference: some View {
         VStack(alignment: .leading, spacing: Moin.Constants.Spacing.md) {
             Text(tr("API"))
                 .font(.title2)
                 .fontWeight(.semibold)
+
+            Text("Moin.Colors")
+                .font(.headline)
+                .padding(.top, Moin.Constants.Spacing.sm)
 
             APITable(
                 headers: (
@@ -136,7 +279,6 @@ struct ColorsExamples: View {
                     ("cyan", "Color", "#13C2C2", tr("colors.cyan_desc")),
                     ("green", "Color", "#52C41A", tr("colors.green_desc")),
                     ("magenta", "Color", "#EB2F96", tr("colors.magenta_desc")),
-                    ("pink", "Color", "#EB2F96", tr("colors.pink_desc")),
                     ("red", "Color", "#F5222D", tr("colors.red_desc")),
                     ("orange", "Color", "#FA8C16", tr("colors.orange_desc")),
                     ("yellow", "Color", "#FADB14", tr("colors.yellow_desc")),
@@ -146,6 +288,86 @@ struct ColorsExamples: View {
                     ("lime", "Color", "#A0D911", tr("colors.lime_desc")),
                 ]
             )
+
+            Text("Moin.ColorPalette")
+                .font(.headline)
+                .padding(.top, Moin.Constants.Spacing.md)
+
+            APITable(
+                headers: (
+                    tr("api.property"),
+                    tr("api.type"),
+                    tr("api.default"),
+                    tr("api.description")
+                ),
+                rows: [
+                    ("colors", "[Color]", "-", tr("colors.api.colors")),
+                    ("primary", "Color", "-", tr("colors.api.primary")),
+                    ("subscript(level:)", "Color", "-", tr("colors.api.subscript")),
+                    ("generate(from:theme:)", "ColorPalette", "-", tr("colors.api.generate")),
+                ]
+            )
         }
+    }
+}
+
+// MARK: - PaletteCard
+
+/// 单个色板卡片
+private struct PaletteCard: View {
+    let name: String
+    let palette: Moin.ColorPalette
+
+    @State private var hoveredLevel: Int?
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            // 色板名称
+            HStack {
+                Text(name)
+                    .font(.headline)
+                Spacer()
+                Text(palette.primary.toHex())
+                    .font(.system(.caption, design: .monospaced))
+                    .foregroundStyle(.secondary)
+            }
+            .padding(.horizontal, Moin.Constants.Spacing.md)
+            .padding(.vertical, Moin.Constants.Spacing.sm)
+
+            // 10 级颜色
+            VStack(spacing: 0) {
+                ForEach(1...10, id: \.self) { level in
+                    let color = palette[level]
+                    let isHovered = hoveredLevel == level
+                    let isPrimary = level == 6
+
+                    HStack {
+                        Text("\(name)-\(level)")
+                            .font(.system(.caption, design: .monospaced))
+
+                        Spacer()
+
+                        Text(color.toHex())
+                            .font(.system(.caption2, design: .monospaced))
+                            .opacity(isHovered ? 1 : 0)
+                    }
+                    .padding(.horizontal, Moin.Constants.Spacing.md)
+                    .padding(.vertical, Moin.Constants.Spacing.xs)
+                    .frame(maxWidth: .infinity)
+                    .background(color)
+                    .foregroundStyle(level <= 5 ? .black.opacity(0.85) : .white)
+                    .fontWeight(isPrimary ? .semibold : .regular)
+                    .onHover { hovering in
+                        hoveredLevel = hovering ? level : nil
+                    }
+                }
+            }
+        }
+        .background(Color(nsColor: .controlBackgroundColor))
+        .clipShape(RoundedRectangle(cornerRadius: Moin.Constants.Radius.lg))
+        .overlay(
+            RoundedRectangle(cornerRadius: Moin.Constants.Radius.lg)
+                .strokeBorder(.quaternary, lineWidth: 1)
+        )
     }
 }

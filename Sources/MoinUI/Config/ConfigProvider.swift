@@ -5,14 +5,30 @@ import SwiftUI
 public extension Moin {
     /// Global design token for component styling
     struct Token {
-        // Colors
+        // Primary Colors
         public var colorPrimary: Color
         public var colorPrimaryHover: Color
         public var colorPrimaryActive: Color
+
+        // Success Colors
         public var colorSuccess: Color
+        public var colorSuccessHover: Color
+        public var colorSuccessActive: Color
+
+        // Warning Colors
         public var colorWarning: Color
+        public var colorWarningHover: Color
+        public var colorWarningActive: Color
+
+        // Danger Colors
         public var colorDanger: Color
+        public var colorDangerHover: Color
+        public var colorDangerActive: Color
+
+        // Info Colors
         public var colorInfo: Color
+        public var colorInfoHover: Color
+        public var colorInfoActive: Color
 
         // Background & Text
         public var colorBgContainer: Color
@@ -54,9 +70,17 @@ public extension Moin {
             colorPrimaryHover: Moin.Constants.Colors.primaryHover,
             colorPrimaryActive: Moin.Constants.Colors.primaryActive,
             colorSuccess: Moin.Constants.Colors.success,
+            colorSuccessHover: Moin.Constants.Colors.successHover,
+            colorSuccessActive: Moin.Constants.Colors.successActive,
             colorWarning: Moin.Constants.Colors.warning,
+            colorWarningHover: Moin.Constants.Colors.warningHover,
+            colorWarningActive: Moin.Constants.Colors.warningActive,
             colorDanger: Moin.Constants.Colors.danger,
+            colorDangerHover: Moin.Constants.Colors.dangerHover,
+            colorDangerActive: Moin.Constants.Colors.dangerActive,
             colorInfo: Moin.Constants.Colors.info,
+            colorInfoHover: Moin.Constants.Colors.infoHover,
+            colorInfoActive: Moin.Constants.Colors.infoActive,
             colorBgContainer: Moin.Constants.Colors.background,
             colorBgElevated: Color.white,
             colorBgHover: Moin.Constants.Colors.backgroundHover,
@@ -87,9 +111,17 @@ public extension Moin {
             colorPrimaryHover: Moin.DarkColors.primaryHover,
             colorPrimaryActive: Moin.DarkColors.primaryActive,
             colorSuccess: Moin.DarkColors.success,
+            colorSuccessHover: Moin.DarkColors.successHover,
+            colorSuccessActive: Moin.DarkColors.successActive,
             colorWarning: Moin.DarkColors.warning,
+            colorWarningHover: Moin.DarkColors.warningHover,
+            colorWarningActive: Moin.DarkColors.warningActive,
             colorDanger: Moin.DarkColors.danger,
+            colorDangerHover: Moin.DarkColors.dangerHover,
+            colorDangerActive: Moin.DarkColors.dangerActive,
             colorInfo: Moin.DarkColors.info,
+            colorInfoHover: Moin.DarkColors.infoHover,
+            colorInfoActive: Moin.DarkColors.infoActive,
             colorBgContainer: Moin.DarkColors.background,
             colorBgElevated: Moin.DarkColors.backgroundElevated,
             colorBgHover: Moin.DarkColors.backgroundHover,

@@ -305,12 +305,34 @@ public extension Moin {
 
         // MARK: - Colors
 
+        /// Hover 颜色 - 使用 token 色阶 (level 5)
         private var hoverColor: SwiftUI.Color {
-            baseColor.lightened(by: 0.08)
+            switch color {
+            case .default: return token.colorPrimary
+            case .primary: return token.colorPrimaryHover
+            case .success: return token.colorSuccessHover
+            case .warning: return token.colorWarningHover
+            case .danger: return token.colorDangerHover
+            case .info: return token.colorInfoHover
+            case .custom(let c):
+                // 自定义颜色：动态生成色板取 level 5
+                return Moin.ColorPalette.generate(from: c)[5]
+            }
         }
 
+        /// Active 颜色 - 使用 token 色阶 (level 7)
         private var activeColor: SwiftUI.Color {
-            baseColor.darkened(by: 0.08)
+            switch color {
+            case .default: return token.colorPrimary
+            case .primary: return token.colorPrimaryActive
+            case .success: return token.colorSuccessActive
+            case .warning: return token.colorWarningActive
+            case .danger: return token.colorDangerActive
+            case .info: return token.colorInfoActive
+            case .custom(let c):
+                // 自定义颜色：动态生成色板取 level 7
+                return Moin.ColorPalette.generate(from: c)[7]
+            }
         }
 
         private var backgroundColor: SwiftUI.Color {

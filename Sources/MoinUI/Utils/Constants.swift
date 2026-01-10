@@ -59,36 +59,36 @@ public extension Moin {
             public static let borderWidth: CGFloat = 1
         }
 
-        /// Colors
+        /// Colors - 使用 Ant Design 色板 (计算属性避免循环依赖)
         public enum Colors {
-            // Primary
-            public static let primary = Color(red: 0.09, green: 0.47, blue: 1.0)
-            public static let primaryHover = Color(red: 0.25, green: 0.59, blue: 1.0)
-            public static let primaryActive = Color(red: 0.04, green: 0.35, blue: 0.85)
+            // Primary (Blue) - level 6/5/7
+            public static var primary: Color { Moin.Colors.bluePalette[6] }
+            public static var primaryHover: Color { Moin.Colors.bluePalette[5] }
+            public static var primaryActive: Color { Moin.Colors.bluePalette[7] }
 
-            // Success
-            public static let success = Color(red: 0.32, green: 0.73, blue: 0.27)
-            public static let successHover = Color(red: 0.45, green: 0.80, blue: 0.40)
-            public static let successActive = Color(red: 0.25, green: 0.60, blue: 0.20)
+            // Success (Green) - level 6/5/7
+            public static var success: Color { Moin.Colors.greenPalette[6] }
+            public static var successHover: Color { Moin.Colors.greenPalette[5] }
+            public static var successActive: Color { Moin.Colors.greenPalette[7] }
 
-            // Warning
-            public static let warning = Color(red: 0.98, green: 0.67, blue: 0.20)
-            public static let warningHover = Color(red: 1.0, green: 0.78, blue: 0.40)
-            public static let warningActive = Color(red: 0.85, green: 0.55, blue: 0.10)
+            // Warning (Gold) - level 6/5/7
+            public static var warning: Color { Moin.Colors.goldPalette[6] }
+            public static var warningHover: Color { Moin.Colors.goldPalette[5] }
+            public static var warningActive: Color { Moin.Colors.goldPalette[7] }
 
-            // Danger
-            public static let danger = Color(red: 1.0, green: 0.30, blue: 0.31)
-            public static let dangerHover = Color(red: 1.0, green: 0.47, blue: 0.47)
-            public static let dangerActive = Color(red: 0.85, green: 0.20, blue: 0.22)
+            // Danger (Red) - level 6/5/7
+            public static var danger: Color { Moin.Colors.redPalette[6] }
+            public static var dangerHover: Color { Moin.Colors.redPalette[5] }
+            public static var dangerActive: Color { Moin.Colors.redPalette[7] }
 
-            // Info (secondary)
+            // Info (灰色系)
             public static let info = Color(red: 0.55, green: 0.55, blue: 0.55)
             public static let infoHover = Color(red: 0.65, green: 0.65, blue: 0.65)
             public static let infoActive = Color(red: 0.45, green: 0.45, blue: 0.45)
 
             // Default / neutral
             public static let border = Color(red: 0.85, green: 0.85, blue: 0.85)
-            public static let borderHover = Color(red: 0.09, green: 0.47, blue: 1.0)
+            public static var borderHover: Color { Moin.Colors.bluePalette[5] }
             public static let background = Color.white
             public static let backgroundHover = Color(white: 0.98)
             public static let textPrimary = Color(white: 0.13)
@@ -98,4 +98,3 @@ public extension Moin {
         }
     }
 }
-
