@@ -40,6 +40,8 @@
     "introduction": "介绍",
     "quick_start": "快速开始",
     "theme": "主题",
+    "general": "通用",
+    "layout": "布局",
     "components": "组件",
     "development": "研发"
   },
@@ -85,6 +87,7 @@
   },
   "component": {
     "button": "Button 按钮",
+    "space": "Space 间距",
     "configProvider": "ConfigProvider 全局配置",
     "localization": "Localization 国际化",
     "colors": "Colors 颜色集合"
@@ -185,6 +188,27 @@
       "delay": "延迟加载",
       "favorite": "收藏",
       "online": "在线"
+    }
+  },
+  "space": {
+    "title": "Space 间距",
+    "description": "设置子元素之间的间距。",
+    "basic": "基本用法",
+    "basic_desc": "最基本的用法，设置子元素的水平间距。",
+    "size": "间距尺寸",
+    "size_desc": "支持 small、middle、large 及自定义数值。",
+    "direction": "垂直排列",
+    "direction_desc": "设置 direction 为 vertical 可垂直排列子元素。",
+    "alignment": "对齐方式",
+    "alignment_desc": "设置子元素在交叉轴上的对齐方式。",
+    "wrap": "自动换行",
+    "wrap_desc": "水平模式下超出容器宽度自动换行。",
+    "prop": {
+      "size": "尺寸",
+      "custom_size": "自定义尺寸",
+      "direction": "方向",
+      "alignment": "对齐",
+      "wrap": "换行"
     }
   },
   "config": {
@@ -455,6 +479,26 @@
       "contentFontSizeSM": "小号按钮内容字体大小",
       "borderColorDisabled": "禁用状态边框颜色",
       "defaultBgDisabled": "默认按钮禁用背景色"
+    },
+    "space": {
+      "size": "间距大小",
+      "direction": "排列方向",
+      "alignment": "交叉轴对齐方式",
+      "wrap": "是否自动换行（仅水平生效）",
+      "content": "子视图内容",
+      "size_small": "小间距 (8pt)",
+      "size_middle": "中间距 (12pt)",
+      "size_large": "大间距 (16pt)",
+      "size_custom": "自定义间距",
+      "direction_h": "水平排列",
+      "direction_v": "垂直排列",
+      "align_start": "顶部/起始对齐",
+      "align_center": "居中对齐",
+      "align_end": "底部/结束对齐",
+      "token_desc": "以下是 Space 组件的设计变量，可通过 ConfigProvider 覆盖。",
+      "token_small": "小间距值",
+      "token_middle": "中间距值",
+      "token_large": "大间距值"
     },
     "global_token": {
       "colorPrimary": "主题色",

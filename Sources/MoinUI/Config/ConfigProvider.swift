@@ -335,19 +335,47 @@ public extension Moin {
 }
 
 
+// MARK: - Moin.SpaceToken
+
+public extension Moin {
+    /// Space component token
+    struct SpaceToken {
+        /// Small spacing (8pt)
+        public var sizeSmall: CGFloat
+        /// Middle spacing (12pt)
+        public var sizeMiddle: CGFloat
+        /// Large spacing (16pt)
+        public var sizeLarge: CGFloat
+
+        public static let light = SpaceToken(
+            sizeSmall: Moin.Constants.Spacing.sm,
+            sizeMiddle: Moin.Constants.Spacing.md,
+            sizeLarge: Moin.Constants.Spacing.lg
+        )
+
+        public static let dark = light
+
+        public static let `default` = light
+    }
+}
+
+
 // MARK: - Moin.ComponentToken
 
 public extension Moin {
     /// Component-level tokens
     struct ComponentToken {
         public var button: Moin.ButtonToken
+        public var space: Moin.SpaceToken
 
         public static let light = ComponentToken(
-            button: .light
+            button: .light,
+            space: .light
         )
 
         public static let dark = ComponentToken(
-            button: .dark
+            button: .dark,
+            space: .dark
         )
 
         public static let `default` = light
@@ -567,6 +595,10 @@ private struct MoinButtonTokenKey: EnvironmentKey {
     static let defaultValue = Moin.ButtonToken.default
 }
 
+private struct MoinSpaceTokenKey: EnvironmentKey {
+    static let defaultValue = Moin.SpaceToken.default
+}
+
 public extension EnvironmentValues {
     var moinConfig: Moin.ConfigProvider {
         get { self[MoinConfigProviderKey.self] }
@@ -581,6 +613,11 @@ public extension EnvironmentValues {
     var moinButtonToken: Moin.ButtonToken {
         get { self[MoinButtonTokenKey.self] }
         set { self[MoinButtonTokenKey.self] = newValue }
+    }
+
+    var moinSpaceToken: Moin.SpaceToken {
+        get { self[MoinSpaceTokenKey.self] }
+        set { self[MoinSpaceTokenKey.self] = newValue }
     }
 }
 
@@ -633,6 +670,7 @@ public extension Moin {
                 .environment(\.moinLocale, config.locale)
                 .environment(\.moinToken, config.token)
                 .environment(\.moinButtonToken, config.components.button)
+                .environment(\.moinSpaceToken, config.components.space)
                 .environmentObject(config)
         }
 

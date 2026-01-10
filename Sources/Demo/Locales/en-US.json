@@ -40,6 +40,8 @@
     "introduction": "Introduction",
     "quick_start": "Quick Start",
     "theme": "Theme",
+    "general": "General",
+    "layout": "Layout",
     "components": "Components",
     "development": "Development"
   },
@@ -85,6 +87,7 @@
   },
   "component": {
     "button": "Button",
+    "space": "Space",
     "configProvider": "ConfigProvider",
     "localization": "Localization",
     "colors": "Colors"
@@ -185,6 +188,27 @@
       "delay": "Delay Load",
       "favorite": "Favorite",
       "online": "Online"
+    }
+  },
+  "space": {
+    "title": "Space",
+    "description": "Set spacing between child elements.",
+    "basic": "Basic Usage",
+    "basic_desc": "Basic usage for setting horizontal spacing between elements.",
+    "size": "Size",
+    "size_desc": "Supports small, middle, large and custom values.",
+    "direction": "Vertical",
+    "direction_desc": "Set direction to vertical for vertical layout.",
+    "alignment": "Alignment",
+    "alignment_desc": "Set cross-axis alignment of child elements.",
+    "wrap": "Auto Wrap",
+    "wrap_desc": "Auto wrap when exceeding container width in horizontal mode.",
+    "prop": {
+      "size": "Size",
+      "custom_size": "Custom Size",
+      "direction": "Direction",
+      "alignment": "Alignment",
+      "wrap": "Wrap"
     }
   },
   "config": {
@@ -455,6 +479,26 @@
       "contentFontSizeSM": "Small button content font size",
       "borderColorDisabled": "Disabled border color",
       "defaultBgDisabled": "Default button disabled background"
+    },
+    "space": {
+      "size": "Spacing size",
+      "direction": "Layout direction",
+      "alignment": "Cross-axis alignment",
+      "wrap": "Auto wrap (horizontal only)",
+      "content": "Child view content",
+      "size_small": "Small spacing (8pt)",
+      "size_middle": "Middle spacing (12pt)",
+      "size_large": "Large spacing (16pt)",
+      "size_custom": "Custom spacing",
+      "direction_h": "Horizontal layout",
+      "direction_v": "Vertical layout",
+      "align_start": "Top/Start alignment",
+      "align_center": "Center alignment",
+      "align_end": "Bottom/End alignment",
+      "token_desc": "Below are the design tokens for the Space component. Override via ConfigProvider.",
+      "token_small": "Small spacing value",
+      "token_middle": "Middle spacing value",
+      "token_large": "Large spacing value"
     },
     "global_token": {
       "colorPrimary": "Primary color",

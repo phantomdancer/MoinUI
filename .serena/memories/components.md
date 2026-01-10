@@ -1,5 +1,14 @@
 # 组件清单
 
+## Space 间距
+- **文件**: `Sources/MoinUI/Components/Space/`
+- **API**: `Moin.Space(size:direction:alignment:wrap:content:)`
+- **枚举**: SpaceSize, SpaceDirection, SpaceAlignment
+- **Token**: SpaceToken (sizeSmall/Middle/Large)
+- **Demo**: `Sources/Demo/Examples/Space/` (Examples, Playground, API)
+
+
+
 ## 通用组件
 
 | 组件 | 状态 | 文件 |

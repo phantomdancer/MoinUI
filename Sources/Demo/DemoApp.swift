@@ -142,13 +142,14 @@ struct ContentView: View {
     @EnvironmentObject var configProvider: Moin.ConfigProvider
     @Localized var tr
     @State private var buttonTab: ButtonExamplesTab = .examples
+    @State private var spaceTab: SpaceExamplesTab = .examples
 
     var body: some View {
         NavigationSplitView {
             Sidebar(selection: $navManager.selectedItem)
                 .modifier(HideSidebarToggleModifier())
         } detail: {
-            DetailView(item: navManager.selectedItem, buttonTab: $buttonTab)
+            DetailView(item: navManager.selectedItem, buttonTab: $buttonTab, spaceTab: $spaceTab)
                 .navigationTitle(navManager.selectedItem.map { tr($0.titleKey) } ?? "MoinUI")
                 .toolbar {
                     ToolbarItemGroup(placement: .primaryAction) {
@@ -158,6 +159,17 @@ struct ContentView: View {
                                 Text(tr("tab.examples")).tag(ButtonExamplesTab.examples)
                                 Text(tr("tab.playground")).tag(ButtonExamplesTab.playground)
                                 Text(tr("tab.api")).tag(ButtonExamplesTab.api)
+                            }
+                            .pickerStyle(.segmented)
+                            .fixedSize()
+                        }
+
+                        // Space 页面显示 Tab 切换
+                        if navManager.selectedItem == .space {
+                            Picker("", selection: $spaceTab) {
+                                Text(tr("tab.examples")).tag(SpaceExamplesTab.examples)
+                                Text(tr("tab.playground")).tag(SpaceExamplesTab.playground)
+                                Text(tr("tab.api")).tag(SpaceExamplesTab.api)
                             }
                             .pickerStyle(.segmented)
                             .fixedSize()
@@ -196,6 +208,7 @@ enum NavItem: String, Identifiable {
 
     // Components
     case button
+    case space
 
     // Development
     case theme
@@ -211,6 +224,7 @@ enum NavItem: String, Identifiable {
         case .quickStart: return "play.circle"
         case .theme: return "paintbrush"
         case .button: return "rectangle.and.hand.point.up.left"
+        case .space: return "rectangle.split.3x1"
         case .configProvider: return "gearshape"
         case .localization: return "globe"
         case .colors: return "paintpalette"
@@ -223,6 +237,7 @@ enum NavItem: String, Identifiable {
         case .quickStart: return "nav.quick_start"
         case .theme: return "nav.theme"
         case .button: return "component.button"
+        case .space: return "component.space"
         case .configProvider: return "component.configProvider"
         case .localization: return "component.localization"
         case .colors: return "component.colors"
@@ -230,7 +245,8 @@ enum NavItem: String, Identifiable {
     }
 
     static var overview: [NavItem] { [.introduction, .quickStart] }
-    static var components: [NavItem] { [.button] }
+    static var general: [NavItem] { [.button] }
+    static var layout: [NavItem] { [.space] }
     static var development: [NavItem] { [.theme, .configProvider, .localization, .colors] }
 }
 
@@ -258,8 +274,16 @@ struct Sidebar: View {
                 }
             }
 
-            Section(tr("nav.components")) {
-                ForEach(NavItem.components) { item in
+            Section(tr("nav.general")) {
+                ForEach(NavItem.general) { item in
+                    NavigationLink(value: item) {
+                        Label(tr(item.titleKey), systemImage: item.icon)
+                    }
+                }
+            }
+
+            Section(tr("nav.layout")) {
+                ForEach(NavItem.layout) { item in
                     NavigationLink(value: item) {
                         Label(tr(item.titleKey), systemImage: item.icon)
                     }
@@ -277,6 +301,7 @@ struct Sidebar: View {
 struct DetailView: View {
     let item: NavItem?
     @Binding var buttonTab: ButtonExamplesTab
+    @Binding var spaceTab: SpaceExamplesTab
 
     var body: some View {
         Group {
@@ -289,6 +314,8 @@ struct DetailView: View {
                 ThemeView()
             case .button:
                 ButtonExamples(selectedTab: $buttonTab)
+            case .space:
+                SpaceExamples(selectedTab: $spaceTab)
             case .configProvider:
                 ConfigProviderExamples()
             case .localization:
