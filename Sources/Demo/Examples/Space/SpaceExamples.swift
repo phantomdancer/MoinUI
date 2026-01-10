@@ -201,7 +201,7 @@ struct SpaceExamples: View {
         ) {
             ResizableContainer(initialWidth: 400, minWidth: 200, maxWidth: 600) {
                 Moin.Space(wrap: true) {
-                    ForEach(1...20, id: \.self) { i in
+                    ForEach(1...6, id: \.self) { i in
                         Moin.Button("Button \(i)", color: .primary) {}
                     }
                 }
@@ -209,7 +209,7 @@ struct SpaceExamples: View {
         } code: {
             """
             Moin.Space(wrap: true) {
-                ForEach(1...20, id: \\.self) { i in
+                ForEach(1...6, id: \\.self) { i in
                     Moin.Button("Button \\(i)", color: .primary) {}
                 }
             }

@@ -20,30 +20,40 @@ struct ColorsExamples: View {
         ("Magenta", Moin.Colors.magentaPalette),
     ]
 
+    /// 锚点列表
+    private let anchors: [AnchorItem] = [
+        AnchorItem(id: "palette", titleKey: "colors.palette"),
+        AnchorItem(id: "generator", titleKey: "colors.generator"),
+        AnchorItem(id: "semantic", titleKey: "colors.semantic_usage"),
+        AnchorItem(id: "preset", titleKey: "colors.preset_usage"),
+        AnchorItem(id: "level", titleKey: "colors.palette_usage"),
+        AnchorItem(id: "generate", titleKey: "colors.generate_usage"),
+        AnchorItem(id: "api", titleKey: "API"),
+    ]
+
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: Moin.Constants.Spacing.xl) {
-                introduction
+        ExamplePageWithAnchor(pageName: "Colors", anchors: anchors) { _ in
+            introduction
 
-                Divider()
+            Divider()
 
-                colorPalettes
+            colorPalettes.id("palette")
 
-                Divider()
+            Divider()
 
-                paletteGenerator
+            paletteGenerator.id("generator")
 
-                Divider()
+            Divider()
 
-                usageExamples
+            semanticUsageSection.id("semantic")
+            presetUsageSection.id("preset")
+            paletteUsageSection.id("level")
+            generateUsageSection.id("generate")
 
-                Divider()
+            Divider()
 
-                apiReference
-            }
-            .padding(Moin.Constants.Spacing.xl)
+            apiReference.id("api")
         }
-        .measureRenderTime("Colors")
     }
 
     // MARK: - 介绍
@@ -128,32 +138,6 @@ struct ColorsExamples: View {
                 }
                 .clipShape(RoundedRectangle(cornerRadius: Moin.Constants.Radius.md))
             }
-        }
-    }
-
-    // MARK: - 使用示例
-
-    private var usageExamples: some View {
-        VStack(alignment: .leading, spacing: Moin.Constants.Spacing.lg) {
-            Text(tr("colors.usage"))
-                .font(.title2)
-                .fontWeight(.semibold)
-
-            Text(tr("colors.usage_desc"))
-                .font(.callout)
-                .foregroundStyle(.secondary)
-
-            // 1. 语义颜色
-            semanticUsageSection
-
-            // 2. 预设颜色
-            presetUsageSection
-
-            // 3. 色板级别
-            paletteUsageSection
-
-            // 4. 动态生成
-            generateUsageSection
         }
     }
 

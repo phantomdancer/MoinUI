@@ -71,7 +71,7 @@ struct AnchorNav: View {
             }
         }
         .padding(.horizontal, Moin.Constants.Spacing.sm)
-        .frame(width: 140)
+        .frame(width: 180)
     }
 }
 
