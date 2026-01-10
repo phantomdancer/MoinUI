@@ -203,6 +203,8 @@
     "alignment_desc": "设置子元素在交叉轴上的对齐方式。",
     "wrap": "自动换行",
     "wrap_desc": "水平模式下超出容器宽度自动换行。",
+    "separator": "分隔符",
+    "separator_desc": "使用分隔符隔开元素。",
     "prop": {
       "size": "尺寸",
       "custom_size": "自定义尺寸",

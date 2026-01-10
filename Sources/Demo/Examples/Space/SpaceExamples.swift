@@ -20,6 +20,7 @@ struct SpaceExamples: View {
         AnchorItem(id: "direction", titleKey: "space.direction"),
         AnchorItem(id: "alignment", titleKey: "space.alignment"),
         AnchorItem(id: "wrap", titleKey: "space.wrap"),
+        AnchorItem(id: "separator", titleKey: "space.separator"),
     ]
 
     var body: some View {
@@ -43,6 +44,7 @@ struct SpaceExamples: View {
             directionExample.id("direction")
             alignmentExample.id("alignment")
             wrapExample.id("wrap")
+            separatorExample.id("separator")
         }
     }
 
@@ -197,17 +199,51 @@ struct SpaceExamples: View {
             title: tr("space.wrap"),
             description: tr("space.wrap_desc")
         ) {
-            Moin.Space(wrap: true) {
-                ForEach(1...20, id: \.self) { i in
-                    Moin.Button("Button \(i)", color: .primary) {}
+            ResizableContainer(initialWidth: 400, minWidth: 200, maxWidth: 600) {
+                Moin.Space(wrap: true) {
+                    ForEach(1...20, id: \.self) { i in
+                        Moin.Button("Button \(i)", color: .primary) {}
+                    }
                 }
             }
-            .frame(maxWidth: 500)
         } code: {
             """
             Moin.Space(wrap: true) {
                 ForEach(1...20, id: \\.self) { i in
                     Moin.Button("Button \\(i)", color: .primary) {}
+                }
+            }
+            """
+        }
+    }
+
+    private var separatorExample: some View {
+        ExampleSection(
+            title: tr("space.separator"),
+            description: tr("space.separator_desc")
+        ) {
+            let links = ["Link 1", "Link 2", "Link 3"]
+            HStack(spacing: Moin.Constants.Spacing.sm) {
+                ForEach(Array(links.enumerated()), id: \.offset) { index, link in
+                    if index > 0 {
+                        Divider()
+                            .frame(height: 14)
+                    }
+                    Text(link)
+                        .foregroundStyle(Color.accentColor)
+                }
+            }
+        } code: {
+            """
+            let links = ["Link 1", "Link 2", "Link 3"]
+            HStack(spacing: Moin.Constants.Spacing.sm) {
+                ForEach(Array(links.enumerated()), id: \\.offset) { index, link in
+                    if index > 0 {
+                        Divider()
+                            .frame(height: 14)
+                    }
+                    Text(link)
+                        .foregroundStyle(Color.accentColor)
                 }
             }
             """

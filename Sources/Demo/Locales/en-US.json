@@ -203,6 +203,8 @@
     "alignment_desc": "Set cross-axis alignment of child elements.",
     "wrap": "Auto Wrap",
     "wrap_desc": "Auto wrap when exceeding container width in horizontal mode.",
+    "separator": "Separator",
+    "separator_desc": "Use separator to split elements.",
     "prop": {
       "size": "Size",
       "custom_size": "Custom Size",

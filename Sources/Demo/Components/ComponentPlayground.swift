@@ -743,3 +743,82 @@ extension Moin.ButtonIconPlacement: CaseIterable, CustomStringConvertible {
         }
     }
 }
+
+// MARK: - ResizableContainer
+
+/// 可调整宽度的容器，用于演示响应式布局效果
+struct ResizableContainer<Content: View>: View {
+    @State private var width: CGFloat
+    let minWidth: CGFloat
+    let maxWidth: CGFloat
+    let content: Content
+
+    init(
+        initialWidth: CGFloat = 400,
+        minWidth: CGFloat = 200,
+        maxWidth: CGFloat = 800,
+        @ViewBuilder content: () -> Content
+    ) {
+        self._width = State(initialValue: initialWidth)
+        self.minWidth = minWidth
+        self.maxWidth = maxWidth
+        self.content = content()
+    }
+
+    var body: some View {
+        HStack(alignment: .top, spacing: 0) {
+            // 内容区域
+            VStack(alignment: .leading, spacing: 0) {
+                content
+            }
+            .frame(width: width, alignment: .leading)
+            .padding(Moin.Constants.Spacing.md)
+            .background(
+                RoundedRectangle(cornerRadius: Moin.Constants.Radius.sm)
+                    .strokeBorder(style: StrokeStyle(lineWidth: 1, dash: [4, 4]))
+                    .foregroundStyle(Color.secondary.opacity(0.5))
+            )
+
+            // 拖动手柄
+            Rectangle()
+                .fill(Color.clear)
+                .frame(width: 12)
+                .contentShape(Rectangle())
+                .overlay(
+                    VStack(spacing: 2) {
+                        ForEach(0..<3) { _ in
+                            Circle()
+                                .fill(Color.secondary.opacity(0.4))
+                                .frame(width: 4, height: 4)
+                        }
+                    }
+                )
+                .gesture(
+                    DragGesture()
+                        .onChanged { value in
+                            let newWidth = width + value.translation.width
+                            width = min(max(newWidth, minWidth), maxWidth)
+                        }
+                )
+                .onHover { hovering in
+                    if hovering {
+                        NSCursor.resizeLeftRight.push()
+                    } else {
+                        NSCursor.pop()
+                    }
+                }
+
+            Spacer(minLength: 0)
+        }
+        .overlay(alignment: .bottomTrailing) {
+            Text("\(Int(width))px")
+                .font(.system(size: 10, design: .monospaced))
+                .foregroundStyle(.secondary)
+                .padding(.horizontal, 6)
+                .padding(.vertical, 2)
+                .background(Color(nsColor: .controlBackgroundColor).opacity(0.8))
+                .cornerRadius(4)
+                .padding(4)
+        }
+    }
+}
