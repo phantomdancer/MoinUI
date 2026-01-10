@@ -28,27 +28,28 @@ public extension Moin {
         let direction: SpaceDirection
         let items: [AnyView]
 
-        @State private var sizes: [Int: CGSize] = [:]
+        @State private var maxWidth: CGFloat = 0
 
         public var body: some View {
             if direction == .horizontal {
                 HStack(spacing: 0) {
                     ForEach(Array(items.enumerated()), id: \.offset) { index, item in
                         item
-                            .modifier(CompactItemSizeReader(index: index))
                             .environment(\.moinSpaceCompactContext, context(for: index))
                     }
                 }
-                .onPreferenceChange(CompactItemSizePreference.self) { sizes = $0 }
             } else {
                 VStack(alignment: .leading, spacing: 0) {
                     ForEach(Array(items.enumerated()), id: \.offset) { index, item in
                         item
                             .modifier(CompactItemSizeReader(index: index))
+                            .frame(width: maxWidth > 0 ? maxWidth : nil, alignment: .leading)
                             .environment(\.moinSpaceCompactContext, context(for: index))
                     }
                 }
-                .onPreferenceChange(CompactItemSizePreference.self) { sizes = $0 }
+                .onPreferenceChange(CompactItemSizePreference.self) { sizes in
+                    maxWidth = sizes.values.map(\.width).max() ?? 0
+                }
             }
         }
 
@@ -63,31 +64,11 @@ public extension Moin {
             } else {
                 position = .middle
             }
-
-            // Get sizes for comparison
-            let ownSize: CGFloat?
-            let prevSize: CGFloat?
-            let nextSize: CGFloat?
-
-            if direction == .vertical {
-                // For vertical layout, compare widths
-                ownSize = sizes[index]?.width
-                prevSize = index > 0 ? sizes[index - 1]?.width : nil
-                nextSize = index < items.count - 1 ? sizes[index + 1]?.width : nil
-            } else {
-                // For horizontal layout, compare heights
-                ownSize = sizes[index]?.height
-                prevSize = index > 0 ? sizes[index - 1]?.height : nil
-                nextSize = index < items.count - 1 ? sizes[index + 1]?.height : nil
-            }
-
             return SpaceCompactContext(
                 isCompact: true,
                 direction: direction,
                 position: position,
-                prevSize: prevSize,
-                nextSize: nextSize,
-                ownSize: ownSize
+                fillWidth: direction == .vertical && maxWidth > 0
             )
         }
     }

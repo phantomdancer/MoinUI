@@ -71,16 +71,16 @@ struct SpaceExamples: View {
             description: tr("space.basic_desc")
         ) {
             Moin.Space {
-                Moin.Button("Button 1", color: .primary) {}
-                Moin.Button("Button 2", color: .primary) {}
-                Moin.Button("Button 3", color: .primary) {}
+                Moin.Button("\(tr("button.label.button")) 1", color: .primary) {}
+                Moin.Button("\(tr("button.label.button")) 2", color: .primary) {}
+                Moin.Button("\(tr("button.label.button")) 3", color: .primary) {}
             }
         } code: {
             """
             Moin.Space {
-                Moin.Button("Button 1", color: .primary) {}
-                Moin.Button("Button 2", color: .primary) {}
-                Moin.Button("Button 3", color: .primary) {}
+                Moin.Button("\(tr("space.button_n").replacingOccurrences(of: "%d", with: "1"))", color: .primary) {}
+                Moin.Button("\(tr("space.button_n").replacingOccurrences(of: "%d", with: "2"))", color: .primary) {}
+                Moin.Button("\(tr("space.button_n").replacingOccurrences(of: "%d", with: "3"))", color: .primary) {}
             }
             """
         }
@@ -95,33 +95,33 @@ struct SpaceExamples: View {
                 HStack {
                     Text("small:").frame(width: 60, alignment: .leading)
                     Moin.Space(size: .small) {
-                        Moin.Button("Button", color: .primary) {}
-                        Moin.Button("Button", color: .primary) {}
-                        Moin.Button("Button", color: .primary) {}
+                        Moin.Button(tr("button.label.button"), color: .primary) {}
+                        Moin.Button(tr("button.label.button"), color: .primary) {}
+                        Moin.Button(tr("button.label.button"), color: .primary) {}
                     }
                 }
                 HStack {
                     Text("medium:").frame(width: 60, alignment: .leading)
                     Moin.Space(size: .medium) {
-                        Moin.Button("Button", color: .primary) {}
-                        Moin.Button("Button", color: .primary) {}
-                        Moin.Button("Button", color: .primary) {}
+                        Moin.Button(tr("button.label.button"), color: .primary) {}
+                        Moin.Button(tr("button.label.button"), color: .primary) {}
+                        Moin.Button(tr("button.label.button"), color: .primary) {}
                     }
                 }
                 HStack {
                     Text("large:").frame(width: 60, alignment: .leading)
                     Moin.Space(size: .large) {
-                        Moin.Button("Button", color: .primary) {}
-                        Moin.Button("Button", color: .primary) {}
-                        Moin.Button("Button", color: .primary) {}
+                        Moin.Button(tr("button.label.button"), color: .primary) {}
+                        Moin.Button(tr("button.label.button"), color: .primary) {}
+                        Moin.Button(tr("button.label.button"), color: .primary) {}
                     }
                 }
                 HStack {
-                    Text("custom:").frame(width: 60, alignment: .leading)
+                    Text("\(tr("space.custom")):").frame(width: 60, alignment: .leading)
                     Moin.Space(size: 24) {
-                        Moin.Button("Button", color: .primary) {}
-                        Moin.Button("Button", color: .primary) {}
-                        Moin.Button("Button", color: .primary) {}
+                        Moin.Button(tr("button.label.button"), color: .primary) {}
+                        Moin.Button(tr("button.label.button"), color: .primary) {}
+                        Moin.Button(tr("button.label.button"), color: .primary) {}
                     }
                 }
             }
@@ -130,7 +130,7 @@ struct SpaceExamples: View {
             Moin.Space(size: .small) { ... }
             Moin.Space(size: .medium) { ... }
             Moin.Space(size: .large) { ... }
-            Moin.Space(size: 24) { ... }  // 直接传数字
+            Moin.Space(size: 24) { ... }  // \(tr("space.pass_number"))
             """
         }
     }
@@ -141,16 +141,16 @@ struct SpaceExamples: View {
             description: tr("space.direction_desc")
         ) {
             Moin.Space(direction: .vertical) {
-                Moin.Button("Button 1", color: .primary) {}
-                Moin.Button("Button 2", color: .primary) {}
-                Moin.Button("Button 3", color: .primary) {}
+                Moin.Button("\(tr("button.label.button")) 1", color: .primary) {}
+                Moin.Button("\(tr("button.label.button")) 2", color: .primary) {}
+                Moin.Button("\(tr("button.label.button")) 3", color: .primary) {}
             }
         } code: {
             """
             Moin.Space(direction: .vertical) {
-                Moin.Button("Button 1", color: .primary) {}
-                Moin.Button("Button 2", color: .primary) {}
-                Moin.Button("Button 3", color: .primary) {}
+                Moin.Button("\(tr("space.button_n").replacingOccurrences(of: "%d", with: "1"))", color: .primary) {}
+                Moin.Button("\(tr("space.button_n").replacingOccurrences(of: "%d", with: "2"))", color: .primary) {}
+                Moin.Button("\(tr("space.button_n").replacingOccurrences(of: "%d", with: "3"))", color: .primary) {}
             }
             """
         }
@@ -165,25 +165,25 @@ struct SpaceExamples: View {
                 HStack {
                     Moin.Space(alignment: .start) {
                         Text("start:").frame(width: 50, alignment: .leading)
-                        Moin.Button("Small", color: .primary, size: .small) {}
-                        Moin.Button("Medium", color: .primary, size: .medium) {}
-                        Moin.Button("Large", color: .primary, size: .large) {}
+                        Moin.Button(tr("button.label.small"), color: .primary, size: .small) {}
+                        Moin.Button(tr("button.label.medium"), color: .primary, size: .medium) {}
+                        Moin.Button(tr("button.label.large"), color: .primary, size: .large) {}
                     }
                 }
                 HStack {
                     Moin.Space(alignment: .center) {
                       Text("center:").frame(width: 50, alignment: .leading)
-                        Moin.Button("Small", color: .primary, size: .small) {}
-                        Moin.Button("Medium", color: .primary, size: .medium) {}
-                        Moin.Button("Large", color: .primary, size: .large) {}
+                        Moin.Button(tr("button.label.small"), color: .primary, size: .small) {}
+                        Moin.Button(tr("button.label.medium"), color: .primary, size: .medium) {}
+                        Moin.Button(tr("button.label.large"), color: .primary, size: .large) {}
                     }
                 }
                 HStack {
                     Moin.Space(alignment: .end) {
                         Text("end:").frame(width: 50, alignment: .leading)
-                        Moin.Button("Small", color: .primary, size: .small) {}
-                        Moin.Button("Medium", color: .primary, size: .medium) {}
-                        Moin.Button("Large", color: .primary, size: .large) {}
+                        Moin.Button(tr("button.label.small"), color: .primary, size: .small) {}
+                        Moin.Button(tr("button.label.medium"), color: .primary, size: .medium) {}
+                        Moin.Button(tr("button.label.large"), color: .primary, size: .large) {}
                     }
                 }
             }
@@ -204,7 +204,7 @@ struct SpaceExamples: View {
             ResizableContainer(initialWidth: 400, minWidth: 200, maxWidth: 600) {
                 Moin.Space(wrap: true) {
                     ForEach(1...6, id: \.self) { i in
-                        Moin.Button("Button \(i)", color: .primary) {}
+                        Moin.Button("\(tr("button.label.button")) \(i)", color: .primary) {}
                     }
                 }
             }
@@ -212,7 +212,7 @@ struct SpaceExamples: View {
             """
             Moin.Space(wrap: true) {
                 ForEach(1...6, id: \\.self) { i in
-                    Moin.Button("Button \\(i)", color: .primary) {}
+                    Moin.Button("\(tr("space.button_n").replacingOccurrences(of: "%d", with: "\\(i)"))", color: .primary) {}
                 }
             }
             """
@@ -227,39 +227,39 @@ struct SpaceExamples: View {
         ) {
             VStack(alignment: .leading, spacing: Moin.Constants.Spacing.lg) {
                 // Horizontal compact
-                Text("Horizontal:")
+                Text("\(tr("space.horizontal")):")
                     .font(.caption)
                     .foregroundStyle(.secondary)
                 Moin.Compact {
-                    Moin.Button("January", variant: .outlined) {}
-                    Moin.Button("February", variant: .outlined) {}
-                    Moin.Button("March", variant: .outlined) {}
+                    Moin.Button(tr("space.january"), variant: .outlined) {}
+                    Moin.Button(tr("space.february"), variant: .outlined) {}
+                    Moin.Button(tr("space.march"), variant: .outlined) {}
                 }
 
                 // Vertical compact
-                Text("Vertical:")
+                Text("\(tr("space.vertical")):")
                     .font(.caption)
                     .foregroundStyle(.secondary)
                 Moin.Compact(direction: .vertical) {
-                    Moin.Button("January") {}
-                    Moin.Button("February") {}
-                    Moin.Button("March") {}
+                    Moin.Button(tr("space.january"), variant: .dashed) {}
+                    Moin.Button("\(tr("space.february")) \(tr("space.february")) \(tr("space.february"))", variant: .dashed) {}
+                    Moin.Button(tr("space.march"), variant: .dashed) {}
                 }
             }
         } code: {
             """
-            // Horizontal compact
+            // \(tr("space.horizontal"))
             Moin.Compact {
-                Moin.Button("January", variant: .outlined) {}
-                Moin.Button("February", variant: .outlined) {}
-                Moin.Button("March", variant: .outlined) {}
+                Moin.Button("\(tr("space.january"))", variant: .outlined) {}
+                Moin.Button("\(tr("space.february"))", variant: .outlined) {}
+                Moin.Button("\(tr("space.march"))", variant: .outlined) {}
             }
 
-            // Vertical compact
+            // \(tr("space.vertical"))
             Moin.Compact(direction: .vertical) {
-                Moin.Button("January") {}
-                Moin.Button("February") {}
-                Moin.Button("March") {}
+                Moin.Button("\(tr("space.january"))", variant: .dashed) {}
+                Moin.Button("\(tr("space.february"))...", variant: .dashed) {}
+                Moin.Button("\(tr("space.march"))", variant: .dashed) {}
             }
             """
         }
@@ -270,7 +270,11 @@ struct SpaceExamples: View {
             title: tr("space.separator"),
             description: tr("space.separator_desc")
         ) {
-            let links = ["Link 1", "Link 2", "Link 3"]
+            let links = [
+                tr("space.link_n").replacingOccurrences(of: "%d", with: "1"),
+                tr("space.link_n").replacingOccurrences(of: "%d", with: "2"),
+                tr("space.link_n").replacingOccurrences(of: "%d", with: "3")
+            ]
             HStack(spacing: Moin.Constants.Spacing.sm) {
                 ForEach(Array(links.enumerated()), id: \.offset) { index, link in
                     if index > 0 {
@@ -283,7 +287,7 @@ struct SpaceExamples: View {
             }
         } code: {
             """
-            let links = ["Link 1", "Link 2", "Link 3"]
+            let links = ["\(tr("space.link_n").replacingOccurrences(of: "%d", with: "1"))", "\(tr("space.link_n").replacingOccurrences(of: "%d", with: "2"))", "\(tr("space.link_n").replacingOccurrences(of: "%d", with: "3"))"]
             HStack(spacing: Moin.Constants.Spacing.sm) {
                 ForEach(Array(links.enumerated()), id: \\.offset) { index, link in
                     if index > 0 {

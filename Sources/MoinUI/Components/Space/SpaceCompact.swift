@@ -16,36 +16,25 @@ public extension Moin {
         public let isCompact: Bool
         public let direction: SpaceDirection
         public let position: SpaceCompactPosition
-        /// Size of previous sibling (for vertical: width, for horizontal: height)
-        public let prevSize: CGFloat?
-        /// Size of next sibling (for vertical: width, for horizontal: height)
-        public let nextSize: CGFloat?
-        /// Own size (for comparison)
-        public let ownSize: CGFloat?
+        public let fillWidth: Bool  // For vertical compact: fill to max width
 
         public static let none = SpaceCompactContext(
             isCompact: false,
             direction: .horizontal,
             position: .none,
-            prevSize: nil,
-            nextSize: nil,
-            ownSize: nil
+            fillWidth: false
         )
 
         public init(
             isCompact: Bool,
             direction: SpaceDirection,
             position: SpaceCompactPosition,
-            prevSize: CGFloat? = nil,
-            nextSize: CGFloat? = nil,
-            ownSize: CGFloat? = nil
+            fillWidth: Bool = false
         ) {
             self.isCompact = isCompact
             self.direction = direction
             self.position = position
-            self.prevSize = prevSize
-            self.nextSize = nextSize
-            self.ownSize = ownSize
+            self.fillWidth = fillWidth
         }
     }
 }

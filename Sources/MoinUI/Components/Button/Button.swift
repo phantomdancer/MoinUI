@@ -101,7 +101,7 @@ private struct ButtonShapeStyle: Shape {
             path.addLine(to: CGPoint(x: rect.minX, y: rect.maxY))
 
         case (.vertical, .first):
-            // Draw: left, top-left corner, top, top-right corner, right
+            // Draw: left, top-left corner, top, top-right corner, right (no bottom)
             path.move(to: CGPoint(x: rect.minX, y: rect.maxY))
             path.addLine(to: CGPoint(x: rect.minX, y: rect.minY + radius))
             path.addArc(center: CGPoint(x: rect.minX + radius, y: rect.minY + radius),
@@ -110,35 +110,20 @@ private struct ButtonShapeStyle: Shape {
             path.addArc(center: CGPoint(x: rect.maxX - radius, y: rect.minY + radius),
                        radius: radius, startAngle: .degrees(-90), endAngle: .degrees(0), clockwise: false)
             path.addLine(to: CGPoint(x: rect.maxX, y: rect.maxY))
-            // If wider than next, draw bottom edge for the extra part
-            if let ownSize = compactContext.ownSize, let nextSize = compactContext.nextSize, ownSize > nextSize {
-                path.move(to: CGPoint(x: nextSize, y: rect.maxY))
-                path.addLine(to: CGPoint(x: rect.maxX, y: rect.maxY))
-            }
 
         case (.vertical, .middle):
-            // Draw: left, right
+            // Draw: top, left, right (no bottom)
+            path.move(to: CGPoint(x: rect.minX, y: rect.minY))
+            path.addLine(to: CGPoint(x: rect.maxX, y: rect.minY))
             path.move(to: CGPoint(x: rect.minX, y: rect.minY))
             path.addLine(to: CGPoint(x: rect.minX, y: rect.maxY))
             path.move(to: CGPoint(x: rect.maxX, y: rect.minY))
             path.addLine(to: CGPoint(x: rect.maxX, y: rect.maxY))
-            // Draw top edge up to min(own, prev) width as separator
-            let topEdgeEnd = min(rect.maxX, compactContext.prevSize ?? rect.maxX)
-            path.move(to: CGPoint(x: rect.minX, y: rect.minY))
-            path.addLine(to: CGPoint(x: topEdgeEnd, y: rect.minY))
-            // If wider than prev, draw top edge for the extra part
-            if let ownSize = compactContext.ownSize, let prevSize = compactContext.prevSize, ownSize > prevSize {
-                path.move(to: CGPoint(x: prevSize, y: rect.minY))
-                path.addLine(to: CGPoint(x: rect.maxX, y: rect.minY))
-            }
-            // If wider than next, draw bottom edge for the extra part
-            if let ownSize = compactContext.ownSize, let nextSize = compactContext.nextSize, ownSize > nextSize {
-                path.move(to: CGPoint(x: nextSize, y: rect.maxY))
-                path.addLine(to: CGPoint(x: rect.maxX, y: rect.maxY))
-            }
 
         case (.vertical, .last):
-            // Draw: left with bottom corner, bottom, right with bottom corner
+            // Draw: top, left, bottom with corners, right
+            path.move(to: CGPoint(x: rect.minX, y: rect.minY))
+            path.addLine(to: CGPoint(x: rect.maxX, y: rect.minY))
             path.move(to: CGPoint(x: rect.minX, y: rect.minY))
             path.addLine(to: CGPoint(x: rect.minX, y: rect.maxY - radius))
             path.addArc(center: CGPoint(x: rect.minX + radius, y: rect.maxY - radius),
@@ -147,15 +132,6 @@ private struct ButtonShapeStyle: Shape {
             path.addArc(center: CGPoint(x: rect.maxX - radius, y: rect.maxY - radius),
                        radius: radius, startAngle: .degrees(90), endAngle: .degrees(0), clockwise: true)
             path.addLine(to: CGPoint(x: rect.maxX, y: rect.minY))
-            // Draw top edge up to min(own, prev) width as separator
-            let topEnd = min(rect.maxX, compactContext.prevSize ?? rect.maxX)
-            path.move(to: CGPoint(x: rect.minX, y: rect.minY))
-            path.addLine(to: CGPoint(x: topEnd, y: rect.minY))
-            // If wider than prev, draw top edge for the extra part
-            if let ownSize = compactContext.ownSize, let prevSize = compactContext.prevSize, ownSize > prevSize {
-                path.move(to: CGPoint(x: prevSize, y: rect.minY))
-                path.addLine(to: CGPoint(x: rect.maxX, y: rect.minY))
-            }
         }
 
         return path
@@ -423,7 +399,7 @@ public extension Moin {
             .font(.system(size: fontSize, weight: buttonToken.fontWeight))
             .foregroundColor(foregroundColor)
             .frame(height: verticalPadding > 0 ? nil : controlHeight)
-            .frame(maxWidth: isBlock ? .infinity : nil)
+            .frame(maxWidth: isBlock || compactContext.fillWidth ? .infinity : nil)
             .frame(minWidth: shape == .circle ? controlHeight : nil)
             .padding(.vertical, verticalPadding > 0 ? verticalPadding : 0)
             .padding(.horizontal, shape == .circle ? 0 : horizontalPadding)
