@@ -173,15 +173,15 @@ public extension Moin.组件名 where Label == Text {
 
 ## 工作流程
 
-1. **开始前**: 读取 `.claude/context/` 了解当前状态
+1. **开始前**: 用 `list_memories` 查看可用记忆，按需 `read_memory` 读取相关文件
 2. **编写代码**: 按照规范编写 Swift 代码
 3. **构建**: `swift build` - 确保零警告
 4. **测试**: `swift test` - 确保所有测试通过
 5. **Demo**: 在 Sources/Demo/Examples/ 添加完整示例
 6. **翻译**: 添加中英文翻译
-7. **上下文**: 更新 `.claude/context/` 文件 (用简洁文言文)
+7. **记忆**: 用 `write_memory` 或 `edit_memory` 更新项目状态
 8. **验证**: 再次构建确认一切正常
-9. **回复**: 完成后回复 "毕。"
+9. **回复**: 完成后回复的最后一个字为：毕
 
 ## 设计原则
 

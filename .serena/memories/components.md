@@ -1,23 +1,21 @@
 # 组件清单
 
-> 已完成的 MoinUI 组件
-
 ## 通用组件
 
 | 组件 | 状态 | 文件 |
 |------|------|------|
-| Button | ✅ | `Components/Button/Moin.Button.swift` |
-| ButtonGroup | ✅ | `Components/Button/Moin.ButtonGroup.swift` |
+| Button | ✅ | `Components/Button/Button.swift` |
+| ButtonGroup | ✅ | `Components/Button/ButtonGroup.swift` |
 
 ## 配置组件
 
 | 组件 | 状态 | 文件 |
 |------|------|------|
-| ConfigProvider | ✅ | `Config/Moin.ConfigProvider.swift` |
-| Theme | ✅ | `Config/Moin.Theme.swift` |
-| Localization | ✅ | `Localization/Moin.Localization.swift` |
+| ConfigProvider | ✅ | `Config/ConfigProvider.swift` |
+| Theme | ✅ | `Config/Theme.swift` |
+| Localization | ✅ | `Localization/Localization.swift` |
 
-## Button 功能完成度
+## Button 功能
 
 | 功能 | 状态 |
 |------|------|
@@ -26,14 +24,14 @@
 | Size (small/medium/large) | ✅ |
 | Shape (default/round/circle) | ✅ |
 | Custom Color (.custom(Color)) | ✅ |
-| Gradient (渐变背景) | ✅ |
-| fontColor (自定义文字颜色) | ✅ |
+| Gradient | ✅ |
+| fontColor | ✅ |
 | Icon + Text | ✅ |
 | Icon Placement (start/end) | ✅ |
 | Loading (delay, 自定义 icon) | ✅ |
-| Disabled (opacity: 0.65) | ✅ |
+| Disabled | ✅ |
 | Block | ✅ |
-| Ghost (透明背景) | ✅ |
+| Ghost | ✅ |
 | href Link | ✅ |
 | ButtonGroup | ✅ |
-| **ButtonToken（完整 antd ComponentToken）** | ✅ |
+| ButtonToken | ✅ |
