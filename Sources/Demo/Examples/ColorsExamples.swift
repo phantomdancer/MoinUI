@@ -84,7 +84,7 @@ struct ColorsExamples: View {
 
             // 响应式布局：最少 4 列
             LazyVGrid(columns: [
-                GridItem(.adaptive(minimum: 160, maximum: 240), spacing: Moin.Constants.Spacing.md)
+                GridItem(.adaptive(minimum: 230, maximum: 280), spacing: Moin.Constants.Spacing.md)
             ], spacing: Moin.Constants.Spacing.md) {
                 ForEach(palettes, id: \.name) { item in
                     PaletteCard(name: item.name, palette: item.palette)
@@ -196,10 +196,12 @@ struct ColorsExamples: View {
             title: tr("colors.palette_usage"),
             description: tr("colors.palette_usage_desc")
         ) {
-            HStack(spacing: Moin.Constants.Spacing.md) {
-                Moin.Button(tr("colors.level4"), color: .blue4) {}
-                Moin.Button(tr("colors.level6"), color: .blue6) {}
-                Moin.Button(tr("colors.level8"), color: .blue8) {}
+            VStack(alignment: .leading, spacing: Moin.Constants.Spacing.md) {
+                HStack(spacing: Moin.Constants.Spacing.md) {
+                    Moin.Button(tr("colors.level4"), color: .blue4) {}
+                    Moin.Button(tr("colors.level6"), color: .blue6) {}
+                    Moin.Button(tr("colors.level8"), color: .blue8) {}
+                }
             }
         } code: {
             """
@@ -210,7 +212,7 @@ struct ColorsExamples: View {
 
             // \(tr("colors.code.button_color_shorthand"))
             Moin.Button("...", color: .blue4) {}
-            Moin.Button("...", color: .cyan6) {}
+            Moin.Button("...", color: .custom(Moin.Colors.cyanPalette[8])) {}
             """
         }
     }

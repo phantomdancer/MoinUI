@@ -195,7 +195,7 @@ struct ContentView: View {
                 }
         }
         .navigationSplitViewStyle(.balanced)
-        .frame(minWidth: 1100, minHeight: 700)
+        .frame(minWidth: 1200, minHeight: 700)
     }
 }
 
@@ -291,7 +291,7 @@ struct Sidebar: View {
             }
         }
         .listStyle(.sidebar)
-        .frame(minWidth: 220)
+        .frame(minWidth: 180)
         .navigationTitle("MoinUI")
     }
 }
