@@ -201,7 +201,7 @@ enum NavItem: String, Identifiable {
     case theme
     case configProvider
     case localization
-    case presetColors
+    case colors
 
     var id: String { rawValue }
 
@@ -213,7 +213,7 @@ enum NavItem: String, Identifiable {
         case .button: return "rectangle.and.hand.point.up.left"
         case .configProvider: return "gearshape"
         case .localization: return "globe"
-        case .presetColors: return "paintpalette"
+        case .colors: return "paintpalette"
         }
     }
 
@@ -225,13 +225,13 @@ enum NavItem: String, Identifiable {
         case .button: return "component.button"
         case .configProvider: return "component.configProvider"
         case .localization: return "component.localization"
-        case .presetColors: return "component.presetColors"
+        case .colors: return "component.colors"
         }
     }
 
     static var overview: [NavItem] { [.introduction, .quickStart] }
     static var components: [NavItem] { [.button] }
-    static var development: [NavItem] { [.theme, .configProvider, .localization, .presetColors] }
+    static var development: [NavItem] { [.theme, .configProvider, .localization, .colors] }
 }
 
 // MARK: - Sidebar
@@ -293,8 +293,8 @@ struct DetailView: View {
                 ConfigProviderExamples()
             case .localization:
                 LocalizationExamples()
-            case .presetColors:
-                PresetColorsExamples()
+            case .colors:
+                ColorsExamples()
             }
         }
     }

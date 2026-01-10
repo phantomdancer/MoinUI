@@ -87,7 +87,7 @@
     "button": "Button",
     "configProvider": "ConfigProvider",
     "localization": "Localization",
-    "presetColors": "PresetColors"
+    "colors": "Colors"
   },
   "home": {
     "tagline": "A modern macOS SwiftUI Component Library",
@@ -219,13 +219,13 @@
     "json_desc": "Load translations from JSON files with nested structure support.",
     "json_demo": "Use registerFromJSON() to load JSON translation files"
   },
-  "preset_colors": {
-    "title": "PresetColors",
-    "description": "MoinUI provides a set of preset colors based on Ant Design color system for quick UI development.",
+  "colors": {
+    "title": "Colors",
+    "description": "MoinUI provides a set of colors based on Ant Design color system for quick UI development.",
     "reference_link": "View Ant Design Color Specification",
     "palette": "Color Palette",
     "usage": "Usage",
-    "usage_desc": "Use .custom(Moin.PresetColors.xxx) to apply preset colors.",
+    "usage_desc": "Use .custom(Moin.Colors.xxx) to apply preset colors.",
     "basic_usage": "Basic Usage:",
     "blue": "Blue",
     "purple": "Purple",

@@ -1,23 +1,23 @@
 import SwiftUI
 import MoinUI
 
-struct PresetColorsExamples: View {
+struct ColorsExamples: View {
     @Localized var tr
 
     private let colors: [(name: String, color: Color, hex: String)] = [
-        ("blue", Moin.PresetColors.blue, "#1677FF"),
-        ("purple", Moin.PresetColors.purple, "#722ED1"),
-        ("cyan", Moin.PresetColors.cyan, "#13C2C2"),
-        ("green", Moin.PresetColors.green, "#52C41A"),
-        ("magenta", Moin.PresetColors.magenta, "#EB2F96"),
-        ("pink", Moin.PresetColors.pink, "#EB2F96"),
-        ("red", Moin.PresetColors.red, "#F5222D"),
-        ("orange", Moin.PresetColors.orange, "#FA8C16"),
-        ("yellow", Moin.PresetColors.yellow, "#FADB14"),
-        ("volcano", Moin.PresetColors.volcano, "#FA541C"),
-        ("geekblue", Moin.PresetColors.geekblue, "#2F54EB"),
-        ("gold", Moin.PresetColors.gold, "#FAAD14"),
-        ("lime", Moin.PresetColors.lime, "#A0D911"),
+        ("blue", Moin.Colors.blue, "#1677FF"),
+        ("purple", Moin.Colors.purple, "#722ED1"),
+        ("cyan", Moin.Colors.cyan, "#13C2C2"),
+        ("green", Moin.Colors.green, "#52C41A"),
+        ("magenta", Moin.Colors.magenta, "#EB2F96"),
+        ("pink", Moin.Colors.pink, "#EB2F96"),
+        ("red", Moin.Colors.red, "#F5222D"),
+        ("orange", Moin.Colors.orange, "#FA8C16"),
+        ("yellow", Moin.Colors.yellow, "#FADB14"),
+        ("volcano", Moin.Colors.volcano, "#FA541C"),
+        ("geekblue", Moin.Colors.geekblue, "#2F54EB"),
+        ("gold", Moin.Colors.gold, "#FAAD14"),
+        ("lime", Moin.Colors.lime, "#A0D911"),
     ]
 
     var body: some View {
@@ -39,20 +39,20 @@ struct PresetColorsExamples: View {
             }
             .padding(Moin.Constants.Spacing.xl)
         }
-        .measureRenderTime("PresetColors")
+        .measureRenderTime("Colors")
     }
 
     private var introduction: some View {
         VStack(alignment: .leading, spacing: Moin.Constants.Spacing.md) {
-            Text(tr("preset_colors.title"))
+            Text(tr("colors.title"))
                 .font(.largeTitle)
                 .fontWeight(.bold)
 
-            Text(tr("preset_colors.description"))
+            Text(tr("colors.description"))
                 .font(.body)
                 .foregroundStyle(.secondary)
 
-            Link(tr("preset_colors.reference_link"), destination: URL(string: "https://ant.design/docs/spec/colors")!)
+            Link(tr("colors.reference_link"), destination: URL(string: "https://ant.design/docs/spec/colors")!)
                 .font(.caption)
                 .foregroundStyle(.blue)
         }
@@ -60,7 +60,7 @@ struct PresetColorsExamples: View {
 
     private var colorPalette: some View {
         VStack(alignment: .leading, spacing: Moin.Constants.Spacing.md) {
-            Text(tr("preset_colors.palette"))
+            Text(tr("colors.palette"))
                 .font(.title2)
                 .fontWeight(.semibold)
 
@@ -94,25 +94,25 @@ struct PresetColorsExamples: View {
 
     private var usageExamples: some View {
         ExampleSection(
-            title: tr("preset_colors.usage"),
-            description: tr("preset_colors.usage_desc")
+            title: tr("colors.usage"),
+            description: tr("colors.usage_desc")
         ) {
             VStack(alignment: .leading, spacing: Moin.Constants.Spacing.md) {
-                Text(tr("preset_colors.basic_usage"))
+                Text(tr("colors.basic_usage"))
                     .font(.caption)
                     .foregroundStyle(.secondary)
 
                 HStack(spacing: Moin.Constants.Spacing.md) {
-                    Moin.Button(tr("preset_colors.blue"), color: .custom(Moin.PresetColors.blue)) {}
-                    Moin.Button(tr("preset_colors.purple"), color: .custom(Moin.PresetColors.purple)) {}
-                    Moin.Button(tr("preset_colors.cyan"), color: .custom(Moin.PresetColors.cyan)) {}
+                    Moin.Button(tr("colors.blue"), color: .custom(Moin.Colors.blue)) {}
+                    Moin.Button(tr("colors.purple"), color: .custom(Moin.Colors.purple)) {}
+                    Moin.Button(tr("colors.cyan"), color: .custom(Moin.Colors.cyan)) {}
                 }
             }
         } code: {
             """
-            Moin.Button("\(tr("preset_colors.blue"))", color: .custom(Moin.PresetColors.blue)) {}
-            Moin.Button("\(tr("preset_colors.purple"))", color: .custom(Moin.PresetColors.purple)) {}
-            Moin.Button("\(tr("preset_colors.cyan"))", color: .custom(Moin.PresetColors.cyan)) {}
+            Moin.Button("\(tr("colors.blue"))", color: .custom(Moin.Colors.blue)) {}
+            Moin.Button("\(tr("colors.purple"))", color: .custom(Moin.Colors.purple)) {}
+            Moin.Button("\(tr("colors.cyan"))", color: .custom(Moin.Colors.cyan)) {}
             """
         }
     }
@@ -131,19 +131,19 @@ struct PresetColorsExamples: View {
                     tr("api.description")
                 ),
                 rows: [
-                    ("blue", "Color", "#1677FF", tr("preset_colors.blue_desc")),
-                    ("purple", "Color", "#722ED1", tr("preset_colors.purple_desc")),
-                    ("cyan", "Color", "#13C2C2", tr("preset_colors.cyan_desc")),
-                    ("green", "Color", "#52C41A", tr("preset_colors.green_desc")),
-                    ("magenta", "Color", "#EB2F96", tr("preset_colors.magenta_desc")),
-                    ("pink", "Color", "#EB2F96", tr("preset_colors.pink_desc")),
-                    ("red", "Color", "#F5222D", tr("preset_colors.red_desc")),
-                    ("orange", "Color", "#FA8C16", tr("preset_colors.orange_desc")),
-                    ("yellow", "Color", "#FADB14", tr("preset_colors.yellow_desc")),
-                    ("volcano", "Color", "#FA541C", tr("preset_colors.volcano_desc")),
-                    ("geekblue", "Color", "#2F54EB", tr("preset_colors.geekblue_desc")),
-                    ("gold", "Color", "#FAAD14", tr("preset_colors.gold_desc")),
-                    ("lime", "Color", "#A0D911", tr("preset_colors.lime_desc")),
+                    ("blue", "Color", "#1677FF", tr("colors.blue_desc")),
+                    ("purple", "Color", "#722ED1", tr("colors.purple_desc")),
+                    ("cyan", "Color", "#13C2C2", tr("colors.cyan_desc")),
+                    ("green", "Color", "#52C41A", tr("colors.green_desc")),
+                    ("magenta", "Color", "#EB2F96", tr("colors.magenta_desc")),
+                    ("pink", "Color", "#EB2F96", tr("colors.pink_desc")),
+                    ("red", "Color", "#F5222D", tr("colors.red_desc")),
+                    ("orange", "Color", "#FA8C16", tr("colors.orange_desc")),
+                    ("yellow", "Color", "#FADB14", tr("colors.yellow_desc")),
+                    ("volcano", "Color", "#FA541C", tr("colors.volcano_desc")),
+                    ("geekblue", "Color", "#2F54EB", tr("colors.geekblue_desc")),
+                    ("gold", "Color", "#FAAD14", tr("colors.gold_desc")),
+                    ("lime", "Color", "#A0D911", tr("colors.lime_desc")),
                 ]
             )
         }
