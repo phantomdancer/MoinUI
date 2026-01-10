@@ -8,8 +8,8 @@ public extension Moin {
     enum Colors {
     // MARK: - 主要颜色
 
-    /// 蓝色 #1677FF
-    public static let blue = Color(hex: 0x1677FF)
+    /// 蓝色 #1890FF (Ant Design 品牌主色，level 6)
+    public static let blue = Color(hex: 0x1890FF)
 
     /// 紫色 #722ED1
     public static let purple = Color(hex: 0x722ED1)
@@ -29,8 +29,8 @@ public extension Moin {
     /// 红色 #F5222D
     public static let red = Color(hex: 0xF5222D)
 
-    /// 橙色 #FA8C16
-    public static let orange = Color(hex: 0xFA8C16)
+    /// 橙色 #FA541C (Ant Design 火山色，level 6)
+    public static let orange = Color(hex: 0xFA541C)
 
     /// 黄色 #FADB14
     public static let yellow = Color(hex: 0xFADB14)
