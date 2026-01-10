@@ -20,6 +20,7 @@ struct SpaceExamples: View {
         AnchorItem(id: "direction", titleKey: "space.direction"),
         AnchorItem(id: "alignment", titleKey: "space.alignment"),
         AnchorItem(id: "wrap", titleKey: "space.wrap"),
+        AnchorItem(id: "compact", titleKey: "space.compact"),
         AnchorItem(id: "separator", titleKey: "space.separator"),
     ]
 
@@ -44,6 +45,7 @@ struct SpaceExamples: View {
             directionExample.id("direction")
             alignmentExample.id("alignment")
             wrapExample.id("wrap")
+            compactExample.id("compact")
             separatorExample.id("separator")
         }
     }
@@ -212,6 +214,52 @@ struct SpaceExamples: View {
                 ForEach(1...6, id: \\.self) { i in
                     Moin.Button("Button \\(i)", color: .primary) {}
                 }
+            }
+            """
+        }
+    }
+
+
+    private var compactExample: some View {
+        ExampleSection(
+            title: tr("space.compact"),
+            description: tr("space.compact_desc")
+        ) {
+            VStack(alignment: .leading, spacing: Moin.Constants.Spacing.lg) {
+                // Horizontal compact
+                Text("Horizontal:")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                Moin.Compact {
+                    Moin.Button("January", variant: .outlined) {}
+                    Moin.Button("February", variant: .outlined) {}
+                    Moin.Button("March", variant: .outlined) {}
+                }
+
+                // Vertical compact
+                Text("Vertical:")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                Moin.Compact(direction: .vertical) {
+                    Moin.Button("January") {}
+                    Moin.Button("February") {}
+                    Moin.Button("March") {}
+                }
+            }
+        } code: {
+            """
+            // Horizontal compact
+            Moin.Compact {
+                Moin.Button("January", variant: .outlined) {}
+                Moin.Button("February", variant: .outlined) {}
+                Moin.Button("March", variant: .outlined) {}
+            }
+
+            // Vertical compact
+            Moin.Compact(direction: .vertical) {
+                Moin.Button("January") {}
+                Moin.Button("February") {}
+                Moin.Button("March") {}
             }
             """
         }

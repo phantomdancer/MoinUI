@@ -4,7 +4,7 @@ import SwiftUI
 
 public extension Moin {
     /// Space direction
-    enum SpaceDirection {
+    enum SpaceDirection: Sendable {
         case horizontal
         case vertical
     }

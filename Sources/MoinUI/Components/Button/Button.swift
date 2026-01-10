@@ -5,16 +5,214 @@ import AppKit
 private struct ButtonShapeStyle: Shape {
     let shapeType: Moin.ButtonShape
     let cornerRadius: CGFloat
+    let compactContext: Moin.SpaceCompactContext
+
+    init(shapeType: Moin.ButtonShape, cornerRadius: CGFloat, compactContext: Moin.SpaceCompactContext = .none) {
+        self.shapeType = shapeType
+        self.cornerRadius = cornerRadius
+        self.compactContext = compactContext
+    }
 
     func path(in rect: CGRect) -> Path {
         switch shapeType {
         case .default:
+            if compactContext.isCompact {
+                return compactPath(in: rect)
+            }
             return RoundedRectangle(cornerRadius: cornerRadius).path(in: rect)
         case .round:
+            if compactContext.isCompact {
+                return compactPath(in: rect, isRound: true)
+            }
             return Capsule().path(in: rect)
         case .circle:
             return Circle().path(in: rect)
         }
+    }
+
+    private func compactPath(in rect: CGRect, isRound: Bool = false) -> Path {
+        let radius = isRound ? min(rect.width, rect.height) / 2 : cornerRadius
+        let corners: UIRectCorner
+
+        switch (compactContext.direction, compactContext.position) {
+        case (_, .only), (_, .none):
+            corners = .allCorners
+        case (.horizontal, .first):
+            corners = [.topLeft, .bottomLeft]
+        case (.horizontal, .last):
+            corners = [.topRight, .bottomRight]
+        case (.horizontal, .middle):
+            corners = []
+        case (.vertical, .first):
+            corners = [.topLeft, .topRight]
+        case (.vertical, .last):
+            corners = [.bottomLeft, .bottomRight]
+        case (.vertical, .middle):
+            corners = []
+        }
+
+        return Path(roundedRect: rect, cornerRadius: radius, corners: corners)
+    }
+
+    /// Returns border path for compact mode (open path, not closed)
+    func borderPath(in rect: CGRect) -> Path {
+        guard compactContext.isCompact else {
+            return path(in: rect)
+        }
+
+        let radius = shapeType == .round ? min(rect.width, rect.height) / 2 : cornerRadius
+        var path = Path()
+
+        switch (compactContext.direction, compactContext.position) {
+        case (_, .only), (_, .none):
+            return self.path(in: rect)
+
+        case (.horizontal, .first):
+            // Draw: bottom-left corner, left, top-left corner, top, right (no right edge)
+            path.move(to: CGPoint(x: rect.maxX, y: rect.maxY))
+            path.addLine(to: CGPoint(x: rect.minX + radius, y: rect.maxY))
+            path.addArc(center: CGPoint(x: rect.minX + radius, y: rect.maxY - radius),
+                       radius: radius, startAngle: .degrees(90), endAngle: .degrees(180), clockwise: false)
+            path.addLine(to: CGPoint(x: rect.minX, y: rect.minY + radius))
+            path.addArc(center: CGPoint(x: rect.minX + radius, y: rect.minY + radius),
+                       radius: radius, startAngle: .degrees(180), endAngle: .degrees(270), clockwise: false)
+            path.addLine(to: CGPoint(x: rect.maxX, y: rect.minY))
+
+        case (.horizontal, .middle):
+            // Draw: left, top, bottom (no right edge - next button draws its left)
+            path.move(to: CGPoint(x: rect.minX, y: rect.maxY))
+            path.addLine(to: CGPoint(x: rect.minX, y: rect.minY))
+            path.move(to: CGPoint(x: rect.minX, y: rect.minY))
+            path.addLine(to: CGPoint(x: rect.maxX, y: rect.minY))
+            path.move(to: CGPoint(x: rect.minX, y: rect.maxY))
+            path.addLine(to: CGPoint(x: rect.maxX, y: rect.maxY))
+
+        case (.horizontal, .last):
+            // Draw: left, top, right with corners, bottom
+            path.move(to: CGPoint(x: rect.minX, y: rect.maxY))
+            path.addLine(to: CGPoint(x: rect.minX, y: rect.minY))
+            path.move(to: CGPoint(x: rect.minX, y: rect.minY))
+            path.addLine(to: CGPoint(x: rect.maxX - radius, y: rect.minY))
+            path.addArc(center: CGPoint(x: rect.maxX - radius, y: rect.minY + radius),
+                       radius: radius, startAngle: .degrees(-90), endAngle: .degrees(0), clockwise: false)
+            path.addLine(to: CGPoint(x: rect.maxX, y: rect.maxY - radius))
+            path.addArc(center: CGPoint(x: rect.maxX - radius, y: rect.maxY - radius),
+                       radius: radius, startAngle: .degrees(0), endAngle: .degrees(90), clockwise: false)
+            path.addLine(to: CGPoint(x: rect.minX, y: rect.maxY))
+
+        case (.vertical, .first):
+            // Draw: left, top-left corner, top, top-right corner, right
+            path.move(to: CGPoint(x: rect.minX, y: rect.maxY))
+            path.addLine(to: CGPoint(x: rect.minX, y: rect.minY + radius))
+            path.addArc(center: CGPoint(x: rect.minX + radius, y: rect.minY + radius),
+                       radius: radius, startAngle: .degrees(180), endAngle: .degrees(270), clockwise: false)
+            path.addLine(to: CGPoint(x: rect.maxX - radius, y: rect.minY))
+            path.addArc(center: CGPoint(x: rect.maxX - radius, y: rect.minY + radius),
+                       radius: radius, startAngle: .degrees(-90), endAngle: .degrees(0), clockwise: false)
+            path.addLine(to: CGPoint(x: rect.maxX, y: rect.maxY))
+            // If wider than next, draw bottom edge for the extra part
+            if let ownSize = compactContext.ownSize, let nextSize = compactContext.nextSize, ownSize > nextSize {
+                path.move(to: CGPoint(x: nextSize, y: rect.maxY))
+                path.addLine(to: CGPoint(x: rect.maxX, y: rect.maxY))
+            }
+
+        case (.vertical, .middle):
+            // Draw: left, right
+            path.move(to: CGPoint(x: rect.minX, y: rect.minY))
+            path.addLine(to: CGPoint(x: rect.minX, y: rect.maxY))
+            path.move(to: CGPoint(x: rect.maxX, y: rect.minY))
+            path.addLine(to: CGPoint(x: rect.maxX, y: rect.maxY))
+            // Draw top edge up to min(own, prev) width as separator
+            let topEdgeEnd = min(rect.maxX, compactContext.prevSize ?? rect.maxX)
+            path.move(to: CGPoint(x: rect.minX, y: rect.minY))
+            path.addLine(to: CGPoint(x: topEdgeEnd, y: rect.minY))
+            // If wider than prev, draw top edge for the extra part
+            if let ownSize = compactContext.ownSize, let prevSize = compactContext.prevSize, ownSize > prevSize {
+                path.move(to: CGPoint(x: prevSize, y: rect.minY))
+                path.addLine(to: CGPoint(x: rect.maxX, y: rect.minY))
+            }
+            // If wider than next, draw bottom edge for the extra part
+            if let ownSize = compactContext.ownSize, let nextSize = compactContext.nextSize, ownSize > nextSize {
+                path.move(to: CGPoint(x: nextSize, y: rect.maxY))
+                path.addLine(to: CGPoint(x: rect.maxX, y: rect.maxY))
+            }
+
+        case (.vertical, .last):
+            // Draw: left with bottom corner, bottom, right with bottom corner
+            path.move(to: CGPoint(x: rect.minX, y: rect.minY))
+            path.addLine(to: CGPoint(x: rect.minX, y: rect.maxY - radius))
+            path.addArc(center: CGPoint(x: rect.minX + radius, y: rect.maxY - radius),
+                       radius: radius, startAngle: .degrees(180), endAngle: .degrees(90), clockwise: true)
+            path.addLine(to: CGPoint(x: rect.maxX - radius, y: rect.maxY))
+            path.addArc(center: CGPoint(x: rect.maxX - radius, y: rect.maxY - radius),
+                       radius: radius, startAngle: .degrees(90), endAngle: .degrees(0), clockwise: true)
+            path.addLine(to: CGPoint(x: rect.maxX, y: rect.minY))
+            // Draw top edge up to min(own, prev) width as separator
+            let topEnd = min(rect.maxX, compactContext.prevSize ?? rect.maxX)
+            path.move(to: CGPoint(x: rect.minX, y: rect.minY))
+            path.addLine(to: CGPoint(x: topEnd, y: rect.minY))
+            // If wider than prev, draw top edge for the extra part
+            if let ownSize = compactContext.ownSize, let prevSize = compactContext.prevSize, ownSize > prevSize {
+                path.move(to: CGPoint(x: prevSize, y: rect.minY))
+                path.addLine(to: CGPoint(x: rect.maxX, y: rect.minY))
+            }
+        }
+
+        return path
+    }
+}
+
+/// Shape that draws partial border for compact mode
+private struct CompactBorderShape: Shape {
+    let baseShape: ButtonShapeStyle
+
+    func path(in rect: CGRect) -> Path {
+        baseShape.borderPath(in: rect)
+    }
+}
+
+/// UIRectCorner for SwiftUI compatibility
+struct UIRectCorner: OptionSet {
+    let rawValue: Int
+
+    static let topLeft = UIRectCorner(rawValue: 1 << 0)
+    static let topRight = UIRectCorner(rawValue: 1 << 1)
+    static let bottomLeft = UIRectCorner(rawValue: 1 << 2)
+    static let bottomRight = UIRectCorner(rawValue: 1 << 3)
+    static let allCorners: UIRectCorner = [.topLeft, .topRight, .bottomLeft, .bottomRight]
+}
+
+extension Path {
+    init(roundedRect rect: CGRect, cornerRadius: CGFloat, corners: UIRectCorner) {
+        self.init()
+
+        let tl = corners.contains(.topLeft) ? cornerRadius : 0
+        let tr = corners.contains(.topRight) ? cornerRadius : 0
+        let bl = corners.contains(.bottomLeft) ? cornerRadius : 0
+        let br = corners.contains(.bottomRight) ? cornerRadius : 0
+
+        move(to: CGPoint(x: rect.minX + tl, y: rect.minY))
+        addLine(to: CGPoint(x: rect.maxX - tr, y: rect.minY))
+        if tr > 0 {
+            addArc(center: CGPoint(x: rect.maxX - tr, y: rect.minY + tr),
+                   radius: tr, startAngle: .degrees(-90), endAngle: .degrees(0), clockwise: false)
+        }
+        addLine(to: CGPoint(x: rect.maxX, y: rect.maxY - br))
+        if br > 0 {
+            addArc(center: CGPoint(x: rect.maxX - br, y: rect.maxY - br),
+                   radius: br, startAngle: .degrees(0), endAngle: .degrees(90), clockwise: false)
+        }
+        addLine(to: CGPoint(x: rect.minX + bl, y: rect.maxY))
+        if bl > 0 {
+            addArc(center: CGPoint(x: rect.minX + bl, y: rect.maxY - bl),
+                   radius: bl, startAngle: .degrees(90), endAngle: .degrees(180), clockwise: false)
+        }
+        addLine(to: CGPoint(x: rect.minX, y: rect.minY + tl))
+        if tl > 0 {
+            addArc(center: CGPoint(x: rect.minX + tl, y: rect.minY + tl),
+                   radius: tl, startAngle: .degrees(180), endAngle: .degrees(270), clockwise: false)
+        }
+        closeSubpath()
     }
 }
 
@@ -97,6 +295,7 @@ public extension Moin {
         // 使用 Environment 获取配置，避免每个按钮都订阅 ObservedObject
         @Environment(\.moinToken) private var token
         @Environment(\.moinButtonToken) private var buttonToken
+        @Environment(\.moinSpaceCompactContext) private var compactContext
 
         public init(
             color: Moin.ButtonColor = .default,
@@ -170,6 +369,7 @@ public extension Moin {
             .disabled(effectiveDisabled && !shouldApplyDisabledOpacity)
             .allowsHitTesting(!effectiveDisabled)
             .opacity(shouldApplyDisabledOpacity ? 0.65 : 1)
+            .zIndex(compactContext.isCompact && isHovered ? 10 : 0)
             .onHover { hovering in
                 guard isHovered != hovering else { return }
                 withAnimation(.easeInOut(duration: token.motionDuration / 2)) {
@@ -255,12 +455,21 @@ public extension Moin {
         }
 
         private var buttonShape: ButtonShapeStyle {
-            ButtonShapeStyle(shapeType: shape, cornerRadius: cornerRadius)
+            ButtonShapeStyle(shapeType: shape, cornerRadius: cornerRadius, compactContext: compactContext)
         }
 
         @ViewBuilder
         private var borderOverlay: some View {
-            if variant == .dashed {
+            if compactContext.isCompact && compactContext.position != .only && !isHovered {
+                // Use open border path for compact mode (not hovered)
+                if variant == .dashed {
+                    CompactBorderShape(baseShape: buttonShape)
+                        .stroke(borderColor, style: StrokeStyle(lineWidth: Moin.Constants.Button.borderWidth, dash: [4, 3]))
+                } else {
+                    CompactBorderShape(baseShape: buttonShape)
+                        .stroke(borderColor, lineWidth: Moin.Constants.Button.borderWidth)
+                }
+            } else if variant == .dashed {
                 buttonShape
                     .stroke(borderColor, style: StrokeStyle(lineWidth: Moin.Constants.Button.borderWidth, dash: [4, 3]))
             } else {

@@ -2,8 +2,8 @@
 
 ## Space 间距
 - **文件**: `Sources/MoinUI/Components/Space/`
-- **API**: `Moin.Space(size:direction:alignment:wrap:content:)`
-- **枚举**: SpaceSize, SpaceDirection, SpaceAlignment
+- **API**: `Moin.Space(size:direction:alignment:wrap:compact:content:)`
+- **枚举**: SpaceSize, SpaceDirection, SpaceAlignment, SpaceCompactPosition, SpaceCompactContext
 - **Token**: SpaceToken (sizeSmall/Medium/Large)
 - **Demo**: `Sources/Demo/Examples/Space/` (Examples, Playground, API)
 

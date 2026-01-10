@@ -203,6 +203,8 @@
     "alignment_desc": "Set cross-axis alignment of child elements.",
     "wrap": "Auto Wrap",
     "wrap_desc": "Auto wrap when exceeding container width in horizontal mode.",
+    "compact": "Compact",
+    "compact_desc": "Compact mode renders children with zero spacing and merged borders.",
     "separator": "Separator",
     "separator_desc": "Use separator to split elements.",
     "prop": {
@@ -210,7 +212,8 @@
       "custom_size": "Custom Size",
       "direction": "Direction",
       "alignment": "Alignment",
-      "wrap": "Wrap"
+      "wrap": "Wrap",
+      "compact": "Compact"
     }
   },
   "config": {
@@ -489,6 +492,7 @@
       "direction": "Layout direction",
       "alignment": "Cross-axis alignment",
       "wrap": "Auto wrap (horizontal only)",
+      "compact": "Compact mode with zero spacing",
       "content": "Child view content",
       "size_small": "Small spacing (8pt)",
       "size_medium": "Medium spacing (12pt)",

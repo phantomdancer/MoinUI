@@ -203,6 +203,8 @@
     "alignment_desc": "设置子元素在交叉轴上的对齐方式。",
     "wrap": "自动换行",
     "wrap_desc": "水平模式下超出容器宽度自动换行。",
+    "compact": "紧凑模式",
+    "compact_desc": "紧凑模式下子元素间距为零，边框圆角合并。",
     "separator": "分隔符",
     "separator_desc": "使用分隔符隔开元素。",
     "prop": {
@@ -210,7 +212,8 @@
       "custom_size": "自定义尺寸",
       "direction": "方向",
       "alignment": "对齐",
-      "wrap": "换行"
+      "wrap": "换行",
+      "compact": "紧凑"
     }
   },
   "config": {
@@ -489,6 +492,7 @@
       "direction": "排列方向",
       "alignment": "交叉轴对齐方式",
       "wrap": "是否自动换行（仅水平生效）",
+      "compact": "紧凑模式，间距为零",
       "content": "子视图内容",
       "size_small": "小间距 (8pt)",
       "size_medium": "中间距 (12pt)",
