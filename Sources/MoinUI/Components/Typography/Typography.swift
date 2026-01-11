@@ -298,13 +298,14 @@ public extension Moin {
                 .font(.system(size: token.fontSize))
                 .foregroundStyle(linkColor)
                 .underline(isHovered && !disabled)
+                .textSelection(.disabled)
                 .onHover { hovering in
                     isHovered = hovering
                     if !disabled {
                         if hovering {
-                            NSCursor.pointingHand.set()
+                            NSCursor.pointingHand.push()
                         } else {
-                            NSCursor.arrow.set()
+                            NSCursor.pop()
                         }
                     }
                 }
