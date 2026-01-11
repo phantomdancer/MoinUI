@@ -2,11 +2,25 @@ import SwiftUI
 
 // MARK: - Moin.SeedToken
 
+/// 线条样式枚举
+public enum MoinLineType: String {
+    case solid = "solid"
+    case dashed = "dashed"
+}
+
+/// 缓动曲线枚举
+public enum MoinMotionEase: String {
+    case easeInOut = "easeInOut"
+    case easeOut = "easeOut"
+    case easeIn = "easeIn"
+    case linear = "linear"
+}
+
 public extension Moin {
     /// 种子 Token - 核心可配置值，派生出完整 Token 系统
-    /// 对应 Ant Design 的 SeedToken
+    /// 对应 Ant Design 的 SeedToken (28 个属性)
     struct SeedToken {
-        // MARK: - 品牌色
+        // MARK: - 品牌色 (6个)
         /// 主色
         public var colorPrimary: Color
         /// 成功色
@@ -20,21 +34,33 @@ public extension Moin {
         /// 链接色
         public var colorLink: Color
 
-        // MARK: - 字体
+        // MARK: - 派生基础色 (2个)
+        /// 文字色派生基础
+        public var colorTextBase: Color
+        /// 背景色派生基础
+        public var colorBgBase: Color
+
+        // MARK: - 字体 (4个)
         /// 基础字号
         public var fontSize: CGFloat
         /// 行高倍数
         public var lineHeight: CGFloat
+        /// 字体族
+        public var fontFamily: String
+        /// 代码字体族
+        public var fontFamilyCode: String
 
-        // MARK: - 线条
+        // MARK: - 线条 (2个)
         /// 线条宽度
         public var lineWidth: CGFloat
+        /// 线条样式
+        public var lineType: MoinLineType
 
-        // MARK: - 圆角
+        // MARK: - 圆角 (1个)
         /// 基础圆角
         public var borderRadius: CGFloat
 
-        // MARK: - 尺寸
+        // MARK: - 尺寸 (3个)
         /// 尺寸步进单位
         public var sizeUnit: CGFloat
         /// 尺寸步进
@@ -42,21 +68,33 @@ public extension Moin {
         /// 控件基础高度
         public var controlHeight: CGFloat
 
-        // MARK: - 间距
+        // MARK: - 间距 (2个)
         /// 基础内边距
         public var padding: CGFloat
         /// 基础外边距
         public var margin: CGFloat
 
-        // MARK: - 层级
+        // MARK: - 层级 (2个)
         /// Z轴基础值
         public var zIndexBase: Int
         /// 弹层Z轴基础值
         public var zIndexPopupBase: Int
 
-        // MARK: - 动画
-        /// 动画时长
+        // MARK: - 动画 (4个)
+        /// 动画开关
+        public var motion: Bool
+        /// 动画时长基础单位
+        public var motionUnit: Double
+        /// 动画时长 (派生)
         public var motionDuration: Double
+        /// 缓动曲线
+        public var motionEase: MoinMotionEase
+
+        // MARK: - 其他 (2个)
+        /// 图片透明度
+        public var opacityImage: Double
+        /// 线框模式
+        public var wireframe: Bool
 
         public init(
             colorPrimary: Color = Moin.Colors.blue,
@@ -65,9 +103,14 @@ public extension Moin {
             colorError: Color = Moin.Colors.red,
             colorInfo: Color = Color(red: 0.55, green: 0.55, blue: 0.60),
             colorLink: Color = Moin.Colors.blue,
+            colorTextBase: Color = Color(white: 0.0),
+            colorBgBase: Color = Color.white,
             fontSize: CGFloat = 14,
             lineHeight: CGFloat = 1.5714,
+            fontFamily: String = "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial",
+            fontFamilyCode: String = "'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace",
             lineWidth: CGFloat = 1,
+            lineType: MoinLineType = .solid,
             borderRadius: CGFloat = 6,
             sizeUnit: CGFloat = 4,
             sizeStep: CGFloat = 4,
@@ -76,7 +119,12 @@ public extension Moin {
             margin: CGFloat = 16,
             zIndexBase: Int = 0,
             zIndexPopupBase: Int = 1000,
-            motionDuration: Double = 0.2
+            motion: Bool = true,
+            motionUnit: Double = 0.1,
+            motionDuration: Double = 0.2,
+            motionEase: MoinMotionEase = .easeInOut,
+            opacityImage: Double = 1.0,
+            wireframe: Bool = false
         ) {
             self.colorPrimary = colorPrimary
             self.colorSuccess = colorSuccess
@@ -84,9 +132,14 @@ public extension Moin {
             self.colorError = colorError
             self.colorInfo = colorInfo
             self.colorLink = colorLink
+            self.colorTextBase = colorTextBase
+            self.colorBgBase = colorBgBase
             self.fontSize = fontSize
             self.lineHeight = lineHeight
+            self.fontFamily = fontFamily
+            self.fontFamilyCode = fontFamilyCode
             self.lineWidth = lineWidth
+            self.lineType = lineType
             self.borderRadius = borderRadius
             self.sizeUnit = sizeUnit
             self.sizeStep = sizeStep
@@ -95,7 +148,12 @@ public extension Moin {
             self.margin = margin
             self.zIndexBase = zIndexBase
             self.zIndexPopupBase = zIndexPopupBase
+            self.motion = motion
+            self.motionUnit = motionUnit
             self.motionDuration = motionDuration
+            self.motionEase = motionEase
+            self.opacityImage = opacityImage
+            self.wireframe = wireframe
         }
 
         public static let `default` = SeedToken()
@@ -241,12 +299,23 @@ public extension Moin {
         // MARK: - 线条
         public let lineWidth: CGFloat
         public let lineWidthBold: CGFloat
+        public let lineType: MoinLineType
 
         // MARK: - 动画
+        public let motion: Bool
         public let motionDuration: Double
         public let motionDurationFast: Double
         public let motionDurationMid: Double
         public let motionDurationSlow: Double
+        public let motionEase: MoinMotionEase
+
+        // MARK: - 字体族
+        public let fontFamily: String
+        public let fontFamilyCode: String
+
+        // MARK: - 其他
+        public let opacityImage: Double
+        public let wireframe: Bool
 
         // MARK: - 层级
         public let zIndexBase: Int
@@ -295,16 +364,17 @@ public extension Moin {
             let colorLinkHover = linkPalette[5]
             let colorLinkActive = linkPalette[7]
 
-            // 文字颜色 (透明度梯度)
-            let textBase: Color = isDark ? Color(white: 0.92) : Color(white: 0.13)
+            // 文字颜色 (从 colorTextBase 派生，透明度梯度)
+            let textBase: Color = isDark ? Color(white: 0.92) : seed.colorTextBase
             let colorText = textBase.opacity(0.88)
             let colorTextSecondary = textBase.opacity(0.65)
             let colorTextTertiary = textBase.opacity(0.45)
             let colorTextQuaternary = textBase.opacity(0.25)
 
-            // 背景颜色
-            let colorBgContainer: Color = isDark ? Color(hex: 0x141414) : .white
-            let colorBgElevated: Color = isDark ? Color(hex: 0x1f1f1f) : .white
+            // 背景颜色 (从 colorBgBase 派生)
+            let bgBase = seed.colorBgBase
+            let colorBgContainer: Color = isDark ? Color(hex: 0x141414) : bgBase
+            let colorBgElevated: Color = isDark ? Color(hex: 0x1f1f1f) : bgBase
             let colorBgLayout: Color = isDark ? Color(hex: 0x000000) : Color(hex: 0xf5f5f5)
             let colorBgSpotlight: Color = isDark ? Color(hex: 0x424242) : Color(white: 0, opacity: 0.85)
             let colorBgMask: Color = Color(white: 0, opacity: isDark ? 0.45 : 0.45)
@@ -450,10 +520,17 @@ public extension Moin {
                 marginXXL: marginXXL,
                 lineWidth: seed.lineWidth,
                 lineWidthBold: lineWidthBold,
+                lineType: seed.lineType,
+                motion: seed.motion,
                 motionDuration: seed.motionDuration,
                 motionDurationFast: motionDurationFast,
                 motionDurationMid: motionDurationMid,
                 motionDurationSlow: motionDurationSlow,
+                motionEase: seed.motionEase,
+                fontFamily: seed.fontFamily,
+                fontFamilyCode: seed.fontFamilyCode,
+                opacityImage: seed.opacityImage,
+                wireframe: seed.wireframe,
                 zIndexBase: seed.zIndexBase,
                 zIndexPopupBase: seed.zIndexPopupBase
             )
@@ -591,12 +668,23 @@ public extension Moin {
         // MARK: - Line
         public var lineWidth: CGFloat
         public var lineWidthBold: CGFloat
+        public var lineType: MoinLineType
 
         // MARK: - Motion
+        public var motion: Bool
         public var motionDuration: Double
         public var motionDurationFast: Double
         public var motionDurationMid: Double
         public var motionDurationSlow: Double
+        public var motionEase: MoinMotionEase
+
+        // MARK: - Font Family
+        public var fontFamily: String
+        public var fontFamilyCode: String
+
+        // MARK: - Other
+        public var opacityImage: Double
+        public var wireframe: Bool
 
         // MARK: - Z-Index
         public var zIndexBase: Int
@@ -710,11 +798,20 @@ public extension Moin {
             // Line
             self.lineWidth = map.lineWidth
             self.lineWidthBold = map.lineWidthBold
+            self.lineType = map.lineType
             // Motion
+            self.motion = map.motion
             self.motionDuration = map.motionDuration
             self.motionDurationFast = map.motionDurationFast
             self.motionDurationMid = map.motionDurationMid
             self.motionDurationSlow = map.motionDurationSlow
+            self.motionEase = map.motionEase
+            // Font Family
+            self.fontFamily = map.fontFamily
+            self.fontFamilyCode = map.fontFamilyCode
+            // Other
+            self.opacityImage = map.opacityImage
+            self.wireframe = map.wireframe
             // Z-Index
             self.zIndexBase = map.zIndexBase
             self.zIndexPopupBase = map.zIndexPopupBase
@@ -810,6 +907,7 @@ public extension Moin {
         // MARK: - 禁用态
         public var borderColorDisabled: Color
         public var defaultBgDisabled: Color
+        public var dashedBgDisabled: Color
 
         // MARK: - 从全局 Token 生成
         public static func generate(from token: Token, isDark: Bool = false) -> ButtonToken {
@@ -856,7 +954,8 @@ public extension Moin {
                 dangerShadow: "0 2px 0 rgba(255, 38, 5, 0.06)",
                 groupBorderColor: token.colorPrimaryHover,
                 borderColorDisabled: token.colorBorder.opacity(0.5),
-                defaultBgDisabled: token.colorBgDisabled
+                defaultBgDisabled: token.colorBgDisabled,
+                dashedBgDisabled: token.colorBgDisabled
             )
         }
 
