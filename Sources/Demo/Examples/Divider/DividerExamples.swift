@@ -75,9 +75,9 @@ struct DividerExamples: View {
         } code: {
             """
             VStack(alignment: .leading, spacing: 0) {
-                Text("Content here...")
+                Text("\(tr("divider.lorem1"))")
                 Moin.Divider()
-                Text("More content here...")
+                Text("\(tr("divider.lorem2"))")
             }
             """
         }
@@ -103,9 +103,9 @@ struct DividerExamples: View {
             .frame(maxWidth: .infinity, alignment: .leading)
         } code: {
             """
-            Moin.Divider("Left", titlePlacement: .left)
-            Moin.Divider("Center", titlePlacement: .center)
-            Moin.Divider("Right", titlePlacement: .right)
+            Moin.Divider("\(tr("divider.label.left"))", titlePlacement: .left)
+            Moin.Divider("\(tr("divider.label.center"))", titlePlacement: .center)
+            Moin.Divider("\(tr("divider.label.right"))", titlePlacement: .right)
             """
         }
     }
@@ -158,13 +158,13 @@ struct DividerExamples: View {
         } code: {
             """
             HStack {
-                Text("Text")
+                Text("\(tr("divider.text"))")
                 Moin.Divider(orientation: .vertical)
                     .frame(height: 14)
-                Text("Link")
+                Text("\(tr("divider.link"))")
                 Moin.Divider(orientation: .vertical)
                     .frame(height: 14)
-                Text("Link")
+                Text("\(tr("divider.link"))")
             }
             """
         }
@@ -187,8 +187,8 @@ struct DividerExamples: View {
             .frame(maxWidth: .infinity, alignment: .leading)
         } code: {
             """
-            Moin.Divider("\\(tr("divider.label.text"))")           // bold
-            Moin.Divider("\\(tr("divider.label.text"))", plain: true)  // regular
+            Moin.Divider("\(tr("divider.label.text"))")           // bold
+            Moin.Divider("\(tr("divider.label.text"))", plain: true)  // regular
             """
         }
     }
