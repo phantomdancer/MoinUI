@@ -123,14 +123,25 @@
         "paddingInline": "按钮横向内间距",
         "paddingInlineLG": "大号按钮横向内间距",
         "paddingInlineSM": "小号按钮横向内间距",
+        "paddingBlock": "按钮纵向内间距",
+        "paddingBlockLG": "大号按钮纵向内间距",
+        "paddingBlockSM": "小号按钮纵向内间距",
         "onlyIconSize": "纯图标按钮图标尺寸",
         "onlyIconSizeLG": "大号纯图标按钮图标尺寸",
         "onlyIconSizeSM": "小号纯图标按钮图标尺寸",
         "contentFontSize": "按钮内容字体大小",
         "contentFontSizeLG": "大号按钮内容字体大小",
         "contentFontSizeSM": "小号按钮内容字体大小",
+        "contentLineHeight": "按钮内容行高",
+        "contentLineHeightLG": "大号按钮内容行高",
+        "contentLineHeightSM": "小号按钮内容行高",
+        "defaultShadow": "默认按钮阴影",
+        "primaryShadow": "主要按钮阴影",
+        "dangerShadow": "危险按钮阴影",
+        "groupBorderColor": "按钮组边框颜色",
         "borderColorDisabled": "禁用状态边框颜色",
-        "defaultBgDisabled": "默认按钮禁用背景色"
+        "defaultBgDisabled": "默认按钮禁用背景色",
+        "dashedBgDisabled": "虚线按钮禁用背景色"
       }
     },
     "playground": {

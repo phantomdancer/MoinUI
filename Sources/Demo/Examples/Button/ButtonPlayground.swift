@@ -249,91 +249,22 @@ struct ButtonPlayground: View {
                     .buttonStyle(.plain)
                 }
 
-                // Component Token
+                // 组件 Token (核心)
                 VStack(alignment: .leading, spacing: Moin.Constants.Spacing.sm) {
                     Text(tr("playground.token.component"))
                         .font(.system(size: 11, weight: .medium))
                         .foregroundStyle(.secondary)
 
-                    TokenColorRow(
-                        label: "defaultColor",
-                        color: $config.components.button.defaultColor
-                    )
-                    TokenColorRow(
-                        label: "defaultBg",
-                        color: $config.components.button.defaultBg
-                    )
-                    TokenColorRow(
-                        label: "defaultBorderColor",
-                        color: $config.components.button.defaultBorderColor
-                    )
-                    TokenColorRow(
-                        label: "primaryColor",
-                        color: $config.components.button.primaryColor
-                    )
-                    TokenColorRow(
-                        label: "dangerColor",
-                        color: $config.components.button.dangerColor
-                    )
-                    TokenDisplayRow(
-                        label: "fontWeight",
-                        value: ".medium"
-                    )
-                    TokenValueRow(
-                        label: "iconGap",
-                        value: $config.components.button.iconGap,
-                        range: 0...20
-                    )
-                    TokenValueRow(
-                        label: "paddingInline",
-                        value: $config.components.button.paddingInline,
-                        range: 0...30
-                    )
-                    TokenValueRow(
-                        label: "paddingBlock",
-                        value: $config.components.button.paddingBlock,
-                        range: 0...20
-                    )
-                }
-
-                Divider()
-
-                // Global Token
-                VStack(alignment: .leading, spacing: Moin.Constants.Spacing.sm) {
-                    Text(tr("playground.token.global"))
-                        .font(.system(size: 11, weight: .medium))
-                        .foregroundStyle(.secondary)
-
-                    TokenColorRow(
-                        label: "colorPrimary",
-                        color: $config.token.colorPrimary
-                    )
-                    TokenColorRow(
-                        label: "colorSuccess",
-                        color: $config.token.colorSuccess
-                    )
-                    TokenColorRow(
-                        label: "colorWarning",
-                        color: $config.token.colorWarning
-                    )
-                    TokenColorRow(
-                        label: "colorDanger",
-                        color: $config.token.colorDanger
-                    )
-                    TokenValueRow(
-                        label: "controlHeight",
-                        value: $config.token.controlHeight,
-                        range: 20...60
-                    )
-                    TokenValueRow(
-                        label: "borderRadius",
-                        value: $config.token.borderRadius,
-                        range: 0...20
-                    )
-                    TokenDisplayRow(
-                        label: "motionDuration",
-                        value: "\(config.token.motionDuration)s"
-                    )
+                    TokenColorRow(label: "defaultColor", color: $config.components.button.defaultColor)
+                    TokenColorRow(label: "defaultBg", color: $config.components.button.defaultBg)
+                    TokenColorRow(label: "defaultBorderColor", color: $config.components.button.defaultBorderColor)
+                    TokenColorRow(label: "primaryColor", color: $config.components.button.primaryColor)
+                    TokenColorRow(label: "dangerColor", color: $config.components.button.dangerColor)
+                    TokenDisplayRow(label: "fontWeight", value: ".medium")
+                    TokenValueRow(label: "iconGap", value: $config.components.button.iconGap, range: 0...20)
+                    TokenValueRow(label: "paddingInline", value: $config.components.button.paddingInline, range: 0...30)
+                    TokenValueRow(label: "paddingBlock", value: $config.components.button.paddingBlock, range: 0...20)
+                    TokenValueRow(label: "contentFontSize", value: $config.components.button.contentFontSize, range: 10...20)
                 }
             }
             .padding(Moin.Constants.Spacing.md)

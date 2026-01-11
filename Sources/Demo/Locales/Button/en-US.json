@@ -123,14 +123,25 @@
         "paddingInline": "Button horizontal padding",
         "paddingInlineLG": "Large button horizontal padding",
         "paddingInlineSM": "Small button horizontal padding",
+        "paddingBlock": "Button vertical padding",
+        "paddingBlockLG": "Large button vertical padding",
+        "paddingBlockSM": "Small button vertical padding",
         "onlyIconSize": "Icon-only button icon size",
         "onlyIconSizeLG": "Large icon-only button icon size",
         "onlyIconSizeSM": "Small icon-only button icon size",
         "contentFontSize": "Button content font size",
         "contentFontSizeLG": "Large button content font size",
         "contentFontSizeSM": "Small button content font size",
+        "contentLineHeight": "Button content line height",
+        "contentLineHeightLG": "Large button content line height",
+        "contentLineHeightSM": "Small button content line height",
+        "defaultShadow": "Default button shadow",
+        "primaryShadow": "Primary button shadow",
+        "dangerShadow": "Danger button shadow",
+        "groupBorderColor": "Button group border color",
         "borderColorDisabled": "Disabled border color",
-        "defaultBgDisabled": "Default button disabled background"
+        "defaultBgDisabled": "Default button disabled background",
+        "dashedBgDisabled": "Dashed button disabled background"
       }
     },
     "playground": {
