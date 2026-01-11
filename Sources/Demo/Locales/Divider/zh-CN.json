@@ -1,0 +1,81 @@
+{
+  "divider": {
+    "title": "Divider 分割线",
+    "description": "区隔内容的分割线。",
+    "horizontal": "水平分割线",
+    "horizontal_desc": "默认为水平分割线。",
+    "with_text": "带文字分割线",
+    "with_text_desc": "分割线中带有文字，可设置文字位置。",
+    "variant": "线型变体",
+    "variant_desc": "支持实线、虚线、点线三种样式。",
+    "vertical": "垂直分割线",
+    "vertical_desc": "行内使用垂直分割线。",
+    "plain": "普通样式",
+    "plain_desc": "plain 为 true 时文字不加粗。",
+    "label": {
+      "left": "左侧",
+      "center": "居中",
+      "right": "右侧",
+      "text": "文字"
+    },
+    "prop": {
+      "orientation": "方向",
+      "variant": "线型",
+      "has_text": "带文字",
+      "text": "文字内容",
+      "title_placement": "文字位置",
+      "plain": "纯文本"
+    },
+    "lorem1": "这是第一段内容。",
+    "lorem2": "这是第二段内容。",
+    "lorem_short": "这是一段示例文本。",
+    "left_aligned": "左对齐的文字。",
+    "center_aligned": "居中对齐的文字。",
+    "right_aligned": "右对齐的文字。",
+    "solid": "solid",
+    "dashed": "dashed",
+    "dotted": "dotted",
+    "text": "文本",
+    "link": "链接",
+    "normal_style": "普通样式（加粗）。",
+    "plain_style": "普通样式（常规）。",
+    "playground": {
+      "preview_text": "文本",
+      "preview_link": "链接",
+      "preview_content1": "这是第一段内容。",
+      "preview_content2": "这是第二段内容。"
+    }
+  },
+  "api": {
+    "divider": {
+      "orientation": "分割线方向",
+      "variant": "线型变体",
+      "title_placement": "文字位置（仅水平生效）",
+      "plain": "纯文本样式（不加粗）",
+      "title": "分割线文字",
+      "content": "自定义内容",
+      "orientation_h": "水平分割线",
+      "orientation_v": "垂直分割线",
+      "variant_solid": "实线",
+      "variant_dashed": "虚线",
+      "variant_dotted": "点线",
+      "placement_left": "文字居左",
+      "placement_center": "文字居中",
+      "placement_right": "文字居右",
+      "token_desc": "以下是 Divider 组件的设计变量，可通过 ConfigProvider 覆盖。",
+      "token_line_color": "分割线颜色",
+      "token_text_color": "文字颜色",
+      "token_font_size": "文字大小",
+      "token_vertical_margin": "水平分割线上下间距",
+      "token_horizontal_margin": "垂直分割线左右间距",
+      "token_text_padding": "文字两侧间距",
+      "token_line_width": "线条粗细",
+      "token_dash_length": "虚线段长度",
+      "token_dash_gap": "虚线间隔",
+      "component_divider": "Moin.Divider",
+      "component_orientation": "Moin.DividerOrientation",
+      "component_variant": "Moin.DividerVariant",
+      "component_placement": "Moin.DividerTitlePlacement"
+    }
+  }
+}

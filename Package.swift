@@ -30,7 +30,7 @@ let package = Package(
             path: "Sources/Demo",
             resources: [
                 .process("Resources"),
-                .process("Locales")
+                .copy("Locales")
             ]
         ),
         .testTarget(

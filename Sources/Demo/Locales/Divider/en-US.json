@@ -1,0 +1,81 @@
+{
+  "divider": {
+    "title": "Divider",
+    "description": "A divider to separate content.",
+    "horizontal": "Horizontal Divider",
+    "horizontal_desc": "Default is horizontal divider.",
+    "with_text": "Divider with Text",
+    "with_text_desc": "Divider can have text with customizable position.",
+    "variant": "Variant",
+    "variant_desc": "Supports solid, dashed, and dotted styles.",
+    "vertical": "Vertical Divider",
+    "vertical_desc": "Use vertical divider inline.",
+    "plain": "Plain Style",
+    "plain_desc": "Text is not bold when plain is true.",
+    "label": {
+      "left": "Left",
+      "center": "Center",
+      "right": "Right",
+      "text": "Text"
+    },
+    "prop": {
+      "orientation": "Orientation",
+      "variant": "Variant",
+      "has_text": "Has Text",
+      "text": "Text Content",
+      "title_placement": "Title Placement",
+      "plain": "Plain"
+    },
+    "lorem1": "Here is the first paragraph of content.",
+    "lorem2": "Here is the second paragraph of content.",
+    "lorem_short": "This is some sample text.",
+    "left_aligned": "Text aligned to the left side.",
+    "center_aligned": "Text centered in the middle.",
+    "right_aligned": "Text aligned to the right side.",
+    "solid": "solid",
+    "dashed": "dashed",
+    "dotted": "dotted",
+    "text": "Text",
+    "link": "Link",
+    "normal_style": "Normal style (bold).",
+    "plain_style": "Plain style (regular).",
+    "playground": {
+      "preview_text": "Text",
+      "preview_link": "Link",
+      "preview_content1": "Here is first paragraph of content.",
+      "preview_content2": "Here is second paragraph of content."
+    }
+  },
+  "api": {
+    "divider": {
+      "orientation": "Divider orientation",
+      "variant": "Line variant",
+      "title_placement": "Text position (horizontal only)",
+      "plain": "Plain style (not bold)",
+      "title": "Divider text",
+      "content": "Custom content",
+      "orientation_h": "Horizontal divider",
+      "orientation_v": "Vertical divider",
+      "variant_solid": "Solid line",
+      "variant_dashed": "Dashed line",
+      "variant_dotted": "Dotted line",
+      "placement_left": "Text left aligned",
+      "placement_center": "Text center aligned",
+      "placement_right": "Text right aligned",
+      "token_desc": "Below are the design tokens for the Divider component. Override via ConfigProvider.",
+      "token_line_color": "Line color",
+      "token_text_color": "Text color",
+      "token_font_size": "Text font size",
+      "token_vertical_margin": "Vertical margin for horizontal divider",
+      "token_horizontal_margin": "Horizontal margin for vertical divider",
+      "token_text_padding": "Padding around text",
+      "token_line_width": "Line width",
+      "token_dash_length": "Dash length",
+      "token_dash_gap": "Dash gap",
+      "component_divider": "Moin.Divider",
+      "component_orientation": "Moin.DividerOrientation",
+      "component_variant": "Moin.DividerVariant",
+      "component_placement": "Moin.DividerTitlePlacement"
+    }
+  }
+}

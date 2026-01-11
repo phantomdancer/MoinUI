@@ -1,0 +1,61 @@
+{
+  "space": {
+    "title": "Space 间距",
+    "description": "设置子元素之间的间距。",
+    "basic": "基本用法",
+    "basic_desc": "最基本的用法，设置子元素的水平间距。",
+    "size": "间距尺寸",
+    "size_desc": "支持 small、medium、large 及自定义数值。",
+    "direction": "垂直排列",
+    "direction_desc": "设置 direction 为 vertical 可垂直排列子元素。",
+    "alignment": "对齐方式",
+    "alignment_desc": "设置子元素在交叉轴上的对齐方式。",
+    "wrap": "自动换行",
+    "wrap_desc": "水平模式下超出容器宽度自动换行。",
+    "compact": "紧凑模式",
+    "compact_desc": "紧凑模式下子元素间距为零，边框圆角合并。",
+    "horizontal": "水平方向",
+    "vertical": "垂直方向",
+    "pass_number": "直接传数字",
+    "january": "一月",
+    "february": "二月",
+    "march": "三月",
+    "button_n": "按钮 %d",
+    "custom": "自定义",
+    "link_n": "链接 %d",
+    "separator": "分隔符",
+    "separator_desc": "使用分隔符隔开元素。",
+    "prop": {
+      "size": "尺寸",
+      "custom_size": "自定义尺寸",
+      "direction": "方向",
+      "alignment": "对齐",
+      "wrap": "换行",
+      "compact": "紧凑"
+    }
+  },
+  "api": {
+    "space": {
+      "space_api": "Moin.Space API",
+      "size": "间距大小",
+      "direction": "排列方向",
+      "alignment": "交叉轴对齐方式",
+      "wrap": "是否自动换行（仅水平生效）",
+      "compact": "紧凑模式，间距为零",
+      "content": "子视图内容",
+      "size_small": "小间距 (8pt)",
+      "size_medium": "中间距 (12pt)",
+      "size_large": "大间距 (16pt)",
+      "size_custom": "自定义间距",
+      "direction_h": "水平排列",
+      "direction_v": "垂直排列",
+      "align_start": "顶部/起始对齐",
+      "align_center": "居中对齐",
+      "align_end": "底部/结束对齐",
+      "token_desc": "以下是 Space 组件的设计变量，可通过 ConfigProvider 覆盖。",
+      "token_small": "小间距值",
+      "token_medium": "中间距值",
+      "token_large": "大间距值"
+    }
+  }
+}
