@@ -160,6 +160,7 @@ struct ContentView: View {
                                 Text(tr("tab.examples")).tag(ButtonExamplesTab.examples)
                                 Text(tr("tab.playground")).tag(ButtonExamplesTab.playground)
                                 Text(tr("tab.api")).tag(ButtonExamplesTab.api)
+                                Text(tr("tab.token")).tag(ButtonExamplesTab.token)
                             }
                             .pickerStyle(.segmented)
                             .fixedSize()
@@ -171,6 +172,7 @@ struct ContentView: View {
                                 Text(tr("tab.examples")).tag(SpaceExamplesTab.examples)
                                 Text(tr("tab.playground")).tag(SpaceExamplesTab.playground)
                                 Text(tr("tab.api")).tag(SpaceExamplesTab.api)
+                                Text(tr("tab.token")).tag(SpaceExamplesTab.token)
                             }
                             .pickerStyle(.segmented)
                             .fixedSize()
@@ -182,6 +184,7 @@ struct ContentView: View {
                                 Text(tr("tab.examples")).tag(DividerExamplesTab.examples)
                                 Text(tr("tab.playground")).tag(DividerExamplesTab.playground)
                                 Text(tr("tab.api")).tag(DividerExamplesTab.api)
+                                Text(tr("tab.token")).tag(DividerExamplesTab.token)
                             }
                             .pickerStyle(.segmented)
                             .fixedSize()

@@ -217,7 +217,8 @@
   "tab": {
     "examples": "示例",
     "playground": "演练场",
-    "api": "API"
+    "api": "API",
+    "token": "Token"
   },
   "playground": {
     "title": "演练场",

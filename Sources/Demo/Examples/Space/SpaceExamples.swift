@@ -6,6 +6,7 @@ enum SpaceExamplesTab: String, CaseIterable {
     case examples
     case playground
     case api
+    case token
 }
 
 /// Space component examples
@@ -30,8 +31,10 @@ struct SpaceExamples: View {
                 examplesContent
             } else if selectedTab == .playground {
                 playgroundContent
-            } else {
+            } else if selectedTab == .api {
                 apiContent
+            } else {
+                tokenContent
             }
         }
     }
@@ -61,6 +64,12 @@ struct SpaceExamples: View {
 
     private var apiContent: some View {
         SpaceAPIContent()
+    }
+
+    // MARK: - Token Content
+
+    private var tokenContent: some View {
+        SpaceTokenContent()
     }
 
     // MARK: - Examples

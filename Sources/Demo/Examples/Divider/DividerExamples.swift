@@ -6,6 +6,7 @@ enum DividerExamplesTab: String, CaseIterable {
     case examples
     case playground
     case api
+    case token
 }
 
 /// Divider component examples
@@ -28,8 +29,10 @@ struct DividerExamples: View {
                 examplesContent
             } else if selectedTab == .playground {
                 playgroundContent
-            } else {
+            } else if selectedTab == .api {
                 apiContent
+            } else {
+                tokenContent
             }
         }
     }
@@ -57,6 +60,12 @@ struct DividerExamples: View {
 
     private var apiContent: some View {
         DividerAPIContent()
+    }
+
+    // MARK: - Token Content
+
+    private var tokenContent: some View {
+        DividerTokenContent()
     }
 
     // MARK: - Examples

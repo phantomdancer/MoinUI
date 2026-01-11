@@ -6,6 +6,7 @@ enum ButtonExamplesTab: String, CaseIterable {
     case examples
     case playground
     case api
+    case token
 }
 
 /// Button component examples
@@ -36,8 +37,10 @@ struct ButtonExamples: View {
                 examplesContent
             } else if selectedTab == .playground {
                 playgroundContent
-            } else {
+            } else if selectedTab == .api {
                 apiContent
+            } else {
+                tokenContent
             }
         }
     }
@@ -71,6 +74,12 @@ struct ButtonExamples: View {
 
     private var apiContent: some View {
         ButtonAPIContent()
+    }
+
+    // MARK: - Token Content
+
+    private var tokenContent: some View {
+        ButtonTokenContent()
     }
 
     // MARK: - Examples
