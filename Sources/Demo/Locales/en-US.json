@@ -252,6 +252,25 @@
       "text": "Text Content",
       "title_placement": "Title Placement",
       "plain": "Plain"
+    },
+    "lorem1": "Here is the first paragraph of content.",
+    "lorem2": "Here is the second paragraph of content.",
+    "lorem_short": "This is some sample text.",
+    "left_aligned": "Text aligned to the left side.",
+    "center_aligned": "Text centered in the middle.",
+    "right_aligned": "Text aligned to the right side.",
+    "solid": "solid",
+    "dashed": "dashed",
+    "dotted": "dotted",
+    "text": "Text",
+    "link": "Link",
+    "normal_style": "Normal style (bold).",
+    "plain_style": "Plain style (regular).",
+    "playground": {
+      "preview_text": "Text",
+      "preview_link": "Link",
+      "preview_content1": "Here is first paragraph of content.",
+      "preview_content2": "Here is second paragraph of content."
     }
   },
   "config": {
@@ -526,6 +545,7 @@
       "defaultBgDisabled": "Default button disabled background"
     },
     "space": {
+      "space_api": "Moin.Space API",
       "size": "Spacing size",
       "direction": "Layout direction",
       "alignment": "Cross-axis alignment",
@@ -570,7 +590,12 @@
       "token_text_padding": "Padding around text",
       "token_line_width": "Line width",
       "token_dash_length": "Dash length",
-      "token_dash_gap": "Dash gap"
+      "token_dash_gap": "Dash gap",
+      "component_divider": "Moin.Divider",
+      "component_orientation": "Moin.DividerOrientation",
+      "component_variant": "Moin.DividerVariant",
+      "component_placement": "Moin.DividerTitlePlacement",
+      "title": "API"
     },
     "global_token": {
       "colorPrimary": "Primary color",

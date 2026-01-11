@@ -51,11 +51,9 @@ struct DividerPlayground: View {
     @Localized var tr
     @StateObject private var state = DividerPlaygroundState()
     @ObservedObject private var config = Moin.ConfigProvider.shared
-    @State private var selectedTab: PlaygroundPanelTab = .props
 
     var body: some View {
         HStack(spacing: 0) {
-            // 左侧：预览 + 代码
             VStack(spacing: 0) {
                 previewSection
                 Divider()
@@ -64,34 +62,8 @@ struct DividerPlayground: View {
 
             Divider()
 
-            // 右侧：属性/Token 控制面板
             VStack(spacing: 0) {
-                // Tab 切换
-                HStack(spacing: 0) {
-                    ForEach(PlaygroundPanelTab.allCases, id: \.self) { tab in
-                        Button {
-                            selectedTab = tab
-                        } label: {
-                            Text(tr(tab.titleKey))
-                                .font(.system(size: 12, weight: selectedTab == tab ? .medium : .regular))
-                                .foregroundStyle(selectedTab == tab ? config.token.colorPrimary : .secondary)
-                                .frame(maxWidth: .infinity)
-                                .padding(.vertical, Moin.Constants.Spacing.sm)
-                                .contentShape(Rectangle())
-                        }
-                        .buttonStyle(.plain)
-                        .background(selectedTab == tab ? config.token.colorPrimary.opacity(0.1) : .clear)
-                    }
-                }
-                .background(Color(nsColor: .controlBackgroundColor))
-
-                Divider()
-
-                if selectedTab == .props {
-                    propsPanel
-                } else {
-                    tokenPanel
-                }
+                propsTokenPanel
             }
             .frame(width: 320)
         }
@@ -116,10 +88,9 @@ struct DividerPlayground: View {
 
             Spacer()
 
-            // Divider 预览
             if state.orientation == .vertical {
                 HStack {
-                    Text("Text")
+                    Text(tr("divider.playground.preview_text"))
                     if state.hasText {
                         Moin.Divider(state.text, orientation: .vertical, variant: state.variant, plain: state.plain)
                             .frame(height: 20)
@@ -127,12 +98,12 @@ struct DividerPlayground: View {
                         Moin.Divider(orientation: .vertical, variant: state.variant)
                             .frame(height: 20)
                     }
-                    Text("Link")
+                    Text(tr("divider.playground.preview_link"))
                         .foregroundStyle(Color.accentColor)
                 }
             } else {
                 VStack(alignment: .leading, spacing: 0) {
-                    Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit.")
+                    Text(tr("divider.playground.preview_content1"))
                         .lineLimit(1)
 
                     if state.hasText {
@@ -146,7 +117,7 @@ struct DividerPlayground: View {
                         Moin.Divider(variant: state.variant)
                     }
 
-                    Text("Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.")
+                    Text(tr("divider.playground.preview_content2"))
                         .lineLimit(1)
                 }
                 .frame(maxWidth: 400)
@@ -158,9 +129,9 @@ struct DividerPlayground: View {
         .frame(maxWidth: .infinity, minHeight: 150)
     }
 
-    // MARK: - Props Panel
+    // MARK: - Props & Token Panel
 
-    private var propsPanel: some View {
+    private var propsTokenPanel: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: Moin.Constants.Spacing.md) {
                 HStack {
@@ -216,16 +187,10 @@ struct DividerPlayground: View {
                         )
                     }
                 }
-            }
-            .padding(Moin.Constants.Spacing.md)
-        }
-    }
 
-    // MARK: - Token Panel
+                Divider()
+                    .padding(.vertical, Moin.Constants.Spacing.sm)
 
-    private var tokenPanel: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: Moin.Constants.Spacing.md) {
                 HStack {
                     Spacer()
                     Button {
@@ -315,8 +280,6 @@ struct DividerPlayground: View {
         .background(config.isDarkMode ? Color(white: 0.08) : Color(white: 0.96))
     }
 }
-
-// MARK: - 扩展枚举以支持 Playground
 
 extension Moin.DividerOrientation: CustomStringConvertible {
     public var description: String { rawValue }

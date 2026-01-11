@@ -237,7 +237,7 @@
     "variant_desc": "支持实线、虚线、点线三种样式。",
     "vertical": "垂直分割线",
     "vertical_desc": "行内使用垂直分割线。",
-    "plain": "纯文本样式",
+    "plain": "普通样式",
     "plain_desc": "plain 为 true 时文字不加粗。",
     "label": {
       "left": "左侧",
@@ -252,6 +252,25 @@
       "text": "文字内容",
       "title_placement": "文字位置",
       "plain": "纯文本"
+    },
+    "lorem1": "这是第一段内容。",
+    "lorem2": "这是第二段内容。",
+    "lorem_short": "这是一段示例文本。",
+    "left_aligned": "左对齐的文字。",
+    "center_aligned": "居中对齐的文字。",
+    "right_aligned": "右对齐的文字。",
+    "solid": "solid",
+    "dashed": "dashed",
+    "dotted": "dotted",
+    "text": "文本",
+    "link": "链接",
+    "normal_style": "普通样式（加粗）。",
+    "plain_style": "普通样式（常规）。",
+    "playground": {
+      "preview_text": "文本",
+      "preview_link": "链接",
+      "preview_content1": "这是第一段内容。",
+      "preview_content2": "这是第二段内容。"
     }
   },
   "config": {
@@ -526,6 +545,7 @@
       "defaultBgDisabled": "默认按钮禁用背景色"
     },
     "space": {
+      "space_api": "Moin.Space API",
       "size": "间距大小",
       "direction": "排列方向",
       "alignment": "交叉轴对齐方式",
@@ -570,7 +590,12 @@
       "token_text_padding": "文字两侧间距",
       "token_line_width": "线条粗细",
       "token_dash_length": "虚线段长度",
-      "token_dash_gap": "虚线间隔"
+      "token_dash_gap": "虚线间隔",
+      "component_divider": "Moin.Divider",
+      "component_orientation": "Moin.DividerOrientation",
+      "component_variant": "Moin.DividerVariant",
+      "component_placement": "Moin.DividerTitlePlacement",
+      "title": "API"
     },
     "global_token": {
       "colorPrimary": "主题色",

@@ -67,17 +67,17 @@ struct DividerExamples: View {
             description: tr("divider.horizontal_desc")
         ) {
             VStack(alignment: .leading, spacing: 0) {
-                Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit.")
+                Text(tr("divider.lorem1"))
                 Moin.Divider()
-                Text("Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.")
+                Text(tr("divider.lorem2"))
             }
             .frame(maxWidth: .infinity, alignment: .leading)
         } code: {
             """
             VStack(alignment: .leading, spacing: 0) {
-                Text("Lorem ipsum dolor sit amet...")
+                Text("Content here...")
                 Moin.Divider()
-                Text("Sed do eiusmod tempor incididunt...")
+                Text("More content here...")
             }
             """
         }
@@ -89,23 +89,23 @@ struct DividerExamples: View {
             description: tr("divider.with_text_desc")
         ) {
             VStack(alignment: .leading, spacing: 0) {
-                Text("Lorem ipsum dolor sit amet.")
+                Text(tr("divider.lorem_short"))
 
                 Moin.Divider(tr("divider.label.left"), titlePlacement: .left)
-                Text("Left aligned text.")
+                Text(tr("divider.left_aligned"))
 
                 Moin.Divider(tr("divider.label.center"), titlePlacement: .center)
-                Text("Center aligned text.")
+                Text(tr("divider.center_aligned"))
 
                 Moin.Divider(tr("divider.label.right"), titlePlacement: .right)
-                Text("Right aligned text.")
+                Text(tr("divider.right_aligned"))
             }
             .frame(maxWidth: .infinity, alignment: .leading)
         } code: {
             """
-            Moin.Divider("\(tr("divider.label.left"))", titlePlacement: .left)
-            Moin.Divider("\(tr("divider.label.center"))", titlePlacement: .center)
-            Moin.Divider("\(tr("divider.label.right"))", titlePlacement: .right)
+            Moin.Divider("Left", titlePlacement: .left)
+            Moin.Divider("Center", titlePlacement: .center)
+            Moin.Divider("Right", titlePlacement: .right)
             """
         }
     }
@@ -117,15 +117,15 @@ struct DividerExamples: View {
         ) {
             VStack(alignment: .leading, spacing: Moin.Constants.Spacing.lg) {
                 VStack(alignment: .leading, spacing: Moin.Constants.Spacing.xs) {
-                    Text("solid").font(.caption).foregroundStyle(.secondary)
+                    Text(tr("divider.solid")).font(.caption).foregroundStyle(.secondary)
                     Moin.Divider(variant: .solid)
                 }
                 VStack(alignment: .leading, spacing: Moin.Constants.Spacing.xs) {
-                    Text("dashed").font(.caption).foregroundStyle(.secondary)
+                    Text(tr("divider.dashed")).font(.caption).foregroundStyle(.secondary)
                     Moin.Divider(variant: .dashed)
                 }
                 VStack(alignment: .leading, spacing: Moin.Constants.Spacing.xs) {
-                    Text("dotted").font(.caption).foregroundStyle(.secondary)
+                    Text(tr("divider.dotted")).font(.caption).foregroundStyle(.secondary)
                     Moin.Divider(variant: .dotted)
                 }
             }
@@ -145,14 +145,14 @@ struct DividerExamples: View {
             description: tr("divider.vertical_desc")
         ) {
             HStack {
-                Text("Text")
+                Text(tr("divider.text"))
                 Moin.Divider(orientation: .vertical)
                     .frame(height: 14)
-                Text("Link")
+                Text(tr("divider.link"))
                     .foregroundStyle(Color.accentColor)
                 Moin.Divider(orientation: .vertical)
                     .frame(height: 14)
-                Text("Link")
+                Text(tr("divider.link"))
                     .foregroundStyle(Color.accentColor)
             }
         } code: {
@@ -176,19 +176,19 @@ struct DividerExamples: View {
             description: tr("divider.plain_desc")
         ) {
             VStack(alignment: .leading, spacing: 0) {
-                Text("Lorem ipsum dolor sit amet.")
+                Text(tr("divider.lorem_short"))
 
                 Moin.Divider(tr("divider.label.text"))
-                Text("Normal style (bold).")
+                Text(tr("divider.normal_style"))
 
                 Moin.Divider(tr("divider.label.text"), plain: true)
-                Text("Plain style (regular).")
+                Text(tr("divider.plain_style"))
             }
             .frame(maxWidth: .infinity, alignment: .leading)
         } code: {
             """
-            Moin.Divider("\(tr("divider.label.text"))")           // bold
-            Moin.Divider("\(tr("divider.label.text"))", plain: true)  // regular
+            Moin.Divider("\\(tr("divider.label.text"))")           // bold
+            Moin.Divider("\\(tr("divider.label.text"))", plain: true)  // regular
             """
         }
     }

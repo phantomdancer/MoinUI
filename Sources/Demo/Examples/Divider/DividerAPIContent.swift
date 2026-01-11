@@ -4,13 +4,20 @@ import MoinUI
 struct DividerAPIContent: View {
     @Localized var tr
 
+    private let anchors: [AnchorItem] = [
+        AnchorItem(id: "api", titleKey: "API"),
+        AnchorItem(id: "component_token", titleKey: "api.component_token"),
+        AnchorItem(id: "global_token", titleKey: "api.global_token_title"),
+    ]
+
     var body: some View {
-        ScrollView {
+        ExamplePageWithAnchor(pageName: "Divider API", anchors: anchors) { _ in
             VStack(alignment: .leading, spacing: Moin.Constants.Spacing.lg) {
                 // MARK: - API
-                Text("API")
+                Text(tr("API"))
                     .font(.title2)
                     .fontWeight(.semibold)
+                    .id("api")
 
                 Text("Moin.Divider")
                     .font(.headline)
@@ -92,6 +99,7 @@ struct DividerAPIContent: View {
                 Text(tr("api.component_token"))
                     .font(.title2)
                     .fontWeight(.semibold)
+                    .id("component_token")
 
                 Text(tr("api.divider.token_desc"))
                     .foregroundStyle(.secondary)
@@ -114,6 +122,35 @@ struct DividerAPIContent: View {
                         ("lineWidth", "CGFloat", "1", tr("api.divider.token_line_width")),
                         ("dashLength", "CGFloat", "4", tr("api.divider.token_dash_length")),
                         ("dashGap", "CGFloat", "4", tr("api.divider.token_dash_gap")),
+                    ]
+                )
+
+                // MARK: - Global Token
+                Divider()
+                    .padding(.top, Moin.Constants.Spacing.lg)
+
+                Text(tr("api.global_token_title"))
+                    .font(.title2)
+                    .fontWeight(.semibold)
+                    .id("global_token")
+
+                Text(tr("api.global_token_desc"))
+                    .foregroundStyle(.secondary)
+                    .padding(.bottom, Moin.Constants.Spacing.sm)
+
+                APITable(
+                    headers: (
+                        tr("api.property"),
+                        tr("api.type"),
+                        tr("api.default"),
+                        tr("api.description")
+                    ),
+                    rows: [
+                        ("borderRadius", "CGFloat", "6", tr("api.global_token.borderRadius")),
+                        ("colorPrimary", "Color", "primary", tr("api.global_token.colorPrimary")),
+                        ("colorText", "Color", "textPrimary", tr("api.global_token.colorText")),
+                        ("lineWidth", "CGFloat", "1", tr("api.global_token.lineWidth")),
+                        ("margin", "CGFloat", "16", tr("api.global_token.margin")),
                     ]
                 )
             }
