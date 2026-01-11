@@ -18,6 +18,7 @@ struct DividerExamples: View {
     private let anchors: [AnchorItem] = [
         AnchorItem(id: "horizontal", titleKey: "divider.horizontal"),
         AnchorItem(id: "with_text", titleKey: "divider.with_text"),
+        AnchorItem(id: "custom_content", titleKey: "divider.custom_content"),
         AnchorItem(id: "variant", titleKey: "divider.variant"),
         AnchorItem(id: "vertical", titleKey: "divider.vertical"),
         AnchorItem(id: "plain", titleKey: "divider.plain"),
@@ -43,6 +44,7 @@ struct DividerExamples: View {
         ExamplePageWithAnchor(pageName: "Divider", anchors: anchors) { _ in
             horizontalExample.id("horizontal")
             withTextExample.id("with_text")
+            customContentExample.id("custom_content")
             variantExample.id("variant")
             verticalExample.id("vertical")
             plainExample.id("plain")
@@ -115,6 +117,70 @@ struct DividerExamples: View {
             Moin.Divider("\(tr("divider.label.left"))", titlePlacement: .left)
             Moin.Divider("\(tr("divider.label.center"))", titlePlacement: .center)
             Moin.Divider("\(tr("divider.label.right"))", titlePlacement: .right)
+            """
+        }
+    }
+
+    private var customContentExample: some View {
+        ExampleSection(
+            title: tr("divider.custom_content"),
+            description: tr("divider.custom_content_desc")
+        ) {
+            VStack(alignment: .leading, spacing: 0) {
+                Text(tr("divider.lorem_short"))
+
+                Moin.Divider {
+                    HStack(spacing: 4) {
+                        Image(systemName: "star.fill")
+                            .foregroundStyle(.yellow)
+                        Text(tr("divider.label.featured"))
+                            .fontWeight(.medium)
+                    }
+                }
+
+                Text(tr("divider.lorem_short"))
+
+                Moin.Divider(titlePlacement: .left) {
+                    HStack(spacing: 4) {
+                        Image(systemName: "link")
+                        Text(tr("divider.label.more"))
+                            .foregroundStyle(.blue)
+                    }
+                }
+
+                Text(tr("divider.lorem_short"))
+
+                Moin.Divider(variant: .dashed) {
+                    Moin.Button(tr("divider.label.expand"), color: .primary, size: .small, variant: .text) {}
+                }
+
+                Text(tr("divider.lorem_short"))
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+        } code: {
+            """
+            // \(tr("divider.custom_icon_text"))
+            Moin.Divider {
+                HStack(spacing: 4) {
+                    Image(systemName: "star.fill")
+                        .foregroundStyle(.yellow)
+                    Text("\(tr("divider.label.featured"))")
+                }
+            }
+
+            // \(tr("divider.custom_link"))
+            Moin.Divider(titlePlacement: .left) {
+                HStack(spacing: 4) {
+                    Image(systemName: "link")
+                    Text("\(tr("divider.label.more"))")
+                        .foregroundStyle(.blue)
+                }
+            }
+
+            // \(tr("divider.custom_button"))
+            Moin.Divider(variant: .dashed) {
+                Moin.Button("\(tr("divider.label.expand"))", color: .primary, size: .small, variant: .text) {}
+            }
             """
         }
     }

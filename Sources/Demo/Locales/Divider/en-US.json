@@ -12,11 +12,19 @@
     "vertical_desc": "Use vertical divider inline.",
     "plain": "Plain Style",
     "plain_desc": "Text is not bold when plain is true.",
+    "custom_content": "Custom Content",
+    "custom_content_desc": "Use @ViewBuilder to pass any view as divider content.",
+    "custom_icon_text": "Icon + Text",
+    "custom_link": "Link Style",
+    "custom_button": "Button Style",
     "label": {
       "left": "Left",
       "center": "Center",
       "right": "Right",
-      "text": "Text"
+      "text": "Text",
+      "featured": "Featured",
+      "more": "View More",
+      "expand": "Expand"
     },
     "prop": {
       "orientation": "Orientation",
