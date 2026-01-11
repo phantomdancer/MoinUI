@@ -1,0 +1,37 @@
+{
+  "theme": {
+    "title": "Theme Configuration",
+    "description": "MoinUI provides a complete theming system supporting light, dark, and system-following modes.",
+    "root": {
+      "title": "Quick Start",
+      "desc": "Use .moinThemeRoot() modifier at App entry to enable global theme support.",
+      "note": ".moinThemeRoot() automatically sets preferredColorScheme, making the entire app (including system controls) follow theme changes."
+    },
+    "switch": {
+      "title": "Theme Switching",
+      "desc": "Switch themes via Moin.ConfigProvider.",
+      "current": "Current Theme",
+      "code_title": "Theme Switching Code"
+    },
+    "token": {
+      "title": "Token System",
+      "desc": "MoinUI uses a Token system to manage theme colors and styles, which can be customized.",
+      "colors": "Theme Colors",
+      "code_title": "Token Usage Example"
+    },
+    "api": {
+      "light": "Light theme",
+      "dark": "Dark theme",
+      "system": "Follow system",
+      "theme_prop": "Current theme setting",
+      "is_dark": "Whether in dark mode",
+      "apply": "Apply specified theme",
+      "toggle": "Toggle light/dark",
+      "theme_root": "Apply global theme (use at App entry)",
+      "theme_modifier": "Set local theme"
+    },
+    "anchor": {
+      "api": "API Reference"
+    }
+  }
+}

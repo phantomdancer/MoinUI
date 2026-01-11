@@ -13,6 +13,11 @@ enum DemoTranslations {
         "Locales/Space",
         "Locales/Divider",
         "Locales/Colors",
+        "Locales/QuickStart",
+        "Locales/Theme",
+        "Locales/Token",
+        "Locales/ConfigProvider",
+        "Locales/Localization",
     ]
 
     static func register() {

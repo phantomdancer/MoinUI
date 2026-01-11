@@ -46,90 +46,6 @@
     "components": "Components",
     "development": "Development"
   },
-  "quick_start": {
-    "desc": "Get started with MoinUI in just a few steps.",
-    "installation": "Installation",
-    "basic_usage": "Basic Usage",
-    "theme_config": "Theme Configuration",
-    "click_me": "Click Me",
-    "hello_moinui": "Hello MoinUI!"
-  },
-  "theme": {
-    "title": "Theme Configuration",
-    "description": "MoinUI provides a complete theming system supporting light, dark, and system-following modes.",
-    "root": {
-      "title": "Quick Start",
-      "desc": "Use .moinThemeRoot() modifier at App entry to enable global theme support.",
-      "note": ".moinThemeRoot() automatically sets preferredColorScheme, making the entire app (including system controls) follow theme changes."
-    },
-    "switch": {
-      "title": "Theme Switching",
-      "desc": "Switch themes via Moin.ConfigProvider.",
-      "current": "Current Theme",
-      "code_title": "Theme Switching Code"
-    },
-    "token": {
-      "title": "Token System",
-      "desc": "MoinUI uses a Token system to manage theme colors and styles, which can be customized.",
-      "colors": "Theme Colors",
-      "code_title": "Token Usage Example"
-    },
-    "api": {
-      "light": "Light theme",
-      "dark": "Dark theme",
-      "system": "Follow system",
-      "theme_prop": "Current theme setting",
-      "is_dark": "Whether in dark mode",
-      "apply": "Apply specified theme",
-      "toggle": "Toggle light/dark",
-      "theme_root": "Apply global theme (use at App entry)",
-      "theme_modifier": "Set local theme"
-    },
-    "anchor": {
-      "api": "API Reference"
-    }
-  },
-  "token": {
-    "title": "Token System",
-    "description": "MoinUI adopts Ant Design's four-layer Token architecture for layered management and automatic derivation of design variables.",
-    "architecture": "Architecture",
-    "architecture_desc": "The Token system has four layers: SeedToken → MapToken → Token → ComponentToken. Modifying seed values automatically cascades updates to all derived values.",
-    "seed_brief": "Core config values",
-    "map_brief": "Derivation layer",
-    "alias_brief": "Semantic aliases",
-    "component_brief": "Component-specific",
-    "seed_desc": "SeedToken contains 24 core configurable values, the source of the entire Token system. Modifying these triggers full derivation chain recalculation.",
-    "seed_usage": "Modify Seed Values",
-    "modify_seed": "Modify single seed value",
-    "batch_modify": "Batch modify seed values",
-    "map_desc": "MapToken derives ~50+ intermediate values from SeedToken through algorithms, including color palettes, text opacity, size variants, etc.",
-    "derive_rules": "Derivation Rules",
-    "derive_color": "Color Derivation",
-    "derive_color_desc": "Generate 10-level color palette using ColorPalette, mapped to Hover/Active/Bg/Border states",
-    "derive_text": "Text Derivation",
-    "derive_text_desc": "Opacity gradient: Primary(0.88) → Secondary(0.65) → Tertiary(0.45) → Quaternary(0.25)",
-    "derive_size": "Size Derivation",
-    "derive_size_desc": "SM = base - 2, LG = base + 2; controlHeight: SM = base × 0.75, LG = base × 1.25",
-    "component_desc": "Each component has its own ComponentToken, inheriting defaults from global Token with independent override support.",
-    "button_token_count": "41 properties",
-    "space_token_count": "3 properties",
-    "divider_token_count": "9 properties",
-    "component_usage": "Override Component Token",
-    "override_component": "Override component token",
-    "regenerate_all": "Regenerate all tokens (reset to derived values)",
-    "usage": "Usage in Views",
-    "anchor": {
-      "seed": "SeedToken",
-      "map": "MapToken",
-      "component": "ComponentToken"
-    },
-    "usage_view": "Environment Injection",
-    "usage_view_desc": "Get current Token values via @Environment for use in views.",
-    "usage_dynamic": "Dynamic Updates",
-    "usage_dynamic_desc": "After modifying seed values, all components using Token will automatically respond to updates.",
-    "change_primary": "Change primary color",
-    "all_components_update": "All components automatically update"
-  },
   "component": {
     "button": "Button",
     "typography": "Typography",
@@ -170,44 +86,6 @@
     "installation": "Installation",
     "usage": "Usage",
     "click_me": "Click me"
-  },
-  "config": {
-    "title": "ConfigProvider",
-    "description": "ConfigProvider is used for global configuration of MoinUI components theme, locale and other properties.",
-    "basic": "Basic Usage",
-    "basic_desc": "Configure ConfigProvider at your app entry.",
-    "basic_demo": "Inject ConfigProvider at App entry",
-    "locale": "Locale Configuration",
-    "locale_desc": "Switch the display language of the component library.",
-    "switch_zh": "Switch to Chinese",
-    "switch_en": "Switch to English",
-    "theme": "Theme Configuration",
-    "theme_desc": "Configure theme colors and style properties.",
-    "theme_demo": "Configure theme properties via ConfigProvider",
-    "primary_color": "Primary Color",
-    "token": "Token Configuration",
-    "token_desc": "Fine-grained control of component styles via Token.",
-    "border_radius": "Radius",
-    "control_height": "Height",
-    "reset": "Reset",
-    "anchor": {
-      "api": "API Reference"
-    }
-  },
-  "i18n": {
-    "title": "Localization",
-    "description": "MoinUI provides complete internationalization support with customizable translations.",
-    "basic": "Basic Usage",
-    "basic_desc": "Use tr() method to get translated text.",
-    "custom": "Custom Translations",
-    "custom_desc": "Register custom translation key-value pairs.",
-    "custom_demo": "Use register() to add custom translations",
-    "json": "JSON Files",
-    "json_desc": "Load translations from JSON files with nested structure support.",
-    "json_demo": "Use registerFromJSON() to load JSON translation files",
-    "anchor": {
-      "api": "API Reference"
-    }
   },
   "code": {
     "show": "Show Code",

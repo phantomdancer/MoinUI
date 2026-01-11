@@ -1,0 +1,37 @@
+{
+  "theme": {
+    "title": "Theme 主题配置",
+    "description": "MoinUI 提供完整的主题系统，支持浅色、深色和跟随系统三种模式。",
+    "root": {
+      "title": "快速开始",
+      "desc": "使用 .moinThemeRoot() 修饰器在 App 入口启用全局主题支持。",
+      "note": ".moinThemeRoot() 会自动设置 preferredColorScheme，使整个应用（包括系统控件）跟随主题切换。"
+    },
+    "switch": {
+      "title": "主题切换",
+      "desc": "通过 Moin.ConfigProvider 切换主题。",
+      "current": "当前主题",
+      "code_title": "切换主题代码"
+    },
+    "token": {
+      "title": "Token 系统",
+      "desc": "MoinUI 使用 Token 系统管理主题颜色和样式，可自定义覆盖。",
+      "colors": "主题颜色",
+      "code_title": "Token 使用示例"
+    },
+    "api": {
+      "light": "浅色主题",
+      "dark": "深色主题",
+      "system": "跟随系统",
+      "theme_prop": "当前主题设置",
+      "is_dark": "是否为深色模式",
+      "apply": "应用指定主题",
+      "toggle": "切换浅色/深色",
+      "theme_root": "应用全局主题（在 App 入口使用）",
+      "theme_modifier": "设置局部主题"
+    },
+    "anchor": {
+      "api": "API 参考"
+    }
+  }
+}

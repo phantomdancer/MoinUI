@@ -1,0 +1,17 @@
+{
+  "i18n": {
+    "title": "Localization 国际化",
+    "description": "MoinUI 提供完整的国际化支持，可自定义翻译文本。",
+    "basic": "基础用法",
+    "basic_desc": "使用 tr() 方法获取翻译文本。",
+    "custom": "自定义翻译",
+    "custom_desc": "注册自定义翻译键值对。",
+    "custom_demo": "使用 register() 注册自定义翻译",
+    "json": "JSON 文件",
+    "json_desc": "从 JSON 文件加载翻译，支持嵌套结构。",
+    "json_demo": "使用 registerFromJSON() 加载 JSON 翻译文件",
+    "anchor": {
+      "api": "API 参考"
+    }
+  }
+}

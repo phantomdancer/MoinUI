@@ -84,30 +84,5 @@
       "type_warning": "警告颜色",
       "type_danger": "危险颜色"
     }
-  },
-  "token": {
-    "font_size": "字体大小",
-    "line_height": "行高",
-    "text_color": "文本颜色",
-    "name": "Token 名称",
-    "value": "值",
-    "preview": "预览",
-    "h1_line_height": "H1 行高",
-    "h2_line_height": "H2 行高",
-    "h3_line_height": "H3 行高",
-    "h4_line_height": "H4 行高",
-    "h5_line_height": "H5 行高",
-    "default_line_height": "默认行高",
-    "default_font_size": "默认字体大小",
-    "small_font_size": "小号字体",
-    "large_font_size": "大号字体",
-    "primary_text": "主要文本色",
-    "secondary_text": "次要文本色",
-    "tertiary_text": "第三文本色",
-    "disabled_text": "禁用文本色",
-    "success_color": "成功色",
-    "warning_color": "警告色",
-    "danger_color": "危险色",
-    "link_color": "链接色"
   }
 }

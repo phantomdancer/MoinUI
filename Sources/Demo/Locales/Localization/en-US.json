@@ -1,0 +1,17 @@
+{
+  "i18n": {
+    "title": "Localization",
+    "description": "MoinUI provides complete internationalization support with customizable translations.",
+    "basic": "Basic Usage",
+    "basic_desc": "Use tr() method to get translated text.",
+    "custom": "Custom Translations",
+    "custom_desc": "Register custom translation key-value pairs.",
+    "custom_demo": "Use register() to add custom translations",
+    "json": "JSON Files",
+    "json_desc": "Load translations from JSON files with nested structure support.",
+    "json_demo": "Use registerFromJSON() to load JSON translation files",
+    "anchor": {
+      "api": "API Reference"
+    }
+  }
+}

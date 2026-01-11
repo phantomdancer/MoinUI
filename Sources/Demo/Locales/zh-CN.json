@@ -46,90 +46,6 @@
     "components": "Components 组件",
     "development": "Development 研发"
   },
-  "quick_start": {
-    "desc": "只需几步即可开始使用 MoinUI。",
-    "installation": "安装",
-    "basic_usage": "基本用法",
-    "theme_config": "主题配置",
-    "click_me": "点击我",
-    "hello_moinui": "你好 MoinUI！"
-  },
-  "theme": {
-    "title": "Theme 主题配置",
-    "description": "MoinUI 提供完整的主题系统，支持浅色、深色和跟随系统三种模式。",
-    "root": {
-      "title": "快速开始",
-      "desc": "使用 .moinThemeRoot() 修饰器在 App 入口启用全局主题支持。",
-      "note": ".moinThemeRoot() 会自动设置 preferredColorScheme，使整个应用（包括系统控件）跟随主题切换。"
-    },
-    "switch": {
-      "title": "主题切换",
-      "desc": "通过 Moin.ConfigProvider 切换主题。",
-      "current": "当前主题",
-      "code_title": "切换主题代码"
-    },
-    "token": {
-      "title": "Token 系统",
-      "desc": "MoinUI 使用 Token 系统管理主题颜色和样式，可自定义覆盖。",
-      "colors": "主题颜色",
-      "code_title": "Token 使用示例"
-    },
-    "api": {
-      "light": "浅色主题",
-      "dark": "深色主题",
-      "system": "跟随系统",
-      "theme_prop": "当前主题设置",
-      "is_dark": "是否为深色模式",
-      "apply": "应用指定主题",
-      "toggle": "切换浅色/深色",
-      "theme_root": "应用全局主题（在 App 入口使用）",
-      "theme_modifier": "设置局部主题"
-    },
-    "anchor": {
-      "api": "API 参考"
-    }
-  },
-  "token": {
-    "title": "Token 设计令牌",
-    "description": "MoinUI 采用与 Ant Design 一致的四层 Token 架构，实现设计变量的分层管理和自动派生。",
-    "architecture": "架构设计",
-    "architecture_desc": "Token 系统分为四层：SeedToken（种子）→ MapToken（映射）→ Token（别名）→ ComponentToken（组件）。修改种子值会自动级联更新所有派生值。",
-    "seed_brief": "核心配置值",
-    "map_brief": "派生算法层",
-    "alias_brief": "语义别名层",
-    "component_brief": "组件专用",
-    "seed_desc": "SeedToken 包含 24 个核心可配置值，是整个 Token 系统的源头。修改这些值会触发完整的派生链重新计算。",
-    "seed_usage": "修改种子值",
-    "modify_seed": "修改单个种子值",
-    "batch_modify": "批量修改种子值",
-    "map_desc": "MapToken 通过派生算法从 SeedToken 生成约 50+ 个中间值，包括色板梯度、文本透明度、尺寸变体等。",
-    "derive_rules": "派生规则",
-    "derive_color": "颜色派生",
-    "derive_color_desc": "使用 ColorPalette 生成 10 级色板，映射到 Hover/Active/Bg/Border 等状态色",
-    "derive_text": "文本派生",
-    "derive_text_desc": "透明度梯度：Primary(0.88) → Secondary(0.65) → Tertiary(0.45) → Quaternary(0.25)",
-    "derive_size": "尺寸派生",
-    "derive_size_desc": "SM = base - 2, LG = base + 2; controlHeight: SM = base × 0.75, LG = base × 1.25",
-    "component_desc": "每个组件有专属的 ComponentToken，从全局 Token 继承默认值，支持独立覆盖。",
-    "button_token_count": "41 个属性",
-    "space_token_count": "3 个属性",
-    "divider_token_count": "9 个属性",
-    "component_usage": "组件 Token 覆盖",
-    "override_component": "覆盖组件 Token",
-    "regenerate_all": "重新生成所有 Token（重置为派生值）",
-    "usage": "在视图中使用",
-    "anchor": {
-      "seed": "SeedToken 种子",
-      "map": "MapToken 映射",
-      "component": "ComponentToken 组件"
-    },
-    "usage_view": "环境注入",
-    "usage_view_desc": "通过 @Environment 获取当前 Token 值，在视图中使用。",
-    "usage_dynamic": "动态更新",
-    "usage_dynamic_desc": "修改种子值后，所有使用 Token 的组件会自动响应更新。",
-    "change_primary": "更改主色",
-    "all_components_update": "所有组件自动响应更新"
-  },
   "component": {
     "button": "Button 按钮",
     "typography": "Typography 排版",
@@ -170,44 +86,6 @@
     "installation": "安装",
     "usage": "使用",
     "click_me": "点击我"
-  },
-  "config": {
-    "title": "ConfigProvider 全局配置",
-    "description": "ConfigProvider 用于全局配置 MoinUI 组件的主题、语言等属性。",
-    "basic": "基础用法",
-    "basic_desc": "在应用入口配置 ConfigProvider。",
-    "basic_demo": "在 App 入口注入 ConfigProvider",
-    "locale": "语言配置",
-    "locale_desc": "切换组件库的显示语言。",
-    "switch_zh": "切换中文",
-    "switch_en": "切换英文",
-    "theme": "主题配置",
-    "theme_desc": "配置主题色等样式属性。",
-    "theme_demo": "通过 ConfigProvider 配置主题属性",
-    "primary_color": "主题色",
-    "token": "Token 配置",
-    "token_desc": "通过 Token 精细控制组件样式。",
-    "border_radius": "圆角",
-    "control_height": "控件高度",
-    "reset": "重置",
-    "anchor": {
-      "api": "API 参考"
-    }
-  },
-  "i18n": {
-    "title": "Localization 国际化",
-    "description": "MoinUI 提供完整的国际化支持，可自定义翻译文本。",
-    "basic": "基础用法",
-    "basic_desc": "使用 tr() 方法获取翻译文本。",
-    "custom": "自定义翻译",
-    "custom_desc": "注册自定义翻译键值对。",
-    "custom_demo": "使用 register() 注册自定义翻译",
-    "json": "JSON 文件",
-    "json_desc": "从 JSON 文件加载翻译，支持嵌套结构。",
-    "json_demo": "使用 registerFromJSON() 加载 JSON 翻译文件",
-    "anchor": {
-      "api": "API 参考"
-    }
   },
   "code": {
     "show": "显示代码",

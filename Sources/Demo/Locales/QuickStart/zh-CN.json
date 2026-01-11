@@ -1,0 +1,10 @@
+{
+  "quick_start": {
+    "desc": "只需几步即可开始使用 MoinUI。",
+    "installation": "安装",
+    "basic_usage": "基本用法",
+    "theme_config": "主题配置",
+    "click_me": "点击我",
+    "hello_moinui": "你好 MoinUI！"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "config": {
+    "title": "ConfigProvider 全局配置",
+    "description": "ConfigProvider 用于全局配置 MoinUI 组件的主题、语言等属性。",
+    "basic": "基础用法",
+    "basic_desc": "在应用入口配置 ConfigProvider。",
+    "basic_demo": "在 App 入口注入 ConfigProvider",
+    "locale": "语言配置",
+    "locale_desc": "切换组件库的显示语言。",
+    "switch_zh": "切换中文",
+    "switch_en": "切换英文",
+    "theme": "主题配置",
+    "theme_desc": "配置主题色等样式属性。",
+    "theme_demo": "通过 ConfigProvider 配置主题属性",
+    "primary_color": "主题色",
+    "token": "Token 配置",
+    "token_desc": "通过 Token 精细控制组件样式。",
+    "border_radius": "圆角",
+    "control_height": "控件高度",
+    "reset": "重置",
+    "anchor": {
+      "api": "API 参考"
+    }
+  }
+}

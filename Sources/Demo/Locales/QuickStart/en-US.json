@@ -1,0 +1,10 @@
+{
+  "quick_start": {
+    "desc": "Get started with MoinUI in just a few steps.",
+    "installation": "Installation",
+    "basic_usage": "Basic Usage",
+    "theme_config": "Theme Configuration",
+    "click_me": "Click Me",
+    "hello_moinui": "Hello MoinUI!"
+  }
+}

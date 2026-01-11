@@ -84,30 +84,5 @@
       "type_warning": "Warning color",
       "type_danger": "Danger color"
     }
-  },
-  "token": {
-    "font_size": "Font Size",
-    "line_height": "Line Height",
-    "text_color": "Text Color",
-    "name": "Token Name",
-    "value": "Value",
-    "preview": "Preview",
-    "h1_line_height": "H1 line height",
-    "h2_line_height": "H2 line height",
-    "h3_line_height": "H3 line height",
-    "h4_line_height": "H4 line height",
-    "h5_line_height": "H5 line height",
-    "default_line_height": "Default line height",
-    "default_font_size": "Default body font size",
-    "small_font_size": "Small font size",
-    "large_font_size": "Large font size",
-    "primary_text": "Primary text color",
-    "secondary_text": "Secondary text color",
-    "tertiary_text": "Tertiary text color",
-    "disabled_text": "Disabled text color",
-    "success_color": "Success color",
-    "warning_color": "Warning color",
-    "danger_color": "Danger color",
-    "link_color": "Link color"
   }
 }

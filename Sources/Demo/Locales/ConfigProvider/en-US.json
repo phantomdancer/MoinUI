@@ -1,0 +1,25 @@
+{
+  "config": {
+    "title": "ConfigProvider",
+    "description": "ConfigProvider is used for global configuration of MoinUI components theme, locale and other properties.",
+    "basic": "Basic Usage",
+    "basic_desc": "Configure ConfigProvider at your app entry.",
+    "basic_demo": "Inject ConfigProvider at App entry",
+    "locale": "Locale Configuration",
+    "locale_desc": "Switch the display language of the component library.",
+    "switch_zh": "Switch to Chinese",
+    "switch_en": "Switch to English",
+    "theme": "Theme Configuration",
+    "theme_desc": "Configure theme colors and style properties.",
+    "theme_demo": "Configure theme properties via ConfigProvider",
+    "primary_color": "Primary Color",
+    "token": "Token Configuration",
+    "token_desc": "Fine-grained control of component styles via Token.",
+    "border_radius": "Radius",
+    "control_height": "Height",
+    "reset": "Reset",
+    "anchor": {
+      "api": "API Reference"
+    }
+  }
+}
