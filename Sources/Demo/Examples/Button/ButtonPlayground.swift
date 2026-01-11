@@ -237,8 +237,7 @@ struct ButtonPlayground: View {
                 HStack {
                     Spacer()
                     Button {
-                        config.components.button = config.isDarkMode ? .dark : .light
-                        config.token = config.isDarkMode ? .dark : .light
+                        config.regenerateTokens()
                     } label: {
                         HStack(spacing: 4) {
                             Image(systemName: "arrow.counterclockwise")

@@ -163,8 +163,8 @@ struct ConfigProviderExamples: View {
                         .frame(width: 80, alignment: .leading)
 
                     Slider(value: Binding(
-                        get: { configProvider.token.borderRadius },
-                        set: { configProvider.token.borderRadius = $0 }
+                        get: { configProvider.seed.borderRadius },
+                        set: { configProvider.setBorderRadius($0) }
                     ), in: 0...20, step: 2)
                     .frame(width: 150)
 

@@ -258,6 +258,7 @@
       "colorPrimary": "主题色",
       "colorPrimaryHover": "主题色悬浮态",
       "colorPrimaryActive": "主题色激活态",
+      "colorText": "文本色",
       "borderRadius": "圆角大小",
       "borderRadiusLG": "大号圆角",
       "borderRadiusSM": "小号圆角",
@@ -265,7 +266,12 @@
       "controlHeightLG": "大号控件高度",
       "controlHeightSM": "小号控件高度",
       "colorTextDisabled": "禁用文本色",
-      "motionDuration": "动画时长"
+      "motionDuration": "动画时长",
+      "fontSize": "字体大小",
+      "margin": "外边距",
+      "marginLG": "大号外边距",
+      "marginXS": "超小外边距",
+      "lineWidth": "线条粗细"
     }
   }
 }

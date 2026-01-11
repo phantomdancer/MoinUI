@@ -233,7 +233,7 @@ struct SpacePlayground: View {
                 HStack {
                     Spacer()
                     Button {
-                        config.components.space = config.isDarkMode ? .dark : .light
+                        config.regenerateTokens()
                     } label: {
                         HStack(spacing: 4) {
                             Image(systemName: "arrow.counterclockwise")

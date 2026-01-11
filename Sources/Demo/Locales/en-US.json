@@ -258,6 +258,7 @@
       "colorPrimary": "Primary color",
       "colorPrimaryHover": "Primary hover color",
       "colorPrimaryActive": "Primary active color",
+      "colorText": "Text color",
       "borderRadius": "Border radius",
       "borderRadiusLG": "Large border radius",
       "borderRadiusSM": "Small border radius",
@@ -265,7 +266,12 @@
       "controlHeightLG": "Large control height",
       "controlHeightSM": "Small control height",
       "colorTextDisabled": "Disabled text color",
-      "motionDuration": "Animation duration"
+      "motionDuration": "Animation duration",
+      "fontSize": "Font size",
+      "margin": "Margin",
+      "marginLG": "Large margin",
+      "marginXS": "Extra small margin",
+      "lineWidth": "Line width"
     }
   }
 }

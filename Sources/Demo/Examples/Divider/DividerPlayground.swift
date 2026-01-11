@@ -194,7 +194,7 @@ struct DividerPlayground: View {
                 HStack {
                     Spacer()
                     Button {
-                        config.components.divider = config.isDarkMode ? .dark : .light
+                        config.regenerateTokens()
                     } label: {
                         HStack(spacing: 4) {
                             Image(systemName: "arrow.counterclockwise")

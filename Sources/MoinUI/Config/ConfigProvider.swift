@@ -1,36 +1,266 @@
 import SwiftUI
 
+// MARK: - Moin.SeedToken
+
+public extension Moin {
+    /// 种子 Token - 核心可配置值，派生出完整 Token 系统
+    /// 对应 Ant Design 的 SeedToken
+    struct SeedToken {
+        /// 主色
+        public var colorPrimary: Color
+        /// 成功色
+        public var colorSuccess: Color
+        /// 警告色
+        public var colorWarning: Color
+        /// 错误色 (对应 colorDanger)
+        public var colorError: Color
+        /// 信息色
+        public var colorInfo: Color
+        /// 基础字号
+        public var fontSize: CGFloat
+        /// 基础圆角
+        public var borderRadius: CGFloat
+        /// 控件基础高度
+        public var controlHeight: CGFloat
+        /// 基础内边距
+        public var padding: CGFloat
+        /// 动画时长
+        public var motionDuration: Double
+
+        public init(
+            colorPrimary: Color = Moin.Colors.blue,
+            colorSuccess: Color = Moin.Colors.green,
+            colorWarning: Color = Moin.Colors.gold,
+            colorError: Color = Moin.Colors.red,
+            colorInfo: Color = Color(red: 0.55, green: 0.55, blue: 0.60),
+            fontSize: CGFloat = 14,
+            borderRadius: CGFloat = 6,
+            controlHeight: CGFloat = 32,
+            padding: CGFloat = 12,
+            motionDuration: Double = 0.25
+        ) {
+            self.colorPrimary = colorPrimary
+            self.colorSuccess = colorSuccess
+            self.colorWarning = colorWarning
+            self.colorError = colorError
+            self.colorInfo = colorInfo
+            self.fontSize = fontSize
+            self.borderRadius = borderRadius
+            self.controlHeight = controlHeight
+            self.padding = padding
+            self.motionDuration = motionDuration
+        }
+
+        public static let `default` = SeedToken()
+    }
+}
+
+
+// MARK: - Moin.MapToken
+
+public extension Moin {
+    /// 映射 Token - 从 SeedToken 派生
+    /// 对应 Ant Design 的 MapToken
+    struct MapToken {
+        // MARK: - 色板
+        public let primaryPalette: Moin.ColorPalette
+        public let successPalette: Moin.ColorPalette
+        public let warningPalette: Moin.ColorPalette
+        public let errorPalette: Moin.ColorPalette
+        public let infoPalette: Moin.ColorPalette
+
+        // MARK: - Primary 颜色 (从色板派生)
+        public var colorPrimary: Color { primaryPalette[6] }
+        public var colorPrimaryHover: Color { primaryPalette[5] }
+        public var colorPrimaryActive: Color { primaryPalette[7] }
+        public var colorPrimaryBg: Color { primaryPalette[1] }
+        public var colorPrimaryBorder: Color { primaryPalette[3] }
+
+        // MARK: - Success 颜色
+        public var colorSuccess: Color { successPalette[6] }
+        public var colorSuccessHover: Color { successPalette[5] }
+        public var colorSuccessActive: Color { successPalette[7] }
+
+        // MARK: - Warning 颜色
+        public var colorWarning: Color { warningPalette[6] }
+        public var colorWarningHover: Color { warningPalette[5] }
+        public var colorWarningActive: Color { warningPalette[7] }
+
+        // MARK: - Error/Danger 颜色
+        public var colorError: Color { errorPalette[6] }
+        public var colorErrorHover: Color { errorPalette[5] }
+        public var colorErrorActive: Color { errorPalette[7] }
+
+        // MARK: - Info 颜色
+        public var colorInfo: Color { infoPalette[6] }
+        public var colorInfoHover: Color { infoPalette[5] }
+        public var colorInfoActive: Color { infoPalette[7] }
+
+        // MARK: - 文字颜色 (透明度梯度)
+        public let colorText: Color           // 0.88
+        public let colorTextSecondary: Color  // 0.65
+        public let colorTextTertiary: Color   // 0.45
+        public let colorTextQuaternary: Color // 0.25
+
+        // MARK: - 背景颜色
+        public let colorBgContainer: Color
+        public let colorBgElevated: Color
+        public let colorBgHover: Color
+        public let colorBgDisabled: Color
+
+        // MARK: - 边框颜色
+        public let colorBorder: Color
+        public let colorBorderHover: Color
+
+        // MARK: - 尺寸派生
+        public let fontSize: CGFloat
+        public let fontSizeSM: CGFloat
+        public let fontSizeLG: CGFloat
+
+        public let controlHeight: CGFloat
+        public let controlHeightSM: CGFloat
+        public let controlHeightLG: CGFloat
+
+        public let borderRadius: CGFloat
+        public let borderRadiusSM: CGFloat
+        public let borderRadiusLG: CGFloat
+
+        public let padding: CGFloat
+        public let paddingSM: CGFloat
+        public let paddingLG: CGFloat
+
+        public let motionDuration: Double
+
+        // MARK: - 派生算法
+        public static func generate(from seed: SeedToken, theme: Moin.Theme) -> MapToken {
+            let isDark = (theme == .dark)
+            let paletteTheme: Moin.ColorPalette.Theme = isDark ? .dark : .light
+            let darkBg = Color(hex: 0x141414)
+
+            // 生成色板
+            let primaryPalette = Moin.ColorPalette.generate(
+                from: seed.colorPrimary,
+                theme: paletteTheme,
+                backgroundColor: darkBg
+            )
+            let successPalette = Moin.ColorPalette.generate(
+                from: seed.colorSuccess,
+                theme: paletteTheme,
+                backgroundColor: darkBg
+            )
+            let warningPalette = Moin.ColorPalette.generate(
+                from: seed.colorWarning,
+                theme: paletteTheme,
+                backgroundColor: darkBg
+            )
+            let errorPalette = Moin.ColorPalette.generate(
+                from: seed.colorError,
+                theme: paletteTheme,
+                backgroundColor: darkBg
+            )
+            let infoPalette = Moin.ColorPalette.generate(
+                from: seed.colorInfo,
+                theme: paletteTheme,
+                backgroundColor: darkBg
+            )
+
+            // 文字颜色 (透明度梯度)
+            let textBase: Color = isDark ? Color(white: 0.92) : Color(white: 0.13)
+            let colorText = textBase.opacity(0.88)
+            let colorTextSecondary = textBase.opacity(0.65)
+            let colorTextTertiary = textBase.opacity(0.45)
+            let colorTextQuaternary = textBase.opacity(0.25)
+
+            // 背景颜色
+            let colorBgContainer: Color = isDark ? Color(hex: 0x141414) : .white
+            let colorBgElevated: Color = isDark ? Color(red: 0.14, green: 0.14, blue: 0.16) : .white
+            let colorBgHover: Color = isDark ? Color(red: 0.15, green: 0.15, blue: 0.17) : Color(white: 0.96)
+            let colorBgDisabled: Color = isDark ? Color(white: 0.22) : Color(white: 0.96)
+
+            // 边框颜色
+            let colorBorder: Color = isDark ? Color(white: 0.25) : Color(white: 0.85)
+            let colorBorderHover: Color = primaryPalette[5]
+
+            // 尺寸派生
+            let fontSizeSM = seed.fontSize - 2
+            let fontSizeLG = seed.fontSize + 2
+
+            let controlHeightSM = round(seed.controlHeight * 0.75)
+            let controlHeightLG = round(seed.controlHeight * 1.25)
+
+            let borderRadiusSM = max(seed.borderRadius - 2, 2)
+            let borderRadiusLG = seed.borderRadius + 2
+
+            let paddingSM = seed.padding - 4
+            let paddingLG = seed.padding + 4
+
+            return MapToken(
+                primaryPalette: primaryPalette,
+                successPalette: successPalette,
+                warningPalette: warningPalette,
+                errorPalette: errorPalette,
+                infoPalette: infoPalette,
+                colorText: colorText,
+                colorTextSecondary: colorTextSecondary,
+                colorTextTertiary: colorTextTertiary,
+                colorTextQuaternary: colorTextQuaternary,
+                colorBgContainer: colorBgContainer,
+                colorBgElevated: colorBgElevated,
+                colorBgHover: colorBgHover,
+                colorBgDisabled: colorBgDisabled,
+                colorBorder: colorBorder,
+                colorBorderHover: colorBorderHover,
+                fontSize: seed.fontSize,
+                fontSizeSM: fontSizeSM,
+                fontSizeLG: fontSizeLG,
+                controlHeight: seed.controlHeight,
+                controlHeightSM: controlHeightSM,
+                controlHeightLG: controlHeightLG,
+                borderRadius: seed.borderRadius,
+                borderRadiusSM: borderRadiusSM,
+                borderRadiusLG: borderRadiusLG,
+                padding: seed.padding,
+                paddingSM: paddingSM,
+                paddingLG: paddingLG,
+                motionDuration: seed.motionDuration
+            )
+        }
+    }
+}
+
+
 // MARK: - Moin.Token
 
 public extension Moin {
-    /// Global design token for component styling
+    /// 别名 Token - 对外暴露的 API 层，从 MapToken 派生
+    /// 保持现有 API 兼容，支持临时覆盖
     struct Token {
-        // Primary Colors
+        // MARK: - Primary Colors
         public var colorPrimary: Color
         public var colorPrimaryHover: Color
         public var colorPrimaryActive: Color
 
-        // Success Colors
+        // MARK: - Success Colors
         public var colorSuccess: Color
         public var colorSuccessHover: Color
         public var colorSuccessActive: Color
 
-        // Warning Colors
+        // MARK: - Warning Colors
         public var colorWarning: Color
         public var colorWarningHover: Color
         public var colorWarningActive: Color
 
-        // Danger Colors
+        // MARK: - Danger Colors
         public var colorDanger: Color
         public var colorDangerHover: Color
         public var colorDangerActive: Color
 
-        // Info Colors
+        // MARK: - Info Colors
         public var colorInfo: Color
         public var colorInfoHover: Color
         public var colorInfoActive: Color
 
-        // Background & Text
+        // MARK: - Background & Text
         public var colorBgContainer: Color
         public var colorBgElevated: Color
         public var colorBgHover: Color
@@ -41,110 +271,78 @@ public extension Moin {
         public var colorBorder: Color
         public var colorBorderHover: Color
 
-        // Border
+        // MARK: - Border
         public var borderRadius: CGFloat
         public var borderRadiusLG: CGFloat
         public var borderRadiusSM: CGFloat
 
-        // Size
+        // MARK: - Size
         public var controlHeight: CGFloat
         public var controlHeightLG: CGFloat
         public var controlHeightSM: CGFloat
 
-        // Font
+        // MARK: - Font
         public var fontSize: CGFloat
         public var fontSizeLG: CGFloat
         public var fontSizeSM: CGFloat
 
-        // Spacing
+        // MARK: - Spacing
         public var padding: CGFloat
         public var paddingLG: CGFloat
         public var paddingSM: CGFloat
 
-        // Animation
+        // MARK: - Animation
         public var motionDuration: Double
 
-        /// 浅色主题默认Token
-        public static let light = Token(
-            colorPrimary: Moin.Constants.Colors.primary,
-            colorPrimaryHover: Moin.Constants.Colors.primaryHover,
-            colorPrimaryActive: Moin.Constants.Colors.primaryActive,
-            colorSuccess: Moin.Constants.Colors.success,
-            colorSuccessHover: Moin.Constants.Colors.successHover,
-            colorSuccessActive: Moin.Constants.Colors.successActive,
-            colorWarning: Moin.Constants.Colors.warning,
-            colorWarningHover: Moin.Constants.Colors.warningHover,
-            colorWarningActive: Moin.Constants.Colors.warningActive,
-            colorDanger: Moin.Constants.Colors.danger,
-            colorDangerHover: Moin.Constants.Colors.dangerHover,
-            colorDangerActive: Moin.Constants.Colors.dangerActive,
-            colorInfo: Moin.Constants.Colors.info,
-            colorInfoHover: Moin.Constants.Colors.infoHover,
-            colorInfoActive: Moin.Constants.Colors.infoActive,
-            colorBgContainer: Moin.Constants.Colors.background,
-            colorBgElevated: Color.white,
-            colorBgHover: Moin.Constants.Colors.backgroundHover,
-            colorText: Moin.Constants.Colors.textPrimary,
-            colorTextSecondary: Moin.Constants.Colors.textSecondary,
-            colorTextDisabled: Moin.Constants.Colors.textDisabled,
-            colorBgDisabled: Moin.Constants.Colors.backgroundDisabled,
-            colorBorder: Moin.Constants.Colors.border,
-            colorBorderHover: Moin.Constants.Colors.borderHover,
-            borderRadius: Moin.Constants.Radius.md,
-            borderRadiusLG: Moin.Constants.Radius.lg,
-            borderRadiusSM: Moin.Constants.Radius.sm,
-            controlHeight: 32,
-            controlHeightLG: 40,
-            controlHeightSM: 24,
-            fontSize: 14,
-            fontSizeLG: 16,
-            fontSizeSM: 12,
-            padding: Moin.Constants.Spacing.md,
-            paddingLG: Moin.Constants.Spacing.lg,
-            paddingSM: Moin.Constants.Spacing.sm,
-            motionDuration: Moin.Constants.Duration.normal
-        )
+        public init(from map: MapToken) {
+            self.colorPrimary = map.colorPrimary
+            self.colorPrimaryHover = map.colorPrimaryHover
+            self.colorPrimaryActive = map.colorPrimaryActive
+            self.colorSuccess = map.colorSuccess
+            self.colorSuccessHover = map.colorSuccessHover
+            self.colorSuccessActive = map.colorSuccessActive
+            self.colorWarning = map.colorWarning
+            self.colorWarningHover = map.colorWarningHover
+            self.colorWarningActive = map.colorWarningActive
+            self.colorDanger = map.colorError
+            self.colorDangerHover = map.colorErrorHover
+            self.colorDangerActive = map.colorErrorActive
+            self.colorInfo = map.colorInfo
+            self.colorInfoHover = map.colorInfoHover
+            self.colorInfoActive = map.colorInfoActive
+            self.colorBgContainer = map.colorBgContainer
+            self.colorBgElevated = map.colorBgElevated
+            self.colorBgHover = map.colorBgHover
+            self.colorText = map.colorText
+            self.colorTextSecondary = map.colorTextSecondary
+            self.colorTextDisabled = map.colorTextTertiary
+            self.colorBgDisabled = map.colorBgDisabled
+            self.colorBorder = map.colorBorder
+            self.colorBorderHover = map.colorBorderHover
+            self.borderRadius = map.borderRadius
+            self.borderRadiusLG = map.borderRadiusLG
+            self.borderRadiusSM = map.borderRadiusSM
+            self.controlHeight = map.controlHeight
+            self.controlHeightLG = map.controlHeightLG
+            self.controlHeightSM = map.controlHeightSM
+            self.fontSize = map.fontSize
+            self.fontSizeLG = map.fontSizeLG
+            self.fontSizeSM = map.fontSizeSM
+            self.padding = map.padding
+            self.paddingLG = map.paddingLG
+            self.paddingSM = map.paddingSM
+            self.motionDuration = map.motionDuration
+        }
 
-        /// 暗色主题默认Token
-        public static let dark = Token(
-            colorPrimary: Moin.DarkColors.primary,
-            colorPrimaryHover: Moin.DarkColors.primaryHover,
-            colorPrimaryActive: Moin.DarkColors.primaryActive,
-            colorSuccess: Moin.DarkColors.success,
-            colorSuccessHover: Moin.DarkColors.successHover,
-            colorSuccessActive: Moin.DarkColors.successActive,
-            colorWarning: Moin.DarkColors.warning,
-            colorWarningHover: Moin.DarkColors.warningHover,
-            colorWarningActive: Moin.DarkColors.warningActive,
-            colorDanger: Moin.DarkColors.danger,
-            colorDangerHover: Moin.DarkColors.dangerHover,
-            colorDangerActive: Moin.DarkColors.dangerActive,
-            colorInfo: Moin.DarkColors.info,
-            colorInfoHover: Moin.DarkColors.infoHover,
-            colorInfoActive: Moin.DarkColors.infoActive,
-            colorBgContainer: Moin.DarkColors.background,
-            colorBgElevated: Moin.DarkColors.backgroundElevated,
-            colorBgHover: Moin.DarkColors.backgroundHover,
-            colorText: Moin.DarkColors.textPrimary,
-            colorTextSecondary: Moin.DarkColors.textSecondary,
-            colorTextDisabled: Moin.DarkColors.textDisabled,
-            colorBgDisabled: Moin.DarkColors.backgroundDisabled,
-            colorBorder: Moin.DarkColors.border,
-            colorBorderHover: Moin.DarkColors.borderHover,
-            borderRadius: Moin.Constants.Radius.md,
-            borderRadiusLG: Moin.Constants.Radius.lg,
-            borderRadiusSM: Moin.Constants.Radius.sm,
-            controlHeight: 32,
-            controlHeightLG: 40,
-            controlHeightSM: 24,
-            fontSize: 14,
-            fontSizeLG: 16,
-            fontSizeSM: 12,
-            padding: Moin.Constants.Spacing.md,
-            paddingLG: Moin.Constants.Spacing.lg,
-            paddingSM: Moin.Constants.Spacing.sm,
-            motionDuration: Moin.Constants.Duration.normal
-        )
+        public static func generate(from seed: SeedToken, theme: Theme) -> Token {
+            Token(from: MapToken.generate(from: seed, theme: theme))
+        }
+
+        /// 浅色主题默认 Token
+        public static let light = generate(from: .default, theme: .light)
+
+        /// 暗色主题默认 Token
+        public static let dark = generate(from: .default, theme: .dark)
 
         public static let `default` = light
     }
@@ -157,179 +355,107 @@ public extension Moin {
     /// Button-specific token (参照 antd ComponentToken)
     struct ButtonToken {
         // MARK: - 字体
-        /// 文字字重
         public var fontWeight: Font.Weight
-        /// 图标文字间距
         public var iconGap: CGFloat
 
         // MARK: - 默认按钮
-        /// 默认按钮文本颜色
         public var defaultColor: Color
-        /// 默认按钮背景色
         public var defaultBg: Color
-        /// 默认按钮边框颜色
         public var defaultBorderColor: Color
-        /// 默认按钮悬浮态背景色
         public var defaultHoverBg: Color
-        /// 默认按钮悬浮态文本颜色
         public var defaultHoverColor: Color
-        /// 默认按钮悬浮态边框颜色
         public var defaultHoverBorderColor: Color
-        /// 默认按钮激活态背景色
         public var defaultActiveBg: Color
-        /// 默认按钮激活态文字颜色
         public var defaultActiveColor: Color
-        /// 默认按钮激活态边框颜色
         public var defaultActiveBorderColor: Color
 
         // MARK: - 主要按钮
-        /// 主要按钮文本颜色
         public var primaryColor: Color
 
         // MARK: - 危险按钮
-        /// 危险按钮文本颜色
         public var dangerColor: Color
 
         // MARK: - Ghost 按钮
-        /// 幽灵按钮背景色
         public var ghostBg: Color
-        /// 默认幽灵按钮文本颜色
         public var defaultGhostColor: Color
-        /// 默认幽灵按钮边框颜色
         public var defaultGhostBorderColor: Color
 
         // MARK: - Solid 按钮
-        /// 默认实心按钮的文本色
         public var solidTextColor: Color
 
         // MARK: - Text 按钮
-        /// 默认文本按钮的文本色
         public var textTextColor: Color
-        /// 默认文本按钮悬浮态文本颜色
         public var textTextHoverColor: Color
-        /// 默认文本按钮激活态文字颜色
         public var textTextActiveColor: Color
-        /// 文本按钮悬浮态背景色
         public var textHoverBg: Color
-        /// 链接按钮悬浮态背景色
         public var linkHoverBg: Color
 
         // MARK: - 内边距
-        /// 按钮横向内间距
         public var paddingInline: CGFloat
-        /// 大号按钮横向内间距
         public var paddingInlineLG: CGFloat
-        /// 小号按钮横向内间距
         public var paddingInlineSM: CGFloat
-        /// 按钮纵向内间距
         public var paddingBlock: CGFloat
-        /// 大号按钮纵向内间距
         public var paddingBlockLG: CGFloat
-        /// 小号按钮纵向内间距
         public var paddingBlockSM: CGFloat
 
         // MARK: - 图标尺寸
-        /// 只有图标的按钮图标尺寸
         public var onlyIconSize: CGFloat
-        /// 大号只有图标的按钮图标尺寸
         public var onlyIconSizeLG: CGFloat
-        /// 小号只有图标的按钮图标尺寸
         public var onlyIconSizeSM: CGFloat
 
         // MARK: - 字体尺寸
-        /// 按钮内容字体大小
         public var contentFontSize: CGFloat
-        /// 大号按钮内容字体大小
         public var contentFontSizeLG: CGFloat
-        /// 小号按钮内容字体大小
         public var contentFontSizeSM: CGFloat
 
         // MARK: - 禁用态
-        /// 禁用状态边框颜色
         public var borderColorDisabled: Color
-        /// type='default' 禁用状态下的背景颜色
         public var defaultBgDisabled: Color
 
-        // MARK: - 浅色主题默认值
-        public static let light = ButtonToken(
-            fontWeight: .medium,
-            iconGap: Moin.Constants.Spacing.xs + 2, // 6
-            defaultColor: Moin.Constants.Colors.textPrimary,
-            defaultBg: Moin.Constants.Colors.background,
-            defaultBorderColor: Moin.Constants.Colors.border,
-            defaultHoverBg: Moin.Constants.Colors.background,
-            defaultHoverColor: Moin.Constants.Colors.primaryHover,
-            defaultHoverBorderColor: Moin.Constants.Colors.primaryHover,
-            defaultActiveBg: Moin.Constants.Colors.background,
-            defaultActiveColor: Moin.Constants.Colors.primaryActive,
-            defaultActiveBorderColor: Moin.Constants.Colors.primaryActive,
-            primaryColor: .white,
-            dangerColor: .white,
-            ghostBg: .clear,
-            defaultGhostColor: .white,
-            defaultGhostBorderColor: .white,
-            solidTextColor: .white,
-            textTextColor: Moin.Constants.Colors.textPrimary,
-            textTextHoverColor: Moin.Constants.Colors.textPrimary,
-            textTextActiveColor: Moin.Constants.Colors.textPrimary,
-            textHoverBg: Color.black.opacity(0.04),
-            linkHoverBg: .clear,
-            paddingInline: Moin.Constants.Spacing.md + 3, // 15
-            paddingInlineLG: Moin.Constants.Spacing.md + 3,
-            paddingInlineSM: Moin.Constants.Spacing.sm - 1, // 7
-            paddingBlock: 0,
-            paddingBlockLG: 0,
-            paddingBlockSM: 0,
-            onlyIconSize: 16,
-            onlyIconSizeLG: 18,
-            onlyIconSizeSM: 14,
-            contentFontSize: 14,
-            contentFontSizeLG: 16,
-            contentFontSizeSM: 12,
-            borderColorDisabled: Moin.Constants.Colors.border.opacity(0.5),
-            defaultBgDisabled: Moin.Constants.Colors.backgroundDisabled
-        )
+        // MARK: - 从全局 Token 生成
+        public static func generate(from token: Token, isDark: Bool = false) -> ButtonToken {
+            ButtonToken(
+                fontWeight: .medium,
+                iconGap: 6,
+                defaultColor: token.colorText,
+                defaultBg: token.colorBgContainer,
+                defaultBorderColor: token.colorBorder,
+                defaultHoverBg: token.colorBgContainer,
+                defaultHoverColor: token.colorPrimaryHover,
+                defaultHoverBorderColor: token.colorPrimaryHover,
+                defaultActiveBg: token.colorBgContainer,
+                defaultActiveColor: token.colorPrimaryActive,
+                defaultActiveBorderColor: token.colorPrimaryActive,
+                primaryColor: .white,
+                dangerColor: .white,
+                ghostBg: .clear,
+                defaultGhostColor: .white,
+                defaultGhostBorderColor: .white,
+                solidTextColor: .white,
+                textTextColor: token.colorText,
+                textTextHoverColor: token.colorText,
+                textTextActiveColor: token.colorText,
+                textHoverBg: isDark ? Color.white.opacity(0.08) : Color.black.opacity(0.04),
+                linkHoverBg: .clear,
+                paddingInline: token.padding + 3,
+                paddingInlineLG: token.padding + 3,
+                paddingInlineSM: token.paddingSM - 1,
+                paddingBlock: 0,
+                paddingBlockLG: 0,
+                paddingBlockSM: 0,
+                onlyIconSize: 16,
+                onlyIconSizeLG: 18,
+                onlyIconSizeSM: 14,
+                contentFontSize: token.fontSize,
+                contentFontSizeLG: token.fontSizeLG,
+                contentFontSizeSM: token.fontSizeSM,
+                borderColorDisabled: token.colorBorder.opacity(0.5),
+                defaultBgDisabled: token.colorBgDisabled
+            )
+        }
 
-        // MARK: - 暗色主题默认值
-        public static let dark = ButtonToken(
-            fontWeight: .medium,
-            iconGap: Moin.Constants.Spacing.xs + 2,
-            defaultColor: Moin.DarkColors.textPrimary,
-            defaultBg: Moin.DarkColors.background,
-            defaultBorderColor: Moin.DarkColors.border,
-            defaultHoverBg: Moin.DarkColors.background,
-            defaultHoverColor: Moin.DarkColors.primaryHover,
-            defaultHoverBorderColor: Moin.DarkColors.primaryHover,
-            defaultActiveBg: Moin.DarkColors.background,
-            defaultActiveColor: Moin.DarkColors.primaryActive,
-            defaultActiveBorderColor: Moin.DarkColors.primaryActive,
-            primaryColor: .white,
-            dangerColor: .white,
-            ghostBg: .clear,
-            defaultGhostColor: .white,
-            defaultGhostBorderColor: .white,
-            solidTextColor: .white,
-            textTextColor: Moin.DarkColors.textPrimary,
-            textTextHoverColor: Moin.DarkColors.textPrimary,
-            textTextActiveColor: Moin.DarkColors.textPrimary,
-            textHoverBg: Color.white.opacity(0.08),
-            linkHoverBg: .clear,
-            paddingInline: Moin.Constants.Spacing.md + 3,
-            paddingInlineLG: Moin.Constants.Spacing.md + 3,
-            paddingInlineSM: Moin.Constants.Spacing.sm - 1,
-            paddingBlock: 0,
-            paddingBlockLG: 0,
-            paddingBlockSM: 0,
-            onlyIconSize: 16,
-            onlyIconSizeLG: 18,
-            onlyIconSizeSM: 14,
-            contentFontSize: 14,
-            contentFontSizeLG: 16,
-            contentFontSizeSM: 12,
-            borderColorDisabled: Moin.DarkColors.border.opacity(0.5),
-            defaultBgDisabled: Moin.DarkColors.backgroundDisabled
-        )
-
+        public static let light = generate(from: .light, isDark: false)
+        public static let dark = generate(from: .dark, isDark: true)
         public static let `default` = light
     }
 }
@@ -340,21 +466,20 @@ public extension Moin {
 public extension Moin {
     /// Space component token
     struct SpaceToken {
-        /// Small spacing (8pt)
         public var sizeSmall: CGFloat
-        /// Medium spacing (12pt)
         public var sizeMedium: CGFloat
-        /// Large spacing (16pt)
         public var sizeLarge: CGFloat
 
-        public static let light = SpaceToken(
-            sizeSmall: Moin.Constants.Spacing.sm,
-            sizeMedium: Moin.Constants.Spacing.md,
-            sizeLarge: Moin.Constants.Spacing.lg
-        )
+        public static func generate(from token: Token) -> SpaceToken {
+            SpaceToken(
+                sizeSmall: token.paddingSM,
+                sizeMedium: token.padding,
+                sizeLarge: token.paddingLG
+            )
+        }
 
-        public static let dark = light
-
+        public static let light = generate(from: .light)
+        public static let dark = generate(from: .dark)
         public static let `default` = light
     }
 }
@@ -365,49 +490,32 @@ public extension Moin {
 public extension Moin {
     /// Divider component token
     struct DividerToken {
-        /// Line color
         public var lineColor: Color
-        /// Text color
         public var textColor: Color
-        /// Text font size
         public var fontSize: CGFloat
-        /// Vertical margin for horizontal divider
         public var verticalMargin: CGFloat
-        /// Horizontal margin for vertical divider
         public var horizontalMargin: CGFloat
-        /// Padding around text
         public var textPadding: CGFloat
-        /// Line width
         public var lineWidth: CGFloat
-        /// Dash length for dashed line
         public var dashLength: CGFloat
-        /// Gap between dashes
         public var dashGap: CGFloat
 
-        public static let light = DividerToken(
-            lineColor: Moin.Constants.Colors.border,
-            textColor: Moin.Constants.Colors.textPrimary,
-            fontSize: 14,
-            verticalMargin: Moin.Constants.Spacing.lg,
-            horizontalMargin: Moin.Constants.Spacing.sm,
-            textPadding: Moin.Constants.Spacing.md,
-            lineWidth: 1,
-            dashLength: 4,
-            dashGap: 4
-        )
+        public static func generate(from token: Token) -> DividerToken {
+            DividerToken(
+                lineColor: token.colorBorder,
+                textColor: token.colorText,
+                fontSize: token.fontSize,
+                verticalMargin: token.paddingLG,
+                horizontalMargin: token.paddingSM,
+                textPadding: token.padding,
+                lineWidth: 1,
+                dashLength: 4,
+                dashGap: 4
+            )
+        }
 
-        public static let dark = DividerToken(
-            lineColor: Moin.DarkColors.border,
-            textColor: Moin.DarkColors.textPrimary,
-            fontSize: 14,
-            verticalMargin: Moin.Constants.Spacing.lg,
-            horizontalMargin: Moin.Constants.Spacing.sm,
-            textPadding: Moin.Constants.Spacing.md,
-            lineWidth: 1,
-            dashLength: 4,
-            dashGap: 4
-        )
-
+        public static let light = generate(from: .light)
+        public static let dark = generate(from: .dark)
         public static let `default` = light
     }
 }
@@ -422,18 +530,16 @@ public extension Moin {
         public var space: Moin.SpaceToken
         public var divider: Moin.DividerToken
 
-        public static let light = ComponentToken(
-            button: .light,
-            space: .light,
-            divider: .light
-        )
+        public static func generate(from token: Token, isDark: Bool = false) -> ComponentToken {
+            ComponentToken(
+                button: .generate(from: token, isDark: isDark),
+                space: .generate(from: token),
+                divider: .generate(from: token)
+            )
+        }
 
-        public static let dark = ComponentToken(
-            button: .dark,
-            space: .dark,
-            divider: .dark
-        )
-
+        public static let light = generate(from: .light, isDark: false)
+        public static let dark = generate(from: .dark, isDark: true)
         public static let `default` = light
     }
 }
@@ -444,19 +550,11 @@ public extension Moin {
 public extension Moin {
     /// MoinUI global configuration
     struct Config {
-        /// Current locale
         public var locale: Moin.Locale
-
-        /// Current theme
         public var theme: Moin.Theme
-
-        /// Global token
         public var token: Moin.Token
-
-        /// Component tokens
         public var components: Moin.ComponentToken
 
-        /// Default configuration
         public static let `default` = Config(
             locale: .default,
             theme: .default,
@@ -486,20 +584,39 @@ public extension Moin {
     final class ConfigProvider: ObservableObject {
         public static let shared = ConfigProvider()
 
+        /// 种子 Token - 核心可配置值
+        @Published public var seed: SeedToken
+
         @Published public var config: Moin.Config
 
         /// 系统外观监听
         @Published public var systemIsDark: Bool = false
 
         private init() {
+            self.seed = .default
             self.config = .default
             if let app = NSApp {
                 self.systemIsDark = app.effectiveAppearance.bestMatch(from: [.darkAqua, .aqua]) == .darkAqua
             }
-            // 初始化时应用系统主题
-            self.config.token = systemIsDark ? .dark : .light
-            self.config.components = systemIsDark ? .dark : .light
+            regenerateTokens()
             observeSystemAppearance()
+        }
+
+        /// 重新生成所有 Token
+        public func regenerateTokens() {
+            let isDark = effectiveIsDark
+            let theme: Moin.Theme = isDark ? .dark : .light
+            config.token = Token.generate(from: seed, theme: theme)
+            config.components = ComponentToken.generate(from: config.token, isDark: isDark)
+        }
+
+        /// 当前有效的暗色模式状态
+        private var effectiveIsDark: Bool {
+            switch config.theme {
+            case .light: return false
+            case .dark: return true
+            case .system: return systemIsDark
+            }
         }
 
         /// 监听系统外观变化
@@ -518,48 +635,31 @@ public extension Moin {
                 systemIsDark = app.effectiveAppearance.bestMatch(from: [.darkAqua, .aqua]) == .darkAqua
             }
             if config.theme == .system {
-                applyTheme(.system)
+                regenerateTokens()
             }
         }
 
         // MARK: - Theme
 
-        /// 当前主题
         public var theme: Moin.Theme {
             get { config.theme }
             set { applyTheme(newValue) }
         }
 
-        /// 当前是否为暗色模式
         public var isDarkMode: Bool {
-            switch config.theme {
-            case .light: return false
-            case .dark: return true
-            case .system: return systemIsDark
-            }
+            effectiveIsDark
         }
 
-        /// 应用主题
         public func applyTheme(_ theme: Moin.Theme) {
             config.theme = theme
-            switch theme {
-            case .light:
-                config.token = .light
-                config.components = .light
-            case .dark:
-                config.token = .dark
-                config.components = .dark
-            case .system:
-                // 重新获取系统当前状态
+            if theme == .system {
                 if let app = NSApp {
                     systemIsDark = app.effectiveAppearance.bestMatch(from: [.darkAqua, .aqua]) == .darkAqua
                 }
-                config.token = systemIsDark ? .dark : .light
-                config.components = systemIsDark ? .dark : .light
             }
+            regenerateTokens()
         }
 
-        /// 切换主题（light <-> dark）
         public func toggleTheme() {
             if isDarkMode {
                 applyTheme(.light)
@@ -568,59 +668,88 @@ public extension Moin {
             }
         }
 
+        // MARK: - Seed 修改方法
+
+        /// 设置主色
+        public func setPrimaryColor(_ color: Color) {
+            seed.colorPrimary = color
+            regenerateTokens()
+        }
+
+        /// 设置圆角
+        public func setBorderRadius(_ radius: CGFloat) {
+            seed.borderRadius = radius
+            regenerateTokens()
+        }
+
+        /// 设置字号
+        public func setFontSize(_ size: CGFloat) {
+            seed.fontSize = size
+            regenerateTokens()
+        }
+
+        /// 设置控件高度
+        public func setControlHeight(_ height: CGFloat) {
+            seed.controlHeight = height
+            regenerateTokens()
+        }
+
+        /// 配置种子 Token
+        public func configureSeed(_ updates: (inout SeedToken) -> Void) {
+            updates(&seed)
+            regenerateTokens()
+        }
+
         // MARK: - Convenience accessors
 
-        /// Current locale
         public var locale: Moin.Locale {
             get { config.locale }
             set { config.locale = newValue }
         }
 
-        /// Global token
         public var token: Moin.Token {
             get { config.token }
             set { config.token = newValue }
         }
 
-        /// Component tokens
         public var components: Moin.ComponentToken {
             get { config.components }
             set { config.components = newValue }
         }
 
-        /// Primary color (shortcut to token.colorPrimary)
+        /// Primary color (从 seed 读取)
         public var primaryColor: Color {
-            get { config.token.colorPrimary }
-            set { config.token.colorPrimary = newValue }
+            get { seed.colorPrimary }
+            set { setPrimaryColor(newValue) }
         }
 
-        /// Border radius (shortcut to token.borderRadius)
+        /// Border radius (从 seed 读取)
         public var borderRadius: CGFloat {
-            get { config.token.borderRadius }
-            set { config.token.borderRadius = newValue }
+            get { seed.borderRadius }
+            set { setBorderRadius(newValue) }
         }
 
-        /// Animation duration (shortcut to token.motionDuration)
+        /// Animation duration (从 seed 读取)
         public var animationDuration: Double {
-            get { config.token.motionDuration }
-            set { config.token.motionDuration = newValue }
+            get { seed.motionDuration }
+            set {
+                seed.motionDuration = newValue
+                regenerateTokens()
+            }
         }
 
         // MARK: - Translation shorthand
 
-        /// Translate string using current locale
         public func tr(_ key: String) -> String {
             Moin.Localization.shared.tr(key, locale: config.locale)
         }
 
         // MARK: - Configuration methods
 
-        /// Update configuration
         public func configure(_ updates: (inout Moin.Config) -> Void) {
             var newConfig = config
             updates(&newConfig)
 
-            // Sync theme
             if newConfig.theme != config.theme {
                 applyTheme(newConfig.theme)
                 return
@@ -629,9 +758,10 @@ public extension Moin {
             config = newConfig
         }
 
-        /// Reset to default configuration
         public func reset() {
+            seed = .default
             config = .default
+            regenerateTokens()
         }
     }
 }
@@ -689,7 +819,6 @@ public extension EnvironmentValues {
 // MARK: - View Modifier
 
 public extension View {
-    /// Configure Moin with custom settings
     func moinConfig(_ config: Moin.Config) -> some View {
         onAppear {
             Moin.ConfigProvider.shared.configure { $0 = config }
@@ -697,7 +826,6 @@ public extension View {
         .environmentObject(Moin.ConfigProvider.shared)
     }
 
-    /// Set Moin locale
     func moinLocale(_ locale: Moin.Locale) -> some View {
         self.environment(\.moinLocale, locale)
             .onAppear {
@@ -705,14 +833,12 @@ public extension View {
             }
     }
 
-    /// Set Moin primary color
     func moinPrimaryColor(_ color: Color) -> some View {
         onAppear {
-            Moin.ConfigProvider.shared.primaryColor = color
+            Moin.ConfigProvider.shared.setPrimaryColor(color)
         }
     }
 
-    /// Set Moin theme
     func moinTheme(_ theme: Moin.Theme) -> some View {
         onAppear {
             Moin.ConfigProvider.shared.applyTheme(theme)
@@ -723,7 +849,6 @@ public extension View {
 // MARK: - Moin.ThemeRoot
 
 public extension Moin {
-    /// 主题根视图修饰器 - 应用于 App 根视图，实现全局主题切换
     struct ThemeRoot: ViewModifier {
         @ObservedObject private var config = Moin.ConfigProvider.shared
 
@@ -744,7 +869,6 @@ public extension Moin {
             switch config.theme {
             case .light: return .light
             case .dark: return .dark
-            // 系统主题，不能 return nil，否则会导致问题，需要返回实际的主题
             case .system: return config.isDarkMode ? .dark : .light
             }
         }
@@ -753,12 +877,6 @@ public extension Moin {
 
 
 public extension View {
-    /// 应用 Moin 主题根修饰器，实现全局主题切换
-    /// 在 App 入口使用：
-    /// ```swift
-    /// ContentView()
-    ///     .moinThemeRoot()
-    /// ```
     func moinThemeRoot() -> some View {
         modifier(Moin.ThemeRoot())
     }
