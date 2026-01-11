@@ -19,7 +19,6 @@ struct DemoApp: App {
                 .moinThemeRoot()
                 .focusable(false)
                 .modifier(DisableFocusEffectModifier())
-                .textSelection(.enabled)
         }
         .defaultSize(width: 800, height: 600)
         .commands {

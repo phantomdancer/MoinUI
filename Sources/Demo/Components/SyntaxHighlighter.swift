@@ -12,7 +12,6 @@ struct HighlightedCodeView: View {
     var body: some View {
         Text(highlightedCode)
             .font(.system(size: fontSize, design: .monospaced))
-            .textSelection(.enabled)
     }
 
     private var highlightedCode: AttributedString {

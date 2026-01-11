@@ -74,12 +74,6 @@ Typography 组件为完整参考：`Sources/Demo/Examples/Typography/`
 - Token 表格
 - Playground 所有标签和预览文本
 
-## 光标样式注意
-
-文字选择会覆盖 cursor pointer。Link 等需要手型光标的组件：
-1. 添加 `.textSelection(.disabled)` 禁用文字选择
-2. 使用 `NSCursor.pointingHand.push()/pop()` 切换光标
-
 ## 检查清单
 
 - [ ] 主组件实现

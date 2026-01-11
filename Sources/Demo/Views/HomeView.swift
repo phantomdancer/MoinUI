@@ -47,8 +47,6 @@ private struct HeroSection: View {
                                 endPoint: .trailing
                             )
                         )
-                        // 关闭大标题的文字选择，保持渐变效果
-                        .textSelection(.disabled)
 
                     Text("v\(Moin.version)")
                         .font(.caption)
