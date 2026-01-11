@@ -19,6 +19,7 @@ struct TypographyExamples: View {
         AnchorItem(id: "title", titleKey: "typography.title"),
         AnchorItem(id: "text", titleKey: "typography.text"),
         AnchorItem(id: "paragraph", titleKey: "typography.paragraph"),
+        AnchorItem(id: "ellipsis", titleKey: "typography.ellipsis"),
         AnchorItem(id: "link", titleKey: "typography.link"),
         AnchorItem(id: "type", titleKey: "typography.type"),
         AnchorItem(id: "decoration", titleKey: "typography.decoration"),
@@ -45,6 +46,7 @@ struct TypographyExamples: View {
             titleExample.id("title")
             textExample.id("text")
             paragraphExample.id("paragraph")
+            ellipsisExample.id("ellipsis")
             linkExample.id("link")
             typeExample.id("type")
             decorationExample.id("decoration")
@@ -129,6 +131,76 @@ struct TypographyExamples: View {
             """
             Moin.Paragraph("\(tr("typography.lorem_long"))")
             Moin.Paragraph("\(tr("typography.lorem_short"))")
+            """
+        }
+    }
+
+    private var ellipsisExample: some View {
+        ExampleSection(
+            title: tr("typography.ellipsis"),
+            description: tr("typography.ellipsis_desc")
+        ) {
+            VStack(alignment: .leading, spacing: Moin.Constants.Spacing.lg) {
+                // 单行省略
+                VStack(alignment: .leading, spacing: Moin.Constants.Spacing.xs) {
+                    Moin.Typography(tr("typography.ellipsis_single"), type: .secondary)
+                    Moin.Paragraph(
+                        tr("typography.lorem_ellipsis"),
+                        ellipsis: .rows(1)
+                    )
+                }
+
+                // 多行省略
+                VStack(alignment: .leading, spacing: Moin.Constants.Spacing.xs) {
+                    Moin.Typography(tr("typography.ellipsis_multi"), type: .secondary)
+                    Moin.Paragraph(
+                        tr("typography.lorem_ellipsis"),
+                        ellipsis: .rows(2)
+                    )
+                }
+
+                // 可展开
+                VStack(alignment: .leading, spacing: Moin.Constants.Spacing.xs) {
+                    Moin.Typography(tr("typography.ellipsis_expandable"), type: .secondary)
+                    Moin.Paragraph(
+                        tr("typography.lorem_ellipsis"),
+                        ellipsis: .expandable(
+                            rows: 2,
+                            collapsible: true,
+                            expandSymbol: tr("typography.expand"),
+                            collapseSymbol: tr("typography.collapse")
+                        )
+                    )
+                }
+
+                // 带 tooltip
+                VStack(alignment: .leading, spacing: Moin.Constants.Spacing.xs) {
+                    Moin.Typography(tr("typography.ellipsis_tooltip"), type: .secondary)
+                    Moin.Paragraph(
+                        tr("typography.lorem_ellipsis"),
+                        ellipsis: Moin.EllipsisConfig(rows: 1, tooltip: true)
+                    )
+                }
+            }
+        } code: {
+            """
+            // \(tr("typography.ellipsis_single"))
+            Moin.Paragraph(text, ellipsis: .rows(1))
+
+            // \(tr("typography.ellipsis_multi"))
+            Moin.Paragraph(text, ellipsis: .rows(2))
+
+            // \(tr("typography.ellipsis_expandable"))
+            Moin.Paragraph(
+                text,
+                ellipsis: .expandable(rows: 2, collapsible: true)
+            )
+
+            // \(tr("typography.ellipsis_tooltip"))
+            Moin.Paragraph(
+                text,
+                ellipsis: Moin.EllipsisConfig(rows: 1, tooltip: true)
+            )
             """
         }
     }
