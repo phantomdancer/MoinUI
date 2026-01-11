@@ -336,7 +336,7 @@ public extension Moin {
         public var body: some View {
             Group {
                 if let href = href {
-                    Link(destination: href) { buttonContent }
+                    SwiftUI.Link(destination: href) { buttonContent }
                 } else {
                     SwiftUI.Button(action: handleAction) { buttonContent }
                 }

@@ -132,6 +132,7 @@
   },
   "component": {
     "button": "Button",
+    "typography": "Typography",
     "space": "Space",
     "divider": "Divider",
     "configProvider": "ConfigProvider",

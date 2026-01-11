@@ -142,6 +142,7 @@ struct ContentView: View {
     @EnvironmentObject var configProvider: Moin.ConfigProvider
     @Localized var tr
     @State private var buttonTab: ButtonExamplesTab = .examples
+    @State private var typographyTab: TypographyExamplesTab = .examples
     @State private var spaceTab: SpaceExamplesTab = .examples
     @State private var dividerTab: DividerExamplesTab = .examples
 
@@ -150,7 +151,7 @@ struct ContentView: View {
             Sidebar(selection: $navManager.selectedItem)
                 .modifier(HideSidebarToggleModifier())
         } detail: {
-            DetailView(item: navManager.selectedItem, buttonTab: $buttonTab, spaceTab: $spaceTab, dividerTab: $dividerTab)
+            DetailView(item: navManager.selectedItem, buttonTab: $buttonTab, typographyTab: $typographyTab, spaceTab: $spaceTab, dividerTab: $dividerTab)
                 .navigationTitle(navManager.selectedItem.map { tr($0.titleKey) } ?? "MoinUI")
                 .toolbar {
                     ToolbarItemGroup(placement: .primaryAction) {
@@ -161,6 +162,18 @@ struct ContentView: View {
                                 Text(tr("tab.playground")).tag(ButtonExamplesTab.playground)
                                 Text(tr("tab.api")).tag(ButtonExamplesTab.api)
                                 Text(tr("tab.token")).tag(ButtonExamplesTab.token)
+                            }
+                            .pickerStyle(.segmented)
+                            .fixedSize()
+                        }
+
+                        // Typography 页面显示 Tab 切换
+                        if navManager.selectedItem == .typography {
+                            Picker("", selection: $typographyTab) {
+                                Text(tr("tab.examples")).tag(TypographyExamplesTab.examples)
+                                Text(tr("tab.playground")).tag(TypographyExamplesTab.playground)
+                                Text(tr("tab.api")).tag(TypographyExamplesTab.api)
+                                Text(tr("tab.token")).tag(TypographyExamplesTab.token)
                             }
                             .pickerStyle(.segmented)
                             .fixedSize()
@@ -223,6 +236,7 @@ enum NavItem: String, Identifiable {
 
     // Components
     case button
+    case typography
     case space
     case divider
 
@@ -242,6 +256,7 @@ enum NavItem: String, Identifiable {
         case .theme: return "paintbrush"
         case .token: return "square.stack.3d.up"
         case .button: return "rectangle.and.hand.point.up.left"
+        case .typography: return "textformat.size"
         case .space: return "rectangle.split.3x1"
         case .divider: return "minus"
         case .configProvider: return "gearshape"
@@ -257,6 +272,7 @@ enum NavItem: String, Identifiable {
         case .theme: return "nav.theme"
         case .token: return "nav.token"
         case .button: return "component.button"
+        case .typography: return "component.typography"
         case .space: return "component.space"
         case .divider: return "component.divider"
         case .configProvider: return "component.configProvider"
@@ -266,7 +282,7 @@ enum NavItem: String, Identifiable {
     }
 
     static var overview: [NavItem] { [.introduction, .quickStart] }
-    static var general: [NavItem] { [.button] }
+    static var general: [NavItem] { [.button, .typography] }
     static var layout: [NavItem] { [.space, .divider] }
     static var development: [NavItem] { [.theme, .token, .configProvider, .localization, .colors] }
 }
@@ -298,7 +314,12 @@ struct Sidebar: View {
             Section(tr("nav.general")) {
                 ForEach(NavItem.general) { item in
                     NavigationLink(value: item) {
-                        Label(tr(item.titleKey), systemImage: item.icon)
+                        Label {
+                            Text(tr(item.titleKey))
+                        } icon: {
+                            Image(systemName: item.icon)
+                                .environment(\.locale, Locale(identifier: "en"))
+                        }
                     }
                 }
             }
@@ -322,6 +343,7 @@ struct Sidebar: View {
 struct DetailView: View {
     let item: NavItem?
     @Binding var buttonTab: ButtonExamplesTab
+    @Binding var typographyTab: TypographyExamplesTab
     @Binding var spaceTab: SpaceExamplesTab
     @Binding var dividerTab: DividerExamplesTab
 
@@ -338,6 +360,8 @@ struct DetailView: View {
                 TokenExamples()
             case .button:
                 ButtonExamples(selectedTab: $buttonTab)
+            case .typography:
+                TypographyExamples(selectedTab: $typographyTab)
             case .space:
                 SpaceExamples(selectedTab: $spaceTab)
             case .divider:

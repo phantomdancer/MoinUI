@@ -132,6 +132,7 @@
   },
   "component": {
     "button": "Button 按钮",
+    "typography": "Typography 排版",
     "space": "Space 间距",
     "divider": "Divider 分割线",
     "configProvider": "ConfigProvider 全局配置",

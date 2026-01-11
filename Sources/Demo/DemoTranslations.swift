@@ -9,6 +9,7 @@ enum DemoTranslations {
     /// 组件翻译子目录列表
     private static let componentDirs = [
         "Locales/Button",
+        "Locales/Typography",
         "Locales/Space",
         "Locales/Divider",
         "Locales/Colors",

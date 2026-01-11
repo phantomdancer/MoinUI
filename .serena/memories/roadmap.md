@@ -6,7 +6,7 @@
 |------|------|
 | Button | ✅ |
 | Icon | 待实现 |
-| Typography | 待实现 |
+| Typography | ✅ |
 | Divider | ✅ |
 
 ## 第二层：布局组件
