@@ -37,8 +37,8 @@
   },
   "nav": {
     "overview": "Overview 概览",
-    "introduction": "Introduction 介绍",
-    "quick_start": "Quick Start 快速开始",
+    "introduction": "首页",
+    "quick_start": "快速开始",
     "theme": "Theme 主题",
     "token": "Token 设计令牌",
     "general": "General 通用",
