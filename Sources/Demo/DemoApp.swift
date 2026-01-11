@@ -225,6 +225,7 @@ enum NavItem: String, Identifiable {
 
     // Development
     case theme
+    case token
     case configProvider
     case localization
     case colors
@@ -236,6 +237,7 @@ enum NavItem: String, Identifiable {
         case .introduction: return "house"
         case .quickStart: return "play.circle"
         case .theme: return "paintbrush"
+        case .token: return "square.stack.3d.up"
         case .button: return "rectangle.and.hand.point.up.left"
         case .space: return "rectangle.split.3x1"
         case .divider: return "minus"
@@ -250,6 +252,7 @@ enum NavItem: String, Identifiable {
         case .introduction: return "nav.introduction"
         case .quickStart: return "nav.quick_start"
         case .theme: return "nav.theme"
+        case .token: return "nav.token"
         case .button: return "component.button"
         case .space: return "component.space"
         case .divider: return "component.divider"
@@ -262,7 +265,7 @@ enum NavItem: String, Identifiable {
     static var overview: [NavItem] { [.introduction, .quickStart] }
     static var general: [NavItem] { [.button] }
     static var layout: [NavItem] { [.space, .divider] }
-    static var development: [NavItem] { [.theme, .configProvider, .localization, .colors] }
+    static var development: [NavItem] { [.theme, .token, .configProvider, .localization, .colors] }
 }
 
 // MARK: - Sidebar
@@ -328,6 +331,8 @@ struct DetailView: View {
                 QuickStartView()
             case .theme:
                 ThemeView()
+            case .token:
+                TokenExamples()
             case .button:
                 ButtonExamples(selectedTab: $buttonTab)
             case .space:

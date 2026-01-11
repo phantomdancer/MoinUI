@@ -6,6 +6,7 @@ public extension Moin {
     /// 种子 Token - 核心可配置值，派生出完整 Token 系统
     /// 对应 Ant Design 的 SeedToken
     struct SeedToken {
+        // MARK: - 品牌色
         /// 主色
         public var colorPrimary: Color
         /// 成功色
@@ -16,14 +17,44 @@ public extension Moin {
         public var colorError: Color
         /// 信息色
         public var colorInfo: Color
+        /// 链接色
+        public var colorLink: Color
+
+        // MARK: - 字体
         /// 基础字号
         public var fontSize: CGFloat
+        /// 行高倍数
+        public var lineHeight: CGFloat
+
+        // MARK: - 线条
+        /// 线条宽度
+        public var lineWidth: CGFloat
+
+        // MARK: - 圆角
         /// 基础圆角
         public var borderRadius: CGFloat
+
+        // MARK: - 尺寸
+        /// 尺寸步进单位
+        public var sizeUnit: CGFloat
+        /// 尺寸步进
+        public var sizeStep: CGFloat
         /// 控件基础高度
         public var controlHeight: CGFloat
+
+        // MARK: - 间距
         /// 基础内边距
         public var padding: CGFloat
+        /// 基础外边距
+        public var margin: CGFloat
+
+        // MARK: - 层级
+        /// Z轴基础值
+        public var zIndexBase: Int
+        /// 弹层Z轴基础值
+        public var zIndexPopupBase: Int
+
+        // MARK: - 动画
         /// 动画时长
         public var motionDuration: Double
 
@@ -33,21 +64,37 @@ public extension Moin {
             colorWarning: Color = Moin.Colors.gold,
             colorError: Color = Moin.Colors.red,
             colorInfo: Color = Color(red: 0.55, green: 0.55, blue: 0.60),
+            colorLink: Color = Moin.Colors.blue,
             fontSize: CGFloat = 14,
+            lineHeight: CGFloat = 1.5714,
+            lineWidth: CGFloat = 1,
             borderRadius: CGFloat = 6,
+            sizeUnit: CGFloat = 4,
+            sizeStep: CGFloat = 4,
             controlHeight: CGFloat = 32,
-            padding: CGFloat = 12,
-            motionDuration: Double = 0.25
+            padding: CGFloat = 16,
+            margin: CGFloat = 16,
+            zIndexBase: Int = 0,
+            zIndexPopupBase: Int = 1000,
+            motionDuration: Double = 0.2
         ) {
             self.colorPrimary = colorPrimary
             self.colorSuccess = colorSuccess
             self.colorWarning = colorWarning
             self.colorError = colorError
             self.colorInfo = colorInfo
+            self.colorLink = colorLink
             self.fontSize = fontSize
+            self.lineHeight = lineHeight
+            self.lineWidth = lineWidth
             self.borderRadius = borderRadius
+            self.sizeUnit = sizeUnit
+            self.sizeStep = sizeStep
             self.controlHeight = controlHeight
             self.padding = padding
+            self.margin = margin
+            self.zIndexBase = zIndexBase
+            self.zIndexPopupBase = zIndexPopupBase
             self.motionDuration = motionDuration
         }
 
@@ -74,27 +121,45 @@ public extension Moin {
         public var colorPrimaryHover: Color { primaryPalette[5] }
         public var colorPrimaryActive: Color { primaryPalette[7] }
         public var colorPrimaryBg: Color { primaryPalette[1] }
+        public var colorPrimaryBgHover: Color { primaryPalette[2] }
         public var colorPrimaryBorder: Color { primaryPalette[3] }
+        public var colorPrimaryBorderHover: Color { primaryPalette[4] }
+        public var colorPrimaryText: Color { primaryPalette[6] }
+        public var colorPrimaryTextHover: Color { primaryPalette[5] }
+        public var colorPrimaryTextActive: Color { primaryPalette[7] }
 
         // MARK: - Success 颜色
         public var colorSuccess: Color { successPalette[6] }
         public var colorSuccessHover: Color { successPalette[5] }
         public var colorSuccessActive: Color { successPalette[7] }
+        public var colorSuccessBg: Color { successPalette[1] }
+        public var colorSuccessBorder: Color { successPalette[3] }
 
         // MARK: - Warning 颜色
         public var colorWarning: Color { warningPalette[6] }
         public var colorWarningHover: Color { warningPalette[5] }
         public var colorWarningActive: Color { warningPalette[7] }
+        public var colorWarningBg: Color { warningPalette[1] }
+        public var colorWarningBorder: Color { warningPalette[3] }
 
         // MARK: - Error/Danger 颜色
         public var colorError: Color { errorPalette[6] }
         public var colorErrorHover: Color { errorPalette[5] }
         public var colorErrorActive: Color { errorPalette[7] }
+        public var colorErrorBg: Color { errorPalette[1] }
+        public var colorErrorBorder: Color { errorPalette[3] }
 
         // MARK: - Info 颜色
         public var colorInfo: Color { infoPalette[6] }
         public var colorInfoHover: Color { infoPalette[5] }
         public var colorInfoActive: Color { infoPalette[7] }
+        public var colorInfoBg: Color { infoPalette[1] }
+        public var colorInfoBorder: Color { infoPalette[3] }
+
+        // MARK: - 链接颜色
+        public let colorLink: Color
+        public let colorLinkHover: Color
+        public let colorLinkActive: Color
 
         // MARK: - 文字颜色 (透明度梯度)
         public let colorText: Color           // 0.88
@@ -105,31 +170,87 @@ public extension Moin {
         // MARK: - 背景颜色
         public let colorBgContainer: Color
         public let colorBgElevated: Color
+        public let colorBgLayout: Color
+        public let colorBgSpotlight: Color
+        public let colorBgMask: Color
+        public let colorFill: Color
+        public let colorFillSecondary: Color
+        public let colorFillTertiary: Color
+        public let colorFillQuaternary: Color
         public let colorBgHover: Color
         public let colorBgDisabled: Color
 
         // MARK: - 边框颜色
         public let colorBorder: Color
+        public let colorBorderSecondary: Color
         public let colorBorderHover: Color
 
-        // MARK: - 尺寸派生
+        // MARK: - 字体尺寸
         public let fontSize: CGFloat
         public let fontSizeSM: CGFloat
         public let fontSizeLG: CGFloat
+        public let fontSizeXL: CGFloat
+        public let fontSizeHeading1: CGFloat
+        public let fontSizeHeading2: CGFloat
+        public let fontSizeHeading3: CGFloat
+        public let fontSizeHeading4: CGFloat
+        public let fontSizeHeading5: CGFloat
 
+        // MARK: - 行高
+        public let lineHeight: CGFloat
+        public let lineHeightSM: CGFloat
+        public let lineHeightLG: CGFloat
+        public let lineHeightHeading1: CGFloat
+        public let lineHeightHeading2: CGFloat
+        public let lineHeightHeading3: CGFloat
+        public let lineHeightHeading4: CGFloat
+        public let lineHeightHeading5: CGFloat
+
+        // MARK: - 控件高度
         public let controlHeight: CGFloat
+        public let controlHeightXS: CGFloat
         public let controlHeightSM: CGFloat
         public let controlHeightLG: CGFloat
 
+        // MARK: - 圆角
         public let borderRadius: CGFloat
+        public let borderRadiusXS: CGFloat
         public let borderRadiusSM: CGFloat
         public let borderRadiusLG: CGFloat
+        public let borderRadiusOuter: CGFloat
 
-        public let padding: CGFloat
+        // MARK: - 内边距
+        public let paddingXXS: CGFloat
+        public let paddingXS: CGFloat
         public let paddingSM: CGFloat
+        public let padding: CGFloat
+        public let paddingMD: CGFloat
         public let paddingLG: CGFloat
+        public let paddingXL: CGFloat
 
+        // MARK: - 外边距
+        public let marginXXS: CGFloat
+        public let marginXS: CGFloat
+        public let marginSM: CGFloat
+        public let margin: CGFloat
+        public let marginMD: CGFloat
+        public let marginLG: CGFloat
+        public let marginXL: CGFloat
+        public let marginXXL: CGFloat
+
+        // MARK: - 线条
+        public let lineWidth: CGFloat
+        public let lineWidthBold: CGFloat
+
+        // MARK: - 动画
         public let motionDuration: Double
+        public let motionDurationFast: Double
+        public let motionDurationMid: Double
+        public let motionDurationSlow: Double
+
+        // MARK: - 层级
+        public let zIndexBase: Int
+        public let zIndexPopupBase: Int
 
         // MARK: - 派生算法
         public static func generate(from seed: SeedToken, theme: Moin.Theme) -> MapToken {
@@ -164,6 +285,16 @@ public extension Moin {
                 backgroundColor: darkBg
             )
 
+            // 链接颜色 (从 colorLink 生成)
+            let linkPalette = Moin.ColorPalette.generate(
+                from: seed.colorLink,
+                theme: paletteTheme,
+                backgroundColor: darkBg
+            )
+            let colorLink = linkPalette[6]
+            let colorLinkHover = linkPalette[5]
+            let colorLinkActive = linkPalette[7]
+
             // 文字颜色 (透明度梯度)
             let textBase: Color = isDark ? Color(white: 0.92) : Color(white: 0.13)
             let colorText = textBase.opacity(0.88)
@@ -173,26 +304,81 @@ public extension Moin {
 
             // 背景颜色
             let colorBgContainer: Color = isDark ? Color(hex: 0x141414) : .white
-            let colorBgElevated: Color = isDark ? Color(red: 0.14, green: 0.14, blue: 0.16) : .white
-            let colorBgHover: Color = isDark ? Color(red: 0.15, green: 0.15, blue: 0.17) : Color(white: 0.96)
-            let colorBgDisabled: Color = isDark ? Color(white: 0.22) : Color(white: 0.96)
+            let colorBgElevated: Color = isDark ? Color(hex: 0x1f1f1f) : .white
+            let colorBgLayout: Color = isDark ? Color(hex: 0x000000) : Color(hex: 0xf5f5f5)
+            let colorBgSpotlight: Color = isDark ? Color(hex: 0x424242) : Color(white: 0, opacity: 0.85)
+            let colorBgMask: Color = Color(white: 0, opacity: isDark ? 0.45 : 0.45)
+            let colorBgHover: Color = isDark ? Color(white: 1, opacity: 0.08) : Color(white: 0, opacity: 0.04)
+            let colorBgDisabled: Color = isDark ? Color(white: 1, opacity: 0.08) : Color(white: 0, opacity: 0.04)
+
+            // 填充颜色
+            let colorFill: Color = isDark ? Color(white: 1, opacity: 0.18) : Color(white: 0, opacity: 0.15)
+            let colorFillSecondary: Color = isDark ? Color(white: 1, opacity: 0.12) : Color(white: 0, opacity: 0.06)
+            let colorFillTertiary: Color = isDark ? Color(white: 1, opacity: 0.08) : Color(white: 0, opacity: 0.04)
+            let colorFillQuaternary: Color = isDark ? Color(white: 1, opacity: 0.04) : Color(white: 0, opacity: 0.02)
 
             // 边框颜色
-            let colorBorder: Color = isDark ? Color(white: 0.25) : Color(white: 0.85)
+            let colorBorder: Color = isDark ? Color(hex: 0x424242) : Color(hex: 0xd9d9d9)
+            let colorBorderSecondary: Color = isDark ? Color(hex: 0x303030) : Color(hex: 0xf0f0f0)
             let colorBorderHover: Color = primaryPalette[5]
 
-            // 尺寸派生
-            let fontSizeSM = seed.fontSize - 2
-            let fontSizeLG = seed.fontSize + 2
+            // 字体尺寸派生
+            let fontSizeSM = seed.fontSize - 2      // 12
+            let fontSizeLG = seed.fontSize + 2      // 16
+            let fontSizeXL = seed.fontSize + 6      // 20
+            let fontSizeHeading1: CGFloat = 38
+            let fontSizeHeading2: CGFloat = 30
+            let fontSizeHeading3: CGFloat = 24
+            let fontSizeHeading4: CGFloat = 20
+            let fontSizeHeading5: CGFloat = 16
 
+            // 行高派生
+            let lineHeight = seed.lineHeight
+            let lineHeightSM: CGFloat = 1.6667
+            let lineHeightLG: CGFloat = 1.5
+            let lineHeightHeading1: CGFloat = 1.2105
+            let lineHeightHeading2: CGFloat = 1.2667
+            let lineHeightHeading3: CGFloat = 1.3333
+            let lineHeightHeading4: CGFloat = 1.4
+            let lineHeightHeading5: CGFloat = 1.5
+
+            // 控件高度派生
+            let controlHeightXS = round(seed.controlHeight * 0.5)
             let controlHeightSM = round(seed.controlHeight * 0.75)
             let controlHeightLG = round(seed.controlHeight * 1.25)
 
+            // 圆角派生
+            let borderRadiusXS = max(seed.borderRadius - 4, 1)
             let borderRadiusSM = max(seed.borderRadius - 2, 2)
             let borderRadiusLG = seed.borderRadius + 2
+            let borderRadiusOuter = seed.borderRadius + 4
 
-            let paddingSM = seed.padding - 4
-            let paddingLG = seed.padding + 4
+            // 间距派生 (基于 sizeUnit = 4)
+            let unit = seed.sizeUnit
+            let paddingXXS = unit * 1       // 4
+            let paddingXS = unit * 2        // 8
+            let paddingSM = unit * 3        // 12
+            let paddingBase = seed.padding  // 16
+            let paddingMD = unit * 5        // 20
+            let paddingLG = unit * 6        // 24
+            let paddingXL = unit * 8        // 32
+
+            let marginXXS = unit * 1        // 4
+            let marginXS = unit * 2         // 8
+            let marginSM = unit * 3         // 12
+            let marginBase = seed.margin    // 16
+            let marginMD = unit * 5         // 20
+            let marginLG = unit * 6         // 24
+            let marginXL = unit * 8         // 32
+            let marginXXL = unit * 12       // 48
+
+            // 线条
+            let lineWidthBold = seed.lineWidth + 1
+
+            // 动画时长派生
+            let motionDurationFast = seed.motionDuration * 0.5
+            let motionDurationMid = seed.motionDuration
+            let motionDurationSlow = seed.motionDuration * 1.5
 
             return MapToken(
                 primaryPalette: primaryPalette,
@@ -200,29 +386,76 @@ public extension Moin {
                 warningPalette: warningPalette,
                 errorPalette: errorPalette,
                 infoPalette: infoPalette,
+                colorLink: colorLink,
+                colorLinkHover: colorLinkHover,
+                colorLinkActive: colorLinkActive,
                 colorText: colorText,
                 colorTextSecondary: colorTextSecondary,
                 colorTextTertiary: colorTextTertiary,
                 colorTextQuaternary: colorTextQuaternary,
                 colorBgContainer: colorBgContainer,
                 colorBgElevated: colorBgElevated,
+                colorBgLayout: colorBgLayout,
+                colorBgSpotlight: colorBgSpotlight,
+                colorBgMask: colorBgMask,
+                colorFill: colorFill,
+                colorFillSecondary: colorFillSecondary,
+                colorFillTertiary: colorFillTertiary,
+                colorFillQuaternary: colorFillQuaternary,
                 colorBgHover: colorBgHover,
                 colorBgDisabled: colorBgDisabled,
                 colorBorder: colorBorder,
+                colorBorderSecondary: colorBorderSecondary,
                 colorBorderHover: colorBorderHover,
                 fontSize: seed.fontSize,
                 fontSizeSM: fontSizeSM,
                 fontSizeLG: fontSizeLG,
+                fontSizeXL: fontSizeXL,
+                fontSizeHeading1: fontSizeHeading1,
+                fontSizeHeading2: fontSizeHeading2,
+                fontSizeHeading3: fontSizeHeading3,
+                fontSizeHeading4: fontSizeHeading4,
+                fontSizeHeading5: fontSizeHeading5,
+                lineHeight: lineHeight,
+                lineHeightSM: lineHeightSM,
+                lineHeightLG: lineHeightLG,
+                lineHeightHeading1: lineHeightHeading1,
+                lineHeightHeading2: lineHeightHeading2,
+                lineHeightHeading3: lineHeightHeading3,
+                lineHeightHeading4: lineHeightHeading4,
+                lineHeightHeading5: lineHeightHeading5,
                 controlHeight: seed.controlHeight,
+                controlHeightXS: controlHeightXS,
                 controlHeightSM: controlHeightSM,
                 controlHeightLG: controlHeightLG,
                 borderRadius: seed.borderRadius,
+                borderRadiusXS: borderRadiusXS,
                 borderRadiusSM: borderRadiusSM,
                 borderRadiusLG: borderRadiusLG,
-                padding: seed.padding,
+                borderRadiusOuter: borderRadiusOuter,
+                paddingXXS: paddingXXS,
+                paddingXS: paddingXS,
                 paddingSM: paddingSM,
+                padding: paddingBase,
+                paddingMD: paddingMD,
                 paddingLG: paddingLG,
-                motionDuration: seed.motionDuration
+                paddingXL: paddingXL,
+                marginXXS: marginXXS,
+                marginXS: marginXS,
+                marginSM: marginSM,
+                margin: marginBase,
+                marginMD: marginMD,
+                marginLG: marginLG,
+                marginXL: marginXL,
+                marginXXL: marginXXL,
+                lineWidth: seed.lineWidth,
+                lineWidthBold: lineWidthBold,
+                motionDuration: seed.motionDuration,
+                motionDurationFast: motionDurationFast,
+                motionDurationMid: motionDurationMid,
+                motionDurationSlow: motionDurationSlow,
+                zIndexBase: seed.zIndexBase,
+                zIndexPopupBase: seed.zIndexPopupBase
             )
         }
     }
@@ -239,99 +472,252 @@ public extension Moin {
         public var colorPrimary: Color
         public var colorPrimaryHover: Color
         public var colorPrimaryActive: Color
+        public var colorPrimaryBg: Color
+        public var colorPrimaryBorder: Color
 
         // MARK: - Success Colors
         public var colorSuccess: Color
         public var colorSuccessHover: Color
         public var colorSuccessActive: Color
+        public var colorSuccessBg: Color
+        public var colorSuccessBorder: Color
 
         // MARK: - Warning Colors
         public var colorWarning: Color
         public var colorWarningHover: Color
         public var colorWarningActive: Color
+        public var colorWarningBg: Color
+        public var colorWarningBorder: Color
 
         // MARK: - Danger Colors
         public var colorDanger: Color
         public var colorDangerHover: Color
         public var colorDangerActive: Color
+        public var colorDangerBg: Color
+        public var colorDangerBorder: Color
 
         // MARK: - Info Colors
         public var colorInfo: Color
         public var colorInfoHover: Color
         public var colorInfoActive: Color
+        public var colorInfoBg: Color
+        public var colorInfoBorder: Color
 
-        // MARK: - Background & Text
-        public var colorBgContainer: Color
-        public var colorBgElevated: Color
-        public var colorBgHover: Color
+        // MARK: - Link Colors
+        public var colorLink: Color
+        public var colorLinkHover: Color
+        public var colorLinkActive: Color
+
+        // MARK: - Text Colors
         public var colorText: Color
         public var colorTextSecondary: Color
+        public var colorTextTertiary: Color
+        public var colorTextQuaternary: Color
         public var colorTextDisabled: Color
+
+        // MARK: - Background Colors
+        public var colorBgContainer: Color
+        public var colorBgElevated: Color
+        public var colorBgLayout: Color
+        public var colorBgSpotlight: Color
+        public var colorBgMask: Color
+        public var colorBgHover: Color
         public var colorBgDisabled: Color
+
+        // MARK: - Fill Colors
+        public var colorFill: Color
+        public var colorFillSecondary: Color
+        public var colorFillTertiary: Color
+        public var colorFillQuaternary: Color
+
+        // MARK: - Border Colors
         public var colorBorder: Color
+        public var colorBorderSecondary: Color
         public var colorBorderHover: Color
 
-        // MARK: - Border
+        // MARK: - Border Radius
         public var borderRadius: CGFloat
-        public var borderRadiusLG: CGFloat
+        public var borderRadiusXS: CGFloat
         public var borderRadiusSM: CGFloat
+        public var borderRadiusLG: CGFloat
+        public var borderRadiusOuter: CGFloat
 
-        // MARK: - Size
+        // MARK: - Control Height
         public var controlHeight: CGFloat
-        public var controlHeightLG: CGFloat
+        public var controlHeightXS: CGFloat
         public var controlHeightSM: CGFloat
+        public var controlHeightLG: CGFloat
 
-        // MARK: - Font
+        // MARK: - Font Size
         public var fontSize: CGFloat
-        public var fontSizeLG: CGFloat
         public var fontSizeSM: CGFloat
+        public var fontSizeLG: CGFloat
+        public var fontSizeXL: CGFloat
+        public var fontSizeHeading1: CGFloat
+        public var fontSizeHeading2: CGFloat
+        public var fontSizeHeading3: CGFloat
+        public var fontSizeHeading4: CGFloat
+        public var fontSizeHeading5: CGFloat
 
-        // MARK: - Spacing
-        public var padding: CGFloat
-        public var paddingLG: CGFloat
+        // MARK: - Line Height
+        public var lineHeight: CGFloat
+        public var lineHeightSM: CGFloat
+        public var lineHeightLG: CGFloat
+        public var lineHeightHeading1: CGFloat
+        public var lineHeightHeading2: CGFloat
+        public var lineHeightHeading3: CGFloat
+        public var lineHeightHeading4: CGFloat
+        public var lineHeightHeading5: CGFloat
+
+        // MARK: - Padding
+        public var paddingXXS: CGFloat
+        public var paddingXS: CGFloat
         public var paddingSM: CGFloat
+        public var padding: CGFloat
+        public var paddingMD: CGFloat
+        public var paddingLG: CGFloat
+        public var paddingXL: CGFloat
 
-        // MARK: - Animation
+        // MARK: - Margin
+        public var marginXXS: CGFloat
+        public var marginXS: CGFloat
+        public var marginSM: CGFloat
+        public var margin: CGFloat
+        public var marginMD: CGFloat
+        public var marginLG: CGFloat
+        public var marginXL: CGFloat
+        public var marginXXL: CGFloat
+
+        // MARK: - Line
+        public var lineWidth: CGFloat
+        public var lineWidthBold: CGFloat
+
+        // MARK: - Motion
         public var motionDuration: Double
+        public var motionDurationFast: Double
+        public var motionDurationMid: Double
+        public var motionDurationSlow: Double
+
+        // MARK: - Z-Index
+        public var zIndexBase: Int
+        public var zIndexPopupBase: Int
 
         public init(from map: MapToken) {
+            // Primary
             self.colorPrimary = map.colorPrimary
             self.colorPrimaryHover = map.colorPrimaryHover
             self.colorPrimaryActive = map.colorPrimaryActive
+            self.colorPrimaryBg = map.colorPrimaryBg
+            self.colorPrimaryBorder = map.colorPrimaryBorder
+            // Success
             self.colorSuccess = map.colorSuccess
             self.colorSuccessHover = map.colorSuccessHover
             self.colorSuccessActive = map.colorSuccessActive
+            self.colorSuccessBg = map.colorSuccessBg
+            self.colorSuccessBorder = map.colorSuccessBorder
+            // Warning
             self.colorWarning = map.colorWarning
             self.colorWarningHover = map.colorWarningHover
             self.colorWarningActive = map.colorWarningActive
+            self.colorWarningBg = map.colorWarningBg
+            self.colorWarningBorder = map.colorWarningBorder
+            // Danger (Error)
             self.colorDanger = map.colorError
             self.colorDangerHover = map.colorErrorHover
             self.colorDangerActive = map.colorErrorActive
+            self.colorDangerBg = map.colorErrorBg
+            self.colorDangerBorder = map.colorErrorBorder
+            // Info
             self.colorInfo = map.colorInfo
             self.colorInfoHover = map.colorInfoHover
             self.colorInfoActive = map.colorInfoActive
-            self.colorBgContainer = map.colorBgContainer
-            self.colorBgElevated = map.colorBgElevated
-            self.colorBgHover = map.colorBgHover
+            self.colorInfoBg = map.colorInfoBg
+            self.colorInfoBorder = map.colorInfoBorder
+            // Link
+            self.colorLink = map.colorLink
+            self.colorLinkHover = map.colorLinkHover
+            self.colorLinkActive = map.colorLinkActive
+            // Text
             self.colorText = map.colorText
             self.colorTextSecondary = map.colorTextSecondary
+            self.colorTextTertiary = map.colorTextTertiary
+            self.colorTextQuaternary = map.colorTextQuaternary
             self.colorTextDisabled = map.colorTextTertiary
+            // Background
+            self.colorBgContainer = map.colorBgContainer
+            self.colorBgElevated = map.colorBgElevated
+            self.colorBgLayout = map.colorBgLayout
+            self.colorBgSpotlight = map.colorBgSpotlight
+            self.colorBgMask = map.colorBgMask
+            self.colorBgHover = map.colorBgHover
             self.colorBgDisabled = map.colorBgDisabled
+            // Fill
+            self.colorFill = map.colorFill
+            self.colorFillSecondary = map.colorFillSecondary
+            self.colorFillTertiary = map.colorFillTertiary
+            self.colorFillQuaternary = map.colorFillQuaternary
+            // Border
             self.colorBorder = map.colorBorder
+            self.colorBorderSecondary = map.colorBorderSecondary
             self.colorBorderHover = map.colorBorderHover
+            // Border Radius
             self.borderRadius = map.borderRadius
-            self.borderRadiusLG = map.borderRadiusLG
+            self.borderRadiusXS = map.borderRadiusXS
             self.borderRadiusSM = map.borderRadiusSM
+            self.borderRadiusLG = map.borderRadiusLG
+            self.borderRadiusOuter = map.borderRadiusOuter
+            // Control Height
             self.controlHeight = map.controlHeight
-            self.controlHeightLG = map.controlHeightLG
+            self.controlHeightXS = map.controlHeightXS
             self.controlHeightSM = map.controlHeightSM
+            self.controlHeightLG = map.controlHeightLG
+            // Font Size
             self.fontSize = map.fontSize
-            self.fontSizeLG = map.fontSizeLG
             self.fontSizeSM = map.fontSizeSM
-            self.padding = map.padding
-            self.paddingLG = map.paddingLG
+            self.fontSizeLG = map.fontSizeLG
+            self.fontSizeXL = map.fontSizeXL
+            self.fontSizeHeading1 = map.fontSizeHeading1
+            self.fontSizeHeading2 = map.fontSizeHeading2
+            self.fontSizeHeading3 = map.fontSizeHeading3
+            self.fontSizeHeading4 = map.fontSizeHeading4
+            self.fontSizeHeading5 = map.fontSizeHeading5
+            // Line Height
+            self.lineHeight = map.lineHeight
+            self.lineHeightSM = map.lineHeightSM
+            self.lineHeightLG = map.lineHeightLG
+            self.lineHeightHeading1 = map.lineHeightHeading1
+            self.lineHeightHeading2 = map.lineHeightHeading2
+            self.lineHeightHeading3 = map.lineHeightHeading3
+            self.lineHeightHeading4 = map.lineHeightHeading4
+            self.lineHeightHeading5 = map.lineHeightHeading5
+            // Padding
+            self.paddingXXS = map.paddingXXS
+            self.paddingXS = map.paddingXS
             self.paddingSM = map.paddingSM
+            self.padding = map.padding
+            self.paddingMD = map.paddingMD
+            self.paddingLG = map.paddingLG
+            self.paddingXL = map.paddingXL
+            // Margin
+            self.marginXXS = map.marginXXS
+            self.marginXS = map.marginXS
+            self.marginSM = map.marginSM
+            self.margin = map.margin
+            self.marginMD = map.marginMD
+            self.marginLG = map.marginLG
+            self.marginXL = map.marginXL
+            self.marginXXL = map.marginXXL
+            // Line
+            self.lineWidth = map.lineWidth
+            self.lineWidthBold = map.lineWidthBold
+            // Motion
             self.motionDuration = map.motionDuration
+            self.motionDurationFast = map.motionDurationFast
+            self.motionDurationMid = map.motionDurationMid
+            self.motionDurationSlow = map.motionDurationSlow
+            // Z-Index
+            self.zIndexBase = map.zIndexBase
+            self.zIndexPopupBase = map.zIndexPopupBase
         }
 
         public static func generate(from seed: SeedToken, theme: Theme) -> Token {
@@ -408,6 +794,19 @@ public extension Moin {
         public var contentFontSizeLG: CGFloat
         public var contentFontSizeSM: CGFloat
 
+        // MARK: - 行高
+        public var contentLineHeight: CGFloat
+        public var contentLineHeightLG: CGFloat
+        public var contentLineHeightSM: CGFloat
+
+        // MARK: - 阴影
+        public var defaultShadow: String
+        public var primaryShadow: String
+        public var dangerShadow: String
+
+        // MARK: - 按钮组
+        public var groupBorderColor: Color
+
         // MARK: - 禁用态
         public var borderColorDisabled: Color
         public var defaultBgDisabled: Color
@@ -437,9 +836,9 @@ public extension Moin {
                 textTextActiveColor: token.colorText,
                 textHoverBg: isDark ? Color.white.opacity(0.08) : Color.black.opacity(0.04),
                 linkHoverBg: .clear,
-                paddingInline: token.padding + 3,
-                paddingInlineLG: token.padding + 3,
-                paddingInlineSM: token.paddingSM - 1,
+                paddingInline: token.paddingMD - 1,
+                paddingInlineLG: token.padding - 1,
+                paddingInlineSM: token.paddingXS - 1,
                 paddingBlock: 0,
                 paddingBlockLG: 0,
                 paddingBlockSM: 0,
@@ -449,6 +848,13 @@ public extension Moin {
                 contentFontSize: token.fontSize,
                 contentFontSizeLG: token.fontSizeLG,
                 contentFontSizeSM: token.fontSizeSM,
+                contentLineHeight: token.lineHeight,
+                contentLineHeightLG: token.lineHeightLG,
+                contentLineHeightSM: token.lineHeightSM,
+                defaultShadow: "0 2px 0 rgba(0, 0, 0, 0.02)",
+                primaryShadow: "0 2px 0 rgba(5, 145, 255, 0.1)",
+                dangerShadow: "0 2px 0 rgba(255, 38, 5, 0.06)",
+                groupBorderColor: token.colorPrimaryHover,
                 borderColorDisabled: token.colorBorder.opacity(0.5),
                 defaultBgDisabled: token.colorBgDisabled
             )

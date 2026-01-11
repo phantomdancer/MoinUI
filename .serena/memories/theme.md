@@ -10,34 +10,38 @@ enum Moin.Theme { case light, dark, system }
 
 ### 架构层级
 ```
-SeedToken (8核心值) → MapToken (派生50+) → Token (别名层) → ComponentToken (组件层)
+SeedToken (18核心值) → MapToken (80+派生) → Token (别名层) → ComponentToken (组件层)
 ```
 
-### SeedToken（种子 Token）
-核心可配置值，所有派生的源头：
-- `colorPrimary`, `colorSuccess`, `colorWarning`, `colorError`, `colorInfo`
-- `fontSize` (14), `borderRadius` (6), `controlHeight` (32)
-- `padding` (12), `motionDuration` (0.25)
+### SeedToken（种子 Token）18 个属性
+- **品牌色**: colorPrimary, colorSuccess, colorWarning, colorError, colorInfo, colorLink
+- **字体**: fontSize, lineHeight
+- **线条**: lineWidth
+- **圆角**: borderRadius
+- **尺寸**: sizeUnit, sizeStep, controlHeight
+- **间距**: padding, margin
+- **层级**: zIndexBase, zIndexPopupBase
+- **动画**: motionDuration
 
-### MapToken（映射 Token）
-从 SeedToken 派生：
-- **颜色派生**：使用 ColorPalette.generate() 生成 10 级色板
-- **文字派生**：透明度梯度 0.88/0.65/0.45/0.25
-- **尺寸派生**：
-  - fontSize: SM = base-2, LG = base+2
-  - controlHeight: SM = base×0.75, LG = base×1.25
-  - borderRadius: SM = base-2, LG = base+2
+### MapToken（映射 Token）80+ 属性
+- **颜色派生**: 5种色板 × 10级 + Bg/Border/Text 变体
+- **链接色**: colorLink/Hover/Active
+- **文字**: 4级透明度梯度
+- **背景**: Container/Elevated/Layout/Spotlight/Mask + Fill(4级)
+- **字体**: fontSize(SM/LG/XL) + Heading(1-5)
+- **行高**: lineHeight(SM/LG) + Heading(1-5)
+- **控件**: controlHeight(XS/SM/LG)
+- **圆角**: borderRadius(XS/SM/LG/Outer)
+- **间距**: padding(XXS/XS/SM/MD/LG/XL) + margin(XXS~XXL)
+- **动画**: motionDuration(Fast/Mid/Slow)
 
 ### Token（别名层）
-从 MapToken 包装，保持现有 API：
-- `colorDanger` → `map.colorError`（别名映射）
-- 所有属性为存储属性，支持双向绑定
+从 MapToken 包装，保持现有 API，属性可变支持覆盖。
 
 ### ComponentToken
-各组件 Token 有 `generate(from: Token)` 方法：
-- `ButtonToken.generate(from:isDark:)`
-- `SpaceToken.generate(from:)`
-- `DividerToken.generate(from:)`
+- **ButtonToken**: 40 个属性（含阴影/行高/按钮组）
+- **SpaceToken**: 3 个属性
+- **DividerToken**: 9 个属性
 
 ## 使用
 
@@ -45,26 +49,22 @@ SeedToken (8核心值) → MapToken (派生50+) → Token (别名层) → Compon
 // 启用
 ContentView().moinThemeRoot()
 
-// 切换主题
-Moin.ConfigProvider.shared.applyTheme(.dark)
-Moin.ConfigProvider.shared.toggleTheme()
-
 // 修改种子值，自动级联派生
 config.setPrimaryColor(.purple)
 config.setBorderRadius(8)
 
-// 或直接配置种子
+// 批量修改
 config.configureSeed { seed in
     seed.colorPrimary = .indigo
-    seed.fontSize = 16
+    seed.fontSize = 15
+    seed.sizeUnit = 4
 }
-
-// 重置所有 Token
-config.reset()
 
 // 在 View 中
 @Environment(\.moinToken) private var token
 .foregroundStyle(token.colorPrimary)
+.padding(token.paddingMD)
+.font(.system(size: token.fontSizeHeading3))
 ```
 
 ## 系统跟随
