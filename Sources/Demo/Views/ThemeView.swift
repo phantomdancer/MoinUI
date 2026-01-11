@@ -8,49 +8,47 @@ struct ThemeView: View {
 
     private var token: Moin.Token { config.token }
 
+    /// 锚点列表
+    private let anchors: [AnchorItem] = [
+        AnchorItem(id: "quick_start", titleKey: "theme.root.title"),
+        AnchorItem(id: "switch", titleKey: "theme.switch.title"),
+        AnchorItem(id: "token", titleKey: "theme.token.title"),
+        AnchorItem(id: "api", titleKey: "theme.anchor.api"),
+    ]
+
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: Moin.Constants.Spacing.xl) {
-                // Title
-                VStack(alignment: .leading, spacing: Moin.Constants.Spacing.sm) {
-                    Text(tr("theme.title"))
-                        .font(.largeTitle)
-                        .fontWeight(.bold)
-                        .foregroundStyle(token.colorText)
+        ExamplePageWithAnchor(pageName: "Theme", anchors: anchors) { _ in
+            // Title
+            VStack(alignment: .leading, spacing: Moin.Constants.Spacing.sm) {
+                Text(tr("theme.title"))
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                    .foregroundStyle(token.colorText)
 
-                    Text(tr("theme.description"))
-                        .font(.body)
-                        .foregroundStyle(token.colorTextSecondary)
-                }
-
-                Divider()
-
-                // Quick Start
-                themeRootSection
-
-                Divider()
-
-                // Theme Switch
-                themeSwitchSection
-
-                Divider()
-
-                // Token Config
-                tokenSection
-
-                Divider()
-
-                // API Reference
-                apiSection
-
-                Spacer(minLength: 40)
+                Text(tr("theme.description"))
+                    .font(.body)
+                    .foregroundStyle(token.colorTextSecondary)
             }
-            .padding(Moin.Constants.Spacing.xl)
-            .frame(maxWidth: .infinity, alignment: .leading)
+
+            Divider()
+
+            themeRootSection.id("quick_start")
+
+            Divider()
+
+            themeSwitchSection.id("switch")
+
+            Divider()
+
+            tokenSection.id("token")
+
+            Divider()
+
+            apiSection.id("api")
+
+            Spacer(minLength: 40)
         }
-        .frame(maxWidth: .infinity)
         .background(token.colorBgContainer)
-        .measureRenderTime("Theme")
     }
 
     // MARK: - Theme Root Section

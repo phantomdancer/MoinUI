@@ -5,25 +5,28 @@ import MoinUI
 struct LocalizationExamples: View {
     @Localized var tr
 
+    /// 锚点列表
+    private let anchors: [AnchorItem] = [
+        AnchorItem(id: "basic", titleKey: "i18n.basic"),
+        AnchorItem(id: "custom", titleKey: "i18n.custom"),
+        AnchorItem(id: "json", titleKey: "i18n.json"),
+        AnchorItem(id: "api", titleKey: "i18n.anchor.api"),
+    ]
+
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: Moin.Constants.Spacing.xl) {
-                introduction
+        ExamplePageWithAnchor(pageName: "Localization", anchors: anchors) { _ in
+            introduction
 
-                Divider()
+            Divider()
 
-                // 示例区域（单列显示）
-                basicUsage
-                customTranslations
-                jsonTranslations
+            basicUsage.id("basic")
+            customTranslations.id("custom")
+            jsonTranslations.id("json")
 
-                Divider()
+            Divider()
 
-                apiReference
-            }
-            .padding(Moin.Constants.Spacing.xl)
+            apiReference.id("api")
         }
-        .measureRenderTime("Localization")
     }
 
     // MARK: - Introduction

@@ -18,7 +18,7 @@ public enum MoinMotionEase: String {
 
 public extension Moin {
     /// 种子 Token - 核心可配置值，派生出完整 Token 系统
-    /// 对应 Ant Design 的 SeedToken (28 个属性)
+    /// 对应 Ant Design 的 SeedToken (24 个属性)
     struct SeedToken {
         // MARK: - 品牌色 (6个)
         /// 主色
@@ -40,11 +40,9 @@ public extension Moin {
         /// 背景色派生基础
         public var colorBgBase: Color
 
-        // MARK: - 字体 (4个)
+        // MARK: - 字体 (3个)
         /// 基础字号
         public var fontSize: CGFloat
-        /// 行高倍数
-        public var lineHeight: CGFloat
         /// 字体族
         public var fontFamily: String
         /// 代码字体族
@@ -60,19 +58,15 @@ public extension Moin {
         /// 基础圆角
         public var borderRadius: CGFloat
 
-        // MARK: - 尺寸 (3个)
+        // MARK: - 尺寸 (4个)
         /// 尺寸步进单位
         public var sizeUnit: CGFloat
         /// 尺寸步进
         public var sizeStep: CGFloat
+        /// 弹出箭头尺寸
+        public var sizePopupArrow: CGFloat
         /// 控件基础高度
         public var controlHeight: CGFloat
-
-        // MARK: - 间距 (2个)
-        /// 基础内边距
-        public var padding: CGFloat
-        /// 基础外边距
-        public var margin: CGFloat
 
         // MARK: - 层级 (2个)
         /// Z轴基础值
@@ -80,13 +74,13 @@ public extension Moin {
         /// 弹层Z轴基础值
         public var zIndexPopupBase: Int
 
-        // MARK: - 动画 (4个)
+        // MARK: - 动画 (3个)
         /// 动画开关
         public var motion: Bool
-        /// 动画时长基础单位
+        /// 动画时长基础单位 (秒)
         public var motionUnit: Double
-        /// 动画时长 (派生)
-        public var motionDuration: Double
+        /// 动画基础时长倍数
+        public var motionBase: Int
         /// 缓动曲线
         public var motionEase: MoinMotionEase
 
@@ -106,7 +100,6 @@ public extension Moin {
             colorTextBase: Color = Color(white: 0.0),
             colorBgBase: Color = Color.white,
             fontSize: CGFloat = 14,
-            lineHeight: CGFloat = 1.5714,
             fontFamily: String = "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial",
             fontFamilyCode: String = "'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace",
             lineWidth: CGFloat = 1,
@@ -114,14 +107,13 @@ public extension Moin {
             borderRadius: CGFloat = 6,
             sizeUnit: CGFloat = 4,
             sizeStep: CGFloat = 4,
+            sizePopupArrow: CGFloat = 16,
             controlHeight: CGFloat = 32,
-            padding: CGFloat = 16,
-            margin: CGFloat = 16,
             zIndexBase: Int = 0,
             zIndexPopupBase: Int = 1000,
             motion: Bool = true,
             motionUnit: Double = 0.1,
-            motionDuration: Double = 0.2,
+            motionBase: Int = 2,
             motionEase: MoinMotionEase = .easeInOut,
             opacityImage: Double = 1.0,
             wireframe: Bool = false
@@ -135,7 +127,6 @@ public extension Moin {
             self.colorTextBase = colorTextBase
             self.colorBgBase = colorBgBase
             self.fontSize = fontSize
-            self.lineHeight = lineHeight
             self.fontFamily = fontFamily
             self.fontFamilyCode = fontFamilyCode
             self.lineWidth = lineWidth
@@ -143,14 +134,13 @@ public extension Moin {
             self.borderRadius = borderRadius
             self.sizeUnit = sizeUnit
             self.sizeStep = sizeStep
+            self.sizePopupArrow = sizePopupArrow
             self.controlHeight = controlHeight
-            self.padding = padding
-            self.margin = margin
             self.zIndexBase = zIndexBase
             self.zIndexPopupBase = zIndexPopupBase
             self.motion = motion
             self.motionUnit = motionUnit
-            self.motionDuration = motionDuration
+            self.motionBase = motionBase
             self.motionEase = motionEase
             self.opacityImage = opacityImage
             self.wireframe = wireframe
@@ -402,8 +392,8 @@ public extension Moin {
             let fontSizeHeading4: CGFloat = 20
             let fontSizeHeading5: CGFloat = 16
 
-            // 行高派生
-            let lineHeight = seed.lineHeight
+            // 行高派生 (Ant Design 默认 1.5714)
+            let lineHeight: CGFloat = 1.5714
             let lineHeightSM: CGFloat = 1.6667
             let lineHeightLG: CGFloat = 1.5
             let lineHeightHeading1: CGFloat = 1.2105
@@ -423,12 +413,12 @@ public extension Moin {
             let borderRadiusLG = seed.borderRadius + 2
             let borderRadiusOuter = seed.borderRadius + 4
 
-            // 间距派生 (基于 sizeUnit = 4)
+            // 间距派生 (基于 sizeUnit)
             let unit = seed.sizeUnit
             let paddingXXS = unit * 1       // 4
             let paddingXS = unit * 2        // 8
             let paddingSM = unit * 3        // 12
-            let paddingBase = seed.padding  // 16
+            let paddingBase = unit * 4      // 16 (派生)
             let paddingMD = unit * 5        // 20
             let paddingLG = unit * 6        // 24
             let paddingXL = unit * 8        // 32
@@ -436,7 +426,7 @@ public extension Moin {
             let marginXXS = unit * 1        // 4
             let marginXS = unit * 2         // 8
             let marginSM = unit * 3         // 12
-            let marginBase = seed.margin    // 16
+            let marginBase = unit * 4       // 16 (派生)
             let marginMD = unit * 5         // 20
             let marginLG = unit * 6         // 24
             let marginXL = unit * 8         // 32
@@ -445,10 +435,11 @@ public extension Moin {
             // 线条
             let lineWidthBold = seed.lineWidth + 1
 
-            // 动画时长派生
-            let motionDurationFast = seed.motionDuration * 0.5
-            let motionDurationMid = seed.motionDuration
-            let motionDurationSlow = seed.motionDuration * 1.5
+            // 动画时长派生 (motionDuration = motionBase × motionUnit)
+            let motionDuration = Double(seed.motionBase) * seed.motionUnit  // 0.2s
+            let motionDurationFast = motionDuration * 0.5   // 0.1s
+            let motionDurationMid = motionDuration          // 0.2s
+            let motionDurationSlow = motionDuration * 1.5   // 0.3s
 
             return MapToken(
                 primaryPalette: primaryPalette,
@@ -522,7 +513,7 @@ public extension Moin {
                 lineWidthBold: lineWidthBold,
                 lineType: seed.lineType,
                 motion: seed.motion,
-                motionDuration: seed.motionDuration,
+                motionDuration: motionDuration,
                 motionDurationFast: motionDurationFast,
                 motionDurationMid: motionDurationMid,
                 motionDurationSlow: motionDurationSlow,
@@ -1234,11 +1225,12 @@ public extension Moin {
             set { setBorderRadius(newValue) }
         }
 
-        /// Animation duration (从 seed 读取)
+        /// Animation duration (从 motionBase × motionUnit 派生)
         public var animationDuration: Double {
-            get { seed.motionDuration }
+            get { Double(seed.motionBase) * seed.motionUnit }
             set {
-                seed.motionDuration = newValue
+                // 反向计算 motionBase (保持 motionUnit 不变)
+                seed.motionBase = Int(round(newValue / seed.motionUnit))
                 regenerateTokens()
             }
         }

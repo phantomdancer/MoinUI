@@ -6,22 +6,38 @@ struct TokenExamples: View {
     @Localized var tr
     @ObservedObject private var config = Moin.ConfigProvider.shared
 
+    /// 锚点列表
+    private let anchors: [AnchorItem] = [
+        AnchorItem(id: "architecture", titleKey: "token.architecture"),
+        AnchorItem(id: "seed", titleKey: "token.anchor.seed"),
+        AnchorItem(id: "map", titleKey: "token.anchor.map"),
+        AnchorItem(id: "component", titleKey: "token.anchor.component"),
+        AnchorItem(id: "usage", titleKey: "token.usage"),
+    ]
+
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: Moin.Constants.Spacing.xl) {
-                introduction
-                Divider()
-                architecture
-                Divider()
-                seedTokenSection
-                Divider()
-                mapTokenSection
-                Divider()
-                componentTokenSection
-                Divider()
-                usageSection
-            }
-            .padding(Moin.Constants.Spacing.xl)
+        ExamplePageWithAnchor(pageName: "Token", anchors: anchors) { _ in
+            introduction
+
+            Divider()
+
+            architecture.id("architecture")
+
+            Divider()
+
+            seedTokenSection.id("seed")
+
+            Divider()
+
+            mapTokenSection.id("map")
+
+            Divider()
+
+            componentTokenSection.id("component")
+
+            Divider()
+
+            usageSection.id("usage")
         }
     }
 
@@ -101,7 +117,7 @@ struct TokenExamples: View {
                 .font(.body)
                 .foregroundStyle(.secondary)
 
-            // 当前 Seed 值展示 (28个属性)
+            // 当前 Seed 值展示 (24个属性)
             LazyVGrid(columns: [
                 GridItem(.flexible()),
                 GridItem(.flexible()),
@@ -118,9 +134,8 @@ struct TokenExamples: View {
                 // 派生基础色 (2个)
                 seedValueCard("colorTextBase", colorView: config.seed.colorTextBase)
                 seedValueCard("colorBgBase", colorView: config.seed.colorBgBase)
-                // 字体 (4个)
+                // 字体 (3个)
                 seedValueCard("fontSize", value: "\(Int(config.seed.fontSize))pt")
-                seedValueCard("lineHeight", value: "\(config.seed.lineHeight)")
                 seedValueCard("fontFamily", value: "system")
                 seedValueCard("fontFamilyCode", value: "mono")
                 // 线条 (2个)
@@ -128,20 +143,18 @@ struct TokenExamples: View {
                 seedValueCard("lineType", value: config.seed.lineType.rawValue)
                 // 圆角 (1个)
                 seedValueCard("borderRadius", value: "\(Int(config.seed.borderRadius))px")
-                // 尺寸 (3个)
+                // 尺寸 (4个)
                 seedValueCard("sizeUnit", value: "\(Int(config.seed.sizeUnit))px")
                 seedValueCard("sizeStep", value: "\(Int(config.seed.sizeStep))px")
+                seedValueCard("sizePopupArrow", value: "\(Int(config.seed.sizePopupArrow))px")
                 seedValueCard("controlHeight", value: "\(Int(config.seed.controlHeight))px")
-                // 间距 (2个)
-                seedValueCard("padding", value: "\(Int(config.seed.padding))px")
-                seedValueCard("margin", value: "\(Int(config.seed.margin))px")
                 // 层级 (2个)
                 seedValueCard("zIndexBase", value: "\(config.seed.zIndexBase)")
                 seedValueCard("zIndexPopupBase", value: "\(config.seed.zIndexPopupBase)")
-                // 动画 (4个)
+                // 动画 (3个)
                 seedValueCard("motion", value: config.seed.motion ? "true" : "false")
                 seedValueCard("motionUnit", value: "\(config.seed.motionUnit)s")
-                seedValueCard("motionDuration", value: "\(config.seed.motionDuration)s")
+                seedValueCard("motionBase", value: "\(config.seed.motionBase)")
                 seedValueCard("motionEase", value: config.seed.motionEase.rawValue)
                 // 其他 (2个)
                 seedValueCard("opacityImage", value: "\(config.seed.opacityImage)")

@@ -84,6 +84,9 @@
       "toggle": "Toggle light/dark",
       "theme_root": "Apply global theme (use at App entry)",
       "theme_modifier": "Set local theme"
+    },
+    "anchor": {
+      "api": "API Reference"
     }
   },
   "token": {
@@ -95,7 +98,7 @@
     "map_brief": "Derivation layer",
     "alias_brief": "Semantic aliases",
     "component_brief": "Component-specific",
-    "seed_desc": "SeedToken contains 28 core configurable values, the source of the entire Token system. Modifying these triggers full derivation chain recalculation.",
+    "seed_desc": "SeedToken contains 24 core configurable values, the source of the entire Token system. Modifying these triggers full derivation chain recalculation.",
     "seed_usage": "Modify Seed Values",
     "modify_seed": "Modify single seed value",
     "batch_modify": "Batch modify seed values",
@@ -115,6 +118,11 @@
     "override_component": "Override component token",
     "regenerate_all": "Regenerate all tokens (reset to derived values)",
     "usage": "Usage in Views",
+    "anchor": {
+      "seed": "SeedToken",
+      "map": "MapToken",
+      "component": "ComponentToken"
+    },
     "usage_view": "Environment Injection",
     "usage_view_desc": "Get current Token values via @Environment for use in views.",
     "usage_dynamic": "Dynamic Updates",
@@ -180,7 +188,10 @@
     "token_desc": "Fine-grained control of component styles via Token.",
     "border_radius": "Radius",
     "control_height": "Height",
-    "reset": "Reset"
+    "reset": "Reset",
+    "anchor": {
+      "api": "API Reference"
+    }
   },
   "i18n": {
     "title": "Localization",
@@ -192,7 +203,10 @@
     "custom_demo": "Use register() to add custom translations",
     "json": "JSON Files",
     "json_desc": "Load translations from JSON files with nested structure support.",
-    "json_demo": "Use registerFromJSON() to load JSON translation files"
+    "json_demo": "Use registerFromJSON() to load JSON translation files",
+    "anchor": {
+      "api": "API Reference"
+    }
   },
   "code": {
     "show": "Show Code",

@@ -36,15 +36,15 @@
     "custom_color": "自定义颜色"
   },
   "nav": {
-    "overview": "概览",
-    "introduction": "介绍",
-    "quick_start": "快速开始",
-    "theme": "主题",
-    "token": "Token 系统",
-    "general": "通用",
-    "layout": "布局",
-    "components": "组件",
-    "development": "研发"
+    "overview": "Overview 概览",
+    "introduction": "Introduction 介绍",
+    "quick_start": "Quick Start 快速开始",
+    "theme": "Theme 主题",
+    "token": "Token 设计令牌",
+    "general": "General 通用",
+    "layout": "Layout 布局",
+    "components": "Components 组件",
+    "development": "Development 研发"
   },
   "quick_start": {
     "desc": "只需几步即可开始使用 MoinUI。",
@@ -55,7 +55,7 @@
     "hello_moinui": "你好 MoinUI！"
   },
   "theme": {
-    "title": "主题配置",
+    "title": "Theme 主题配置",
     "description": "MoinUI 提供完整的主题系统，支持浅色、深色和跟随系统三种模式。",
     "root": {
       "title": "快速开始",
@@ -84,10 +84,13 @@
       "toggle": "切换浅色/深色",
       "theme_root": "应用全局主题（在 App 入口使用）",
       "theme_modifier": "设置局部主题"
+    },
+    "anchor": {
+      "api": "API 参考"
     }
   },
   "token": {
-    "title": "Token 系统",
+    "title": "Token 设计令牌",
     "description": "MoinUI 采用与 Ant Design 一致的四层 Token 架构，实现设计变量的分层管理和自动派生。",
     "architecture": "架构设计",
     "architecture_desc": "Token 系统分为四层：SeedToken（种子）→ MapToken（映射）→ Token（别名）→ ComponentToken（组件）。修改种子值会自动级联更新所有派生值。",
@@ -95,7 +98,7 @@
     "map_brief": "派生算法层",
     "alias_brief": "语义别名层",
     "component_brief": "组件专用",
-    "seed_desc": "SeedToken 包含 28 个核心可配置值，是整个 Token 系统的源头。修改这些值会触发完整的派生链重新计算。",
+    "seed_desc": "SeedToken 包含 24 个核心可配置值，是整个 Token 系统的源头。修改这些值会触发完整的派生链重新计算。",
     "seed_usage": "修改种子值",
     "modify_seed": "修改单个种子值",
     "batch_modify": "批量修改种子值",
@@ -115,6 +118,11 @@
     "override_component": "覆盖组件 Token",
     "regenerate_all": "重新生成所有 Token（重置为派生值）",
     "usage": "在视图中使用",
+    "anchor": {
+      "seed": "SeedToken 种子",
+      "map": "MapToken 映射",
+      "component": "ComponentToken 组件"
+    },
     "usage_view": "环境注入",
     "usage_view_desc": "通过 @Environment 获取当前 Token 值，在视图中使用。",
     "usage_dynamic": "动态更新",
@@ -180,7 +188,10 @@
     "token_desc": "通过 Token 精细控制组件样式。",
     "border_radius": "圆角",
     "control_height": "控件高度",
-    "reset": "重置"
+    "reset": "重置",
+    "anchor": {
+      "api": "API 参考"
+    }
   },
   "i18n": {
     "title": "Localization 国际化",
@@ -192,7 +203,10 @@
     "custom_demo": "使用 register() 注册自定义翻译",
     "json": "JSON 文件",
     "json_desc": "从 JSON 文件加载翻译，支持嵌套结构。",
-    "json_demo": "使用 registerFromJSON() 加载 JSON 翻译文件"
+    "json_demo": "使用 registerFromJSON() 加载 JSON 翻译文件",
+    "anchor": {
+      "api": "API 参考"
+    }
   },
   "code": {
     "show": "显示代码",

@@ -6,26 +6,30 @@ struct ConfigProviderExamples: View {
     @Localized var tr
     @EnvironmentObject var configProvider: Moin.ConfigProvider
 
+    /// 锚点列表
+    private let anchors: [AnchorItem] = [
+        AnchorItem(id: "basic", titleKey: "config.basic"),
+        AnchorItem(id: "locale", titleKey: "config.locale"),
+        AnchorItem(id: "theme", titleKey: "config.theme"),
+        AnchorItem(id: "token", titleKey: "config.token"),
+        AnchorItem(id: "api", titleKey: "config.anchor.api"),
+    ]
+
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: Moin.Constants.Spacing.xl) {
-                introduction
+        ExamplePageWithAnchor(pageName: "ConfigProvider", anchors: anchors) { _ in
+            introduction
 
-                Divider()
+            Divider()
 
-                // 示例区域（单列显示）
-                basicUsage
-                localeConfig
-                themeConfig
-                tokenConfig
+            basicUsage.id("basic")
+            localeConfig.id("locale")
+            themeConfig.id("theme")
+            tokenConfig.id("token")
 
-                Divider()
+            Divider()
 
-                apiReference
-            }
-            .padding(Moin.Constants.Spacing.xl)
+            apiReference.id("api")
         }
-        .measureRenderTime("ConfigProvider")
     }
 
     // MARK: - Introduction
