@@ -360,6 +360,59 @@ public extension Moin {
 }
 
 
+// MARK: - Moin.DividerToken
+
+public extension Moin {
+    /// Divider component token
+    struct DividerToken {
+        /// Line color
+        public var lineColor: Color
+        /// Text color
+        public var textColor: Color
+        /// Text font size
+        public var fontSize: CGFloat
+        /// Vertical margin for horizontal divider
+        public var verticalMargin: CGFloat
+        /// Horizontal margin for vertical divider
+        public var horizontalMargin: CGFloat
+        /// Padding around text
+        public var textPadding: CGFloat
+        /// Line width
+        public var lineWidth: CGFloat
+        /// Dash length for dashed line
+        public var dashLength: CGFloat
+        /// Gap between dashes
+        public var dashGap: CGFloat
+
+        public static let light = DividerToken(
+            lineColor: Moin.Constants.Colors.border,
+            textColor: Moin.Constants.Colors.textPrimary,
+            fontSize: 14,
+            verticalMargin: Moin.Constants.Spacing.lg,
+            horizontalMargin: Moin.Constants.Spacing.sm,
+            textPadding: Moin.Constants.Spacing.md,
+            lineWidth: 1,
+            dashLength: 4,
+            dashGap: 4
+        )
+
+        public static let dark = DividerToken(
+            lineColor: Moin.DarkColors.border,
+            textColor: Moin.DarkColors.textPrimary,
+            fontSize: 14,
+            verticalMargin: Moin.Constants.Spacing.lg,
+            horizontalMargin: Moin.Constants.Spacing.sm,
+            textPadding: Moin.Constants.Spacing.md,
+            lineWidth: 1,
+            dashLength: 4,
+            dashGap: 4
+        )
+
+        public static let `default` = light
+    }
+}
+
+
 // MARK: - Moin.ComponentToken
 
 public extension Moin {
@@ -367,15 +420,18 @@ public extension Moin {
     struct ComponentToken {
         public var button: Moin.ButtonToken
         public var space: Moin.SpaceToken
+        public var divider: Moin.DividerToken
 
         public static let light = ComponentToken(
             button: .light,
-            space: .light
+            space: .light,
+            divider: .light
         )
 
         public static let dark = ComponentToken(
             button: .dark,
-            space: .dark
+            space: .dark,
+            divider: .dark
         )
 
         public static let `default` = light
@@ -599,6 +655,10 @@ private struct MoinSpaceTokenKey: EnvironmentKey {
     static let defaultValue = Moin.SpaceToken.default
 }
 
+private struct MoinDividerTokenKey: EnvironmentKey {
+    static let defaultValue = Moin.DividerToken.default
+}
+
 public extension EnvironmentValues {
     var moinConfig: Moin.ConfigProvider {
         get { self[MoinConfigProviderKey.self] }
@@ -618,6 +678,11 @@ public extension EnvironmentValues {
     var moinSpaceToken: Moin.SpaceToken {
         get { self[MoinSpaceTokenKey.self] }
         set { self[MoinSpaceTokenKey.self] = newValue }
+    }
+
+    var moinDividerToken: Moin.DividerToken {
+        get { self[MoinDividerTokenKey.self] }
+        set { self[MoinDividerTokenKey.self] = newValue }
     }
 }
 
@@ -671,6 +736,7 @@ public extension Moin {
                 .environment(\.moinToken, config.token)
                 .environment(\.moinButtonToken, config.components.button)
                 .environment(\.moinSpaceToken, config.components.space)
+                .environment(\.moinDividerToken, config.components.divider)
                 .environmentObject(config)
         }
 

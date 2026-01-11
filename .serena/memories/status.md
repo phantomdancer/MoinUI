@@ -2,9 +2,11 @@
 
 ## 当前任务
 
-待实现 Divider 组件
+待实现 Typography 组件
 
 ## 最近完成
+
+- 2026-01-10: Divider 组件（水平/垂直、实线/虚线/点线、带文字、演练场）
 
 - 2026-01-10: Space 组件（间距布局，支持 size/direction/alignment/wrap）
 - 2026-01-10: 色彩系统重构（HSV 色板生成算法，语义色 hover/active 使用色阶）

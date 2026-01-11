@@ -88,6 +88,7 @@
   "component": {
     "button": "Button",
     "space": "Space",
+    "divider": "Divider",
     "configProvider": "ConfigProvider",
     "localization": "Localization",
     "colors": "Colors"
@@ -223,6 +224,34 @@
       "alignment": "Alignment",
       "wrap": "Wrap",
       "compact": "Compact"
+    }
+  },
+  "divider": {
+    "title": "Divider",
+    "description": "A divider to separate content.",
+    "horizontal": "Horizontal Divider",
+    "horizontal_desc": "Default is horizontal divider.",
+    "with_text": "Divider with Text",
+    "with_text_desc": "Divider can have text with customizable position.",
+    "variant": "Variant",
+    "variant_desc": "Supports solid, dashed, and dotted styles.",
+    "vertical": "Vertical Divider",
+    "vertical_desc": "Use vertical divider inline.",
+    "plain": "Plain Style",
+    "plain_desc": "Text is not bold when plain is true.",
+    "label": {
+      "left": "Left",
+      "center": "Center",
+      "right": "Right",
+      "text": "Text"
+    },
+    "prop": {
+      "orientation": "Orientation",
+      "variant": "Variant",
+      "has_text": "Has Text",
+      "text": "Text Content",
+      "title_placement": "Title Placement",
+      "plain": "Plain"
     }
   },
   "config": {
@@ -516,6 +545,32 @@
       "token_small": "Small spacing value",
       "token_medium": "Medium spacing value",
       "token_large": "Large spacing value"
+    },
+    "divider": {
+      "orientation": "Divider orientation",
+      "variant": "Line variant",
+      "title_placement": "Text position (horizontal only)",
+      "plain": "Plain style (not bold)",
+      "title": "Divider text",
+      "content": "Custom content",
+      "orientation_h": "Horizontal divider",
+      "orientation_v": "Vertical divider",
+      "variant_solid": "Solid line",
+      "variant_dashed": "Dashed line",
+      "variant_dotted": "Dotted line",
+      "placement_left": "Text left aligned",
+      "placement_center": "Text center aligned",
+      "placement_right": "Text right aligned",
+      "token_desc": "Below are the design tokens for the Divider component. Override via ConfigProvider.",
+      "token_line_color": "Line color",
+      "token_text_color": "Text color",
+      "token_font_size": "Text font size",
+      "token_vertical_margin": "Vertical margin for horizontal divider",
+      "token_horizontal_margin": "Horizontal margin for vertical divider",
+      "token_text_padding": "Padding around text",
+      "token_line_width": "Line width",
+      "token_dash_length": "Dash length",
+      "token_dash_gap": "Dash gap"
     },
     "global_token": {
       "colorPrimary": "Primary color",

@@ -143,13 +143,14 @@ struct ContentView: View {
     @Localized var tr
     @State private var buttonTab: ButtonExamplesTab = .examples
     @State private var spaceTab: SpaceExamplesTab = .examples
+    @State private var dividerTab: DividerExamplesTab = .examples
 
     var body: some View {
         NavigationSplitView {
             Sidebar(selection: $navManager.selectedItem)
                 .modifier(HideSidebarToggleModifier())
         } detail: {
-            DetailView(item: navManager.selectedItem, buttonTab: $buttonTab, spaceTab: $spaceTab)
+            DetailView(item: navManager.selectedItem, buttonTab: $buttonTab, spaceTab: $spaceTab, dividerTab: $dividerTab)
                 .navigationTitle(navManager.selectedItem.map { tr($0.titleKey) } ?? "MoinUI")
                 .toolbar {
                     ToolbarItemGroup(placement: .primaryAction) {
@@ -170,6 +171,17 @@ struct ContentView: View {
                                 Text(tr("tab.examples")).tag(SpaceExamplesTab.examples)
                                 Text(tr("tab.playground")).tag(SpaceExamplesTab.playground)
                                 Text(tr("tab.api")).tag(SpaceExamplesTab.api)
+                            }
+                            .pickerStyle(.segmented)
+                            .fixedSize()
+                        }
+
+                        // Divider 页面显示 Tab 切换
+                        if navManager.selectedItem == .divider {
+                            Picker("", selection: $dividerTab) {
+                                Text(tr("tab.examples")).tag(DividerExamplesTab.examples)
+                                Text(tr("tab.playground")).tag(DividerExamplesTab.playground)
+                                Text(tr("tab.api")).tag(DividerExamplesTab.api)
                             }
                             .pickerStyle(.segmented)
                             .fixedSize()
@@ -209,6 +221,7 @@ enum NavItem: String, Identifiable {
     // Components
     case button
     case space
+    case divider
 
     // Development
     case theme
@@ -225,6 +238,7 @@ enum NavItem: String, Identifiable {
         case .theme: return "paintbrush"
         case .button: return "rectangle.and.hand.point.up.left"
         case .space: return "rectangle.split.3x1"
+        case .divider: return "minus"
         case .configProvider: return "gearshape"
         case .localization: return "globe"
         case .colors: return "paintpalette"
@@ -238,6 +252,7 @@ enum NavItem: String, Identifiable {
         case .theme: return "nav.theme"
         case .button: return "component.button"
         case .space: return "component.space"
+        case .divider: return "component.divider"
         case .configProvider: return "component.configProvider"
         case .localization: return "component.localization"
         case .colors: return "component.colors"
@@ -246,7 +261,7 @@ enum NavItem: String, Identifiable {
 
     static var overview: [NavItem] { [.introduction, .quickStart] }
     static var general: [NavItem] { [.button] }
-    static var layout: [NavItem] { [.space] }
+    static var layout: [NavItem] { [.space, .divider] }
     static var development: [NavItem] { [.theme, .configProvider, .localization, .colors] }
 }
 
@@ -302,6 +317,7 @@ struct DetailView: View {
     let item: NavItem?
     @Binding var buttonTab: ButtonExamplesTab
     @Binding var spaceTab: SpaceExamplesTab
+    @Binding var dividerTab: DividerExamplesTab
 
     var body: some View {
         Group {
@@ -316,6 +332,8 @@ struct DetailView: View {
                 ButtonExamples(selectedTab: $buttonTab)
             case .space:
                 SpaceExamples(selectedTab: $spaceTab)
+            case .divider:
+                DividerExamples(selectedTab: $dividerTab)
             case .configProvider:
                 ConfigProviderExamples()
             case .localization:
