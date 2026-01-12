@@ -1,5 +1,4 @@
 import SwiftUI
-import AppKit
 
 /// Mark 背景色 - 使用 Ant Design 的 yellow-3 色值
 private let colorMarkBg = Color(hex: 0xFFE58F)
@@ -280,7 +279,10 @@ public extension Moin {
         private let ellipsis: EllipsisConfig?
 
         @State private var isExpanded: Bool
-        @State private var isTruncated = false
+        // 双重测量比对法所需状态
+        @State private var intrinsicSize: CGSize = .zero
+        @State private var truncatedSize: CGSize = .zero
+        @State private var moreTextSize: CGSize = .zero
 
         public init(
             _ content: String,
@@ -311,6 +313,11 @@ public extension Moin {
                 .padding(.bottom, token.marginXS)
         }
 
+        /// 是否被截断（双重测量比对）
+        private var isTruncated: Bool {
+            truncatedSize != intrinsicSize
+        }
+
         @ViewBuilder
         private var textContent: some View {
             if let ellipsis {
@@ -330,66 +337,108 @@ public extension Moin {
             let text = plainText
                 .lineLimit(config.rows)
                 .truncationMode(.tail)
-                .background(truncationDetector(rows: config.rows))
 
-            if config.tooltip && isTruncated {
+            if config.tooltip {
                 text.help(content)
             } else {
                 text
             }
         }
 
-        // 可展开文本（内联展开/收起按钮）
+        // 可展开文本（双重测量比对法）
+        @ViewBuilder
         private func expandableText(_ config: EllipsisConfig) -> some View {
-            Group {
-                if isExpanded {
-                    // 展开状态：完整文本 + 收起按钮
-                    HStack(alignment: .lastTextBaseline, spacing: 0) {
-                        Text(content)
-                            .font(textFont)
-                            .foregroundStyle(textColor)
-                        if config.collapsible {
-                            Text(" ")
-                            Text(config.collapseSymbol)
-                                .font(textFont)
-                                .foregroundColor(token.colorLink)
-                                .onTapGesture {
-                                    isExpanded = false
-                                    config.onExpand?(false)
-                                }
-                        }
-                    }
-                    .lineSpacing((token.lineHeight - token.fontSize) / 2)
-                } else {
-                    // 收起状态：截断文本 + 展开按钮
-                    ZStack(alignment: .bottomTrailing) {
-                        Text(content)
-                            .font(textFont)
-                            .foregroundStyle(textColor)
-                            .lineSpacing((token.lineHeight - token.fontSize) / 2)
-                            .lineLimit(config.rows)
-                            .truncationMode(.tail)
-                            .background(truncationDetector(rows: config.rows))
+            if isExpanded {
+                // 展开状态：文本 + 收起链接（拼接在末尾）
+                expandedTextView(config)
+            } else {
+                // 收起状态：截断文本 + 展开链接（overlay 在末尾）
+                collapsedTextView(config)
+            }
+        }
 
-                        if isTruncated {
-                            HStack(spacing: 0) {
-                                Text("... ")
-                                    .font(textFont)
-                                    .foregroundStyle(textColor)
-                                Text(config.expandSymbol)
-                                    .font(textFont)
-                                    .foregroundColor(token.colorLink)
-                            }
-                            .padding(.leading, 2)
-                            .background(token.colorBgContainer)
-                            .onTapGesture {
-                                isExpanded = true
-                                config.onExpand?(true)
-                            }
-                        }
+        /// 展开状态视图
+        private func expandedTextView(_ config: EllipsisConfig) -> some View {
+            (
+                Text(content)
+                    .font(textFont)
+                    .foregroundColor(textColor)
+                + (config.collapsible
+                    ? Text(" \(config.collapseSymbol)")
+                        .font(textFont)
+                        .foregroundColor(token.colorLink)
+                    : Text(""))
+            )
+            .lineSpacing((token.lineHeight - token.fontSize) / 2)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .contentShape(Rectangle())
+            .onTapGesture {
+                if config.collapsible {
+                    withAnimation(.easeInOut(duration: 0.2)) {
+                        isExpanded = false
                     }
+                    config.onExpand?(false)
                 }
             }
+        }
+
+        /// 收起状态视图
+        private func collapsedTextView(_ config: EllipsisConfig) -> some View {
+            textView
+                .lineLimit(config.rows)
+                .applyingTruncationMask(size: moreTextSize, enabled: isTruncated)
+                .readSize { size in
+                    truncatedSize = size
+                }
+                // 背景层1：测量完整文本尺寸
+                .background(
+                    textView
+                        .lineLimit(nil)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .hidden()
+                        .readSize { size in
+                            intrinsicSize = size
+                        }
+                )
+                // 背景层2：测量按钮尺寸
+                .background(
+                    Text(config.expandSymbol)
+                        .font(textFont)
+                        .hidden()
+                        .readSize { moreTextSize = $0 }
+                )
+                .contentShape(Rectangle())
+                .onTapGesture {
+                    if isTruncated {
+                        withAnimation(.easeInOut(duration: 0.2)) {
+                            isExpanded = true
+                        }
+                        config.onExpand?(true)
+                    }
+                }
+                // 覆盖层：展开链接
+                .overlay(alignment: .trailingLastTextBaseline) {
+                    if isTruncated {
+                        Text(config.expandSymbol)
+                            .font(textFont)
+                            .foregroundColor(token.colorLink)
+                            .onTapGesture {
+                                withAnimation(.easeInOut(duration: 0.2)) {
+                                    isExpanded = true
+                                }
+                                config.onExpand?(true)
+                            }
+                    }
+                }
+        }
+
+        /// 文本视图（用于测量）
+        private var textView: some View {
+            styledText
+                .font(textFont)
+                .foregroundStyle(textColor)
+                .lineSpacing((token.lineHeight - token.fontSize) / 2)
+                .frame(maxWidth: .infinity, alignment: .leading)
         }
 
         private var plainText: some View {
@@ -397,37 +446,6 @@ public extension Moin {
                 .font(textFont)
                 .foregroundStyle(textColor)
                 .lineSpacing((token.lineHeight - token.fontSize) / 2)
-        }
-
-        private func truncationDetector(rows: Int) -> some View {
-            GeometryReader { geometry in
-                Color.clear
-                    .onAppear {
-                        checkTruncation(geometry: geometry, rows: rows)
-                    }
-                    .onChange(of: content) { _ in
-                        checkTruncation(geometry: geometry, rows: rows)
-                    }
-                    .onChange(of: geometry.size) { _ in
-                        checkTruncation(geometry: geometry, rows: rows)
-                    }
-            }
-        }
-
-        private func checkTruncation(geometry: GeometryProxy, rows: Int) {
-            let font = NSFont.systemFont(
-                ofSize: token.fontSize,
-                weight: strong ? .semibold : .regular
-            )
-            let lineHeight = token.lineHeight
-            let maxHeight = lineHeight * CGFloat(rows)
-            let textSize = (content as NSString).boundingRect(
-                with: CGSize(width: geometry.size.width, height: .infinity),
-                options: [.usesLineFragmentOrigin, .usesFontLeading],
-                attributes: [.font: font],
-                context: nil
-            )
-            isTruncated = textSize.height > maxHeight
         }
 
         private var styledText: some View {
