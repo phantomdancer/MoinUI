@@ -148,7 +148,6 @@ struct ContentView: View {
     var body: some View {
         NavigationSplitView {
             Sidebar(selection: $navManager.selectedItem)
-                .modifier(HideSidebarToggleModifier())
         } detail: {
             DetailView(item: navManager.selectedItem, buttonTab: $buttonTab, typographyTab: $typographyTab, spaceTab: $spaceTab, dividerTab: $dividerTab)
                 .navigationTitle(navManager.selectedItem.map { tr($0.titleKey) } ?? "MoinUI")
@@ -332,7 +331,7 @@ struct Sidebar: View {
             }
         }
         .listStyle(.sidebar)
-        .frame(minWidth: 180)
+        .frame(minWidth: 220, maxWidth: 220)
         .navigationTitle("MoinUI")
     }
 }
