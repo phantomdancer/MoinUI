@@ -2,7 +2,7 @@
 
 # Coverage report script for MoinUI
 
-BINARY=".build/debug/MoinPackageTests.xctest/Contents/MacOS/MoinPackageTests"
+BINARY=".build/debug/MoinUIPackageTests.xctest/Contents/MacOS/MoinUIPackageTests"
 PROFDATA=".build/debug/codecov/default.profdata"
 
 if [ ! -f "$PROFDATA" ]; then

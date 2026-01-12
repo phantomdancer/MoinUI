@@ -1,8 +1,8 @@
 {
   "watch": [
-    ".build/arm64-apple-macosx/debug/Demo"
+    ".build/debug/Demo"
   ],
-  "exec": "pkill -f '.build/arm64-apple-macosx/debug/Demo' 2>/dev/null; .build/arm64-apple-macosx/debug/Demo",
+  "exec": "pkill -f '.build/debug/Demo' 2>/dev/null; .build/debug/Demo",
   "restartable": "rs",
   "ignore": [],
   "verbose": true,
