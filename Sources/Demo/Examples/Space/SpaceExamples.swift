@@ -290,8 +290,7 @@ struct SpaceExamples: View {
                         Divider()
                             .frame(height: 14)
                     }
-                    Text(link)
-                        .foregroundStyle(Color.accentColor)
+                    Moin.Link(link) {}
                 }
             }
         } code: {
@@ -303,8 +302,7 @@ struct SpaceExamples: View {
                         Divider()
                             .frame(height: 14)
                     }
-                    Text(link)
-                        .foregroundStyle(Color.accentColor)
+                    Moin.Link(link) {}
                 }
             }
             """
