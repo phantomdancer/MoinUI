@@ -221,6 +221,9 @@ struct ContentView: View {
                     }
                 }
         }
+        .transaction { transaction in
+            transaction.animation = nil
+        }
         .navigationSplitViewStyle(.balanced)
         .frame(minWidth: 1200, minHeight: 700)
     }
