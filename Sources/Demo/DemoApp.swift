@@ -148,6 +148,7 @@ struct ContentView: View {
     var body: some View {
         NavigationSplitView {
             Sidebar(selection: $navManager.selectedItem)
+                .navigationSplitViewColumnWidth(min: 220, ideal: 280, max: 400)
         } detail: {
             DetailView(item: navManager.selectedItem, buttonTab: $buttonTab, typographyTab: $typographyTab, spaceTab: $spaceTab, dividerTab: $dividerTab)
                 .navigationTitle(navManager.selectedItem.map { tr($0.titleKey) } ?? "MoinUI")
