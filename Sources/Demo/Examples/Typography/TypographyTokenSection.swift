@@ -89,7 +89,6 @@ struct TypographyTokenSection: View {
                 ]
             )
         }
-        .padding(Moin.Constants.Spacing.xl)
     }
 }
 

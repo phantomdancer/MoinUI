@@ -60,7 +60,6 @@ struct SpaceTokenSection: View {
                 ]
             )
         }
-        .padding(Moin.Constants.Spacing.xl)
     }
 }
 

@@ -65,7 +65,6 @@ struct DividerTokenSection: View {
                 ]
             )
         }
-        .padding(Moin.Constants.Spacing.xl)
     }
 }
 
