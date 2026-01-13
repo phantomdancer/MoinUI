@@ -23,6 +23,7 @@ struct TypographyExamples: View {
         AnchorItem(id: "link", titleKey: "typography.link"),
         AnchorItem(id: "type", titleKey: "typography.type"),
         AnchorItem(id: "decoration", titleKey: "typography.decoration"),
+        AnchorItem(id: "alias", titleKey: "typography.alias"),
     ]
 
     var body: some View {
@@ -50,6 +51,7 @@ struct TypographyExamples: View {
             linkExample.id("link")
             typeExample.id("type")
             decorationExample.id("decoration")
+            aliasExample.id("alias")
         }
     }
 
@@ -271,6 +273,35 @@ struct TypographyExamples: View {
             Moin.Typography.Text("\(tr("typography.example.underline"))", underline: true)
             Moin.Typography.Text("\(tr("typography.example.delete"))", delete: true)
             Moin.Typography.Text("\(tr("typography.example.mark"))", mark: true)
+            """
+        }
+    }
+
+    private var aliasExample: some View {
+        ExampleSection(
+            title: tr("typography.alias"),
+            description: tr("typography.alias_desc")
+        ) {
+            VStack(alignment: .leading, spacing: Moin.Constants.Spacing.md) {
+                Moin.Typography.Title(tr("typography.example.h1"))
+                Moin.Typography.Paragraph(tr("typography.lorem_short"))
+                Moin.Typography.Text(tr("typography.example.default"))
+                Moin.Typography.Link(tr("typography.example.link")) {
+                    print("Link clicked")
+                }
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+        } code: {
+            """
+            private typealias Title = Moin.Typography.Title
+            private typealias Paragraph = Moin.Typography.Paragraph
+            private typealias Text = Moin.Typography.Text
+            private typealias Link = Moin.Typography.Link
+
+            Title("\(tr("typography.example.h1"))")
+            Paragraph("\(tr("typography.lorem_short"))")
+            Text("\(tr("typography.example.default"))")
+            Link("\(tr("typography.example.link"))") { print("clicked") }
             """
         }
     }

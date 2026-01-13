@@ -22,6 +22,8 @@
     "type_desc": "Text colors for different semantic states.",
     "decoration": "Text Decoration",
     "decoration_desc": "Supports bold, italic, underline, strikethrough, mark decorations.",
+    "alias": "Aliases",
+    "alias_desc": "Use typealias for simpler access.",
     "lorem_long": "Moin Design Language, dedicated to providing a complete and elegant UI component library for macOS applications. Built with native SwiftUI, deeply adapted to macOS design specifications, providing developers with high-quality out-of-the-box components. Our design philosophy is simplicity, efficiency, and beauty.",
     "lorem_short": "Moin Design, elegant and simple.",
     "lorem_ellipsis": "Moin Design Language is a modern UI component library built specifically for the macOS platform. It is developed based on the native SwiftUI technology stack, deeply integrating Apple's design specifications and best practices. The component library provides a rich set of basic components, including buttons, input fields, selectors, tables, tree controls, etc., while also supporting enterprise-level features such as theme customization, internationalization, and accessibility. Our goal is to make macOS application development more efficient and enjoyable, enabling every developer to easily build beautiful and user-friendly desktop applications.",
