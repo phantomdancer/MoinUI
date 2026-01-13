@@ -23,14 +23,30 @@ class TypographyPlaygroundState: ObservableObject {
     @Published var textCode = false
     @Published var textKeyboard = false
 
+    // Paragraph settings
+    @Published var paragraphType: Moin.Typography.TextType = .default
+    @Published var paragraphDisabled = false
+    @Published var paragraphMark = false
+    @Published var paragraphUnderline = false
+    @Published var paragraphDelete = false
+    @Published var paragraphStrong = false
+    @Published var paragraphItalic = false
+    @Published var paragraphEllipsis = false
+    @Published var paragraphEllipsisRows: Int = 2
+
+    // Link settings
+    @Published var linkDisabled = false
+
     @Published var previewMode: PreviewMode = .title
 
     enum PreviewMode: String, CaseIterable {
         case title
         case text
+        case paragraph
+        case link
     }
 
-    func generateCode(previewTitle: String, previewText: String) -> String {
+    func generateCode(previewTitle: String, previewText: String, previewParagraph: String, previewLink: String) -> String {
         switch previewMode {
         case .title:
             var params: [String] = ["\"\(previewTitle)\"", "level: .h\(titleLevel.rawValue)"]
@@ -53,6 +69,22 @@ class TypographyPlaygroundState: ObservableObject {
             if textCode { params.append("code: true") }
             if textKeyboard { params.append("keyboard: true") }
             return "Moin.Typography.Text(\(params.joined(separator: ", ")))"
+        case .paragraph:
+            var params: [String] = ["\"\(previewParagraph)\""]
+            if paragraphType != .default { params.append("type: .\(paragraphType)") }
+            if paragraphDisabled { params.append("disabled: true") }
+            if paragraphMark { params.append("mark: true") }
+            if paragraphUnderline { params.append("underline: true") }
+            if paragraphDelete { params.append("delete: true") }
+            if paragraphStrong { params.append("strong: true") }
+            if paragraphItalic { params.append("italic: true") }
+            if paragraphEllipsis { params.append("ellipsis: .rows(\(paragraphEllipsisRows))") }
+            return "Moin.Typography.Paragraph(\(params.joined(separator: ", ")))"
+        case .link:
+            var params: [String] = ["\"\(previewLink)\""]
+            if linkDisabled { params.append("disabled: true") }
+            params.append("action: { }")
+            return "Moin.Typography.Link(\(params.joined(separator: ", ")))"
         }
     }
 }
@@ -125,6 +157,26 @@ struct TypographyPlayground: View {
                         code: state.textCode,
                         keyboard: state.textKeyboard
                     )
+                case .paragraph:
+                    Moin.Typography.Paragraph(
+                        tr("typography.playground.preview_paragraph"),
+                        type: state.paragraphType,
+                        disabled: state.paragraphDisabled,
+                        mark: state.paragraphMark,
+                        underline: state.paragraphUnderline,
+                        delete: state.paragraphDelete,
+                        strong: state.paragraphStrong,
+                        italic: state.paragraphItalic,
+                        ellipsis: state.paragraphEllipsis ? .rows(state.paragraphEllipsisRows) : nil
+                    )
+                    .frame(maxWidth: 300)
+                case .link:
+                    Moin.Typography.Link(
+                        tr("typography.playground.preview_link"),
+                        disabled: state.linkDisabled
+                    ) {
+                        print("Link clicked")
+                    }
                 }
             }
 
@@ -159,8 +211,12 @@ struct TypographyPlayground: View {
 
                 if state.previewMode == .title {
                     titleControls
-                } else {
+                } else if state.previewMode == .text {
                     textControls
+                } else if state.previewMode == .paragraph {
+                    paragraphControls
+                } else {
+                    linkControls
                 }
             }
             .padding(Moin.Constants.Spacing.md)
@@ -211,6 +267,57 @@ struct TypographyPlayground: View {
         }
     }
 
+    private var paragraphControls: some View {
+        VStack(spacing: Moin.Constants.Spacing.sm) {
+            SelectPropControl(
+                label: tr("typography.playground.type"),
+                propName: "type: Moin.Typography.TextType",
+                options: Moin.Typography.TextType.allCases,
+                value: $state.paragraphType
+            )
+
+            TogglePropControl(label: tr("typography.playground.disabled"), propName: "disabled: Bool", value: $state.paragraphDisabled)
+            TogglePropControl(label: tr("typography.playground.mark"), propName: "mark: Bool", value: $state.paragraphMark)
+            TogglePropControl(label: tr("typography.playground.underline"), propName: "underline: Bool", value: $state.paragraphUnderline)
+            TogglePropControl(label: tr("typography.playground.delete"), propName: "delete: Bool", value: $state.paragraphDelete)
+            TogglePropControl(label: tr("typography.playground.strong"), propName: "strong: Bool", value: $state.paragraphStrong)
+            TogglePropControl(label: tr("typography.playground.italic"), propName: "italic: Bool", value: $state.paragraphItalic)
+            TogglePropControl(label: tr("typography.playground.ellipsis"), propName: "ellipsis: EllipsisConfig?", value: $state.paragraphEllipsis)
+
+            if state.paragraphEllipsis {
+                PropControl(label: tr("typography.playground.ellipsis_rows"), propName: "rows: Int") {
+                    HStack(spacing: 4) {
+                        Button {
+                            if state.paragraphEllipsisRows > 1 { state.paragraphEllipsisRows -= 1 }
+                        } label: {
+                            Image(systemName: "minus")
+                                .font(.system(size: 10))
+                        }
+                        .buttonStyle(.plain)
+
+                        Text("\(state.paragraphEllipsisRows)")
+                            .font(.system(size: 11, design: .monospaced))
+                            .frame(width: 20)
+
+                        Button {
+                            if state.paragraphEllipsisRows < 10 { state.paragraphEllipsisRows += 1 }
+                        } label: {
+                            Image(systemName: "plus")
+                                .font(.system(size: 10))
+                        }
+                        .buttonStyle(.plain)
+                    }
+                }
+            }
+        }
+    }
+
+    private var linkControls: some View {
+        VStack(spacing: Moin.Constants.Spacing.sm) {
+            TogglePropControl(label: tr("typography.playground.disabled"), propName: "disabled: Bool", value: $state.linkDisabled)
+        }
+    }
+
     // MARK: - Code Section
 
     private var codeSection: some View {
@@ -226,7 +333,9 @@ struct TypographyPlayground: View {
                 HighlightedCodeView(
                     code: state.generateCode(
                         previewTitle: tr("typography.playground.preview_title"),
-                        previewText: tr("typography.playground.preview_text")
+                        previewText: tr("typography.playground.preview_text"),
+                        previewParagraph: tr("typography.playground.preview_paragraph"),
+                        previewLink: tr("typography.playground.preview_link")
                     ),
                     fontSize: 12
                 )

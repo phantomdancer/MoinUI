@@ -36,7 +36,8 @@
       "direction": "Direction",
       "alignment": "Alignment",
       "wrap": "Wrap",
-      "compact": "Compact"
+      "compact": "Compact",
+      "separator": "Separator"
     }
   },
   "api": {

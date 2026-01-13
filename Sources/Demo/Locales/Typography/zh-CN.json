@@ -66,8 +66,12 @@
       "strong": "粗体",
       "italic": "斜体",
       "keyboard": "键盘",
+      "ellipsis": "省略号",
+      "ellipsis_rows": "省略行数",
       "preview_title": "预览标题",
-      "preview_text": "预览文本"
+      "preview_text": "预览文本",
+      "preview_paragraph": "墨影设计语言，致力于为 macOS 应用提供一套完整、优雅的 UI 组件库。基于 SwiftUI 原生开发，深度适配 macOS 设计规范。",
+      "preview_link": "点击访问"
     }
   },
   "api": {

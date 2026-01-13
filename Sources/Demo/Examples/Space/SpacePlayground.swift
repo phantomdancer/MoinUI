@@ -8,6 +8,7 @@ class SpacePlaygroundState: ObservableObject {
     @Published var alignment: Moin.SpaceAlignment = .center
     @Published var wrap: Bool = false
     @Published var customSize: CGFloat = 16
+    @Published var useSeparator: Bool = false
 
     /// 生成代码
     func generateCode() -> String {
@@ -34,6 +35,8 @@ class SpacePlaygroundState: ObservableObject {
             params.append("wrap: true")
         }
 
+        let separatorCode = useSeparator ? ",\n    separator: { Moin.Divider(orientation: .vertical) }" : ""
+
         if params.isEmpty {
             return """
             Moin.Space {
@@ -45,7 +48,7 @@ class SpacePlaygroundState: ObservableObject {
         } else {
             return """
             Moin.Space(
-                \(params.joined(separator: ",\n    "))
+                \(params.joined(separator: ",\n    "))\(separatorCode)
             ) {
                 Moin.Button("Button 1", color: .primary) {}
                 Moin.Button("Button 2", color: .primary) {}
@@ -134,17 +137,32 @@ struct SpacePlayground: View {
                 }
             }()
 
-            Moin.Space(
-                size: actualSize,
-                direction: state.direction,
-                alignment: state.alignment,
-                wrap: state.wrap
-            ) {
-                Moin.Button("Button 1", color: .primary) {}
-                Moin.Button("Button 2", color: .success) {}
-                Moin.Button("Button 3", color: .warning) {}
+            if state.useSeparator {
+                Moin.Space(
+                    size: actualSize,
+                    direction: state.direction,
+                    alignment: state.alignment,
+                    wrap: state.wrap,
+                    separator: { Moin.Divider(orientation: state.direction == .horizontal ? .vertical : .horizontal) }
+                ) {
+                    Moin.Button("Button 1", color: .primary) {}
+                    Moin.Button("Button 2", color: .success) {}
+                    Moin.Button("Button 3", color: .warning) {}
+                }
+                .frame(maxWidth: state.wrap ? 200 : nil)
+            } else {
+                Moin.Space(
+                    size: actualSize,
+                    direction: state.direction,
+                    alignment: state.alignment,
+                    wrap: state.wrap
+                ) {
+                    Moin.Button("Button 1", color: .primary) {}
+                    Moin.Button("Button 2", color: .success) {}
+                    Moin.Button("Button 3", color: .warning) {}
+                }
+                .frame(maxWidth: state.wrap ? 200 : nil)
             }
-            .frame(maxWidth: state.wrap ? 200 : nil)
 
             Spacer()
         }
@@ -219,6 +237,12 @@ struct SpacePlayground: View {
                     )
                     .disabled(state.direction == .vertical)
                     .opacity(state.direction == .vertical ? 0.5 : 1)
+
+                    TogglePropControl(
+                        label: tr("space.prop.separator"),
+                        propName: "separator: () -> View",
+                        value: $state.useSeparator
+                    )
                 }
             }
             .padding(Moin.Constants.Spacing.md)

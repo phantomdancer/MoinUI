@@ -36,7 +36,8 @@
       "direction": "方向",
       "alignment": "对齐",
       "wrap": "换行",
-      "compact": "紧凑"
+      "compact": "紧凑",
+      "separator": "分隔符"
     }
   },
   "api": {
