@@ -213,16 +213,16 @@ struct TypographyExamples: View {
             description: tr("typography.link_desc")
         ) {
             VStack(alignment: .leading, spacing: Moin.Constants.Spacing.md) {
-                Moin.Typography.Link(tr("typography.example.link")) {
-                    print("Link clicked")
+                Moin.Typography.Link(tr("typography.example.link"), href: githubRepoURL)
+                Moin.Typography.Link(tr("typography.example.link"), disabled: true) {
+                    print("This should not be printed")
                 }
-                Moin.Typography.Link(tr("typography.example.link_disabled"), disabled: true) {}
             }
             .frame(maxWidth: .infinity, alignment: .leading)
         } code: {
             """
-            Moin.Typography.Link("\(tr("typography.example.link"))") { print("clicked") }
-            Moin.Typography.Link("\(tr("typography.example.link_disabled"))", disabled: true) {}
+            Moin.Typography.Link("\(tr("typography.example.link"))", href: URL(string: "https://github.com/phantomdancer/MoinUI.git"))
+            Moin.Typography.Link("\(tr("typography.example.link"))", disabled: true) {}
             """
         }
     }

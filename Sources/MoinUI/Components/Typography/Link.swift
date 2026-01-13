@@ -1,4 +1,5 @@
 import SwiftUI
+import AppKit
 
 public extension Moin.Typography {
     /// Link component for clickable text
@@ -7,10 +8,12 @@ public extension Moin.Typography {
 
         private let content: String
         private let disabled: Bool
-        private let action: () -> Void
+        private let href: URL?
+        private let action: (() -> Void)?
 
         @State private var isHovered = false
 
+        /// Initialize with action callback
         public init(
             _ content: String,
             disabled: Bool = false,
@@ -18,7 +21,20 @@ public extension Moin.Typography {
         ) {
             self.content = content
             self.disabled = disabled
+            self.href = nil
             self.action = action
+        }
+
+        /// Initialize with href URL
+        public init(
+            _ content: String,
+            href: URL?,
+            disabled: Bool = false
+        ) {
+            self.content = content
+            self.disabled = disabled
+            self.href = href
+            self.action = nil
         }
 
         public var body: some View {
@@ -37,7 +53,12 @@ public extension Moin.Typography {
                     }
                 }
                 .onTapGesture {
-                    if !disabled { action() }
+                    guard !disabled else { return }
+                    if let href = href {
+                        NSWorkspace.shared.open(href)
+                    } else {
+                        action?()
+                    }
                 }
         }
 

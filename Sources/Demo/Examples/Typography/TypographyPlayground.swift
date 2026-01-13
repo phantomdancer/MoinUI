@@ -36,6 +36,7 @@ class TypographyPlaygroundState: ObservableObject {
 
     // Link settings
     @Published var linkDisabled = false
+    @Published var linkHref: String = ""
 
     @Published var previewMode: PreviewMode = .title
 
@@ -82,8 +83,13 @@ class TypographyPlaygroundState: ObservableObject {
             return "Moin.Typography.Paragraph(\(params.joined(separator: ", ")))"
         case .link:
             var params: [String] = ["\"\(previewLink)\""]
+            if !linkHref.isEmpty {
+                params.append("href: URL(string: \"\(linkHref)\")")
+            }
             if linkDisabled { params.append("disabled: true") }
-            params.append("action: { }")
+            if linkHref.isEmpty {
+                params.append("action: { }")
+            }
             return "Moin.Typography.Link(\(params.joined(separator: ", ")))"
         }
     }
@@ -171,11 +177,19 @@ struct TypographyPlayground: View {
                     )
                     .frame(maxWidth: 300)
                 case .link:
-                    Moin.Typography.Link(
-                        tr("typography.playground.preview_link"),
-                        disabled: state.linkDisabled
-                    ) {
-                        print("Link clicked")
+                    if state.linkHref.isEmpty {
+                        Moin.Typography.Link(
+                            tr("typography.playground.preview_link"),
+                            disabled: state.linkDisabled
+                        ) {
+                            print("Link clicked")
+                        }
+                    } else {
+                        Moin.Typography.Link(
+                            tr("typography.playground.preview_link"),
+                            href: URL(string: state.linkHref),
+                            disabled: state.linkDisabled
+                        )
                     }
                 }
             }
@@ -314,6 +328,11 @@ struct TypographyPlayground: View {
 
     private var linkControls: some View {
         VStack(spacing: Moin.Constants.Spacing.sm) {
+            TextPropControl(
+                label: tr("typography.playground.href"),
+                propName: "href: URL?",
+                value: $state.linkHref
+            )
             TogglePropControl(label: tr("typography.playground.disabled"), propName: "disabled: Bool", value: $state.linkDisabled)
         }
     }

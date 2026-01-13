@@ -71,7 +71,8 @@
       "preview_title": "Preview Title",
       "preview_text": "Preview Text",
       "preview_paragraph": "Moin Design Language, dedicated to providing a complete and elegant UI component library for macOS applications. Built with native SwiftUI.",
-      "preview_link": "Click to visit"
+      "preview_link": "Click to visit",
+      "href": "Link URL"
     }
   },
   "api": {
