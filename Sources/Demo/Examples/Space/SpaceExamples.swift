@@ -239,7 +239,7 @@ struct SpaceExamples: View {
                 Text("\(tr("space.horizontal")):")
                     .font(.caption)
                     .foregroundStyle(.secondary)
-                Moin.Compact {
+                Moin.SpaceCompact {
                     Moin.Button(tr("space.january"), variant: .outlined) {}
                     Moin.Button(tr("space.february"), variant: .outlined) {}
                     Moin.Button(tr("space.march"), variant: .outlined) {}
@@ -249,7 +249,7 @@ struct SpaceExamples: View {
                 Text("\(tr("space.vertical")):")
                     .font(.caption)
                     .foregroundStyle(.secondary)
-                Moin.Compact(direction: .vertical) {
+                Moin.SpaceCompact(direction: .vertical) {
                     Moin.Button(tr("space.january"), variant: .dashed) {}
                     Moin.Button("\(tr("space.february")) \(tr("space.february")) \(tr("space.february"))", variant: .dashed) {}
                     Moin.Button(tr("space.march"), variant: .dashed) {}
@@ -258,14 +258,14 @@ struct SpaceExamples: View {
         } code: {
             """
             // \(tr("space.horizontal"))
-            Moin.Compact {
+            Moin.SpaceCompact {
                 Moin.Button("\(tr("space.january"))", variant: .outlined) {}
                 Moin.Button("\(tr("space.february"))", variant: .outlined) {}
                 Moin.Button("\(tr("space.march"))", variant: .outlined) {}
             }
 
             // \(tr("space.vertical"))
-            Moin.Compact(direction: .vertical) {
+            Moin.SpaceCompact(direction: .vertical) {
                 Moin.Button("\(tr("space.january"))", variant: .dashed) {}
                 Moin.Button("\(tr("space.february"))...", variant: .dashed) {}
                 Moin.Button("\(tr("space.march"))", variant: .dashed) {}

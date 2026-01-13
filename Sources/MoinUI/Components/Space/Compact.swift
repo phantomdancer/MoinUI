@@ -1,4 +1,4 @@
-// Moin.Compact - Compact layout with auto position detection
+// Moin.SpaceCompact - Compact layout with auto position detection
 import SwiftUI
 
 // MARK: - Size Preference Key
@@ -24,7 +24,7 @@ private struct CompactItemSizeReader: ViewModifier {
 
 public extension Moin {
     /// Compact layout with zero spacing and merged borders
-    struct Compact: View {
+    struct SpaceCompact: View {
         let direction: SpaceDirection
         let items: [AnyView]
 
@@ -76,7 +76,7 @@ public extension Moin {
 
 // MARK: - Convenience initializers
 
-public extension Moin.Compact {
+public extension Moin.SpaceCompact {
     /// Two items
     init<V0: View, V1: View>(
         direction: Moin.SpaceDirection = .horizontal,
