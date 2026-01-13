@@ -5,7 +5,7 @@ public extension Moin {
     enum TagColor: Hashable {
         case `default`      // 灰色
         case success        // 绿色
-        case processing     // 蓝色
+        case primary        // 主色
         case warning        // 橙色
         case error          // 红色
         case custom(SwiftUI.Color)
@@ -49,7 +49,7 @@ public extension Moin {
             switch self {
             case .default: hasher.combine(0)
             case .success: hasher.combine(1)
-            case .processing: hasher.combine(2)
+            case .primary: hasher.combine(2)
             case .warning: hasher.combine(3)
             case .error: hasher.combine(4)
             case .custom(let color): hasher.combine(color.description)

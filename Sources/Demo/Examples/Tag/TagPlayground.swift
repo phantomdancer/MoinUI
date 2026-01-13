@@ -45,7 +45,7 @@ class TagPlaygroundState: ObservableObject {
         switch color {
         case .default: return ".default"
         case .success: return ".success"
-        case .processing: return ".processing"
+        case .primary: return ".primary"
         case .warning: return ".warning"
         case .error: return ".error"
         case .custom: return ".custom(...)"
@@ -165,7 +165,7 @@ struct TagPlayground: View {
                 Picker("", selection: $state.color) {
                     Text("default").tag(Moin.TagColor.default)
                     Text("success").tag(Moin.TagColor.success)
-                    Text("processing").tag(Moin.TagColor.processing)
+                    Text("primary").tag(Moin.TagColor.primary)
                     Text("warning").tag(Moin.TagColor.warning)
                     Text("error").tag(Moin.TagColor.error)
                 }

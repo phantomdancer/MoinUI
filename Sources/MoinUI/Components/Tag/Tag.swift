@@ -1,4 +1,5 @@
 import SwiftUI
+import AppKit
 
 public extension Moin {
     /// 标签组件
@@ -6,6 +7,7 @@ public extension Moin {
         @Environment(\.moinToken) private var token
         @Environment(\.colorScheme) private var colorScheme
         @State private var isHovered = false
+        @State private var isCloseHovered = false
 
         private let text: String
         private let color: TagColor
@@ -58,13 +60,20 @@ public extension Moin {
                     .lineLimit(1)
 
                 if closable {
-                    Button(action: { onClose?() }) {
-                        Image(systemName: "xmark")
-                            .font(.system(size: closeIconSize, weight: .medium))
-                            .foregroundStyle(foregroundColor.opacity(0.6))
-                    }
-                    .buttonStyle(.plain)
-                    .contentShape(Rectangle())
+                    Image(systemName: "xmark")
+                        .font(.system(size: closeIconSize, weight: .semibold))
+                        .foregroundStyle(isCloseHovered ? foregroundColor : foregroundColor.opacity(0.5))
+                        .onHover { hovering in
+                            isCloseHovered = hovering
+                            if hovering {
+                                NSCursor.pointingHand.push()
+                            } else {
+                                NSCursor.pop()
+                            }
+                        }
+                        .onTapGesture {
+                            onClose?()
+                        }
                 }
             }
             .padding(.horizontal, paddingH)
@@ -99,9 +108,9 @@ public extension Moin {
 
         private var closeIconSize: CGFloat {
             switch size {
-            case .large: return 10
+            case .large: return 9
             case .medium: return 8
-            case .small: return 6
+            case .small: return 7
             }
         }
 
@@ -157,7 +166,7 @@ public extension Moin {
             switch color {
             case .default: return token.colorTextSecondary
             case .success: return token.colorSuccess
-            case .processing: return token.colorPrimary
+            case .primary: return token.colorPrimary
             case .warning: return token.colorWarning
             case .error: return token.colorDanger
             case .custom(let c): return c
@@ -237,7 +246,7 @@ public extension Moin {
             switch color {
             case .success:
                 return tokenColorLevel(base: token.colorSuccess, level: level)
-            case .processing:
+            case .primary:
                 return tokenColorLevel(base: token.colorPrimary, level: level)
             case .warning:
                 return tokenColorLevel(base: token.colorWarning, level: level)

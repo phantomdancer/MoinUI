@@ -104,7 +104,7 @@ struct TagExamples: View {
                 // 语义色
                 HStack(spacing: Moin.Constants.Spacing.sm) {
                     Moin.Tag(tr("tag.example.success"), color: .success)
-                    Moin.Tag(tr("tag.example.processing"), color: .processing)
+                    Moin.Tag(tr("tag.example.primary"), color: .primary)
                     Moin.Tag(tr("tag.example.warning"), color: .warning)
                     Moin.Tag(tr("tag.example.error"), color: .error)
                 }
@@ -139,7 +139,7 @@ struct TagExamples: View {
             """
             // \(tr("tag.semantic_colors"))
             Moin.Tag("\(tr("tag.example.success"))", color: .success)
-            Moin.Tag("\(tr("tag.example.processing"))", color: .processing)
+            Moin.Tag("\(tr("tag.example.primary"))", color: .primary)
             Moin.Tag("\(tr("tag.example.warning"))", color: .warning)
             Moin.Tag("\(tr("tag.example.error"))", color: .error)
 
@@ -182,7 +182,7 @@ struct TagExamples: View {
             VStack(alignment: .leading, spacing: Moin.Constants.Spacing.md) {
                 HStack(spacing: Moin.Constants.Spacing.sm) {
                     Moin.Tag(tr("tag.example.tag1"), round: true)
-                    Moin.Tag(tr("tag.example.tag2"), color: .processing, round: true)
+                    Moin.Tag(tr("tag.example.tag2"), color: .primary, round: true)
                     Moin.Tag(tr("tag.example.tag3"), color: .success, round: true)
                 }
 
@@ -195,7 +195,7 @@ struct TagExamples: View {
         } code: {
             """
             Moin.Tag("\(tr("tag.example.tag1"))", round: true)
-            Moin.Tag("\(tr("tag.example.tag2"))", color: .processing, round: true)
+            Moin.Tag("\(tr("tag.example.tag2"))", color: .primary, round: true)
             Moin.Tag("\(tr("tag.example.large"))", size: .large, round: true)
             """
         }
@@ -208,10 +208,10 @@ struct TagExamples: View {
         ) {
             VStack(alignment: .leading, spacing: Moin.Constants.Spacing.md) {
                 HStack(spacing: Moin.Constants.Spacing.sm) {
-                    Moin.Tag(tr("tag.example.filled"), color: .processing, variant: .filled)
-                    Moin.Tag(tr("tag.example.outlined"), color: .processing, variant: .outlined)
-                    Moin.Tag(tr("tag.example.solid"), color: .processing, variant: .solid)
-                    Moin.Tag(tr("tag.example.borderless"), color: .processing, variant: .borderless)
+                    Moin.Tag(tr("tag.example.filled"), color: .primary, variant: .filled)
+                    Moin.Tag(tr("tag.example.outlined"), color: .primary, variant: .outlined)
+                    Moin.Tag(tr("tag.example.solid"), color: .primary, variant: .solid)
+                    Moin.Tag(tr("tag.example.borderless"), color: .primary, variant: .borderless)
                 }
 
                 HStack(spacing: Moin.Constants.Spacing.sm) {
@@ -223,10 +223,10 @@ struct TagExamples: View {
             }
         } code: {
             """
-            Moin.Tag("\(tr("tag.example.filled"))", color: .processing, variant: .filled)
-            Moin.Tag("\(tr("tag.example.outlined"))", color: .processing, variant: .outlined)
-            Moin.Tag("\(tr("tag.example.solid"))", color: .processing, variant: .solid)
-            Moin.Tag("\(tr("tag.example.borderless"))", color: .processing, variant: .borderless)
+            Moin.Tag("\(tr("tag.example.filled"))", color: .primary, variant: .filled)
+            Moin.Tag("\(tr("tag.example.outlined"))", color: .primary, variant: .outlined)
+            Moin.Tag("\(tr("tag.example.solid"))", color: .primary, variant: .solid)
+            Moin.Tag("\(tr("tag.example.borderless"))", color: .primary, variant: .borderless)
             """
         }
     }
@@ -272,34 +272,40 @@ struct ClosableTagExample: View {
             title: tr("tag.closable"),
             description: tr("tag.closable_desc")
         ) {
-            HStack(spacing: Moin.Constants.Spacing.sm) {
-                ForEach(tags, id: \.self) { tag in
-                    Moin.Tag(tag, closable: true) {
-                        withAnimation {
-                            tags.removeAll { $0 == tag }
-                        }
-                    }
+            VStack(alignment: .leading, spacing: Moin.Constants.Spacing.md) {
+                // 三种大小
+                HStack(spacing: Moin.Constants.Spacing.sm) {
+                    Moin.Tag(tr("tag.example.large"), size: .large, closable: true)
+                    Moin.Tag(tr("tag.example.medium"), size: .medium, closable: true)
+                    Moin.Tag(tr("tag.example.small"), size: .small, closable: true)
                 }
 
-                if tags.isEmpty {
-                    Button(tr("tag.reset")) {
-                        withAnimation {
-                            tags = ["Tag 1", "Tag 2", "Tag 3"]
+                // 动态示例
+                HStack(spacing: Moin.Constants.Spacing.sm) {
+                    ForEach(tags, id: \.self) { tag in
+                        Moin.Tag(tag, closable: true) {
+                            withAnimation {
+                                tags.removeAll { $0 == tag }
+                            }
                         }
                     }
-                    .buttonStyle(.plain)
-                    .foregroundStyle(.secondary)
+
+                    if tags.isEmpty {
+                        Button(tr("tag.reset")) {
+                            withAnimation {
+                                tags = ["Tag 1", "Tag 2", "Tag 3"]
+                            }
+                        }
+                        .buttonStyle(.plain)
+                        .foregroundStyle(.secondary)
+                    }
                 }
             }
         } code: {
             """
-            @State private var tags = ["Tag 1", "Tag 2", "Tag 3"]
-
-            ForEach(tags, id: \\.self) { tag in
-                Moin.Tag(tag, closable: true) {
-                    tags.removeAll { $0 == tag }
-                }
-            }
+            Moin.Tag("\(tr("tag.example.large"))", size: .large, closable: true)
+            Moin.Tag("\(tr("tag.example.medium"))", size: .medium, closable: true)
+            Moin.Tag("\(tr("tag.example.small"))", size: .small, closable: true)
             """
         }
     }
