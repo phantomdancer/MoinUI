@@ -28,7 +28,7 @@ public extension Moin {
 1. **示例 (Examples)** - 各场景用法示例
 2. **演练场 (Playground)** - 实时调整属性预览
 3. **API** - 属性表
-4. **Token** - 组件 Token 文档
+4. **Token** - 组件 Token 文档（组件 token/全局 token）
 
 ### Demo 文件结构
 
@@ -49,6 +49,7 @@ Sources/Demo/Locales/{Name}/
 ```
 
 **规则**: 只要左侧导航有独立入口的，翻译文件放自己目录；根目录只放共享翻译。
+注意：所有代码中的以及示例 code 中的都需要国际化，不能硬编码字符串。
 
 ### Tab 枚举
 

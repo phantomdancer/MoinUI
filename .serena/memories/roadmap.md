@@ -17,13 +17,13 @@
 ## 按复杂度排序（简单优先，无依赖优先）
 
 ### 已完成
-Button ✅, Typography ✅, Divider ✅, Space ✅, Icon ⏭
+Button ✅, Typography ✅, Divider ✅, Space ✅, Tag ✅, Icon ⏭
 
 ### 第一梯队：极简组件（无依赖，几乎无状态）
 
 | 组件 | 复杂度 | 说明 |
 |------|--------|------|
-| Tag | ★☆☆☆☆ | 带样式的文本/徽章 |
+| Tag | ★☆☆☆☆ | ✅ 已完成 |
 | Badge | ★☆☆☆☆ | 小圆点/数字角标 |
 | Avatar | ★☆☆☆☆ | 圆形图片/文字 |
 | Empty | ★☆☆☆☆ | 空状态占位 |
@@ -97,9 +97,9 @@ Button ✅, Typography ✅, Divider ✅, Space ✅, Icon ⏭
 ## 建议实现顺序
 
 ```
-已完成: Button → Typography → Divider → Space
+已完成: Button → Typography → Divider → Space → Tag
 
-下一批: Tag → Badge → Avatar → Empty → Spin → Statistic
+下一批: Badge → Avatar → Empty → Spin → Statistic
 
 再下批: Alert → Progress → Switch → Checkbox → Radio
 

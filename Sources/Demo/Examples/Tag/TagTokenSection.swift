@@ -5,6 +5,7 @@ import MoinUI
 struct TagTokenSection: View {
     @Localized var tr
     @Environment(\.moinToken) private var token
+    @Environment(\.moinTagToken) private var tagToken
 
     var body: some View {
         ScrollView {
@@ -15,6 +16,28 @@ struct TagTokenSection: View {
 
                 Text(tr("tag.token.desc"))
                     .foregroundStyle(.secondary)
+
+                // 组件 Token
+                Text(tr("tag.token.component"))
+                    .font(.headline)
+
+                Text(tr("tag.token.component_desc"))
+                    .foregroundStyle(.secondary)
+
+                APITable(
+                    headers: (
+                        tr("api.property"),
+                        tr("api.type"),
+                        tr("api.default"),
+                        tr("api.description")
+                    ),
+                    rows: [
+                        ("defaultBg", "Color", "-", tr("tag.token.defaultBg")),
+                        ("defaultColor", "Color", "-", tr("tag.token.defaultColor")),
+                        ("solidTextColor", "Color", "#fff", tr("tag.token.solidTextColor")),
+                        ("lineWidth", "CGFloat", "\(Int(tagToken.lineWidth))", tr("tag.token.lineWidth")),
+                    ]
+                )
 
                 // 全局 Token
                 Text(tr("tag.token.usage"))
@@ -40,7 +63,6 @@ struct TagTokenSection: View {
                         ("colorPrimary", "Color", "-", tr("tag.token.colorProcessing")),
                         ("colorWarning", "Color", "-", tr("tag.token.colorWarning")),
                         ("colorDanger", "Color", "-", tr("tag.token.colorDanger")),
-                        ("colorFillSecondary", "Color", "-", tr("tag.token.colorDefault")),
                         ("colorBorder", "Color", "-", tr("tag.token.colorBorder")),
                     ]
                 )

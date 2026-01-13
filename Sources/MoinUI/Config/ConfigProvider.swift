@@ -1017,6 +1017,36 @@ public extension Moin {
 }
 
 
+// MARK: - Moin.TagToken
+
+public extension Moin {
+    /// Tag component token
+    struct TagToken {
+        /// 默认背景色
+        public var defaultBg: Color
+        /// 默认文字颜色
+        public var defaultColor: Color
+        /// 实心标签文字颜色
+        public var solidTextColor: Color
+        /// 边框宽度
+        public var lineWidth: CGFloat
+
+        public static func generate(from token: Token) -> TagToken {
+            TagToken(
+                defaultBg: token.colorFillSecondary,
+                defaultColor: token.colorText,
+                solidTextColor: .white,
+                lineWidth: token.lineWidth
+            )
+        }
+
+        public static let light = generate(from: .light)
+        public static let dark = generate(from: .dark)
+        public static let `default` = light
+    }
+}
+
+
 // MARK: - Moin.ComponentToken
 
 public extension Moin {
@@ -1025,12 +1055,14 @@ public extension Moin {
         public var button: Moin.ButtonToken
         public var space: Moin.SpaceToken
         public var divider: Moin.DividerToken
+        public var tag: Moin.TagToken
 
         public static func generate(from token: Token, isDark: Bool = false) -> ComponentToken {
             ComponentToken(
                 button: .generate(from: token, isDark: isDark),
                 space: .generate(from: token),
-                divider: .generate(from: token)
+                divider: .generate(from: token),
+                tag: .generate(from: token)
             )
         }
 
@@ -1286,6 +1318,10 @@ private struct MoinDividerTokenKey: EnvironmentKey {
     static let defaultValue = Moin.DividerToken.default
 }
 
+private struct MoinTagTokenKey: EnvironmentKey {
+    static let defaultValue = Moin.TagToken.default
+}
+
 public extension EnvironmentValues {
     var moinConfig: Moin.ConfigProvider {
         get { self[MoinConfigProviderKey.self] }
@@ -1310,6 +1346,11 @@ public extension EnvironmentValues {
     var moinDividerToken: Moin.DividerToken {
         get { self[MoinDividerTokenKey.self] }
         set { self[MoinDividerTokenKey.self] = newValue }
+    }
+
+    var moinTagToken: Moin.TagToken {
+        get { self[MoinTagTokenKey.self] }
+        set { self[MoinTagTokenKey.self] = newValue }
     }
 }
 

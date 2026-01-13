@@ -5,6 +5,7 @@ public extension Moin {
     /// 标签组件
     struct Tag: View {
         @Environment(\.moinToken) private var token
+        @Environment(\.moinTagToken) private var tagToken
         @Environment(\.colorScheme) private var colorScheme
         @State private var isHovered = false
         @State private var isCloseHovered = false
@@ -83,7 +84,7 @@ public extension Moin {
             .clipShape(RoundedRectangle(cornerRadius: cornerRadius))
             .overlay(
                 RoundedRectangle(cornerRadius: cornerRadius)
-                    .strokeBorder(borderColor, lineWidth: hasBorder ? 1 : 0)
+                    .strokeBorder(borderColor, lineWidth: hasBorder ? tagToken.lineWidth : 0)
             )
             .onHover { isHovered = $0 }
         }
@@ -186,16 +187,16 @@ public extension Moin {
             switch variant {
             case .filled, .borderless:
                 if color.isDefault {
-                    return token.colorText
+                    return tagToken.defaultColor
                 }
                 return colorAt(level: 6)
             case .outlined:
                 if color.isDefault {
-                    return token.colorText
+                    return tagToken.defaultColor
                 }
                 return colorAt(level: 6)
             case .solid:
-                return .white
+                return tagToken.solidTextColor
             }
         }
 
@@ -204,7 +205,7 @@ public extension Moin {
             switch variant {
             case .filled, .borderless:
                 if color.isDefault {
-                    return token.colorFillSecondary
+                    return tagToken.defaultBg
                 }
                 return colorAt(level: 1)
             case .outlined:
