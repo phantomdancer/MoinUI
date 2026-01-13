@@ -40,9 +40,9 @@
 ## Tag 标签
 - **文件**: `Sources/MoinUI/Components/Tag/`
 - **API**:
-  - `Moin.Tag(_:color:variant:icon:closable:onClose:)`
+  - `Moin.Tag(_:color:variant:size:round:icon:closable:onClose:)`
   - `Moin.CheckableTag(_:isChecked:onChange:)`
-- **枚举**: TagColor, TagVariant
+- **枚举**: TagColor (.default/success/primary/warning/error/custom + 预设色), TagVariant (.filled/outlined/solid/borderless), TagSize (.small/medium/large)
 - **Demo**: `Sources/Demo/Examples/Tag/` (Examples, Playground, API, Token)
 
 ## 通用组件
