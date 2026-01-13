@@ -10,6 +10,8 @@ public extension Moin {
         private let text: String
         private let color: TagColor
         private let variant: TagVariant
+        private let size: TagSize
+        private let round: Bool
         private let icon: String?
         private let closable: Bool
         private let onClose: (() -> Void)?
@@ -19,6 +21,8 @@ public extension Moin {
         ///   - text: 标签文本
         ///   - color: 颜色
         ///   - variant: 变体
+        ///   - size: 尺寸
+        ///   - round: 是否圆角（药丸形）
         ///   - icon: SF Symbol 图标名
         ///   - closable: 是否可关闭
         ///   - onClose: 关闭回调
@@ -26,6 +30,8 @@ public extension Moin {
             _ text: String,
             color: TagColor = .default,
             variant: TagVariant = .filled,
+            size: TagSize = .medium,
+            round: Bool = false,
             icon: String? = nil,
             closable: Bool = false,
             onClose: (() -> Void)? = nil
@@ -33,42 +39,106 @@ public extension Moin {
             self.text = text
             self.color = color
             self.variant = variant
+            self.size = size
+            self.round = round
             self.icon = icon
             self.closable = closable
             self.onClose = onClose
         }
 
         public var body: some View {
-            HStack(spacing: token.paddingXXS) {
+            HStack(spacing: iconSpacing) {
                 if let icon = icon {
                     Image(systemName: icon)
-                        .font(.system(size: 10))
+                        .font(.system(size: iconSize))
                 }
 
                 Text(text)
-                    .font(.system(size: token.fontSize - 2))
+                    .font(.system(size: fontSize))
                     .lineLimit(1)
 
                 if closable {
                     Button(action: { onClose?() }) {
                         Image(systemName: "xmark")
-                            .font(.system(size: 8, weight: .medium))
+                            .font(.system(size: closeIconSize, weight: .medium))
                             .foregroundStyle(foregroundColor.opacity(0.6))
                     }
                     .buttonStyle(.plain)
                     .contentShape(Rectangle())
                 }
             }
-            .padding(.horizontal, Moin.Constants.Spacing.xs)
-            .padding(.vertical, token.paddingXXS)
+            .padding(.horizontal, paddingH)
+            .padding(.vertical, paddingV)
             .foregroundStyle(foregroundColor)
             .background(backgroundColor)
-            .clipShape(RoundedRectangle(cornerRadius: token.borderRadiusSM))
+            .clipShape(RoundedRectangle(cornerRadius: cornerRadius))
             .overlay(
-                RoundedRectangle(cornerRadius: token.borderRadiusSM)
+                RoundedRectangle(cornerRadius: cornerRadius)
                     .strokeBorder(borderColor, lineWidth: hasBorder ? 1 : 0)
             )
             .onHover { isHovered = $0 }
+        }
+
+        // MARK: - Size Properties
+
+        private var fontSize: CGFloat {
+            switch size {
+            case .large: return token.fontSize
+            case .medium: return token.fontSize - 2
+            case .small: return token.fontSize - 4
+            }
+        }
+
+        private var iconSize: CGFloat {
+            switch size {
+            case .large: return 12
+            case .medium: return 10
+            case .small: return 8
+            }
+        }
+
+        private var closeIconSize: CGFloat {
+            switch size {
+            case .large: return 10
+            case .medium: return 8
+            case .small: return 6
+            }
+        }
+
+        private var iconSpacing: CGFloat {
+            switch size {
+            case .large: return token.paddingXS
+            case .medium: return token.paddingXXS
+            case .small: return 2
+            }
+        }
+
+        private var paddingH: CGFloat {
+            switch size {
+            case .large: return Moin.Constants.Spacing.md
+            case .medium: return Moin.Constants.Spacing.sm
+            case .small: return Moin.Constants.Spacing.xs
+            }
+        }
+
+        private var paddingV: CGFloat {
+            switch size {
+            case .large: return token.paddingXXS + 2
+            case .medium: return token.paddingXXS
+            case .small: return 1
+            }
+        }
+
+        private var cornerRadius: CGFloat {
+            if round {
+                // 药丸形：使用足够大的圆角
+                return 100
+            }
+            switch size {
+            case .large: return token.borderRadiusSM + 2
+            case .medium: return token.borderRadiusSM
+            case .small: return token.borderRadiusSM - 1
+            }
         }
 
         // MARK: - Computed Properties

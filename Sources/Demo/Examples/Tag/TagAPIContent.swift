@@ -27,6 +27,8 @@ struct TagAPIContent: View {
                         ("text", "String", "-", tr("tag.api.text")),
                         ("color", "Moin.TagColor", ".default", tr("tag.api.color")),
                         ("variant", "Moin.TagVariant", ".filled", tr("tag.api.variant")),
+                        ("size", "Moin.TagSize", ".medium", tr("tag.api.size")),
+                        ("round", "Bool", "false", tr("tag.api.round")),
                         ("icon", "String?", "nil", tr("tag.api.icon")),
                         ("closable", "Bool", "false", tr("tag.api.closable")),
                         ("onClose", "(() -> Void)?", "nil", tr("tag.api.onClose")),
@@ -101,6 +103,28 @@ struct TagAPIContent: View {
                         (".outlined", "-", "-", tr("tag.api.variant_outlined")),
                         (".solid", "-", "-", tr("tag.api.variant_solid")),
                         (".borderless", "-", "-", tr("tag.api.variant_borderless")),
+                    ]
+                )
+
+                // TagSize
+                Text("Moin.TagSize")
+                    .font(.title2)
+                    .fontWeight(.semibold)
+
+                Text(tr("tag.api.tagsize_desc"))
+                    .foregroundStyle(.secondary)
+
+                APITable(
+                    headers: (
+                        tr("api.value"),
+                        tr("api.type"),
+                        tr("api.default"),
+                        tr("api.description")
+                    ),
+                    rows: [
+                        (".small", "-", "-", tr("tag.api.size_small")),
+                        (".medium", "-", "-", tr("tag.api.size_medium")),
+                        (".large", "-", "-", tr("tag.api.size_large")),
                     ]
                 )
             }

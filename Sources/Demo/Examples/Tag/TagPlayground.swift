@@ -6,6 +6,8 @@ class TagPlaygroundState: ObservableObject {
     @Published var text: String = "Tag"
     @Published var color: Moin.TagColor = .default
     @Published var variant: Moin.TagVariant = .filled
+    @Published var size: Moin.TagSize = .medium
+    @Published var round: Bool = false
     @Published var showIcon: Bool = false
     @Published var closable: Bool = false
 
@@ -24,6 +26,8 @@ class TagPlaygroundState: ObservableObject {
             var params: [String] = ["\"\(text)\""]
             if !isDefaultColor { params.append("color: \(colorString)") }
             if variant != .filled { params.append("variant: .\(variant)") }
+            if size != .medium { params.append("size: .\(size)") }
+            if round { params.append("round: true") }
             if showIcon { params.append("icon: \"tag.fill\"") }
             if closable { params.append("closable: true") }
             return "Moin.Tag(\(params.joined(separator: ", ")))"
@@ -98,6 +102,8 @@ struct TagPlayground: View {
                         state.text,
                         color: state.color,
                         variant: state.variant,
+                        size: state.size,
+                        round: state.round,
                         icon: state.showIcon ? "tag.fill" : nil,
                         closable: state.closable
                     ) {
@@ -175,6 +181,15 @@ struct TagPlayground: View {
                 value: $state.variant
             )
 
+            // Size selector
+            SelectPropControl(
+                label: tr("tag.playground.size"),
+                propName: "size: Moin.TagSize",
+                options: Moin.TagSize.allCases,
+                value: $state.size
+            )
+
+            TogglePropControl(label: tr("tag.playground.round"), propName: "round: Bool", value: $state.round)
             TogglePropControl(label: tr("tag.playground.icon"), propName: "icon: String?", value: $state.showIcon)
             TogglePropControl(label: tr("tag.playground.closable"), propName: "closable: Bool", value: $state.closable)
         }
@@ -211,6 +226,17 @@ extension Moin.TagVariant: CaseIterable, CustomStringConvertible {
         case .outlined: return "outlined"
         case .solid: return "solid"
         case .borderless: return "borderless"
+        }
+    }
+}
+
+extension Moin.TagSize: CaseIterable, CustomStringConvertible {
+    public static var allCases: [Moin.TagSize] { [.small, .medium, .large] }
+    public var description: String {
+        switch self {
+        case .small: return "small"
+        case .medium: return "medium"
+        case .large: return "large"
         }
     }
 }
