@@ -92,7 +92,10 @@ struct ButtonPlayground: View {
                     shape: state.shape,
                     loading: Moin.ButtonLoading(state.isLoading),
                     isDisabled: state.isDisabled,
-                    isGhost: state.isGhost
+                    isGhost: state.isGhost,
+                    href: state.hrefURL,
+                    gradient: state.useGradient ? state.gradientValue : nil,
+                    fontColor: state.useFontColor ? state.fontColor : nil
                 ) {}
             } else {
                 Moin.Button(
@@ -106,7 +109,10 @@ struct ButtonPlayground: View {
                     loading: Moin.ButtonLoading(state.isLoading),
                     isDisabled: state.isDisabled,
                     isBlock: state.isBlock,
-                    isGhost: state.isGhost
+                    isGhost: state.isGhost,
+                    href: state.hrefURL,
+                    gradient: state.useGradient ? state.gradientValue : nil,
+                    fontColor: state.useFontColor ? state.fontColor : nil
                 ) {}
                 .frame(maxWidth: state.isBlock ? .infinity : nil)
                 .padding(.horizontal, state.isBlock ? Moin.Constants.Spacing.xl : 0)
@@ -222,6 +228,35 @@ struct ButtonPlayground: View {
                         propName: tr("playground.prop.ghost_prop"),
                         value: $state.isGhost
                     )
+
+                    Divider()
+                        .padding(.vertical, Moin.Constants.Spacing.xs)
+
+                    TogglePropControl(
+                        label: tr("button.playground.prop.font_color"),
+                        propName: "fontColor: Color?",
+                        value: $state.useFontColor
+                    )
+
+                    if state.useFontColor {
+                        ColorPropControl(
+                            label: tr("playground.prop.color"),
+                            propName: "fontColor",
+                            value: $state.fontColor
+                        )
+                    }
+
+                    TogglePropControl(
+                        label: tr("button.playground.prop.gradient"),
+                        propName: "gradient: LinearGradient?",
+                        value: $state.useGradient
+                    )
+
+                    TextPropControl(
+                        label: tr("button.playground.prop.href"),
+                        propName: "href: URL?",
+                        value: $state.href
+                    )
                 }
             }
             .padding(Moin.Constants.Spacing.md)
@@ -309,8 +344,25 @@ class ButtonPlaygroundState: ObservableObject {
     @Published var iconPlacement: Moin.ButtonIconPlacement = .start
     @Published var useCustomColor: Bool = false
     @Published var customColor: Color = .purple
+    @Published var useFontColor: Bool = false
+    @Published var fontColor: Color = .white
+    @Published var useGradient: Bool = false
+    @Published var href: String = ""
 
     var hasIcon: Bool { !icon.isEmpty }
+    
+    var hrefURL: URL? {
+        guard !href.isEmpty else { return nil }
+        return URL(string: href)
+    }
+    
+    var gradientValue: LinearGradient {
+        LinearGradient(
+            colors: [Color(hex: "#667eea"), Color(hex: "#764ba2")],
+            startPoint: .leading,
+            endPoint: .trailing
+        )
+    }
 
     /// 生成代码
     func generateCode(defaultText: String) -> String {
@@ -365,6 +417,21 @@ class ButtonPlaygroundState: ObservableObject {
         // 自定义颜色
         if useCustomColor {
             params.append("color: .\(colorName)")
+        }
+
+        // href
+        if !href.isEmpty {
+            params.append("href: URL(string: \"\(href)\")")
+        }
+
+        // gradient
+        if useGradient {
+            params.append("gradient: LinearGradient(colors: [...], startPoint: .leading, endPoint: .trailing)")
+        }
+
+        // fontColor
+        if useFontColor {
+            params.append("fontColor: .white")
         }
 
         if params.count <= 2 {

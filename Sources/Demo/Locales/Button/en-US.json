@@ -62,7 +62,9 @@
       "icon_end": "Icon End",
       "delay": "Delay Load",
       "favorite": "Favorite",
-      "online": "Online"
+      "online": "Online",
+      "visit_github": "Visit GitHub",
+      "visit_docs": "View Docs"
     },
     "api": {
       "type": "Button color type",
@@ -158,7 +160,10 @@
         "block": "Block",
         "ghost": "Ghost",
         "custom_color": "Custom Color",
-        "color": "Color"
+        "color": "Color",
+        "font_color": "Font Color",
+        "gradient": "Gradient",
+        "href": "Link URL"
       },
       "default_text": "Button"
     }

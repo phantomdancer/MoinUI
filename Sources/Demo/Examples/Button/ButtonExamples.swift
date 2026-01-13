@@ -29,6 +29,7 @@ struct ButtonExamples: View {
         AnchorItem(id: "custom_content", titleKey: "button.custom_content"),
         AnchorItem(id: "disabled", titleKey: "button.disabled"),
         AnchorItem(id: "block", titleKey: "button.block"),
+        AnchorItem(id: "href", titleKey: "button.link"),
     ]
 
     var body: some View {
@@ -60,6 +61,7 @@ struct ButtonExamples: View {
             customContentExample.id("custom_content")
             disabledExample.id("disabled")
             blockExample.id("block")
+            hrefExample.id("href")
         }
     }
 
@@ -466,6 +468,26 @@ struct ButtonExamples: View {
             Moin.Button("\(tr("button.label.dashed"))", variant: .dashed, isBlock: true) {}
             Moin.Button("\(tr("button.label.text"))", variant: .text, isBlock: true) {}
             Moin.Button("\(tr("button.label.link"))", variant: .link, isBlock: true) {}
+            """
+        }
+    }
+
+    private var hrefExample: some View {
+        ExampleSection(
+            title: tr("button.link"),
+            description: tr("button.link_desc")
+        ) {
+            HStack(spacing: Moin.Constants.Spacing.md) {
+                Moin.Button(tr("button.label.visit_github"), color: .primary, icon: "link", href: URL(string: "https://github.com")) {}
+                Moin.Button(tr("button.label.visit_docs"), variant: .outlined, icon: "doc.text", href: URL(string: "https://developer.apple.com")) {}
+                Moin.Button(tr("button.label.link"), variant: .link, href: URL(string: "https://apple.com")) {}
+            }
+        } code: {
+            """
+            // \(tr("button.link_desc"))
+            Moin.Button("\(tr("button.label.visit_github"))", color: .primary, icon: "link", href: URL(string: "https://github.com")) {}
+            Moin.Button("\(tr("button.label.visit_docs"))", variant: .outlined, icon: "doc.text", href: URL(string: "https://developer.apple.com")) {}
+            Moin.Button("\(tr("button.label.link"))", variant: .link, href: URL(string: "https://apple.com")) {}
             """
         }
     }
