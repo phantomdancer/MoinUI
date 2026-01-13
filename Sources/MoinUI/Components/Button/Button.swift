@@ -229,16 +229,15 @@ private struct LoadingIndicator: View {
     let icon: String
     let size: CGFloat
 
-    @State private var rotationAngle: Double = 0
+    @State private var isAnimating = false
 
     var body: some View {
         Image(systemName: icon)
             .font(.system(size: size))
-            .rotationEffect(.degrees(rotationAngle))
+            .rotationEffect(.degrees(isAnimating ? 360 : 0))
+            .animation(.linear(duration: 1).repeatForever(autoreverses: false), value: isAnimating)
             .onAppear {
-                withAnimation(.linear(duration: 1).repeatForever(autoreverses: false)) {
-                    rotationAngle = 360
-                }
+                isAnimating = true
             }
     }
 }

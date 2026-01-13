@@ -6,6 +6,10 @@
 
 ## 最近完成
 
+- 2026-01-13: Tag 组件（基础标签、多彩标签、变体、图标、可关闭、可选中）
+
+## 最近完成
+
 - 2026-01-11: Typography 组件（Title/Text/Paragraph/Link、斜体 transform 支持、mark 颜色优化、完整国际化）
 - 2026-01-10: Divider 组件（水平/垂直、实线/虚线/点线、带文字、演练场）
 - 2026-01-10: Space 组件（间距布局，支持 size/direction/alignment/wrap）

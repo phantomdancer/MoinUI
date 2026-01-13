@@ -37,6 +37,14 @@
 - **Token**: SpaceToken (sizeSmall/Medium/Large)
 - **Demo**: `Sources/Demo/Examples/Space/` (Examples, Playground, API)
 
+## Tag 标签
+- **文件**: `Sources/MoinUI/Components/Tag/`
+- **API**:
+  - `Moin.Tag(_:color:variant:icon:closable:onClose:)`
+  - `Moin.CheckableTag(_:isChecked:onChange:)`
+- **枚举**: TagColor, TagVariant
+- **Demo**: `Sources/Demo/Examples/Tag/` (Examples, Playground, API, Token)
+
 ## 通用组件
 
 | 组件 | 状态 | 文件 |
@@ -44,6 +52,8 @@
 | Button | ✅ | `Components/Button/Button.swift` |
 | ButtonGroup | ✅ | `Components/Button/ButtonGroup.swift` |
 | Typography | ✅ | `Components/Typography/Typography.swift` |
+| Tag | ✅ | `Components/Tag/Tag.swift` |
+| CheckableTag | ✅ | `Components/Tag/CheckableTag.swift` |
 | Divider | ✅ | `Components/Divider/Divider.swift` |
 | Space | ✅ | `Components/Space/Space.swift` |
 

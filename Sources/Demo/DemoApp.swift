@@ -142,6 +142,7 @@ struct ContentView: View {
     @Localized var tr
     @State private var buttonTab: ButtonExamplesTab = .examples
     @State private var typographyTab: TypographyExamplesTab = .examples
+    @State private var tagTab: TagExamplesTab = .examples
     @State private var spaceTab: SpaceExamplesTab = .examples
     @State private var dividerTab: DividerExamplesTab = .examples
 
@@ -150,7 +151,7 @@ struct ContentView: View {
             Sidebar(selection: $navManager.selectedItem)
                 .navigationSplitViewColumnWidth(min: 220, ideal: 280, max: 400)
         } detail: {
-            DetailView(item: navManager.selectedItem, buttonTab: $buttonTab, typographyTab: $typographyTab, spaceTab: $spaceTab, dividerTab: $dividerTab)
+            DetailView(item: navManager.selectedItem, buttonTab: $buttonTab, typographyTab: $typographyTab, tagTab: $tagTab, spaceTab: $spaceTab, dividerTab: $dividerTab)
                 .navigationTitle(navManager.selectedItem.map { tr($0.titleKey) } ?? "MoinUI")
                 .toolbar {
                     ToolbarItemGroup(placement: .primaryAction) {
@@ -173,6 +174,18 @@ struct ContentView: View {
                                 Text(tr("tab.playground")).tag(TypographyExamplesTab.playground)
                                 Text(tr("tab.api")).tag(TypographyExamplesTab.api)
                                 Text(tr("tab.token")).tag(TypographyExamplesTab.token)
+                            }
+                            .pickerStyle(.segmented)
+                            .fixedSize()
+                        }
+
+                        // Tag 页面显示 Tab 切换
+                        if navManager.selectedItem == .tag {
+                            Picker("", selection: $tagTab) {
+                                Text(tr("tab.examples")).tag(TagExamplesTab.examples)
+                                Text(tr("tab.playground")).tag(TagExamplesTab.playground)
+                                Text(tr("tab.api")).tag(TagExamplesTab.api)
+                                Text(tr("tab.token")).tag(TagExamplesTab.token)
                             }
                             .pickerStyle(.segmented)
                             .fixedSize()
@@ -239,6 +252,7 @@ enum NavItem: String, Identifiable {
     // Components
     case button
     case typography
+    case tag
     case space
     case divider
 
@@ -259,6 +273,7 @@ enum NavItem: String, Identifiable {
         case .token: return "square.stack.3d.up"
         case .button: return "rectangle.and.hand.point.up.left"
         case .typography: return "textformat.size"
+        case .tag: return "tag"
         case .space: return "rectangle.split.3x1"
         case .divider: return "minus"
         case .configProvider: return "gearshape"
@@ -275,6 +290,7 @@ enum NavItem: String, Identifiable {
         case .token: return "nav.token"
         case .button: return "component.button"
         case .typography: return "component.typography"
+        case .tag: return "component.tag"
         case .space: return "component.space"
         case .divider: return "component.divider"
         case .configProvider: return "component.configProvider"
@@ -284,7 +300,7 @@ enum NavItem: String, Identifiable {
     }
 
     static var overview: [NavItem] { [.introduction, .quickStart] }
-    static var general: [NavItem] { [.button, .typography] }
+    static var general: [NavItem] { [.button, .typography, .tag] }
     static var layout: [NavItem] { [.space, .divider] }
     static var development: [NavItem] { [.theme, .token, .configProvider, .localization, .colors] }
 }
@@ -346,6 +362,7 @@ struct DetailView: View {
     let item: NavItem?
     @Binding var buttonTab: ButtonExamplesTab
     @Binding var typographyTab: TypographyExamplesTab
+    @Binding var tagTab: TagExamplesTab
     @Binding var spaceTab: SpaceExamplesTab
     @Binding var dividerTab: DividerExamplesTab
 
@@ -364,6 +381,8 @@ struct DetailView: View {
                 ButtonExamples(selectedTab: $buttonTab)
             case .typography:
                 TypographyExamples(selectedTab: $typographyTab)
+            case .tag:
+                TagExamples(selectedTab: $tagTab)
             case .space:
                 SpaceExamples(selectedTab: $spaceTab)
             case .divider:

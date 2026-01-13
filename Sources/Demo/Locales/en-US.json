@@ -49,6 +49,7 @@
   "component": {
     "button": "Button",
     "typography": "Typography",
+    "tag": "Tag",
     "space": "Space",
     "divider": "Divider",
     "configProvider": "ConfigProvider",
