@@ -342,16 +342,27 @@ struct ButtonExamples: View {
             title: tr("button.icon_text"),
             description: tr("button.icon_text_desc")
         ) {
-            HStack(spacing: Moin.Constants.Spacing.md) {
-                Moin.Button(tr("button.label.search"), color: .primary, icon: "magnifyingglass") {}
-                Moin.Button(tr("button.label.download"), color: .success, icon: "arrow.down.circle") {}
-                Moin.Button(tr("button.label.go"), color: .info, icon: "arrow.right", iconPlacement: .end) {}
+            VStack(alignment: .leading, spacing: Moin.Constants.Spacing.md) {
+                HStack(spacing: Moin.Constants.Spacing.md) {
+                    Moin.Button(tr("button.label.search"), color: .primary, icon: "magnifyingglass") {}
+                    Moin.Button(tr("button.label.download"), color: .success, icon: "arrow.down.circle") {}
+                    Moin.Button(tr("button.label.go"), color: .info, icon: "arrow.right", iconPlacement: .end) {}
+                }
+                HStack(spacing: Moin.Constants.Spacing.md) {
+                    Moin.Button(tr("button.label.search"), icon: "magnifyingglass", fontColor: .orange) {}
+                    Moin.Button(tr("button.label.download"), icon: "arrow.down.circle", fontColor: .purple) {}
+                }
             }
         } code: {
             """
+            // 默认颜色
             Moin.Button("\(tr("button.label.search"))", color: .primary, icon: "magnifyingglass") {}
             Moin.Button("\(tr("button.label.download"))", color: .success, icon: "arrow.down.circle") {}
             Moin.Button("\(tr("button.label.go"))", color: .info, icon: "arrow.right", iconPlacement: .end) {}
+
+            // 自定义前景色 (fontColor)
+            Moin.Button("\(tr("button.label.search"))", icon: "magnifyingglass", fontColor: .orange) {}
+            Moin.Button("\(tr("button.label.download"))", icon: "arrow.down.circle", fontColor: .purple) {}
             """
         }
     }
