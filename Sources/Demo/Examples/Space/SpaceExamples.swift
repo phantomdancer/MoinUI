@@ -234,41 +234,41 @@ struct SpaceExamples: View {
             title: tr("space.compact"),
             description: tr("space.compact_desc")
         ) {
-            VStack(alignment: .leading, spacing: Moin.Constants.Spacing.lg) {
-                // Horizontal compact
-                Text("\(tr("space.horizontal")):")
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
-                Moin.SpaceCompact {
-                    Moin.Button(tr("space.january"), variant: .outlined) {}
-                    Moin.Button(tr("space.february"), variant: .outlined) {}
-                    Moin.Button(tr("space.march"), variant: .outlined) {}
-                }
-
-                // Vertical compact
-                Text("\(tr("space.vertical")):")
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
+            Moin.Space {
                 Moin.SpaceCompact(direction: .vertical) {
-                    Moin.Button(tr("space.january"), variant: .dashed) {}
-                    Moin.Button("\(tr("space.february")) \(tr("space.february")) \(tr("space.february"))", variant: .dashed) {}
-                    Moin.Button(tr("space.march"), variant: .dashed) {}
+                    Moin.Button("\(tr("button.label.button")) 1", variant: .outlined) {}
+                    Moin.Button("\(tr("button.label.button")) 2", variant: .outlined) {}
+                    Moin.Button("\(tr("button.label.button")) 3", variant: .outlined) {}
+                }
+                Moin.SpaceCompact(direction: .vertical) {
+                    Moin.Button("\(tr("button.label.button")) 1", variant: .dashed) {}
+                    Moin.Button("\(tr("button.label.button")) 2", variant: .dashed) {}
+                    Moin.Button("\(tr("button.label.button")) 3", variant: .dashed) {}
+                }
+                Moin.SpaceCompact(direction: .vertical) {
+                    Moin.Button("\(tr("button.label.button")) 1", color: .primary) {}
+                    Moin.Button("\(tr("button.label.button")) 2", color: .primary) {}
+                    Moin.Button("\(tr("button.label.button")) 3", color: .primary) {}
                 }
             }
         } code: {
             """
-            // \(tr("space.horizontal"))
-            Moin.SpaceCompact {
-                Moin.Button("\(tr("space.january"))", variant: .outlined) {}
-                Moin.Button("\(tr("space.february"))", variant: .outlined) {}
-                Moin.Button("\(tr("space.march"))", variant: .outlined) {}
-            }
-
-            // \(tr("space.vertical"))
-            Moin.SpaceCompact(direction: .vertical) {
-                Moin.Button("\(tr("space.january"))", variant: .dashed) {}
-                Moin.Button("\(tr("space.february"))...", variant: .dashed) {}
-                Moin.Button("\(tr("space.march"))", variant: .dashed) {}
+            Moin.Space {
+                Moin.SpaceCompact(direction: .vertical) {
+                    Moin.Button("Button 1", variant: .outlined) {}
+                    Moin.Button("Button 2", variant: .outlined) {}
+                    Moin.Button("Button 3", variant: .outlined) {}
+                }
+                Moin.SpaceCompact(direction: .vertical) {
+                    Moin.Button("Button 1", variant: .dashed) {}
+                    Moin.Button("Button 2", variant: .dashed) {}
+                    Moin.Button("Button 3", variant: .dashed) {}
+                }
+                Moin.SpaceCompact(direction: .vertical) {
+                    Moin.Button("Button 1", color: .primary) {}
+                    Moin.Button("Button 2", color: .primary) {}
+                    Moin.Button("Button 3", color: .primary) {}
+                }
             }
             """
         }
