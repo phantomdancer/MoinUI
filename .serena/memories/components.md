@@ -1,5 +1,19 @@
 # 组件清单
 
+## Ant Design 组件分类参考
+
+| 分类 | 组件 |
+|------|------|
+| 通用 | Button, Icon, Typography |
+| 布局 | Divider, Flex, Grid, Layout, Space, Splitter |
+| 导航 | Affix, Anchor, Breadcrumb, Dropdown, Menu, Pagination, Steps |
+| 数据录入 | AutoComplete, Cascader, Checkbox, ColorPicker, DatePicker, Form, Input, InputNumber, Mentions, Radio, Rate, Select, Slider, Switch, TimePicker, Transfer, TreeSelect, Upload |
+| 数据展示 | Avatar, Badge, Calendar, Card, Carousel, Collapse, Descriptions, Empty, Image, List, Masonry, Popover, QRCode, Segmented, Statistic, Table, Tabs, Tag, Timeline, Tooltip, Tour, Tree |
+| 反馈 | Alert, Drawer, Message, Modal, Notification, Popconfirm, Progress, Result, Skeleton, Spin |
+| 其他 | App, ConfigProvider, FloatButton, Watermark |
+
+---
+
 ## Typography 排版
 - **文件**: `Sources/MoinUI/Components/Typography/`
 - **API**: 

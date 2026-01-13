@@ -16,4 +16,9 @@
 
 ## 待处理
 
-- Input 组件（第三层基础交互）
+按优先级：
+1. Input 组件（数据录入基础）
+2. Switch / Checkbox / Radio
+3. Select
+4. Tag / Badge / Avatar / Tooltip
+5. Spin / Progress / Alert / Message / Modal

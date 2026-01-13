@@ -50,5 +50,10 @@ MoinUI (墨影UI) - macOS SwiftUI 组件库
 分析开源工具时，可 clone 到 `ThirdLibs/` 目录后查看其代码。
 
 - **Ant Design**: `ThirdLibs/ant-design/`，若无请 clone
+有两个工具可用：
+https://ant.design/llms.txt
+https://ant.design/llms-full.txt
+已经下载到：ThirdLibs/ant-design/ 目录下，如果txt 文件不存在，你需要 wget 或者curl 下载到该目录，因为文件太大了。
+
 - **Element Plus**: https://element-plus.org
 - **shadcn/ui**: https://ui.shadcn.com

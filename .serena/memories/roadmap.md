@@ -1,34 +1,111 @@
 # 开发路线图
 
-## 第一层：原子组件（无依赖）
+## Ant Design 组件分类参考
 
-| 组件 | 状态 |
+| 分类 | 组件 |
 |------|------|
-| Button | ✅ |
-| Icon | ⏭ 跳过（用原生 Image） |
-| Typography | ✅ |
-| Divider | ✅ |
+| 通用 | Button, Icon, Typography |
+| 布局 | Divider, Flex, Grid, Layout, Space, Splitter |
+| 导航 | Affix, Anchor, Breadcrumb, Dropdown, Menu, Pagination, Steps |
+| 数据录入 | AutoComplete, Cascader, Checkbox, ColorPicker, DatePicker, Form, Input, InputNumber, Mentions, Radio, Rate, Select, Slider, Switch, TimePicker, Transfer, TreeSelect, Upload |
+| 数据展示 | Avatar, Badge, Calendar, Card, Carousel, Collapse, Descriptions, Empty, Image, List, Masonry, Popover, QRCode, Segmented, Statistic, Table, Tabs, Tag, Timeline, Tooltip, Tour, Tree |
+| 反馈 | Alert, Drawer, Message, Modal, Notification, Popconfirm, Progress, Result, Skeleton, Spin |
+| 其他 | App, ConfigProvider, FloatButton, Watermark |
 
-## 第二层：布局组件
+---
 
-| 组件 | 状态 |
-|------|------|
-| Space | ✅ |
-| Flex | 待实现 |
-| Grid | 待实现 |
+## 按复杂度排序（简单优先，无依赖优先）
 
-## 第三层：基础交互
+### 已完成
+Button ✅, Typography ✅, Divider ✅, Space ✅, Icon ⏭
 
-Input, Switch, Checkbox, Radio, Slider, Tag, Badge, Avatar, Tooltip, Spin, Progress
+### 第一梯队：极简组件（无依赖，几乎无状态）
 
-## 第四层：复合组件
+| 组件 | 复杂度 | 说明 |
+|------|--------|------|
+| Tag | ★☆☆☆☆ | 带样式的文本/徽章 |
+| Badge | ★☆☆☆☆ | 小圆点/数字角标 |
+| Avatar | ★☆☆☆☆ | 圆形图片/文字 |
+| Empty | ★☆☆☆☆ | 空状态占位 |
+| Spin | ★☆☆☆☆ | 旋转加载动画 |
+| Statistic | ★☆☆☆☆ | 数值+标签展示 |
 
-Select, Alert, Card, Collapse, Tabs, Modal, Drawer, Message, Notification, Popover, Dropdown
+### 第二梯队：简单组件（无依赖，少量状态）
 
-## 第五层：高级组件
+| 组件 | 复杂度 | 说明 |
+|------|--------|------|
+| Alert | ★★☆☆☆ | 警告提示框 |
+| Progress | ★★☆☆☆ | 进度条/圆环 |
+| Switch | ★★☆☆☆ | 开关切换 |
+| Checkbox | ★★☆☆☆ | 复选框 |
+| Radio | ★★☆☆☆ | 单选框 |
+| Skeleton | ★★☆☆☆ | 骨架屏占位 |
+| Result | ★★☆☆☆ | 结果页面 |
+| Timeline | ★★☆☆☆ | 时间轴 |
 
-Form, Table, Menu, DatePicker, Pagination
+### 第三梯队：中等组件（无依赖，较多状态/变体）
 
-## 建议顺序
+| 组件 | 复杂度 | 说明 |
+|------|--------|------|
+| Rate | ★★★☆☆ | 评分（交互稍复杂） |
+| Slider | ★★★☆☆ | 滑动条 |
+| Input | ★★★☆☆ | 输入框（状态多） |
+| InputNumber | ★★★☆☆ | 数字输入 |
+| Card | ★★★☆☆ | 卡片容器 |
+| Collapse | ★★★☆☆ | 折叠面板 |
+| Tabs | ★★★☆☆ | 标签页切换 |
+| Segmented | ★★★☆☆ | 分段控制器 |
+| Descriptions | ★★★☆☆ | 描述列表 |
 
-Space → Divider → Typography → ~~Icon~~ → Input → Switch → Tag → Tooltip → Select → Alert → Card → Modal → Form → Table
+### 第四梯队：弹出层组件（需处理定位/层级）
+
+| 组件 | 复杂度 | 说明 |
+|------|--------|------|
+| Tooltip | ★★★☆☆ | 文字提示气泡 |
+| Popover | ★★★☆☆ | 气泡卡片 |
+| Modal | ★★★☆☆ | 对话框 |
+| Drawer | ★★★☆☆ | 侧边抽屉 |
+| Message | ★★★☆☆ | 全局消息 |
+| Notification | ★★★☆☆ | 通知提醒 |
+| Dropdown | ★★★☆☆ | 下拉菜单 |
+
+### 第五梯队：组合组件（依赖前置组件）
+
+| 组件 | 复杂度 | 依赖 |
+|------|--------|------|
+| Select | ★★★★☆ | Input + Popover |
+| AutoComplete | ★★★★☆ | Input + Popover |
+| DatePicker | ★★★★☆ | Input + Popover |
+| TimePicker | ★★★★☆ | Input + Popover |
+| ColorPicker | ★★★★☆ | Input + Popover |
+| Popconfirm | ★★★★☆ | Popover + Button |
+| Menu | ★★★★☆ | 递归结构 |
+
+### 第六梯队：复杂组件
+
+| 组件 | 复杂度 | 依赖 |
+|------|--------|------|
+| Table | ★★★★★ | 多组件 |
+| Tree | ★★★★★ | Checkbox，递归 |
+| List | ★★★★☆ | Avatar 等 |
+| Transfer | ★★★★★ | Checkbox, Input |
+| Form | ★★★★★ | 所有输入组件 |
+| Calendar | ★★★★★ | DatePicker 机制 |
+
+---
+
+## 建议实现顺序
+
+```
+已完成: Button → Typography → Divider → Space
+
+下一批: Tag → Badge → Avatar → Empty → Spin → Statistic
+
+再下批: Alert → Progress → Switch → Checkbox → Radio
+
+再下批: Rate → Slider → Input → Card → Collapse → Tabs
+
+再下批: Tooltip → Popover → Modal → Message
+
+再下批: Select → DatePicker → Menu → Table
+```
