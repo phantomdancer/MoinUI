@@ -8,6 +8,7 @@ public extension Moin {
         @Environment(\.colorScheme) private var colorScheme
         @Binding var isChecked: Bool
         @State private var isHovered = false
+        @State private var isPressed = false
 
         private let text: String
         private let onChange: ((Bool) -> Void)?
@@ -36,10 +37,6 @@ public extension Moin {
                 .foregroundStyle(foregroundColor)
                 .background(backgroundColor)
                 .clipShape(RoundedRectangle(cornerRadius: token.borderRadiusSM))
-                .overlay(
-                    RoundedRectangle(cornerRadius: token.borderRadiusSM)
-                        .strokeBorder(borderColor, lineWidth: 1)
-                )
                 .onHover { hovering in
                     isHovered = hovering
                     if hovering {
@@ -48,40 +45,57 @@ public extension Moin {
                         NSCursor.pop()
                     }
                 }
-                .onTapGesture {
-                    isChecked.toggle()
-                    onChange?(isChecked)
-                }
+                .simultaneousGesture(
+                    DragGesture(minimumDistance: 0)
+                        .onChanged { _ in isPressed = true }
+                        .onEnded { _ in
+                            isPressed = false
+                            isChecked.toggle()
+                            onChange?(isChecked)
+                        }
+                )
                 .animation(.easeInOut(duration: token.motionDurationFast), value: isChecked)
+                .animation(.easeInOut(duration: token.motionDurationFast), value: isHovered)
+                .animation(.easeInOut(duration: token.motionDurationFast), value: isPressed)
         }
 
         // MARK: - Computed Properties
 
         private var isDark: Bool { colorScheme == .dark }
 
-        private var palette: Moin.ColorPalette {
-            Moin.ColorPalette.generate(from: token.colorPrimary, theme: isDark ? .dark : .light)
-        }
-
         private var foregroundColor: Color {
-            if isChecked {
+            // 按下或选中时：白色文字
+            if isPressed || isChecked {
+                return .white
+            }
+            // hover 时：主色文字
+            if isHovered {
                 return token.colorPrimary
             }
-            return isHovered ? token.colorPrimary : token.colorText
+            // 默认：普通文本色
+            return token.colorText
         }
 
         private var backgroundColor: Color {
+            // 选中状态
             if isChecked {
-                return palette[1]
-            }
-            return isHovered ? palette[1] : .clear
-        }
-
-        private var borderColor: Color {
-            if isChecked {
+                // 选中 + hover：主色 hover 态
+                if isHovered {
+                    return token.colorPrimaryHover
+                }
+                // 选中：主色背景
                 return token.colorPrimary
             }
-            return isHovered ? token.colorPrimary : token.colorBorder
+            // 按下状态：主色激活态
+            if isPressed {
+                return token.colorPrimaryActive
+            }
+            // hover 状态：浅色背景
+            if isHovered {
+                return token.colorFillSecondary
+            }
+            // 默认：透明
+            return .clear
         }
     }
 }
