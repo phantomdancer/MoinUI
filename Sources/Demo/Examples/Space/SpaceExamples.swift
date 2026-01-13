@@ -279,31 +279,75 @@ struct SpaceExamples: View {
             title: tr("space.separator"),
             description: tr("space.separator_desc")
         ) {
-            let links = [
-                tr("space.link_n").replacingOccurrences(of: "%d", with: "1"),
-                tr("space.link_n").replacingOccurrences(of: "%d", with: "2"),
-                tr("space.link_n").replacingOccurrences(of: "%d", with: "3")
-            ]
-            HStack(spacing: Moin.Constants.Spacing.sm) {
-                ForEach(Array(links.enumerated()), id: \.offset) { index, link in
-                    if index > 0 {
-                        Divider()
-                            .frame(height: 14)
-                    }
-                    Moin.Link(link) {}
+            VStack(alignment: .leading, spacing: Moin.Constants.Spacing.lg) {
+                // Horizontal with divider
+                Text("\(tr("space.horizontal")):").font(.caption).foregroundStyle(.secondary)
+                Moin.Space(size: .small, separator: { Moin.Divider(orientation: .vertical) }) {
+                    Moin.Link(tr("space.link_n").replacingOccurrences(of: "%d", with: "1")) {}
+                    Moin.Link(tr("space.link_n").replacingOccurrences(of: "%d", with: "2")) {}
+                    Moin.Link(tr("space.link_n").replacingOccurrences(of: "%d", with: "3")) {}
+                }
+
+                // Vertical with custom separator
+                Text("\(tr("space.vertical")):").font(.caption).foregroundStyle(.secondary)
+                Moin.Space(direction: .vertical, separator: { Moin.Divider() }) {
+                    Moin.Link(tr("space.link_n").replacingOccurrences(of: "%d", with: "1")) {}
+                    Moin.Link(tr("space.link_n").replacingOccurrences(of: "%d", with: "2")) {}
+                    Moin.Link(tr("space.link_n").replacingOccurrences(of: "%d", with: "3")) {}
+                }
+
+                // Custom text separator
+                Text("\(tr("space.custom_separator")):").font(.caption).foregroundStyle(.secondary)
+                Moin.Space(separator: { Text("|").foregroundStyle(.secondary) }) {
+                    Text(tr("space.nav_home"))
+                    Text(tr("space.nav_products"))
+                    Text(tr("space.nav_about"))
+                }
+
+                // Icon separator
+                Text("\(tr("space.icon_separator")):").font(.caption).foregroundStyle(.secondary)
+                Moin.Space(separator: {
+                    Image(systemName: "star.fill")
+                        .font(.system(size: 8))
+                        .foregroundStyle(.orange)
+                }) {
+                    Text("Swift")
+                    Text("SwiftUI")
+                    Text("MoinUI")
                 }
             }
         } code: {
             """
-            let links = ["\(tr("space.link_n").replacingOccurrences(of: "%d", with: "1"))", "\(tr("space.link_n").replacingOccurrences(of: "%d", with: "2"))", "\(tr("space.link_n").replacingOccurrences(of: "%d", with: "3"))"]
-            HStack(spacing: Moin.Constants.Spacing.sm) {
-                ForEach(Array(links.enumerated()), id: \\.offset) { index, link in
-                    if index > 0 {
-                        Divider()
-                            .frame(height: 14)
-                    }
-                    Moin.Link(link) {}
-                }
+            // \(tr("space.horizontal"))
+            Moin.Space(size: .small, separator: { Moin.Divider(orientation: .vertical) }) {
+                Moin.Link("\(tr("space.link_n").replacingOccurrences(of: "%d", with: "1"))") {}
+                Moin.Link("\(tr("space.link_n").replacingOccurrences(of: "%d", with: "2"))") {}
+                Moin.Link("\(tr("space.link_n").replacingOccurrences(of: "%d", with: "3"))") {}
+            }
+
+            // \(tr("space.vertical"))
+            Moin.Space(direction: .vertical, separator: { Moin.Divider() }) {
+                Moin.Link("\(tr("space.link_n").replacingOccurrences(of: "%d", with: "1"))") {}
+                Moin.Link("\(tr("space.link_n").replacingOccurrences(of: "%d", with: "2"))") {}
+                Moin.Link("\(tr("space.link_n").replacingOccurrences(of: "%d", with: "3"))") {}
+            }
+
+            // \(tr("space.custom_separator"))
+            Moin.Space(separator: { Text("|").foregroundStyle(.secondary) }) {
+                Text("\(tr("space.nav_home"))")
+                Text("\(tr("space.nav_products"))")
+                Text("\(tr("space.nav_about"))")
+            }
+
+            // \(tr("space.icon_separator"))
+            Moin.Space(separator: {
+                Image(systemName: "star.fill")
+                    .font(.system(size: 8))
+                    .foregroundStyle(.orange)
+            }) {
+                Text("Swift")
+                Text("SwiftUI")
+                Text("MoinUI")
             }
             """
         }

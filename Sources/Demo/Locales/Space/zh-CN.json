@@ -25,6 +25,11 @@
     "link_n": "链接 %d",
     "separator": "分隔符",
     "separator_desc": "使用分隔符隔开元素。",
+    "custom_separator": "自定义分隔符",
+    "nav_home": "首页",
+    "nav_products": "产品",
+    "nav_about": "关于",
+    "icon_separator": "图标分隔符",
     "prop": {
       "size": "尺寸",
       "custom_size": "自定义尺寸",

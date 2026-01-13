@@ -4,7 +4,7 @@ import SwiftUI
 
 public extension Moin {
     /// Space component for setting spacing between child elements
-    struct Space<Content: View>: View {
+    struct Space<Content: View, Separator: View>: View {
         @Environment(\.moinToken) private var token
         @Environment(\.moinSpaceToken) private var spaceToken
 
@@ -12,46 +12,43 @@ public extension Moin {
         private let direction: Moin.SpaceDirection
         private let alignment: Moin.SpaceAlignment
         private let wrap: Bool
+        private let separator: Separator?
         private let content: Content
 
-        /// Initialize Space component
+        /// Initialize Space component with separator
         /// - Parameters:
         ///   - size: Spacing size (.small, .medium, .large, .custom)
         ///   - direction: Layout direction (.horizontal, .vertical)
         ///   - alignment: Cross-axis alignment (.start, .end, .center)
         ///   - wrap: Enable auto wrap (horizontal only)
+        ///   - separator: Separator view between items
         ///   - content: Child views
         public init(
             size: Moin.SpaceSize = .medium,
             direction: Moin.SpaceDirection = .horizontal,
             alignment: Moin.SpaceAlignment = .center,
             wrap: Bool = false,
+            @ViewBuilder separator: () -> Separator,
             @ViewBuilder content: () -> Content
         ) {
             self.size = size
             self.direction = direction
             self.alignment = alignment
             self.wrap = wrap
+            self.separator = separator()
             self.content = content()
         }
 
         public var body: some View {
-            switch direction {
-            case .horizontal:
-                if wrap {
-                    FlowLayout(spacing: spacing, alignment: verticalAlignment) {
-                        content
-                    }
-                } else {
-                    HStack(alignment: verticalAlignment, spacing: spacing) {
-                        content
-                    }
-                }
-            case .vertical:
-                VStack(alignment: horizontalAlignment, spacing: spacing) {
-                    content
-                }
-            }
+            let layout = SpaceLayout(
+                direction: direction,
+                spacing: spacing,
+                verticalAlignment: verticalAlignment,
+                horizontalAlignment: horizontalAlignment,
+                wrap: wrap,
+                separator: separator
+            )
+            layout.body(content: content)
         }
 
         // MARK: - Private
@@ -82,6 +79,106 @@ public extension Moin {
             case .start: return .leading
             case .end: return .trailing
             case .center: return .center
+            }
+        }
+    }
+}
+
+// MARK: - Space without separator
+
+public extension Moin.Space where Separator == EmptyView {
+    /// Initialize Space component without separator
+    init(
+        size: Moin.SpaceSize = .medium,
+        direction: Moin.SpaceDirection = .horizontal,
+        alignment: Moin.SpaceAlignment = .center,
+        wrap: Bool = false,
+        @ViewBuilder content: () -> Content
+    ) {
+        self.size = size
+        self.direction = direction
+        self.alignment = alignment
+        self.wrap = wrap
+        self.separator = nil
+        self.content = content()
+    }
+}
+
+// MARK: - SpaceLayout
+
+private struct SpaceLayout<Separator: View> {
+    let direction: Moin.SpaceDirection
+    let spacing: CGFloat
+    let verticalAlignment: VerticalAlignment
+    let horizontalAlignment: HorizontalAlignment
+    let wrap: Bool
+    let separator: Separator?
+
+    @ViewBuilder
+    func body<Content: View>(content: Content) -> some View {
+        if separator != nil {
+            _VariadicView.Tree(SpaceLayoutRoot(layout: self)) {
+                content
+            }
+        } else {
+            // No separator, use simple layout
+            switch direction {
+            case .horizontal:
+                if wrap {
+                    FlowLayout(spacing: spacing, alignment: verticalAlignment) {
+                        content
+                    }
+                } else {
+                    HStack(alignment: verticalAlignment, spacing: spacing) {
+                        content
+                    }
+                }
+            case .vertical:
+                VStack(alignment: horizontalAlignment, spacing: spacing) {
+                    content
+                }
+            }
+        }
+    }
+}
+
+// MARK: - SpaceLayoutRoot
+
+private struct SpaceLayoutRoot<Separator: View>: _VariadicView.MultiViewRoot {
+    let layout: SpaceLayout<Separator>
+
+    @ViewBuilder
+    func body(children: _VariadicView.Children) -> some View {
+        let childArray = Array(children)
+        switch layout.direction {
+        case .horizontal:
+            if layout.wrap {
+                FlowLayout(spacing: layout.spacing, alignment: layout.verticalAlignment) {
+                    ForEach(childArray.indices, id: \.self) { index in
+                        childArray[index]
+                        if index < childArray.count - 1, let sep = layout.separator {
+                            sep
+                        }
+                    }
+                }
+            } else {
+                HStack(alignment: layout.verticalAlignment, spacing: layout.spacing) {
+                    ForEach(childArray.indices, id: \.self) { index in
+                        childArray[index]
+                        if index < childArray.count - 1, let sep = layout.separator {
+                            sep
+                        }
+                    }
+                }
+            }
+        case .vertical:
+            VStack(alignment: layout.horizontalAlignment, spacing: layout.spacing) {
+                ForEach(childArray.indices, id: \.self) { index in
+                    childArray[index]
+                    if index < childArray.count - 1, let sep = layout.separator {
+                        sep
+                    }
+                }
             }
         }
     }

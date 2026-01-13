@@ -25,6 +25,11 @@
     "link_n": "Link %d",
     "separator": "Separator",
     "separator_desc": "Use separator to split elements.",
+    "custom_separator": "Custom Separator",
+    "nav_home": "Home",
+    "nav_products": "Products",
+    "nav_about": "About",
+    "icon_separator": "Icon Separator",
     "prop": {
       "size": "Size",
       "custom_size": "Custom Size",
