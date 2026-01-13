@@ -36,15 +36,15 @@
     "custom_color": "自定义颜色"
   },
   "nav": {
-    "overview": "Overview 概览",
+    "overview": "概览",
     "introduction": "首页",
     "quick_start": "快速开始",
-    "theme": "Theme 主题",
-    "token": "Token 设计令牌",
-    "general": "General 通用",
-    "layout": "Layout 布局",
-    "components": "Components 组件",
-    "development": "Development 研发"
+    "theme": "主题",
+    "token": "Token 令牌",
+    "general": "通用",
+    "layout": "布局",
+    "components": "组件",
+    "development": "研发"
   },
   "component": {
     "button": "Button 按钮",
