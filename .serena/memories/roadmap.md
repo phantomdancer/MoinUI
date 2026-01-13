@@ -5,7 +5,7 @@
 | 组件 | 状态 |
 |------|------|
 | Button | ✅ |
-| Icon | 待实现 |
+| Icon | ⏭ 跳过（用原生 Image） |
 | Typography | ✅ |
 | Divider | ✅ |
 
@@ -31,4 +31,4 @@ Form, Table, Menu, DatePicker, Pagination
 
 ## 建议顺序
 
-Space → Divider → Typography → Icon → Input → Switch → Tag → Tooltip → Select → Alert → Card → Modal → Form → Table
+Space → Divider → Typography → ~~Icon~~ → Input → Switch → Tag → Tooltip → Select → Alert → Card → Modal → Form → Table
