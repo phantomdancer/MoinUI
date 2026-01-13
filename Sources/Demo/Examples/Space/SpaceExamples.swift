@@ -255,19 +255,19 @@ struct SpaceExamples: View {
             """
             Moin.Space {
                 Moin.SpaceCompact(direction: .vertical) {
-                    Moin.Button("Button 1", variant: .outlined) {}
-                    Moin.Button("Button 2", variant: .outlined) {}
-                    Moin.Button("Button 3", variant: .outlined) {}
+                    Moin.Button("\(tr("space.button_n").replacingOccurrences(of: "%d", with: "1"))", variant: .outlined) {}
+                    Moin.Button("\(tr("space.button_n").replacingOccurrences(of: "%d", with: "2"))", variant: .outlined) {}
+                    Moin.Button("\(tr("space.button_n").replacingOccurrences(of: "%d", with: "3"))", variant: .outlined) {}
                 }
                 Moin.SpaceCompact(direction: .vertical) {
-                    Moin.Button("Button 1", variant: .dashed) {}
-                    Moin.Button("Button 2", variant: .dashed) {}
-                    Moin.Button("Button 3", variant: .dashed) {}
+                    Moin.Button("\(tr("space.button_n").replacingOccurrences(of: "%d", with: "1"))", variant: .dashed) {}
+                    Moin.Button("\(tr("space.button_n").replacingOccurrences(of: "%d", with: "2"))", variant: .dashed) {}
+                    Moin.Button("\(tr("space.button_n").replacingOccurrences(of: "%d", with: "3"))", variant: .dashed) {}
                 }
                 Moin.SpaceCompact(direction: .vertical) {
-                    Moin.Button("Button 1", color: .primary) {}
-                    Moin.Button("Button 2", color: .primary) {}
-                    Moin.Button("Button 3", color: .primary) {}
+                    Moin.Button("\(tr("space.button_n").replacingOccurrences(of: "%d", with: "1"))", color: .primary) {}
+                    Moin.Button("\(tr("space.button_n").replacingOccurrences(of: "%d", with: "2"))", color: .primary) {}
+                    Moin.Button("\(tr("space.button_n").replacingOccurrences(of: "%d", with: "3"))", color: .primary) {}
                 }
             }
             """
