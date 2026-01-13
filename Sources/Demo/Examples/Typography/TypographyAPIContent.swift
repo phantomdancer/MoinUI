@@ -12,7 +12,7 @@ struct TypographyAPIContent: View {
                     .font(.title2)
                     .fontWeight(.semibold)
 
-                Text("Moin.Title")
+                Text("Moin.Typography.Title")
                     .font(.headline)
 
                 APITable(
@@ -24,8 +24,8 @@ struct TypographyAPIContent: View {
                     ),
                     rows: [
                         ("content", "String", "-", tr("api.typography.content")),
-                        ("level", "Moin.TitleLevel", ".h1", tr("api.typography.level")),
-                        ("type", "Moin.TypographyType", ".default", tr("api.typography.type")),
+                        ("level", "Moin.Typography.TitleLevel", ".h1", tr("api.typography.level")),
+                        ("type", "Moin.Typography.TextType", ".default", tr("api.typography.type")),
                         ("disabled", "Bool", "false", tr("api.typography.disabled")),
                         ("mark", "Bool", "false", tr("api.typography.mark")),
                         ("underline", "Bool", "false", tr("api.typography.underline")),
@@ -35,7 +35,7 @@ struct TypographyAPIContent: View {
                 )
 
                 // MARK: - Typography API
-                Text("Moin.Typography")
+                Text("Moin.Typography.Text")
                     .font(.headline)
                     .padding(.top, Moin.Constants.Spacing.md)
 
@@ -48,7 +48,7 @@ struct TypographyAPIContent: View {
                     ),
                     rows: [
                         ("content", "String", "-", tr("api.typography.content")),
-                        ("type", "Moin.TypographyType", ".default", tr("api.typography.type")),
+                        ("type", "Moin.Typography.TextType", ".default", tr("api.typography.type")),
                         ("disabled", "Bool", "false", tr("api.typography.disabled")),
                         ("mark", "Bool", "false", tr("api.typography.mark")),
                         ("underline", "Bool", "false", tr("api.typography.underline")),
@@ -61,7 +61,7 @@ struct TypographyAPIContent: View {
                 )
 
                 // MARK: - Paragraph API
-                Text("Moin.Paragraph")
+                Text("Moin.Typography.Paragraph")
                     .font(.headline)
                     .padding(.top, Moin.Constants.Spacing.md)
 
@@ -74,7 +74,7 @@ struct TypographyAPIContent: View {
                     ),
                     rows: [
                         ("content", "String", "-", tr("api.typography.content")),
-                        ("type", "Moin.TypographyType", ".default", tr("api.typography.type")),
+                        ("type", "Moin.Typography.TextType", ".default", tr("api.typography.type")),
                         ("disabled", "Bool", "false", tr("api.typography.disabled")),
                         ("mark", "Bool", "false", tr("api.typography.mark")),
                         ("underline", "Bool", "false", tr("api.typography.underline")),
@@ -85,7 +85,7 @@ struct TypographyAPIContent: View {
                 )
 
                 // MARK: - Link API
-                Text("Moin.Link")
+                Text("Moin.Typography.Link")
                     .font(.headline)
                     .padding(.top, Moin.Constants.Spacing.md)
 
@@ -104,7 +104,7 @@ struct TypographyAPIContent: View {
                 )
 
                 // MARK: - TitleLevel
-                Text("Moin.TitleLevel")
+                Text("Moin.Typography.TitleLevel")
                     .font(.headline)
                     .padding(.top, Moin.Constants.Spacing.md)
 
@@ -125,7 +125,7 @@ struct TypographyAPIContent: View {
                 )
 
                 // MARK: - TypographyType
-                Text("Moin.TypographyType")
+                Text("Moin.Typography.TextType")
                     .font(.headline)
                     .padding(.top, Moin.Constants.Spacing.md)
 

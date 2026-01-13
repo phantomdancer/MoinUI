@@ -144,7 +144,7 @@ struct DividerExamples: View {
                     HStack(spacing: 4) {
                         Image(systemName: "link")
                             .foregroundStyle(Color.accentColor)
-                        Moin.Link(tr("divider.label.more")) {}
+                        Moin.Typography.Link(tr("divider.label.more")) {}
                     }
                 }
 
@@ -173,7 +173,7 @@ struct DividerExamples: View {
                 HStack(spacing: 4) {
                     Image(systemName: "link")
                         .foregroundStyle(Color.accentColor)
-                    Moin.Link("\(tr("divider.label.more"))") {}
+                    Moin.Typography.Link("\(tr("divider.label.more"))") {}
                 }
             }
 

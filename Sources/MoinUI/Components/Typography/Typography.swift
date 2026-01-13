@@ -5,7 +5,7 @@ private let colorMarkBg = Color(hex: 0xFFE58F)
 
 // MARK: - Ellipsis Configuration
 
-public extension Moin {
+public extension Moin.Typography {
     /// 省略号配置
     struct EllipsisConfig {
         /// 最大行数
@@ -68,14 +68,14 @@ public extension Moin {
     }
 }
 
-public extension Moin {
+public extension Moin.Typography {
     /// Title component for headings (h1-h5)
     struct Title: View {
         @Environment(\.moinToken) private var token
 
         private let content: String
         private let level: TitleLevel
-        private let type: TypographyType
+        private let type: TextType
         private let disabled: Bool
         private let mark: Bool
         private let underline: Bool
@@ -85,7 +85,7 @@ public extension Moin {
         public init(
             _ content: String,
             level: TitleLevel = .h1,
-            type: TypographyType = .default,
+            type: TextType = .default,
             disabled: Bool = false,
             mark: Bool = false,
             underline: Bool = false,
@@ -110,10 +110,10 @@ public extension Moin {
         }
 
         private var styledText: some View {
-            var text = Text(content)
+            var text = SwiftUI.Text(content)
 
             if code {
-                text = Text(content).font(.system(size: fontSize * 0.9, design: .monospaced))
+                text = SwiftUI.Text(content).font(.system(size: fontSize * 0.9, design: .monospaced))
             }
             if underline { text = text.underline() }
             if delete { text = text.strikethrough() }
@@ -155,13 +155,13 @@ public extension Moin {
     }
 }
 
-public extension Moin {
+public extension Moin.Typography {
     /// Text component for inline text
-    struct Typography: View {
+    struct Text: View {
         @Environment(\.moinToken) private var token
 
         private let content: String
-        private let type: TypographyType
+        private let type: TextType
         private let disabled: Bool
         private let mark: Bool
         private let underline: Bool
@@ -173,7 +173,7 @@ public extension Moin {
 
         public init(
             _ content: String,
-            type: TypographyType = .default,
+            type: TextType = .default,
             disabled: Bool = false,
             mark: Bool = false,
             underline: Bool = false,
@@ -213,7 +213,7 @@ public extension Moin {
         }
 
         private var normalStyle: some View {
-            var text = Text(content)
+            var text = SwiftUI.Text(content)
             if underline { text = text.underline() }
             if delete { text = text.strikethrough() }
             if italic { text = text.italic() }
@@ -223,7 +223,7 @@ public extension Moin {
         }
 
         private var codeStyle: some View {
-            Text(content)
+            SwiftUI.Text(content)
                 .font(.system(size: token.fontSize * 0.9, design: .monospaced))
                 .padding(.horizontal, token.paddingXXS)
                 .background(token.colorFillTertiary)
@@ -231,7 +231,7 @@ public extension Moin {
         }
 
         private var keyboardStyle: some View {
-            Text(content)
+            SwiftUI.Text(content)
                 .font(.system(size: token.fontSizeSM, design: .monospaced))
                 .padding(.horizontal, token.paddingXS)
                 .padding(.vertical, token.paddingXXS)
@@ -263,13 +263,13 @@ public extension Moin {
     }
 }
 
-public extension Moin {
+public extension Moin.Typography {
     /// Paragraph component for block-level text with ellipsis support
     struct Paragraph: View {
         @Environment(\.moinToken) private var token
 
         private let content: String
-        private let type: TypographyType
+        private let type: TextType
         private let disabled: Bool
         private let mark: Bool
         private let underline: Bool
@@ -286,7 +286,7 @@ public extension Moin {
 
         public init(
             _ content: String,
-            type: TypographyType = .default,
+            type: TextType = .default,
             disabled: Bool = false,
             mark: Bool = false,
             underline: Bool = false,
@@ -360,14 +360,14 @@ public extension Moin {
         /// 展开状态视图
         private func expandedTextView(_ config: EllipsisConfig) -> some View {
             (
-                Text(content)
+                SwiftUI.Text(content)
                     .font(textFont)
                     .foregroundColor(textColor)
                 + (config.collapsible
-                    ? Text(" \(config.collapseSymbol)")
+                    ? SwiftUI.Text(" \(config.collapseSymbol)")
                         .font(textFont)
                         .foregroundColor(token.colorLink)
-                    : Text(""))
+                    : SwiftUI.Text(""))
             )
             .lineSpacing((token.lineHeight - token.fontSize) / 2)
             .frame(maxWidth: .infinity, alignment: .leading)
@@ -402,7 +402,7 @@ public extension Moin {
                 )
                 // 背景层2：测量按钮尺寸
                 .background(
-                    Text(config.expandSymbol)
+                    SwiftUI.Text(config.expandSymbol)
                         .font(textFont)
                         .hidden()
                         .readSize { moreTextSize = $0 }
@@ -419,7 +419,7 @@ public extension Moin {
                 // 覆盖层：展开链接
                 .overlay(alignment: .trailingLastTextBaseline) {
                     if isTruncated {
-                        Text(config.expandSymbol)
+                        SwiftUI.Text(config.expandSymbol)
                             .font(textFont)
                             .foregroundColor(token.colorLink)
                             .onTapGesture {
@@ -449,7 +449,7 @@ public extension Moin {
         }
 
         private var styledText: some View {
-            var text = Text(content)
+            var text = SwiftUI.Text(content)
             if underline { text = text.underline() }
             if delete { text = text.strikethrough() }
             if italic { text = text.italic() }
@@ -478,7 +478,7 @@ public extension Moin {
     }
 }
 
-public extension Moin {
+public extension Moin.Typography {
     /// Link component for clickable text
     struct Link: View {
         @Environment(\.moinToken) private var token
@@ -500,7 +500,7 @@ public extension Moin {
         }
 
         public var body: some View {
-            Text(content)
+            SwiftUI.Text(content)
                 .font(.system(size: token.fontSize))
                 .foregroundStyle(linkColor)
                 .underline(isHovered && !disabled)

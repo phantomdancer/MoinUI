@@ -80,20 +80,20 @@ struct TypographyExamples: View {
             description: tr("typography.title_desc")
         ) {
             VStack(alignment: .leading, spacing: Moin.Constants.Spacing.sm) {
-                Moin.Title(tr("typography.example.h1"), level: .h1)
-                Moin.Title(tr("typography.example.h2"), level: .h2)
-                Moin.Title(tr("typography.example.h3"), level: .h3)
-                Moin.Title(tr("typography.example.h4"), level: .h4)
-                Moin.Title(tr("typography.example.h5"), level: .h5)
+                Moin.Typography.Title(tr("typography.example.h1"), level: .h1)
+                Moin.Typography.Title(tr("typography.example.h2"), level: .h2)
+                Moin.Typography.Title(tr("typography.example.h3"), level: .h3)
+                Moin.Typography.Title(tr("typography.example.h4"), level: .h4)
+                Moin.Typography.Title(tr("typography.example.h5"), level: .h5)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
         } code: {
             """
-            Moin.Title("\(tr("typography.example.h1"))", level: .h1)
-            Moin.Title("\(tr("typography.example.h2"))", level: .h2)
-            Moin.Title("\(tr("typography.example.h3"))", level: .h3)
-            Moin.Title("\(tr("typography.example.h4"))", level: .h4)
-            Moin.Title("\(tr("typography.example.h5"))", level: .h5)
+            Moin.Typography.Title("\(tr("typography.example.h1"))", level: .h1)
+            Moin.Typography.Title("\(tr("typography.example.h2"))", level: .h2)
+            Moin.Typography.Title("\(tr("typography.example.h3"))", level: .h3)
+            Moin.Typography.Title("\(tr("typography.example.h4"))", level: .h4)
+            Moin.Typography.Title("\(tr("typography.example.h5"))", level: .h5)
             """
         }
     }
@@ -104,16 +104,16 @@ struct TypographyExamples: View {
             description: tr("typography.text_desc")
         ) {
             VStack(alignment: .leading, spacing: Moin.Constants.Spacing.md) {
-                Moin.Typography(tr("typography.example.default"))
-                Moin.Typography(tr("typography.example.code"), code: true)
-                Moin.Typography(tr("typography.example.keyboard"), keyboard: true)
+                Moin.Typography.Text(tr("typography.example.default"))
+                Moin.Typography.Text(tr("typography.example.code"), code: true)
+                Moin.Typography.Text(tr("typography.example.keyboard"), keyboard: true)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
         } code: {
             """
-            Moin.Typography("\(tr("typography.example.default"))")
-            Moin.Typography("\(tr("typography.example.code"))", code: true)
-            Moin.Typography("\(tr("typography.example.keyboard"))", keyboard: true)
+            Moin.Typography.Text("\(tr("typography.example.default"))")
+            Moin.Typography.Text("\(tr("typography.example.code"))", code: true)
+            Moin.Typography.Text("\(tr("typography.example.keyboard"))", keyboard: true)
             """
         }
     }
@@ -124,13 +124,13 @@ struct TypographyExamples: View {
             description: tr("typography.paragraph_desc")
         ) {
             VStack(alignment: .leading, spacing: 0) {
-                Moin.Paragraph(tr("typography.lorem_long"))
-                Moin.Paragraph(tr("typography.lorem_short"))
+                Moin.Typography.Paragraph(tr("typography.lorem_long"))
+                Moin.Typography.Paragraph(tr("typography.lorem_short"))
             }
         } code: {
             """
-            Moin.Paragraph("\(tr("typography.lorem_long"))")
-            Moin.Paragraph("\(tr("typography.lorem_short"))")
+            Moin.Typography.Paragraph("\(tr("typography.lorem_long"))")
+            Moin.Typography.Paragraph("\(tr("typography.lorem_short"))")
             """
         }
     }
@@ -143,8 +143,8 @@ struct TypographyExamples: View {
             VStack(alignment: .leading, spacing: Moin.Constants.Spacing.lg) {
                 // 单行省略
                 VStack(alignment: .leading, spacing: Moin.Constants.Spacing.xs) {
-                    Moin.Typography(tr("typography.ellipsis_single"), type: .secondary)
-                    Moin.Paragraph(
+                    Moin.Typography.Text(tr("typography.ellipsis_single"), type: .secondary)
+                    Moin.Typography.Paragraph(
                         tr("typography.lorem_ellipsis"),
                         ellipsis: .rows(1)
                     )
@@ -152,8 +152,8 @@ struct TypographyExamples: View {
 
                 // 多行省略
                 VStack(alignment: .leading, spacing: Moin.Constants.Spacing.xs) {
-                    Moin.Typography(tr("typography.ellipsis_multi"), type: .secondary)
-                    Moin.Paragraph(
+                    Moin.Typography.Text(tr("typography.ellipsis_multi"), type: .secondary)
+                    Moin.Typography.Paragraph(
                         tr("typography.lorem_ellipsis"),
                         ellipsis: .rows(2)
                     )
@@ -161,8 +161,8 @@ struct TypographyExamples: View {
 
                 // 可展开
                 VStack(alignment: .leading, spacing: Moin.Constants.Spacing.xs) {
-                    Moin.Typography(tr("typography.ellipsis_expandable"), type: .secondary)
-                    Moin.Paragraph(
+                    Moin.Typography.Text(tr("typography.ellipsis_expandable"), type: .secondary)
+                    Moin.Typography.Paragraph(
                         tr("typography.lorem_ellipsis"),
                         ellipsis: .expandable(
                             rows: 2,
@@ -175,31 +175,31 @@ struct TypographyExamples: View {
 
                 // 带 tooltip
                 VStack(alignment: .leading, spacing: Moin.Constants.Spacing.xs) {
-                    Moin.Typography(tr("typography.ellipsis_tooltip"), type: .secondary)
-                    Moin.Paragraph(
+                    Moin.Typography.Text(tr("typography.ellipsis_tooltip"), type: .secondary)
+                    Moin.Typography.Paragraph(
                         tr("typography.lorem_ellipsis"),
-                        ellipsis: Moin.EllipsisConfig(rows: 1, tooltip: true)
+                        ellipsis: Moin.Typography.EllipsisConfig(rows: 1, tooltip: true)
                     )
                 }
             }
         } code: {
             """
             // \(tr("typography.ellipsis_single"))
-            Moin.Paragraph(text, ellipsis: .rows(1))
+            Moin.Typography.Paragraph(text, ellipsis: .rows(1))
 
             // \(tr("typography.ellipsis_multi"))
-            Moin.Paragraph(text, ellipsis: .rows(2))
+            Moin.Typography.Paragraph(text, ellipsis: .rows(2))
 
             // \(tr("typography.ellipsis_expandable"))
-            Moin.Paragraph(
+            Moin.Typography.Paragraph(
                 text,
                 ellipsis: .expandable(rows: 2, collapsible: true)
             )
 
             // \(tr("typography.ellipsis_tooltip"))
-            Moin.Paragraph(
+            Moin.Typography.Paragraph(
                 text,
-                ellipsis: Moin.EllipsisConfig(rows: 1, tooltip: true)
+                ellipsis: Moin.Typography.EllipsisConfig(rows: 1, tooltip: true)
             )
             """
         }
@@ -211,16 +211,16 @@ struct TypographyExamples: View {
             description: tr("typography.link_desc")
         ) {
             VStack(alignment: .leading, spacing: Moin.Constants.Spacing.md) {
-                Moin.Link(tr("typography.example.link")) {
+                Moin.Typography.Link(tr("typography.example.link")) {
                     print("Link clicked")
                 }
-                Moin.Link(tr("typography.example.link_disabled"), disabled: true) {}
+                Moin.Typography.Link(tr("typography.example.link_disabled"), disabled: true) {}
             }
             .frame(maxWidth: .infinity, alignment: .leading)
         } code: {
             """
-            Moin.Link("\(tr("typography.example.link"))") { print("clicked") }
-            Moin.Link("\(tr("typography.example.link_disabled"))", disabled: true) {}
+            Moin.Typography.Link("\(tr("typography.example.link"))") { print("clicked") }
+            Moin.Typography.Link("\(tr("typography.example.link_disabled"))", disabled: true) {}
             """
         }
     }
@@ -231,22 +231,22 @@ struct TypographyExamples: View {
             description: tr("typography.type_desc")
         ) {
             VStack(alignment: .leading, spacing: Moin.Constants.Spacing.md) {
-                Moin.Typography(tr("typography.example.type_default"), type: .default)
-                Moin.Typography(tr("typography.example.type_secondary"), type: .secondary)
-                Moin.Typography(tr("typography.example.type_success"), type: .success)
-                Moin.Typography(tr("typography.example.type_warning"), type: .warning)
-                Moin.Typography(tr("typography.example.type_danger"), type: .danger)
-                Moin.Typography(tr("typography.example.type_disabled"), disabled: true)
+                Moin.Typography.Text(tr("typography.example.type_default"), type: .default)
+                Moin.Typography.Text(tr("typography.example.type_secondary"), type: .secondary)
+                Moin.Typography.Text(tr("typography.example.type_success"), type: .success)
+                Moin.Typography.Text(tr("typography.example.type_warning"), type: .warning)
+                Moin.Typography.Text(tr("typography.example.type_danger"), type: .danger)
+                Moin.Typography.Text(tr("typography.example.type_disabled"), disabled: true)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
         } code: {
             """
-            Moin.Typography("\(tr("typography.example.type_default"))", type: .default)
-            Moin.Typography("\(tr("typography.example.type_secondary"))", type: .secondary)
-            Moin.Typography("\(tr("typography.example.type_success"))", type: .success)
-            Moin.Typography("\(tr("typography.example.type_warning"))", type: .warning)
-            Moin.Typography("\(tr("typography.example.type_danger"))", type: .danger)
-            Moin.Typography("\(tr("typography.example.type_disabled"))", disabled: true)
+            Moin.Typography.Text("\(tr("typography.example.type_default"))", type: .default)
+            Moin.Typography.Text("\(tr("typography.example.type_secondary"))", type: .secondary)
+            Moin.Typography.Text("\(tr("typography.example.type_success"))", type: .success)
+            Moin.Typography.Text("\(tr("typography.example.type_warning"))", type: .warning)
+            Moin.Typography.Text("\(tr("typography.example.type_danger"))", type: .danger)
+            Moin.Typography.Text("\(tr("typography.example.type_disabled"))", disabled: true)
             """
         }
     }
@@ -257,20 +257,20 @@ struct TypographyExamples: View {
             description: tr("typography.decoration_desc")
         ) {
             VStack(alignment: .leading, spacing: Moin.Constants.Spacing.md) {
-                Moin.Typography(tr("typography.example.strong"), strong: true)
-                Moin.Typography(tr("typography.example.italic"), italic: true)
-                Moin.Typography(tr("typography.example.underline"), underline: true)
-                Moin.Typography(tr("typography.example.delete"), delete: true)
-                Moin.Typography(tr("typography.example.mark"), mark: true)
+                Moin.Typography.Text(tr("typography.example.strong"), strong: true)
+                Moin.Typography.Text(tr("typography.example.italic"), italic: true)
+                Moin.Typography.Text(tr("typography.example.underline"), underline: true)
+                Moin.Typography.Text(tr("typography.example.delete"), delete: true)
+                Moin.Typography.Text(tr("typography.example.mark"), mark: true)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
         } code: {
             """
-            Moin.Typography("\(tr("typography.example.strong"))", strong: true)
-            Moin.Typography("\(tr("typography.example.italic"))", italic: true)
-            Moin.Typography("\(tr("typography.example.underline"))", underline: true)
-            Moin.Typography("\(tr("typography.example.delete"))", delete: true)
-            Moin.Typography("\(tr("typography.example.mark"))", mark: true)
+            Moin.Typography.Text("\(tr("typography.example.strong"))", strong: true)
+            Moin.Typography.Text("\(tr("typography.example.italic"))", italic: true)
+            Moin.Typography.Text("\(tr("typography.example.underline"))", underline: true)
+            Moin.Typography.Text("\(tr("typography.example.delete"))", delete: true)
+            Moin.Typography.Text("\(tr("typography.example.mark"))", mark: true)
             """
         }
     }

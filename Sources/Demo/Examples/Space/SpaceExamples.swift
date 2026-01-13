@@ -283,17 +283,17 @@ struct SpaceExamples: View {
                 // Horizontal with divider
                 Text("\(tr("space.horizontal")):").font(.caption).foregroundStyle(.secondary)
                 Moin.Space(size: .small, separator: { Moin.Divider(orientation: .vertical) }) {
-                    Moin.Link(tr("space.link_n").replacingOccurrences(of: "%d", with: "1")) {}
-                    Moin.Link(tr("space.link_n").replacingOccurrences(of: "%d", with: "2")) {}
-                    Moin.Link(tr("space.link_n").replacingOccurrences(of: "%d", with: "3")) {}
+                    Moin.Typography.Link(tr("space.link_n").replacingOccurrences(of: "%d", with: "1")) {}
+                    Moin.Typography.Link(tr("space.link_n").replacingOccurrences(of: "%d", with: "2")) {}
+                    Moin.Typography.Link(tr("space.link_n").replacingOccurrences(of: "%d", with: "3")) {}
                 }
 
                 // Vertical with custom separator
                 Text("\(tr("space.vertical")):").font(.caption).foregroundStyle(.secondary)
                 Moin.Space(direction: .vertical, separator: { Moin.Divider() }) {
-                    Moin.Link(tr("space.link_n").replacingOccurrences(of: "%d", with: "1")) {}
-                    Moin.Link(tr("space.link_n").replacingOccurrences(of: "%d", with: "2")) {}
-                    Moin.Link(tr("space.link_n").replacingOccurrences(of: "%d", with: "3")) {}
+                    Moin.Typography.Link(tr("space.link_n").replacingOccurrences(of: "%d", with: "1")) {}
+                    Moin.Typography.Link(tr("space.link_n").replacingOccurrences(of: "%d", with: "2")) {}
+                    Moin.Typography.Link(tr("space.link_n").replacingOccurrences(of: "%d", with: "3")) {}
                 }
 
                 // Custom text separator
@@ -320,16 +320,16 @@ struct SpaceExamples: View {
             """
             // \(tr("space.horizontal"))
             Moin.Space(size: .small, separator: { Moin.Divider(orientation: .vertical) }) {
-                Moin.Link("\(tr("space.link_n").replacingOccurrences(of: "%d", with: "1"))") {}
-                Moin.Link("\(tr("space.link_n").replacingOccurrences(of: "%d", with: "2"))") {}
-                Moin.Link("\(tr("space.link_n").replacingOccurrences(of: "%d", with: "3"))") {}
+                Moin.Typography.Link("\(tr("space.link_n").replacingOccurrences(of: "%d", with: "1"))") {}
+                Moin.Typography.Link("\(tr("space.link_n").replacingOccurrences(of: "%d", with: "2"))") {}
+                Moin.Typography.Link("\(tr("space.link_n").replacingOccurrences(of: "%d", with: "3"))") {}
             }
 
             // \(tr("space.vertical"))
             Moin.Space(direction: .vertical, separator: { Moin.Divider() }) {
-                Moin.Link("\(tr("space.link_n").replacingOccurrences(of: "%d", with: "1"))") {}
-                Moin.Link("\(tr("space.link_n").replacingOccurrences(of: "%d", with: "2"))") {}
-                Moin.Link("\(tr("space.link_n").replacingOccurrences(of: "%d", with: "3"))") {}
+                Moin.Typography.Link("\(tr("space.link_n").replacingOccurrences(of: "%d", with: "1"))") {}
+                Moin.Typography.Link("\(tr("space.link_n").replacingOccurrences(of: "%d", with: "2"))") {}
+                Moin.Typography.Link("\(tr("space.link_n").replacingOccurrences(of: "%d", with: "3"))") {}
             }
 
             // \(tr("space.custom_separator"))

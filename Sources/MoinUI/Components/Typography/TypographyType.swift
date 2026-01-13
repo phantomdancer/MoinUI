@@ -1,8 +1,13 @@
 import SwiftUI
 
 public extension Moin {
+    /// Typography 命名空间
+    enum Typography {}
+}
+
+public extension Moin.Typography {
     /// Typography semantic color type
-    enum TypographyType: String, CaseIterable {
+    enum TextType: String, CaseIterable {
         case `default`
         case secondary
         case success

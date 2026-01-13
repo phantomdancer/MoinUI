@@ -4,8 +4,8 @@ import MoinUI
 /// Typography Playground State
 class TypographyPlaygroundState: ObservableObject {
     // Title settings
-    @Published var titleLevel: Moin.TitleLevel = .h1
-    @Published var titleType: Moin.TypographyType = .default
+    @Published var titleLevel: Moin.Typography.TitleLevel = .h1
+    @Published var titleType: Moin.Typography.TextType = .default
     @Published var titleDisabled = false
     @Published var titleMark = false
     @Published var titleUnderline = false
@@ -13,7 +13,7 @@ class TypographyPlaygroundState: ObservableObject {
     @Published var titleCode = false
 
     // Text settings
-    @Published var textType: Moin.TypographyType = .default
+    @Published var textType: Moin.Typography.TextType = .default
     @Published var textDisabled = false
     @Published var textMark = false
     @Published var textUnderline = false
@@ -40,7 +40,7 @@ class TypographyPlaygroundState: ObservableObject {
             if titleUnderline { params.append("underline: true") }
             if titleDelete { params.append("delete: true") }
             if titleCode { params.append("code: true") }
-            return "Moin.Title(\(params.joined(separator: ", ")))"
+            return "Moin.Typography.Title(\(params.joined(separator: ", ")))"
         case .text:
             var params: [String] = ["\"\(previewText)\""]
             if textType != .default { params.append("type: .\(textType)") }
@@ -52,7 +52,7 @@ class TypographyPlaygroundState: ObservableObject {
             if textItalic { params.append("italic: true") }
             if textCode { params.append("code: true") }
             if textKeyboard { params.append("keyboard: true") }
-            return "Moin.Typography(\(params.joined(separator: ", ")))"
+            return "Moin.Typography.Text(\(params.joined(separator: ", ")))"
         }
     }
 }
@@ -102,7 +102,7 @@ struct TypographyPlayground: View {
             Group {
                 switch state.previewMode {
                 case .title:
-                    Moin.Title(
+                    Moin.Typography.Title(
                         tr("typography.playground.preview_title"),
                         level: state.titleLevel,
                         type: state.titleType,
@@ -113,7 +113,7 @@ struct TypographyPlayground: View {
                         code: state.titleCode
                     )
                 case .text:
-                    Moin.Typography(
+                    Moin.Typography.Text(
                         tr("typography.playground.preview_text"),
                         type: state.textType,
                         disabled: state.textDisabled,
@@ -171,15 +171,15 @@ struct TypographyPlayground: View {
         VStack(spacing: Moin.Constants.Spacing.sm) {
             SelectPropControl(
                 label: tr("typography.playground.level"),
-                propName: "level: Moin.TitleLevel",
-                options: Moin.TitleLevel.allCases,
+                propName: "level: Moin.Typography.TitleLevel",
+                options: Moin.Typography.TitleLevel.allCases,
                 value: $state.titleLevel
             )
 
             SelectPropControl(
                 label: tr("typography.playground.type"),
-                propName: "type: Moin.TypographyType",
-                options: Moin.TypographyType.allCases,
+                propName: "type: Moin.Typography.TextType",
+                options: Moin.Typography.TextType.allCases,
                 value: $state.titleType
             )
 
@@ -195,8 +195,8 @@ struct TypographyPlayground: View {
         VStack(spacing: Moin.Constants.Spacing.sm) {
             SelectPropControl(
                 label: tr("typography.playground.type"),
-                propName: "type: Moin.TypographyType",
-                options: Moin.TypographyType.allCases,
+                propName: "type: Moin.Typography.TextType",
+                options: Moin.Typography.TextType.allCases,
                 value: $state.textType
             )
 
@@ -238,11 +238,11 @@ struct TypographyPlayground: View {
     }
 }
 
-extension Moin.TitleLevel: CustomStringConvertible {
+extension Moin.Typography.TitleLevel: CustomStringConvertible {
     public var description: String { "h\(rawValue)" }
 }
 
-extension Moin.TypographyType: CustomStringConvertible {
+extension Moin.Typography.TextType: CustomStringConvertible {
     public var description: String { rawValue }
 }
 
