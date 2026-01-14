@@ -104,7 +104,13 @@
       "divider_colors": "分割线颜色",
       "divider_sizes": "分割线尺寸",
       "code_comment": "配置 SeedToken",
-      "default_buttons": "默认色按钮"
+      "default_buttons": "默认色按钮",
+      "code_seed_config": "Seed Token 配置",
+      "code_global_readonly": "Global Token (只读，由 Seed 派生)",
+      "code_button_config": "Button Token 配置",
+      "code_tag_config": "Tag Token 配置",
+      "code_space_config": "Space Token 配置",
+      "code_divider_config": "Divider Token 配置"
     }
   }
 }

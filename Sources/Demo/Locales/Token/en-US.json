@@ -104,7 +104,13 @@
       "divider_colors": "Divider Colors",
       "divider_sizes": "Divider Sizes",
       "code_comment": "Configure SeedToken",
-      "default_buttons": "Default Buttons"
+      "default_buttons": "Default Buttons",
+      "code_seed_config": "Seed Token Configuration",
+      "code_global_readonly": "Global Token (Read-only, derived from Seed)",
+      "code_button_config": "Button Token Configuration",
+      "code_tag_config": "Tag Token Configuration",
+      "code_space_config": "Space Token Configuration",
+      "code_divider_config": "Divider Token Configuration"
     }
   }
 }

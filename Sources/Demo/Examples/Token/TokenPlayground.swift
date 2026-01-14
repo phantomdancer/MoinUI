@@ -50,14 +50,13 @@ struct TokenPlayground: View {
 
             // 中间：Token 编辑面板内容
             panelContent
-                .frame(width: 320)
+                .frame(width: 260)
 
             Divider()
 
             // 右侧：竖排 Tab 导航
             panelTabBar
         }
-        .padding(Moin.Constants.Spacing.xl)
         .background(Color(nsColor: .controlBackgroundColor))
     }
 
@@ -248,30 +247,135 @@ struct TokenPlayground: View {
                 Spacer()
             }
 
-            ScrollView(.horizontal, showsIndicators: false) {
-                HighlightedCodeView(code: generateCode(), fontSize: 12)
+            ScrollView([.horizontal, .vertical], showsIndicators: true) {
+                VStack(alignment: .leading, spacing: 0) {
+                    HighlightedCodeView(code: generateCode(), fontSize: 12)
+                        .fixedSize(horizontal: true, vertical: true)
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+                .padding(Moin.Constants.Spacing.sm)
             }
-            .frame(maxWidth: .infinity, maxHeight: 100, alignment: .topLeading)
+            .frame(minHeight: 150, maxHeight: 200, alignment: .topLeading)
+            .background(config.isDarkMode ? Color(white: 0.08) : Color(white: 0.96))
+            .cornerRadius(Moin.Constants.Radius.sm)
+            .id("code-\(selectedPanel.rawValue)")
         }
         .padding(Moin.Constants.Spacing.md)
-        .background(config.isDarkMode ? Color(white: 0.08) : Color(white: 0.96))
     }
 
     private func generateCode() -> String {
-        """
-        // \(tr("token.playground.code_comment"))
-        let config = Moin.ConfigProvider.shared
-        config.setPrimaryColor(Color(hex: "\(config.seed.colorPrimary.hexString)"))
-        config.configureSeed { seed in
-            seed.colorSuccess = Color(hex: "\(config.seed.colorSuccess.hexString)")
-            seed.colorWarning = Color(hex: "\(config.seed.colorWarning.hexString)")
-            seed.colorError = Color(hex: "\(config.seed.colorError.hexString)")
-            seed.colorInfo = Color(hex: "\(config.seed.colorInfo.hexString)")
-            seed.borderRadius = \(Int(config.seed.borderRadius))
-            seed.fontSize = \(Int(config.seed.fontSize))
-            seed.controlHeight = \(Int(config.seed.controlHeight))
+        switch selectedPanel {
+        case .seed:
+            return """
+// \(tr("token.playground.code_seed_config"))
+let config = Moin.ConfigProvider.shared
+config.configureSeed { seed in
+    // \(tr("token.playground.brand_colors"))
+    seed.colorPrimary = Color(hex: "\(config.seed.colorPrimary.hexString)")
+    seed.colorSuccess = Color(hex: "\(config.seed.colorSuccess.hexString)")
+    seed.colorWarning = Color(hex: "\(config.seed.colorWarning.hexString)")
+    seed.colorError = Color(hex: "\(config.seed.colorError.hexString)")
+    seed.colorInfo = Color(hex: "\(config.seed.colorInfo.hexString)")
+    seed.colorLink = Color(hex: "\(config.seed.colorLink.hexString)")
+    // \(tr("token.playground.base_colors"))
+    seed.colorTextBase = Color(hex: "\(config.seed.colorTextBase.hexString)")
+    seed.colorBgBase = Color(hex: "\(config.seed.colorBgBase.hexString)")
+    // \(tr("token.playground.font"))
+    seed.fontSize = \(Int(config.seed.fontSize))
+    // \(tr("token.playground.radius"))
+    seed.borderRadius = \(Int(config.seed.borderRadius))
+    // \(tr("token.playground.size"))
+    seed.controlHeight = \(Int(config.seed.controlHeight))
+    seed.sizeUnit = \(Int(config.seed.sizeUnit))
+    // \(tr("token.playground.line"))
+    seed.lineWidth = \(Int(config.seed.lineWidth))
+}
+"""
+        case .global:
+            return """
+// \(tr("token.playground.code_global_readonly"))
+// \(tr("token.playground.derived_colors"))
+token.colorPrimaryHover    // \(config.token.colorPrimaryHover.hexString)
+token.colorPrimaryActive   // \(config.token.colorPrimaryActive.hexString)
+token.colorPrimaryBg       // \(config.token.colorPrimaryBg.hexString)
+token.colorPrimaryBorder   // \(config.token.colorPrimaryBorder.hexString)
+// \(tr("token.playground.text_colors"))
+token.colorText            // \(config.token.colorText.hexString)
+token.colorTextSecondary   // \(config.token.colorTextSecondary.hexString)
+token.colorTextTertiary    // \(config.token.colorTextTertiary.hexString)
+// \(tr("token.playground.bg_colors"))
+token.colorBgContainer     // \(config.token.colorBgContainer.hexString)
+token.colorBgElevated      // \(config.token.colorBgElevated.hexString)
+token.colorBgLayout        // \(config.token.colorBgLayout.hexString)
+// \(tr("token.playground.border_colors"))
+token.colorBorder          // \(config.token.colorBorder.hexString)
+token.colorBorderSecondary // \(config.token.colorBorderSecondary.hexString)
+// \(tr("token.playground.derived_sizes"))
+token.fontSizeSM = \(Int(config.token.fontSizeSM))
+token.fontSizeLG = \(Int(config.token.fontSizeLG))
+token.controlHeightSM = \(Int(config.token.controlHeightSM))
+token.controlHeightLG = \(Int(config.token.controlHeightLG))
+token.borderRadiusSM = \(Int(config.token.borderRadiusSM))
+token.borderRadiusLG = \(Int(config.token.borderRadiusLG))
+// \(tr("token.playground.spacing_values"))
+token.paddingXS = \(Int(config.token.paddingXS))
+token.paddingSM = \(Int(config.token.paddingSM))
+token.padding = \(Int(config.token.padding))
+token.paddingMD = \(Int(config.token.paddingMD))
+token.paddingLG = \(Int(config.token.paddingLG))
+"""
+        case .button:
+            return """
+// \(tr("token.playground.code_button_config"))
+config.components.button.defaultColor = Color(hex: "\(config.components.button.defaultColor.hexString)")
+config.components.button.defaultBg = Color(hex: "\(config.components.button.defaultBg.hexString)")
+config.components.button.defaultBorderColor = Color(hex: "\(config.components.button.defaultBorderColor.hexString)")
+config.components.button.primaryColor = Color(hex: "\(config.components.button.primaryColor.hexString)")
+config.components.button.dangerColor = Color(hex: "\(config.components.button.dangerColor.hexString)")
+// \(tr("token.playground.button_sizes"))
+config.components.button.paddingInline = \(Int(config.components.button.paddingInline))
+config.components.button.paddingInlineLG = \(Int(config.components.button.paddingInlineLG))
+config.components.button.paddingInlineSM = \(Int(config.components.button.paddingInlineSM))
+config.components.button.paddingBlock = \(Int(config.components.button.paddingBlock))
+config.components.button.iconGap = \(Int(config.components.button.iconGap))
+// \(tr("token.playground.button_font"))
+config.components.button.contentFontSize = \(Int(config.components.button.contentFontSize))
+config.components.button.contentFontSizeLG = \(Int(config.components.button.contentFontSizeLG))
+config.components.button.contentFontSizeSM = \(Int(config.components.button.contentFontSizeSM))
+"""
+        case .tag:
+            return """
+// \(tr("token.playground.code_tag_config"))
+config.components.tag.defaultBg = Color(hex: "\(config.components.tag.defaultBg.hexString)")
+config.components.tag.defaultColor = Color(hex: "\(config.components.tag.defaultColor.hexString)")
+config.components.tag.solidTextColor = Color(hex: "\(config.components.tag.solidTextColor.hexString)")
+// \(tr("token.playground.tag_sizes"))
+config.components.tag.fontSize = \(Int(config.components.tag.fontSize))
+config.components.tag.fontSizeLG = \(Int(config.components.tag.fontSizeLG))
+config.components.tag.fontSizeSM = \(Int(config.components.tag.fontSizeSM))
+config.components.tag.paddingH = \(Int(config.components.tag.paddingH))
+config.components.tag.paddingV = \(Int(config.components.tag.paddingV))
+"""
+        case .space:
+            return """
+// \(tr("token.playground.code_space_config"))
+config.components.space.sizeSmall = \(Int(config.components.space.sizeSmall))
+config.components.space.sizeMedium = \(Int(config.components.space.sizeMedium))
+config.components.space.sizeLarge = \(Int(config.components.space.sizeLarge))
+"""
+        case .divider:
+            return """
+// \(tr("token.playground.code_divider_config"))
+config.components.divider.lineColor = Color(hex: "\(config.components.divider.lineColor.hexString)")
+config.components.divider.textColor = Color(hex: "\(config.components.divider.textColor.hexString)")
+// \(tr("token.playground.divider_sizes"))
+config.components.divider.fontSize = \(Int(config.components.divider.fontSize))
+config.components.divider.lineWidth = \(Int(config.components.divider.lineWidth))
+config.components.divider.verticalMargin = \(Int(config.components.divider.verticalMargin))
+config.components.divider.horizontalMargin = \(Int(config.components.divider.horizontalMargin))
+config.components.divider.textPadding = \(Int(config.components.divider.textPadding))
+"""
         }
-        """
     }
 
     // MARK: - Panel Tab Bar
@@ -282,14 +386,19 @@ struct TokenPlayground: View {
                 Button {
                     selectedPanel = tab
                 } label: {
-                    VStack(spacing: 4) {
+                    HStack(spacing: 8) {
                         Image(systemName: tab.icon)
-                            .font(.system(size: 16))
+                            .font(.system(size: 12))
+                            .frame(width: 16)
                         Text(tab.title)
-                            .font(.system(size: 10, weight: selectedPanel == tab ? .medium : .regular))
+                            .font(.system(size: 12))
+                            .lineLimit(1)
+                            .fixedSize(horizontal: true, vertical: false)
                     }
                     .foregroundStyle(selectedPanel == tab ? config.token.colorPrimary : .secondary)
-                    .frame(width: 36, height: 36)
+                    .padding(.horizontal, 10)
+                    .padding(.vertical, 8)
+                    .frame(maxWidth: .infinity, alignment: .leading)
                     .contentShape(Rectangle())
                 }
                 .buttonStyle(.plain)
@@ -307,8 +416,8 @@ struct TokenPlayground: View {
             }
             Spacer()
         }
-        .padding(.vertical, Moin.Constants.Spacing.xs)
-        .frame(width: 40)
+        .padding(8)
+        .fixedSize(horizontal: true, vertical: false)
         .background(Color(nsColor: .controlBackgroundColor))
     }
 

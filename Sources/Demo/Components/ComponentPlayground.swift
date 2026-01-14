@@ -108,14 +108,11 @@ struct ColorPropControl: View {
 
 /// 预设颜色选项
 private let presetColors: [Color] = [
-    Color(hex: "#1677ff"),  // Ant Design Blue
+    Color(hex: "#1677ff"),  // Blue
     Color(hex: "#52c41a"),  // Green
     Color(hex: "#faad14"),  // Gold
     Color(hex: "#ff4d4f"),  // Red
     Color(hex: "#722ed1"),  // Purple
-    Color(hex: "#13c2c2"),  // Cyan
-    Color(hex: "#eb2f96"),  // Magenta
-    Color(hex: "#fa8c16"),  // Orange
 ]
 
 /// Token 颜色预设选择行
