@@ -247,15 +247,21 @@ struct TokenPlayground: View {
                 Spacer()
             }
 
-            ScrollView([.horizontal, .vertical], showsIndicators: true) {
-                VStack(alignment: .leading, spacing: 0) {
-                    HighlightedCodeView(code: generateCode(), fontSize: 12)
-                        .fixedSize(horizontal: true, vertical: true)
+            GeometryReader { geo in
+                ScrollView([.horizontal, .vertical], showsIndicators: true) {
+                    HStack {
+                        VStack(alignment: .leading) {
+                            HighlightedCodeView(code: generateCode(), fontSize: 12)
+                                .fixedSize()
+                            Spacer(minLength: 0)
+                        }
+                        Spacer(minLength: 0)
+                    }
+                    .padding(Moin.Constants.Spacing.sm)
+                    .frame(minWidth: geo.size.width, minHeight: geo.size.height, alignment: .topLeading)
                 }
-                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-                .padding(Moin.Constants.Spacing.sm)
             }
-            .frame(minHeight: 150, maxHeight: 200, alignment: .topLeading)
+            .frame(minHeight: 150, maxHeight: 200)
             .background(config.isDarkMode ? Color(white: 0.08) : Color(white: 0.96))
             .cornerRadius(Moin.Constants.Radius.sm)
             .id("code-\(selectedPanel.rawValue)")
