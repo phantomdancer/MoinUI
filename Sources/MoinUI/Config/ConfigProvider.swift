@@ -355,11 +355,12 @@ public extension Moin {
             let colorLinkActive = linkPalette[7]
 
             // 文字颜色 (从 colorTextBase 派生，透明度梯度)
+            // 注意：colorTextTertiary 提升至 0.55 以满足 WCAG AA 对比度要求
             let textBase: Color = isDark ? Color(white: 0.92) : seed.colorTextBase
             let colorText = textBase.opacity(0.88)
             let colorTextSecondary = textBase.opacity(0.65)
-            let colorTextTertiary = textBase.opacity(0.45)
-            let colorTextQuaternary = textBase.opacity(0.25)
+            let colorTextTertiary = textBase.opacity(0.55)
+            let colorTextQuaternary = textBase.opacity(0.30)
 
             // 背景颜色 (从 colorBgBase 派生)
             let bgBase = seed.colorBgBase
@@ -681,6 +682,17 @@ public extension Moin {
         public var zIndexBase: Int
         public var zIndexPopupBase: Int
 
+        // MARK: - Elevation (阴影层级)
+        /// 一级阴影 (按钮等低层元素)
+        public var shadowRadius1: CGFloat
+        public var shadowOpacity1: Double
+        /// 二级阴影 (卡片、下拉菜单)
+        public var shadowRadius2: CGFloat
+        public var shadowOpacity2: Double
+        /// 三级阴影 (弹窗、抽屉)
+        public var shadowRadius3: CGFloat
+        public var shadowOpacity3: Double
+
         public init(from map: MapToken) {
             // Primary
             self.colorPrimary = map.colorPrimary
@@ -806,6 +818,13 @@ public extension Moin {
             // Z-Index
             self.zIndexBase = map.zIndexBase
             self.zIndexPopupBase = map.zIndexPopupBase
+            // Elevation (阴影层级)
+            self.shadowRadius1 = 2
+            self.shadowOpacity1 = 0.08
+            self.shadowRadius2 = 8
+            self.shadowOpacity2 = 0.12
+            self.shadowRadius3 = 16
+            self.shadowOpacity3 = 0.16
         }
 
         public static func generate(from seed: SeedToken, theme: Theme) -> Token {
@@ -1031,12 +1050,74 @@ public extension Moin {
         /// 边框宽度
         public var lineWidth: CGFloat
 
+        // MARK: - 尺寸相关 Token
+        /// 字号 (Large)
+        public var fontSizeLG: CGFloat
+        /// 字号 (Medium)
+        public var fontSize: CGFloat
+        /// 字号 (Small)
+        public var fontSizeSM: CGFloat
+        /// 图标尺寸 (Large)
+        public var iconSizeLG: CGFloat
+        /// 图标尺寸 (Medium)
+        public var iconSize: CGFloat
+        /// 图标尺寸 (Small)
+        public var iconSizeSM: CGFloat
+        /// 关闭图标尺寸 (Large)
+        public var closeIconSizeLG: CGFloat
+        /// 关闭图标尺寸 (Medium)
+        public var closeIconSize: CGFloat
+        /// 关闭图标尺寸 (Small)
+        public var closeIconSizeSM: CGFloat
+        /// 图标间距 (Large)
+        public var iconGapLG: CGFloat
+        /// 图标间距 (Medium)
+        public var iconGap: CGFloat
+        /// 图标间距 (Small)
+        public var iconGapSM: CGFloat
+        /// 水平内边距 (Large)
+        public var paddingHLG: CGFloat
+        /// 水平内边距 (Medium)
+        public var paddingH: CGFloat
+        /// 水平内边距 (Small)
+        public var paddingHSM: CGFloat
+        /// 垂直内边距 (Large)
+        public var paddingVLG: CGFloat
+        /// 垂直内边距 (Medium)
+        public var paddingV: CGFloat
+        /// 垂直内边距 (Small)
+        public var paddingVSM: CGFloat
+
         public static func generate(from token: Token) -> TagToken {
             TagToken(
                 defaultBg: token.colorFillSecondary,
                 defaultColor: token.colorText,
                 solidTextColor: .white,
-                lineWidth: token.lineWidth
+                lineWidth: token.lineWidth,
+                // 字号
+                fontSizeLG: token.fontSize,
+                fontSize: token.fontSizeSM,
+                fontSizeSM: token.fontSizeSM - 2,
+                // 图标尺寸
+                iconSizeLG: 12,
+                iconSize: 10,
+                iconSizeSM: 8,
+                // 关闭图标尺寸
+                closeIconSizeLG: 9,
+                closeIconSize: 8,
+                closeIconSizeSM: 7,
+                // 图标间距
+                iconGapLG: token.paddingXS,
+                iconGap: token.paddingXXS,
+                iconGapSM: 2,
+                // 水平内边距
+                paddingHLG: token.paddingMD,
+                paddingH: token.paddingSM,
+                paddingHSM: token.paddingXS,
+                // 垂直内边距
+                paddingVLG: token.paddingXXS + 2,
+                paddingV: token.paddingXXS,
+                paddingVSM: 1
             )
         }
 

@@ -17,7 +17,7 @@ struct TagTokenSection: View {
                 Text(tr("tag.token.desc"))
                     .foregroundStyle(.secondary)
 
-                // 组件 Token
+                // 组件 Token - 基础
                 Text(tr("tag.token.component"))
                     .font(.headline)
 
@@ -39,6 +39,60 @@ struct TagTokenSection: View {
                     ]
                 )
 
+                // 组件 Token - 尺寸
+                Text(tr("tag.token.size"))
+                    .font(.headline)
+
+                Text(tr("tag.token.size_desc"))
+                    .foregroundStyle(.secondary)
+
+                APITable(
+                    headers: (
+                        tr("api.property"),
+                        tr("api.type"),
+                        tr("api.default"),
+                        tr("api.description")
+                    ),
+                    rows: [
+                        ("fontSizeLG", "CGFloat", "\(Int(tagToken.fontSizeLG))", tr("tag.token.fontSizeLG")),
+                        ("fontSize", "CGFloat", "\(Int(tagToken.fontSize))", tr("tag.token.fontSizeMD")),
+                        ("fontSizeSM", "CGFloat", "\(Int(tagToken.fontSizeSM))", tr("tag.token.fontSizeSM")),
+                        ("iconSizeLG", "CGFloat", "\(Int(tagToken.iconSizeLG))", tr("tag.token.iconSizeLG")),
+                        ("iconSize", "CGFloat", "\(Int(tagToken.iconSize))", tr("tag.token.iconSizeMD")),
+                        ("iconSizeSM", "CGFloat", "\(Int(tagToken.iconSizeSM))", tr("tag.token.iconSizeSM")),
+                        ("closeIconSizeLG", "CGFloat", "\(Int(tagToken.closeIconSizeLG))", tr("tag.token.closeIconSizeLG")),
+                        ("closeIconSize", "CGFloat", "\(Int(tagToken.closeIconSize))", tr("tag.token.closeIconSizeMD")),
+                        ("closeIconSizeSM", "CGFloat", "\(Int(tagToken.closeIconSizeSM))", tr("tag.token.closeIconSizeSM")),
+                    ]
+                )
+
+                // 组件 Token - 间距
+                Text(tr("tag.token.spacing"))
+                    .font(.headline)
+
+                Text(tr("tag.token.spacing_desc"))
+                    .foregroundStyle(.secondary)
+
+                APITable(
+                    headers: (
+                        tr("api.property"),
+                        tr("api.type"),
+                        tr("api.default"),
+                        tr("api.description")
+                    ),
+                    rows: [
+                        ("iconGapLG", "CGFloat", "\(Int(tagToken.iconGapLG))", tr("tag.token.iconGapLG")),
+                        ("iconGap", "CGFloat", "\(Int(tagToken.iconGap))", tr("tag.token.iconGapMD")),
+                        ("iconGapSM", "CGFloat", "\(Int(tagToken.iconGapSM))", tr("tag.token.iconGapSM")),
+                        ("paddingHLG", "CGFloat", "\(Int(tagToken.paddingHLG))", tr("tag.token.paddingHLG")),
+                        ("paddingH", "CGFloat", "\(Int(tagToken.paddingH))", tr("tag.token.paddingHMD")),
+                        ("paddingHSM", "CGFloat", "\(Int(tagToken.paddingHSM))", tr("tag.token.paddingHSM")),
+                        ("paddingVLG", "CGFloat", "\(Int(tagToken.paddingVLG))", tr("tag.token.paddingVLG")),
+                        ("paddingV", "CGFloat", "\(Int(tagToken.paddingV))", tr("tag.token.paddingVMD")),
+                        ("paddingVSM", "CGFloat", "\(Int(tagToken.paddingVSM))", tr("tag.token.paddingVSM")),
+                    ]
+                )
+
                 // 全局 Token
                 Text(tr("tag.token.usage"))
                     .font(.headline)
@@ -54,9 +108,6 @@ struct TagTokenSection: View {
                         tr("api.description")
                     ),
                     rows: [
-                        ("fontSize - 2", "CGFloat", "\(Int(token.fontSize - 2))", tr("tag.token.fontSize")),
-                        ("paddingXXS", "CGFloat", "\(Int(token.paddingXXS))", tr("tag.token.paddingV")),
-                        ("Spacing.sm", "CGFloat", "8", tr("tag.token.paddingH")),
                         ("borderRadiusSM", "CGFloat", "\(Int(token.borderRadiusSM))", tr("tag.token.borderRadius")),
                         ("motionDurationFast", "Double", "\(token.motionDurationFast)s", tr("tag.token.animation")),
                         ("colorSuccess", "Color", "-", tr("tag.token.colorSuccess")),

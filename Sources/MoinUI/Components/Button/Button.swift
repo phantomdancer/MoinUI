@@ -266,11 +266,13 @@ public extension Moin {
         @State private var isHovered = false
         @State private var isPressed = false
         @State private var showLoading = false
+        @FocusState private var isFocused: Bool
 
         // 使用 Environment 获取配置，避免每个按钮都订阅 ObservedObject
         @Environment(\.moinToken) private var token
         @Environment(\.moinButtonToken) private var buttonToken
         @Environment(\.moinSpaceCompactContext) private var compactContext
+        @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
         public init(
             color: Moin.ButtonColor = .default,
@@ -332,6 +334,11 @@ public extension Moin {
 
         // MARK: - Body
 
+        /// 动画：尊重 reducedMotion 设置
+        private var stateAnimation: Animation? {
+            reduceMotion ? nil : .easeInOut(duration: token.motionDuration / 2)
+        }
+
         public var body: some View {
             Group {
                 if let href = href {
@@ -341,13 +348,14 @@ public extension Moin {
                 }
             }
             .buttonStyle(.plain)
+            .focused($isFocused)
             .disabled(effectiveDisabled && !shouldApplyDisabledOpacity)
             .allowsHitTesting(!effectiveDisabled)
             .opacity(shouldApplyDisabledOpacity ? 0.65 : 1)
             .zIndex(compactContext.isCompact && isHovered ? 10 : 0)
             .onHover { hovering in
                 guard isHovered != hovering else { return }
-                withAnimation(.easeInOut(duration: token.motionDuration / 2)) {
+                withAnimation(stateAnimation) {
                     isHovered = hovering
                     if !hovering { isPressed = false }
                 }
@@ -362,13 +370,13 @@ public extension Moin {
                 DragGesture(minimumDistance: 0)
                     .onChanged { _ in
                         if !isPressed {
-                            withAnimation(.easeInOut(duration: token.motionDuration / 2)) {
+                            withAnimation(stateAnimation) {
                                 isPressed = true
                             }
                         }
                     }
                     .onEnded { _ in
-                        withAnimation(.easeInOut(duration: token.motionDuration / 2)) {
+                        withAnimation(stateAnimation) {
                             isPressed = false
                         }
                     }
@@ -404,8 +412,20 @@ public extension Moin {
             .padding(.horizontal, shape == .circle ? 0 : horizontalPadding)
             .background(backgroundView)
             .clipShape(buttonShape)
+            .shadow(color: shadowColor, radius: shadowRadius, x: 0, y: shadowY)
             .overlay(borderOverlay)
+            .overlay(focusRingOverlay)
             .contentShape(Rectangle())
+        }
+
+        /// 焦点环样式
+        @ViewBuilder
+        private var focusRingOverlay: some View {
+            if isFocused && !effectiveDisabled {
+                buttonShape
+                    .stroke(token.colorPrimary.opacity(0.5), lineWidth: 2)
+                    .padding(-2)
+            }
         }
 
         @ViewBuilder
@@ -485,6 +505,33 @@ public extension Moin {
 
         private var cornerRadius: CGFloat {
             sizedValue(small: token.borderRadiusSM, medium: token.borderRadius, large: token.borderRadiusLG)
+        }
+
+        // MARK: - Shadow
+
+        /// 阴影颜色
+        private var shadowColor: SwiftUI.Color {
+            // 只有 solid variant 且非 ghost/disabled 时显示阴影
+            guard variant == .solid && !isGhost && !effectiveDisabled else {
+                return .clear
+            }
+            // 有色按钮使用主题色阴影，default 使用灰色
+            if color.isDefault {
+                return SwiftUI.Color.black.opacity(token.shadowOpacity1)
+            }
+            return baseColor.opacity(0.25)
+        }
+
+        /// 阴影半径
+        private var shadowRadius: CGFloat {
+            guard variant == .solid && !isGhost && !effectiveDisabled else { return 0 }
+            return isPressed ? 1 : token.shadowRadius1
+        }
+
+        /// 阴影 Y 偏移
+        private var shadowY: CGFloat {
+            guard variant == .solid && !isGhost && !effectiveDisabled else { return 0 }
+            return isPressed ? 0 : 1
         }
 
         // MARK: - Colors

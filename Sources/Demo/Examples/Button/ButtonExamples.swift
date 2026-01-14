@@ -30,6 +30,8 @@ struct ButtonExamples: View {
         AnchorItem(id: "disabled", titleKey: "button.disabled"),
         AnchorItem(id: "block", titleKey: "button.block"),
         AnchorItem(id: "href", titleKey: "button.link"),
+        AnchorItem(id: "shadow", titleKey: "button.shadow"),
+        AnchorItem(id: "focus", titleKey: "button.focus"),
     ]
 
     var body: some View {
@@ -62,6 +64,8 @@ struct ButtonExamples: View {
             disabledExample.id("disabled")
             blockExample.id("block")
             hrefExample.id("href")
+            shadowExample.id("shadow")
+            focusExample.id("focus")
         }
     }
 
@@ -488,6 +492,62 @@ struct ButtonExamples: View {
             Moin.Button("\(tr("button.label.visit_github"))", color: .primary, icon: "link", href: URL(string: "https://github.com")) {}
             Moin.Button("\(tr("button.label.visit_docs"))", variant: .outlined, icon: "doc.text", href: URL(string: "https://developer.apple.com")) {}
             Moin.Button("\(tr("button.label.link"))", variant: .link, href: URL(string: "https://apple.com")) {}
+            """
+        }
+    }
+
+    private var shadowExample: some View {
+        ExampleSection(
+            title: tr("button.shadow"),
+            description: tr("button.shadow_desc")
+        ) {
+            VStack(alignment: .leading, spacing: Moin.Constants.Spacing.md) {
+                // 有色按钮阴影
+                HStack(spacing: Moin.Constants.Spacing.md) {
+                    Moin.Button(tr("button.label.primary"), color: .primary) {}
+                    Moin.Button(tr("button.label.success"), color: .success) {}
+                    Moin.Button(tr("button.label.warning"), color: .warning) {}
+                    Moin.Button(tr("button.label.danger"), color: .danger) {}
+                }
+                // 默认按钮阴影
+                HStack(spacing: Moin.Constants.Spacing.md) {
+                    Moin.Button(tr("button.label.default")) {}
+                    Moin.Button(tr("button.label.outlined"), variant: .outlined) {}
+                    Moin.Button(tr("button.label.text"), variant: .text) {}
+                }
+                Text(tr("button.shadow_hint"))
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
+        } code: {
+            """
+            // \(tr("button.shadow_hint"))
+            Moin.Button("\(tr("button.label.primary"))", color: .primary) {}
+            Moin.Button("\(tr("button.label.success"))", color: .success) {}
+            """
+        }
+    }
+
+    private var focusExample: some View {
+        ExampleSection(
+            title: tr("button.focus"),
+            description: tr("button.focus_desc")
+        ) {
+            VStack(alignment: .leading, spacing: Moin.Constants.Spacing.md) {
+                HStack(spacing: Moin.Constants.Spacing.md) {
+                    Moin.Button(tr("button.label.primary"), color: .primary) {}
+                    Moin.Button(tr("button.label.success"), color: .success) {}
+                    Moin.Button(tr("button.label.default")) {}
+                }
+                Text(tr("button.focus_hint"))
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
+        } code: {
+            """
+            // \(tr("button.focus_hint"))
+            // \(tr("button.focus_code"))
+            Moin.Button("\(tr("button.label.primary"))", color: .primary) {}
             """
         }
     }

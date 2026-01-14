@@ -93,49 +93,49 @@ public extension Moin {
 
         private var fontSize: CGFloat {
             switch size {
-            case .large: return token.fontSize
-            case .medium: return token.fontSize - 2
-            case .small: return token.fontSize - 4
+            case .large: return tagToken.fontSizeLG
+            case .medium: return tagToken.fontSize
+            case .small: return tagToken.fontSizeSM
             }
         }
 
         private var iconSize: CGFloat {
             switch size {
-            case .large: return 12
-            case .medium: return 10
-            case .small: return 8
+            case .large: return tagToken.iconSizeLG
+            case .medium: return tagToken.iconSize
+            case .small: return tagToken.iconSizeSM
             }
         }
 
         private var closeIconSize: CGFloat {
             switch size {
-            case .large: return 9
-            case .medium: return 8
-            case .small: return 7
+            case .large: return tagToken.closeIconSizeLG
+            case .medium: return tagToken.closeIconSize
+            case .small: return tagToken.closeIconSizeSM
             }
         }
 
         private var iconSpacing: CGFloat {
             switch size {
-            case .large: return token.paddingXS
-            case .medium: return token.paddingXXS
-            case .small: return 2
+            case .large: return tagToken.iconGapLG
+            case .medium: return tagToken.iconGap
+            case .small: return tagToken.iconGapSM
             }
         }
 
         private var paddingH: CGFloat {
             switch size {
-            case .large: return Moin.Constants.Spacing.md
-            case .medium: return Moin.Constants.Spacing.sm
-            case .small: return Moin.Constants.Spacing.xs
+            case .large: return tagToken.paddingHLG
+            case .medium: return tagToken.paddingH
+            case .small: return tagToken.paddingHSM
             }
         }
 
         private var paddingV: CGFloat {
             switch size {
-            case .large: return token.paddingXXS + 2
-            case .medium: return token.paddingXXS
-            case .small: return 1
+            case .large: return tagToken.paddingVLG
+            case .medium: return tagToken.paddingV
+            case .small: return tagToken.paddingVSM
             }
         }
 
@@ -147,7 +147,7 @@ public extension Moin {
             switch size {
             case .large: return token.borderRadiusSM + 2
             case .medium: return token.borderRadiusSM
-            case .small: return token.borderRadiusSM - 1
+            case .small: return max(token.borderRadiusSM - 1, 2)
             }
         }
 
