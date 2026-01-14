@@ -111,6 +111,20 @@ struct TokenPlayground: View {
                             Moin.Button(tr("button.label.dashed"), color: .primary, variant: .dashed) {}
                             Moin.Button(tr("button.label.filled"), color: .primary, variant: .filled) {}
                             Moin.Button(tr("button.label.text"), color: .primary, variant: .text) {}
+                            Moin.Button(tr("button.label.link"), color: .primary, variant: .link) {}
+                        }
+                    }
+
+                    // 默认色按钮（测试 defaultColor）
+                    VStack(alignment: .leading, spacing: Moin.Constants.Spacing.sm) {
+                        Text(tr("token.playground.default_buttons"))
+                            .font(.system(size: 12, weight: .medium))
+                            .foregroundStyle(.secondary)
+                        HStack(spacing: Moin.Constants.Spacing.sm) {
+                            Moin.Button(tr("button.label.default"), color: .default, variant: .solid) {}
+                            Moin.Button(tr("button.label.default"), color: .default, variant: .outlined) {}
+                            Moin.Button(tr("button.label.default"), color: .default, variant: .text) {}
+                            Moin.Button(tr("button.label.default"), color: .default, variant: .link) {}
                         }
                     }
 
@@ -143,11 +157,45 @@ struct TokenPlayground: View {
                         Text(tr("token.playground.spacing"))
                             .font(.system(size: 12, weight: .medium))
                             .foregroundStyle(.secondary)
-                        Moin.Space(size: .medium) {
-                            ForEach(0..<4) { _ in
-                                RoundedRectangle(cornerRadius: config.token.borderRadius)
-                                    .fill(config.token.colorPrimary.opacity(0.3))
-                                    .frame(width: 60, height: 32)
+
+                        HStack(spacing: Moin.Constants.Spacing.md) {
+                            VStack(alignment: .leading, spacing: 4) {
+                                Text("Small")
+                                    .font(.system(size: 10))
+                                    .foregroundStyle(.tertiary)
+                                Moin.Space(size: .small) {
+                                    ForEach(0..<3, id: \.self) { _ in
+                                        RoundedRectangle(cornerRadius: config.token.borderRadius)
+                                            .fill(config.token.colorPrimary.opacity(0.3))
+                                            .frame(width: 40, height: 24)
+                                    }
+                                }
+                            }
+
+                            VStack(alignment: .leading, spacing: 4) {
+                                Text("Medium")
+                                    .font(.system(size: 10))
+                                    .foregroundStyle(.tertiary)
+                                Moin.Space(size: .medium) {
+                                    ForEach(0..<3, id: \.self) { _ in
+                                        RoundedRectangle(cornerRadius: config.token.borderRadius)
+                                            .fill(config.token.colorSuccess.opacity(0.3))
+                                            .frame(width: 40, height: 24)
+                                    }
+                                }
+                            }
+
+                            VStack(alignment: .leading, spacing: 4) {
+                                Text("Large")
+                                    .font(.system(size: 10))
+                                    .foregroundStyle(.tertiary)
+                                Moin.Space(size: .large) {
+                                    ForEach(0..<3, id: \.self) { _ in
+                                        RoundedRectangle(cornerRadius: config.token.borderRadius)
+                                            .fill(config.token.colorWarning.opacity(0.3))
+                                            .frame(width: 40, height: 24)
+                                    }
+                                }
                             }
                         }
                     }
@@ -234,7 +282,7 @@ struct TokenPlayground: View {
                             .font(.system(size: 10, weight: selectedPanel == tab ? .medium : .regular))
                     }
                     .foregroundStyle(selectedPanel == tab ? config.token.colorPrimary : .secondary)
-                    .frame(width: 52, height: 52)
+                    .frame(width: 44, height: 44)
                     .contentShape(Rectangle())
                 }
                 .buttonStyle(.plain)
@@ -253,7 +301,7 @@ struct TokenPlayground: View {
             Spacer()
         }
         .padding(.vertical, Moin.Constants.Spacing.xs)
-        .frame(width: 56)
+        .frame(width: 48)
         .background(Color(nsColor: .controlBackgroundColor))
     }
 

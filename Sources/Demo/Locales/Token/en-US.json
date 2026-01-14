@@ -103,7 +103,8 @@
       "space_sizes": "Space Sizes",
       "divider_colors": "Divider Colors",
       "divider_sizes": "Divider Sizes",
-      "code_comment": "Configure SeedToken"
+      "code_comment": "Configure SeedToken",
+      "default_buttons": "Default Buttons"
     }
   }
 }

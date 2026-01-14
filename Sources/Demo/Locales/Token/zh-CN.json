@@ -103,7 +103,8 @@
       "space_sizes": "间距尺寸",
       "divider_colors": "分割线颜色",
       "divider_sizes": "分割线尺寸",
-      "code_comment": "配置 SeedToken"
+      "code_comment": "配置 SeedToken",
+      "default_buttons": "默认色按钮"
     }
   }
 }
