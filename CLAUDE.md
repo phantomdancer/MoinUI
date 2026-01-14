@@ -33,12 +33,13 @@ MoinUI (墨影UI) - macOS SwiftUI 组件库
 
 ## 工作流程
 
-1. **开始前**: 用 `list_memories` 查看记忆，按需 `read_memory`
+1. **开始前**: 用 `list_memories` 查看记忆，`read_memory("session-progress")` 恢复进度
 2. **编写代码**: 遵循命名约定和 Token 规则
 3. **构建测试**: `swift build && swift test`
 4. **Demo**: 添加示例和翻译
-5. **记忆**: 用 `write_memory` 更新状态
-6. **回复**: 完成后回复的最后一个字为：毕
+5. **记忆**: 用 `write_memory` 更新状态和记忆
+6. **结束时**: 更新 session-progress，结合 `git log --oneline -10` 生成进度
+7. **回复**: 完成后回复的最后一行必须为：✅ 毕。
 
 ## 设计原则
 
