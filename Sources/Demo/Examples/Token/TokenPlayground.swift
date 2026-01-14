@@ -289,12 +289,12 @@ struct TokenPlayground: View {
                             .font(.system(size: 10, weight: selectedPanel == tab ? .medium : .regular))
                     }
                     .foregroundStyle(selectedPanel == tab ? config.token.colorPrimary : .secondary)
-                    .frame(width: 44, height: 44)
+                    .frame(width: 36, height: 36)
                     .contentShape(Rectangle())
                 }
                 .buttonStyle(.plain)
                 .background(
-                    RoundedRectangle(cornerRadius: 8)
+                    RoundedRectangle(cornerRadius: 6)
                         .fill(selectedPanel == tab ? config.token.colorPrimary.opacity(0.1) : .clear)
                 )
                 .onHover { hovering in
@@ -308,7 +308,7 @@ struct TokenPlayground: View {
             Spacer()
         }
         .padding(.vertical, Moin.Constants.Spacing.xs)
-        .frame(width: 48)
+        .frame(width: 40)
         .background(Color(nsColor: .controlBackgroundColor))
     }
 
@@ -382,23 +382,23 @@ struct TokenPlayground: View {
 
             // 字体
             tokenGroup(tr("token.playground.font")) {
-                TokenValueRow(label: "fontSize", value: $config.seed.fontSize, range: 10...20, onChange: config.regenerateTokens)
+                TokenValueRow(label: "fontSize", value: $config.seed.fontSize, onChange: config.regenerateTokens)
             }
 
             // 圆角
             tokenGroup(tr("token.playground.radius")) {
-                TokenValueRow(label: "borderRadius", value: $config.seed.borderRadius, range: 0...20, onChange: config.regenerateTokens)
+                TokenValueRow(label: "borderRadius", value: $config.seed.borderRadius, onChange: config.regenerateTokens)
             }
 
             // 尺寸
             tokenGroup(tr("token.playground.size")) {
-                TokenValueRow(label: "controlHeight", value: $config.seed.controlHeight, range: 24...48, onChange: config.regenerateTokens)
-                TokenValueRow(label: "sizeUnit", value: $config.seed.sizeUnit, range: 2...8, onChange: config.regenerateTokens)
+                TokenValueRow(label: "controlHeight", value: $config.seed.controlHeight, onChange: config.regenerateTokens)
+                TokenValueRow(label: "sizeUnit", value: $config.seed.sizeUnit, onChange: config.regenerateTokens)
             }
 
             // 线条
             tokenGroup(tr("token.playground.line")) {
-                TokenValueRow(label: "lineWidth", value: $config.seed.lineWidth, range: 1...4, onChange: config.regenerateTokens)
+                TokenValueRow(label: "lineWidth", value: $config.seed.lineWidth, onChange: config.regenerateTokens)
             }
         }
     }
@@ -469,17 +469,17 @@ struct TokenPlayground: View {
             }
 
             tokenGroup(tr("token.playground.button_sizes")) {
-                TokenValueRow(label: "paddingInline", value: $config.components.button.paddingInline, range: 0...30)
-                TokenValueRow(label: "paddingInlineLG", value: $config.components.button.paddingInlineLG, range: 0...40)
-                TokenValueRow(label: "paddingInlineSM", value: $config.components.button.paddingInlineSM, range: 0...20)
-                TokenValueRow(label: "paddingBlock", value: $config.components.button.paddingBlock, range: 0...20)
-                TokenValueRow(label: "iconGap", value: $config.components.button.iconGap, range: 0...16)
+                TokenValueRow(label: "paddingInline", value: $config.components.button.paddingInline)
+                TokenValueRow(label: "paddingInlineLG", value: $config.components.button.paddingInlineLG)
+                TokenValueRow(label: "paddingInlineSM", value: $config.components.button.paddingInlineSM)
+                TokenValueRow(label: "paddingBlock", value: $config.components.button.paddingBlock)
+                TokenValueRow(label: "iconGap", value: $config.components.button.iconGap)
             }
 
             tokenGroup(tr("token.playground.button_font")) {
-                TokenValueRow(label: "contentFontSize", value: $config.components.button.contentFontSize, range: 10...20)
-                TokenValueRow(label: "contentFontSizeLG", value: $config.components.button.contentFontSizeLG, range: 12...24)
-                TokenValueRow(label: "contentFontSizeSM", value: $config.components.button.contentFontSizeSM, range: 8...16)
+                TokenValueRow(label: "contentFontSize", value: $config.components.button.contentFontSize)
+                TokenValueRow(label: "contentFontSizeLG", value: $config.components.button.contentFontSizeLG)
+                TokenValueRow(label: "contentFontSizeSM", value: $config.components.button.contentFontSizeSM)
             }
         }
     }
@@ -495,11 +495,11 @@ struct TokenPlayground: View {
             }
 
             tokenGroup(tr("token.playground.tag_sizes")) {
-                TokenValueRow(label: "fontSize", value: $config.components.tag.fontSize, range: 8...16)
-                TokenValueRow(label: "fontSizeLG", value: $config.components.tag.fontSizeLG, range: 10...20)
-                TokenValueRow(label: "fontSizeSM", value: $config.components.tag.fontSizeSM, range: 6...14)
-                TokenValueRow(label: "paddingH", value: $config.components.tag.paddingH, range: 0...16)
-                TokenValueRow(label: "paddingV", value: $config.components.tag.paddingV, range: 0...12)
+                TokenValueRow(label: "fontSize", value: $config.components.tag.fontSize)
+                TokenValueRow(label: "fontSizeLG", value: $config.components.tag.fontSizeLG)
+                TokenValueRow(label: "fontSizeSM", value: $config.components.tag.fontSizeSM)
+                TokenValueRow(label: "paddingH", value: $config.components.tag.paddingH)
+                TokenValueRow(label: "paddingV", value: $config.components.tag.paddingV)
             }
         }
     }
@@ -509,9 +509,9 @@ struct TokenPlayground: View {
     private var spaceTokenPanel: some View {
         VStack(alignment: .leading, spacing: Moin.Constants.Spacing.md) {
             tokenGroup(tr("token.playground.space_sizes")) {
-                TokenValueRow(label: "sizeSmall", value: $config.components.space.sizeSmall, range: 2...16)
-                TokenValueRow(label: "sizeMedium", value: $config.components.space.sizeMedium, range: 4...24)
-                TokenValueRow(label: "sizeLarge", value: $config.components.space.sizeLarge, range: 8...32)
+                TokenValueRow(label: "sizeSmall", value: $config.components.space.sizeSmall)
+                TokenValueRow(label: "sizeMedium", value: $config.components.space.sizeMedium)
+                TokenValueRow(label: "sizeLarge", value: $config.components.space.sizeLarge)
             }
         }
     }
@@ -526,11 +526,11 @@ struct TokenPlayground: View {
             }
 
             tokenGroup(tr("token.playground.divider_sizes")) {
-                TokenValueRow(label: "fontSize", value: $config.components.divider.fontSize, range: 10...18)
-                TokenValueRow(label: "lineWidth", value: $config.components.divider.lineWidth, range: 1...4)
-                TokenValueRow(label: "verticalMargin", value: $config.components.divider.verticalMargin, range: 0...32)
-                TokenValueRow(label: "horizontalMargin", value: $config.components.divider.horizontalMargin, range: 0...24)
-                TokenValueRow(label: "textPadding", value: $config.components.divider.textPadding, range: 0...32)
+                TokenValueRow(label: "fontSize", value: $config.components.divider.fontSize)
+                TokenValueRow(label: "lineWidth", value: $config.components.divider.lineWidth)
+                TokenValueRow(label: "verticalMargin", value: $config.components.divider.verticalMargin)
+                TokenValueRow(label: "horizontalMargin", value: $config.components.divider.horizontalMargin)
+                TokenValueRow(label: "textPadding", value: $config.components.divider.textPadding)
             }
         }
     }

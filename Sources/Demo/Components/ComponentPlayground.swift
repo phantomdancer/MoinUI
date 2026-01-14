@@ -204,11 +204,13 @@ struct TokenColorDisplayRow: View {
 struct TokenValueRow: View {
     let label: String
     @Binding var value: CGFloat
-    var range: ClosedRange<CGFloat> = 0...100
+    var range: ClosedRange<CGFloat>? = nil  // nil 表示无限制
     var onChange: (() -> Void)?
 
     @State private var minusHovered = false
     @State private var plusHovered = false
+
+    private var minValue: CGFloat { range?.lowerBound ?? 0 }
 
     var body: some View {
         HStack {
@@ -218,7 +220,7 @@ struct TokenValueRow: View {
             Spacer()
             HStack(spacing: 4) {
                 Button {
-                    if value > range.lowerBound {
+                    if value > minValue {
                         value -= 1
                         onChange?()
                     }
@@ -247,10 +249,8 @@ struct TokenValueRow: View {
                     .frame(width: 30)
 
                 Button {
-                    if value < range.upperBound {
-                        value += 1
-                        onChange?()
-                    }
+                    value += 1
+                    onChange?()
                 } label: {
                     Image(systemName: "plus")
                         .font(.system(size: 10))
