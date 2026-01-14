@@ -106,10 +106,61 @@ struct ColorPropControl: View {
 
 // MARK: - Token 编辑组件
 
+/// 预设颜色选项
+private let presetColors: [Color] = [
+    Color(hex: "#1677ff"),  // Ant Design Blue
+    Color(hex: "#52c41a"),  // Green
+    Color(hex: "#faad14"),  // Gold
+    Color(hex: "#ff4d4f"),  // Red
+    Color(hex: "#722ed1"),  // Purple
+    Color(hex: "#13c2c2"),  // Cyan
+    Color(hex: "#eb2f96"),  // Magenta
+    Color(hex: "#fa8c16"),  // Orange
+]
+
+/// Token 颜色预设选择行
+struct ColorPresetRow: View {
+    let label: String
+    @Binding var color: Color
+    var onChange: (() -> Void)?
+
+    var body: some View {
+        HStack {
+            Text(label)
+                .font(.system(size: 11, design: .monospaced))
+                .foregroundStyle(.secondary)
+            Spacer()
+            HStack(spacing: 6) {
+                ForEach(presetColors, id: \.self) { preset in
+                    Circle()
+                        .fill(preset)
+                        .frame(width: 16, height: 16)
+                        .overlay(
+                            Circle()
+                                .stroke(color == preset ? Color.primary : Color.clear, lineWidth: 2)
+                        )
+                        .onTapGesture {
+                            color = preset
+                            onChange?()
+                        }
+                        .onHover { hovering in
+                            if hovering {
+                                NSCursor.pointingHand.push()
+                            } else {
+                                NSCursor.pop()
+                            }
+                        }
+                }
+            }
+        }
+    }
+}
+
 /// Token 颜色编辑行
 struct TokenColorRow: View {
     let label: String
     @Binding var color: Color
+    var onChange: (() -> Void)?
 
     var body: some View {
         HStack {
@@ -120,6 +171,9 @@ struct TokenColorRow: View {
             ColorPicker("", selection: $color)
                 .labelsHidden()
                 .frame(width: 40)
+                .onChange(of: color) { _ in
+                    onChange?()
+                }
         }
     }
 }
@@ -151,6 +205,10 @@ struct TokenValueRow: View {
     let label: String
     @Binding var value: CGFloat
     var range: ClosedRange<CGFloat> = 0...100
+    var onChange: (() -> Void)?
+
+    @State private var minusHovered = false
+    @State private var plusHovered = false
 
     var body: some View {
         HStack {
@@ -160,24 +218,58 @@ struct TokenValueRow: View {
             Spacer()
             HStack(spacing: 4) {
                 Button {
-                    if value > range.lowerBound { value -= 1 }
+                    if value > range.lowerBound {
+                        value -= 1
+                        onChange?()
+                    }
                 } label: {
                     Image(systemName: "minus")
                         .font(.system(size: 10))
+                        .frame(width: 20, height: 20)
+                        .background(
+                            Circle()
+                                .fill(minusHovered ? Color.primary.opacity(0.1) : .clear)
+                        )
+                        .contentShape(Circle())
                 }
                 .buttonStyle(.plain)
+                .onHover { hovering in
+                    minusHovered = hovering
+                    if hovering {
+                        NSCursor.pointingHand.push()
+                    } else {
+                        NSCursor.pop()
+                    }
+                }
 
                 Text("\(Int(value))")
                     .font(.system(size: 11, design: .monospaced))
                     .frame(width: 30)
 
                 Button {
-                    if value < range.upperBound { value += 1 }
+                    if value < range.upperBound {
+                        value += 1
+                        onChange?()
+                    }
                 } label: {
                     Image(systemName: "plus")
                         .font(.system(size: 10))
+                        .frame(width: 20, height: 20)
+                        .background(
+                            Circle()
+                                .fill(plusHovered ? Color.primary.opacity(0.1) : .clear)
+                        )
+                        .contentShape(Circle())
                 }
                 .buttonStyle(.plain)
+                .onHover { hovering in
+                    plusHovered = hovering
+                    if hovering {
+                        NSCursor.pointingHand.push()
+                    } else {
+                        NSCursor.pop()
+                    }
+                }
             }
         }
     }

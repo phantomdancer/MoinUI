@@ -2,7 +2,7 @@
 set -e
 
 SOURCE="CLAUDE.md"
-TARGETS=("AGENTS.md" ".trae/rules/project_rules.md")
+TARGETS=("AGENTS.md")
 
 for target in "${TARGETS[@]}"; do
     if [ -L "$target" ]; then

@@ -102,7 +102,8 @@
       "tag_sizes": "Tag Sizes",
       "space_sizes": "Space Sizes",
       "divider_colors": "Divider Colors",
-      "divider_sizes": "Divider Sizes"
+      "divider_sizes": "Divider Sizes",
+      "code_comment": "Configure SeedToken"
     }
   }
 }

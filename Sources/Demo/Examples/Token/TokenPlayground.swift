@@ -1,4 +1,5 @@
 import SwiftUI
+import AppKit
 import MoinUI
 
 // MARK: - Token Playground Panel Tab
@@ -12,14 +13,18 @@ enum TokenPlaygroundPanelTab: String, CaseIterable {
     case space
     case divider
 
-    var titleKey: String {
+    var title: String {
+        rawValue.capitalized
+    }
+
+    var icon: String {
         switch self {
-        case .seed: return "token.playground.tab.seed"
-        case .global: return "token.playground.tab.global"
-        case .button: return "token.playground.tab.button"
-        case .tag: return "token.playground.tab.tag"
-        case .space: return "token.playground.tab.space"
-        case .divider: return "token.playground.tab.divider"
+        case .seed: return "leaf"
+        case .global: return "globe"
+        case .button: return "rectangle.and.hand.point.up.left"
+        case .tag: return "tag"
+        case .space: return "rectangle.split.3x1"
+        case .divider: return "minus"
         }
     }
 }
@@ -43,13 +48,14 @@ struct TokenPlayground: View {
 
             Divider()
 
-            // 右侧：Token 编辑面板
-            VStack(spacing: 0) {
-                panelTabBar
-                Divider()
-                panelContent
-            }
-            .frame(width: 360)
+            // 中间：Token 编辑面板内容
+            panelContent
+                .frame(width: 320)
+
+            Divider()
+
+            // 右侧：竖排 Tab 导航
+            panelTabBar
         }
         .padding(Moin.Constants.Spacing.xl)
         .background(Color(nsColor: .controlBackgroundColor))
@@ -88,8 +94,8 @@ struct TokenPlayground: View {
                             .font(.system(size: 12, weight: .medium))
                             .foregroundStyle(.secondary)
                         HStack(spacing: Moin.Constants.Spacing.sm) {
-                            Moin.Button(tr("button.label.small"), color: .primary, size: .small) {}
-                            Moin.Button(tr("button.label.medium"), color: .primary, size: .medium) {}
+                            Moin.Button(tr("button.label.small"), color: .primary, size: .small, icon: "star.fill") {}
+                            Moin.Button(tr("button.label.medium"), color: .primary, size: .medium, icon: "heart.fill") {}
                             Moin.Button(tr("button.label.large"), color: .primary, size: .large) {}
                         }
                     }
@@ -188,9 +194,7 @@ struct TokenPlayground: View {
             }
 
             ScrollView(.horizontal, showsIndicators: false) {
-                Text(generateCode())
-                    .font(.system(size: 12, design: .monospaced))
-                    .foregroundStyle(.primary)
+                HighlightedCodeView(code: generateCode(), fontSize: 12)
             }
             .frame(maxWidth: .infinity, maxHeight: 100, alignment: .topLeading)
         }
@@ -200,37 +204,56 @@ struct TokenPlayground: View {
 
     private func generateCode() -> String {
         """
-        // 修改 SeedToken
+        // \(tr("token.playground.code_comment"))
         let config = Moin.ConfigProvider.shared
         config.setPrimaryColor(Color(hex: "\(config.seed.colorPrimary.hexString)"))
-        config.setBorderRadius(\(Int(config.seed.borderRadius)))
-        config.setFontSize(\(Int(config.seed.fontSize)))
+        config.configureSeed { seed in
+            seed.colorSuccess = Color(hex: "\(config.seed.colorSuccess.hexString)")
+            seed.colorWarning = Color(hex: "\(config.seed.colorWarning.hexString)")
+            seed.colorError = Color(hex: "\(config.seed.colorError.hexString)")
+            seed.colorInfo = Color(hex: "\(config.seed.colorInfo.hexString)")
+            seed.borderRadius = \(Int(config.seed.borderRadius))
+            seed.fontSize = \(Int(config.seed.fontSize))
+            seed.controlHeight = \(Int(config.seed.controlHeight))
+        }
         """
     }
 
     // MARK: - Panel Tab Bar
 
     private var panelTabBar: some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: 0) {
-                ForEach(TokenPlaygroundPanelTab.allCases, id: \.self) { tab in
-                    Button {
-                        selectedPanel = tab
-                    } label: {
-                        Text(tr(tab.titleKey))
-                            .font(.system(size: 11, weight: selectedPanel == tab ? .medium : .regular))
-                            .foregroundStyle(selectedPanel == tab ? config.token.colorPrimary : .secondary)
-                            .padding(.horizontal, Moin.Constants.Spacing.sm)
-                            .padding(.vertical, Moin.Constants.Spacing.xs)
-                            .contentShape(Rectangle())
+        VStack(spacing: 4) {
+            ForEach(TokenPlaygroundPanelTab.allCases, id: \.self) { tab in
+                Button {
+                    selectedPanel = tab
+                } label: {
+                    VStack(spacing: 4) {
+                        Image(systemName: tab.icon)
+                            .font(.system(size: 16))
+                        Text(tab.title)
+                            .font(.system(size: 10, weight: selectedPanel == tab ? .medium : .regular))
                     }
-                    .buttonStyle(.plain)
-                    .background(selectedPanel == tab ? config.token.colorPrimary.opacity(0.1) : .clear)
+                    .foregroundStyle(selectedPanel == tab ? config.token.colorPrimary : .secondary)
+                    .frame(width: 52, height: 52)
+                    .contentShape(Rectangle())
+                }
+                .buttonStyle(.plain)
+                .background(
+                    RoundedRectangle(cornerRadius: 8)
+                        .fill(selectedPanel == tab ? config.token.colorPrimary.opacity(0.1) : .clear)
+                )
+                .onHover { hovering in
+                    if hovering {
+                        NSCursor.pointingHand.push()
+                    } else {
+                        NSCursor.pop()
+                    }
                 }
             }
-            .padding(.horizontal, Moin.Constants.Spacing.xs)
+            Spacer()
         }
-        .frame(height: 32)
+        .padding(.vertical, Moin.Constants.Spacing.xs)
+        .frame(width: 56)
         .background(Color(nsColor: .controlBackgroundColor))
     }
 
@@ -243,7 +266,7 @@ struct TokenPlayground: View {
                 HStack {
                     Spacer()
                     Button {
-                        config.regenerateTokens()
+                        config.reset()
                     } label: {
                         HStack(spacing: 4) {
                             Image(systemName: "arrow.counterclockwise")
@@ -253,6 +276,13 @@ struct TokenPlayground: View {
                         .foregroundStyle(.secondary)
                     }
                     .buttonStyle(.plain)
+                    .onHover { hovering in
+                        if hovering {
+                            NSCursor.pointingHand.push()
+                        } else {
+                            NSCursor.pop()
+                        }
+                    }
                 }
 
                 // 根据选中 Tab 显示内容
@@ -281,39 +311,39 @@ struct TokenPlayground: View {
         VStack(alignment: .leading, spacing: Moin.Constants.Spacing.md) {
             // 品牌色
             tokenGroup(tr("token.playground.brand_colors")) {
-                TokenColorRow(label: "colorPrimary", color: $config.seed.colorPrimary)
-                TokenColorRow(label: "colorSuccess", color: $config.seed.colorSuccess)
-                TokenColorRow(label: "colorWarning", color: $config.seed.colorWarning)
-                TokenColorRow(label: "colorError", color: $config.seed.colorError)
-                TokenColorRow(label: "colorInfo", color: $config.seed.colorInfo)
-                TokenColorRow(label: "colorLink", color: $config.seed.colorLink)
+                ColorPresetRow(label: "colorPrimary", color: $config.seed.colorPrimary, onChange: config.regenerateTokens)
+                ColorPresetRow(label: "colorSuccess", color: $config.seed.colorSuccess, onChange: config.regenerateTokens)
+                ColorPresetRow(label: "colorWarning", color: $config.seed.colorWarning, onChange: config.regenerateTokens)
+                ColorPresetRow(label: "colorError", color: $config.seed.colorError, onChange: config.regenerateTokens)
+                ColorPresetRow(label: "colorInfo", color: $config.seed.colorInfo, onChange: config.regenerateTokens)
+                ColorPresetRow(label: "colorLink", color: $config.seed.colorLink, onChange: config.regenerateTokens)
             }
 
             // 基础色
             tokenGroup(tr("token.playground.base_colors")) {
-                TokenColorRow(label: "colorTextBase", color: $config.seed.colorTextBase)
-                TokenColorRow(label: "colorBgBase", color: $config.seed.colorBgBase)
+                ColorPresetRow(label: "colorTextBase", color: $config.seed.colorTextBase, onChange: config.regenerateTokens)
+                ColorPresetRow(label: "colorBgBase", color: $config.seed.colorBgBase, onChange: config.regenerateTokens)
             }
 
             // 字体
             tokenGroup(tr("token.playground.font")) {
-                TokenValueRow(label: "fontSize", value: $config.seed.fontSize, range: 10...20)
+                TokenValueRow(label: "fontSize", value: $config.seed.fontSize, range: 10...20, onChange: config.regenerateTokens)
             }
 
             // 圆角
             tokenGroup(tr("token.playground.radius")) {
-                TokenValueRow(label: "borderRadius", value: $config.seed.borderRadius, range: 0...20)
+                TokenValueRow(label: "borderRadius", value: $config.seed.borderRadius, range: 0...20, onChange: config.regenerateTokens)
             }
 
             // 尺寸
             tokenGroup(tr("token.playground.size")) {
-                TokenValueRow(label: "controlHeight", value: $config.seed.controlHeight, range: 24...48)
-                TokenValueRow(label: "sizeUnit", value: $config.seed.sizeUnit, range: 2...8)
+                TokenValueRow(label: "controlHeight", value: $config.seed.controlHeight, range: 24...48, onChange: config.regenerateTokens)
+                TokenValueRow(label: "sizeUnit", value: $config.seed.sizeUnit, range: 2...8, onChange: config.regenerateTokens)
             }
 
             // 线条
             tokenGroup(tr("token.playground.line")) {
-                TokenValueRow(label: "lineWidth", value: $config.seed.lineWidth, range: 1...4)
+                TokenValueRow(label: "lineWidth", value: $config.seed.lineWidth, range: 1...4, onChange: config.regenerateTokens)
             }
         }
     }
@@ -376,11 +406,11 @@ struct TokenPlayground: View {
     private var buttonTokenPanel: some View {
         VStack(alignment: .leading, spacing: Moin.Constants.Spacing.md) {
             tokenGroup(tr("token.playground.button_colors")) {
-                TokenColorRow(label: "defaultColor", color: $config.components.button.defaultColor)
-                TokenColorRow(label: "defaultBg", color: $config.components.button.defaultBg)
-                TokenColorRow(label: "defaultBorderColor", color: $config.components.button.defaultBorderColor)
-                TokenColorRow(label: "primaryColor", color: $config.components.button.primaryColor)
-                TokenColorRow(label: "dangerColor", color: $config.components.button.dangerColor)
+                ColorPresetRow(label: "defaultColor", color: $config.components.button.defaultColor)
+                ColorPresetRow(label: "defaultBg", color: $config.components.button.defaultBg)
+                ColorPresetRow(label: "defaultBorderColor", color: $config.components.button.defaultBorderColor)
+                ColorPresetRow(label: "primaryColor", color: $config.components.button.primaryColor)
+                ColorPresetRow(label: "dangerColor", color: $config.components.button.dangerColor)
             }
 
             tokenGroup(tr("token.playground.button_sizes")) {
@@ -404,9 +434,9 @@ struct TokenPlayground: View {
     private var tagTokenPanel: some View {
         VStack(alignment: .leading, spacing: Moin.Constants.Spacing.md) {
             tokenGroup(tr("token.playground.tag_colors")) {
-                TokenColorRow(label: "defaultBg", color: $config.components.tag.defaultBg)
-                TokenColorRow(label: "defaultColor", color: $config.components.tag.defaultColor)
-                TokenColorRow(label: "solidTextColor", color: $config.components.tag.solidTextColor)
+                ColorPresetRow(label: "defaultBg", color: $config.components.tag.defaultBg)
+                ColorPresetRow(label: "defaultColor", color: $config.components.tag.defaultColor)
+                ColorPresetRow(label: "solidTextColor", color: $config.components.tag.solidTextColor)
             }
 
             tokenGroup(tr("token.playground.tag_sizes")) {
@@ -436,8 +466,8 @@ struct TokenPlayground: View {
     private var dividerTokenPanel: some View {
         VStack(alignment: .leading, spacing: Moin.Constants.Spacing.md) {
             tokenGroup(tr("token.playground.divider_colors")) {
-                TokenColorRow(label: "lineColor", color: $config.components.divider.lineColor)
-                TokenColorRow(label: "textColor", color: $config.components.divider.textColor)
+                ColorPresetRow(label: "lineColor", color: $config.components.divider.lineColor)
+                ColorPresetRow(label: "textColor", color: $config.components.divider.textColor)
             }
 
             tokenGroup(tr("token.playground.divider_sizes")) {
