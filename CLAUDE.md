@@ -33,7 +33,7 @@ MoinUI (墨影UI) - macOS SwiftUI 组件库
 
 ## 工作流程
 
-1. **开始前**: `/session-sync load` 恢复进度，按需 `read_memory` 读取其他记忆
+1. **开始前**: `/session-sync load` 恢复进度，按需 `read_memory` 读取其他记忆，如读取 `roadmap` 加载项目计划
 2. **编写代码**: 遵循命名约定和 Token 规则
 3. **构建测试**: `swift build && swift test`
 4. **Demo**: 添加示例和翻译
