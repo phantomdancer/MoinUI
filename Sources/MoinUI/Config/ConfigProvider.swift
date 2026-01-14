@@ -1479,6 +1479,7 @@ public extension Moin {
                 .environment(\.moinLocale, config.locale)
                 .environment(\.moinToken, config.token)
                 .environment(\.moinButtonToken, config.components.button)
+                .environment(\.moinTagToken, config.components.tag)
                 .environment(\.moinSpaceToken, config.components.space)
                 .environment(\.moinDividerToken, config.components.divider)
                 .environmentObject(config)

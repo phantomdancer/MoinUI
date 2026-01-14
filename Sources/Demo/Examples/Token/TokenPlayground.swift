@@ -133,12 +133,19 @@ struct TokenPlayground: View {
                         Text(tr("token.playground.tags"))
                             .font(.system(size: 12, weight: .medium))
                             .foregroundStyle(.secondary)
+                        // Filled 变体（默认）- defaultBg/defaultColor 影响 Default 标签
                         HStack(spacing: Moin.Constants.Spacing.sm) {
                             Moin.Tag("Default")
                             Moin.Tag("Primary", color: .primary)
                             Moin.Tag("Success", color: .success)
                             Moin.Tag("Warning", color: .warning)
                             Moin.Tag("Error", color: .error)
+                        }
+                        // Solid 变体 - solidTextColor 影响所有 solid 标签
+                        HStack(spacing: Moin.Constants.Spacing.sm) {
+                            Moin.Tag("Default", variant: .solid)
+                            Moin.Tag("Primary", color: .primary, variant: .solid)
+                            Moin.Tag("Success", color: .success, variant: .solid)
                         }
                     }
 
