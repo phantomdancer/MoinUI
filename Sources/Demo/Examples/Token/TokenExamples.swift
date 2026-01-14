@@ -1,9 +1,16 @@
 import SwiftUI
 import MoinUI
 
+/// Token 页面 Tab
+enum TokenExamplesTab: String, CaseIterable {
+    case examples
+    case playground
+}
+
 /// Token 系统示例页面
 struct TokenExamples: View {
     @Localized var tr
+    @Binding var selectedTab: TokenExamplesTab
     @ObservedObject private var config = Moin.ConfigProvider.shared
 
     /// 锚点列表
@@ -16,6 +23,18 @@ struct TokenExamples: View {
     ]
 
     var body: some View {
+        Group {
+            if selectedTab == .examples {
+                examplesContent
+            } else {
+                TokenPlayground()
+            }
+        }
+    }
+
+    // MARK: - Examples Content
+
+    private var examplesContent: some View {
         ExamplePageWithAnchor(pageName: "Token", anchors: anchors) { _ in
             introduction
 

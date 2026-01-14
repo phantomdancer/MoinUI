@@ -145,13 +145,14 @@ struct ContentView: View {
     @State private var tagTab: TagExamplesTab = .examples
     @State private var spaceTab: SpaceExamplesTab = .examples
     @State private var dividerTab: DividerExamplesTab = .examples
+    @State private var tokenTab: TokenExamplesTab = .examples
 
     var body: some View {
         NavigationSplitView {
             Sidebar(selection: $navManager.selectedItem)
                 .navigationSplitViewColumnWidth(min: 220, ideal: 280, max: 400)
         } detail: {
-            DetailView(item: navManager.selectedItem, buttonTab: $buttonTab, typographyTab: $typographyTab, tagTab: $tagTab, spaceTab: $spaceTab, dividerTab: $dividerTab)
+            DetailView(item: navManager.selectedItem, buttonTab: $buttonTab, typographyTab: $typographyTab, tagTab: $tagTab, spaceTab: $spaceTab, dividerTab: $dividerTab, tokenTab: $tokenTab)
                 .navigationTitle(navManager.selectedItem.map { tr($0.titleKey) } ?? "MoinUI")
                 .toolbar {
                     ToolbarItemGroup(placement: .primaryAction) {
@@ -210,6 +211,16 @@ struct ContentView: View {
                                 Text(tr("tab.playground")).tag(DividerExamplesTab.playground)
                                 Text(tr("tab.api")).tag(DividerExamplesTab.api)
                                 Text(tr("tab.token")).tag(DividerExamplesTab.token)
+                            }
+                            .pickerStyle(.segmented)
+                            .fixedSize()
+                        }
+
+                        // Token 页面显示 Tab 切换
+                        if navManager.selectedItem == .token {
+                            Picker("", selection: $tokenTab) {
+                                Text(tr("tab.examples")).tag(TokenExamplesTab.examples)
+                                Text(tr("tab.playground")).tag(TokenExamplesTab.playground)
                             }
                             .pickerStyle(.segmented)
                             .fixedSize()
@@ -365,6 +376,7 @@ struct DetailView: View {
     @Binding var tagTab: TagExamplesTab
     @Binding var spaceTab: SpaceExamplesTab
     @Binding var dividerTab: DividerExamplesTab
+    @Binding var tokenTab: TokenExamplesTab
 
     var body: some View {
         Group {
@@ -376,7 +388,7 @@ struct DetailView: View {
             case .theme:
                 ThemeView()
             case .token:
-                TokenExamples()
+                TokenExamples(selectedTab: $tokenTab)
             case .button:
                 ButtonExamples(selectedTab: $buttonTab)
             case .typography:
