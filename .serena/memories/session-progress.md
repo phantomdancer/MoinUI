@@ -1,13 +1,8 @@
 # 会话进度
 
-## 最近更新
-- 日期: 2026-01-14
-- 最新提交: 1d9b9bb feat(按钮/标签): 新增阴影效果和焦点状态功能
-
-## 当前任务
-- [ ] 待定
-
 ## 近期提交 (git log)
+- c6faf6f feat(会话同步): 添加会话进度同步功能和相关文档
+- d0993d8 docs: 更新工作流程文档，添加进度恢复和结束步骤
 - 1d9b9bb feat(按钮/标签): 新增阴影效果和焦点状态功能
 - 94942d5 feat(tag): 添加 Tag 组件专属 Token 并完善国际化
 - eeae570 docs: 更新组件文档和状态记录
@@ -16,46 +11,34 @@
 - d5429f9 feat(CheckableTag): 添加按压状态并优化交互样式
 - 17723d3 feat(components): 添加 Tag 组件及其相关功能
 - 11898e4 update
-- 55a5461 fix(本地化): 统一导航栏中英文混合文本为纯中文
-- 1125710 docs: 更新组件文档和开发路线图
 
 ## 变更统计 (最近5次提交)
 ```
+ Sources/Demo/Examples/Tag/TagTokenSection.swift    |  81 ++++++-
+ Sources/Demo/Locales/Button/en-US.json             |   7 +
  Sources/Demo/Locales/Button/zh-CN.json             |   7 +
- Sources/Demo/Locales/Tag/en-US.json                |  51 ++++-
- Sources/Demo/Locales/Tag/zh-CN.json                |  59 ++++-
+ Sources/Demo/Locales/Tag/en-US.json                |  30 ++-
+ Sources/Demo/Locales/Tag/zh-CN.json                |  30 ++-
  Sources/MoinUI/Components/Button/Button.swift      |  53 ++++-
- Sources/MoinUI/Components/Tag/Tag.swift            | 122 ++++++++--
- Sources/MoinUI/Components/Tag/TagColor.swift       |   4 +-
- Sources/MoinUI/Components/Tag/TagSize.swift        |  10 +
+ Sources/MoinUI/Components/Tag/Tag.swift            |  49 +++--
  Sources/MoinUI/Config/ConfigProvider.swift         | 128 ++++++++++-
  package.json                                       |   3 +-
- 45 files changed, 2391 insertions(+), 328 deletions(-)
-```
-
-## Git 状态
-```
-M  CLAUDE.md
-?? .claude/skills/session-sync/
-?? .serena/memories/session-progress.md
+ 44 files changed, 2309 insertions(+), 279 deletions(-)
 ```
 
 ## 最近命令历史
 <command>
-/session-sync status
-</command>
-<command>
-generate-progress.sh 和 list-sessions.sh 生成的内容需要合并到一起
-</command>
-<command>
-会话信息这一部分不要：
-## 会话信息
-- 项目路径编码: Users-finn-.virtualenvs-moin-ui-MoinUi
-- 会话目录: /Users/finn/.claude/projects/-Users-finn-.virtualenvs-moin-ui-MoinUi
-</command>
-<command>
-generate-progress.sh 脚本应当直接覆盖生成.serena/memories/session-progress.md文件的内容即可
-</command>
-<command>
 最近命令历史 用xml标签把每一条分开
+</command>
+<command>
+/ide 
+</command>
+<command>
+流程需要更新了，应该是使用skill来操作进度，而不是serena
+</command>
+<command>
+流程不是全部去掉啊，serena本身的记忆功能还是需要的，因为我有roadmap等还需要操作呢。只是把session-sync整合加进去
+</command>
+<command>
+现在该做什么了
 </command>
