@@ -24,7 +24,6 @@
     "button_token_count": "41 properties",
     "space_token_count": "3 properties",
     "divider_token_count": "9 properties",
-    "badge_token_count": "14 properties",
     "component_usage": "Override Component Token",
     "override_component": "Override component token",
     "regenerate_all": "Regenerate all tokens (reset to derived values)",
@@ -111,12 +110,7 @@
       "code_button_config": "Button Token Configuration",
       "code_tag_config": "Tag Token Configuration",
       "code_space_config": "Space Token Configuration",
-      "code_divider_config": "Divider Token Configuration",
-      "code_badge_config": "Badge Token Configuration",
-      "badges": "Badges",
-      "badge_colors": "Badge Colors",
-      "badge_sizes": "Badge Sizes",
-      "badge_shadow": "Badge Shadow"
+      "code_divider_config": "Divider Token Configuration"
     }
   }
 }

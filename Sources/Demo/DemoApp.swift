@@ -292,19 +292,19 @@ enum NavItem: String, Identifiable {
 
     var icon: String {
         switch self {
-        case .introduction: return "house"
-        case .quickStart: return "play.circle"
-        case .theme: return "paintbrush"
-        case .token: return "square.stack.3d.up"
-        case .button: return "rectangle.and.hand.point.up.left"
-        case .typography: return "textformat.size"
-        case .tag: return "tag"
-        case .badge: return "app.badge"
-        case .space: return "rectangle.split.3x1"
-        case .divider: return "minus"
-        case .configProvider: return "gearshape"
-        case .localization: return "globe"
-        case .colors: return "paintpalette"
+        case .introduction: return DemoIcons.introduction
+        case .quickStart: return DemoIcons.quickStart
+        case .theme: return DemoIcons.theme
+        case .token: return DemoIcons.token
+        case .button: return DemoIcons.button
+        case .typography: return DemoIcons.typography
+        case .tag: return DemoIcons.tag
+        case .badge: return DemoIcons.badge
+        case .space: return DemoIcons.space
+        case .divider: return DemoIcons.divider
+        case .configProvider: return DemoIcons.configProvider
+        case .localization: return DemoIcons.localization
+        case .colors: return DemoIcons.colors
         }
     }
 

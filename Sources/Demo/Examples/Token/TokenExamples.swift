@@ -284,6 +284,7 @@ struct TokenExamples: View {
                 componentTokenRow("ButtonToken", "\(tr("token.button_token_count"))")
                 componentTokenRow("SpaceToken", "\(tr("token.space_token_count"))")
                 componentTokenRow("DividerToken", "\(tr("token.divider_token_count"))")
+                componentTokenRow("BadgeToken", "\(tr("token.badge_token_count"))")
             }
 
             ExampleSection(title: tr("token.component_usage"), description: "") {

@@ -24,7 +24,6 @@
     "button_token_count": "41 个属性",
     "space_token_count": "3 个属性",
     "divider_token_count": "9 个属性",
-    "badge_token_count": "14 个属性",
     "component_usage": "组件 Token 覆盖",
     "override_component": "覆盖组件 Token",
     "regenerate_all": "重新生成所有 Token（重置为派生值）",
@@ -111,12 +110,7 @@
       "code_button_config": "Button Token 配置",
       "code_tag_config": "Tag Token 配置",
       "code_space_config": "Space Token 配置",
-      "code_divider_config": "Divider Token 配置",
-      "code_badge_config": "Badge Token 配置",
-      "badges": "徽标",
-      "badge_colors": "徽标颜色",
-      "badge_sizes": "徽标尺寸",
-      "badge_shadow": "徽标阴影"
+      "code_divider_config": "Divider Token 配置"
     }
   }
 }
