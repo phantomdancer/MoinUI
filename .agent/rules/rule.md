@@ -1,1 +1,1 @@
-/Users/finn/workspace/MoinUi/CLAUDE.md
+CLAUDE.md
