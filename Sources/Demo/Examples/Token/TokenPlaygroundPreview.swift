@@ -78,7 +78,7 @@ struct TokenPlaygroundPreview: View {
                         // Filled 变体（默认）- defaultBg/defaultColor 影响 Default 标签
                         HStack(spacing: Moin.Constants.Spacing.sm) {
                             Moin.Tag("Default")
-                            Moin.Tag("Primary", color: .primary)
+                            Moin.Tag("Processing", color: .processing)
                             Moin.Tag("Success", color: .success)
                             Moin.Tag("Warning", color: .warning)
                             Moin.Tag("Error", color: .error)
@@ -86,7 +86,7 @@ struct TokenPlaygroundPreview: View {
                         // Solid 变体 - solidTextColor 影响所有 solid 标签
                         HStack(spacing: Moin.Constants.Spacing.sm) {
                             Moin.Tag("Default", variant: .solid)
-                            Moin.Tag("Primary", color: .primary, variant: .solid)
+                            Moin.Tag("Processing", color: .processing, variant: .solid)
                             Moin.Tag("Success", color: .success, variant: .solid)
                         }
                     }
@@ -116,6 +116,24 @@ struct TokenPlaygroundPreview: View {
                                     )
                             }
                             Moin.Badge(count: 100, color: .success) {
+                                RoundedRectangle(cornerRadius: 4)
+                                    .fill(Color.gray.opacity(0.15))
+                                    .frame(width: 40, height: 40)
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 4)
+                                            .stroke(Color.gray.opacity(0.2), lineWidth: 1)
+                                    )
+                            }
+                            Moin.Badge(dot: true) {
+                                RoundedRectangle(cornerRadius: 4)
+                                    .fill(Color.gray.opacity(0.15))
+                                    .frame(width: 40, height: 40)
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 4)
+                                            .stroke(Color.gray.opacity(0.2), lineWidth: 1)
+                                    )
+                            }
+                            Moin.Badge(dot: true, size: .small) {
                                 RoundedRectangle(cornerRadius: 4)
                                     .fill(Color.gray.opacity(0.15))
                                     .frame(width: 40, height: 40)

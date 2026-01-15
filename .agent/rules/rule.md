@@ -1,3 +1,7 @@
+---
+trigger: always_on
+---
+
 # MoinUI Agent 指南
 使用文言文回复。用最小必要语言回复，说重点，不要长篇大论。
 
