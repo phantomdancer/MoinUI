@@ -40,6 +40,8 @@ MoinUI (墨影UI) - macOS SwiftUI 组件库
 5. **结束时**: 用 `write_memory` / `edit_memory` 更新 roadmap 等记忆
 6. **回复**: 完成后回复的最后一行必须为：✅ 어머!
 
+使用serena操作记忆，如果serena不可用，可自行阅读 .serena/memories目录下的记忆文件。
+
 ## 设计原则
 
 - **Token 驱动**: 所有样式通过 token 实现

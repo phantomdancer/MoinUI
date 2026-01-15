@@ -2,13 +2,10 @@
 set -e
 
 SOURCE="CLAUDE.md"
-TARGETS=("AGENTS.md")
+TARGETS=("AGENTS.md" ".agent/rules/rule.md")
 
 for target in "${TARGETS[@]}"; do
-    if [ -L "$target" ]; then
-        rm -f "$target"
-    fi
-    ln -sf "$SOURCE" "$target"
+    cp -f "$SOURCE" "$target"
     echo "已同步: $SOURCE -> $target"
 done
 
