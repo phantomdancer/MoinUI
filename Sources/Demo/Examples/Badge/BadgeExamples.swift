@@ -387,41 +387,57 @@ struct BadgeExamples: View {
             description: tr("badge.colorful_desc")
         ) {
             VStack(alignment: .leading, spacing: Moin.Constants.Spacing.md) {
+                // 语义色
                 HStack(spacing: Moin.Constants.Spacing.xl) {
-                    Moin.Badge(count: 5, color: .default) {
-                        sampleBox
-                    }
-                    Moin.Badge(count: 5, color: .success) {
-                        sampleBox
-                    }
-                    Moin.Badge(count: 5, color: .processing) {
-                        sampleBox
-                    }
-                    Moin.Badge(count: 5, color: .warning) {
-                        sampleBox
-                    }
-                    Moin.Badge(count: 5, color: .error) {
-                        sampleBox
-                    }
+                    Moin.Badge(count: 5, color: .default) { sampleBox }
+                    Moin.Badge(count: 5, color: .success) { sampleBox }
+                    Moin.Badge(count: 5, color: .processing) { sampleBox }
+                    Moin.Badge(count: 5, color: .warning) { sampleBox }
+                    Moin.Badge(count: 5, color: .error) { sampleBox }
+                }
+                
+                // 预设色
+                HStack(spacing: Moin.Constants.Spacing.xl) {
+                    Moin.Badge(count: 5, color: .magenta) { sampleBox }
+                    Moin.Badge(count: 5, color: .red) { sampleBox }
+                    Moin.Badge(count: 5, color: .volcano) { sampleBox }
+                    Moin.Badge(count: 5, color: .orange) { sampleBox }
+                    Moin.Badge(count: 5, color: .gold) { sampleBox }
                 }
                 HStack(spacing: Moin.Constants.Spacing.xl) {
-                    Moin.Badge(count: 5, color: .custom(.purple)) {
-                        sampleBox
-                    }
-                    Moin.Badge(count: 5, color: .custom(.orange)) {
-                        sampleBox
-                    }
-                    Moin.Badge(count: 5, color: .custom(.cyan)) {
-                        sampleBox
-                    }
+                    Moin.Badge(count: 5, color: .lime) { sampleBox }
+                    Moin.Badge(count: 5, color: .green) { sampleBox }
+                    Moin.Badge(count: 5, color: .cyan) { sampleBox }
+                    Moin.Badge(count: 5, color: .blue) { sampleBox }
+                    Moin.Badge(count: 5, color: .geekblue) { sampleBox }
+                    Moin.Badge(count: 5, color: .purple) { sampleBox }
+                }
+                
+                // 自定义颜色
+                HStack(spacing: Moin.Constants.Spacing.xl) {
+                    Moin.Badge(count: 5, color: .custom(Color(hex: 0xf50))) { sampleBox }
+                    Moin.Badge(count: 5, color: .custom(Color(hex: 0x2db7f5))) { sampleBox }
+                    Moin.Badge(count: 5, color: .custom(Color(hex: 0x87d068))) { sampleBox }
+                    Moin.Badge(count: 5, color: .custom(Color(hex: 0x108ee9))) { sampleBox }
                 }
             }
         } code: {
             """
+            // \(tr("tag.semantic_colors"))
+            Moin.Badge(count: 5, color: .default) { ... }
             Moin.Badge(count: 5, color: .success) { ... }
             Moin.Badge(count: 5, color: .processing) { ... }
             Moin.Badge(count: 5, color: .warning) { ... }
-            Moin.Badge(count: 5, color: .custom(.purple)) { ... }
+            Moin.Badge(count: 5, color: .error) { ... }
+
+            // \(tr("tag.preset_colors"))
+            Moin.Badge(count: 5, color: .magenta) { ... }
+            Moin.Badge(count: 5, color: .red) { ... }
+            Moin.Badge(count: 5, color: .volcano) { ... }
+            // ...
+
+            // \(tr("tag.custom_colors"))
+            Moin.Badge(count: 5, color: .custom(Color(hex: 0xf50))) { ... }
             """
         }
     }
