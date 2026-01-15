@@ -75,7 +75,7 @@ struct TagAPIContent: View {
                     rows: [
                         (".default", "-", "-", tr("tag.api.color_default")),
                         (".success", "-", "-", tr("tag.api.color_success")),
-                        (".primary", "-", "-", tr("tag.api.color_primary")),
+                        (".processing", "-", "-", tr("tag.api.color_processing")),
                         (".warning", "-", "-", tr("tag.api.color_warning")),
                         (".error", "-", "-", tr("tag.api.color_error")),
                         (".custom(Color)", "-", "-", tr("tag.api.color_custom")),

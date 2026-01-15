@@ -103,8 +103,9 @@ struct TagExamples: View {
             VStack(alignment: .leading, spacing: Moin.Constants.Spacing.md) {
                 // 语义色
                 HStack(spacing: Moin.Constants.Spacing.sm) {
+                    Moin.Tag(tr("tag.example.default"), color: .default)
                     Moin.Tag(tr("tag.example.success"), color: .success)
-                    Moin.Tag(tr("tag.example.primary"), color: .primary)
+                    Moin.Tag(tr("tag.example.processing"), color: .processing)
                     Moin.Tag(tr("tag.example.warning"), color: .warning)
                     Moin.Tag(tr("tag.example.error"), color: .error)
                 }
@@ -138,8 +139,9 @@ struct TagExamples: View {
         } code: {
             """
             // \(tr("tag.semantic_colors"))
+            Moin.Tag("\(tr("tag.example.default"))", color: .default)
             Moin.Tag("\(tr("tag.example.success"))", color: .success)
-            Moin.Tag("\(tr("tag.example.primary"))", color: .primary)
+            Moin.Tag("\(tr("tag.example.processing"))", color: .processing)
             Moin.Tag("\(tr("tag.example.warning"))", color: .warning)
             Moin.Tag("\(tr("tag.example.error"))", color: .error)
 
@@ -182,7 +184,7 @@ struct TagExamples: View {
             VStack(alignment: .leading, spacing: Moin.Constants.Spacing.md) {
                 HStack(spacing: Moin.Constants.Spacing.sm) {
                     Moin.Tag(tr("tag.example.tag1"), round: true)
-                    Moin.Tag(tr("tag.example.tag2"), color: .primary, round: true)
+                    Moin.Tag(tr("tag.example.tag2"), color: .processing, round: true)
                     Moin.Tag(tr("tag.example.tag3"), color: .success, round: true)
                 }
 
@@ -195,7 +197,7 @@ struct TagExamples: View {
         } code: {
             """
             Moin.Tag("\(tr("tag.example.tag1"))", round: true)
-            Moin.Tag("\(tr("tag.example.tag2"))", color: .primary, round: true)
+            Moin.Tag("\(tr("tag.example.tag2"))", color: .processing, round: true)
             Moin.Tag("\(tr("tag.example.large"))", size: .large, round: true)
             """
         }
@@ -208,10 +210,17 @@ struct TagExamples: View {
         ) {
             VStack(alignment: .leading, spacing: Moin.Constants.Spacing.md) {
                 HStack(spacing: Moin.Constants.Spacing.sm) {
-                    Moin.Tag(tr("tag.example.filled"), color: .primary, variant: .filled)
-                    Moin.Tag(tr("tag.example.outlined"), color: .primary, variant: .outlined)
-                    Moin.Tag(tr("tag.example.solid"), color: .primary, variant: .solid)
-                    Moin.Tag(tr("tag.example.borderless"), color: .primary, variant: .borderless)
+                    Moin.Tag(tr("tag.example.filled"), color: .default, variant: .filled)
+                    Moin.Tag(tr("tag.example.outlined"), color: .default, variant: .outlined)
+                    Moin.Tag(tr("tag.example.solid"), color: .default, variant: .solid)
+                    Moin.Tag(tr("tag.example.borderless"), color: .default, variant: .borderless)
+                }
+
+                HStack(spacing: Moin.Constants.Spacing.sm) {
+                    Moin.Tag(tr("tag.example.filled"), color: .processing, variant: .filled)
+                    Moin.Tag(tr("tag.example.outlined"), color: .processing, variant: .outlined)
+                    Moin.Tag(tr("tag.example.solid"), color: .processing, variant: .solid)
+                    Moin.Tag(tr("tag.example.borderless"), color: .processing, variant: .borderless)
                 }
 
                 HStack(spacing: Moin.Constants.Spacing.sm) {
@@ -223,10 +232,10 @@ struct TagExamples: View {
             }
         } code: {
             """
-            Moin.Tag("\(tr("tag.example.filled"))", color: .primary, variant: .filled)
-            Moin.Tag("\(tr("tag.example.outlined"))", color: .primary, variant: .outlined)
-            Moin.Tag("\(tr("tag.example.solid"))", color: .primary, variant: .solid)
-            Moin.Tag("\(tr("tag.example.borderless"))", color: .primary, variant: .borderless)
+            Moin.Tag("\(tr("tag.example.filled"))", color: .default, variant: .filled)
+            Moin.Tag("\(tr("tag.example.outlined"))", color: .default, variant: .outlined)
+            Moin.Tag("\(tr("tag.example.solid"))", color: .default, variant: .solid)
+            Moin.Tag("\(tr("tag.example.borderless"))", color: .default, variant: .borderless)
             """
         }
     }

@@ -19,12 +19,12 @@
   "tag.checkable": "Checkable",
   "tag.checkable_desc": "CheckableTag supports toggle selection, similar to Checkbox.",
   "tag.reset": "Reset",
-
   "tag.example.tag1": "Tag 1",
   "tag.example.tag2": "Tag 2",
   "tag.example.tag3": "Tag 3",
   "tag.example.success": "Success",
-  "tag.example.primary": "Primary",
+  "tag.example.default": "Default",
+  "tag.example.processing": "Processing",
   "tag.example.warning": "Warning",
   "tag.example.error": "Error",
   "tag.example.filled": "Filled",
@@ -44,7 +44,6 @@
   "tag.example.large": "Large",
   "tag.example.medium": "Medium",
   "tag.example.small": "Small",
-
   "tag.playground.text": "Text",
   "tag.playground.text_placeholder": "Enter tag text",
   "tag.playground.color": "Color",
@@ -55,7 +54,6 @@
   "tag.playground.options": "Options",
   "tag.playground.icon": "Show Icon",
   "tag.playground.closable": "Closable",
-
   "tag.api.tag_desc": "Tag component for displaying labels and categories.",
   "tag.api.checkable_desc": "Checkable tag with toggle selection support.",
   "tag.api.text": "Tag text content",
@@ -69,7 +67,7 @@
   "tag.api.tagcolor_desc": "Tag color enumeration",
   "tag.api.color_default": "Default gray",
   "tag.api.color_success": "Success green",
-  "tag.api.color_primary": "Primary color",
+  "tag.api.color_processing": "Processing color",
   "tag.api.color_warning": "Warning orange",
   "tag.api.color_error": "Error red",
   "tag.api.color_custom": "Custom color",
@@ -85,7 +83,6 @@
   "tag.api.size_small": "Small size",
   "tag.api.size_medium": "Medium size (default)",
   "tag.api.size_large": "Large size",
-
   "tag.token.title": "Tag Token",
   "tag.token.desc": "Design tokens used by Tag component.",
   "tag.token.component": "Basic Token",

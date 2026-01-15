@@ -2,21 +2,24 @@ import SwiftUI
 
 public extension Moin {
     /// 徽标组件 - 用于展示数字、状态或小红点
-    struct Badge<Content: View, Indicator: View>: View {
+    struct Badge<Content: View, CountView: View>: View {
         @Environment(\.moinToken) private var token
+        @Environment(\.moinBadgeToken) private var badgeToken
         @Environment(\.colorScheme) private var colorScheme
 
         private let content: Content?
-        private let count: Int?
+        private let countNumber: Int?
+        private let countView: CountView?
         private let dot: Bool
         private let showZero: Bool
         private let overflowCount: Int
         private let size: BadgeSize
         private let color: BadgeColor
         private let offset: (x: CGFloat, y: CGFloat)?
-        private let customIndicator: Indicator?
+        private let status: BadgeStatus?
+        private let text: String?
 
-        /// 创建带内容的徽标（数字模式）
+        /// 创建带数字的徽标
         public init(
             count: Int? = nil,
             dot: Bool = false,
@@ -26,34 +29,38 @@ public extension Moin {
             color: BadgeColor = .default,
             offset: (x: CGFloat, y: CGFloat)? = nil,
             @ViewBuilder content: () -> Content
-        ) where Indicator == EmptyView {
+        ) where CountView == EmptyView {
             self.content = content()
-            self.count = count
+            self.countNumber = count
+            self.countView = nil
             self.dot = dot
             self.showZero = showZero
             self.overflowCount = overflowCount
             self.size = size
             self.color = color
             self.offset = offset
-            self.customIndicator = nil
+            self.status = nil
+            self.text = nil
         }
 
-        /// 创建带自定义指示器的徽标
+        /// 创建带自定义指示器的徽标（类似 Ant Design count={<Icon/>}）
         public init(
+            count: @escaping () -> CountView,
             size: BadgeSize = .default,
             offset: (x: CGFloat, y: CGFloat)? = nil,
-            @ViewBuilder indicator: () -> Indicator,
             @ViewBuilder content: () -> Content
         ) {
             self.content = content()
-            self.count = nil
+            self.countNumber = nil
+            self.countView = count()
             self.dot = false
             self.showZero = false
             self.overflowCount = 99
             self.size = size
             self.color = .default
             self.offset = offset
-            self.customIndicator = indicator()
+            self.status = nil
+            self.text = nil
         }
 
         public var body: some View {
@@ -64,58 +71,85 @@ public extension Moin {
                         badgeIndicator
                             .offset(x: offsetX, y: offsetY)
                     }
+            } else if let status = status {
+                // 状态模式（独立使用）
+                statusView(status)
             } else {
-                // 独立模式
+                // 独立徽标模式
                 badgeIndicator
             }
         }
 
         @ViewBuilder
         private var badgeIndicator: some View {
-            if let customIndicator = customIndicator {
+            if let countView = countView {
                 // 自定义指示器
-                customIndicator
+                countView
             } else if dot {
                 dotView
-            } else if let count = count, (count > 0 || showZero) {
-                countView(count)
+            } else if let count = countNumber, (count > 0 || showZero) {
+                numberView(count)
             }
         }
 
         private var dotView: some View {
             Circle()
-                .fill(badgeColor)
+                .fill(resolvedBadgeColor)
                 .frame(width: dotSize, height: dotSize)
-                .shadow(color: badgeColor.opacity(0.3), radius: 2, x: 0, y: 1)
+                .shadow(color: resolvedBadgeColor.opacity(badgeToken.shadowOpacity), radius: badgeToken.shadowRadius, x: 0, y: 1)
         }
 
-        private func countView(_ count: Int) -> some View {
+        private func numberView(_ count: Int) -> some View {
             let displayText = count > overflowCount ? "\(overflowCount)+" : "\(count)"
             return Text(displayText)
-                .font(.system(size: fontSize, weight: .medium))
-                .foregroundStyle(.white)
+                .font(.system(size: fontSize, weight: badgeToken.textFontWeight))
+                .foregroundStyle(badgeToken.textColor)
                 .lineLimit(1)
                 .fixedSize()
                 .padding(.horizontal, horizontalPadding)
                 .frame(minWidth: minWidth, minHeight: height)
-                .background(badgeColor)
+                .background(resolvedBadgeColor)
                 .clipShape(Capsule())
-                .shadow(color: badgeColor.opacity(0.3), radius: 2, x: 0, y: 1)
+                .shadow(color: resolvedBadgeColor.opacity(badgeToken.shadowOpacity), radius: badgeToken.shadowRadius, x: 0, y: 1)
         }
 
-        // MARK: - Size Properties
+        private func statusView(_ status: BadgeStatus) -> some View {
+            HStack(spacing: 6) {
+                Circle()
+                    .fill(statusColor(status))
+                    .frame(width: badgeToken.statusSize, height: badgeToken.statusSize)
+
+                if let text = text {
+                    Text(text)
+                        .font(.system(size: 13))
+                        .foregroundStyle(token.colorText)
+                }
+            }
+        }
+
+        private func statusColor(_ status: BadgeStatus) -> Color {
+            switch status {
+            case .success: return token.colorSuccess
+            case .processing: return token.colorPrimary
+            case .default: return token.colorTextSecondary
+            case .error: return token.colorDanger
+            case .warning: return token.colorWarning
+            }
+        }
+
+        // MARK: - Size Properties (from Token)
 
         private var fontSize: CGFloat {
             switch size {
-            case .default: return 11
-            case .small: return 10
+            case .default: return badgeToken.textFontSize
+            case .small: return badgeToken.textFontSizeSM
             }
         }
 
         private var height: CGFloat {
             switch size {
-            case .default: return 18
-            case .small: return 14
+            case .default: return badgeToken.indicatorHeight
+            case .small: return badgeToken.indicatorHeightSM
             }
         }
 
@@ -125,15 +159,15 @@ public extension Moin {
 
         private var horizontalPadding: CGFloat {
             switch size {
-            case .default: return 6
-            case .small: return 4
+            case .default: return badgeToken.paddingH
+            case .small: return badgeToken.paddingHSM
             }
         }
 
         private var dotSize: CGFloat {
             switch size {
-            case .default: return 8
-            case .small: return 6
+            case .default: return badgeToken.dotSize
+            case .small: return badgeToken.dotSizeSM
             }
         }
 
@@ -153,10 +187,10 @@ public extension Moin {
 
         private var isDark: Bool { colorScheme == .dark }
 
-        private var badgeColor: Color {
+        private var resolvedBadgeColor: Color {
             switch color {
             case .default:
-                return token.colorDanger
+                return badgeToken.badgeColor
             case .success:
                 return token.colorSuccess
             case .processing:
@@ -174,7 +208,7 @@ public extension Moin {
 
 // MARK: - 独立徽标（无内容）
 
-public extension Moin.Badge where Content == EmptyView, Indicator == EmptyView {
+public extension Moin.Badge where Content == EmptyView, CountView == EmptyView {
     /// 创建独立徽标（无子内容）
     init(
         count: Int? = nil,
@@ -185,24 +219,40 @@ public extension Moin.Badge where Content == EmptyView, Indicator == EmptyView {
         color: BadgeColor = .default
     ) {
         self.content = nil
-        self.count = count
+        self.countNumber = count
+        self.countView = nil
         self.dot = dot
         self.showZero = showZero
         self.overflowCount = overflowCount
         self.size = size
         self.color = color
         self.offset = nil
-        self.customIndicator = nil
+        self.status = nil
+        self.text = nil
+    }
+
+    /// 创建状态徽标（独立使用，类似 Ant Design）
+    init(status: BadgeStatus, text: String? = nil) {
+        self.content = nil
+        self.countNumber = nil
+        self.countView = nil
+        self.dot = false
+        self.showZero = false
+        self.overflowCount = 99
+        self.size = .default
+        self.color = .default
+        self.offset = nil
+        self.status = status
+        self.text = text
     }
 }
 
-// MARK: - 状态徽标
+// MARK: - StatusBadge (别名，保持兼容)
 
 public extension Moin {
-    /// 状态徽标 - 带状态点和文本的独立组件
+    /// 状态徽标 - Badge(status:text:) 的别名
+    @available(*, deprecated, message: "Use Moin.Badge(status:text:) instead")
     struct StatusBadge: View {
-        @Environment(\.moinToken) private var token
-
         private let status: BadgeStatus
         private let text: String?
 
@@ -212,27 +262,7 @@ public extension Moin {
         }
 
         public var body: some View {
-            HStack(spacing: 6) {
-                Circle()
-                    .fill(statusColor)
-                    .frame(width: 6, height: 6)
-
-                if let text = text {
-                    Text(text)
-                        .font(.system(size: 13))
-                        .foregroundStyle(token.colorText)
-                }
-            }
-        }
-
-        private var statusColor: Color {
-            switch status {
-            case .success: return token.colorSuccess
-            case .processing: return token.colorPrimary
-            case .default: return token.colorTextSecondary
-            case .error: return token.colorDanger
-            case .warning: return token.colorWarning
-            }
+            Moin.Badge(status: status, text: text)
         }
     }
 }

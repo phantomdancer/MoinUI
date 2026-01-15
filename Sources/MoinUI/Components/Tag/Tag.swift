@@ -167,7 +167,7 @@ public extension Moin {
             switch color {
             case .default: return token.colorTextSecondary
             case .success: return token.colorSuccess
-            case .primary: return token.colorPrimary
+            case .processing: return token.colorPrimary
             case .warning: return token.colorWarning
             case .error: return token.colorDanger
             case .custom(let c): return c
@@ -247,7 +247,7 @@ public extension Moin {
             switch color {
             case .success:
                 return tokenColorLevel(base: token.colorSuccess, level: level)
-            case .primary:
+            case .processing:
                 return tokenColorLevel(base: token.colorPrimary, level: level)
             case .warning:
                 return tokenColorLevel(base: token.colorWarning, level: level)

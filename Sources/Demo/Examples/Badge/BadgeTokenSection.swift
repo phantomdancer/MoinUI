@@ -5,6 +5,7 @@ import MoinUI
 struct BadgeTokenSection: View {
     @Localized var tr
     @Environment(\.moinToken) private var token
+    @Environment(\.moinBadgeToken) private var badgeToken
 
     var body: some View {
         ScrollView {
@@ -15,6 +16,34 @@ struct BadgeTokenSection: View {
 
                 Text(tr("badge.token.desc"))
                     .foregroundStyle(.secondary)
+
+                // 组件 Token
+                Text(tr("badge.token.component"))
+                    .font(.headline)
+
+                Text(tr("badge.token.component_desc"))
+                    .foregroundStyle(.secondary)
+
+                APITable(
+                    headers: (
+                        tr("api.property"),
+                        tr("api.type"),
+                        tr("api.default"),
+                        tr("api.description")
+                    ),
+                    rows: [
+                        ("indicatorHeight", "CGFloat", "\(Int(badgeToken.indicatorHeight))", tr("badge.token.indicatorHeight")),
+                        ("indicatorHeightSM", "CGFloat", "\(Int(badgeToken.indicatorHeightSM))", tr("badge.token.indicatorHeightSM")),
+                        ("dotSize", "CGFloat", "\(Int(badgeToken.dotSize))", tr("badge.token.dotSize")),
+                        ("dotSizeSM", "CGFloat", "\(Int(badgeToken.dotSizeSM))", tr("badge.token.dotSizeSM")),
+                        ("textFontSize", "CGFloat", "\(Int(badgeToken.textFontSize))", tr("badge.token.textFontSize")),
+                        ("textFontSizeSM", "CGFloat", "\(Int(badgeToken.textFontSizeSM))", tr("badge.token.textFontSizeSM")),
+                        ("statusSize", "CGFloat", "\(Int(badgeToken.statusSize))", tr("badge.token.statusSize")),
+                        ("paddingH", "CGFloat", "\(Int(badgeToken.paddingH))", tr("badge.token.paddingH")),
+                        ("paddingHSM", "CGFloat", "\(Int(badgeToken.paddingHSM))", tr("badge.token.paddingHSM")),
+                        ("shadowRadius", "CGFloat", "\(Int(badgeToken.shadowRadius))", tr("badge.token.shadowRadius")),
+                    ]
+                )
 
                 // 全局 Token
                 Text(tr("badge.token.global"))

@@ -19,6 +19,8 @@ struct BadgeExamples: View {
         AnchorItem(id: "basic", titleKey: "badge.basic"),
         AnchorItem(id: "overflow", titleKey: "badge.overflow"),
         AnchorItem(id: "dot", titleKey: "badge.dot"),
+        AnchorItem(id: "change", titleKey: "badge.change"),
+        AnchorItem(id: "offset", titleKey: "badge.offset"),
         AnchorItem(id: "custom", titleKey: "badge.custom"),
         AnchorItem(id: "standalone", titleKey: "badge.standalone"),
         AnchorItem(id: "status", titleKey: "badge.status"),
@@ -47,6 +49,8 @@ struct BadgeExamples: View {
             basicExample.id("basic")
             overflowExample.id("overflow")
             dotExample.id("dot")
+            changeExample.id("change")
+            offsetExample.id("offset")
             customExample.id("custom")
             standaloneExample.id("standalone")
             statusExample.id("status")
@@ -163,6 +167,77 @@ struct BadgeExamples: View {
         }
     }
 
+    @State private var dynamicCount = 5
+    @State private var showDot = true
+
+    private var changeExample: some View {
+        ExampleSection(
+            title: tr("badge.change"),
+            description: tr("badge.change_desc")
+        ) {
+            VStack(spacing: Moin.Constants.Spacing.lg) {
+                HStack(spacing: Moin.Constants.Spacing.xl) {
+                    Moin.Badge(count: dynamicCount) {
+                        sampleBox
+                    }
+                    HStack(spacing: Moin.Constants.Spacing.sm) {
+                        Moin.Button("-", color: .primary, variant: .outlined) {
+                            if dynamicCount > 0 { dynamicCount -= 1 }
+                        }
+                        Moin.Button("+", color: .primary, variant: .outlined) {
+                            dynamicCount += 1
+                        }
+                        Moin.Button("?", color: .primary, variant: .outlined) {
+                            dynamicCount = Int.random(in: 0...100)
+                        }
+                    }
+                }
+                HStack(spacing: Moin.Constants.Spacing.xl) {
+                    Moin.Badge(dot: showDot) {
+                        sampleBox
+                    }
+                    Toggle(tr("badge.playground.dot"), isOn: $showDot)
+                        .toggleStyle(.switch)
+                        .fixedSize()
+                }
+            }
+        } code: {
+            """
+            @State private var count = 5
+
+            Moin.Badge(count: count) { ... }
+
+            Button("-") { count -= 1 }
+            Button("+") { count += 1 }
+            """
+        }
+    }
+
+    private var offsetExample: some View {
+        ExampleSection(
+            title: tr("badge.offset"),
+            description: tr("badge.offset_desc")
+        ) {
+            HStack(spacing: Moin.Constants.Spacing.xl) {
+                Moin.Badge(count: 5, offset: (10, -10)) {
+                    sampleBox
+                }
+                Moin.Badge(count: 5, offset: (-5, 5)) {
+                    sampleBox
+                }
+            }
+        } code: {
+            """
+            Moin.Badge(count: 5, offset: (10, -10)) {
+                \(tr("badge.code.avatar"))
+            }
+            Moin.Badge(count: 5, offset: (-5, 5)) {
+                \(tr("badge.code.avatar"))
+            }
+            """
+        }
+    }
+
     private var customExample: some View {
         ExampleSection(
             title: tr("badge.custom"),
@@ -170,25 +245,25 @@ struct BadgeExamples: View {
         ) {
             HStack(spacing: Moin.Constants.Spacing.xl) {
                 // 自定义图标
-                Moin.Badge {
+                Moin.Badge(count: {
                     Image(systemName: "clock.fill")
                         .font(.system(size: 10))
                         .foregroundStyle(.red)
-                } content: {
+                }) {
                     sampleBox
                 }
 
                 // 自定义视图
-                Moin.Badge {
+                Moin.Badge(count: {
                     Image(systemName: "exclamationmark.circle.fill")
                         .font(.system(size: 12))
                         .foregroundStyle(.orange)
-                } content: {
+                }) {
                     sampleBox
                 }
 
                 // 自定义复杂视图
-                Moin.Badge {
+                Moin.Badge(count: {
                     HStack(spacing: 2) {
                         Image(systemName: "star.fill")
                             .font(.system(size: 8))
@@ -200,29 +275,29 @@ struct BadgeExamples: View {
                     .padding(.vertical, 2)
                     .background(.orange)
                     .clipShape(Capsule())
-                } content: {
+                }) {
                     sampleBox
                 }
             }
         } code: {
             """
             // \(tr("badge.code.custom_icon"))
-            Moin.Badge {
+            Moin.Badge(count: {
                 Image(systemName: "clock.fill")
                     .foregroundStyle(.red)
-            } content: {
+            }) {
                 Avatar()
             }
 
             // \(tr("badge.code.custom_view"))
-            Moin.Badge {
+            Moin.Badge(count: {
                 HStack {
                     Image(systemName: "star.fill")
                     Text("NEW")
                 }
                 .background(.orange)
                 .clipShape(Capsule())
-            } content: {
+            }) {
                 Avatar()
             }
             """
@@ -257,29 +332,29 @@ struct BadgeExamples: View {
         ) {
             VStack(alignment: .leading, spacing: Moin.Constants.Spacing.sm) {
                 HStack(spacing: Moin.Constants.Spacing.xl) {
-                    Moin.StatusBadge(status: .success)
-                    Moin.StatusBadge(status: .processing)
-                    Moin.StatusBadge(status: .default)
-                    Moin.StatusBadge(status: .error)
-                    Moin.StatusBadge(status: .warning)
+                    Moin.Badge(status: .success)
+                    Moin.Badge(status: .processing)
+                    Moin.Badge(status: .default)
+                    Moin.Badge(status: .error)
+                    Moin.Badge(status: .warning)
                 }
                 VStack(alignment: .leading, spacing: Moin.Constants.Spacing.xs) {
-                    Moin.StatusBadge(status: .success, text: tr("badge.example.success"))
-                    Moin.StatusBadge(status: .processing, text: tr("badge.example.processing"))
-                    Moin.StatusBadge(status: .default, text: tr("badge.example.default"))
-                    Moin.StatusBadge(status: .error, text: tr("badge.example.error"))
-                    Moin.StatusBadge(status: .warning, text: tr("badge.example.warning"))
+                    Moin.Badge(status: .success, text: tr("badge.example.success"))
+                    Moin.Badge(status: .processing, text: tr("badge.example.processing"))
+                    Moin.Badge(status: .default, text: tr("badge.example.default"))
+                    Moin.Badge(status: .error, text: tr("badge.example.error"))
+                    Moin.Badge(status: .warning, text: tr("badge.example.warning"))
                 }
             }
         } code: {
             """
-            Moin.StatusBadge(status: .success)
-            Moin.StatusBadge(status: .processing)
-            Moin.StatusBadge(status: .default)
-            Moin.StatusBadge(status: .error)
-            Moin.StatusBadge(status: .warning)
+            Moin.Badge(status: .success)
+            Moin.Badge(status: .processing)
+            Moin.Badge(status: .default)
+            Moin.Badge(status: .error)
+            Moin.Badge(status: .warning)
 
-            Moin.StatusBadge(status: .success, text: "\(tr("badge.example.success"))")
+            Moin.Badge(status: .success, text: "\(tr("badge.example.success"))")
             """
         }
     }

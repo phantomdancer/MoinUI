@@ -1128,6 +1128,66 @@ public extension Moin {
 }
 
 
+// MARK: - Moin.BadgeToken
+
+public extension Moin {
+    /// Badge component token
+    struct BadgeToken {
+        /// 徽标高度
+        public var indicatorHeight: CGFloat
+        /// 小号徽标高度
+        public var indicatorHeightSM: CGFloat
+        /// 点状徽标尺寸
+        public var dotSize: CGFloat
+        /// 小号点状尺寸
+        public var dotSizeSM: CGFloat
+        /// 徽标文字尺寸
+        public var textFontSize: CGFloat
+        /// 小号文字尺寸
+        public var textFontSizeSM: CGFloat
+        /// 文字粗细
+        public var textFontWeight: Font.Weight
+        /// 状态点尺寸
+        public var statusSize: CGFloat
+        /// 阴影半径
+        public var shadowRadius: CGFloat
+        /// 阴影透明度
+        public var shadowOpacity: Double
+        /// 水平内边距
+        public var paddingH: CGFloat
+        /// 小号水平内边距
+        public var paddingHSM: CGFloat
+        /// 徽标文字颜色
+        public var textColor: Color
+        /// 徽标背景色
+        public var badgeColor: Color
+
+        public static func generate(from token: Token) -> BadgeToken {
+            BadgeToken(
+                indicatorHeight: 18,
+                indicatorHeightSM: 14,
+                dotSize: 8,
+                dotSizeSM: 6,
+                textFontSize: 11,
+                textFontSizeSM: 10,
+                textFontWeight: .medium,
+                statusSize: 6,
+                shadowRadius: 2,
+                shadowOpacity: 0.3,
+                paddingH: 6,
+                paddingHSM: 4,
+                textColor: .white,
+                badgeColor: token.colorDanger
+            )
+        }
+
+        public static let light = generate(from: .light)
+        public static let dark = generate(from: .dark)
+        public static let `default` = light
+    }
+}
+
+
 // MARK: - Moin.ComponentToken
 
 public extension Moin {
@@ -1137,13 +1197,15 @@ public extension Moin {
         public var space: Moin.SpaceToken
         public var divider: Moin.DividerToken
         public var tag: Moin.TagToken
+        public var badge: Moin.BadgeToken
 
         public static func generate(from token: Token, isDark: Bool = false) -> ComponentToken {
             ComponentToken(
                 button: .generate(from: token, isDark: isDark),
                 space: .generate(from: token),
                 divider: .generate(from: token),
-                tag: .generate(from: token)
+                tag: .generate(from: token),
+                badge: .generate(from: token)
             )
         }
 
@@ -1403,6 +1465,10 @@ private struct MoinTagTokenKey: EnvironmentKey {
     static let defaultValue = Moin.TagToken.default
 }
 
+private struct MoinBadgeTokenKey: EnvironmentKey {
+    static let defaultValue = Moin.BadgeToken.default
+}
+
 public extension EnvironmentValues {
     var moinConfig: Moin.ConfigProvider {
         get { self[MoinConfigProviderKey.self] }
@@ -1432,6 +1498,11 @@ public extension EnvironmentValues {
     var moinTagToken: Moin.TagToken {
         get { self[MoinTagTokenKey.self] }
         set { self[MoinTagTokenKey.self] = newValue }
+    }
+
+    var moinBadgeToken: Moin.BadgeToken {
+        get { self[MoinBadgeTokenKey.self] }
+        set { self[MoinBadgeTokenKey.self] = newValue }
     }
 }
 
@@ -1480,6 +1551,7 @@ public extension Moin {
                 .environment(\.moinToken, config.token)
                 .environment(\.moinButtonToken, config.components.button)
                 .environment(\.moinTagToken, config.components.tag)
+                .environment(\.moinBadgeToken, config.components.badge)
                 .environment(\.moinSpaceToken, config.components.space)
                 .environment(\.moinDividerToken, config.components.divider)
                 .environmentObject(config)
