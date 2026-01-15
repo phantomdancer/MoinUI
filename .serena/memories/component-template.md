@@ -29,6 +29,7 @@ public extension Moin {
 2. **演练场 (Playground)** - 实时调整属性预览
 3. **API** - 属性表
 4. **Token** - 组件 Token 文档（组件 token/全局 token）
+5. **TokenPlauyground** Token 页面的Plauyground页面中，在右侧要添加该按钮的导致，且图标一致。需要实现所有token的实时预览和修改
 
 ### Demo 文件结构
 
@@ -84,5 +85,6 @@ Typography 组件为完整参考：`Sources/Demo/Examples/Typography/`
 - [ ] **完整国际化**（含 code 块）
 - [ ] 翻译文件放组件目录
 - [ ] 导航注册（含 Tab 切换）
+- [ ] TokenPlayground添加Token预览
 - [ ] `swift build` 无警告
 - [ ] `swift test` 通过
