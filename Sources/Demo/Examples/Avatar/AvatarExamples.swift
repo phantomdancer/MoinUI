@@ -19,6 +19,9 @@ struct AvatarExamples: View {
         AnchorItem(id: "size", titleKey: "avatar.size"),
         AnchorItem(id: "shape", titleKey: "avatar.shape"),
         AnchorItem(id: "type", titleKey: "avatar.type"),
+        AnchorItem(id: "src", titleKey: "avatar.src"),
+        AnchorItem(id: "icon_view", titleKey: "avatar.icon_view"),
+        AnchorItem(id: "gap", titleKey: "avatar.gap"),
         AnchorItem(id: "color", titleKey: "avatar.color"),
         AnchorItem(id: "group", titleKey: "avatar.group"),
     ]
@@ -44,6 +47,9 @@ struct AvatarExamples: View {
             sizeExample.id("size")
             shapeExample.id("shape")
             typeExample.id("type")
+            srcExample.id("src")
+            iconViewExample.id("icon_view")
+            gapExample.id("gap")
             colorExample.id("color")
             groupExample.id("group")
         }
@@ -148,6 +154,137 @@ struct AvatarExamples: View {
                 Moin.Avatar(icon: "person")
                 Moin.Avatar("Text")
                 Moin.Avatar(image: Image(systemName: "photo"))
+                """
+            }
+        )
+    }
+
+    private var srcExample: some View {
+        ExampleSection(
+            title: tr("avatar.src"),
+            description: tr("avatar.src_desc"),
+            content: {
+                HStack(spacing: 24) {
+                    Moin.Avatar(
+                        src: "https://api.dicebear.com/7.x/avataaars/svg?seed=Felix",
+                        fallbackIcon: "person.fill"
+                    )
+                    Moin.Avatar(
+                        src: "https://invalid-url-test.com/404.png",
+                        fallbackIcon: "exclamationmark.triangle"
+                    )
+                    Moin.Avatar(
+                        src: URL(string: "https://api.dicebear.com/7.x/avataaars/svg?seed=Aneka"),
+                        size: .large
+                    )
+                }
+            },
+            code: {
+                """
+                // \(tr("avatar.src_url"))
+                Moin.Avatar(
+                    src: "https://example.com/avatar.png",
+                    fallbackIcon: "person.fill"
+                )
+
+                // \(tr("avatar.src_fallback"))
+                Moin.Avatar(
+                    src: "https://invalid-url.com/404.png",
+                    fallbackIcon: "exclamationmark.triangle"
+                )
+
+                // URL \(tr("avatar.src_type"))
+                Moin.Avatar(
+                    src: URL(string: "https://example.com/avatar.png"),
+                    size: .large
+                )
+                """
+            }
+        )
+    }
+
+    private var iconViewExample: some View {
+        ExampleSection(
+            title: tr("avatar.icon_view"),
+            description: tr("avatar.icon_view_desc"),
+            content: {
+                HStack(spacing: 24) {
+                    Moin.Avatar(backgroundColor: .blue, content: {
+                        Image(systemName: "star.fill")
+                            .foregroundStyle(.yellow)
+                    })
+                    Moin.Avatar(size: .large, backgroundColor: .purple, content: {
+                        Image(systemName: "heart.fill")
+                            .font(.system(size: 20))
+                            .foregroundStyle(.pink)
+                    })
+                    Moin.Avatar(shape: .square, backgroundColor: .green, content: {
+                        Text("🐱")
+                            .font(.system(size: 18))
+                    })
+                }
+            },
+            code: {
+                """
+                // \(tr("avatar.icon_view_custom"))
+                Moin.Avatar(backgroundColor: .blue) {
+                    Image(systemName: "star.fill")
+                        .foregroundStyle(.yellow)
+                }
+
+                Moin.Avatar(size: .large, backgroundColor: .purple) {
+                    Image(systemName: "heart.fill")
+                        .font(.system(size: 20))
+                        .foregroundStyle(.pink)
+                }
+
+                // \(tr("avatar.icon_view_emoji"))
+                Moin.Avatar(shape: .square, backgroundColor: .green) {
+                    Text("🐱")
+                        .font(.system(size: 18))
+                }
+                """
+            }
+        )
+    }
+
+    private var gapExample: some View {
+        ExampleSection(
+            title: tr("avatar.gap"),
+            description: tr("avatar.gap_desc"),
+            content: {
+                VStack(alignment: .leading, spacing: 16) {
+                    HStack(spacing: 24) {
+                        VStack {
+                            Moin.Avatar("ABC", gap: 2)
+                            Text("gap: 2").font(.caption).foregroundStyle(.secondary)
+                        }
+                        VStack {
+                            Moin.Avatar("ABC", gap: 4)
+                            Text("gap: 4").font(.caption).foregroundStyle(.secondary)
+                        }
+                        VStack {
+                            Moin.Avatar("ABC", gap: 8)
+                            Text("gap: 8").font(.caption).foregroundStyle(.secondary)
+                        }
+                    }
+                    HStack(spacing: 24) {
+                        VStack {
+                            Moin.Avatar("LongText", size: .large, gap: 4)
+                            Text(tr("avatar.gap_auto_scale")).font(.caption).foregroundStyle(.secondary)
+                        }
+                    }
+                }
+            },
+            code: {
+                """
+                // \(tr("avatar.gap_control"))
+                Moin.Avatar("ABC", gap: 2)
+                Moin.Avatar("ABC", gap: 4)  // \(tr("avatar.gap_default"))
+                Moin.Avatar("ABC", gap: 8)
+
+                // \(tr("avatar.gap_long_text"))
+                Moin.Avatar("LongText", size: .large, gap: 4)
                 """
             }
         )

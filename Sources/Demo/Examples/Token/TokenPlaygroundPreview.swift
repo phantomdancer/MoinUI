@@ -147,6 +147,59 @@ struct TokenPlaygroundPreview: View {
                         }
                     }
 
+                    // Avatar 组件
+                    VStack(alignment: .leading, spacing: Moin.Constants.Spacing.sm) {
+                        Text(tr("token.playground.avatars"))
+                            .font(.system(size: 12, weight: .medium))
+                            .foregroundStyle(.secondary)
+
+                        // 尺寸展示
+                        HStack(spacing: 16) {
+                            VStack(spacing: 4) {
+                                Moin.Avatar(icon: "person", size: .small)
+                                Text("SM").font(.system(size: 10)).foregroundStyle(.tertiary)
+                            }
+                            VStack(spacing: 4) {
+                                Moin.Avatar(icon: "person", size: .default)
+                                Text("Default").font(.system(size: 10)).foregroundStyle(.tertiary)
+                            }
+                            VStack(spacing: 4) {
+                                Moin.Avatar(icon: "person", size: .large)
+                                Text("LG").font(.system(size: 10)).foregroundStyle(.tertiary)
+                            }
+                        }
+
+                        // 形状和类型
+                        HStack(spacing: 16) {
+                            Moin.Avatar(icon: "person", shape: .circle)
+                            Moin.Avatar(icon: "person", shape: .square)
+                            Moin.Avatar("U")
+                            Moin.Avatar("Long", gap: 4)
+                            Moin.Avatar("AB", backgroundColor: config.token.colorPrimary)
+                        }
+
+                        // AvatarGroup
+                        HStack(spacing: 24) {
+                            VStack(alignment: .leading, spacing: 4) {
+                                Text("Group").font(.system(size: 10)).foregroundStyle(.tertiary)
+                                Moin.AvatarGroup(size: .small) {
+                                    Moin.Avatar(icon: "person")
+                                    Moin.Avatar("A")
+                                    Moin.Avatar("B", backgroundColor: .blue)
+                                }
+                            }
+                            VStack(alignment: .leading, spacing: 4) {
+                                Text("Max: 2").font(.system(size: 10)).foregroundStyle(.tertiary)
+                                Moin.AvatarGroup(maxCount: 2, size: .small) {
+                                    Moin.Avatar(icon: "person")
+                                    Moin.Avatar("A")
+                                    Moin.Avatar("B")
+                                    Moin.Avatar("C")
+                                }
+                            }
+                        }
+                    }
+
                     // Divider 组件
                     VStack(alignment: .leading, spacing: Moin.Constants.Spacing.sm) {
                         Text(tr("token.playground.dividers"))
