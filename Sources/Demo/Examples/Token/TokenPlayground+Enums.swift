@@ -9,6 +9,7 @@ enum TokenPlaygroundPanelTab: String, CaseIterable {
     case button
     case tag
     case badge
+    case avatar
     case space
     case divider
     
@@ -23,6 +24,7 @@ enum TokenPlaygroundPanelTab: String, CaseIterable {
         case .button: return DemoIcons.button
         case .tag: return DemoIcons.tag
         case .badge: return DemoIcons.badge
+        case .avatar: return DemoIcons.avatar
         case .space: return DemoIcons.space
         case .divider: return DemoIcons.divider
         }

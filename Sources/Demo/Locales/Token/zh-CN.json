@@ -116,7 +116,13 @@
       "badges": "徽标",
       "badge_colors": "徽标颜色",
       "badge_sizes": "徽标尺寸",
-      "badge_shadow": "徽标阴影"
+      "badge_shadow": "徽标阴影",
+      "avatar_colors": "头像颜色",
+      "avatar_sizes": "头像尺寸",
+      "avatar_fonts": "头像字体",
+      "avatar_radius": "头像圆角",
+      "avatar_group": "头像组",
+      "code_avatar_config": "Avatar Token 配置"
     }
   }
 }

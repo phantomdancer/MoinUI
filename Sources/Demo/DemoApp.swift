@@ -147,13 +147,14 @@ struct ContentView: View {
     @State private var dividerTab: DividerExamplesTab = .examples
     @State private var tokenTab: TokenExamplesTab = .examples
     @State private var badgeTab: BadgeExamplesTab = .examples
+    @State private var avatarTab: AvatarExamplesTab = .examples
 
     var body: some View {
         NavigationSplitView {
             Sidebar(selection: $navManager.selectedItem)
                 .navigationSplitViewColumnWidth(min: 220, ideal: 280, max: 400)
         } detail: {
-            DetailView(item: navManager.selectedItem, buttonTab: $buttonTab, typographyTab: $typographyTab, tagTab: $tagTab, spaceTab: $spaceTab, dividerTab: $dividerTab, badgeTab: $badgeTab, tokenTab: $tokenTab)
+            DetailView(item: navManager.selectedItem, buttonTab: $buttonTab, typographyTab: $typographyTab, tagTab: $tagTab, spaceTab: $spaceTab, dividerTab: $dividerTab, badgeTab: $badgeTab, avatarTab: $avatarTab, tokenTab: $tokenTab)
                 .navigationTitle(navManager.selectedItem.map { tr($0.titleKey) } ?? "MoinUI")
                 .toolbar {
                     ToolbarItemGroup(placement: .primaryAction) {
@@ -239,6 +240,18 @@ struct ContentView: View {
                             .fixedSize()
                         }
 
+                        // Avatar 页面显示 Tab 切换
+                        if navManager.selectedItem == .avatar {
+                            Picker("", selection: $avatarTab) {
+                                Text(tr("tab.examples")).tag(AvatarExamplesTab.examples)
+                                Text(tr("tab.playground")).tag(AvatarExamplesTab.playground)
+                                Text(tr("tab.api")).tag(AvatarExamplesTab.api)
+                                Text(tr("tab.token")).tag(AvatarExamplesTab.token)
+                            }
+                            .pickerStyle(.segmented)
+                            .fixedSize()
+                        }
+
                         Spacer()
 
                         Button {
@@ -278,6 +291,7 @@ enum NavItem: String, Identifiable {
     case typography
     case tag
     case badge
+    case avatar
     case space
     case divider
 
@@ -300,6 +314,7 @@ enum NavItem: String, Identifiable {
         case .typography: return DemoIcons.typography
         case .tag: return DemoIcons.tag
         case .badge: return DemoIcons.badge
+        case .avatar: return DemoIcons.avatar
         case .space: return DemoIcons.space
         case .divider: return DemoIcons.divider
         case .configProvider: return DemoIcons.configProvider
@@ -318,6 +333,7 @@ enum NavItem: String, Identifiable {
         case .typography: return "component.typography"
         case .tag: return "component.tag"
         case .badge: return "component.badge"
+        case .avatar: return "component.avatar"
         case .space: return "component.space"
         case .divider: return "component.divider"
         case .configProvider: return "component.configProvider"
@@ -327,10 +343,10 @@ enum NavItem: String, Identifiable {
     }
 
     static var overview: [NavItem] { [.introduction, .quickStart] }
-    static var general: [NavItem] { [.button, .typography, .tag] }
-    static var dataDisplay: [NavItem] { [.badge] }
-    static var layout: [NavItem] { [.space, .divider] }
-    static var development: [NavItem] { [.theme, .token, .configProvider, .localization, .colors] }
+    static var general: [NavItem] { [.button, .tag, .typography] }
+    static var dataDisplay: [NavItem] { [.avatar, .badge] }
+    static var layout: [NavItem] { [.divider, .space] }
+    static var development: [NavItem] { [.colors, .configProvider, .localization, .theme, .token] }
 }
 
 // MARK: - Sidebar
@@ -402,6 +418,7 @@ struct DetailView: View {
     @Binding var spaceTab: SpaceExamplesTab
     @Binding var dividerTab: DividerExamplesTab
     @Binding var badgeTab: BadgeExamplesTab
+    @Binding var avatarTab: AvatarExamplesTab
     @Binding var tokenTab: TokenExamplesTab
 
     var body: some View {
@@ -423,6 +440,8 @@ struct DetailView: View {
                 TagExamples(selectedTab: $tagTab)
             case .badge:
                 BadgeExamples(selectedTab: $badgeTab)
+            case .avatar:
+                AvatarExamples(selectedTab: $avatarTab)
             case .space:
                 SpaceExamples(selectedTab: $spaceTab)
             case .divider:

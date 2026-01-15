@@ -116,6 +116,8 @@ struct TokenPlayground: View {
                     TokenTagPanel()
                 case .badge:
                     TokenBadgePanel()
+                case .avatar:
+                    TokenAvatarPanel()
                 case .space:
                     TokenSpacePanel()
                 case .divider:

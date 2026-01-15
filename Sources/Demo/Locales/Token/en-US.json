@@ -116,7 +116,13 @@
       "badges": "Badges",
       "badge_colors": "Badge Colors",
       "badge_sizes": "Badge Sizes",
-      "badge_shadow": "Badge Shadow"
+      "badge_shadow": "Badge Shadow",
+      "avatar_colors": "Avatar Colors",
+      "avatar_sizes": "Avatar Sizes",
+      "avatar_fonts": "Avatar Fonts",
+      "avatar_radius": "Avatar Radius",
+      "avatar_group": "Avatar Group",
+      "code_avatar_config": "Avatar Token Configuration"
     }
   }
 }

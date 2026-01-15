@@ -140,6 +140,19 @@ config.components.badge.dotSize = \(Int(config.components.badge.dotSize))
 config.components.badge.textFontSize = \(Int(config.components.badge.textFontSize))
 config.components.badge.paddingH = \(Int(config.components.badge.paddingH))
 """
+        case .avatar:
+            return """
+// \(tr("token.playground.code_avatar_config"))
+config.components.avatar.containerBg = Color(hex: "\(config.components.avatar.containerBg.hexString)")
+config.components.avatar.colorText = Color(hex: "\(config.components.avatar.colorText.hexString)")
+// \(tr("token.playground.avatar_sizes"))
+config.components.avatar.size = \(Int(config.components.avatar.size))
+config.components.avatar.sizeLG = \(Int(config.components.avatar.sizeLG))
+config.components.avatar.sizeSM = \(Int(config.components.avatar.sizeSM))
+// \(tr("token.playground.avatar_group"))
+config.components.avatar.groupSpacing = \(Int(config.components.avatar.groupSpacing))
+config.components.avatar.groupBorderWidth = \(Int(config.components.avatar.groupBorderWidth))
+"""
         case .space:
             return """
 // \(tr("token.playground.code_space_config"))
