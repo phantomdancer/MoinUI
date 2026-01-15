@@ -270,6 +270,7 @@ struct BadgeExamples: View {
                         Text("NEW")
                             .font(.system(size: 8, weight: .bold))
                     }
+                    .fixedSize()
                     .foregroundStyle(.white)
                     .padding(.horizontal, 4)
                     .padding(.vertical, 2)
