@@ -42,6 +42,7 @@
     "theme": "Theme",
     "token": "Token System",
     "general": "General",
+    "data_display": "Data Display",
     "layout": "Layout",
     "components": "Components",
     "development": "Development"
@@ -50,6 +51,7 @@
     "button": "Button",
     "typography": "Typography",
     "tag": "Tag",
+    "badge": "Badge",
     "space": "Space",
     "divider": "Divider",
     "configProvider": "ConfigProvider",

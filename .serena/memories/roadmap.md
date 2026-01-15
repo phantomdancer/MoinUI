@@ -17,7 +17,7 @@
 ## 按复杂度排序（简单优先，无依赖优先）
 
 ### 已完成
-Button ✅, Typography ✅, Divider ✅, Space ✅, Tag ✅, Icon ⏭
+Button ✅, Typography ✅, Divider ✅, Space ✅, Tag ✅, Badge ✅, Icon ⏭
 
 ### 第一梯队：极简组件（无依赖，几乎无状态）
 
@@ -97,9 +97,9 @@ Button ✅, Typography ✅, Divider ✅, Space ✅, Tag ✅, Icon ⏭
 ## 建议实现顺序
 
 ```
-已完成: Button → Typography → Divider → Space → Tag
+已完成: Button → Typography → Divider → Space → Tag → Badge
 
-下一批: Badge → Avatar → Empty → Spin → Statistic
+下一批: Avatar → Empty → Spin → Statistic
 
 再下批: Alert → Progress → Switch → Checkbox → Radio
 

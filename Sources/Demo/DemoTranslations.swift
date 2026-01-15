@@ -11,6 +11,7 @@ enum DemoTranslations {
         "Locales/Button",
         "Locales/Typography",
         "Locales/Tag",
+        "Locales/Badge",
         "Locales/Space",
         "Locales/Divider",
         "Locales/Colors",

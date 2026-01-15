@@ -146,13 +146,14 @@ struct ContentView: View {
     @State private var spaceTab: SpaceExamplesTab = .examples
     @State private var dividerTab: DividerExamplesTab = .examples
     @State private var tokenTab: TokenExamplesTab = .examples
+    @State private var badgeTab: BadgeExamplesTab = .examples
 
     var body: some View {
         NavigationSplitView {
             Sidebar(selection: $navManager.selectedItem)
                 .navigationSplitViewColumnWidth(min: 220, ideal: 280, max: 400)
         } detail: {
-            DetailView(item: navManager.selectedItem, buttonTab: $buttonTab, typographyTab: $typographyTab, tagTab: $tagTab, spaceTab: $spaceTab, dividerTab: $dividerTab, tokenTab: $tokenTab)
+            DetailView(item: navManager.selectedItem, buttonTab: $buttonTab, typographyTab: $typographyTab, tagTab: $tagTab, spaceTab: $spaceTab, dividerTab: $dividerTab, badgeTab: $badgeTab, tokenTab: $tokenTab)
                 .navigationTitle(navManager.selectedItem.map { tr($0.titleKey) } ?? "MoinUI")
                 .toolbar {
                     ToolbarItemGroup(placement: .primaryAction) {
@@ -226,6 +227,18 @@ struct ContentView: View {
                             .fixedSize()
                         }
 
+                        // Badge 页面显示 Tab 切换
+                        if navManager.selectedItem == .badge {
+                            Picker("", selection: $badgeTab) {
+                                Text(tr("tab.examples")).tag(BadgeExamplesTab.examples)
+                                Text(tr("tab.playground")).tag(BadgeExamplesTab.playground)
+                                Text(tr("tab.api")).tag(BadgeExamplesTab.api)
+                                Text(tr("tab.token")).tag(BadgeExamplesTab.token)
+                            }
+                            .pickerStyle(.segmented)
+                            .fixedSize()
+                        }
+
                         Spacer()
 
                         Button {
@@ -264,6 +277,7 @@ enum NavItem: String, Identifiable {
     case button
     case typography
     case tag
+    case badge
     case space
     case divider
 
@@ -285,6 +299,7 @@ enum NavItem: String, Identifiable {
         case .button: return "rectangle.and.hand.point.up.left"
         case .typography: return "textformat.size"
         case .tag: return "tag"
+        case .badge: return "app.badge"
         case .space: return "rectangle.split.3x1"
         case .divider: return "minus"
         case .configProvider: return "gearshape"
@@ -302,6 +317,7 @@ enum NavItem: String, Identifiable {
         case .button: return "component.button"
         case .typography: return "component.typography"
         case .tag: return "component.tag"
+        case .badge: return "component.badge"
         case .space: return "component.space"
         case .divider: return "component.divider"
         case .configProvider: return "component.configProvider"
@@ -312,6 +328,7 @@ enum NavItem: String, Identifiable {
 
     static var overview: [NavItem] { [.introduction, .quickStart] }
     static var general: [NavItem] { [.button, .typography, .tag] }
+    static var dataDisplay: [NavItem] { [.badge] }
     static var layout: [NavItem] { [.space, .divider] }
     static var development: [NavItem] { [.theme, .token, .configProvider, .localization, .colors] }
 }
@@ -353,6 +370,14 @@ struct Sidebar: View {
                 }
             }
 
+            Section(tr("nav.data_display")) {
+                ForEach(NavItem.dataDisplay) { item in
+                    NavigationLink(value: item) {
+                        Label(tr(item.titleKey), systemImage: item.icon)
+                    }
+                }
+            }
+
             Section(tr("nav.layout")) {
                 ForEach(NavItem.layout) { item in
                     NavigationLink(value: item) {
@@ -376,6 +401,7 @@ struct DetailView: View {
     @Binding var tagTab: TagExamplesTab
     @Binding var spaceTab: SpaceExamplesTab
     @Binding var dividerTab: DividerExamplesTab
+    @Binding var badgeTab: BadgeExamplesTab
     @Binding var tokenTab: TokenExamplesTab
 
     var body: some View {
@@ -395,6 +421,8 @@ struct DetailView: View {
                 TypographyExamples(selectedTab: $typographyTab)
             case .tag:
                 TagExamples(selectedTab: $tagTab)
+            case .badge:
+                BadgeExamples(selectedTab: $badgeTab)
             case .space:
                 SpaceExamples(selectedTab: $spaceTab)
             case .divider:

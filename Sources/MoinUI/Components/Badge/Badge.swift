@@ -2,7 +2,7 @@ import SwiftUI
 
 public extension Moin {
     /// 徽标组件 - 用于展示数字、状态或小红点
-    struct Badge<Content: View>: View {
+    struct Badge<Content: View, Indicator: View>: View {
         @Environment(\.moinToken) private var token
         @Environment(\.colorScheme) private var colorScheme
 
@@ -11,22 +11,12 @@ public extension Moin {
         private let dot: Bool
         private let showZero: Bool
         private let overflowCount: Int
-        private let status: BadgeStatus?
-        private let text: String?
         private let size: BadgeSize
         private let color: BadgeColor
         private let offset: (x: CGFloat, y: CGFloat)?
+        private let customIndicator: Indicator?
 
-        /// 创建带内容的徽标
-        /// - Parameters:
-        ///   - count: 显示的数字
-        ///   - dot: 是否显示小红点（优先于 count）
-        ///   - showZero: count 为 0 时是否显示
-        ///   - overflowCount: 溢出阈值，超过显示 {overflowCount}+
-        ///   - size: 尺寸
-        ///   - color: 颜色
-        ///   - offset: 偏移量 (x, y)
-        ///   - content: 被包裹的内容
+        /// 创建带内容的徽标（数字模式）
         public init(
             count: Int? = nil,
             dot: Bool = false,
@@ -36,17 +26,34 @@ public extension Moin {
             color: BadgeColor = .default,
             offset: (x: CGFloat, y: CGFloat)? = nil,
             @ViewBuilder content: () -> Content
-        ) {
+        ) where Indicator == EmptyView {
             self.content = content()
             self.count = count
             self.dot = dot
             self.showZero = showZero
             self.overflowCount = overflowCount
-            self.status = nil
-            self.text = nil
             self.size = size
             self.color = color
             self.offset = offset
+            self.customIndicator = nil
+        }
+
+        /// 创建带自定义指示器的徽标
+        public init(
+            size: BadgeSize = .default,
+            offset: (x: CGFloat, y: CGFloat)? = nil,
+            @ViewBuilder indicator: () -> Indicator,
+            @ViewBuilder content: () -> Content
+        ) {
+            self.content = content()
+            self.count = nil
+            self.dot = false
+            self.showZero = false
+            self.overflowCount = 99
+            self.size = size
+            self.color = .default
+            self.offset = offset
+            self.customIndicator = indicator()
         }
 
         public var body: some View {
@@ -65,7 +72,10 @@ public extension Moin {
 
         @ViewBuilder
         private var badgeIndicator: some View {
-            if dot {
+            if let customIndicator = customIndicator {
+                // 自定义指示器
+                customIndicator
+            } else if dot {
                 dotView
             } else if let count = count, (count > 0 || showZero) {
                 countView(count)
@@ -84,6 +94,8 @@ public extension Moin {
             return Text(displayText)
                 .font(.system(size: fontSize, weight: .medium))
                 .foregroundStyle(.white)
+                .lineLimit(1)
+                .fixedSize()
                 .padding(.horizontal, horizontalPadding)
                 .frame(minWidth: minWidth, minHeight: height)
                 .background(badgeColor)
@@ -126,11 +138,15 @@ public extension Moin {
         }
 
         private var offsetX: CGFloat {
-            offset?.x ?? (height / 2)
+            if let x = offset?.x { return x }
+            // dot 模式使用自身尺寸的一半，数字模式使用高度的一半
+            return dot ? (dotSize / 2) : (height / 2)
         }
 
         private var offsetY: CGFloat {
-            offset?.y ?? -(height / 2)
+            if let y = offset?.y { return y }
+            // dot 模式使用自身尺寸的一半，数字模式使用高度的一半
+            return dot ? -(dotSize / 2) : -(height / 2)
         }
 
         // MARK: - Color
@@ -158,7 +174,7 @@ public extension Moin {
 
 // MARK: - 独立徽标（无内容）
 
-public extension Moin.Badge where Content == EmptyView {
+public extension Moin.Badge where Content == EmptyView, Indicator == EmptyView {
     /// 创建独立徽标（无子内容）
     init(
         count: Int? = nil,
@@ -173,11 +189,10 @@ public extension Moin.Badge where Content == EmptyView {
         self.dot = dot
         self.showZero = showZero
         self.overflowCount = overflowCount
-        self.status = nil
-        self.text = nil
         self.size = size
         self.color = color
         self.offset = nil
+        self.customIndicator = nil
     }
 }
 

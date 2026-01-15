@@ -42,6 +42,7 @@
     "theme": "主题",
     "token": "Token 系统",
     "general": "通用",
+    "data_display": "数据展示",
     "layout": "布局",
     "components": "组件",
     "development": "研发"
@@ -50,6 +51,7 @@
     "button": "Button 按钮",
     "typography": "Typography 排版",
     "tag": "Tag 标签",
+    "badge": "Badge 徽标",
     "space": "Space 间距",
     "divider": "Divider 分割线",
     "configProvider": "ConfigProvider 全局配置",
