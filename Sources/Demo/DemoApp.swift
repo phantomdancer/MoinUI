@@ -346,7 +346,7 @@ enum NavItem: String, Identifiable {
     static var general: [NavItem] { [.button, .tag, .typography] }
     static var dataDisplay: [NavItem] { [.avatar, .badge] }
     static var layout: [NavItem] { [.divider, .space] }
-    static var development: [NavItem] { [.colors, .configProvider, .localization, .theme, .token] }
+    static var development: [NavItem] { [.theme, .token, .configProvider, .localization, .colors] }
 }
 
 // MARK: - Sidebar
