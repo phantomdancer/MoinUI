@@ -43,7 +43,7 @@ public extension Moin {
                 borderRadius: token.borderRadius,
                 borderRadiusLG: token.borderRadiusLG,
                 borderRadiusSM: token.borderRadiusSM,
-                groupSpacing: -8,
+                groupSpacing: 4,  // 正数不重叠，负数重叠
                 groupBorderColor: token.colorBgContainer,
                 groupBorderWidth: token.lineWidth * 2
             )
