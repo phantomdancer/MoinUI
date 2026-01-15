@@ -109,3 +109,11 @@ Button ✅, Typography ✅, Divider ✅, Space ✅, Tag ✅, Badge ✅, Icon ⏭
 
 再下批: Select → DatePicker → Menu → Table
 ```
+
+### 待优化 (Optimizations)
+- **Badge**:
+  - [ ] 实现 Ribbon 组件
+  - [ ] 添加 Title 属性 (悬停显示完整数值)
+  - [ ] 添加缩放进出动画
+  - [ ] 考虑实现数字滚动效果 (低优先级)
+

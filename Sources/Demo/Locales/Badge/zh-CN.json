@@ -87,5 +87,12 @@
     "badge.api.statusbadge_desc": "独立的状态徽标组件，用于显示状态点和文本。",
     "badge.api.badgesize_desc": "徽标尺寸枚举值。",
     "badge.api.badgecolor_desc": "徽标颜色枚举值。",
-    "badge.api.badgestatus_desc": "状态徽标的状态类型枚举值。"
+    "badge.api.badgestatus_desc": "状态徽标的状态类型枚举值。",
+    "badge.ribbon": "缎带徽标",
+    "badge.ribbon_desc": "使用缎带形式展示徽标。",
+    "badge.ribbon_placement": "位置",
+    "badge.api.ribbon_desc": "在元素角落悬挂缎带的组件。",
+    "badge.api.placement": "设置缎带位置",
+    "badge.enum.placement.start": "左上角",
+    "badge.enum.placement.end": "右上角"
 }

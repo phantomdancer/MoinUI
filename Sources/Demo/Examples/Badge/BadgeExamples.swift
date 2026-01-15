@@ -26,6 +26,7 @@ struct BadgeExamples: View {
         AnchorItem(id: "status", titleKey: "badge.status"),
         AnchorItem(id: "size", titleKey: "badge.size"),
         AnchorItem(id: "colorful", titleKey: "badge.colorful"),
+        AnchorItem(id: "ribbon", titleKey: "badge.ribbon"),
     ]
 
     var body: some View {
@@ -56,6 +57,7 @@ struct BadgeExamples: View {
             statusExample.id("status")
             sizeExample.id("size")
             colorfulExample.id("colorful")
+            ribbonExample.id("ribbon")
         }
     }
 
@@ -442,11 +444,48 @@ struct BadgeExamples: View {
         }
     }
 
+    private var ribbonExample: some View {
+        ExampleSection(
+            title: tr("badge.ribbon"),
+            description: tr("badge.ribbon_desc")
+        ) {
+            HStack(spacing: Moin.Constants.Spacing.xl) {
+                 Moin.BadgeRibbon(text: "Pushes", color: .cyan) {
+                    ribbonCard
+                 }
+                 Moin.BadgeRibbon(text: "Hippo", color: .purple, placement: .start) {
+                    ribbonCard
+                 }
+                 Moin.BadgeRibbon(text: "Hot", color: .error) {
+                    ribbonCard
+                 }
+            }
+        } code: {
+            """
+            Moin.BadgeRibbon(text: "Pushes", color: .cyan) {
+                Card()
+            }
+            Moin.BadgeRibbon(text: "Hippo", placement: .start) {
+                Card()
+            }
+            """
+        }
+    }
+    
     // MARK: - Helper Views
 
     private var sampleBox: some View {
         RoundedRectangle(cornerRadius: 6)
             .fill(Color.gray.opacity(0.3))
             .frame(width: 40, height: 40)
+    }
+    private var ribbonCard: some View {
+        RoundedRectangle(cornerRadius: 8)
+            .fill(Color.gray.opacity(0.1))
+            .overlay(
+                RoundedRectangle(cornerRadius: 8)
+                    .strokeBorder(Color.gray.opacity(0.2))
+            )
+            .frame(width: 80, height: 60)
     }
 }

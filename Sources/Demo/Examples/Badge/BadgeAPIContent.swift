@@ -35,6 +35,29 @@ struct BadgeAPIContent: View {
                     ]
                 )
 
+                // BadgeRibbon API
+                Text("Moin.BadgeRibbon")
+                    .font(.title2)
+                    .fontWeight(.semibold)
+
+                Text(tr("badge.api.ribbon_desc"))
+                    .foregroundStyle(.secondary)
+
+                APITable(
+                    headers: (
+                        tr("api.property"),
+                        tr("api.type"),
+                        tr("api.default"),
+                        tr("api.description")
+                    ),
+                    rows: [
+                        ("text", "String?", "nil", tr("badge.api.text")),
+                        ("color", "BadgeColor", ".processing", tr("badge.api.color")),
+                        ("placement", "RibbonPlacement", ".end", tr("badge.api.placement")),
+                        ("content", "() -> Content", "-", tr("badge.api.content")),
+                    ]
+                )
+
                 // StatusBadge API
                 Text("Moin.StatusBadge")
                     .font(.title2)
