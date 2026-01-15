@@ -1198,6 +1198,7 @@ public extension Moin {
         public var divider: Moin.DividerToken
         public var tag: Moin.TagToken
         public var badge: Moin.BadgeToken
+        public var avatar: Moin.AvatarToken
 
         public static func generate(from token: Token, isDark: Bool = false) -> ComponentToken {
             ComponentToken(
@@ -1205,7 +1206,8 @@ public extension Moin {
                 space: .generate(from: token),
                 divider: .generate(from: token),
                 tag: .generate(from: token),
-                badge: .generate(from: token)
+                badge: .generate(from: token),
+                avatar: .generate(from: token)
             )
         }
 
@@ -1469,6 +1471,10 @@ private struct MoinBadgeTokenKey: EnvironmentKey {
     static let defaultValue = Moin.BadgeToken.default
 }
 
+private struct MoinAvatarTokenKey: EnvironmentKey {
+    static let defaultValue = Moin.AvatarToken.default
+}
+
 public extension EnvironmentValues {
     var moinConfig: Moin.ConfigProvider {
         get { self[MoinConfigProviderKey.self] }
@@ -1503,6 +1509,11 @@ public extension EnvironmentValues {
     var moinBadgeToken: Moin.BadgeToken {
         get { self[MoinBadgeTokenKey.self] }
         set { self[MoinBadgeTokenKey.self] = newValue }
+    }
+
+    var moinAvatarToken: Moin.AvatarToken {
+        get { self[MoinAvatarTokenKey.self] }
+        set { self[MoinAvatarTokenKey.self] = newValue }
     }
 }
 
@@ -1552,6 +1563,7 @@ public extension Moin {
                 .environment(\.moinButtonToken, config.components.button)
                 .environment(\.moinTagToken, config.components.tag)
                 .environment(\.moinBadgeToken, config.components.badge)
+                .environment(\.moinAvatarToken, config.components.avatar)
                 .environment(\.moinSpaceToken, config.components.space)
                 .environment(\.moinDividerToken, config.components.divider)
                 .environmentObject(config)
@@ -1571,5 +1583,61 @@ public extension Moin {
 public extension View {
     func moinThemeRoot() -> some View {
         modifier(Moin.ThemeRoot())
+    }
+}
+
+// MARK: - Moin.AvatarToken
+
+public extension Moin {
+    /// Avatar component token
+    struct AvatarToken {
+        // MARK: - Colors
+        public var containerBg: Color
+        public var colorText: Color
+        public var colorTextLight: Color // 用于彩色背景时的亮色文字
+
+        // MARK: - Sizes
+        public var size: CGFloat
+        public var sizeLG: CGFloat
+        public var sizeSM: CGFloat
+
+        // MARK: - Font Sizes
+        public var fontSize: CGFloat
+        public var fontSizeLG: CGFloat
+        public var fontSizeSM: CGFloat
+
+        // MARK: - Border Radius
+        public var borderRadius: CGFloat
+        public var borderRadiusLG: CGFloat
+        public var borderRadiusSM: CGFloat
+        
+        // MARK: - AvatarGroup
+        public var groupSpacing: CGFloat
+        public var groupBorderColor: Color
+        public var groupBorderWidth: CGFloat
+
+        public static func generate(from token: Token) -> AvatarToken {
+            AvatarToken(
+                containerBg: token.colorFillTertiary, // Ant Design 默认背景: textQuaternary or fillTertiary
+                colorText: token.colorTextSecondary, // 默认文本颜色
+                colorTextLight: Color.white,
+                size: token.controlHeight,       // 32
+                sizeLG: token.controlHeightLG,   // 40
+                sizeSM: token.controlHeightSM,   // 24
+                fontSize: token.fontSizeHeading5,  // 18 (default)
+                fontSizeLG: token.fontSizeHeading3,// 24 (large)
+                fontSizeSM: token.fontSize,      // 14 (small)
+                borderRadius: token.borderRadius,
+                borderRadiusLG: token.borderRadiusLG,
+                borderRadiusSM: token.borderRadiusSM,
+                groupSpacing: -8,
+                groupBorderColor: token.colorBgContainer,
+                groupBorderWidth: token.lineWidth * 2 // 通常稍微粗一点
+            )
+        }
+        
+        public static let light = generate(from: .light)
+        public static let dark = generate(from: .dark)
+        public static let `default` = light
     }
 }

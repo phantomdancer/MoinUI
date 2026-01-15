@@ -56,6 +56,7 @@
     "divider": "Divider",
     "configProvider": "ConfigProvider",
     "localization": "Localization",
+    "avatar": "Avatar",
     "colors": "Colors"
   },
   "home": {
@@ -206,6 +207,42 @@
       "marginLG": "Large margin",
       "marginXS": "Extra small margin",
       "lineWidth": "Line width"
+    }
+  },
+  "avatar": {
+    "basic": "Basic Usage",
+    "basic_desc": "Three sizes and two shapes available.",
+    "size": "Size",
+    "size_desc": "Avatar comes in 3 sizes: Large, Default, Small. Custom size is also supported.",
+    "shape": "Shape",
+    "shape_desc": "Avatar comes in 2 shapes: Circle and Square.",
+    "type": "Type",
+    "type_desc": "Supports icon, text, and image.",
+    "color": "Color",
+    "color_desc": "Custom background color supported.",
+    "group": "Avatar Group",
+    "group_desc": "AvatarGroup controls the number of avatars shown, displaying +N for overflow.",
+    "token": {
+      "title": "Avatar Token",
+      "desc": "Design tokens for the Avatar component.",
+      "component": "Component Token",
+      "component_desc": "Avatar specific design tokens.",
+      "size": "Default Size",
+      "sizeLG": "Large Size",
+      "sizeSM": "Small Size",
+      "fontSize": "Default Font Size",
+      "fontSizeLG": "Large Font Size",
+      "fontSizeSM": "Small Font Size",
+      "borderRadius": "Default Border Radius",
+      "borderRadiusLG": "Large Border Radius",
+      "borderRadiusSM": "Small Border Radius",
+      "groupSpacing": "Group Spacing",
+      "groupBorderWidth": "Group Border Width",
+      "global": "Global Token",
+      "global_desc": "Global tokens used by Avatar.",
+      "colorTextSecondary": "Secondary Text Color",
+      "colorFillTertiary": "Tertiary Fill Color",
+      "controlHeight": "Control Height"
     }
   }
 }
