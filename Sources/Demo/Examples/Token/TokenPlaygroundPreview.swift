@@ -77,17 +77,17 @@ struct TokenPlaygroundPreview: View {
                             .foregroundStyle(.secondary)
                         // Filled 变体（默认）- defaultBg/defaultColor 影响 Default 标签
                         HStack(spacing: Moin.Constants.Spacing.sm) {
-                            Moin.Tag("Default")
-                            Moin.Tag("Processing", color: .processing)
-                            Moin.Tag("Success", color: .success)
-                            Moin.Tag("Warning", color: .warning)
-                            Moin.Tag("Error", color: .error)
+                            Moin.Tag(tr("tag.example.default"))
+                            Moin.Tag(tr("tag.example.processing"), color: .processing)
+                            Moin.Tag(tr("tag.example.success"), color: .success)
+                            Moin.Tag(tr("tag.example.warning"), color: .warning)
+                            Moin.Tag(tr("tag.example.error"), color: .error)
                         }
                         // Solid 变体 - solidTextColor 影响所有 solid 标签
                         HStack(spacing: Moin.Constants.Spacing.sm) {
-                            Moin.Tag("Default", variant: .solid)
-                            Moin.Tag("Processing", color: .processing, variant: .solid)
-                            Moin.Tag("Success", color: .success, variant: .solid)
+                            Moin.Tag(tr("tag.example.default"), variant: .solid)
+                            Moin.Tag(tr("tag.example.processing"), color: .processing, variant: .solid)
+                            Moin.Tag(tr("tag.example.success"), color: .success, variant: .solid)
                         }
                     }
                     
