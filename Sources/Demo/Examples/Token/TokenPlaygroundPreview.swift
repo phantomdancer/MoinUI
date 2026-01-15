@@ -152,9 +152,43 @@ struct TokenPlaygroundPreview: View {
                         Text(tr("token.playground.dividers"))
                             .font(.system(size: 12, weight: .medium))
                             .foregroundStyle(.secondary)
-                        Moin.Divider()
-                        Moin.Divider(tr("token.playground.divider_text"))
-                        Moin.Divider(variant: .dashed)
+
+                        HStack(alignment: .top, spacing: 32) {
+                            // Column 1: Horizontal Dividers (Vertical Stack)
+                            VStack(alignment: .leading, spacing: Moin.Constants.Spacing.sm) {
+                                Text("Horizontal")
+                                    .font(.system(size: 10))
+                                    .foregroundStyle(.tertiary)
+                                
+                                Moin.Divider()
+                                Moin.Divider(tr("token.playground.divider_text"))
+                                Moin.Divider(variant: .dashed)
+                            }
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            
+                            // Column 2: Vertical Dividers (Horizontal Stack)
+                            VStack(alignment: .leading, spacing: Moin.Constants.Spacing.sm) {
+                                Text("Vertical")
+                                    .font(.system(size: 10))
+                                    .foregroundStyle(.tertiary)
+                                
+                                HStack(spacing: Moin.Constants.Spacing.md) {
+                                    Text("Text")
+                                        .font(.system(size: 12))
+                                        .foregroundStyle(.secondary)
+                                    Moin.Divider(orientation: .vertical)
+                                    Text("Text")
+                                        .font(.system(size: 12))
+                                        .foregroundStyle(.secondary)
+                                    Moin.Divider(orientation: .vertical, variant: .dashed)
+                                    Text("Text")
+                                        .font(.system(size: 12))
+                                        .foregroundStyle(.secondary)
+                                }
+                                .frame(height: 24)
+                            }
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                        }
                     }
 
                     // Space 组件
