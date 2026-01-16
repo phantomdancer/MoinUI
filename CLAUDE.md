@@ -52,6 +52,12 @@ MoinUI (墨影UI) - macOS SwiftUI 组件库
 - **原生适配**: 利用 SwiftUI 原生能力
 - **简化优先**: 复杂功能可简化
 
+## Playground 规范
+
+- **颜色选择**: 使用 `ColorPresetRow` 预设颜色选择（禁用 `TokenColorRow` ColorPicker）
+- **数值调节**: 使用 `TokenValueRow`
+- **布局结构**: 左侧预览+代码，右侧属性面板（参考 DividerPlayground）
+
 ## 竞品参考
 分析开源工具时，可 clone 到 `ThirdLibs/` 目录后查看其代码。
 

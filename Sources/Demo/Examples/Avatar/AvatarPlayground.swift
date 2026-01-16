@@ -225,22 +225,25 @@ struct AvatarPlayground: View {
                         .font(.system(size: 11, weight: .medium))
                         .foregroundStyle(.secondary)
 
-                    TokenColorRow(
+                    // Colors
+                    ColorPresetRow(
                         label: "containerBg",
                         color: $config.components.avatar.containerBg
                     )
-                    TokenColorRow(
+                    ColorPresetRow(
                         label: "colorText",
                         color: $config.components.avatar.colorText
                     )
-                    TokenColorRow(
+                    ColorPresetRow(
                         label: "colorTextLight",
                         color: $config.components.avatar.colorTextLight
                     )
-                    TokenColorRow(
+                    ColorPresetRow(
                         label: "groupBorderColor",
                         color: $config.components.avatar.groupBorderColor
                     )
+
+                    // Sizes
                     TokenValueRow(
                         label: "size",
                         value: $config.components.avatar.size,
@@ -256,6 +259,42 @@ struct AvatarPlayground: View {
                         value: $config.components.avatar.sizeSM,
                         range: 12...40
                     )
+
+                    // Font Sizes
+                    TokenValueRow(
+                        label: "fontSize",
+                        value: $config.components.avatar.fontSize,
+                        range: 10...32
+                    )
+                    TokenValueRow(
+                        label: "fontSizeLG",
+                        value: $config.components.avatar.fontSizeLG,
+                        range: 14...40
+                    )
+                    TokenValueRow(
+                        label: "fontSizeSM",
+                        value: $config.components.avatar.fontSizeSM,
+                        range: 8...24
+                    )
+
+                    // Border Radius
+                    TokenValueRow(
+                        label: "borderRadius",
+                        value: $config.components.avatar.borderRadius,
+                        range: 0...20
+                    )
+                    TokenValueRow(
+                        label: "borderRadiusLG",
+                        value: $config.components.avatar.borderRadiusLG,
+                        range: 0...24
+                    )
+                    TokenValueRow(
+                        label: "borderRadiusSM",
+                        value: $config.components.avatar.borderRadiusSM,
+                        range: 0...16
+                    )
+
+                    // AvatarGroup
                     TokenValueRow(
                         label: "groupSpacing",
                         value: $config.components.avatar.groupSpacing,
