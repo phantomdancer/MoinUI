@@ -170,7 +170,7 @@ struct AvatarExamples: View {
                         fallbackIcon: "person.fill"
                     )
                     Moin.Avatar(
-                        src: "https://invalid-url-test.com/404.png",
+                        src: "https://example.com/404.png",
                         fallbackIcon: "exclamationmark.triangle"
                     )
                     Moin.Avatar(
@@ -183,19 +183,19 @@ struct AvatarExamples: View {
                 """
                 // \(tr("avatar.src_url"))
                 Moin.Avatar(
-                    src: "https://i.pravatar.cc/150?img=1",
+                    src: "https://api.dicebear.com/7.x/avataaars/svg?seed=Felix",
                     fallbackIcon: "person.fill"
                 )
 
                 // \(tr("avatar.src_fallback"))
                 Moin.Avatar(
-                    src: "https://invalid-url.com/404.png",
+                    src: "https://example.com/404.png",
                     fallbackIcon: "exclamationmark.triangle"
                 )
 
                 // URL \(tr("avatar.src_type"))
                 Moin.Avatar(
-                    src: URL(string: "https://i.pravatar.cc/150?img=2"),
+                    src: URL(string: "https://api.dicebear.com/7.x/avataaars/svg?seed=Aneka"),
                     size: .large
                 )
                 """
