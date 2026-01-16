@@ -69,3 +69,69 @@ https://ant.design/llms-full.txt
 
 - **Element Plus**: https://element-plus.org
 - **shadcn/ui**: https://ui.shadcn.com
+
+# MoinUI 目录结构
+
+## 📁 核心代码
+
+### Sources/MoinUI/ - 主库代码
+- **Components/** - 组件实现
+  - Avatar/ - 头像组件
+  - Button/ - 按钮组件
+  - 其他省略
+
+- **Config/** - 配置系统
+  - Tokens/ - Token配置
+    - AvatarToken.swift
+    - ButtonToken.swift
+    - 其他省略
+  - Config.swift
+  - ConfigProvider.swift
+  - Theme.swift
+
+- **Utils/** - 工具类
+  - Colors.swift
+  - Constants.swift
+  - TruncationMask.swift
+  - Version.swift
+  - ViewSizeReader.swift
+
+- **Localization/** - 库级别国际化
+
+- **Moin.swift** - 库入口文件
+
+---
+
+## 📖 Demo应用
+
+### Sources/Demo/ - Demo应用
+- **Examples/** - 组件示例展示
+  - ExampleComponents.swift - 示例通用组件
+  - Avatar/ - 头像示例 + Playground + Token配置
+  - Button/ - 按钮示例 + Playground + Token配置 + API文档
+  - 其他省略
+
+- **Views/** - Demo主页面视图
+  - HomeView.swift
+  - QuickStartView.swift
+  - ThemeView.swift
+
+- **Locales/** - 翻译文件
+  - en-US.json - 英文翻译
+  - zh-CN.json - 中文翻译
+
+- **Resources/** - 资源文件
+
+- **Utils/** - Demo工具类
+
+- **Components/** - Demo专用组件
+
+- DemoApp.swift - Demo应用入口
+- DemoTranslations.swift - Demo翻译管理
+
+---
+
+## 🧪 测试
+
+### Tests/MoinTests/ - 单元测试
+- MoinUI组件测试用例
