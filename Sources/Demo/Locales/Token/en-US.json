@@ -72,6 +72,10 @@
         "space": "Space",
         "divider": "Divider"
       },
+      "group": {
+        "basic": "Basic",
+        "component": "Component"
+      },
       "preview": "Preview",
       "code": "Code",
       "reset": "Reset",

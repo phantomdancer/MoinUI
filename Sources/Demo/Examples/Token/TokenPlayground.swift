@@ -37,35 +37,49 @@ struct TokenPlayground: View {
 
     private var panelTabBar: some View {
         VStack(spacing: 4) {
-            ForEach(TokenPlaygroundPanelTab.allCases, id: \.self) { tab in
-                Button {
-                    selectedPanel = tab
-                } label: {
-                    HStack(spacing: 8) {
-                        Image(systemName: tab.icon)
-                            .font(.system(size: 12))
-                            .frame(width: 16)
-                        Text(tab.title)
-                            .font(.system(size: 12))
-                            .lineLimit(1)
-                            .fixedSize(horizontal: true, vertical: false)
-                    }
-                    .foregroundStyle(selectedPanel == tab ? config.token.colorPrimary : .secondary)
-                    .padding(.horizontal, 10)
-                    .padding(.vertical, 8)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .contentShape(Rectangle())
+            ForEach(TokenPlaygroundPanelGroup.allCases, id: \.self) { group in
+                // 分组标题
+                HStack {
+                    Text(tr(group.titleKey))
+                        .font(.system(size: 10, weight: .medium))
+                        .foregroundStyle(.tertiary)
+                    Spacer()
                 }
-                .buttonStyle(.plain)
-                .background(
-                    RoundedRectangle(cornerRadius: 6)
-                        .fill(selectedPanel == tab ? config.token.colorPrimary.opacity(0.1) : .clear)
-                )
-                .onHover { hovering in
-                    if hovering {
-                        NSCursor.pointingHand.push()
-                    } else {
-                        NSCursor.pop()
+                .padding(.horizontal, 10)
+                .padding(.top, group == .basic ? 0 : 8)
+                .padding(.bottom, 4)
+
+                // 分组内的 Tab
+                ForEach(group.tabs, id: \.self) { tab in
+                    Button {
+                        selectedPanel = tab
+                    } label: {
+                        HStack(spacing: 8) {
+                            Image(systemName: tab.icon)
+                                .font(.system(size: 12))
+                                .frame(width: 16)
+                            Text(tab.title)
+                                .font(.system(size: 12))
+                                .lineLimit(1)
+                                .fixedSize(horizontal: true, vertical: false)
+                        }
+                        .foregroundStyle(selectedPanel == tab ? config.token.colorPrimary : .secondary)
+                        .padding(.horizontal, 10)
+                        .padding(.vertical, 8)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .contentShape(Rectangle())
+                    }
+                    .buttonStyle(.plain)
+                    .background(
+                        RoundedRectangle(cornerRadius: 6)
+                            .fill(selectedPanel == tab ? config.token.colorPrimary.opacity(0.1) : .clear)
+                    )
+                    .onHover { hovering in
+                        if hovering {
+                            NSCursor.pointingHand.push()
+                        } else {
+                            NSCursor.pop()
+                        }
                     }
                 }
             }
