@@ -81,10 +81,9 @@ Typography 组件为完整参考：`Sources/Demo/Examples/Typography/`
 - [ ] 主组件实现
 - [ ] 使用 Token 和 Constants
 - [ ] 支持浅色/深色主题
-- [ ] Demo 四个 Tab（示例、演练场、API、Token）
+- [ ] Demo 四个 Tab（示例-所有属性都需要有示例不要遗漏、演练场、API、Token）
 - [ ] **完整国际化**（含 code 块）
-- [ ] 翻译文件放组件目录
 - [ ] 导航注册（含 Tab 切换）
-- [ ] TokenPlayground添加Token预览
+- [ ] TokenPlayground添加Token预览 - 所有token都需要有实时预览
 - [ ] `swift build` 无警告
 - [ ] `swift test` 通过
