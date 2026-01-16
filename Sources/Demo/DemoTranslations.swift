@@ -8,6 +8,7 @@ private let translationsLogger = Logger(subsystem: "Demo", category: "Translatio
 enum DemoTranslations {
     /// 组件翻译子目录列表
     private static let componentDirs = [
+        "Locales/Avatar",
         "Locales/Button",
         "Locales/Typography",
         "Locales/Tag",
