@@ -29,6 +29,7 @@
   "empty.api.image_simple": "简洁小图标",
   "empty.api.image_custom": "自定义 SwiftUI Image",
   "empty.api.image_system": "SF Symbol 图标",
+  "empty.api.image_url": "网络图片 URL",
   "empty.api.image_none": "不显示图片",
   "empty.token.title": "Empty Token",
   "empty.token.desc": "Empty 组件的设计令牌",

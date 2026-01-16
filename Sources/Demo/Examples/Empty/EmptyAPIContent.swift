@@ -46,6 +46,7 @@ struct EmptyAPIContent: View {
                         (".simple", "ImageType", "-", tr("empty.api.image_simple")),
                         (".custom(Image)", "ImageType", "-", tr("empty.api.image_custom")),
                         (".systemIcon(String)", "ImageType", "-", tr("empty.api.image_system")),
+                        (".url(String)", "ImageType", "-", tr("empty.api.image_url")),
                         (".none", "ImageType", "-", tr("empty.api.image_none")),
                     ]
                 )

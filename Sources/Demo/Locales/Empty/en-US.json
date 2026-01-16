@@ -29,6 +29,7 @@
   "empty.api.image_simple": "Simple small icon",
   "empty.api.image_custom": "Custom SwiftUI Image",
   "empty.api.image_system": "SF Symbol icon",
+  "empty.api.image_url": "Network image URL",
   "empty.api.image_none": "No image",
   "empty.token.title": "Empty Token",
   "empty.token.desc": "Design tokens for Empty component",

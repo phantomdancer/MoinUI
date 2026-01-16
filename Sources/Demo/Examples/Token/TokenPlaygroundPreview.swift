@@ -207,8 +207,8 @@ struct TokenPlaygroundPreview: View {
                             .foregroundStyle(.secondary)
 
                         HStack(spacing: 32) {
-                            Moin.Empty()
-                            Moin.Empty(image: .simple)
+                            Moin.Empty(description: tr("empty.default_description"))
+                            Moin.Empty(image: .simple, description: tr("empty.default_description"))
                         }
                     }
 
