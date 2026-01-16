@@ -7,3 +7,17 @@ public enum AvatarSize {
     case small
     case custom(CGFloat)
 }
+
+// MARK: - ExpressibleByIntegerLiteral
+extension AvatarSize: ExpressibleByIntegerLiteral {
+    public init(integerLiteral value: Int) {
+        self = .custom(CGFloat(value))
+    }
+}
+
+// MARK: - ExpressibleByFloatLiteral
+extension AvatarSize: ExpressibleByFloatLiteral {
+    public init(floatLiteral value: Double) {
+        self = .custom(CGFloat(value))
+    }
+}

@@ -105,7 +105,7 @@ struct AvatarExamples: View {
                     Moin.Avatar(icon: "person", size: .large)
                     Moin.Avatar(icon: "person", size: .default)
                     Moin.Avatar(icon: "person", size: .small)
-                    Moin.Avatar(icon: "person", size: .custom(64))
+                    Moin.Avatar(icon: "person", size: 64)
                 }
             },
             code: {
@@ -113,7 +113,7 @@ struct AvatarExamples: View {
                 Moin.Avatar(icon: "person", size: .large)
                 Moin.Avatar(icon: "person", size: .default)
                 Moin.Avatar(icon: "person", size: .small)
-                Moin.Avatar(icon: "person", size: .custom(64))
+                Moin.Avatar(icon: "person", size: 64)
                 """
             }
         )
@@ -183,7 +183,7 @@ struct AvatarExamples: View {
                 """
                 // \(tr("avatar.src_url"))
                 Moin.Avatar(
-                    src: "https://example.com/avatar.png",
+                    src: "https://i.pravatar.cc/150?img=1",
                     fallbackIcon: "person.fill"
                 )
 
@@ -195,7 +195,7 @@ struct AvatarExamples: View {
 
                 // URL \(tr("avatar.src_type"))
                 Moin.Avatar(
-                    src: URL(string: "https://example.com/avatar.png"),
+                    src: URL(string: "https://i.pravatar.cc/150?img=2"),
                     size: .large
                 )
                 """
