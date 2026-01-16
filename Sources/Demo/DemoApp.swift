@@ -148,13 +148,14 @@ struct ContentView: View {
     @State private var tokenTab: TokenExamplesTab = .examples
     @State private var badgeTab: BadgeExamplesTab = .examples
     @State private var avatarTab: AvatarExamplesTab = .examples
+    @State private var emptyTab: EmptyExamplesTab = .examples
 
     var body: some View {
         NavigationSplitView {
             Sidebar(selection: $navManager.selectedItem)
                 .navigationSplitViewColumnWidth(min: 220, ideal: 280, max: 400)
         } detail: {
-            DetailView(item: navManager.selectedItem, buttonTab: $buttonTab, typographyTab: $typographyTab, tagTab: $tagTab, spaceTab: $spaceTab, dividerTab: $dividerTab, badgeTab: $badgeTab, avatarTab: $avatarTab, tokenTab: $tokenTab)
+            DetailView(item: navManager.selectedItem, buttonTab: $buttonTab, typographyTab: $typographyTab, tagTab: $tagTab, spaceTab: $spaceTab, dividerTab: $dividerTab, badgeTab: $badgeTab, avatarTab: $avatarTab, emptyTab: $emptyTab, tokenTab: $tokenTab)
                 .navigationTitle(navManager.selectedItem.map { tr($0.titleKey) } ?? "MoinUI")
                 .toolbar {
                     ToolbarItemGroup(placement: .primaryAction) {
@@ -252,6 +253,18 @@ struct ContentView: View {
                             .fixedSize()
                         }
 
+                        // Empty 页面显示 Tab 切换
+                        if navManager.selectedItem == .empty {
+                            Picker("", selection: $emptyTab) {
+                                Text(tr("tab.examples")).tag(EmptyExamplesTab.examples)
+                                Text(tr("tab.playground")).tag(EmptyExamplesTab.playground)
+                                Text(tr("tab.api")).tag(EmptyExamplesTab.api)
+                                Text(tr("tab.token")).tag(EmptyExamplesTab.token)
+                            }
+                            .pickerStyle(.segmented)
+                            .fixedSize()
+                        }
+
                         Spacer()
 
                         Button {
@@ -292,6 +305,7 @@ enum NavItem: String, Identifiable {
     case tag
     case badge
     case avatar
+    case empty
     case space
     case divider
 
@@ -315,6 +329,7 @@ enum NavItem: String, Identifiable {
         case .tag: return DemoIcons.tag
         case .badge: return DemoIcons.badge
         case .avatar: return DemoIcons.avatar
+        case .empty: return DemoIcons.empty
         case .space: return DemoIcons.space
         case .divider: return DemoIcons.divider
         case .configProvider: return DemoIcons.configProvider
@@ -334,6 +349,7 @@ enum NavItem: String, Identifiable {
         case .tag: return "component.tag"
         case .badge: return "component.badge"
         case .avatar: return "component.avatar"
+        case .empty: return "component.empty"
         case .space: return "component.space"
         case .divider: return "component.divider"
         case .configProvider: return "component.configProvider"
@@ -344,7 +360,7 @@ enum NavItem: String, Identifiable {
 
     static var overview: [NavItem] { [.introduction, .quickStart] }
     static var general: [NavItem] { [.button, .tag, .typography] }
-    static var dataDisplay: [NavItem] { [.avatar, .badge] }
+    static var dataDisplay: [NavItem] { [.avatar, .badge, .empty] }
     static var layout: [NavItem] { [.divider, .space] }
     static var development: [NavItem] { [.theme, .token, .configProvider, .localization, .colors] }
 }
@@ -419,6 +435,7 @@ struct DetailView: View {
     @Binding var dividerTab: DividerExamplesTab
     @Binding var badgeTab: BadgeExamplesTab
     @Binding var avatarTab: AvatarExamplesTab
+    @Binding var emptyTab: EmptyExamplesTab
     @Binding var tokenTab: TokenExamplesTab
 
     var body: some View {
@@ -442,6 +459,8 @@ struct DetailView: View {
                 BadgeExamples(selectedTab: $badgeTab)
             case .avatar:
                 AvatarExamples(selectedTab: $avatarTab)
+            case .empty:
+                EmptyExamples(selectedTab: $emptyTab)
             case .space:
                 SpaceExamples(selectedTab: $spaceTab)
             case .divider:

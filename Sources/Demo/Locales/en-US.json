@@ -57,6 +57,7 @@
     "configProvider": "ConfigProvider",
     "localization": "Localization",
     "avatar": "Avatar",
+    "empty": "Empty",
     "colors": "Colors"
   },
   "home": {

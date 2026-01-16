@@ -127,7 +127,11 @@
       "avatar_fonts": "Avatar Fonts",
       "avatar_radius": "Avatar Radius",
       "avatar_group": "Avatar Group",
-      "code_avatar_config": "Avatar Token Configuration"
+      "code_avatar_config": "Avatar Token Configuration",
+      "empty_image": "Empty Image",
+      "empty_description": "Empty Description",
+      "empty_spacing": "Empty Spacing",
+      "code_empty_config": "Empty Token Configuration"
     }
   }
 }

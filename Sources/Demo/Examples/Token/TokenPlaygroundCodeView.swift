@@ -172,6 +172,15 @@ config.components.divider.verticalMargin = \(Int(config.components.divider.verti
 config.components.divider.horizontalMargin = \(Int(config.components.divider.horizontalMargin))
 config.components.divider.textPadding = \(Int(config.components.divider.textPadding))
 """
+        case .empty:
+            return """
+// \(tr("token.playground.code_empty_config"))
+config.components.empty.imageHeight = \(Int(config.components.empty.imageHeight))
+config.components.empty.imageHeightSM = \(Int(config.components.empty.imageHeightSM))
+config.components.empty.descriptionFontSize = \(Int(config.components.empty.descriptionFontSize))
+config.components.empty.imageMarginBottom = \(Int(config.components.empty.imageMarginBottom))
+config.components.empty.contentMarginTop = \(Int(config.components.empty.contentMarginTop))
+"""
         }
     }
 }

@@ -1,0 +1,183 @@
+import SwiftUI
+import MoinUI
+
+/// Empty 组件文档页面 Tab
+enum EmptyExamplesTab: String, CaseIterable {
+    case examples
+    case playground
+    case api
+    case token
+}
+
+struct EmptyExamples: View {
+    @Localized var tr
+    @Binding var selectedTab: EmptyExamplesTab
+
+    /// 锚点列表
+    private let anchors: [AnchorItem] = [
+        AnchorItem(id: "basic", titleKey: "empty.basic"),
+        AnchorItem(id: "custom_image", titleKey: "empty.custom_image"),
+        AnchorItem(id: "with_action", titleKey: "empty.with_action"),
+        AnchorItem(id: "simple", titleKey: "empty.simple"),
+        AnchorItem(id: "no_description", titleKey: "empty.no_description"),
+    ]
+
+    var body: some View {
+        Group {
+            if selectedTab == .examples {
+                examplesContent
+            } else if selectedTab == .playground {
+                playgroundContent
+            } else if selectedTab == .api {
+                apiContent
+            } else {
+                tokenContent
+            }
+        }
+    }
+
+    // MARK: - Examples Content
+    private var examplesContent: some View {
+        ExamplePageWithAnchor(pageName: "Empty", anchors: anchors) { _ in
+            basicExample.id("basic")
+            customImageExample.id("custom_image")
+            withActionExample.id("with_action")
+            simpleExample.id("simple")
+            noDescriptionExample.id("no_description")
+        }
+    }
+
+    // MARK: - Playground Content
+    private var playgroundContent: some View {
+        EmptyPlayground()
+            .padding(Moin.Constants.Spacing.xl)
+    }
+
+    // MARK: - API Content
+    private var apiContent: some View {
+        EmptyAPIContent()
+    }
+
+    // MARK: - Token Content
+    private var tokenContent: some View {
+        EmptyTokenSection()
+    }
+
+    // MARK: - Examples
+
+    private var basicExample: some View {
+        ExampleSection(
+            title: tr("empty.basic"),
+            description: tr("empty.basic_desc"),
+            content: {
+                Moin.Empty(description: tr("empty.default_description"))
+            },
+            code: {
+                """
+                Moin.Empty(description: "\(tr("empty.default_description"))")
+                """
+            }
+        )
+    }
+
+    private var customImageExample: some View {
+        ExampleSection(
+            title: tr("empty.custom_image"),
+            description: tr("empty.custom_image_desc"),
+            content: {
+                HStack(spacing: 48) {
+                    Moin.Empty(
+                        image: .systemIcon("folder"),
+                        description: tr("empty.no_files")
+                    )
+                    Moin.Empty(
+                        image: .systemIcon("magnifyingglass"),
+                        description: tr("empty.no_results")
+                    )
+                }
+            },
+            code: {
+                """
+                Moin.Empty(
+                    image: .systemIcon("folder"),
+                    description: "\(tr("empty.no_files"))"
+                )
+                Moin.Empty(
+                    image: .systemIcon("magnifyingglass"),
+                    description: "\(tr("empty.no_results"))"
+                )
+                """
+            }
+        )
+    }
+
+    private var descriptionExample: some View {
+        ExampleSection(
+            title: tr("empty.description"),
+            description: tr("empty.description_desc"),
+            content: {
+                Moin.Empty(description: tr("empty.custom_text"))
+            },
+            code: {
+                """
+                Moin.Empty(description: "\(tr("empty.custom_text"))")
+                """
+            }
+        )
+    }
+
+    private var withActionExample: some View {
+        ExampleSection(
+            title: tr("empty.with_action"),
+            description: tr("empty.with_action_desc"),
+            content: {
+                Moin.Empty(description: tr("empty.default_description")) {
+                    Moin.Button(tr("empty.create_now"), color: .primary) {}
+                }
+            },
+            code: {
+                """
+                Moin.Empty(description: "\(tr("empty.default_description"))") {
+                    Moin.Button("\(tr("empty.create_now"))", color: .primary) {}
+                }
+                """
+            }
+        )
+    }
+
+    private var simpleExample: some View {
+        ExampleSection(
+            title: tr("empty.simple"),
+            description: tr("empty.simple_desc"),
+            content: {
+                Moin.Empty(
+                    image: .simple,
+                    description: tr("empty.default_description")
+                )
+            },
+            code: {
+                """
+                Moin.Empty(
+                    image: .simple,
+                    description: "\(tr("empty.default_description"))"
+                )
+                """
+            }
+        )
+    }
+
+    private var noDescriptionExample: some View {
+        ExampleSection(
+            title: tr("empty.no_description"),
+            description: tr("empty.no_description_desc"),
+            content: {
+                Moin.Empty(image: .default)
+            },
+            code: {
+                """
+                Moin.Empty(image: .default)
+                """
+            }
+        )
+    }
+}

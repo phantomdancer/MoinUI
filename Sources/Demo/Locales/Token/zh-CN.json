@@ -127,7 +127,11 @@
       "avatar_fonts": "头像字体",
       "avatar_radius": "头像圆角",
       "avatar_group": "头像组",
-      "code_avatar_config": "Avatar Token 配置"
+      "code_avatar_config": "Avatar Token 配置",
+      "empty_image": "空状态图片",
+      "empty_description": "空状态描述",
+      "empty_spacing": "空状态间距",
+      "code_empty_config": "Empty Token 配置"
     }
   }
 }

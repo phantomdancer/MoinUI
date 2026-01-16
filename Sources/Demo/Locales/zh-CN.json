@@ -57,6 +57,7 @@
     "configProvider": "ConfigProvider 全局配置",
     "localization": "Localization 国际化",
     "avatar": "Avatar 头像",
+    "empty": "Empty 空状态",
     "colors": "Colors 颜色集合"
   },
   "home": {

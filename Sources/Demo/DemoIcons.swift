@@ -21,6 +21,7 @@ struct DemoIcons {
     // Data Display
     static let badge = "app.badge"
     static let avatar = "person.crop.circle"
+    static let empty = "tray"
     
     // Layout
     static let space = "rectangle.split.3x1"

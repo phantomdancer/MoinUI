@@ -223,6 +223,10 @@ private struct MoinAvatarTokenKey: EnvironmentKey {
     static let defaultValue = Moin.AvatarToken.default
 }
 
+private struct MoinEmptyTokenKey: EnvironmentKey {
+    static let defaultValue = Moin.EmptyToken.default
+}
+
 public extension EnvironmentValues {
     var moinConfig: Moin.ConfigProvider {
         get { self[MoinConfigProviderKey.self] }
@@ -262,6 +266,11 @@ public extension EnvironmentValues {
     var moinAvatarToken: Moin.AvatarToken {
         get { self[MoinAvatarTokenKey.self] }
         set { self[MoinAvatarTokenKey.self] = newValue }
+    }
+
+    var moinEmptyToken: Moin.EmptyToken {
+        get { self[MoinEmptyTokenKey.self] }
+        set { self[MoinEmptyTokenKey.self] = newValue }
     }
 }
 
@@ -312,6 +321,7 @@ public extension Moin {
                 .environment(\.moinTagToken, config.components.tag)
                 .environment(\.moinBadgeToken, config.components.badge)
                 .environment(\.moinAvatarToken, config.components.avatar)
+                .environment(\.moinEmptyToken, config.components.empty)
                 .environment(\.moinSpaceToken, config.components.space)
                 .environment(\.moinDividerToken, config.components.divider)
                 .environmentObject(config)
