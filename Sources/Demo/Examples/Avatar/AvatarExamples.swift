@@ -166,7 +166,7 @@ struct AvatarExamples: View {
             content: {
                 HStack(spacing: 24) {
                     Moin.Avatar(
-                        src: "https://api.dicebear.com/7.x/avataaars/svg?seed=Felix",
+                        src: "https://api.dicebear.com/7.x/avataaars/png?seed=Felix",
                         fallbackIcon: "person.fill"
                     )
                     Moin.Avatar(
@@ -174,7 +174,7 @@ struct AvatarExamples: View {
                         fallbackIcon: "exclamationmark.triangle"
                     )
                     Moin.Avatar(
-                        src: URL(string: "https://api.dicebear.com/7.x/avataaars/svg?seed=Aneka"),
+                        src: URL(string: "https://api.dicebear.com/7.x/avataaars/png?seed=Aneka"),
                         size: .large
                     )
                 }
@@ -183,7 +183,7 @@ struct AvatarExamples: View {
                 """
                 // \(tr("avatar.src_url"))
                 Moin.Avatar(
-                    src: "https://api.dicebear.com/7.x/avataaars/svg?seed=Felix",
+                    src: "https://api.dicebear.com/7.x/avataaars/png?seed=Felix",
                     fallbackIcon: "person.fill"
                 )
 
@@ -195,7 +195,7 @@ struct AvatarExamples: View {
 
                 // URL \(tr("avatar.src_type"))
                 Moin.Avatar(
-                    src: URL(string: "https://api.dicebear.com/7.x/avataaars/svg?seed=Aneka"),
+                    src: URL(string: "https://api.dicebear.com/7.x/avataaars/png?seed=Aneka"),
                     size: .large
                 )
                 """

@@ -8,11 +8,14 @@ class AvatarPlaygroundState: ObservableObject {
     @Published var contentType: AvatarContentType = .icon
     @Published var text: String = "U"
     @Published var hasBackgroundColor: Bool = false
+    @Published var gap: CGFloat = 4
+    @Published var srcUrl: String = "https://api.dicebear.com/7.x/avataaars/png?seed=demo"
 
     enum AvatarContentType: String, CaseIterable, CustomStringConvertible {
         case icon
         case text
         case image
+        case src
 
         var description: String { rawValue }
     }
@@ -28,6 +31,8 @@ class AvatarPlaygroundState: ObservableObject {
             return generateTextCode()
         case .image:
             params.append("image: Image(systemName: \"photo\")")
+        case .src:
+            return generateSrcCode()
         }
 
         if size != .default {
@@ -53,6 +58,20 @@ class AvatarPlaygroundState: ObservableObject {
         }
         if hasBackgroundColor {
             params.append("backgroundColor: .blue")
+        }
+        if gap != 4 {
+            params.append("gap: \(Int(gap))")
+        }
+        return "Moin.Avatar(\(params.joined(separator: ", ")))"
+    }
+
+    private func generateSrcCode() -> String {
+        var params: [String] = ["src: \"\(srcUrl)\""]
+        if size != .default {
+            params.append("size: .\(sizeString)")
+        }
+        if shape != .circle {
+            params.append("shape: .square")
         }
         return "Moin.Avatar(\(params.joined(separator: ", ")))"
     }
@@ -142,11 +161,18 @@ struct AvatarPlayground: View {
                 state.text,
                 size: state.size,
                 shape: state.shape,
-                backgroundColor: state.hasBackgroundColor ? .blue : nil
+                backgroundColor: state.hasBackgroundColor ? .blue : nil,
+                gap: state.gap
             )
         case .image:
             Moin.Avatar(
                 image: Image(systemName: "photo"),
+                size: state.size,
+                shape: state.shape
+            )
+        case .src:
+            Moin.Avatar(
+                src: state.srcUrl,
                 size: state.size,
                 shape: state.shape
             )
@@ -193,118 +219,45 @@ struct AvatarPlayground: View {
                             propName: "text",
                             value: $state.text
                         )
-                    }
 
-                    TogglePropControl(
-                        label: tr("avatar.prop.background_color"),
-                        propName: "backgroundColor: Color?",
-                        value: $state.hasBackgroundColor
-                    )
-                }
+                        PropControl(label: tr("avatar.prop.gap"), propName: "gap: CGFloat") {
+                            HStack(spacing: 4) {
+                                Button { if state.gap > 0 { state.gap -= 1 } } label: {
+                                    Image(systemName: "minus")
+                                        .font(.system(size: 10))
+                                        .frame(width: 20, height: 20)
+                                }
+                                .buttonStyle(.plain)
 
-                Divider()
-                    .padding(.vertical, Moin.Constants.Spacing.sm)
+                                Text("\(Int(state.gap))")
+                                    .font(.system(size: 11, design: .monospaced))
+                                    .frame(width: 30)
 
-                HStack {
-                    Spacer()
-                    Button {
-                        config.regenerateTokens()
-                    } label: {
-                        HStack(spacing: 4) {
-                            Image(systemName: "arrow.counterclockwise")
-                            Text(tr("playground.token.reset"))
+                                Button { state.gap += 1 } label: {
+                                    Image(systemName: "plus")
+                                        .font(.system(size: 10))
+                                        .frame(width: 20, height: 20)
+                                }
+                                .buttonStyle(.plain)
+                            }
                         }
-                        .font(.system(size: 11))
-                        .foregroundStyle(.secondary)
                     }
-                    .buttonStyle(.plain)
-                }
 
-                VStack(alignment: .leading, spacing: Moin.Constants.Spacing.sm) {
-                    Text(tr("playground.token.component"))
-                        .font(.system(size: 11, weight: .medium))
-                        .foregroundStyle(.secondary)
+                    if state.contentType == .src {
+                        TextPropControl(
+                            label: tr("avatar.prop.src_url"),
+                            propName: "src: String",
+                            value: $state.srcUrl
+                        )
+                    }
 
-                    // Colors
-                    ColorPresetRow(
-                        label: "containerBg",
-                        color: $config.components.avatar.containerBg
-                    )
-                    ColorPresetRow(
-                        label: "colorText",
-                        color: $config.components.avatar.colorText
-                    )
-                    ColorPresetRow(
-                        label: "colorTextLight",
-                        color: $config.components.avatar.colorTextLight
-                    )
-                    ColorPresetRow(
-                        label: "groupBorderColor",
-                        color: $config.components.avatar.groupBorderColor
-                    )
-
-                    // Sizes
-                    TokenValueRow(
-                        label: "size",
-                        value: $config.components.avatar.size,
-                        range: 16...64
-                    )
-                    TokenValueRow(
-                        label: "sizeLG",
-                        value: $config.components.avatar.sizeLG,
-                        range: 24...80
-                    )
-                    TokenValueRow(
-                        label: "sizeSM",
-                        value: $config.components.avatar.sizeSM,
-                        range: 12...40
-                    )
-
-                    // Font Sizes
-                    TokenValueRow(
-                        label: "fontSize",
-                        value: $config.components.avatar.fontSize,
-                        range: 10...32
-                    )
-                    TokenValueRow(
-                        label: "fontSizeLG",
-                        value: $config.components.avatar.fontSizeLG,
-                        range: 14...40
-                    )
-                    TokenValueRow(
-                        label: "fontSizeSM",
-                        value: $config.components.avatar.fontSizeSM,
-                        range: 8...24
-                    )
-
-                    // Border Radius
-                    TokenValueRow(
-                        label: "borderRadius",
-                        value: $config.components.avatar.borderRadius,
-                        range: 0...20
-                    )
-                    TokenValueRow(
-                        label: "borderRadiusLG",
-                        value: $config.components.avatar.borderRadiusLG,
-                        range: 0...24
-                    )
-                    TokenValueRow(
-                        label: "borderRadiusSM",
-                        value: $config.components.avatar.borderRadiusSM,
-                        range: 0...16
-                    )
-
-                    // AvatarGroup
-                    TokenValueRow(
-                        label: "groupSpacing",
-                        value: $config.components.avatar.groupSpacing,
-                        range: -20...20
-                    )
-                    TokenValueRow(
-                        label: "groupBorderWidth",
-                        value: $config.components.avatar.groupBorderWidth,
-                        range: 0...6
-                    )
+                    if state.contentType != .src && state.contentType != .image {
+                        TogglePropControl(
+                            label: tr("avatar.prop.background_color"),
+                            propName: "backgroundColor: Color?",
+                            value: $state.hasBackgroundColor
+                        )
+                    }
                 }
             }
             .padding(Moin.Constants.Spacing.md)

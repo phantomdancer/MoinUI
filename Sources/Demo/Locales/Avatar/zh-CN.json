@@ -37,7 +37,29 @@
       "size": "尺寸",
       "shape": "形状",
       "text": "文字",
-      "background_color": "背景色"
+      "background_color": "背景色",
+      "gap": "间距",
+      "src_url": "图片地址"
+    },
+    "api": {
+      "icon": "SF Symbol 图标名称",
+      "text": "显示文字内容",
+      "image": "SwiftUI Image 图片",
+      "src": "网络图片 URL（支持 URL 或 String）",
+      "fallback_icon": "加载失败时显示的兜底图标",
+      "size": "头像尺寸",
+      "shape": "头像形状",
+      "background_color": "自定义背景色",
+      "gap": "文字与边界的间距",
+      "content": "自定义内容视图",
+      "size_large": "大号尺寸 (40pt)",
+      "size_default": "默认尺寸 (32pt)",
+      "size_small": "小号尺寸 (24pt)",
+      "size_custom": "自定义尺寸",
+      "shape_circle": "圆形",
+      "shape_square": "方形",
+      "max_count": "最多显示的头像数量，超出显示 +N",
+      "group_content": "头像组内容"
     },
     "token": {
       "title": "Avatar 变量",

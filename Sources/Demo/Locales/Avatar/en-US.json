@@ -37,7 +37,29 @@
       "size": "Size",
       "shape": "Shape",
       "text": "Text",
-      "background_color": "Background Color"
+      "background_color": "Background Color",
+      "gap": "Gap",
+      "src_url": "Image URL"
+    },
+    "api": {
+      "icon": "SF Symbol icon name",
+      "text": "Text content to display",
+      "image": "SwiftUI Image",
+      "src": "Network image URL (URL or String)",
+      "fallback_icon": "Fallback icon when loading fails",
+      "size": "Avatar size",
+      "shape": "Avatar shape",
+      "background_color": "Custom background color",
+      "gap": "Gap between text and container edge",
+      "content": "Custom content view",
+      "size_large": "Large size (40pt)",
+      "size_default": "Default size (32pt)",
+      "size_small": "Small size (24pt)",
+      "size_custom": "Custom size",
+      "shape_circle": "Circle shape",
+      "shape_square": "Square shape",
+      "max_count": "Max avatars to display, shows +N for overflow",
+      "group_content": "Avatar group content"
     },
     "token": {
       "title": "Avatar Token",
