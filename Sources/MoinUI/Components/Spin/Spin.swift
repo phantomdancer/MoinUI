@@ -1,5 +1,9 @@
 import SwiftUI
 
+public extension Moin {
+    typealias Spin = MoinUI.Spin
+}
+
 // MARK: - Spin
 
 /// 加载中组件

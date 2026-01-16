@@ -43,6 +43,7 @@
     "token": "Token System",
     "general": "General",
     "data_display": "Data Display",
+    "feedback": "Feedback",
     "layout": "Layout",
     "components": "Components",
     "development": "Development"
@@ -58,6 +59,7 @@
     "localization": "Localization",
     "avatar": "Avatar",
     "empty": "Empty",
+    "spin": "Spin",
     "colors": "Colors"
   },
   "home": {

@@ -11,6 +11,7 @@ public extension Moin {
         public var badge: Moin.BadgeToken
         public var avatar: Moin.AvatarToken
         public var empty: Moin.EmptyToken
+        public var spin: Moin.SpinToken
 
         public static func generate(from token: Token, isDark: Bool = false) -> ComponentToken {
             ComponentToken(
@@ -20,7 +21,8 @@ public extension Moin {
                 tag: .generate(from: token),
                 badge: .generate(from: token),
                 avatar: .generate(from: token),
-                empty: .generate(from: token)
+                empty: .generate(from: token),
+                spin: .generate(from: token)
             )
         }
 

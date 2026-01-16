@@ -149,13 +149,14 @@ struct ContentView: View {
     @State private var badgeTab: BadgeExamplesTab = .examples
     @State private var avatarTab: AvatarExamplesTab = .examples
     @State private var emptyTab: EmptyExamplesTab = .examples
+    @State private var spinTab: SpinExamplesTab = .examples
 
     var body: some View {
         NavigationSplitView {
             Sidebar(selection: $navManager.selectedItem)
                 .navigationSplitViewColumnWidth(min: 220, ideal: 280, max: 400)
         } detail: {
-            DetailView(item: navManager.selectedItem, buttonTab: $buttonTab, typographyTab: $typographyTab, tagTab: $tagTab, spaceTab: $spaceTab, dividerTab: $dividerTab, badgeTab: $badgeTab, avatarTab: $avatarTab, emptyTab: $emptyTab, tokenTab: $tokenTab)
+            DetailView(item: navManager.selectedItem, buttonTab: $buttonTab, typographyTab: $typographyTab, tagTab: $tagTab, spaceTab: $spaceTab, dividerTab: $dividerTab, badgeTab: $badgeTab, avatarTab: $avatarTab, emptyTab: $emptyTab, spinTab: $spinTab, tokenTab: $tokenTab)
                 .navigationTitle(navManager.selectedItem.map { tr($0.titleKey) } ?? "MoinUI")
                 .toolbar {
                     ToolbarItemGroup(placement: .primaryAction) {
@@ -265,6 +266,18 @@ struct ContentView: View {
                             .fixedSize()
                         }
 
+                        // Spin 页面显示 Tab 切换
+                        if navManager.selectedItem == .spin {
+                            Picker("", selection: $spinTab) {
+                                Text(tr("tab.examples")).tag(SpinExamplesTab.examples)
+                                Text(tr("tab.playground")).tag(SpinExamplesTab.playground)
+                                Text(tr("tab.api")).tag(SpinExamplesTab.api)
+                                Text(tr("tab.token")).tag(SpinExamplesTab.token)
+                            }
+                            .pickerStyle(.segmented)
+                            .fixedSize()
+                        }
+
                         Spacer()
 
                         Button {
@@ -299,13 +312,20 @@ enum NavItem: String, Identifiable {
     case introduction
     case quickStart
 
-    // Components
+    // Components - General
     case button
     case typography
     case tag
+
+    // Components - Data Display
     case badge
     case avatar
     case empty
+
+    // Components - Feedback
+    case spin
+
+    // Components - Layout
     case space
     case divider
 
@@ -330,6 +350,7 @@ enum NavItem: String, Identifiable {
         case .badge: return DemoIcons.badge
         case .avatar: return DemoIcons.avatar
         case .empty: return DemoIcons.empty
+        case .spin: return DemoIcons.spin
         case .space: return DemoIcons.space
         case .divider: return DemoIcons.divider
         case .configProvider: return DemoIcons.configProvider
@@ -350,6 +371,7 @@ enum NavItem: String, Identifiable {
         case .badge: return "component.badge"
         case .avatar: return "component.avatar"
         case .empty: return "component.empty"
+        case .spin: return "component.spin"
         case .space: return "component.space"
         case .divider: return "component.divider"
         case .configProvider: return "component.configProvider"
@@ -361,6 +383,7 @@ enum NavItem: String, Identifiable {
     static var overview: [NavItem] { [.introduction, .quickStart] }
     static var general: [NavItem] { [.button, .tag, .typography] }
     static var dataDisplay: [NavItem] { [.avatar, .badge, .empty] }
+    static var feedback: [NavItem] { [.spin] }
     static var layout: [NavItem] { [.divider, .space] }
     static var development: [NavItem] { [.theme, .token, .configProvider, .localization, .colors] }
 }
@@ -410,6 +433,14 @@ struct Sidebar: View {
                 }
             }
 
+            Section(tr("nav.feedback")) {
+                ForEach(NavItem.feedback) { item in
+                    NavigationLink(value: item) {
+                        Label(tr(item.titleKey), systemImage: item.icon)
+                    }
+                }
+            }
+
             Section(tr("nav.layout")) {
                 ForEach(NavItem.layout) { item in
                     NavigationLink(value: item) {
@@ -436,6 +467,7 @@ struct DetailView: View {
     @Binding var badgeTab: BadgeExamplesTab
     @Binding var avatarTab: AvatarExamplesTab
     @Binding var emptyTab: EmptyExamplesTab
+    @Binding var spinTab: SpinExamplesTab
     @Binding var tokenTab: TokenExamplesTab
 
     var body: some View {
@@ -461,6 +493,8 @@ struct DetailView: View {
                 AvatarExamples(selectedTab: $avatarTab)
             case .empty:
                 EmptyExamples(selectedTab: $emptyTab)
+            case .spin:
+                SpinExamples(selectedTab: $spinTab)
             case .space:
                 SpaceExamples(selectedTab: $spaceTab)
             case .divider:

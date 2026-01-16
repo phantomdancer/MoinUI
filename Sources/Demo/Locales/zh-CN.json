@@ -43,6 +43,7 @@
     "token": "Token 系统",
     "general": "通用",
     "data_display": "数据展示",
+    "feedback": "反馈",
     "layout": "布局",
     "components": "组件",
     "development": "研发"
@@ -58,6 +59,7 @@
     "localization": "Localization 国际化",
     "avatar": "Avatar 头像",
     "empty": "Empty 空状态",
+    "spin": "Spin 加载中",
     "colors": "Colors 颜色集合"
   },
   "home": {

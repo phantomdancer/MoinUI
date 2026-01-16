@@ -27,6 +27,9 @@ struct DemoIcons {
     static let space = "rectangle.split.3x1"
     static let divider = "minus"
     
+    // Feedback
+    static let spin = "arrow.trianglehead.2.counterclockwise.rotate.90"
+    
     // Other (Playground specific)
     static let seed = "leaf"
     static let global = "globe" // Note: localization also uses globe in NavItem, might be confusing but fine.
