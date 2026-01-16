@@ -39,7 +39,7 @@ public extension Moin {
                 tipColor: token.colorTextTertiary,
                 maskBackground: token.colorBgMask,
                 contentHeight: 400,
-                motionDuration: token.motionDurationSlow
+                motionDuration: 1.2  // antd: animation 1.2s infinite linear
             )
         }
 

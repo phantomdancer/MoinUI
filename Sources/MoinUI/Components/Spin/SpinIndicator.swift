@@ -27,14 +27,13 @@ public struct SpinIndicator: View {
             }
         }
         .frame(width: size, height: size)
-        .rotationEffect(.degrees(isAnimating ? 360 : 0))
+        .rotationEffect(.degrees(45 + (isAnimating ? 360 : 0)))  // antd: 45deg → 405deg
+        .animation(
+            .linear(duration: duration).repeatForever(autoreverses: false),
+            value: isAnimating
+        )
         .onAppear {
-            withAnimation(
-                .linear(duration: duration)
-                .repeatForever(autoreverses: false)
-            ) {
-                isAnimating = true
-            }
+            isAnimating = true
         }
     }
 
@@ -51,13 +50,14 @@ public struct SpinIndicator: View {
     }
 
     /// 计算每个点的偏移位置
-    /// 布局: 0-上, 1-右, 2-下, 3-左
+    /// 布局: 正方形四角 (左上、右上、右下、左下)
+    /// 通过 45° 旋转变成菱形
     private func dotOffset(for index: Int) -> CGPoint {
         switch index {
-        case 0: return CGPoint(x: 0, y: -offsetDistance)
-        case 1: return CGPoint(x: offsetDistance, y: 0)
-        case 2: return CGPoint(x: 0, y: offsetDistance)
-        case 3: return CGPoint(x: -offsetDistance, y: 0)
+        case 0: return CGPoint(x: -offsetDistance, y: -offsetDistance)  // 左上
+        case 1: return CGPoint(x: offsetDistance, y: -offsetDistance)   // 右上
+        case 2: return CGPoint(x: offsetDistance, y: offsetDistance)    // 右下
+        case 3: return CGPoint(x: -offsetDistance, y: offsetDistance)   // 左下
         default: return .zero
         }
     }
