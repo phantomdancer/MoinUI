@@ -32,6 +32,10 @@ struct AvatarTokenSection: View {
                         tr("api.description")
                     ),
                     rows: [
+                        ("containerBg", "Color", "-", tr("avatar.token.containerBg")),
+                        ("colorText", "Color", "-", tr("avatar.token.colorText")),
+                        ("colorTextLight", "Color", "-", tr("avatar.token.colorTextLight")),
+                        ("groupBorderColor", "Color", "-", tr("avatar.token.groupBorderColor")),
                         ("size", "CGFloat", "\(Int(avatarToken.size))", tr("avatar.token.size")),
                         ("sizeLG", "CGFloat", "\(Int(avatarToken.sizeLG))", tr("avatar.token.sizeLG")),
                         ("sizeSM", "CGFloat", "\(Int(avatarToken.sizeSM))", tr("avatar.token.sizeSM")),
