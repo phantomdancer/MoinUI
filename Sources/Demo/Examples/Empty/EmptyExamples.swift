@@ -72,11 +72,11 @@ struct EmptyExamples: View {
             title: tr("empty.basic"),
             description: tr("empty.basic_desc"),
             content: {
-                Moin.Empty(description: tr("empty.default_description"))
+                Moin.Empty()
             },
             code: {
                 """
-                Moin.Empty(description: "\(tr("empty.default_description"))")
+                Moin.Empty()
                 """
             }
         )
@@ -194,11 +194,11 @@ struct EmptyExamples: View {
             title: tr("empty.no_description"),
             description: tr("empty.no_description_desc"),
             content: {
-                Moin.Empty(image: .default)
+                Moin.Empty(image: .default, description: "")
             },
             code: {
                 """
-                Moin.Empty(image: .default)
+                Moin.Empty(image: .default, description: "")
                 """
             }
         )

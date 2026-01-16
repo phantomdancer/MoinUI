@@ -15,5 +15,8 @@
   },
   "button": {
     "loading": "Loading..."
+  },
+  "empty": {
+    "defaultText": "No Data"
   }
 }

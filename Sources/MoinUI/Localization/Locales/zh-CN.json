@@ -15,5 +15,8 @@
   },
   "button": {
     "loading": "加载中..."
+  },
+  "empty": {
+    "defaultText": "暂无数据"
   }
 }

@@ -37,6 +37,8 @@ class EmptyPlaygroundState: ObservableObject {
 
         if showDescription {
             params.append("description: \"\(descriptionText)\"")
+        } else {
+            params.append("description: \"\"")
         }
 
         if showAction {
@@ -102,7 +104,7 @@ struct EmptyPlayground: View {
 
     @ViewBuilder
     var emptyPreview: some View {
-        let description = state.showDescription ? state.descriptionText : nil
+        let description = state.showDescription ? state.descriptionText : ""
 
         if state.showAction {
             emptyWithAction(description: description)

@@ -20,13 +20,22 @@ public extension Moin {
         private let description: String?
         private let content: Content?
 
+        @Localized private var tr
+
+        private var resolvedDescription: String? {
+            if let description = description {
+                return description
+            }
+            return tr("empty.defaultText")
+        }
+
         public var body: some View {
             VStack(spacing: 0) {
                 imageView
                     .padding(.bottom, emptyToken.imageMarginBottom)
 
-                if let description = description {
-                    Text(description)
+                if let text = resolvedDescription, !text.isEmpty {
+                    Text(text)
                         .font(.system(size: emptyToken.descriptionFontSize))
                         .foregroundStyle(emptyToken.descriptionColor)
                         .padding(.bottom, emptyToken.contentMarginTop)

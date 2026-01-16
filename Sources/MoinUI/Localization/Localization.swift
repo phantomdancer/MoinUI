@@ -101,7 +101,11 @@ public extension Moin {
         /// Load built-in locale files from bundle
         private func loadBuiltinLocales() {
             for locale in Moin.Locale.allCases {
-                if let url = Bundle.module.url(forResource: locale.fileName, withExtension: "json", subdirectory: "Locales"),
+                // 先尝试 subdirectory，再尝试根目录
+                let url = Bundle.module.url(forResource: locale.fileName, withExtension: "json", subdirectory: "Locales")
+                    ?? Bundle.module.url(forResource: locale.fileName, withExtension: "json")
+                
+                if let url = url,
                    let data = try? Data(contentsOf: url),
                    let dict = try? JSONSerialization.jsonObject(with: data) as? [String: Any] {
                     translations[locale] = flattenDictionary(dict, prefix: "")
