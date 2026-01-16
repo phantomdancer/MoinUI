@@ -138,6 +138,8 @@ struct TokenPlayground: View {
                     TokenDividerPanel()
                 case .empty:
                     TokenEmptyPanel()
+                case .spin:
+                    TokenSpinPanel()
                 }
             }
             .padding(Moin.Constants.Spacing.md)

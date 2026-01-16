@@ -17,7 +17,7 @@
 ## 按复杂度排序（简单优先，无依赖优先）
 
 ### 已完成
-Button ✅, Typography ✅, Divider ✅, Space ✅, Tag ✅, Badge ✅, Avatar ✅, Empty ✅, Icon ⏭
+Button ✅, Typography ✅, Divider ✅, Space ✅, Tag ✅, Badge ✅, Avatar ✅, Empty ✅, Spin ✅, Icon ⏭
 
 ### 第一梯队：极简组件（无依赖，几乎无状态）
 
@@ -27,7 +27,7 @@ Button ✅, Typography ✅, Divider ✅, Space ✅, Tag ✅, Badge ✅, Avatar �
 | Badge | ★☆☆☆☆ | ✅ 已完成 |
 | Avatar | ★☆☆☆☆ | ✅ 已完成 |
 | Empty | ★☆☆☆☆ | ✅ 已完成 |
-| Spin | ★☆☆☆☆ | 旋转加载动画 |
+| Spin | ★☆☆☆☆ | ✅ 已完成 |
 | Statistic | ★☆☆☆☆ | 数值+标签展示 |
 
 ### 第二梯队：简单组件（无依赖，少量状态）
@@ -99,7 +99,7 @@ Button ✅, Typography ✅, Divider ✅, Space ✅, Tag ✅, Badge ✅, Avatar �
 ```
 已完成: Button → Typography → Divider → Space → Tag → Badge → Avatar → Empty
 
-下一批: Spin → Statistic → Alert
+下一批: Statistic → Alert → Progress
 
 再下批: Progress → Switch → Checkbox → Radio
 

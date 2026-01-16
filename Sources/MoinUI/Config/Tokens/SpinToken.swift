@@ -19,6 +19,8 @@ public extension Moin {
         public var tipColor: Color
         /// 全屏遮罩背景色
         public var maskBackground: Color
+        /// 进度圆环轨道颜色
+        public var progressTrackColor: Color
 
         // MARK: - Content
         /// 嵌套模式最大内容高度
@@ -38,6 +40,7 @@ public extension Moin {
                 dotColor: token.colorPrimary,
                 tipColor: token.colorTextTertiary,
                 maskBackground: token.colorBgMask,
+                progressTrackColor: token.colorFillSecondary,
                 contentHeight: 400,
                 motionDuration: 1.2  // antd: animation 1.2s infinite linear
             )

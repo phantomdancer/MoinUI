@@ -155,6 +155,10 @@
     "zh": "中文",
     "en": "EN"
   },
+  "token.playground.spin": "Spin 加载中",
+  "token.playground.code_spin_config": "Spin 组件配置",
+  "token.playground.spin_sizes": "Spin 尺寸",
+  "token.playground.spin_animation": "Spin 动画",
   "api": {
     "property": "属性",
     "method": "方法",

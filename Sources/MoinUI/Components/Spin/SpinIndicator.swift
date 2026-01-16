@@ -19,11 +19,13 @@ public struct SpinIndicator: View {
     public var body: some View {
         ZStack {
             ForEach(0..<4, id: \.self) { index in
-                Circle()
-                    .fill(color)
-                    .frame(width: dotItemSize, height: dotItemSize)
-                    .offset(x: dotOffset(for: index).x, y: dotOffset(for: index).y)
-                    .opacity(dotOpacity(for: index))
+                SpinDot(
+                    size: dotItemSize,
+                    color: color,
+                    delay: Double(index) * 0.4,  // antd: 0s, 0.4s, 0.8s, 1.2s
+                    isAnimating: isAnimating
+                )
+                .offset(x: dotOffset(for: index).x, y: dotOffset(for: index).y)
             }
         }
         .frame(width: size, height: size)
@@ -39,9 +41,9 @@ public struct SpinIndicator: View {
 
     // MARK: - Private
 
-    /// 单个点的尺寸 (约为整体的 40%)
+    /// 单个点的尺寸 (antd: (dotSize - marginXXS/2) / 2)
     private var dotItemSize: CGFloat {
-        (size - size * 0.1) / 2.5
+        (size - 2) / 2
     }
 
     /// 点距中心的偏移距离
@@ -61,12 +63,46 @@ public struct SpinIndicator: View {
         default: return .zero
         }
     }
+}
 
-    /// 每个点的基础透明度 (交替闪烁效果)
-    private func dotOpacity(for index: Int) -> Double {
-        // 0.3 → 0.5 → 0.7 → 1.0 依次递增
-        let base = 0.3 + Double(index) * 0.233
-        return min(base, 1.0)
+// MARK: - SpinDot
+
+/// 单个旋转点，带有 opacity 闪烁动画
+private struct SpinDot: View {
+    let size: CGFloat
+    let color: Color
+    let delay: Double
+    let isAnimating: Bool
+
+    @State private var isAtMaxOpacity = false
+
+    var body: some View {
+        Circle()
+            .fill(color)
+            .frame(width: size, height: size)
+            .scaleEffect(0.75)  // antd: transform: scale(0.75)
+            .opacity(isAtMaxOpacity ? 1.0 : 0.3)
+            .animation(
+                isAnimating ?
+                    Animation.easeInOut(duration: 1.0)
+                        .repeatForever(autoreverses: true)
+                        .delay(delay)
+                    : nil,
+                value: isAtMaxOpacity
+            )
+            .onChange(of: isAnimating) { animating in
+                if animating {
+                    isAtMaxOpacity = true
+                }
+            }
+            .onAppear {
+                if isAnimating {
+                    // 延迟一帧启动，确保动画正确绑定
+                    DispatchQueue.main.async {
+                        isAtMaxOpacity = true
+                    }
+                }
+            }
     }
 }
 

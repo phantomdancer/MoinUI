@@ -55,10 +55,7 @@ struct SpinExamples: View {
     // MARK: - Playground Content
 
     private var playgroundContent: some View {
-        Text(tr("spin.playground.coming_soon"))
-            .foregroundStyle(.secondary)
-            .frame(maxWidth: .infinity, alignment: .center)
-            .padding(40)
+        SpinPlayground()
     }
 
     // MARK: - API Content
@@ -274,6 +271,7 @@ struct SpinAPIContent: View {
                         ("size", "SpinSize", ".default", tr("spin.api.size")),
                         ("tip", "String?", "nil", tr("spin.api.tip")),
                         ("delay", "Int?", "nil", tr("spin.api.delay")),
+                        ("percent", "SpinPercent?", "nil", tr("spin.api.percent")),
                         ("fullscreen", "Bool", "false", tr("spin.api.fullscreen")),
                         ("indicator", "View?", "nil", tr("spin.api.indicator")),
                         ("content", "View?", "nil", tr("spin.api.content"))
@@ -298,6 +296,24 @@ struct SpinAPIContent: View {
                     ],
                     columnWidths: (140, 300, 0, 0)
                 )
+
+                Divider()
+
+                // SpinPercent
+                Text("SpinPercent")
+                    .font(.title2.bold())
+
+                Text(tr("spin.api.percent_desc"))
+                    .foregroundStyle(.secondary)
+
+                APITable(
+                    headers: (tr("api.value"), tr("api.description"), "", ""),
+                    rows: [
+                        (".value(Double)", tr("spin.api.percent_value"), "", ""),
+                        (".auto", tr("spin.api.percent_auto"), "", "")
+                    ],
+                    columnWidths: (180, 300, 0, 0)
+                )
             }
             .padding(24)
         }
@@ -314,60 +330,69 @@ struct SpinTokenSection: View {
         let token = config.components.spin
 
         ScrollView {
-            VStack(alignment: .leading, spacing: 24) {
+            VStack(alignment: .leading, spacing: Moin.Constants.Spacing.xl) {
                 Text(tr("spin.token.title"))
-                    .font(.title2.bold())
+                    .font(.title2)
+                    .fontWeight(.semibold)
 
                 Text(tr("spin.token.desc"))
                     .foregroundStyle(.secondary)
 
                 // Size Tokens
-                TokenGroup(title: tr("spin.token.size")) {
-                    tokenRow("dotSize", "\(Int(token.dotSize))pt")
-                    tokenRow("dotSizeSM", "\(Int(token.dotSizeSM))pt")
-                    tokenRow("dotSizeLG", "\(Int(token.dotSizeLG))pt")
-                    tokenRow("contentHeight", "\(Int(token.contentHeight))pt")
-                }
+                Text(tr("spin.token.size"))
+                    .font(.headline)
+
+                APITable(
+                    headers: (
+                        tr("api.property"),
+                        tr("api.type"),
+                        tr("api.default"),
+                        tr("api.description")
+                    ),
+                    rows: [
+                        ("dotSize", "CGFloat", "\(Int(token.dotSize))", tr("spin.token.dotSize_desc")),
+                        ("dotSizeSM", "CGFloat", "\(Int(token.dotSizeSM))", tr("spin.token.dotSizeSM_desc")),
+                        ("dotSizeLG", "CGFloat", "\(Int(token.dotSizeLG))", tr("spin.token.dotSizeLG_desc")),
+                        ("contentHeight", "CGFloat", "\(Int(token.contentHeight))", tr("spin.token.contentHeight_desc")),
+                    ]
+                )
 
                 // Color Tokens
-                TokenGroup(title: tr("spin.token.color")) {
-                    colorRow("dotColor", token.dotColor)
-                    colorRow("tipColor", token.tipColor)
-                    colorRow("maskBackground", token.maskBackground)
-                }
+                Text(tr("spin.token.color"))
+                    .font(.headline)
+
+                APITable(
+                    headers: (
+                        tr("api.property"),
+                        tr("api.type"),
+                        tr("api.default"),
+                        tr("api.description")
+                    ),
+                    rows: [
+                        ("dotColor", "Color", "colorPrimary", tr("spin.token.dotColor_desc")),
+                        ("tipColor", "Color", "colorTextTertiary", tr("spin.token.tipColor_desc")),
+                        ("maskBackground", "Color", "colorBgMask", tr("spin.token.maskBackground_desc")),
+                        ("progressTrackColor", "Color", "colorFillSecondary", tr("spin.token.progressTrackColor_desc")),
+                    ]
+                )
 
                 // Animation Tokens
-                TokenGroup(title: tr("spin.token.animation")) {
-                    tokenRow("motionDuration", "\(token.motionDuration)s")
-                }
+                Text(tr("spin.token.animation"))
+                    .font(.headline)
+
+                APITable(
+                    headers: (
+                        tr("api.property"),
+                        tr("api.type"),
+                        tr("api.default"),
+                        tr("api.description")
+                    ),
+                    rows: [
+                        ("motionDuration", "Double", "1.2", tr("spin.token.motionDuration_desc")),
+                    ]
+                )
             }
             .padding(24)
         }
-    }
-
-    private func tokenRow(_ name: String, _ value: String) -> some View {
-        HStack {
-            Text(name)
-                .font(.system(size: 12, design: .monospaced))
-                .foregroundStyle(.secondary)
-            Spacer()
-            Text(value)
-                .font(.system(size: 12, design: .monospaced))
-        }
-        .padding(.vertical, 4)
-    }
-
-    private func colorRow(_ name: String, _ color: Color) -> some View {
-        HStack {
-            Text(name)
-                .font(.system(size: 12, design: .monospaced))
-                .foregroundStyle(.secondary)
-            Spacer()
-            Circle()
-                .fill(color)
-                .frame(width: 16, height: 16)
-                .overlay(Circle().stroke(Color.primary.opacity(0.2), lineWidth: 1))
-        }
-        .padding(.vertical, 4)
     }
 }

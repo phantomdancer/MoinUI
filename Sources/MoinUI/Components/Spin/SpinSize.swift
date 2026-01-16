@@ -3,10 +3,12 @@ import SwiftUI
 // MARK: - SpinSize
 
 /// Spin 组件尺寸
-public enum SpinSize: String, CaseIterable {
+public enum SpinSize: String, CaseIterable, CustomStringConvertible {
     case small
     case `default`
     case large
+
+    public var description: String { rawValue }
 
     /// 获取对应的 dotSize
     public func dotSize(from token: Moin.SpinToken) -> CGFloat {

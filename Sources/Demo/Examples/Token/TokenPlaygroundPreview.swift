@@ -304,6 +304,32 @@ struct TokenPlaygroundPreview: View {
                         }
                     }
 
+                    // Spin 组件
+                    VStack(alignment: .leading, spacing: Moin.Constants.Spacing.sm) {
+                        Text(tr("token.playground.spin"))
+                            .font(.system(size: 12, weight: .medium))
+                            .foregroundStyle(.secondary)
+
+                        HStack(spacing: 32) {
+                            VStack(spacing: 4) {
+                                Moin.Spin(size: .small)
+                                Text("Small").font(.system(size: 10)).foregroundStyle(.tertiary)
+                            }
+                            VStack(spacing: 4) {
+                                Moin.Spin()
+                                Text("Default").font(.system(size: 10)).foregroundStyle(.tertiary)
+                            }
+                            VStack(spacing: 4) {
+                                Moin.Spin(size: .large)
+                                Text("Large").font(.system(size: 10)).foregroundStyle(.tertiary)
+                            }
+                            VStack(spacing: 4) {
+                                Moin.Spin(size: .large, percent: .value(60))
+                                Text("60%").font(.system(size: 10)).foregroundStyle(.tertiary)
+                            }
+                        }
+                    }
+
                     // Typography
                     VStack(alignment: .leading, spacing: Moin.Constants.Spacing.sm) {
                         Text(tr("token.playground.typography"))

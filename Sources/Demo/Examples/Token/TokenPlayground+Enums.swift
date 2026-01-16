@@ -19,7 +19,7 @@ enum TokenPlaygroundPanelGroup: String, CaseIterable {
         case .basic:
             return [.seed, .global]
         case .component:
-            return [.avatar, .badge, .button, .divider, .empty, .space, .tag]
+            return [.avatar, .badge, .button, .divider, .empty, .space, .spin, .tag]
         }
     }
 }
@@ -34,6 +34,7 @@ enum TokenPlaygroundPanelTab: String, CaseIterable {
     case divider
     case empty
     case space
+    case spin
     case tag
 
     var title: String {
@@ -50,6 +51,7 @@ enum TokenPlaygroundPanelTab: String, CaseIterable {
         case .divider: return DemoIcons.divider
         case .empty: return DemoIcons.empty
         case .space: return DemoIcons.space
+        case .spin: return DemoIcons.spin
         case .tag: return DemoIcons.tag
         }
     }

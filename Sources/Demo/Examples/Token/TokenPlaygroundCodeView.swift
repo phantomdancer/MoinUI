@@ -181,6 +181,18 @@ config.components.empty.descriptionFontSize = \(Int(config.components.empty.desc
 config.components.empty.imageMarginBottom = \(Int(config.components.empty.imageMarginBottom))
 config.components.empty.contentMarginTop = \(Int(config.components.empty.contentMarginTop))
 """
+        case .spin:
+            return """
+// \(tr("token.playground.code_spin_config"))
+config.components.spin.dotColor = Color(hex: "\(config.components.spin.dotColor.hexString)")
+config.components.spin.tipColor = Color(hex: "\(config.components.spin.tipColor.hexString)")
+// \(tr("token.playground.spin_sizes"))
+config.components.spin.dotSize = \(Int(config.components.spin.dotSize))
+config.components.spin.dotSizeSM = \(Int(config.components.spin.dotSizeSM))
+config.components.spin.dotSizeLG = \(Int(config.components.spin.dotSizeLG))
+// \(tr("token.playground.spin_animation"))
+config.components.spin.motionDuration = \(String(format: "%.1f", config.components.spin.motionDuration))
+"""
         }
     }
 }
