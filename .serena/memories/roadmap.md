@@ -17,7 +17,7 @@
 ## 按复杂度排序（简单优先，无依赖优先）
 
 ### 已完成
-Button ✅, Typography ✅, Divider ✅, Space ✅, Tag ✅, Badge ✅, Icon ⏭
+Button ✅, Typography ✅, Divider ✅, Space ✅, Tag ✅, Badge ✅, Avatar ✅, Icon ⏭
 
 ### 第一梯队：极简组件（无依赖，几乎无状态）
 
@@ -25,7 +25,7 @@ Button ✅, Typography ✅, Divider ✅, Space ✅, Tag ✅, Badge ✅, Icon ⏭
 |------|--------|------|
 | Tag | ★☆☆☆☆ | ✅ 已完成 |
 | Badge | ★☆☆☆☆ | ✅ 已完成 |
-| Avatar | ★☆☆☆☆ | 圆形图片/文字 |
+| Avatar | ★☆☆☆☆ | ✅ 已完成 |
 | Empty | ★☆☆☆☆ | 空状态占位 |
 | Spin | ★☆☆☆☆ | 旋转加载动画 |
 | Statistic | ★☆☆☆☆ | 数值+标签展示 |
@@ -97,9 +97,9 @@ Button ✅, Typography ✅, Divider ✅, Space ✅, Tag ✅, Badge ✅, Icon ⏭
 ## 建议实现顺序
 
 ```
-已完成: Button → Typography → Divider → Space → Tag → Badge
+已完成: Button → Typography → Divider → Space → Tag → Badge → Avatar
 
-下一批: Avatar → Empty → Spin → Statistic
+下一批: Empty → Spin → Statistic
 
 再下批: Alert → Progress → Switch → Checkbox → Radio
 
@@ -111,6 +111,13 @@ Button ✅, Typography ✅, Divider ✅, Space ✅, Tag ✅, Badge ✅, Icon ⏭
 ```
 
 ### 待优化 (Optimizations)
+
+- **Avatar**:
+  - [ ] accessibilityLabel (无障碍支持，对应 Ant Design 的 alt)
+  - [ ] 响应式尺寸 (根据窗口大小自动调整，如 `{ compact: 24, regular: 32 }`)
+  - [ ] AvatarGroup max.popover (溢出头像 Popover 展示)
+  - 已排除: srcSet (Web特有)、draggable (SwiftUI不适用)、crossOrigin (不需要)
+
 - **Badge**:
   - [ ] 添加 Title 属性 (悬停显示完整数值)
   - [ ] 添加缩放进出动画
