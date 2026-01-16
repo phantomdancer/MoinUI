@@ -3,6 +3,8 @@
   "empty.basic_desc": "Simple empty state display",
   "empty.custom_image": "Custom Image",
   "empty.custom_image_desc": "Use SF Symbol or custom image",
+  "empty.image_url": "Network Image",
+  "empty.image_url_desc": "Load image from URL",
   "empty.description": "Custom Description",
   "empty.description_desc": "Custom description text",
   "empty.with_action": "With Action",

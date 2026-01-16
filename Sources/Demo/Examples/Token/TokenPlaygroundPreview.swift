@@ -200,6 +200,18 @@ struct TokenPlaygroundPreview: View {
                         }
                     }
 
+                    // Empty 组件
+                    VStack(alignment: .leading, spacing: Moin.Constants.Spacing.sm) {
+                        Text(tr("token.playground.empty"))
+                            .font(.system(size: 12, weight: .medium))
+                            .foregroundStyle(.secondary)
+
+                        HStack(spacing: 32) {
+                            Moin.Empty()
+                            Moin.Empty(image: .simple)
+                        }
+                    }
+
                     // Divider 组件
                     VStack(alignment: .leading, spacing: Moin.Constants.Spacing.sm) {
                         Text(tr("token.playground.dividers"))

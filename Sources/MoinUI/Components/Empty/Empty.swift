@@ -12,6 +12,7 @@ public extension Moin {
             case simple
             case custom(Image)
             case systemIcon(String)
+            case url(String)
             case none
         }
 
@@ -58,6 +59,27 @@ public extension Moin {
                     .font(.system(size: emptyToken.imageHeight * 0.6))
                     .foregroundStyle(emptyToken.imageColor.opacity(emptyToken.imageOpacity))
                     .frame(height: emptyToken.imageHeight)
+            case .url(let urlString):
+                AsyncImage(url: URL(string: urlString)) { phase in
+                    switch phase {
+                    case .empty:
+                        ProgressView()
+                            .frame(height: emptyToken.imageHeight)
+                    case .success(let image):
+                        image
+                            .resizable()
+                            .scaledToFit()
+                            .frame(height: emptyToken.imageHeight)
+                    case .failure:
+                        EmptyDefaultImage()
+                            .frame(height: emptyToken.imageHeight)
+                            .foregroundStyle(emptyToken.imageColor.opacity(emptyToken.imageOpacity))
+                    @unknown default:
+                        EmptyDefaultImage()
+                            .frame(height: emptyToken.imageHeight)
+                            .foregroundStyle(emptyToken.imageColor.opacity(emptyToken.imageOpacity))
+                    }
+                }
             case .none:
                 EmptyView()
             }

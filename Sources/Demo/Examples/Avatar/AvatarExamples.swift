@@ -174,7 +174,7 @@ struct AvatarExamples: View {
                         fallbackIcon: "exclamationmark.triangle"
                     )
                     Moin.Avatar(
-                        src: URL(string: "https://api.dicebear.com/7.x/avataaars/png?seed=Aneka"),
+                        src: URL(string: "https://api.dicebear.com/7.x/avataaars/png?seed=Felix"),
                         size: .large
                     )
                 }
@@ -195,7 +195,7 @@ struct AvatarExamples: View {
 
                 // URL \(tr("avatar.src_type"))
                 Moin.Avatar(
-                    src: URL(string: "https://api.dicebear.com/7.x/avataaars/png?seed=Aneka"),
+                    src: URL(string: "https://api.dicebear.com/7.x/avataaars/png?seed=Felix"),
                     size: .large
                 )
                 """

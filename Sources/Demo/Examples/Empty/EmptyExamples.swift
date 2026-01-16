@@ -17,6 +17,7 @@ struct EmptyExamples: View {
     private let anchors: [AnchorItem] = [
         AnchorItem(id: "basic", titleKey: "empty.basic"),
         AnchorItem(id: "custom_image", titleKey: "empty.custom_image"),
+        AnchorItem(id: "image_url", titleKey: "empty.image_url"),
         AnchorItem(id: "with_action", titleKey: "empty.with_action"),
         AnchorItem(id: "simple", titleKey: "empty.simple"),
         AnchorItem(id: "no_description", titleKey: "empty.no_description"),
@@ -41,6 +42,7 @@ struct EmptyExamples: View {
         ExamplePageWithAnchor(pageName: "Empty", anchors: anchors) { _ in
             basicExample.id("basic")
             customImageExample.id("custom_image")
+            imageUrlExample.id("image_url")
             withActionExample.id("with_action")
             simpleExample.id("simple")
             noDescriptionExample.id("no_description")
@@ -105,6 +107,27 @@ struct EmptyExamples: View {
                 Moin.Empty(
                     image: .systemIcon("magnifyingglass"),
                     description: "\(tr("empty.no_results"))"
+                )
+                """
+            }
+        )
+    }
+
+    private var imageUrlExample: some View {
+        ExampleSection(
+            title: tr("empty.image_url"),
+            description: tr("empty.image_url_desc"),
+            content: {
+                Moin.Empty(
+                    image: .url("https://api.dicebear.com/7.x/shapes/png?seed=empty"),
+                    description: tr("empty.default_description")
+                )
+            },
+            code: {
+                """
+                Moin.Empty(
+                    image: .url("https://api.dicebear.com/7.x/shapes/png?seed=empty"),
+                    description: "\(tr("empty.default_description"))"
                 )
                 """
             }

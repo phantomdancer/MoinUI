@@ -31,7 +31,8 @@ public extension Moin {
 
         public static func generate(from token: Token) -> AvatarToken {
             AvatarToken(
-                containerBg: token.colorFillTertiary,
+                // 与 antd 一致: colorTextPlaceholder = #BFBFBF
+                containerBg: Color(red: 0.749, green: 0.749, blue: 0.749),
                 colorText: token.colorTextSecondary,
                 colorTextLight: Color.white,
                 size: token.controlHeight,       // 32
