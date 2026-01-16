@@ -49,6 +49,8 @@ public extension Moin {
         public var colorTextSecondary: Color
         public var colorTextTertiary: Color
         public var colorTextQuaternary: Color
+        public var colorTextLightSolid: Color  // #fff - 用于带背景色的文本
+        public var colorTextPlaceholder: Color // 占位文本颜色
         public var colorTextDisabled: Color
 
         // MARK: - Background Colors
@@ -200,6 +202,8 @@ public extension Moin {
             self.colorTextSecondary = map.colorTextSecondary
             self.colorTextTertiary = map.colorTextTertiary
             self.colorTextQuaternary = map.colorTextQuaternary
+            self.colorTextLightSolid = map.colorTextLightSolid
+            self.colorTextPlaceholder = map.colorTextPlaceholder
             self.colorTextDisabled = map.colorTextTertiary
             // Background
             self.colorBgContainer = map.colorBgContainer

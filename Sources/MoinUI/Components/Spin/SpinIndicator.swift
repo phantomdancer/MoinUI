@@ -27,7 +27,7 @@ public struct SpinIndicator: View {
             }
         }
         .frame(width: size, height: size)
-        .rotationEffect(.degrees(isAnimating ? 360 + 45 : 45))
+        .rotationEffect(.degrees(isAnimating ? 360 : 0))
         .onAppear {
             withAnimation(
                 .linear(duration: duration)

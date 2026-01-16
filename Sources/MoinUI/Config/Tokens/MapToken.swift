@@ -61,6 +61,8 @@ public extension Moin {
         public let colorTextSecondary: Color  // 0.65
         public let colorTextTertiary: Color   // 0.45
         public let colorTextQuaternary: Color // 0.25
+        public let colorTextLightSolid: Color // #fff - 用于带背景色的文本
+        public let colorTextPlaceholder: Color // 占位文本颜色
 
         // MARK: - 背景颜色
         public let colorBgContainer: Color
@@ -302,6 +304,8 @@ public extension Moin {
                 colorTextSecondary: colorTextSecondary,
                 colorTextTertiary: colorTextTertiary,
                 colorTextQuaternary: colorTextQuaternary,
+                colorTextLightSolid: Color.white,
+                colorTextPlaceholder: textBase.opacity(0.25),
                 colorBgContainer: colorBgContainer,
                 colorBgElevated: colorBgElevated,
                 colorBgLayout: colorBgLayout,
