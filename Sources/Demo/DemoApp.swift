@@ -154,7 +154,7 @@ struct ContentView: View {
     var body: some View {
         NavigationSplitView {
             Sidebar(selection: $navManager.selectedItem)
-                .navigationSplitViewColumnWidth(min: 220, ideal: 280, max: 400)
+                .navigationSplitViewColumnWidth(min: 240, ideal: 300, max: 420)
         } detail: {
             DetailView(item: navManager.selectedItem, buttonTab: $buttonTab, typographyTab: $typographyTab, tagTab: $tagTab, spaceTab: $spaceTab, dividerTab: $dividerTab, badgeTab: $badgeTab, avatarTab: $avatarTab, emptyTab: $emptyTab, spinTab: $spinTab, tokenTab: $tokenTab)
                 .navigationTitle(navManager.selectedItem.map { tr($0.titleKey) } ?? "MoinUI")
@@ -450,7 +450,7 @@ struct Sidebar: View {
             }
         }
         .listStyle(.sidebar)
-        .frame(minWidth: 220, maxWidth: 220)
+        .frame(minWidth: 240, maxWidth: 240)
         .navigationTitle("MoinUI")
     }
 }
