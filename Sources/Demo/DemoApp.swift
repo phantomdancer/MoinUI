@@ -3,6 +3,11 @@ import AppKit
 import MoinUI
 import os
 
+// MARK: - Notification Names
+extension Notification.Name {
+    static let buttonDocReset = Notification.Name("buttonDocReset")
+}
+
 @main
 struct DemoApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
@@ -140,7 +145,6 @@ struct ContentView: View {
     @StateObject private var navManager = NavigationManager.shared
     @EnvironmentObject var configProvider: Moin.ConfigProvider
     @Localized var tr
-    @State private var buttonTab: ButtonExamplesTab = .examples
     @State private var typographyTab: TypographyExamplesTab = .examples
     @State private var tagTab: TagExamplesTab = .examples
     @State private var spaceTab: SpaceExamplesTab = .examples
@@ -156,22 +160,10 @@ struct ContentView: View {
             Sidebar(selection: $navManager.selectedItem)
                 .navigationSplitViewColumnWidth(min: 240, ideal: 300, max: 420)
         } detail: {
-            DetailView(item: navManager.selectedItem, buttonTab: $buttonTab, typographyTab: $typographyTab, tagTab: $tagTab, spaceTab: $spaceTab, dividerTab: $dividerTab, badgeTab: $badgeTab, avatarTab: $avatarTab, emptyTab: $emptyTab, spinTab: $spinTab, tokenTab: $tokenTab)
+            DetailView(item: navManager.selectedItem, typographyTab: $typographyTab, tagTab: $tagTab, spaceTab: $spaceTab, dividerTab: $dividerTab, badgeTab: $badgeTab, avatarTab: $avatarTab, emptyTab: $emptyTab, spinTab: $spinTab, tokenTab: $tokenTab)
                 .navigationTitle(navManager.selectedItem.map { tr($0.titleKey) } ?? "MoinUI")
                 .toolbar {
                     ToolbarItemGroup(placement: .primaryAction) {
-                        // 按钮页面显示 Tab 切换（分段控件样式）
-                        if navManager.selectedItem == .button {
-                            Picker("", selection: $buttonTab) {
-                                Text(tr("tab.examples")).tag(ButtonExamplesTab.examples)
-                                Text(tr("tab.playground")).tag(ButtonExamplesTab.playground)
-                                Text(tr("tab.api")).tag(ButtonExamplesTab.api)
-                                Text(tr("tab.token")).tag(ButtonExamplesTab.token)
-                            }
-                            .pickerStyle(.segmented)
-                            .fixedSize()
-                        }
-
                         // Typography 页面显示 Tab 切换
                         if navManager.selectedItem == .typography {
                             Picker("", selection: $typographyTab) {
@@ -314,6 +306,7 @@ enum NavItem: String, Identifiable {
 
     // Components - General
     case button
+    case buttonOld  // 旧版Button，用于对比
     case typography
     case tag
 
@@ -345,6 +338,7 @@ enum NavItem: String, Identifiable {
         case .theme: return DemoIcons.theme
         case .token: return DemoIcons.token
         case .button: return DemoIcons.button
+        case .buttonOld: return DemoIcons.button
         case .typography: return DemoIcons.typography
         case .tag: return DemoIcons.tag
         case .badge: return DemoIcons.badge
@@ -366,6 +360,7 @@ enum NavItem: String, Identifiable {
         case .theme: return "nav.theme"
         case .token: return "nav.token"
         case .button: return "component.button"
+        case .buttonOld: return "Button (旧版)"
         case .typography: return "component.typography"
         case .tag: return "component.tag"
         case .badge: return "component.badge"
@@ -381,7 +376,7 @@ enum NavItem: String, Identifiable {
     }
 
     static var overview: [NavItem] { [.introduction, .quickStart] }
-    static var general: [NavItem] { [.button, .tag, .typography] }
+    static var general: [NavItem] { [.button, .buttonOld, .tag, .typography] }
     static var dataDisplay: [NavItem] { [.avatar, .badge, .empty] }
     static var feedback: [NavItem] { [.spin] }
     static var layout: [NavItem] { [.divider, .space] }
@@ -459,7 +454,6 @@ struct Sidebar: View {
 
 struct DetailView: View {
     let item: NavItem?
-    @Binding var buttonTab: ButtonExamplesTab
     @Binding var typographyTab: TypographyExamplesTab
     @Binding var tagTab: TagExamplesTab
     @Binding var spaceTab: SpaceExamplesTab
@@ -482,7 +476,9 @@ struct DetailView: View {
             case .token:
                 TokenExamples(selectedTab: $tokenTab)
             case .button:
-                ButtonExamples(selectedTab: $buttonTab)
+                ButtonDocView()
+            case .buttonOld:
+                ButtonExamples(selectedTab: .constant(.examples))
             case .typography:
                 TypographyExamples(selectedTab: $typographyTab)
             case .tag:

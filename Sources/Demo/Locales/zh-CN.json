@@ -106,6 +106,20 @@
     "api": "API",
     "token": "Token"
   },
+  "doc": {
+    "section": {
+      "api": "API",
+      "component_token": "组件 Token",
+      "global_token": "全局 Token"
+    },
+    "type": "类型",
+    "default": "默认",
+    "preview": "预览",
+    "try_it": "试一试",
+    "edit_token": "编辑 Token",
+    "hide_editor": "收起",
+    "token_editor": "Token 编辑器"
+  },
   "playground": {
     "title": "演练场",
     "desc": "调整属性实时预览效果",

@@ -106,6 +106,20 @@
     "api": "API",
     "token": "Token"
   },
+  "doc": {
+    "section": {
+      "api": "API",
+      "component_token": "Component Token",
+      "global_token": "Global Token"
+    },
+    "type": "Type",
+    "default": "Default",
+    "preview": "Preview",
+    "try_it": "Try it",
+    "edit_token": "Edit Token",
+    "hide_editor": "Hide",
+    "token_editor": "Token Editor"
+  },
   "playground": {
     "title": "Playground",
     "desc": "Adjust props to preview changes in real-time",
