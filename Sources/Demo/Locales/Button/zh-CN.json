@@ -2,6 +2,9 @@
   "button": {
     "title": "Button 按钮",
     "description": "按钮用于触发一个操作或事件。",
+    "semantic_colors": "语义颜色",
+    "preset_colors": "预设颜色",
+    "custom_colors": "自定义颜色",
     "color_variant": "颜色与变体",
     "color_variant_desc": "用 color 指定语义颜色（primary/success/danger 等），用 variant 指定样式（solid/outlined/text 等）。语义颜色可通过主题全局配置。",
     "ghost": "幽灵按钮",

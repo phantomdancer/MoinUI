@@ -51,7 +51,7 @@ struct ButtonDocView: View {
             
             // 右栏：导航树
             navigationSidebar
-                .frame(width: 180)
+                .frame(width: 220)
         }
         .background(Color(nsColor: .controlBackgroundColor))
         .onReceive(NotificationCenter.default.publisher(for: .buttonDocReset)) { _ in
@@ -196,38 +196,54 @@ struct ButtonDocView: View {
             type: "Moin.ButtonColor",
             defaultValue: ".default",
             description: tr("button.api.type"),
-            enumValues: ".primary | .success | .warning | .danger | .info | .default | .custom(Color)",
+            enumValues: ".primary | .success | .warning | .danger | .info | .default | .custom(Color) | .red | .blue | .green | .cyan | .purple | .magenta | .orange | .yellow | .lime | .gold | .volcano | .geekblue",
             sectionId: "api"
         ) {
             // 预览：展示所有颜色
-            HStack(spacing: Moin.Constants.Spacing.sm) {
-                ForEach([Moin.ButtonColor.primary, .success, .warning, .danger, .info], id: \.self) { color in
-                    Moin.Button(color.description, color: color, size: .small) {}
-                }
-            }
-        } tryIt: {
-            // 试一试 - 按钮组
             VStack(alignment: .leading, spacing: Moin.Constants.Spacing.sm) {
-                HStack(spacing: Moin.Constants.Spacing.xs) {
+                // Semantic Colors
+                Text(tr("button.semantic_colors"))
+                    .font(.system(size: 11, weight: .semibold))
+                    .foregroundStyle(.secondary)
+                HStack(alignment: .center, spacing: Moin.Constants.Spacing.sm) {
                     ForEach(Moin.ButtonColor.allCases, id: \.self) { color in
-                        Button {
-                            selectedColor = color
-                        } label: {
-                            Text(color.description)
-                                .font(.system(size: 11))
-                                .padding(.horizontal, 8)
-                                .padding(.vertical, 4)
-                                .background(selectedColor == color ? config.token.colorPrimary : Color.secondary.opacity(0.1))
-                                .foregroundStyle(selectedColor == color ? .white : .primary)
-                                .cornerRadius(4)
-                        }
-                        .buttonStyle(.plain)
+                        Moin.Button(color.description, color: color) {}
                     }
                 }
-                Moin.Button("Button", color: selectedColor) {}
+                .frame(maxWidth: .infinity, alignment: .leading)
+                
+                // Preset Colors
+                Text(tr("button.preset_colors"))
+                    .font(.system(size: 11, weight: .semibold))
+                    .foregroundStyle(.secondary)
+                    .padding(.top, Moin.Constants.Spacing.sm)
+                HStack(alignment: .center, spacing: Moin.Constants.Spacing.sm) {
+                    Moin.Button("cyan", color: .cyan) {}
+                    Moin.Button("purple", color: .purple) {}
+                    Moin.Button("magenta", color: .magenta) {}
+                    Moin.Button("orange", color: .orange) {}
+                    Moin.Button("yellow", color: .yellow) {}
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+                
+                // Custom Colors
+                Text(tr("button.custom_colors"))
+                    .font(.system(size: 11, weight: .semibold))
+                    .foregroundStyle(.secondary)
+                    .padding(.top, Moin.Constants.Spacing.sm)
+                HStack(alignment: .center, spacing: Moin.Constants.Spacing.sm) {
+                    Moin.Button("brown", color: .custom(Color(red: 0.6, green: 0.3, blue: 0.1))) {}
+                    Moin.Button("custom", color: .custom(Color(red: 0.6, green: 0.2, blue: 0.8))) {}
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
             }
         } code: {
-            "Moin.Button(\"Button\", color: .\(selectedColor)) {}"
+            """
+Moin.Button("primary", color: .primary) {}
+Moin.Button("cyan", color: .cyan) {}
+Moin.Button("brown", color: .custom(Color(red: 0.6, green: 0.3, blue: 0.1))) {}
+Moin.Button("custom", color: .custom(Color(red: 0.6, green: 0.2, blue: 0.8))) {}
+"""
         }
     }
     
@@ -244,31 +260,11 @@ struct ButtonDocView: View {
         ) {
             HStack(spacing: Moin.Constants.Spacing.sm) {
                 ForEach(Moin.ButtonVariant.allCases, id: \.self) { variant in
-                    Moin.Button(variant.description, color: .primary, size: .small, variant: variant) {}
+                    Moin.Button(variant.description.capitalized, color: .primary, variant: variant) {}
                 }
-            }
-        } tryIt: {
-            VStack(alignment: .leading, spacing: Moin.Constants.Spacing.sm) {
-                HStack(spacing: Moin.Constants.Spacing.xs) {
-                    ForEach(Moin.ButtonVariant.allCases, id: \.self) { variant in
-                        Button {
-                            selectedVariant = variant
-                        } label: {
-                            Text(variant.description)
-                                .font(.system(size: 11))
-                                .padding(.horizontal, 8)
-                                .padding(.vertical, 4)
-                                .background(selectedVariant == variant ? config.token.colorPrimary : Color.secondary.opacity(0.1))
-                                .foregroundStyle(selectedVariant == variant ? .white : .primary)
-                                .cornerRadius(4)
-                        }
-                        .buttonStyle(.plain)
-                    }
-                }
-                Moin.Button("Button", color: .primary, variant: selectedVariant) {}
             }
         } code: {
-            "Moin.Button(\"Hello\", variant: .\(selectedVariant)) {}"
+            "Moin.Button(\"Solid\", variant: .solid) {}"
         }
     }
     
@@ -284,32 +280,12 @@ struct ButtonDocView: View {
             sectionId: "api"
         ) {
             HStack(alignment: .center, spacing: Moin.Constants.Spacing.md) {
-                Moin.Button("Small", color: .primary, size: .small) {}
-                Moin.Button("Medium", color: .primary, size: .medium) {}
-                Moin.Button("Large", color: .primary, size: .large) {}
-            }
-        } tryIt: {
-            VStack(alignment: .leading, spacing: Moin.Constants.Spacing.sm) {
-                HStack(spacing: Moin.Constants.Spacing.xs) {
-                    ForEach(Moin.ButtonSize.allCases, id: \.self) { size in
-                        Button {
-                            selectedSize = size
-                        } label: {
-                            Text(size.description)
-                                .font(.system(size: 11))
-                                .padding(.horizontal, 8)
-                                .padding(.vertical, 4)
-                                .background(selectedSize == size ? config.token.colorPrimary : Color.secondary.opacity(0.1))
-                                .foregroundStyle(selectedSize == size ? .white : .primary)
-                                .cornerRadius(4)
-                        }
-                        .buttonStyle(.plain)
-                    }
+                ForEach(Moin.ButtonSize.allCases, id: \.self) { size in
+                    Moin.Button(size.description.capitalized, color: .primary, size: size) {}
                 }
-                Moin.Button("Button", color: .primary, size: selectedSize) {}
             }
         } code: {
-            "Moin.Button(\"Hello\", size: .\(selectedSize)) {}"
+            "Moin.Button(\"Medium\", size: .medium) {}"
         }
     }
     
@@ -325,32 +301,16 @@ struct ButtonDocView: View {
             sectionId: "api"
         ) {
             HStack(spacing: Moin.Constants.Spacing.md) {
-                Moin.Button("Default", color: .primary, shape: .default) {}
-                Moin.Button("Round", color: .primary, shape: .round) {}
-                Moin.Button(icon: "plus", color: .primary, shape: .circle) {}
-            }
-        } tryIt: {
-            VStack(alignment: .leading, spacing: Moin.Constants.Spacing.sm) {
-                HStack(spacing: Moin.Constants.Spacing.xs) {
-                    ForEach(Moin.ButtonShape.allCases, id: \.self) { shape in
-                        Button {
-                            selectedShape = shape
-                        } label: {
-                            Text(shape.description)
-                                .font(.system(size: 11))
-                                .padding(.horizontal, 8)
-                                .padding(.vertical, 4)
-                                .background(selectedShape == shape ? config.token.colorPrimary : Color.secondary.opacity(0.1))
-                                .foregroundStyle(selectedShape == shape ? .white : .primary)
-                                .cornerRadius(4)
-                        }
-                        .buttonStyle(.plain)
+                ForEach(Moin.ButtonShape.allCases, id: \.self) { shape in
+                    if shape == .circle {
+                        Moin.Button(icon: "plus", color: .primary, shape: shape) {}
+                    } else {
+                        Moin.Button(shape.description.capitalized, color: .primary, shape: shape) {}
                     }
                 }
-                Moin.Button("Button", color: .primary, shape: selectedShape) {}
             }
         } code: {
-            "Moin.Button(\"Hello\", shape: .\(selectedShape)) {}"
+            "Moin.Button(\"Default\", shape: .default) {}"
         }
     }
     
@@ -400,7 +360,7 @@ struct PropertyCard<Preview: View, TryIt: View>: View {
     let enumValues: String?  // 可选枚举值说明
     let sectionId: String
     @ViewBuilder let preview: () -> Preview
-    @ViewBuilder let tryIt: () -> TryIt
+    @ViewBuilder let tryIt: (() -> TryIt)?
     let code: () -> String
     
     init(
@@ -422,6 +382,27 @@ struct PropertyCard<Preview: View, TryIt: View>: View {
         self.sectionId = sectionId
         self.preview = preview
         self.tryIt = tryIt
+        self.code = code
+    }
+    
+    init(
+        name: String,
+        type: String,
+        defaultValue: String,
+        description: String,
+        enumValues: String? = nil,
+        sectionId: String,
+        @ViewBuilder preview: @escaping () -> Preview,
+        code: @escaping () -> String
+    ) where TryIt == EmptyView {
+        self.name = name
+        self.type = type
+        self.defaultValue = defaultValue
+        self.description = description
+        self.enumValues = enumValues
+        self.sectionId = sectionId
+        self.preview = preview
+        self.tryIt = nil
         self.code = code
     }
     
@@ -478,27 +459,29 @@ struct PropertyCard<Preview: View, TryIt: View>: View {
             .cornerRadius(Moin.Constants.Radius.sm)
             
             // 试一试
-            VStack(alignment: .trailing, spacing: 0) {
-                // 标签溢出到上方
-                Text(tr("doc.try_it"))
-                    .font(.system(size: 10, weight: .medium))
-                    .foregroundStyle(config.token.colorPrimary)
-                    .padding(.horizontal, 8)
-                    .padding(.vertical, 3)
-                    .background(config.token.colorPrimary.opacity(0.15))
-                    .cornerRadius(3)
-                    .offset(y: 8)
-                
-                HStack {
-                    tryIt()
-                    Spacer()
+            if let tryIt = tryIt {
+                VStack(alignment: .trailing, spacing: 0) {
+                    // 标签溢出到上方
+                    Text(tr("doc.try_it"))
+                        .font(.system(size: 10, weight: .medium))
+                        .foregroundStyle(config.token.colorPrimary)
+                        .padding(.horizontal, 8)
+                        .padding(.vertical, 3)
+                        .background(config.token.colorPrimary.opacity(0.15))
+                        .cornerRadius(3)
+                        .offset(y: 8)
+                    
+                    HStack {
+                        tryIt()
+                        Spacer()
+                    }
+                    .padding(Moin.Constants.Spacing.md)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .background(config.token.colorPrimary.opacity(0.05))
+                    .cornerRadius(Moin.Constants.Radius.sm)
                 }
-                .padding(Moin.Constants.Spacing.md)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .background(config.token.colorPrimary.opacity(0.05))
-                .cornerRadius(Moin.Constants.Radius.sm)
+                .frame(maxWidth: .infinity, alignment: .trailing)
             }
-            .frame(maxWidth: .infinity, alignment: .trailing)
             
             // 代码
             ScrollView(.horizontal, showsIndicators: false) {
@@ -528,7 +511,7 @@ struct TokenCard<Preview: View, Editor: View>: View {
     let description: String
     let sectionId: String
     @ViewBuilder let preview: () -> Preview
-    @ViewBuilder let editor: () -> Editor
+    @ViewBuilder let editor: (() -> Editor)?
     let code: () -> String
     
     init(
@@ -548,6 +531,25 @@ struct TokenCard<Preview: View, Editor: View>: View {
         self.sectionId = sectionId
         self.preview = preview
         self.editor = editor
+        self.code = code
+    }
+    
+    init(
+        name: String,
+        type: String,
+        defaultValue: String,
+        description: String,
+        sectionId: String,
+        @ViewBuilder preview: @escaping () -> Preview,
+        code: @escaping () -> String = { "" }
+    ) where Editor == EmptyView {
+        self.name = name
+        self.type = type
+        self.defaultValue = defaultValue
+        self.description = description
+        self.sectionId = sectionId
+        self.preview = preview
+        self.editor = nil
         self.code = code
     }
     
@@ -590,26 +592,28 @@ struct TokenCard<Preview: View, Editor: View>: View {
                 .cornerRadius(Moin.Constants.Radius.sm)
                 
                 // 试一试
-                VStack(alignment: .trailing, spacing: 0) {
-                    Text(tr("doc.try_it"))
-                        .font(.system(size: 10, weight: .medium))
-                        .foregroundStyle(config.token.colorPrimary)
-                        .padding(.horizontal, 8)
-                        .padding(.vertical, 3)
-                        .background(config.token.colorPrimary.opacity(0.15))
-                        .cornerRadius(3)
-                        .offset(y: 8)
-                    
-                    HStack {
-                        editor()
-                        Spacer()
+                if let editor = editor {
+                    VStack(alignment: .trailing, spacing: 0) {
+                        Text(tr("doc.try_it"))
+                            .font(.system(size: 10, weight: .medium))
+                            .foregroundStyle(config.token.colorPrimary)
+                            .padding(.horizontal, 8)
+                            .padding(.vertical, 3)
+                            .background(config.token.colorPrimary.opacity(0.15))
+                            .cornerRadius(3)
+                            .offset(y: 8)
+                        
+                        HStack {
+                            editor()
+                            Spacer()
+                        }
+                        .padding(Moin.Constants.Spacing.md)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .background(config.token.colorPrimary.opacity(0.05))
+                        .cornerRadius(Moin.Constants.Radius.sm)
                     }
-                    .padding(Moin.Constants.Spacing.md)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .background(config.token.colorPrimary.opacity(0.05))
-                    .cornerRadius(Moin.Constants.Radius.sm)
+                    .frame(maxWidth: .infinity, alignment: .trailing)
                 }
-                .frame(maxWidth: .infinity, alignment: .trailing)
                 
                 // 代码
                 let codeText = code()

@@ -2,6 +2,9 @@
   "button": {
     "title": "Button",
     "description": "A button triggers an action or event when clicked.",
+    "semantic_colors": "Semantic Colors",
+    "preset_colors": "Preset Colors",
+    "custom_colors": "Custom Colors",
     "color_variant": "Color & Variant",
     "color_variant_desc": "Use color for semantic colors (primary/success/danger etc.), variant for styles (solid/outlined/text etc.). Semantic colors can be configured globally via theme.",
     "ghost": "Ghost Button",
