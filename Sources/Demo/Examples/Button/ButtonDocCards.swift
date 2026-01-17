@@ -91,10 +91,10 @@ Moin.Button(icon: "heart.fill", shape: .circle) {}
                 Color(white: 0.8)
                     .frame(height: 60)
                     .cornerRadius(8)
-                Moin.Button("Ghost", color: .primary, isGhost: true) {}
+                Moin.Button("Button", color: .primary, isGhost: true) {}
             }
         } code: {
-            "Moin.Button(\"Ghost\", isGhost: true) {}"
+            "Moin.Button(\"Button\", isGhost: true) {}"
         }
     }
     
@@ -112,7 +112,7 @@ Moin.Button(icon: "heart.fill", shape: .circle) {}
             HStack(spacing: Moin.Constants.Spacing.md) {
                 ForEach(Moin.ButtonIconPlacement.allCases, id: \.self) { placement in
                     Moin.Button(
-                        placement.description.capitalized,
+                        "Button",
                         color: .primary,
                         icon: placement == .start ? "arrow.left" : "arrow.right",
                         iconPlacement: placement
@@ -121,8 +121,8 @@ Moin.Button(icon: "heart.fill", shape: .circle) {}
             }
         } code: {
             """
-Moin.Button("Start", icon: "arrow.left", iconPlacement: .start) {}
-Moin.Button("End", icon: "arrow.right", iconPlacement: .end) {}
+Moin.Button("Button", icon: "arrow.left", iconPlacement: .start) {}
+Moin.Button("Button", icon: "arrow.right", iconPlacement: .end) {}
 """
         }
     }
