@@ -483,8 +483,11 @@ struct PropertyCard<Preview: View, TryIt: View>: View {
     }
     
     @Localized var tr
-    @ObservedObject private var config = Moin.ConfigProvider.shared
-    
+    @Environment(\.moinToken) private var token
+    @Environment(\.colorScheme) private var colorScheme
+
+    private var isDarkMode: Bool { colorScheme == .dark }
+
     var body: some View {
         Moin.BadgeRibbon(text: name, color: .custom(.gray), placement: .end) {
             VStack(alignment: .leading, spacing: Moin.Constants.Spacing.md) {
@@ -492,7 +495,7 @@ struct PropertyCard<Preview: View, TryIt: View>: View {
                 HStack {
                     Text(name)
                         .font(.system(size: 14, weight: .semibold, design: .monospaced))
-                        .foregroundStyle(config.token.colorPrimary)
+                        .foregroundStyle(token.colorPrimary)
                         .textSelection(.enabled)
                     Text(type)
                         .font(.system(size: 12, design: .monospaced))
@@ -505,13 +508,13 @@ struct PropertyCard<Preview: View, TryIt: View>: View {
                     Spacer()
                 }
                 .id("\(sectionId).\(name)")
-            
+
             // 说明
             Text(description)
                 .font(.system(size: 13))
                 .foregroundStyle(.secondary)
                 .textSelection(.enabled)
-            
+
             // 枚举值说明
             if let values = enumValues {
                 Text(values)
@@ -523,7 +526,7 @@ struct PropertyCard<Preview: View, TryIt: View>: View {
                     .background(Color.secondary.opacity(0.1))
                     .cornerRadius(4)
             }
-            
+
             // 预览区
             HStack {
                 preview()
@@ -531,40 +534,40 @@ struct PropertyCard<Preview: View, TryIt: View>: View {
             }
             .padding(Moin.Constants.Spacing.md)
             .frame(maxWidth: .infinity, alignment: .leading)
-            .background(config.isDarkMode ? Color(white: 0.12) : Color(white: 0.98))
+            .background(isDarkMode ? Color(white: 0.12) : Color(white: 0.98))
             .cornerRadius(Moin.Constants.Radius.sm)
-            
+
             // 试一试
             if let tryIt = tryIt {
                 VStack(alignment: .trailing, spacing: 0) {
                     // 标签溢出到上方
                     Text(tr("doc.try_it"))
                         .font(.system(size: 10, weight: .medium))
-                        .foregroundStyle(config.token.colorPrimary)
+                        .foregroundStyle(token.colorPrimary)
                         .padding(.horizontal, 8)
                         .padding(.vertical, 3)
-                        .background(config.token.colorPrimary.opacity(0.15))
+                        .background(token.colorPrimary.opacity(0.15))
                         .cornerRadius(3)
                         .offset(y: 8)
-                    
+
                     HStack {
                         tryIt()
                         Spacer()
                     }
                     .padding(Moin.Constants.Spacing.md)
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    .background(config.token.colorPrimary.opacity(0.05))
+                    .background(token.colorPrimary.opacity(0.05))
                     .cornerRadius(Moin.Constants.Radius.sm)
                 }
                 .frame(maxWidth: .infinity, alignment: .trailing)
             }
-            
+
             // 代码
             ScrollView(.horizontal, showsIndicators: false) {
                 HighlightedCodeView(code: code(), fontSize: 12)
                     .padding(Moin.Constants.Spacing.sm)
             }
-            .background(config.isDarkMode ? Color(white: 0.08) : Color(white: 0.96))
+            .background(isDarkMode ? Color(white: 0.08) : Color(white: 0.96))
             .cornerRadius(Moin.Constants.Radius.sm)
             }
             .padding(Moin.Constants.Spacing.md)
@@ -630,8 +633,11 @@ struct TokenCard<Preview: View, Editor: View>: View {
     }
     
     @Localized var tr
-    @ObservedObject private var config = Moin.ConfigProvider.shared
-    
+    @Environment(\.moinToken) private var token
+    @Environment(\.colorScheme) private var colorScheme
+
+    private var isDarkMode: Bool { colorScheme == .dark }
+
     var body: some View {
         Moin.BadgeRibbon(text: name, color: .custom(.gray), placement: .end) {
             VStack(alignment: .leading, spacing: Moin.Constants.Spacing.md) {
@@ -639,7 +645,7 @@ struct TokenCard<Preview: View, Editor: View>: View {
                 HStack {
                     Text(name)
                         .font(.system(size: 14, weight: .semibold, design: .monospaced))
-                        .foregroundStyle(config.token.colorPrimary)
+                        .foregroundStyle(token.colorPrimary)
                         .textSelection(.enabled)
                     Text(type)
                         .font(.system(size: 12, design: .monospaced))
@@ -652,45 +658,45 @@ struct TokenCard<Preview: View, Editor: View>: View {
                     Spacer()
                 }
                 .id("\(sectionId).\(name)")
-                
+
                 Text(description)
                     .font(.system(size: 13))
                     .foregroundStyle(.secondary)
                     .textSelection(.enabled)
-                
+
                 // 预览
                 HStack {
                     preview()
                     Spacer()
                 }
                 .padding(Moin.Constants.Spacing.md)
-                .background(config.isDarkMode ? Color(white: 0.12) : Color(white: 0.98))
+                .background(isDarkMode ? Color(white: 0.12) : Color(white: 0.98))
                 .cornerRadius(Moin.Constants.Radius.sm)
-                
+
                 // 试一试
                 if let editor = editor {
                     VStack(alignment: .trailing, spacing: 0) {
                         Text(tr("doc.try_it"))
                             .font(.system(size: 10, weight: .medium))
-                            .foregroundStyle(config.token.colorPrimary)
+                            .foregroundStyle(token.colorPrimary)
                             .padding(.horizontal, 8)
                             .padding(.vertical, 3)
-                            .background(config.token.colorPrimary.opacity(0.15))
+                            .background(token.colorPrimary.opacity(0.15))
                             .cornerRadius(3)
                             .offset(y: 8)
-                        
+
                         HStack {
                             editor()
                             Spacer()
                         }
                         .padding(Moin.Constants.Spacing.md)
                         .frame(maxWidth: .infinity, alignment: .leading)
-                        .background(config.token.colorPrimary.opacity(0.05))
+                        .background(token.colorPrimary.opacity(0.05))
                         .cornerRadius(Moin.Constants.Radius.sm)
                     }
                     .frame(maxWidth: .infinity, alignment: .trailing)
                 }
-                
+
                 // 代码
                 let codeText = code()
                 if !codeText.isEmpty {
@@ -698,7 +704,7 @@ struct TokenCard<Preview: View, Editor: View>: View {
                         HighlightedCodeView(code: codeText, fontSize: 12)
                             .padding(Moin.Constants.Spacing.sm)
                     }
-                    .background(config.isDarkMode ? Color(white: 0.08) : Color(white: 0.96))
+                    .background(isDarkMode ? Color(white: 0.08) : Color(white: 0.96))
                     .cornerRadius(Moin.Constants.Radius.sm)
                 }
             }

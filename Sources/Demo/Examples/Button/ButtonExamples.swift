@@ -13,6 +13,7 @@ struct ButtonExamples: View {
     @Binding var selectedTab: ButtonExamplesTab
     @State private var isLoading = false
     @State private var loadings: [Bool] = Array(repeating: false, count: 6)
+    @State private var apiViewReady = false
 
     /// 锚点列表
     private let anchors: [AnchorItem] = [
@@ -36,8 +37,26 @@ struct ButtonExamples: View {
         Group {
             if selectedTab == .examples {
                 examplesContent
-            } else {
+            } else if apiViewReady {
                 ButtonAPIView()
+            } else {
+                ProgressView()
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+            }
+        }
+        .onAppear {
+            // 页面出现时，如果是 API tab 且未准备好，则加载
+            if selectedTab == .api && !apiViewReady {
+                DispatchQueue.main.async {
+                    apiViewReady = true
+                }
+            }
+        }
+        .onChange(of: selectedTab) { newTab in
+            if newTab == .api && !apiViewReady {
+                DispatchQueue.main.async {
+                    apiViewReady = true
+                }
             }
         }
     }
