@@ -353,16 +353,23 @@ public extension Moin {
             .allowsHitTesting(!effectiveDisabled)
             .opacity(shouldApplyDisabledOpacity ? 0.65 : 1)
             .zIndex(compactContext.isCompact && isHovered ? 10 : 0)
-            .onHover { hovering in
-                guard isHovered != hovering else { return }
-                withAnimation(stateAnimation) {
-                    isHovered = hovering
-                    if !hovering { isPressed = false }
-                }
-                if hovering {
+            .onContinuousHover { phase in
+                switch phase {
+                case .active:
+                    if !isHovered {
+                        withAnimation(stateAnimation) {
+                            isHovered = true
+                        }
+                    }
                     let cursor: NSCursor = effectiveDisabled ? .operationNotAllowed : .pointingHand
                     cursor.set()
-                } else {
+                case .ended:
+                    if isHovered {
+                        withAnimation(stateAnimation) {
+                            isHovered = false
+                            isPressed = false
+                        }
+                    }
                     NSCursor.arrow.set()
                 }
             }
