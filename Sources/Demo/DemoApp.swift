@@ -165,13 +165,11 @@ struct ContentView: View {
                 .navigationTitle(navManager.selectedItem.map { tr($0.titleKey) } ?? "MoinUI")
                 .toolbar {
                     ToolbarItemGroup(placement: .primaryAction) {
-                        // ButtonOld 页面显示 Tab 切换
-                        if navManager.selectedItem == .buttonOld {
+                        // Button 页面显示 Tab 切换
+                        if navManager.selectedItem == .button {
                             Picker("", selection: $buttonTab) {
                                 Text(tr("tab.examples")).tag(ButtonExamplesTab.examples)
-                                Text(tr("tab.playground")).tag(ButtonExamplesTab.playground)
-                                Text(tr("tab.api")).tag(ButtonExamplesTab.api)
-                                Text(tr("tab.token")).tag(ButtonExamplesTab.token)
+                                Text("API").tag(ButtonExamplesTab.api)
                             }
                             .pickerStyle(.segmented)
                             .fixedSize()
@@ -220,16 +218,6 @@ struct ContentView: View {
                                 Text(tr("tab.playground")).tag(DividerExamplesTab.playground)
                                 Text(tr("tab.api")).tag(DividerExamplesTab.api)
                                 Text(tr("tab.token")).tag(DividerExamplesTab.token)
-                            }
-                            .pickerStyle(.segmented)
-                            .fixedSize()
-                        }
-
-                        // Token 页面显示 Tab 切换
-                        if navManager.selectedItem == .token {
-                            Picker("", selection: $tokenTab) {
-                                Text(tr("tab.examples")).tag(TokenExamplesTab.examples)
-                                Text(tr("tab.playground")).tag(TokenExamplesTab.playground)
                             }
                             .pickerStyle(.segmented)
                             .fixedSize()
@@ -319,7 +307,6 @@ enum NavItem: String, Identifiable {
 
     // Components - General
     case button
-    case buttonOld  // 旧版Button，用于对比
     case typography
     case tag
 
@@ -351,7 +338,6 @@ enum NavItem: String, Identifiable {
         case .theme: return DemoIcons.theme
         case .token: return DemoIcons.token
         case .button: return DemoIcons.button
-        case .buttonOld: return DemoIcons.button
         case .typography: return DemoIcons.typography
         case .tag: return DemoIcons.tag
         case .badge: return DemoIcons.badge
@@ -373,7 +359,6 @@ enum NavItem: String, Identifiable {
         case .theme: return "nav.theme"
         case .token: return "nav.token"
         case .button: return "component.button"
-        case .buttonOld: return "Button (旧版)"
         case .typography: return "component.typography"
         case .tag: return "component.tag"
         case .badge: return "component.badge"
@@ -389,7 +374,7 @@ enum NavItem: String, Identifiable {
     }
 
     static var overview: [NavItem] { [.introduction, .quickStart] }
-    static var general: [NavItem] { [.button, .buttonOld, .tag, .typography] }
+    static var general: [NavItem] { [.button, .tag, .typography] }
     static var dataDisplay: [NavItem] { [.avatar, .badge, .empty] }
     static var feedback: [NavItem] { [.spin] }
     static var layout: [NavItem] { [.divider, .space] }
@@ -490,8 +475,6 @@ struct DetailView: View {
             case .token:
                 TokenExamples(selectedTab: $tokenTab)
             case .button:
-                ButtonDocView()
-            case .buttonOld:
                 ButtonExamples(selectedTab: $buttonTab)
             case .typography:
                 TypographyExamples(selectedTab: $typographyTab)

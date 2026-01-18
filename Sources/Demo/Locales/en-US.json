@@ -1,4 +1,7 @@
 {
+  "search": {
+    "placeholder": "Search..."
+  },
   "demo": {
     "about": "About MoinUI Demo"
   },

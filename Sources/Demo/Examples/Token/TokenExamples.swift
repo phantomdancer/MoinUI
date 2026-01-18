@@ -23,13 +23,7 @@ struct TokenExamples: View {
     ]
 
     var body: some View {
-        Group {
-            if selectedTab == .examples {
-                examplesContent
-            } else {
-                TokenPlayground()
-            }
-        }
+        examplesContent
     }
 
     // MARK: - Examples Content

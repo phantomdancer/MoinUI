@@ -3,8 +3,149 @@ import MoinUI
 
 // MARK: - API 属性卡片扩展
 
-extension ButtonDocView {
-    
+extension ButtonAPIView {
+
+    // MARK: - Action 属性卡片
+
+    var actionPropertyCard: some View {
+        PropertyCard(
+            name: "action",
+            type: "(() -> Void)?",
+            defaultValue: "nil",
+            description: tr("button.api.action"),
+            sectionId: "api"
+        ) {
+            Moin.Button("Click Me", color: .primary) {
+                print("Button clicked!")
+            }
+        } code: {
+            """
+Moin.Button("Click Me", color: .primary) {
+    print("Button clicked!")
+}
+"""
+        }
+    }
+
+    // MARK: - FontColor 属性卡片
+
+    var fontColorPropertyCard: some View {
+        PropertyCard(
+            name: "fontColor",
+            type: "Color?",
+            defaultValue: "nil",
+            description: tr("button.api.fontColor"),
+            sectionId: "api"
+        ) {
+            HStack(spacing: Moin.Constants.Spacing.sm) {
+                Moin.Button("Orange", fontColor: .orange) {}
+                Moin.Button("Purple", fontColor: .purple) {}
+                Moin.Button("Custom", color: .primary, fontColor: .yellow) {}
+            }
+        } code: {
+            """
+Moin.Button("Orange", fontColor: .orange) {}
+Moin.Button("Purple", fontColor: .purple) {}
+Moin.Button("Custom", color: .primary, fontColor: .yellow) {}
+"""
+        }
+    }
+
+    // MARK: - Gradient 属性卡片
+
+    var gradientPropertyCard: some View {
+        PropertyCard(
+            name: "gradient",
+            type: "LinearGradient?",
+            defaultValue: "nil",
+            description: tr("button.api.gradient"),
+            sectionId: "api"
+        ) {
+            HStack(spacing: Moin.Constants.Spacing.md) {
+                Moin.Button("Gradient", gradient: LinearGradient(
+                    colors: [Color(hex: "#667eea"), Color(hex: "#764ba2")],
+                    startPoint: .leading,
+                    endPoint: .trailing
+                ), fontColor: .white) {}
+                Moin.Button("Pink", gradient: LinearGradient(
+                    colors: [Color(hex: "#f093fb"), Color(hex: "#f5576c")],
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                ), fontColor: .white) {}
+            }
+        } code: {
+            """
+Moin.Button("Gradient", gradient: LinearGradient(
+    colors: [Color(hex: "#667eea"), Color(hex: "#764ba2")],
+    startPoint: .leading,
+    endPoint: .trailing
+), fontColor: .white) {}
+"""
+        }
+    }
+
+    // MARK: - Href 属性卡片
+
+    var hrefPropertyCard: some View {
+        PropertyCard(
+            name: "href",
+            type: "URL?",
+            defaultValue: "nil",
+            description: tr("button.api.href"),
+            sectionId: "api"
+        ) {
+            HStack(spacing: Moin.Constants.Spacing.md) {
+                Moin.Button("Visit GitHub", color: .primary, icon: "link", href: URL(string: "https://github.com")) {}
+                Moin.Button("Apple Docs", variant: .link, href: URL(string: "https://developer.apple.com")) {}
+            }
+        } code: {
+            """
+Moin.Button("Visit GitHub", icon: "link", href: URL(string: "https://github.com")) {}
+Moin.Button("Apple Docs", variant: .link, href: URL(string: "https://apple.com")) {}
+"""
+        }
+    }
+
+    // MARK: - Label 属性卡片
+
+    var labelPropertyCard: some View {
+        PropertyCard(
+            name: "label",
+            type: "@ViewBuilder () -> View",
+            defaultValue: "-",
+            description: tr("button.api.label"),
+            sectionId: "api"
+        ) {
+            HStack(spacing: Moin.Constants.Spacing.md) {
+                Moin.Button(color: .primary) {
+                    HStack(spacing: Moin.Constants.Spacing.xs) {
+                        Image(systemName: "star.fill")
+                            .foregroundStyle(.yellow)
+                        Text("Favorite")
+                    }
+                }
+                Moin.Button(color: .success, variant: .outlined) {
+                    HStack(spacing: Moin.Constants.Spacing.xs) {
+                        Circle()
+                            .fill(.green)
+                            .frame(width: 8, height: 8)
+                        Text("Online")
+                    }
+                }
+            }
+        } code: {
+            """
+Moin.Button(color: .primary) {
+    HStack {
+        Image(systemName: "star.fill")
+            .foregroundStyle(.yellow)
+        Text("Favorite")
+    }
+}
+"""
+        }
+    }
+
     // MARK: - Icon 属性卡片
     
     var iconPropertyCard: some View {
@@ -110,14 +251,8 @@ Moin.Button(icon: "heart.fill", shape: .circle) {}
             sectionId: "api"
         ) {
             HStack(spacing: Moin.Constants.Spacing.md) {
-                ForEach(Moin.ButtonIconPlacement.allCases, id: \.self) { placement in
-                    Moin.Button(
-                        "Button",
-                        color: .primary,
-                        icon: placement == .start ? "arrow.left" : "arrow.right",
-                        iconPlacement: placement
-                    ) {}
-                }
+                Moin.Button("Start", color: .primary, icon: "arrow.left", iconPlacement: .start) {}
+                Moin.Button("End", color: .primary, icon: "arrow.right", iconPlacement: .end) {}
             }
         } code: {
             """

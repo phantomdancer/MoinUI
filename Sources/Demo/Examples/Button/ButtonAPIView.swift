@@ -1,15 +1,16 @@
 import SwiftUI
 import MoinUI
 
-// MARK: - ButtonDocView
+// MARK: - ButtonAPIView
 
-/// Button 组件文档视图 - 每属性独立卡片
-struct ButtonDocView: View {
+/// Button 组件 API 文档视图 - 每属性独立卡片
+struct ButtonAPIView: View {
     @Localized var tr
     @ObservedObject var config = Moin.ConfigProvider.shared
     
     @State var selectedItemId: String?
     @State var scrollProxy: ScrollViewProxy?
+    @State var searchText: String = ""
     
     // 各属性的当前选中值
     @State var selectedColor: Moin.ButtonColor = .primary
@@ -51,7 +52,7 @@ struct ButtonDocView: View {
             
             // 右栏：导航树
             navigationSidebar
-                .frame(width: 220)
+                .frame(width: 280)
         }
         .background(Color(nsColor: .controlBackgroundColor))
         .onReceive(NotificationCenter.default.publisher(for: .buttonDocReset)) { _ in
@@ -60,30 +61,65 @@ struct ButtonDocView: View {
     }
     
     // MARK: - 右栏导航
-    
+
     private var navigationSidebar: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: Moin.Constants.Spacing.sm) {
-                navSection(title: "API", items: ["color", "icon", "iconPlacement", "isBlock", "isDisabled", "isGhost", "loading", "shape", "size", "variant"], sectionId: "api")
-                navSection(title: tr("doc.section.component_token"), items: ["contentFontSize", "dangerColor", "defaultBg", "defaultBorderColor", "defaultColor", "iconGap", "paddingBlock", "paddingInline", "paddingInlineLG", "paddingInlineSM", "primaryColor"], sectionId: "token")
-                navSection(title: tr("doc.section.global_token"), items: ["borderRadius", "colorPrimary", "controlHeight"], sectionId: "global")
+        VStack(spacing: 0) {
+            // 搜索框
+            HStack(spacing: Moin.Constants.Spacing.xs) {
+                Image(systemName: "magnifyingglass")
+                    .foregroundStyle(.secondary)
+                    .font(.system(size: 12))
+                TextField(tr("search.placeholder"), text: $searchText)
+                    .textFieldStyle(.plain)
+                    .font(.system(size: 12))
+                if !searchText.isEmpty {
+                    Button {
+                        searchText = ""
+                    } label: {
+                        Image(systemName: "xmark.circle.fill")
+                            .foregroundStyle(.secondary)
+                            .font(.system(size: 12))
+                    }
+                    .buttonStyle(.plain)
+                }
             }
+            .padding(Moin.Constants.Spacing.sm)
+            .background(Color(nsColor: .textBackgroundColor))
+            .cornerRadius(Moin.Constants.Radius.sm)
             .padding(Moin.Constants.Spacing.md)
+
+            Divider()
+
+            // 导航列表
+            ScrollView {
+                VStack(alignment: .leading, spacing: Moin.Constants.Spacing.sm) {
+                    navSection(title: "API", items: ["action", "color", "fontColor", "gradient", "href", "icon", "iconPlacement", "isBlock", "isDisabled", "isGhost", "label", "loading", "shape", "size", "variant"], sectionId: "api")
+                    navSection(title: tr("doc.section.component_token"), items: ["borderColorDisabled", "contentFontSize", "contentFontSizeLG", "contentFontSizeSM", "dangerColor", "defaultActiveBg", "defaultActiveBorderColor", "defaultActiveColor", "defaultBg", "defaultBgDisabled", "defaultBorderColor", "defaultColor", "defaultGhostBorderColor", "defaultGhostColor", "defaultHoverBg", "defaultHoverBorderColor", "defaultHoverColor", "fontWeight", "ghostBg", "iconGap", "linkHoverBg", "onlyIconSize", "onlyIconSizeLG", "onlyIconSizeSM", "paddingBlock", "paddingBlockLG", "paddingBlockSM", "paddingInline", "paddingInlineLG", "paddingInlineSM", "primaryColor", "solidTextColor", "textHoverBg", "textTextActiveColor", "textTextColor", "textTextHoverColor"], sectionId: "token")
+                    navSection(title: tr("doc.section.global_token"), items: ["borderRadius", "borderRadiusLG", "borderRadiusSM", "colorPrimary", "colorPrimaryActive", "colorPrimaryHover", "colorTextDisabled", "controlHeight", "controlHeightLG", "controlHeightSM", "motionDuration"], sectionId: "global")
+                }
+                .padding(Moin.Constants.Spacing.md)
+            }
         }
     }
-    
+
     private func navSection(title: String, items: [String], sectionId: String) -> some View {
-        VStack(alignment: .leading, spacing: 0) {
-            Text(title)
-                .font(.system(size: 11, weight: .semibold))
-                .foregroundStyle(.secondary)
-                .padding(.vertical, Moin.Constants.Spacing.xs)
-            
-            ForEach(items, id: \.self) { item in
-                navItem(name: item, sectionId: sectionId)
+        let filteredItems = searchText.isEmpty ? items : items.filter { $0.localizedCaseInsensitiveContains(searchText) }
+
+        return Group {
+            if !filteredItems.isEmpty {
+                VStack(alignment: .leading, spacing: 0) {
+                    Text(title)
+                        .font(.system(size: 11, weight: .semibold))
+                        .foregroundStyle(.secondary)
+                        .padding(.vertical, Moin.Constants.Spacing.xs)
+
+                    ForEach(filteredItems, id: \.self) { item in
+                        navItem(name: item, sectionId: sectionId)
+                    }
+                }
+                .padding(.bottom, Moin.Constants.Spacing.md)
             }
         }
-        .padding(.bottom, Moin.Constants.Spacing.md)
     }
     
     private func navItem(name: String, sectionId: String) -> some View {
@@ -137,49 +173,87 @@ struct ButtonDocView: View {
                             .font(.title3)
                             .fontWeight(.semibold)
                             .id("api")
-                        
+
+                        actionPropertyCard
                         colorPropertyCard
+                        fontColorPropertyCard
+                        gradientPropertyCard
+                        hrefPropertyCard
                         iconPropertyCard
                         iconPlacementPropertyCard
                         blockPropertyCard
                         disabledPropertyCard
                         ghostPropertyCard
+                        labelPropertyCard
                         loadingPropertyCard
                         shapePropertyCard
                         sizePropertyCard
                         variantPropertyCard
-                        
+
                         Divider().padding(.vertical, Moin.Constants.Spacing.md)
-                        
+
                         // Token 分组
                         Text(tr("doc.section.component_token"))
                             .font(.title3)
                             .fontWeight(.semibold)
                             .id("token")
-                        
+
+                        borderColorDisabledTokenCard
                         contentFontSizeTokenCard
+                        contentFontSizeLGTokenCard
+                        contentFontSizeSMTokenCard
                         dangerColorTokenCard
+                        defaultActiveBgTokenCard
+                        defaultActiveBorderColorTokenCard
+                        defaultActiveColorTokenCard
                         defaultBgTokenCard
+                        defaultBgDisabledTokenCard
                         defaultBorderColorTokenCard
                         defaultColorTokenCard
+                        defaultGhostBorderColorTokenCard
+                        defaultGhostColorTokenCard
+                        defaultHoverBgTokenCard
+                        defaultHoverBorderColorTokenCard
+                        defaultHoverColorTokenCard
+                        fontWeightTokenCard
+                        ghostBgTokenCard
                         iconGapTokenCard
+                        linkHoverBgTokenCard
+                        onlyIconSizeTokenCard
+                        onlyIconSizeLGTokenCard
+                        onlyIconSizeSMTokenCard
                         paddingBlockTokenCard
+                        paddingBlockLGTokenCard
+                        paddingBlockSMTokenCard
                         paddingInlineTokenCard
                         paddingInlineLGTokenCard
                         paddingInlineSMTokenCard
                         primaryColorTokenCard
-                        
+                        solidTextColorTokenCard
+                        textHoverBgTokenCard
+                        textTextActiveColorTokenCard
+                        textTextColorTokenCard
+                        textTextHoverColorTokenCard
+
                         Divider().padding(.vertical, Moin.Constants.Spacing.md)
-                        
+
                         // 全局 Token 分组
                         Text(tr("doc.section.global_token"))
                             .font(.title3)
                             .fontWeight(.semibold)
                             .id("global")
-                        
+
                         borderRadiusGlobalTokenCard
+                        borderRadiusLGGlobalTokenCard
+                        borderRadiusSMGlobalTokenCard
                         colorPrimaryGlobalTokenCard
+                        colorPrimaryActiveGlobalTokenCard
+                        colorPrimaryHoverGlobalTokenCard
+                        colorTextDisabledGlobalTokenCard
                         controlHeightGlobalTokenCard
+                        controlHeightLGGlobalTokenCard
+                        controlHeightSMGlobalTokenCard
+                        motionDurationGlobalTokenCard
                     }
                     .padding(Moin.Constants.Spacing.lg)
                 }
@@ -206,9 +280,12 @@ struct ButtonDocView: View {
                     .font(.system(size: 11, weight: .semibold))
                     .foregroundStyle(.secondary)
                 HStack(alignment: .center, spacing: Moin.Constants.Spacing.sm) {
-                    ForEach(Moin.ButtonColor.allCases, id: \.self) { color in
-                        Moin.Button(color.description, color: color) {}
-                    }
+                    Moin.Button("primary", color: .primary) {}
+                    Moin.Button("success", color: .success) {}
+                    Moin.Button("warning", color: .warning) {}
+                    Moin.Button("danger", color: .danger) {}
+                    Moin.Button("info", color: .info) {}
+                    Moin.Button("default", color: .default) {}
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 
@@ -259,17 +336,20 @@ Moin.Button("custom", color: .custom(Color(red: 0.6, green: 0.2, blue: 0.8))) {}
             sectionId: "api"
         ) {
             HStack(spacing: Moin.Constants.Spacing.sm) {
-                ForEach(Moin.ButtonVariant.allCases, id: \.self) { variant in
-                    Moin.Button(variant.description.capitalized, color: .primary, variant: variant) {}
-                }
+                Moin.Button("Solid", color: .primary, variant: .solid) {}
+                Moin.Button("Outlined", color: .primary, variant: .outlined) {}
+                Moin.Button("Dashed", color: .primary, variant: .dashed) {}
+                Moin.Button("Filled", color: .primary, variant: .filled) {}
+                Moin.Button("Text", color: .primary, variant: .text) {}
+                Moin.Button("Link", color: .primary, variant: .link) {}
             }
         } code: {
             "Moin.Button(\"Solid\", variant: .solid) {}"
         }
     }
-    
+
     // MARK: - Size 属性卡片
-    
+
     private var sizePropertyCard: some View {
         PropertyCard(
             name: "size",
@@ -280,17 +360,17 @@ Moin.Button("custom", color: .custom(Color(red: 0.6, green: 0.2, blue: 0.8))) {}
             sectionId: "api"
         ) {
             HStack(alignment: .center, spacing: Moin.Constants.Spacing.md) {
-                ForEach(Moin.ButtonSize.allCases, id: \.self) { size in
-                    Moin.Button(size.description.capitalized, color: .primary, size: size) {}
-                }
+                Moin.Button("Small", color: .primary, size: .small) {}
+                Moin.Button("Medium", color: .primary, size: .medium) {}
+                Moin.Button("Large", color: .primary, size: .large) {}
             }
         } code: {
             "Moin.Button(\"Medium\", size: .medium) {}"
         }
     }
-    
+
     // MARK: - Shape 属性卡片
-    
+
     private var shapePropertyCard: some View {
         PropertyCard(
             name: "shape",
@@ -301,13 +381,9 @@ Moin.Button("custom", color: .custom(Color(red: 0.6, green: 0.2, blue: 0.8))) {}
             sectionId: "api"
         ) {
             HStack(spacing: Moin.Constants.Spacing.md) {
-                ForEach(Moin.ButtonShape.allCases, id: \.self) { shape in
-                    if shape == .circle {
-                        Moin.Button(icon: "plus", color: .primary, shape: shape) {}
-                    } else {
-                        Moin.Button(shape.description.capitalized, color: .primary, shape: shape) {}
-                    }
-                }
+                Moin.Button("Default", color: .primary, shape: .default) {}
+                Moin.Button("Round", color: .primary, shape: .round) {}
+                Moin.Button(icon: "plus", color: .primary, shape: .circle) {}
             }
         } code: {
             "Moin.Button(\"Default\", shape: .default) {}"

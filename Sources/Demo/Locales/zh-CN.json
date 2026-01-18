@@ -1,4 +1,7 @@
 {
+  "search": {
+    "placeholder": "搜索..."
+  },
   "demo": {
     "about": "关于 MoinUI Demo"
   },

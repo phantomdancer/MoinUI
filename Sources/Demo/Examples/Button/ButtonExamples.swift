@@ -4,9 +4,7 @@ import MoinUI
 /// 按钮组件文档页面 Tab
 enum ButtonExamplesTab: String, CaseIterable {
     case examples
-    case playground
     case api
-    case token
 }
 
 /// Button component examples
@@ -38,12 +36,8 @@ struct ButtonExamples: View {
         Group {
             if selectedTab == .examples {
                 examplesContent
-            } else if selectedTab == .playground {
-                playgroundContent
-            } else if selectedTab == .api {
-                apiContent
             } else {
-                tokenContent
+                ButtonAPIView()
             }
         }
     }
@@ -67,25 +61,6 @@ struct ButtonExamples: View {
             shadowExample.id("shadow")
             focusExample.id("focus")
         }
-    }
-
-    // MARK: - Playground Content
-
-    private var playgroundContent: some View {
-        ButtonPlayground()
-            .padding(Moin.Constants.Spacing.xl)
-    }
-
-    // MARK: - API Content
-
-    private var apiContent: some View {
-        ButtonAPIContent()
-    }
-
-    // MARK: - Token Content
-
-    private var tokenContent: some View {
-        ButtonTokenContent()
     }
 
     // MARK: - Examples
