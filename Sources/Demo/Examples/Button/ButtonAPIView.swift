@@ -167,7 +167,7 @@ struct ButtonAPIView: View {
             // 可滚动内容
             ScrollViewReader { proxy in
                 ScrollView {
-                    VStack(alignment: .leading, spacing: Moin.Constants.Spacing.xl) {
+                    LazyVStack(alignment: .leading, spacing: Moin.Constants.Spacing.xl) {
                         // API 分组
                         Text("API")
                             .font(.title3)
