@@ -534,8 +534,6 @@ struct PropertyCard<Preview: View, TryIt: View>: View {
             }
             .padding(Moin.Constants.Spacing.md)
             .frame(maxWidth: .infinity, alignment: .leading)
-            .background(isDarkMode ? Color(white: 0.12) : Color(white: 0.98))
-            .cornerRadius(Moin.Constants.Radius.sm)
 
             // 试一试
             if let tryIt = tryIt {
