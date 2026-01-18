@@ -15,12 +15,12 @@ extension ButtonAPIView {
             description: tr("button.api.action"),
             sectionId: "api"
         ) {
-            Moin.Button("Click Me", color: .primary) {
+            Moin.Button(tr("button.label.click_me"), color: .primary) {
                 print("Button clicked!")
             }
         } code: {
             """
-Moin.Button("Click Me", color: .primary) {
+Moin.Button("\(tr("button.label.click_me"))", color: .primary) {
     print("Button clicked!")
 }
 """
@@ -38,15 +38,15 @@ Moin.Button("Click Me", color: .primary) {
             sectionId: "api"
         ) {
             HStack(spacing: Moin.Constants.Spacing.sm) {
-                Moin.Button("Orange", fontColor: .orange) {}
-                Moin.Button("Purple", fontColor: .purple) {}
-                Moin.Button("Custom", color: .primary, fontColor: .yellow) {}
+                Moin.Button(tr("button.label.orange"), fontColor: .orange) {}
+                Moin.Button(tr("button.label.purple"), fontColor: .purple) {}
+                Moin.Button(tr("button.label.custom"), color: .primary, fontColor: .yellow) {}
             }
         } code: {
             """
-Moin.Button("Orange", fontColor: .orange) {}
-Moin.Button("Purple", fontColor: .purple) {}
-Moin.Button("Custom", color: .primary, fontColor: .yellow) {}
+Moin.Button("\(tr("button.label.orange"))", fontColor: .orange) {}
+Moin.Button("\(tr("button.label.purple"))", fontColor: .purple) {}
+Moin.Button("\(tr("button.label.custom"))", color: .primary, fontColor: .yellow) {}
 """
         }
     }
@@ -62,12 +62,12 @@ Moin.Button("Custom", color: .primary, fontColor: .yellow) {}
             sectionId: "api"
         ) {
             HStack(spacing: Moin.Constants.Spacing.md) {
-                Moin.Button("Gradient", gradient: LinearGradient(
+                Moin.Button(tr("button.label.gradient"), gradient: LinearGradient(
                     colors: [Color(hex: "#667eea"), Color(hex: "#764ba2")],
                     startPoint: .leading,
                     endPoint: .trailing
                 ), fontColor: .white) {}
-                Moin.Button("Pink", gradient: LinearGradient(
+                Moin.Button(tr("button.label.pink"), gradient: LinearGradient(
                     colors: [Color(hex: "#f093fb"), Color(hex: "#f5576c")],
                     startPoint: .topLeading,
                     endPoint: .bottomTrailing
@@ -75,7 +75,7 @@ Moin.Button("Custom", color: .primary, fontColor: .yellow) {}
             }
         } code: {
             """
-Moin.Button("Gradient", gradient: LinearGradient(
+Moin.Button("\(tr("button.label.gradient"))", gradient: LinearGradient(
     colors: [Color(hex: "#667eea"), Color(hex: "#764ba2")],
     startPoint: .leading,
     endPoint: .trailing
@@ -95,13 +95,13 @@ Moin.Button("Gradient", gradient: LinearGradient(
             sectionId: "api"
         ) {
             HStack(spacing: Moin.Constants.Spacing.md) {
-                Moin.Button("Visit GitHub", color: .primary, icon: "link", href: URL(string: "https://github.com")) {}
-                Moin.Button("Apple Docs", variant: .link, href: URL(string: "https://developer.apple.com")) {}
+                Moin.Button(tr("button.label.visit_github"), color: .primary, icon: "link", href: URL(string: "https://github.com")) {}
+                Moin.Button(tr("button.label.visit_docs"), variant: .link, href: URL(string: "https://developer.apple.com")) {}
             }
         } code: {
             """
-Moin.Button("Visit GitHub", icon: "link", href: URL(string: "https://github.com")) {}
-Moin.Button("Apple Docs", variant: .link, href: URL(string: "https://apple.com")) {}
+Moin.Button("\(tr("button.label.visit_github"))", icon: "link", href: URL(string: "https://github.com")) {}
+Moin.Button("\(tr("button.label.visit_docs"))", variant: .link, href: URL(string: "https://apple.com")) {}
 """
         }
     }
@@ -121,7 +121,7 @@ Moin.Button("Apple Docs", variant: .link, href: URL(string: "https://apple.com")
                     HStack(spacing: Moin.Constants.Spacing.xs) {
                         Image(systemName: "star.fill")
                             .foregroundStyle(.yellow)
-                        Text("Favorite")
+                        Text(tr("button.label.favorite"))
                     }
                 }
                 Moin.Button(color: .success, variant: .outlined) {
@@ -129,7 +129,7 @@ Moin.Button("Apple Docs", variant: .link, href: URL(string: "https://apple.com")
                         Circle()
                             .fill(.green)
                             .frame(width: 8, height: 8)
-                        Text("Online")
+                        Text(tr("button.label.online"))
                     }
                 }
             }
@@ -139,7 +139,7 @@ Moin.Button(color: .primary) {
     HStack {
         Image(systemName: "star.fill")
             .foregroundStyle(.yellow)
-        Text("Favorite")
+        Text("\(tr("button.label.favorite"))")
     }
 }
 """
@@ -147,7 +147,7 @@ Moin.Button(color: .primary) {
     }
 
     // MARK: - Icon 属性卡片
-    
+
     var iconPropertyCard: some View {
         PropertyCard(
             name: "icon",
@@ -157,21 +157,21 @@ Moin.Button(color: .primary) {
             sectionId: "api"
         ) {
             HStack(spacing: Moin.Constants.Spacing.sm) {
-                Moin.Button("Search", color: .primary, icon: "magnifyingglass") {}
-                Moin.Button("Add", color: .success, icon: "plus") {}
+                Moin.Button(tr("button.label.search"), color: .primary, icon: "magnifyingglass") {}
+                Moin.Button(tr("button.label.add"), color: .success, icon: "plus") {}
                 Moin.Button(icon: "heart.fill", color: .danger, shape: .circle) {}
             }
         } code: {
             """
-Moin.Button("Search", icon: "magnifyingglass") {}
-Moin.Button("Add", icon: "plus") {}
+Moin.Button("\(tr("button.label.search"))", icon: "magnifyingglass") {}
+Moin.Button("\(tr("button.label.add"))", icon: "plus") {}
 Moin.Button(icon: "heart.fill", shape: .circle) {}
 """
         }
     }
-    
+
     // MARK: - Loading 属性卡片
-    
+
     var loadingPropertyCard: some View {
         PropertyCard(
             name: "loading",
@@ -180,14 +180,14 @@ Moin.Button(icon: "heart.fill", shape: .circle) {}
             description: tr("button.api.loading"),
             sectionId: "api"
         ) {
-            Moin.Button("Loading", color: .primary, loading: true) {}
+            Moin.Button(tr("button.label.loading"), color: .primary, loading: true) {}
         } code: {
-            "Moin.Button(\"Loading\", loading: true) {}"
+            "Moin.Button(\"\(tr("button.label.loading"))\", loading: true) {}"
         }
     }
-    
+
     // MARK: - Disabled 属性卡片
-    
+
     var disabledPropertyCard: some View {
         PropertyCard(
             name: "isDisabled",
@@ -196,14 +196,14 @@ Moin.Button(icon: "heart.fill", shape: .circle) {}
             description: tr("button.api.isDisabled"),
             sectionId: "api"
         ) {
-            Moin.Button("Disabled", color: .primary, isDisabled: true) {}
+            Moin.Button(tr("button.label.disabled"), color: .primary, isDisabled: true) {}
         } code: {
-            "Moin.Button(\"Disabled\", isDisabled: true) {}"
+            "Moin.Button(\"\(tr("button.label.disabled"))\", isDisabled: true) {}"
         }
     }
-    
+
     // MARK: - Block 属性卡片
-    
+
     var blockPropertyCard: some View {
         PropertyCard(
             name: "isBlock",
@@ -212,14 +212,14 @@ Moin.Button(icon: "heart.fill", shape: .circle) {}
             description: tr("button.api.isBlock"),
             sectionId: "api"
         ) {
-            Moin.Button("Block", color: .primary, isBlock: true) {}
+            Moin.Button(tr("button.label.block"), color: .primary, isBlock: true) {}
         } code: {
-            "Moin.Button(\"Block\", isBlock: true) {}"
+            "Moin.Button(\"\(tr("button.label.block"))\", isBlock: true) {}"
         }
     }
-    
+
     // MARK: - Ghost 属性卡片
-    
+
     var ghostPropertyCard: some View {
         PropertyCard(
             name: "isGhost",
@@ -232,15 +232,15 @@ Moin.Button(icon: "heart.fill", shape: .circle) {}
                 Color(white: 0.8)
                     .frame(height: 60)
                     .cornerRadius(8)
-                Moin.Button("Button", color: .primary, isGhost: true) {}
+                Moin.Button(tr("button.label.button"), color: .primary, isGhost: true) {}
             }
         } code: {
-            "Moin.Button(\"Button\", isGhost: true) {}"
+            "Moin.Button(\"\(tr("button.label.button"))\", isGhost: true) {}"
         }
     }
-    
+
     // MARK: - IconPlacement 属性卡片
-    
+
     var iconPlacementPropertyCard: some View {
         PropertyCard(
             name: "iconPlacement",
@@ -251,13 +251,13 @@ Moin.Button(icon: "heart.fill", shape: .circle) {}
             sectionId: "api"
         ) {
             HStack(spacing: Moin.Constants.Spacing.md) {
-                Moin.Button("Start", color: .primary, icon: "arrow.left", iconPlacement: .start) {}
-                Moin.Button("End", color: .primary, icon: "arrow.right", iconPlacement: .end) {}
+                Moin.Button(tr("button.label.start"), color: .primary, icon: "arrow.left", iconPlacement: .start) {}
+                Moin.Button(tr("button.label.end"), color: .primary, icon: "arrow.right", iconPlacement: .end) {}
             }
         } code: {
             """
-Moin.Button("Button", icon: "arrow.left", iconPlacement: .start) {}
-Moin.Button("Button", icon: "arrow.right", iconPlacement: .end) {}
+Moin.Button("\(tr("button.label.start"))", icon: "arrow.left", iconPlacement: .start) {}
+Moin.Button("\(tr("button.label.end"))", icon: "arrow.right", iconPlacement: .end) {}
 """
         }
     }

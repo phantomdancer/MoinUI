@@ -280,46 +280,46 @@ struct ButtonAPIView: View {
                     .font(.system(size: 11, weight: .semibold))
                     .foregroundStyle(.secondary)
                 HStack(alignment: .center, spacing: Moin.Constants.Spacing.sm) {
-                    Moin.Button("primary", color: .primary) {}
-                    Moin.Button("success", color: .success) {}
-                    Moin.Button("warning", color: .warning) {}
-                    Moin.Button("danger", color: .danger) {}
-                    Moin.Button("info", color: .info) {}
-                    Moin.Button("default", color: .default) {}
+                    Moin.Button(tr("button.label.primary"), color: .primary) {}
+                    Moin.Button(tr("button.label.success"), color: .success) {}
+                    Moin.Button(tr("button.label.warning"), color: .warning) {}
+                    Moin.Button(tr("button.label.danger"), color: .danger) {}
+                    Moin.Button(tr("button.label.info"), color: .info) {}
+                    Moin.Button(tr("button.label.default"), color: .default) {}
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
-                
+
                 // Preset Colors
                 Text(tr("button.preset_colors"))
                     .font(.system(size: 11, weight: .semibold))
                     .foregroundStyle(.secondary)
                     .padding(.top, Moin.Constants.Spacing.sm)
                 HStack(alignment: .center, spacing: Moin.Constants.Spacing.sm) {
-                    Moin.Button("cyan", color: .cyan) {}
-                    Moin.Button("purple", color: .purple) {}
-                    Moin.Button("magenta", color: .magenta) {}
-                    Moin.Button("orange", color: .orange) {}
-                    Moin.Button("yellow", color: .yellow) {}
+                    Moin.Button(tr("button.label.cyan"), color: .cyan) {}
+                    Moin.Button(tr("button.label.purple"), color: .purple) {}
+                    Moin.Button(tr("button.label.magenta"), color: .magenta) {}
+                    Moin.Button(tr("button.label.orange"), color: .orange) {}
+                    Moin.Button(tr("button.label.yellow"), color: .yellow) {}
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
-                
+
                 // Custom Colors
                 Text(tr("button.custom_colors"))
                     .font(.system(size: 11, weight: .semibold))
                     .foregroundStyle(.secondary)
                     .padding(.top, Moin.Constants.Spacing.sm)
                 HStack(alignment: .center, spacing: Moin.Constants.Spacing.sm) {
-                    Moin.Button("brown", color: .custom(Color(red: 0.6, green: 0.3, blue: 0.1))) {}
-                    Moin.Button("custom", color: .custom(Color(red: 0.6, green: 0.2, blue: 0.8))) {}
+                    Moin.Button(tr("button.label.brown"), color: .custom(Color(red: 0.6, green: 0.3, blue: 0.1))) {}
+                    Moin.Button(tr("button.label.custom"), color: .custom(Color(red: 0.6, green: 0.2, blue: 0.8))) {}
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
             }
         } code: {
             """
-Moin.Button("primary", color: .primary) {}
-Moin.Button("cyan", color: .cyan) {}
-Moin.Button("brown", color: .custom(Color(red: 0.6, green: 0.3, blue: 0.1))) {}
-Moin.Button("custom", color: .custom(Color(red: 0.6, green: 0.2, blue: 0.8))) {}
+Moin.Button("\(tr("button.label.primary"))", color: .primary) {}
+Moin.Button("\(tr("button.label.cyan"))", color: .cyan) {}
+Moin.Button("\(tr("button.label.brown"))", color: .custom(Color(red: 0.6, green: 0.3, blue: 0.1))) {}
+Moin.Button("\(tr("button.label.custom"))", color: .custom(Color(red: 0.6, green: 0.2, blue: 0.8))) {}
 """
         }
     }
@@ -336,15 +336,15 @@ Moin.Button("custom", color: .custom(Color(red: 0.6, green: 0.2, blue: 0.8))) {}
             sectionId: "api"
         ) {
             HStack(spacing: Moin.Constants.Spacing.sm) {
-                Moin.Button("Solid", color: .primary, variant: .solid) {}
-                Moin.Button("Outlined", color: .primary, variant: .outlined) {}
-                Moin.Button("Dashed", color: .primary, variant: .dashed) {}
-                Moin.Button("Filled", color: .primary, variant: .filled) {}
-                Moin.Button("Text", color: .primary, variant: .text) {}
-                Moin.Button("Link", color: .primary, variant: .link) {}
+                Moin.Button(tr("button.label.solid"), color: .primary, variant: .solid) {}
+                Moin.Button(tr("button.label.outlined"), color: .primary, variant: .outlined) {}
+                Moin.Button(tr("button.label.dashed"), color: .primary, variant: .dashed) {}
+                Moin.Button(tr("button.label.filled"), color: .primary, variant: .filled) {}
+                Moin.Button(tr("button.label.text"), color: .primary, variant: .text) {}
+                Moin.Button(tr("button.label.link"), color: .primary, variant: .link) {}
             }
         } code: {
-            "Moin.Button(\"Solid\", variant: .solid) {}"
+            "Moin.Button(\"\(tr("button.label.solid"))\", variant: .solid) {}"
         }
     }
 
@@ -360,12 +360,12 @@ Moin.Button("custom", color: .custom(Color(red: 0.6, green: 0.2, blue: 0.8))) {}
             sectionId: "api"
         ) {
             HStack(alignment: .center, spacing: Moin.Constants.Spacing.md) {
-                Moin.Button("Small", color: .primary, size: .small) {}
-                Moin.Button("Medium", color: .primary, size: .medium) {}
-                Moin.Button("Large", color: .primary, size: .large) {}
+                Moin.Button(tr("button.label.small"), color: .primary, size: .small) {}
+                Moin.Button(tr("button.label.medium"), color: .primary, size: .medium) {}
+                Moin.Button(tr("button.label.large"), color: .primary, size: .large) {}
             }
         } code: {
-            "Moin.Button(\"Medium\", size: .medium) {}"
+            "Moin.Button(\"\(tr("button.label.medium"))\", size: .medium) {}"
         }
     }
 
@@ -381,12 +381,12 @@ Moin.Button("custom", color: .custom(Color(red: 0.6, green: 0.2, blue: 0.8))) {}
             sectionId: "api"
         ) {
             HStack(spacing: Moin.Constants.Spacing.md) {
-                Moin.Button("Default", color: .primary, shape: .default) {}
-                Moin.Button("Round", color: .primary, shape: .round) {}
+                Moin.Button(tr("button.label.normal"), color: .primary, shape: .default) {}
+                Moin.Button(tr("button.label.round"), color: .primary, shape: .round) {}
                 Moin.Button(icon: "plus", color: .primary, shape: .circle) {}
             }
         } code: {
-            "Moin.Button(\"Default\", shape: .default) {}"
+            "Moin.Button(\"\(tr("button.label.normal"))\", shape: .default) {}"
         }
     }
     
@@ -400,12 +400,12 @@ Moin.Button("custom", color: .custom(Color(red: 0.6, green: 0.2, blue: 0.8))) {}
             description: tr("button.api.token.primaryColor"),
             sectionId: "token"
         ) {
-            Moin.Button("Primary Button", color: .primary) {}
+            Moin.Button(tr("button.label.primary"), color: .primary) {}
         } editor: {
             ColorPresetRow(label: "primaryColor", color: $config.components.button.primaryColor)
         }
     }
-    
+
     private var paddingInlineTokenCard: some View {
         TokenCard(
             name: "paddingInline",
@@ -415,7 +415,7 @@ Moin.Button("custom", color: .custom(Color(red: 0.6, green: 0.2, blue: 0.8))) {}
             sectionId: "token"
         ) {
             HStack(spacing: Moin.Constants.Spacing.md) {
-                Moin.Button("Button", color: .primary) {}
+                Moin.Button(tr("button.label.button"), color: .primary) {}
                 Text("padding: \(Int(config.components.button.paddingInline))px")
                     .font(.system(size: 11, design: .monospaced))
                     .foregroundStyle(.secondary)
