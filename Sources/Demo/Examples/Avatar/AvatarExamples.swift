@@ -13,6 +13,11 @@ struct AvatarExamples: View {
     @Localized var tr
     @Binding var selectedTab: AvatarExamplesTab
 
+    // 懒加载状态
+    @State private var playgroundReady = false
+    @State private var apiReady = false
+    @State private var tokenReady = false
+
     /// 锚点列表
     private let anchors: [AnchorItem] = [
         AnchorItem(id: "basic", titleKey: "avatar.basic"),
@@ -28,14 +33,53 @@ struct AvatarExamples: View {
 
     var body: some View {
         Group {
-            if selectedTab == .examples {
+            switch selectedTab {
+            case .examples:
                 examplesContent
-            } else if selectedTab == .playground {
-                playgroundContent
-            } else if selectedTab == .api {
-                apiContent
-            } else {
-                tokenContent
+            case .playground:
+                if playgroundReady {
+                    playgroundContent
+                } else {
+                    loadingView
+                }
+            case .api:
+                if apiReady {
+                    apiContent
+                } else {
+                    loadingView
+                }
+            case .token:
+                if tokenReady {
+                    tokenContent
+                } else {
+                    loadingView
+                }
+            }
+        }
+        .onAppear { triggerLazyLoad(for: selectedTab) }
+        .onChange(of: selectedTab) { triggerLazyLoad(for: $0) }
+    }
+
+    private var loadingView: some View {
+        Moin.Spin()
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+
+    private func triggerLazyLoad(for tab: AvatarExamplesTab) {
+        switch tab {
+        case .examples:
+            break
+        case .playground:
+            if !playgroundReady {
+                DispatchQueue.main.async { playgroundReady = true }
+            }
+        case .api:
+            if !apiReady {
+                DispatchQueue.main.async { apiReady = true }
+            }
+        case .token:
+            if !tokenReady {
+                DispatchQueue.main.async { tokenReady = true }
             }
         }
     }

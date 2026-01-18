@@ -40,7 +40,7 @@ struct ButtonExamples: View {
             } else if apiViewReady {
                 ButtonAPIView()
             } else {
-                ProgressView()
+                Moin.Spin()
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
         }
