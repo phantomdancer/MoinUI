@@ -183,6 +183,7 @@
     "default": "Default",
     "description": "Description",
     "value": "Value",
+    "derived_from": "Derived from",
     "component_token": "Component Token",
     "component_token_desc": "Below are the design tokens for the Button component. Override via ConfigProvider.",
     "global_token_title": "Global Token",

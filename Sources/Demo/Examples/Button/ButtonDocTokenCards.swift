@@ -16,6 +16,10 @@ extension ButtonAPIView {
             sectionId: "token"
         ) {
             Moin.Button(tr("button.label.disabled"), variant: .outlined, isDisabled: true) {}
+        } editor: {
+            ColorPresetRow(label: "borderColorDisabled", color: $config.components.button.borderColorDisabled)
+        } code: {
+            "config.components.button.borderColorDisabled = Color(...)"
         }
     }
 
@@ -48,6 +52,8 @@ extension ButtonAPIView {
             Moin.Button(tr("button.label.default")) {}
         } editor: {
             ColorPresetRow(label: "defaultBg", color: $config.components.button.defaultBg)
+        } code: {
+            "config.components.button.defaultBg = Color(...)"
         }
     }
 
@@ -62,6 +68,8 @@ extension ButtonAPIView {
             Moin.Button(tr("button.label.default"), variant: .outlined) {}
         } editor: {
             ColorPresetRow(label: "defaultBorderColor", color: $config.components.button.defaultBorderColor)
+        } code: {
+            "config.components.button.defaultBorderColor = Color(...)"
         }
     }
 
@@ -76,6 +84,8 @@ extension ButtonAPIView {
             Moin.Button(tr("button.label.danger"), color: .danger) {}
         } editor: {
             ColorPresetRow(label: "dangerColor", color: $config.components.button.dangerColor)
+        } code: {
+            "config.components.button.dangerColor = Color(...)"
         }
     }
 
@@ -88,6 +98,10 @@ extension ButtonAPIView {
             sectionId: "token"
         ) {
             Moin.Button(tr("button.label.click_active")) {}
+        } editor: {
+            ColorPresetRow(label: "defaultActiveBg", color: $config.components.button.defaultActiveBg)
+        } code: {
+            "config.components.button.defaultActiveBg = Color(...)"
         }
     }
 
@@ -100,6 +114,10 @@ extension ButtonAPIView {
             sectionId: "token"
         ) {
             Moin.Button(tr("button.label.default"), variant: .outlined) {}
+        } editor: {
+            ColorPresetRow(label: "defaultActiveBorderColor", color: $config.components.button.defaultActiveBorderColor)
+        } code: {
+            "config.components.button.defaultActiveBorderColor = Color(...)"
         }
     }
 
@@ -112,6 +130,10 @@ extension ButtonAPIView {
             sectionId: "token"
         ) {
             Moin.Button(tr("button.label.click_active")) {}
+        } editor: {
+            ColorPresetRow(label: "defaultActiveColor", color: $config.components.button.defaultActiveColor)
+        } code: {
+            "config.components.button.defaultActiveColor = Color(...)"
         }
     }
 
@@ -124,6 +146,10 @@ extension ButtonAPIView {
             sectionId: "token"
         ) {
             Moin.Button(tr("button.label.disabled"), isDisabled: true) {}
+        } editor: {
+            ColorPresetRow(label: "defaultBgDisabled", color: $config.components.button.defaultBgDisabled)
+        } code: {
+            "config.components.button.defaultBgDisabled = Color(...)"
         }
     }
 
@@ -139,6 +165,10 @@ extension ButtonAPIView {
                 Color(white: 0.3).frame(height: 50).cornerRadius(8)
                 Moin.Button(tr("button.label.ghost"), isGhost: true) {}
             }
+        } editor: {
+            ColorPresetRow(label: "defaultGhostBorderColor", color: $config.components.button.defaultGhostBorderColor)
+        } code: {
+            "config.components.button.defaultGhostBorderColor = Color(...)"
         }
     }
 
@@ -154,6 +184,10 @@ extension ButtonAPIView {
                 Color(white: 0.3).frame(height: 50).cornerRadius(8)
                 Moin.Button(tr("button.label.ghost"), isGhost: true) {}
             }
+        } editor: {
+            ColorPresetRow(label: "defaultGhostColor", color: $config.components.button.defaultGhostColor)
+        } code: {
+            "config.components.button.defaultGhostColor = Color(...)"
         }
     }
 
@@ -166,6 +200,10 @@ extension ButtonAPIView {
             sectionId: "token"
         ) {
             Moin.Button(tr("button.label.hover_me")) {}
+        } editor: {
+            ColorPresetRow(label: "defaultHoverBg", color: $config.components.button.defaultHoverBg)
+        } code: {
+            "config.components.button.defaultHoverBg = Color(...)"
         }
     }
 
@@ -178,6 +216,10 @@ extension ButtonAPIView {
             sectionId: "token"
         ) {
             Moin.Button(tr("button.label.hover_me"), variant: .outlined) {}
+        } editor: {
+            ColorPresetRow(label: "defaultHoverBorderColor", color: $config.components.button.defaultHoverBorderColor)
+        } code: {
+            "config.components.button.defaultHoverBorderColor = Color(...)"
         }
     }
 
@@ -190,6 +232,10 @@ extension ButtonAPIView {
             sectionId: "token"
         ) {
             Moin.Button(tr("button.label.hover_me")) {}
+        } editor: {
+            ColorPresetRow(label: "defaultHoverColor", color: $config.components.button.defaultHoverColor)
+        } code: {
+            "config.components.button.defaultHoverColor = Color(...)"
         }
     }
 
@@ -202,6 +248,8 @@ extension ButtonAPIView {
             sectionId: "token"
         ) {
             Moin.Button(tr("button.label.button"), color: .primary) {}
+        } code: {
+            "config.components.button.fontWeight = .bold"
         }
     }
 
@@ -217,6 +265,10 @@ extension ButtonAPIView {
                 Color(white: 0.3).frame(height: 50).cornerRadius(8)
                 Moin.Button(tr("button.label.ghost"), color: .primary, isGhost: true) {}
             }
+        } editor: {
+            ColorPresetRow(label: "ghostBg", color: $config.components.button.ghostBg)
+        } code: {
+            "config.components.button.ghostBg = Color(...)"
         }
     }
 
@@ -229,6 +281,10 @@ extension ButtonAPIView {
             sectionId: "token"
         ) {
             Moin.Button(tr("button.label.link_button"), variant: .link) {}
+        } editor: {
+            ColorPresetRow(label: "linkHoverBg", color: $config.components.button.linkHoverBg)
+        } code: {
+            "config.components.button.linkHoverBg = Color(...)"
         }
     }
 
@@ -240,7 +296,16 @@ extension ButtonAPIView {
             description: tr("button.api.token.onlyIconSize"),
             sectionId: "token"
         ) {
-            Moin.Button(icon: "plus", color: .primary) {}
+            HStack(spacing: Moin.Constants.Spacing.md) {
+                Moin.Button(icon: "plus", color: .primary) {}
+                Text("iconSize: \(Int(config.components.button.onlyIconSize))px")
+                    .font(.system(size: 11, design: .monospaced))
+                    .foregroundStyle(.secondary)
+            }
+        } editor: {
+            TokenValueRow(label: "onlyIconSize", value: $config.components.button.onlyIconSize, range: 10...30)
+        } code: {
+            "config.components.button.onlyIconSize = \(Int(config.components.button.onlyIconSize))"
         }
     }
 
@@ -252,7 +317,16 @@ extension ButtonAPIView {
             description: tr("button.api.token.onlyIconSizeLG"),
             sectionId: "token"
         ) {
-            Moin.Button(icon: "plus", color: .primary, size: .large) {}
+            HStack(spacing: Moin.Constants.Spacing.md) {
+                Moin.Button(icon: "plus", color: .primary, size: .large) {}
+                Text("iconSize: \(Int(config.components.button.onlyIconSizeLG))px")
+                    .font(.system(size: 11, design: .monospaced))
+                    .foregroundStyle(.secondary)
+            }
+        } editor: {
+            TokenValueRow(label: "onlyIconSizeLG", value: $config.components.button.onlyIconSizeLG, range: 12...36)
+        } code: {
+            "config.components.button.onlyIconSizeLG = \(Int(config.components.button.onlyIconSizeLG))"
         }
     }
 
@@ -264,7 +338,16 @@ extension ButtonAPIView {
             description: tr("button.api.token.onlyIconSizeSM"),
             sectionId: "token"
         ) {
-            Moin.Button(icon: "plus", color: .primary, size: .small) {}
+            HStack(spacing: Moin.Constants.Spacing.md) {
+                Moin.Button(icon: "plus", color: .primary, size: .small) {}
+                Text("iconSize: \(Int(config.components.button.onlyIconSizeSM))px")
+                    .font(.system(size: 11, design: .monospaced))
+                    .foregroundStyle(.secondary)
+            }
+        } editor: {
+            TokenValueRow(label: "onlyIconSizeSM", value: $config.components.button.onlyIconSizeSM, range: 8...24)
+        } code: {
+            "config.components.button.onlyIconSizeSM = \(Int(config.components.button.onlyIconSizeSM))"
         }
     }
 
@@ -277,6 +360,10 @@ extension ButtonAPIView {
             sectionId: "token"
         ) {
             Moin.Button(tr("button.label.solid"), color: .primary) {}
+        } editor: {
+            ColorPresetRow(label: "solidTextColor", color: $config.components.button.solidTextColor)
+        } code: {
+            "config.components.button.solidTextColor = Color(...)"
         }
     }
 
@@ -289,6 +376,10 @@ extension ButtonAPIView {
             sectionId: "token"
         ) {
             Moin.Button(tr("button.label.text_button"), variant: .text) {}
+        } editor: {
+            ColorPresetRow(label: "textHoverBg", color: $config.components.button.textHoverBg)
+        } code: {
+            "config.components.button.textHoverBg = Color(...)"
         }
     }
 
@@ -301,6 +392,10 @@ extension ButtonAPIView {
             sectionId: "token"
         ) {
             Moin.Button(tr("button.label.text_button"), variant: .text) {}
+        } editor: {
+            ColorPresetRow(label: "textTextActiveColor", color: $config.components.button.textTextActiveColor)
+        } code: {
+            "config.components.button.textTextActiveColor = Color(...)"
         }
     }
 
@@ -313,6 +408,10 @@ extension ButtonAPIView {
             sectionId: "token"
         ) {
             Moin.Button(tr("button.label.text_button"), variant: .text) {}
+        } editor: {
+            ColorPresetRow(label: "textTextColor", color: $config.components.button.textTextColor)
+        } code: {
+            "config.components.button.textTextColor = Color(...)"
         }
     }
 
@@ -325,6 +424,10 @@ extension ButtonAPIView {
             sectionId: "token"
         ) {
             Moin.Button(tr("button.label.text_button"), variant: .text) {}
+        } editor: {
+            ColorPresetRow(label: "textTextHoverColor", color: $config.components.button.textTextHoverColor)
+        } code: {
+            "config.components.button.textTextHoverColor = Color(...)"
         }
     }
 
@@ -338,7 +441,16 @@ extension ButtonAPIView {
             description: tr("button.api.token.contentFontSizeLG"),
             sectionId: "token"
         ) {
-            Moin.Button(tr("button.label.large"), color: .primary, size: .large) {}
+            HStack(spacing: Moin.Constants.Spacing.md) {
+                Moin.Button(tr("button.label.large"), color: .primary, size: .large) {}
+                Text("fontSize: \(Int(config.components.button.contentFontSizeLG))px")
+                    .font(.system(size: 11, design: .monospaced))
+                    .foregroundStyle(.secondary)
+            }
+        } editor: {
+            TokenValueRow(label: "contentFontSizeLG", value: $config.components.button.contentFontSizeLG, range: 12...24)
+        } code: {
+            "config.components.button.contentFontSizeLG = \(Int(config.components.button.contentFontSizeLG))"
         }
     }
 
@@ -350,7 +462,16 @@ extension ButtonAPIView {
             description: tr("button.api.token.contentFontSizeSM"),
             sectionId: "token"
         ) {
-            Moin.Button(tr("button.label.small"), color: .primary, size: .small) {}
+            HStack(spacing: Moin.Constants.Spacing.md) {
+                Moin.Button(tr("button.label.small"), color: .primary, size: .small) {}
+                Text("fontSize: \(Int(config.components.button.contentFontSizeSM))px")
+                    .font(.system(size: 11, design: .monospaced))
+                    .foregroundStyle(.secondary)
+            }
+        } editor: {
+            TokenValueRow(label: "contentFontSizeSM", value: $config.components.button.contentFontSizeSM, range: 8...18)
+        } code: {
+            "config.components.button.contentFontSizeSM = \(Int(config.components.button.contentFontSizeSM))"
         }
     }
 
@@ -370,6 +491,8 @@ extension ButtonAPIView {
             }
         } editor: {
             TokenValueRow(label: "paddingBlock", value: $config.components.button.paddingBlock, range: 0...20)
+        } code: {
+            "config.components.button.paddingBlock = \(Int(config.components.button.paddingBlock))"
         }
     }
 
@@ -410,6 +533,8 @@ extension ButtonAPIView {
             }
         } editor: {
             TokenValueRow(label: "contentFontSize", value: $config.components.button.contentFontSize, range: 10...20)
+        } code: {
+            "config.components.button.contentFontSize = \(Int(config.components.button.contentFontSize))"
         }
     }
 
@@ -421,9 +546,16 @@ extension ButtonAPIView {
             description: tr("button.api.token.paddingInlineLG"),
             sectionId: "token"
         ) {
-            Moin.Button(tr("button.label.large_button"), color: .primary, size: .large) {}
+            HStack(spacing: Moin.Constants.Spacing.md) {
+                Moin.Button(tr("button.label.large_button"), color: .primary, size: .large) {}
+                Text("padding: \(Int(config.components.button.paddingInlineLG))px")
+                    .font(.system(size: 11, design: .monospaced))
+                    .foregroundStyle(.secondary)
+            }
         } editor: {
             TokenValueRow(label: "paddingInlineLG", value: $config.components.button.paddingInlineLG, range: 0...40)
+        } code: {
+            "config.components.button.paddingInlineLG = \(Int(config.components.button.paddingInlineLG))"
         }
     }
 
@@ -435,9 +567,16 @@ extension ButtonAPIView {
             description: tr("button.api.token.paddingInlineSM"),
             sectionId: "token"
         ) {
-            Moin.Button(tr("button.label.small"), color: .primary, size: .small) {}
+            HStack(spacing: Moin.Constants.Spacing.md) {
+                Moin.Button(tr("button.label.small"), color: .primary, size: .small) {}
+                Text("padding: \(Int(config.components.button.paddingInlineSM))px")
+                    .font(.system(size: 11, design: .monospaced))
+                    .foregroundStyle(.secondary)
+            }
         } editor: {
             TokenValueRow(label: "paddingInlineSM", value: $config.components.button.paddingInlineSM, range: 0...20)
+        } code: {
+            "config.components.button.paddingInlineSM = \(Int(config.components.button.paddingInlineSM))"
         }
     }
 
@@ -449,7 +588,16 @@ extension ButtonAPIView {
             description: tr("button.api.token.paddingBlockLG"),
             sectionId: "token"
         ) {
-            Moin.Button(tr("button.label.large"), color: .primary, size: .large) {}
+            HStack(spacing: Moin.Constants.Spacing.md) {
+                Moin.Button(tr("button.label.large"), color: .primary, size: .large) {}
+                Text("paddingBlock: \(Int(config.components.button.paddingBlockLG))px")
+                    .font(.system(size: 11, design: .monospaced))
+                    .foregroundStyle(.secondary)
+            }
+        } editor: {
+            TokenValueRow(label: "paddingBlockLG", value: $config.components.button.paddingBlockLG, range: 0...20)
+        } code: {
+            "config.components.button.paddingBlockLG = \(Int(config.components.button.paddingBlockLG))"
         }
     }
 
@@ -461,7 +609,16 @@ extension ButtonAPIView {
             description: tr("button.api.token.paddingBlockSM"),
             sectionId: "token"
         ) {
-            Moin.Button(tr("button.label.small"), color: .primary, size: .small) {}
+            HStack(spacing: Moin.Constants.Spacing.md) {
+                Moin.Button(tr("button.label.small"), color: .primary, size: .small) {}
+                Text("paddingBlock: \(Int(config.components.button.paddingBlockSM))px")
+                    .font(.system(size: 11, design: .monospaced))
+                    .foregroundStyle(.secondary)
+            }
+        } editor: {
+            TokenValueRow(label: "paddingBlockSM", value: $config.components.button.paddingBlockSM, range: 0...20)
+        } code: {
+            "config.components.button.paddingBlockSM = \(Int(config.components.button.paddingBlockSM))"
         }
     }
 
@@ -522,6 +679,8 @@ extension ButtonAPIView {
             }
         } editor: {
             TokenValueRow(label: "controlHeight", value: $config.seed.controlHeight, range: 24...48, onChange: { config.regenerateTokens() })
+        } code: {
+            "config.seed.controlHeight = \(Int(config.seed.controlHeight))"
         }
     }
 
@@ -534,6 +693,8 @@ extension ButtonAPIView {
             sectionId: "global"
         ) {
             Moin.Button(tr("button.label.large"), color: .primary, size: .large) {}
+        } code: {
+            "// \(tr("api.derived_from")) borderRadius + 2"
         }
     }
 
@@ -546,6 +707,8 @@ extension ButtonAPIView {
             sectionId: "global"
         ) {
             Moin.Button(tr("button.label.small"), color: .primary, size: .small) {}
+        } code: {
+            "// \(tr("api.derived_from")) borderRadius - 2"
         }
     }
 
@@ -558,6 +721,8 @@ extension ButtonAPIView {
             sectionId: "global"
         ) {
             Moin.Button(tr("button.label.click_me"), color: .primary) {}
+        } code: {
+            "// \(tr("api.derived_from")) colorPrimary"
         }
     }
 
@@ -570,6 +735,8 @@ extension ButtonAPIView {
             sectionId: "global"
         ) {
             Moin.Button(tr("button.label.hover_me"), color: .primary) {}
+        } code: {
+            "// \(tr("api.derived_from")) colorPrimary"
         }
     }
 
@@ -582,6 +749,8 @@ extension ButtonAPIView {
             sectionId: "global"
         ) {
             Moin.Button(tr("button.label.disabled"), isDisabled: true) {}
+        } code: {
+            "// \(tr("api.derived_from")) colorText"
         }
     }
 
@@ -594,6 +763,8 @@ extension ButtonAPIView {
             sectionId: "global"
         ) {
             Moin.Button(tr("button.label.large"), color: .primary, size: .large) {}
+        } code: {
+            "// \(tr("api.derived_from")) controlHeight + 8"
         }
     }
 
@@ -606,6 +777,8 @@ extension ButtonAPIView {
             sectionId: "global"
         ) {
             Moin.Button(tr("button.label.small"), color: .primary, size: .small) {}
+        } code: {
+            "// \(tr("api.derived_from")) controlHeight - 8"
         }
     }
 
@@ -618,6 +791,8 @@ extension ButtonAPIView {
             sectionId: "global"
         ) {
             Moin.Button(tr("button.label.button"), color: .primary) {}
+        } code: {
+            "config.seed.motionDuration = 0.2"
         }
     }
 }

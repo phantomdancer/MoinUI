@@ -183,6 +183,7 @@
     "default": "默认值",
     "description": "说明",
     "value": "值",
+    "derived_from": "派生自",
     "component_token": "组件 Token",
     "component_token_desc": "以下是 Button 组件的设计变量（Design Token），可通过 ConfigProvider 覆盖。",
     "global_token_title": "全局 Token",
