@@ -30,7 +30,6 @@ struct ButtonExamples: View {
         AnchorItem(id: "block", titleKey: "button.block"),
         AnchorItem(id: "href", titleKey: "button.link"),
         AnchorItem(id: "shadow", titleKey: "button.shadow"),
-        AnchorItem(id: "focus", titleKey: "button.focus"),
     ]
 
     var body: some View {
@@ -78,7 +77,6 @@ struct ButtonExamples: View {
             blockExample.id("block")
             hrefExample.id("href")
             shadowExample.id("shadow")
-            focusExample.id("focus")
         }
     }
 
@@ -518,30 +516,6 @@ struct ButtonExamples: View {
             // \(tr("button.shadow_hint"))
             Moin.Button("\(tr("button.label.primary"))", color: .primary) {}
             Moin.Button("\(tr("button.label.success"))", color: .success) {}
-            """
-        }
-    }
-
-    private var focusExample: some View {
-        ExampleSection(
-            title: tr("button.focus"),
-            description: tr("button.focus_desc")
-        ) {
-            VStack(alignment: .leading, spacing: Moin.Constants.Spacing.md) {
-                HStack(spacing: Moin.Constants.Spacing.md) {
-                    Moin.Button(tr("button.label.primary"), color: .primary) {}
-                    Moin.Button(tr("button.label.success"), color: .success) {}
-                    Moin.Button(tr("button.label.default")) {}
-                }
-                Text(tr("button.focus_hint"))
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
-            }
-        } code: {
-            """
-            // \(tr("button.focus_hint"))
-            // \(tr("button.focus_code"))
-            Moin.Button("\(tr("button.label.primary"))", color: .primary) {}
             """
         }
     }
