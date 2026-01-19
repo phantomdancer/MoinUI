@@ -9,7 +9,6 @@ extension Notification.Name {
 }
 
 @main
-@available(macOS 14.0, *)
 struct DemoApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     @StateObject private var configProvider = Moin.ConfigProvider.shared
@@ -142,7 +141,6 @@ class NavigationManager: ObservableObject {
     }
 }
 
-@available(macOS 14.0, *)
 struct ContentView: View {
     @StateObject private var navManager = NavigationManager.shared
     @EnvironmentObject var configProvider: Moin.ConfigProvider
@@ -385,7 +383,6 @@ enum NavItem: String, Identifiable {
 
 // MARK: - Sidebar
 
-@available(macOS 14.0, *)
 struct Sidebar: View {
     @Binding var selection: NavItem?
     @Localized var tr
@@ -453,7 +450,6 @@ struct Sidebar: View {
 
 // MARK: - Detail View
 
-@available(macOS 14.0, *)
 struct DetailView: View {
     let item: NavItem?
     @Binding var buttonTab: ButtonExamplesTab

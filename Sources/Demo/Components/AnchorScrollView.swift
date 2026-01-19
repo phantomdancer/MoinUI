@@ -1,29 +1,26 @@
 import SwiftUI
 
-/// 一个封装了精确锚点滚动逻辑的 ScrollView。
+/// 一个兼容 macOS 13 的精确锚点滚动组件。
 ///
-/// 它结合了 macOS 14 的 `scrollPosition` 用于监听滚动位置，
-/// 以及 `ScrollViewReader` 用于执行精确跳转（包含二次校准以应对 LazyVStack 的高度偏差）。
-@available(macOS 14.0, *)
+/// 特性：
+/// 1. 使用 `ScrollViewReader` 实现精确跳转。
+/// 2. 内置“双重校准”机制，解决 `LazyVStack` 高度估算不准导致的定位偏差。
+/// 3. 移除了 macOS 14 的 `scrollPosition` API，因此去掉了版本限制。
+///
+/// 注意：此版本仅支持“点击跳转”。滚动时不会自动更新 `scrollPosition`（单向绑定）。
 struct AnchorScrollView<ID: Hashable, Content: View>: View {
-    /// 当前滚动位置（只读/双向），用于高亮导航栏
-    @Binding var scrollPosition: ID?
-    
     /// 目标滚动 ID，当此值改变时触发跳转
     @Binding var targetScrollId: ID?
     
-    /// 滚动视图的内容，通常是一个 LazyVStack
+    /// 滚动视图的内容
     @ViewBuilder var content: () -> Content
     
     var body: some View {
         ScrollViewReader { proxy in
             ScrollView {
                 content()
-                    .scrollTargetLayout() // 关键：标记内容布局为滚动目标
             }
-            .scrollTargetBehavior(.viewAligned)
-            .scrollPosition(id: $scrollPosition, anchor: .top)
-            .onChange(of: targetScrollId) { _, newValue in
+            .onChange(of: targetScrollId) { newValue in
                 if let newValue {
                     // 第一次跳转
                     withAnimation {
@@ -31,7 +28,7 @@ struct AnchorScrollView<ID: Hashable, Content: View>: View {
                     }
                     
                     // 二次校准：延迟 0.1s 再次跳转
-                    // 这解决了 LazyVStack 因内容异步加载或估算高度不准导致的定位偏差
+                    // 彻底修复 LazyVStack 内容异步加载导致的偏移
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                         withAnimation {
                             proxy.scrollTo(newValue, anchor: .top)

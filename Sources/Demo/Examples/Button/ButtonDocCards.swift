@@ -3,7 +3,6 @@ import MoinUI
 
 // MARK: - API 属性卡片扩展
 
-@available(macOS 14.0, *)
 extension ButtonAPIView {
 
     // MARK: - Action 属性卡片

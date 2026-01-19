@@ -4,7 +4,6 @@ import MoinUI
 // MARK: - ButtonAPIView
 
 /// Button 组件 API 文档视图 - 每属性独立卡片
-@available(macOS 14.0, *)
 struct ButtonAPIView: View {
     @Localized var tr
     @ObservedObject var config = Moin.ConfigProvider.shared
@@ -167,7 +166,7 @@ struct ButtonAPIView: View {
             .padding(.vertical, Moin.Constants.Spacing.sm)
             
             // 可滚动内容
-            AnchorScrollView(scrollPosition: $scrollPosition, targetScrollId: $targetScrollId) {
+            AnchorScrollView(targetScrollId: $targetScrollId) {
                 LazyVStack(alignment: .leading, spacing: Moin.Constants.Spacing.xl) {
                     // API 分组
                     Text("API")
@@ -257,11 +256,6 @@ struct ButtonAPIView: View {
                     motionDurationGlobalTokenCard
                 }
                 .padding(Moin.Constants.Spacing.lg)
-            }
-            .onChange(of: scrollPosition) { _, newValue in
-                if let newValue {
-                    selectedItemId = newValue
-                }
             }
         }
     }

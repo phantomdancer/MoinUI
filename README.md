@@ -39,7 +39,6 @@ pnpm dev
 ## Requirements
 
 - MoinUI: macOS 13.0+
-- Demo: macOS 14.0+
 - Swift 5.9+
 
 ## License

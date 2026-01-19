@@ -8,7 +8,6 @@ enum ButtonExamplesTab: String, CaseIterable {
 }
 
 /// Button component examples
-@available(macOS 14.0, *)
 struct ButtonExamples: View {
     @Localized var tr
     @Binding var selectedTab: ButtonExamplesTab

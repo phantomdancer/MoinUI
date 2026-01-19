@@ -3,7 +3,6 @@ import MoinUI
 
 // MARK: - Button Token 卡片扩展
 
-@available(macOS 14.0, *)
 extension ButtonAPIView {
 
     // MARK: - 边框相关 Token
