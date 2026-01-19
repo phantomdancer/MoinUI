@@ -621,7 +621,7 @@ public extension Moin {
                 return .clear
 
             case .link:
-                return buttonToken.linkHoverBg
+                return (isHovered || isPressed) ? buttonToken.linkHoverBg : .clear
             }
         }
 
