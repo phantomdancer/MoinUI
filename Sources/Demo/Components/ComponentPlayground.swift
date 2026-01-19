@@ -1,6 +1,23 @@
 import SwiftUI
 import MoinUI
 
+extension Font.Weight {
+    var codeDescription: String {
+        switch self {
+        case .ultraLight: return ".ultraLight"
+        case .thin: return ".thin"
+        case .light: return ".light"
+        case .regular: return ".regular"
+        case .medium: return ".medium"
+        case .semibold: return ".semibold"
+        case .bold: return ".bold"
+        case .heavy: return ".heavy"
+        case .black: return ".black"
+        default: return ".regular"
+        }
+    }
+}
+
 // MARK: - Playground 通用控制组件
 
 /// 属性控制项：带参数名显示
@@ -286,6 +303,34 @@ struct TokenDisplayRow: View {
             Text(value)
                 .font(.system(size: 11, design: .monospaced))
                 .foregroundStyle(.primary)
+        }
+    }
+}
+
+/// Token 字体权重选择行
+struct FontWeightPickerRow: View {
+    let label: String
+    @Binding var selection: Font.Weight
+
+    var body: some View {
+        HStack {
+            Text(label)
+                .font(.system(size: 11, design: .monospaced))
+                .foregroundStyle(.secondary)
+            Spacer()
+            Picker("", selection: $selection) {
+                Text("UltraLight").tag(Font.Weight.ultraLight)
+                Text("Thin").tag(Font.Weight.thin)
+                Text("Light").tag(Font.Weight.light)
+                Text("Regular").tag(Font.Weight.regular)
+                Text("Medium").tag(Font.Weight.medium)
+                Text("Semibold").tag(Font.Weight.semibold)
+                Text("Bold").tag(Font.Weight.bold)
+                Text("Heavy").tag(Font.Weight.heavy)
+                Text("Black").tag(Font.Weight.black)
+            }
+            .labelsHidden()
+            .frame(width: 120)
         }
     }
 }

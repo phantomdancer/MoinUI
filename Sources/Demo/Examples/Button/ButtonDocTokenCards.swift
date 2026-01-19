@@ -262,8 +262,10 @@ extension ButtonTokenView {
             sectionId: "token"
         ) {
             Moin.Button(tr("button.label.button"), color: .primary) {}
+        } editor: {
+            FontWeightPickerRow(label: "fontWeight", selection: $config.components.button.fontWeight)
         } code: {
-            "config.components.button.fontWeight = .bold"
+            "config.components.button.fontWeight = \(config.components.button.fontWeight.codeDescription)"
         }
         .scrollAnchor("token.fontWeight")
     }
