@@ -4,7 +4,6 @@ import MoinUI
 /// Typography 组件文档页面 Tab
 enum TypographyExamplesTab: String, CaseIterable {
     case examples
-    case playground
     case api
     case token
 }
@@ -15,7 +14,6 @@ struct TypographyExamples: View {
     @Binding var selectedTab: TypographyExamplesTab
 
     // 懒加载状态
-    @State private var playgroundReady = false
     @State private var apiReady = false
     @State private var tokenReady = false
 
@@ -36,12 +34,6 @@ struct TypographyExamples: View {
             switch selectedTab {
             case .examples:
                 examplesContent
-            case .playground:
-                if playgroundReady {
-                    playgroundContent
-                } else {
-                    loadingView
-                }
             case .api:
                 if apiReady {
                     apiContent
@@ -69,10 +61,6 @@ struct TypographyExamples: View {
         switch tab {
         case .examples:
             break
-        case .playground:
-            if !playgroundReady {
-                DispatchQueue.main.async { playgroundReady = true }
-            }
         case .api:
             if !apiReady {
                 DispatchQueue.main.async { apiReady = true }
@@ -99,23 +87,16 @@ struct TypographyExamples: View {
         }
     }
 
-    // MARK: - Playground Content
-
-    private var playgroundContent: some View {
-        TypographyPlayground()
-            .padding(Moin.Constants.Spacing.xl)
-    }
-
     // MARK: - API Content
 
     private var apiContent: some View {
-        TypographyAPIContent()
+        TypographyAPIView()
     }
 
     // MARK: - Token Content
 
     private var tokenContent: some View {
-        TypographyTokenContent()
+        TypographyTokenView()
     }
 
     // MARK: - Examples

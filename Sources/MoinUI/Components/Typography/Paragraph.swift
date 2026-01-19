@@ -106,7 +106,8 @@ public extension Moin.Typography {
                         .foregroundColor(token.colorLink)
                     : SwiftUI.Text(""))
             )
-            .lineSpacing((token.lineHeight - token.fontSize) / 2)
+            .lineSpacing(max(0, token.lineHeight - token.fontSize))
+            .padding(.vertical, max(0, (token.lineHeight - token.fontSize) / 2))
             .frame(maxWidth: .infinity, alignment: .leading)
             .contentShape(Rectangle())
             .onTapGesture {
@@ -174,7 +175,8 @@ public extension Moin.Typography {
             styledText
                 .font(textFont)
                 .foregroundStyle(textColor)
-                .lineSpacing((token.lineHeight - token.fontSize) / 2)
+                .lineSpacing(max(0, token.lineHeight - token.fontSize))
+                .padding(.vertical, max(0, (token.lineHeight - token.fontSize) / 2))
                 .frame(maxWidth: .infinity, alignment: .leading)
         }
 
@@ -182,7 +184,8 @@ public extension Moin.Typography {
             styledText
                 .font(textFont)
                 .foregroundStyle(textColor)
-                .lineSpacing((token.lineHeight - token.fontSize) / 2)
+                .lineSpacing(max(0, token.lineHeight - token.fontSize))
+                .padding(.vertical, max(0, (token.lineHeight - token.fontSize) / 2))
         }
 
         private var styledText: some View {

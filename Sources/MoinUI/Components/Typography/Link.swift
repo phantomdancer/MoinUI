@@ -42,6 +42,8 @@ public extension Moin.Typography {
                 .font(.system(size: token.fontSize))
                 .foregroundStyle(linkColor)
                 .underline(isHovered && !disabled)
+                .lineSpacing(max(0, token.lineHeight - token.fontSize))
+                .padding(.vertical, max(0, (token.lineHeight - token.fontSize) / 2))
                 .onHover { hovering in
                     isHovered = hovering
                     if !disabled {

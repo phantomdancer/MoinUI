@@ -180,7 +180,6 @@ struct ContentView: View {
                         if navManager.selectedItem == .typography {
                             Picker("", selection: $typographyTab) {
                                 Text(tr("tab.examples")).tag(TypographyExamplesTab.examples)
-                                Text(tr("tab.playground")).tag(TypographyExamplesTab.playground)
                                 Text(tr("tab.api")).tag(TypographyExamplesTab.api)
                                 Text(tr("tab.token")).tag(TypographyExamplesTab.token)
                             }

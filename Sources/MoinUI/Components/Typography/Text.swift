@@ -44,6 +44,8 @@ public extension Moin.Typography {
             styledText
                 .font(textFont)
                 .foregroundStyle(textColor)
+                .lineSpacing(max(0, token.lineHeight - token.fontSize))
+                .padding(.vertical, max(0, (token.lineHeight - token.fontSize) / 2))
         }
 
         @ViewBuilder

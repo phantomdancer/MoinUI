@@ -38,7 +38,8 @@ public extension Moin.Typography {
             styledText
                 .font(.system(size: fontSize, weight: .semibold))
                 .foregroundStyle(textColor)
-                .lineSpacing((lineHeight - fontSize) / 2)
+                .lineSpacing(max(0, lineHeight - fontSize))
+                .padding(.vertical, max(0, (lineHeight - fontSize) / 2))
         }
 
         private var styledText: some View {
