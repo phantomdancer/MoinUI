@@ -23,7 +23,7 @@ struct DemoApp: App {
             ContentView()
                 .moinThemeRoot()
                 .focusable(false)
-                .modifier(DisableFocusEffectModifier())
+
         }
         .defaultSize(width: 800, height: 600)
         .commands {
@@ -506,24 +506,4 @@ struct DetailView: View {
 /// Global logger
 public let logger = Logger(subsystem: "com.moinui", category: "MoinUI")
 
-/// 隐藏侧边栏切换按钮
-struct HideSidebarToggleModifier: ViewModifier {
-    func body(content: Content) -> some View {
-        if #available(macOS 14.0, *) {
-            content.toolbar(removing: .sidebarToggle)
-        } else {
-            content
-        }
-    }
-}
 
-/// 禁用聚焦效果（兼容 macOS 13+）
-struct DisableFocusEffectModifier: ViewModifier {
-    func body(content: Content) -> some View {
-        if #available(macOS 14.0, *) {
-            content.focusEffectDisabled()
-        } else {
-            content
-        }
-    }
-}
