@@ -27,7 +27,7 @@ MoinUI (墨影UI) - macOS SwiftUI 组件库
 ```
 
 ### 构建要求
-- `swift build` 零警告
+- `swift build` 零警告(禁止使用xcodebuild)
 - `swift test` 全部通过
 - Demo 示例 + 中英文翻译
 
