@@ -1,4 +1,13 @@
 {
+  "api.button.section.common": "Common",
+  "api.button.section.style": "Style",
+  "api.button.section.icon": "Icon",
+  "api.button.section.link": "Link",
+  "api.button.section.font": "Font",
+  "api.button.section.dimensions": "Dimensions",
+  "api.button.section.color_primary": "Primary Color",
+  "api.button.section.color_default": "Default Color",
+  "api.button.section.color_other": "Other Color",
   "button": {
     "title": "Button",
     "description": "A button triggers an action or event when clicked.",

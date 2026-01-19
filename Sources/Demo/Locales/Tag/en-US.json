@@ -1,4 +1,10 @@
 {
+  "api.tag.section.style": "Style",
+  "api.tag.section.feature": "Feature",
+  "api.tag.section.font": "Font",
+  "api.tag.section.color": "Color",
+  "api.tag.section.dimensions": "Dimensions",
+  "api.tag.section.icon_style": "Icon",
   "tag.basic": "Basic",
   "tag.basic_desc": "Simple tag display with text content.",
   "tag.colorful": "Colorful",

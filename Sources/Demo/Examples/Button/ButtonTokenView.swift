@@ -11,7 +11,7 @@ struct ButtonTokenView: View {
     @State var selectedItemId: String? = "token"
     @State var scrollPosition: String?
     @State private var targetScrollId: String?
-    @State var searchText: String = ""
+
     
     // 重置所有 Token 到默认值
     private func resetAll() {
@@ -34,7 +34,7 @@ struct ButtonTokenView: View {
             Divider()
             
             // 右栏：导航树
-            navigationSidebar
+            docSidebar
                 .frame(width: 280)
         }
         .background(Color(nsColor: .controlBackgroundColor))
@@ -42,49 +42,46 @@ struct ButtonTokenView: View {
     
     // MARK: - 右栏导航
 
-    private var navigationSidebar: some View {
-        VStack(spacing: 0) {
-            // 搜索框
-            HStack(spacing: Moin.Constants.Spacing.xs) {
-                Image(systemName: "magnifyingglass")
-                    .foregroundStyle(.secondary)
-                    .font(.system(size: 12))
-                TextField(tr("search.placeholder"), text: $searchText)
-                    .textFieldStyle(.plain)
-                    .font(.system(size: 12))
-                if !searchText.isEmpty {
-                    Button {
-                        searchText = ""
-                    } label: {
-                        Image(systemName: "xmark.circle.fill")
-                            .foregroundStyle(.secondary)
-                            .font(.system(size: 12))
-                    }
-                    .buttonStyle(.plain)
-                }
-            }
-            .padding(Moin.Constants.Spacing.sm)
-            .background(Color(nsColor: .textBackgroundColor))
-            .cornerRadius(Moin.Constants.Radius.sm)
-            .padding(Moin.Constants.Spacing.md)
+    // MARK: - Doc Sidebar
 
-
-
-            Divider()
-
-            // 导航列表
-            ScrollView {
-                VStack(alignment: .leading, spacing: Moin.Constants.Spacing.sm) {
-                    navSection(title: tr("doc.section.component_token"), items: ["borderColorDisabled", "contentFontSize", "contentFontSizeLG", "contentFontSizeSM", "dangerColor", "defaultActiveBg", "defaultActiveBorderColor", "defaultActiveColor", "defaultBg", "defaultBgDisabled", "defaultBorderColor", "defaultColor", "defaultGhostBorderColor", "defaultGhostColor", "defaultHoverBg", "defaultHoverBorderColor", "defaultHoverColor", "fontWeight", "ghostBg", "iconGap", "linkHoverBg", "onlyIconSize", "onlyIconSizeLG", "onlyIconSizeSM", "paddingBlock", "paddingBlockLG", "paddingBlockSM", "paddingInline", "paddingInlineLG", "paddingInlineSM", "primaryColor", "solidTextColor", "textHoverBg", "textTextActiveColor", "textTextColor", "textTextHoverColor"], sectionId: "token")
-                    navSection(title: tr("doc.section.global_token"), items: ["borderRadius", "borderRadiusLG", "borderRadiusSM", "colorPrimary", "colorPrimaryActive", "colorPrimaryHover", "colorTextDisabled", "controlHeight", "controlHeightLG", "controlHeightSM", "motionDurationMid", "motionDurationSlow", "motionEase"], sectionId: "global")
-                }
-                .padding(Moin.Constants.Spacing.md)
-            }
-            
-            Divider()
-            
-            // 底部重置按钮
-            HStack(spacing: Moin.Constants.Spacing.sm) {
+    private var docSidebar: some View {
+        DocSidebar(
+            sections: [
+                DocSidebarSection(
+                    title: tr("api.button.section.font"),
+                    items: ["contentFontSize", "contentFontSizeSM", "contentFontSizeLG", "fontWeight"],
+                    sectionId: "token"
+                ),
+                DocSidebarSection(
+                    title: tr("api.button.section.dimensions"),
+                    items: ["paddingBlock", "paddingBlockSM", "paddingBlockLG", "paddingInline", "paddingInlineSM", "paddingInlineLG", "iconGap", "onlyIconSize", "onlyIconSizeSM", "onlyIconSizeLG"],
+                    sectionId: "token"
+                ),
+                DocSidebarSection(
+                    title: tr("api.button.section.color_primary"),
+                    items: ["primaryColor", "solidTextColor", "dangerColor"],
+                    sectionId: "token"
+                ),
+                DocSidebarSection(
+                    title: tr("api.button.section.color_default"),
+                    items: ["defaultColor", "defaultBg", "defaultBorderColor", "defaultHoverColor", "defaultHoverBg", "defaultHoverBorderColor", "defaultActiveColor", "defaultActiveBg", "defaultActiveBorderColor", "defaultBgDisabled", "borderColorDisabled"],
+                    sectionId: "token"
+                ),
+                DocSidebarSection(
+                    title: tr("api.button.section.color_other"),
+                    items: ["defaultGhostColor", "defaultGhostBorderColor", "ghostBg", "textTextColor", "textHoverBg", "textTextHoverColor", "textTextActiveColor", "linkHoverBg"],
+                    sectionId: "token"
+                ),
+                DocSidebarSection(
+                    title: tr("doc.section.global_token"),
+                    items: ["borderRadius", "borderRadiusLG", "borderRadiusSM", "colorPrimary", "colorPrimaryActive", "colorPrimaryHover", "colorTextDisabled", "controlHeight", "controlHeightLG", "controlHeightSM", "motionDurationMid", "motionDurationSlow", "motionEase"],
+                    sectionId: "global"
+                )
+            ],
+            selectedItemId: $selectedItemId,
+            targetScrollId: $targetScrollId
+        ) {
+             HStack(spacing: Moin.Constants.Spacing.sm) {
                 Moin.Button(tr("playground.token.reset"), color: .primary, variant: .solid) {
                     resetAll()
                 }
@@ -98,51 +95,6 @@ struct ButtonTokenView: View {
             }
             .padding(Moin.Constants.Spacing.md)
         }
-    }
-
-    private func navSection(title: String, items: [String], sectionId: String) -> some View {
-        let sortedItems = items.sorted()  // 内部自动排序
-        let filteredItems = searchText.isEmpty ? sortedItems : sortedItems.filter { $0.localizedCaseInsensitiveContains(searchText) }
-
-        return Group {
-            if !filteredItems.isEmpty {
-                VStack(alignment: .leading, spacing: 0) {
-                    Text(title)
-                        .font(.system(size: 11, weight: .semibold))
-                        .foregroundStyle(.secondary)
-                        .padding(.vertical, Moin.Constants.Spacing.xs)
-
-                    ForEach(filteredItems, id: \.self) { item in
-                        navItem(name: item, sectionId: sectionId)
-                    }
-                }
-                .padding(.bottom, Moin.Constants.Spacing.md)
-            }
-        }
-    }
-    
-    private func navItem(name: String, sectionId: String) -> some View {
-        let itemId = "\(sectionId).\(name)"
-        return Button {
-            selectedItemId = itemId
-            targetScrollId = itemId
-        } label: {
-            HStack(spacing: Moin.Constants.Spacing.xs) {
-                Circle()
-                    .fill(selectedItemId == itemId ? config.token.colorPrimary : Color.secondary.opacity(0.3))
-                    .frame(width: 6, height: 6)
-                Text(name)
-                    .font(.system(size: 12, design: .monospaced))
-                    .foregroundStyle(selectedItemId == itemId ? config.token.colorPrimary : .primary)
-                Spacer()
-            }
-            .padding(.vertical, 4)
-            .padding(.horizontal, Moin.Constants.Spacing.sm)
-            .contentShape(Rectangle())
-        }
-        .buttonStyle(.plain)
-        .background(selectedItemId == itemId ? config.token.colorPrimary.opacity(0.1) : .clear)
-        .cornerRadius(Moin.Constants.Radius.sm)
     }
 
     // MARK: - 主内容区

@@ -11,7 +11,7 @@ struct TagTokenView: View {
     @State var selectedItemId: String? = "token"
     @State var scrollPosition: String?
     @State private var targetScrollId: String?
-    @State var searchText: String = ""
+
     
     // 重置所有 Token 到默认值
     private func resetAll() {
@@ -33,7 +33,7 @@ struct TagTokenView: View {
             Divider()
             
             // 右栏：导航树
-            navigationSidebar
+            docSidebar
                 .frame(width: 280)
         }
         .background(Color(nsColor: .controlBackgroundColor))
@@ -41,54 +41,40 @@ struct TagTokenView: View {
     
     // MARK: - 右栏导航
 
-    private var navigationSidebar: some View {
-        VStack(spacing: 0) {
-            // 搜索框
-            HStack(spacing: Moin.Constants.Spacing.xs) {
-                Image(systemName: "magnifyingglass")
-                    .foregroundStyle(.secondary)
-                    .font(.system(size: 12))
-                TextField(tr("search.placeholder"), text: $searchText)
-                    .textFieldStyle(.plain)
-                    .font(.system(size: 12))
-                if !searchText.isEmpty {
-                    Button {
-                        searchText = ""
-                    } label: {
-                        Image(systemName: "xmark.circle.fill")
-                            .foregroundStyle(.secondary)
-                            .font(.system(size: 12))
-                    }
-                    .buttonStyle(.plain)
-                }
-            }
-            .padding(Moin.Constants.Spacing.sm)
-            .background(Color(nsColor: .textBackgroundColor))
-            .cornerRadius(Moin.Constants.Radius.sm)
-            .padding(Moin.Constants.Spacing.md)
+    // MARK: - Doc Sidebar
 
-            Divider()
-
-            // 导航列表
-            ScrollView {
-                VStack(alignment: .leading, spacing: Moin.Constants.Spacing.sm) {
-                    navSection(title: tr("doc.section.component_token"), items: [
-                        "fontSizeLG", "fontSize", "fontSizeSM",
-                        "defaultBg", "defaultColor", "solidTextColor", "lineWidth",
-                        "paddingHLG", "paddingH", "paddingHSM",
-                        "paddingVLG", "paddingV", "paddingVSM",
-                        "iconSizeLG", "iconSize", "iconSizeSM",
-                        "iconGapLG", "iconGap", "iconGapSM"
-                    ], sectionId: "token")
-                    
-                    navSection(title: tr("doc.section.global_token"), items: ["fontSizeSM"], sectionId: "global")
-                }
-                .padding(Moin.Constants.Spacing.md)
-            }
-            
-            Divider()
-            
-            // 底部重置按钮
+    private var docSidebar: some View {
+        DocSidebar(
+            sections: [
+                DocSidebarSection(
+                    title: tr("api.tag.section.font"),
+                    items: ["fontSize", "fontSizeSM", "fontSizeLG"],
+                    sectionId: "token"
+                ),
+                DocSidebarSection(
+                    title: tr("api.tag.section.color"),
+                    items: ["defaultBg", "defaultColor", "solidTextColor"],
+                    sectionId: "token"
+                ),
+                DocSidebarSection(
+                    title: tr("api.tag.section.dimensions"),
+                    items: ["lineWidth", "paddingH", "paddingHSM", "paddingHLG", "paddingV", "paddingVSM", "paddingVLG"],
+                    sectionId: "token"
+                ),
+                DocSidebarSection(
+                    title: tr("api.tag.section.icon_style"),
+                    items: ["iconSize", "iconSizeSM", "iconSizeLG", "iconGap", "iconGapSM", "iconGapLG"],
+                    sectionId: "token"
+                ),
+                DocSidebarSection(
+                    title: tr("doc.section.global_token"),
+                    items: ["fontSizeSM"],
+                    sectionId: "global"
+                )
+            ],
+            selectedItemId: $selectedItemId,
+            targetScrollId: $targetScrollId
+        ) {
             HStack(spacing: Moin.Constants.Spacing.sm) {
                 Moin.Button(tr("playground.token.reset"), color: .primary, variant: .solid) {
                     resetAll()
@@ -103,51 +89,6 @@ struct TagTokenView: View {
             }
             .padding(Moin.Constants.Spacing.md)
         }
-    }
-
-    private func navSection(title: String, items: [String], sectionId: String) -> some View {
-        let sortedItems = items.sorted()  // 内部自动排序
-        let filteredItems = searchText.isEmpty ? sortedItems : sortedItems.filter { $0.localizedCaseInsensitiveContains(searchText) }
-
-        return Group {
-            if !filteredItems.isEmpty {
-                VStack(alignment: .leading, spacing: 0) {
-                    Text(title)
-                        .font(.system(size: 11, weight: .semibold))
-                        .foregroundStyle(.secondary)
-                        .padding(.vertical, Moin.Constants.Spacing.xs)
-
-                    ForEach(filteredItems, id: \.self) { item in
-                        navItem(name: item, sectionId: sectionId)
-                    }
-                }
-                .padding(.bottom, Moin.Constants.Spacing.md)
-            }
-        }
-    }
-    
-    private func navItem(name: String, sectionId: String) -> some View {
-        let itemId = "\(sectionId).\(name)"
-        return Button {
-            selectedItemId = itemId
-            targetScrollId = itemId
-        } label: {
-            HStack(spacing: Moin.Constants.Spacing.xs) {
-                Circle()
-                    .fill(selectedItemId == itemId ? config.token.colorPrimary : Color.secondary.opacity(0.3))
-                    .frame(width: 6, height: 6)
-                Text(name)
-                    .font(.system(size: 12, design: .monospaced))
-                    .foregroundStyle(selectedItemId == itemId ? config.token.colorPrimary : .primary)
-                Spacer()
-            }
-            .padding(.vertical, 4)
-            .padding(.horizontal, Moin.Constants.Spacing.sm)
-            .contentShape(Rectangle())
-        }
-        .buttonStyle(.plain)
-        .background(selectedItemId == itemId ? config.token.colorPrimary.opacity(0.1) : .clear)
-        .cornerRadius(Moin.Constants.Radius.sm)
     }
     
     // MARK: - 主内容区

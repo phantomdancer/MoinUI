@@ -11,7 +11,7 @@ struct TagAPIView: View {
     @State var selectedItemId: String? = "api"
     @State var scrollPosition: String?
     @State private var targetScrollId: String?
-    @State var searchText: String = ""
+
     
 
     
@@ -23,7 +23,7 @@ struct TagAPIView: View {
             Divider()
             
             // 右栏：导航树
-            navigationSidebar
+            docSidebar
                 .frame(width: 280)
         }
         .background(Color(nsColor: .controlBackgroundColor))
@@ -31,89 +31,26 @@ struct TagAPIView: View {
     
     // MARK: - 右栏导航
 
-    private var navigationSidebar: some View {
-        VStack(spacing: 0) {
-            // 搜索框
-            HStack(spacing: Moin.Constants.Spacing.xs) {
-                Image(systemName: "magnifyingglass")
-                    .foregroundStyle(.secondary)
-                    .font(.system(size: 12))
-                TextField(tr("search.placeholder"), text: $searchText)
-                    .textFieldStyle(.plain)
-                    .font(.system(size: 12))
-                if !searchText.isEmpty {
-                    Button {
-                        searchText = ""
-                    } label: {
-                        Image(systemName: "xmark.circle.fill")
-                            .foregroundStyle(.secondary)
-                            .font(.system(size: 12))
-                    }
-                    .buttonStyle(.plain)
-                }
-            }
-            .padding(Moin.Constants.Spacing.sm)
-            .background(Color(nsColor: .textBackgroundColor))
-            .cornerRadius(Moin.Constants.Radius.sm)
-            .padding(Moin.Constants.Spacing.md)
+    // MARK: - Doc Sidebar
 
-            Divider()
-
-            // 导航列表
-            ScrollView {
-                VStack(alignment: .leading, spacing: Moin.Constants.Spacing.sm) {
-                    navSection(title: "API", items: ["color", "variant", "size", "round", "icon", "closable", "checkable"], sectionId: "api")
-                }
-                .padding(Moin.Constants.Spacing.md)
-            }
-            
-
-        }
-    }
-
-    private func navSection(title: String, items: [String], sectionId: String) -> some View {
-        let sortedItems = items.sorted()  // 内部自动排序
-        let filteredItems = searchText.isEmpty ? sortedItems : sortedItems.filter { $0.localizedCaseInsensitiveContains(searchText) }
-
-        return Group {
-            if !filteredItems.isEmpty {
-                VStack(alignment: .leading, spacing: 0) {
-                    Text(title)
-                        .font(.system(size: 11, weight: .semibold))
-                        .foregroundStyle(.secondary)
-                        .padding(.vertical, Moin.Constants.Spacing.xs)
-
-                    ForEach(filteredItems, id: \.self) { item in
-                        navItem(name: item, sectionId: sectionId)
-                    }
-                }
-                .padding(.bottom, Moin.Constants.Spacing.md)
-            }
-        }
-    }
-    
-    private func navItem(name: String, sectionId: String) -> some View {
-        let itemId = "\(sectionId).\(name)"
-        return Button {
-            selectedItemId = itemId
-            targetScrollId = itemId
-        } label: {
-            HStack(spacing: Moin.Constants.Spacing.xs) {
-                Circle()
-                    .fill(selectedItemId == itemId ? config.token.colorPrimary : Color.secondary.opacity(0.3))
-                    .frame(width: 6, height: 6)
-                Text(name)
-                    .font(.system(size: 12, design: .monospaced))
-                    .foregroundStyle(selectedItemId == itemId ? config.token.colorPrimary : .primary)
-                Spacer()
-            }
-            .padding(.vertical, 4)
-            .padding(.horizontal, Moin.Constants.Spacing.sm)
-            .contentShape(Rectangle())
-        }
-        .buttonStyle(.plain)
-        .background(selectedItemId == itemId ? config.token.colorPrimary.opacity(0.1) : .clear)
-        .cornerRadius(Moin.Constants.Radius.sm)
+    private var docSidebar: some View {
+        DocSidebar(
+            sections: [
+                DocSidebarSection(
+                    title: tr("api.tag.section.style"),
+                    items: ["variant", "size", "color", "round"],
+                    sectionId: "api"
+                ),
+                DocSidebarSection(
+                    title: tr("api.tag.section.feature"),
+                    items: ["icon", "closable", "checkable"],
+                    sectionId: "api"
+                )
+            ],
+            selectedItemId: $selectedItemId,
+            targetScrollId: $targetScrollId
+        )
+        .frame(width: 280)
     }
 
     // MARK: - 主内容区

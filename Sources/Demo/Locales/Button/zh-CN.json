@@ -1,4 +1,13 @@
 {
+  "api.button.section.common": "通用",
+  "api.button.section.style": "样式",
+  "api.button.section.icon": "图标",
+  "api.button.section.link": "链接",
+  "api.button.section.font": "字体",
+  "api.button.section.dimensions": "尺寸",
+  "api.button.section.color_primary": "主色",
+  "api.button.section.color_default": "默认色",
+  "api.button.section.color_other": "其他色",
   "button": {
     "title": "Button 按钮",
     "description": "按钮用于触发一个操作或事件。",

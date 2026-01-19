@@ -118,6 +118,12 @@ Button ✅, Typography ✅, Divider ✅, Space ✅, Tag ✅, Badge ✅, Avatar �
   - [ ] AvatarGroup max.popover (溢出头像 Popover 展示)
   - 已排除: srcSet (Web特有)、draggable (SwiftUI不适用)、crossOrigin (不需要)
 
+- **Button**:
+  - [x] Doc: Grouped API & Token navigation (DocSidebar)
+
+- **Tag**:
+  - [x] Doc: Grouped API & Token navigation (DocSidebar)
+
 - **Badge**:
   - [ ] 添加 Title 属性 (悬停显示完整数值)
   - [ ] 添加缩放进出动画
