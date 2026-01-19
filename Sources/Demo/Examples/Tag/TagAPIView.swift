@@ -72,7 +72,8 @@ struct TagAPIView: View {
     }
 
     private func navSection(title: String, items: [String], sectionId: String) -> some View {
-        let filteredItems = searchText.isEmpty ? items : items.filter { $0.localizedCaseInsensitiveContains(searchText) }
+        let sortedItems = items.sorted()  // 内部自动排序
+        let filteredItems = searchText.isEmpty ? sortedItems : sortedItems.filter { $0.localizedCaseInsensitiveContains(searchText) }
 
         return Group {
             if !filteredItems.isEmpty {
