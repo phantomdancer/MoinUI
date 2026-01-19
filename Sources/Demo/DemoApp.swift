@@ -192,7 +192,6 @@ struct ContentView: View {
                         if navManager.selectedItem == .tag {
                             Picker("", selection: $tagTab) {
                                 Text(tr("tab.examples")).tag(TagExamplesTab.examples)
-                                Text(tr("tab.playground")).tag(TagExamplesTab.playground)
                                 Text(tr("tab.api")).tag(TagExamplesTab.api)
                                 Text(tr("tab.token")).tag(TagExamplesTab.token)
                             }
