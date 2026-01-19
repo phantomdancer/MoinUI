@@ -4,12 +4,14 @@ import MoinUI
 // MARK: - ButtonAPIView
 
 /// Button 组件 API 文档视图 - 每属性独立卡片
+@available(macOS 14.0, *)
 struct ButtonAPIView: View {
     @Localized var tr
     @ObservedObject var config = Moin.ConfigProvider.shared
     
-    @State var selectedItemId: String?
-    @State var scrollProxy: ScrollViewProxy?
+    @State var selectedItemId: String? = "api"
+    @State var scrollPosition: String?
+    @State private var targetScrollId: String?
     @State var searchText: String = ""
     
     // 各属性的当前选中值
@@ -126,7 +128,7 @@ struct ButtonAPIView: View {
         let itemId = "\(sectionId).\(name)"
         return Button {
             selectedItemId = itemId
-            scrollProxy?.scrollTo(itemId, anchor: .top)
+            targetScrollId = itemId
         } label: {
             HStack(spacing: Moin.Constants.Spacing.xs) {
                 Circle()
@@ -256,9 +258,30 @@ struct ButtonAPIView: View {
                         motionDurationGlobalTokenCard
                     }
                     .padding(Moin.Constants.Spacing.lg)
+                    .scrollTargetLayout()
                 }
-                .onAppear { scrollProxy = proxy }
+                .scrollTargetBehavior(.viewAligned)
+                .scrollPosition(id: $scrollPosition, anchor: .top)
+                .onChange(of: targetScrollId) { _, newValue in
+                    if let newValue {
+                        withAnimation {
+                            proxy.scrollTo(newValue, anchor: .top)
+                        }
+                        // 二次校准，解决 LazyVStack 高度估算偏差
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                            withAnimation {
+                                proxy.scrollTo(newValue, anchor: .top)
+                            }
+                        }
+                    }
+                }
+                .onChange(of: scrollPosition) { _, newValue in
+                    if let newValue {
+                        selectedItemId = newValue
+                    }
+                }
             }
+            .background(Color(nsColor: .controlBackgroundColor))
         }
     }
     
@@ -322,6 +345,7 @@ Moin.Button("\(tr("button.label.brown"))", color: .custom(Color(red: 0.6, green:
 Moin.Button("\(tr("button.label.custom"))", color: .custom(Color(red: 0.6, green: 0.2, blue: 0.8))) {}
 """
         }
+        .id("api.color")
     }
     
     // MARK: - Variant 属性卡片
@@ -346,6 +370,7 @@ Moin.Button("\(tr("button.label.custom"))", color: .custom(Color(red: 0.6, green
         } code: {
             "Moin.Button(\"\(tr("button.label.solid"))\", variant: .solid) {}"
         }
+        .id("api.variant")
     }
 
     // MARK: - Size 属性卡片
@@ -367,6 +392,7 @@ Moin.Button("\(tr("button.label.custom"))", color: .custom(Color(red: 0.6, green
         } code: {
             "Moin.Button(\"\(tr("button.label.medium"))\", size: .medium) {}"
         }
+        .id("api.size")
     }
 
     // MARK: - Shape 属性卡片
@@ -388,6 +414,7 @@ Moin.Button("\(tr("button.label.custom"))", color: .custom(Color(red: 0.6, green
         } code: {
             "Moin.Button(\"\(tr("button.label.normal"))\", shape: .default) {}"
         }
+        .id("api.shape")
     }
     
     // MARK: - Token 卡片
@@ -404,6 +431,7 @@ Moin.Button("\(tr("button.label.custom"))", color: .custom(Color(red: 0.6, green
         } editor: {
             ColorPresetRow(label: "primaryColor", color: $config.components.button.primaryColor)
         }
+        .id("token.primaryColor")
     }
 
     private var paddingInlineTokenCard: some View {
@@ -423,6 +451,7 @@ Moin.Button("\(tr("button.label.custom"))", color: .custom(Color(red: 0.6, green
         } editor: {
             TokenValueRow(label: "paddingInline", value: $config.components.button.paddingInline, range: 0...30)
         }
+        .id("token.paddingInline")
     }
 }
 
@@ -507,7 +536,6 @@ struct PropertyCard<Preview: View, TryIt: View>: View {
                         .textSelection(.enabled)
                     Spacer()
                 }
-                .id("\(sectionId).\(name)")
 
             // 说明
             Text(description)
@@ -576,6 +604,7 @@ struct PropertyCard<Preview: View, TryIt: View>: View {
                     .stroke(Color.primary.opacity(0.1), lineWidth: 1)
             )
         }
+        .id("\(sectionId).\(name)")
     }
 }
 
@@ -655,7 +684,6 @@ struct TokenCard<Preview: View, Editor: View>: View {
                         .textSelection(.enabled)
                     Spacer()
                 }
-                .id("\(sectionId).\(name)")
 
                 Text(description)
                     .font(.system(size: 13))
@@ -714,5 +742,6 @@ struct TokenCard<Preview: View, Editor: View>: View {
                     .stroke(Color.primary.opacity(0.1), lineWidth: 1)
             )
         }
+        .id("\(sectionId).\(name)")
     }
 }
