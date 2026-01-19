@@ -154,10 +154,36 @@ struct TagTokenView: View {
                     .fontWeight(.semibold)
                     .scrollAnchor("token")
 
-                tagDefaultBgTokenCard
-                tagDefaultColorTokenCard
-                tagFontSizeTokenCard
-                tagPaddingHTokenCard
+                    // Component - Font
+                    tagFontSizeLGTokenCard
+                    tagFontSizeTokenCard
+                    tagFontSizeSMTokenCard
+                    
+                    // Component - Color
+                    tagDefaultBgTokenCard
+                    tagDefaultColorTokenCard
+                    tagSolidTextColorTokenCard
+                    tagLineWidthTokenCard
+
+                    // Component - Padding H
+                    tagPaddingHLGTokenCard
+                    tagPaddingHTokenCard
+                    tagPaddingHSMTokenCard
+                    
+                    // Component - Padding V
+                    tagPaddingVLGTokenCard
+                    tagPaddingVTokenCard
+                    tagPaddingVSMTokenCard
+                    
+                    // Component - Icon Size
+                    tagIconSizeLGTokenCard
+                    tagIconSizeTokenCard
+                    tagIconSizeSMTokenCard
+                    
+                    // Component - Icon Gap
+                    tagIconGapLGTokenCard
+                    tagIconGapTokenCard
+                    tagIconGapSMTokenCard
 
                 // Global Token 分组
                 Text(tr("doc.section.global_token"))

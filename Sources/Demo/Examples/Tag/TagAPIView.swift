@@ -165,16 +165,25 @@ struct TagAPIView: View {
                     Moin.Tag(tr("tag.example.custom3"), color: .magenta)
                     Moin.Tag(tr("tag.example.custom1"), color: .purple) // mapped to violet/custom1 for variety
                     Moin.Tag(tr("tag.example.custom2"), color: .cyan) // mapped to teal/custom2
-                    Moin.Tag("Orange", color: .orange)
-                    Moin.Tag("Gold", color: .gold)
+                    Moin.Tag(tr("tag.label.orange"), color: .orange)
+                    Moin.Tag(tr("tag.label.gold"), color: .gold)
+                }
+
+                Text(tr("tag.custom_colors")).font(.caption).foregroundStyle(.secondary)
+                HStack {
+                    Moin.Tag(tr("tag.label.cyan"), color: .cyan)
+                    Moin.Tag(tr("tag.label.brown"), color: .custom(Color(red: 0.6, green: 0.3, blue: 0.1)))
+                    Moin.Tag(tr("tag.label.custom"), color: .custom(Color(red: 0.6, green: 0.2, blue: 0.8)))
                 }
             }
         } code: {
-            let def = tr("tag.example.default")
-            let suc = tr("tag.example.success")
+            let cyan = tr("tag.label.cyan")
+            let brown = tr("tag.label.brown")
+            let custom = tr("tag.label.custom")
             return """
-            Moin.Tag("\(def)", color: .default)
-            Moin.Tag("\(suc)", color: .success)
+            Moin.Tag("\(cyan)", color: .cyan)
+            Moin.Tag("\(brown)", color: .custom(Color(red: 0.6, green: 0.3, blue: 0.1)))
+            Moin.Tag("\(custom)", color: .custom(Color(red: 0.6, green: 0.2, blue: 0.8)))
             """
         }
         .scrollAnchor("api.color")
