@@ -72,7 +72,14 @@ struct TagTokenView: View {
             // 导航列表
             ScrollView {
                 VStack(alignment: .leading, spacing: Moin.Constants.Spacing.sm) {
-                    navSection(title: tr("doc.section.component_token"), items: ["defaultBg", "defaultColor", "fontSize", "paddingH"], sectionId: "token")
+                    navSection(title: tr("doc.section.component_token"), items: [
+                        "fontSizeLG", "fontSize", "fontSizeSM",
+                        "defaultBg", "defaultColor", "solidTextColor", "lineWidth",
+                        "paddingHLG", "paddingH", "paddingHSM",
+                        "paddingVLG", "paddingV", "paddingVSM",
+                        "iconSizeLG", "iconSize", "iconSizeSM",
+                        "iconGapLG", "iconGap", "iconGapSM"
+                    ], sectionId: "token")
                     
                     navSection(title: tr("doc.section.global_token"), items: ["fontSizeSM"], sectionId: "global")
                 }
