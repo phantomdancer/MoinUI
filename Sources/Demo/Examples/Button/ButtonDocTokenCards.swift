@@ -398,7 +398,7 @@ extension ButtonTokenView {
             description: tr("button.api.token.solidTextColor"),
             sectionId: "token"
         ) {
-            Moin.Button(tr("button.label.solid"), color: .primary) {}
+            Moin.Button(tr("button.label.solid"), color: .success) {}
         } editor: {
             ColorPresetRow(label: "solidTextColor", color: $config.components.button.solidTextColor)
         } code: {

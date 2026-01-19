@@ -652,7 +652,13 @@ public extension Moin {
                     else if isHovered { return buttonToken.defaultHoverColor }
                     return buttonToken.defaultColor
                 }
-                return color == .danger ? buttonToken.dangerColor : buttonToken.primaryColor
+                if color == .danger {
+                    return buttonToken.dangerColor
+                } else if color == .primary {
+                    return buttonToken.primaryColor
+                } else {
+                    return buttonToken.solidTextColor
+                }
 
             case .filled, .outlined, .dashed:
                 if color.isDefault {
