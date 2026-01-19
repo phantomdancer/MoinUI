@@ -7,6 +7,11 @@ struct DocSidebarSection: Identifiable {
     let title: String
     let items: [String] // Items will be sorted automatically by DocSidebar
     let sectionId: String // Prefix for anchor, e.g. "api" or "token"
+    
+    /// 返回排序后的 items，供主内容区和侧边栏共用
+    var sortedItems: [String] {
+        items.sorted()
+    }
 }
 
 /// Generic Documentation Sidebar with Search, Grouping, and Sorting

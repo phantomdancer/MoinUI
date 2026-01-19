@@ -235,6 +235,15 @@
       "marginLG": "Large margin",
       "marginXS": "Extra small margin",
       "lineWidth": "Line width"
+    },
+    "typography": {
+      "section": {
+        "common": "Common",
+        "styles": "Styles",
+        "title": "Title",
+        "paragraph": "Paragraph",
+        "link": "Link"
+      }
     }
   }
 }

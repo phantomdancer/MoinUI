@@ -235,6 +235,15 @@
       "marginLG": "大号外边距",
       "marginXS": "超小外边距",
       "lineWidth": "线条粗细"
+    },
+    "typography": {
+      "section": {
+        "common": "通用",
+        "styles": "样式",
+        "title": "标题",
+        "paragraph": "段落",
+        "link": "链接"
+      }
     }
   }
 }

@@ -12,6 +12,46 @@ struct TagTokenView: View {
     @State var scrollPosition: String?
     @State private var targetScrollId: String?
 
+    // MARK: - 共享 Sections 数据（sidebar 和主内容区共用）
+    
+    private var tokenSections: [DocSidebarSection] {
+        [
+            DocSidebarSection(
+                title: tr("api.tag.section.font"),
+                items: ["fontSize", "fontSizeSM", "fontSizeLG"],
+                sectionId: "token"
+            ),
+            DocSidebarSection(
+                title: tr("api.tag.section.color"),
+                items: ["defaultBg", "defaultColor", "solidTextColor"],
+                sectionId: "token"
+            ),
+            DocSidebarSection(
+                title: tr("api.tag.section.dimensions"),
+                items: ["lineWidth", "paddingH", "paddingHSM", "paddingHLG", "paddingV", "paddingVSM", "paddingVLG"],
+                sectionId: "token"
+            ),
+            DocSidebarSection(
+                title: tr("api.tag.section.icon_style"),
+                items: ["iconSize", "iconSizeSM", "iconSizeLG", "iconGap", "iconGapSM", "iconGapLG"],
+                sectionId: "token"
+            )
+        ]
+    }
+    
+    private var globalSections: [DocSidebarSection] {
+        [
+            DocSidebarSection(
+                title: tr("doc.section.global_token"),
+                items: ["fontSizeSM"],
+                sectionId: "global"
+            )
+        ]
+    }
+    
+    private var allSections: [DocSidebarSection] {
+        tokenSections + globalSections
+    }
     
     // 重置所有 Token 到默认值
     private func resetAll() {
@@ -39,39 +79,11 @@ struct TagTokenView: View {
         .background(Color(nsColor: .controlBackgroundColor))
     }
     
-    // MARK: - 右栏导航
-
     // MARK: - Doc Sidebar
 
     private var docSidebar: some View {
         DocSidebar(
-            sections: [
-                DocSidebarSection(
-                    title: tr("api.tag.section.font"),
-                    items: ["fontSize", "fontSizeSM", "fontSizeLG"],
-                    sectionId: "token"
-                ),
-                DocSidebarSection(
-                    title: tr("api.tag.section.color"),
-                    items: ["defaultBg", "defaultColor", "solidTextColor"],
-                    sectionId: "token"
-                ),
-                DocSidebarSection(
-                    title: tr("api.tag.section.dimensions"),
-                    items: ["lineWidth", "paddingH", "paddingHSM", "paddingHLG", "paddingV", "paddingVSM", "paddingVLG"],
-                    sectionId: "token"
-                ),
-                DocSidebarSection(
-                    title: tr("api.tag.section.icon_style"),
-                    items: ["iconSize", "iconSizeSM", "iconSizeLG", "iconGap", "iconGapSM", "iconGapLG"],
-                    sectionId: "token"
-                ),
-                DocSidebarSection(
-                    title: tr("doc.section.global_token"),
-                    items: ["fontSizeSM"],
-                    sectionId: "global"
-                )
-            ],
+            sections: allSections,
             selectedItemId: $selectedItemId,
             targetScrollId: $targetScrollId
         ) {
@@ -103,36 +115,12 @@ struct TagTokenView: View {
                     .fontWeight(.semibold)
                     .scrollAnchor("token")
 
-                    // Component - Font
-                    tagFontSizeLGTokenCard
-                    tagFontSizeTokenCard
-                    tagFontSizeSMTokenCard
-                    
-                    // Component - Color
-                    tagDefaultBgTokenCard
-                    tagDefaultColorTokenCard
-                    tagSolidTextColorTokenCard
-                    tagLineWidthTokenCard
-
-                    // Component - Padding H
-                    tagPaddingHLGTokenCard
-                    tagPaddingHTokenCard
-                    tagPaddingHSMTokenCard
-                    
-                    // Component - Padding V
-                    tagPaddingVLGTokenCard
-                    tagPaddingVTokenCard
-                    tagPaddingVSMTokenCard
-                    
-                    // Component - Icon Size
-                    tagIconSizeLGTokenCard
-                    tagIconSizeTokenCard
-                    tagIconSizeSMTokenCard
-                    
-                    // Component - Icon Gap
-                    tagIconGapLGTokenCard
-                    tagIconGapTokenCard
-                    tagIconGapSMTokenCard
+                // 按 tokenSections 顺序渲染
+                ForEach(tokenSections) { section in
+                    ForEach(section.sortedItems, id: \.self) { item in
+                        cardForItem(item, sectionId: "token")
+                    }
+                }
 
                 // Global Token 分组
                 Text(tr("doc.section.global_token"))
@@ -141,9 +129,50 @@ struct TagTokenView: View {
                     .padding(.top, Moin.Constants.Spacing.xl)
                     .scrollAnchor("global")
                 
-                tagGlobalFontSizeCard
+                // 按 globalSections 顺序渲染
+                ForEach(globalSections) { section in
+                    ForEach(section.sortedItems, id: \.self) { item in
+                        cardForItem(item, sectionId: "global")
+                    }
+                }
             }
             .padding(Moin.Constants.Spacing.lg)
+        }
+    }
+    
+    // MARK: - Item -> Card 映射
+    
+    @ViewBuilder
+    private func cardForItem(_ item: String, sectionId: String) -> some View {
+        if sectionId == "token" {
+            switch item {
+            case "fontSize": tagFontSizeTokenCard
+            case "fontSizeSM": tagFontSizeSMTokenCard
+            case "fontSizeLG": tagFontSizeLGTokenCard
+            case "defaultBg": tagDefaultBgTokenCard
+            case "defaultColor": tagDefaultColorTokenCard
+            case "solidTextColor": tagSolidTextColorTokenCard
+            case "lineWidth": tagLineWidthTokenCard
+            case "paddingH": tagPaddingHTokenCard
+            case "paddingHSM": tagPaddingHSMTokenCard
+            case "paddingHLG": tagPaddingHLGTokenCard
+            case "paddingV": tagPaddingVTokenCard
+            case "paddingVSM": tagPaddingVSMTokenCard
+            case "paddingVLG": tagPaddingVLGTokenCard
+            case "iconSize": tagIconSizeTokenCard
+            case "iconSizeSM": tagIconSizeSMTokenCard
+            case "iconSizeLG": tagIconSizeLGTokenCard
+            case "iconGap": tagIconGapTokenCard
+            case "iconGapSM": tagIconGapSMTokenCard
+            case "iconGapLG": tagIconGapLGTokenCard
+            default: EmptyView()
+            }
+        } else {
+            // global
+            switch item {
+            case "fontSizeSM": tagGlobalFontSizeCard
+            default: EmptyView()
+            }
         }
     }
 }

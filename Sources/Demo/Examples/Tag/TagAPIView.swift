@@ -12,8 +12,22 @@ struct TagAPIView: View {
     @State var scrollPosition: String?
     @State private var targetScrollId: String?
 
+    // MARK: - 共享 Sections 数据（sidebar 和主内容区共用）
     
-
+    private var apiSections: [DocSidebarSection] {
+        [
+            DocSidebarSection(
+                title: tr("api.tag.section.style"),
+                items: ["variant", "size", "color", "round"],
+                sectionId: "api"
+            ),
+            DocSidebarSection(
+                title: tr("api.tag.section.feature"),
+                items: ["icon", "closable", "checkable"],
+                sectionId: "api"
+            )
+        ]
+    }
     
     var body: some View {
         HStack(spacing: 0) {
@@ -35,18 +49,7 @@ struct TagAPIView: View {
 
     private var docSidebar: some View {
         DocSidebar(
-            sections: [
-                DocSidebarSection(
-                    title: tr("api.tag.section.style"),
-                    items: ["variant", "size", "color", "round"],
-                    sectionId: "api"
-                ),
-                DocSidebarSection(
-                    title: tr("api.tag.section.feature"),
-                    items: ["icon", "closable", "checkable"],
-                    sectionId: "api"
-                )
-            ],
+            sections: apiSections,
             selectedItemId: $selectedItemId,
             targetScrollId: $targetScrollId
         )
@@ -65,15 +68,30 @@ struct TagAPIView: View {
                     .fontWeight(.semibold)
                     .scrollAnchor("api")
 
-                colorPropertyCard
-                variantPropertyCard
-                sizePropertyCard
-                roundPropertyCard
-                iconPropertyCard
-                closablePropertyCard
-                checkablePropertyCard
+                // 按 sections 顺序渲染，每个 section 内按 sortedItems 排序
+                ForEach(apiSections) { section in
+                    ForEach(section.sortedItems, id: \.self) { item in
+                        cardForItem(item)
+                    }
+                }
             }
             .padding(Moin.Constants.Spacing.lg)
+        }
+    }
+    
+    // MARK: - Item -> Card 映射
+    
+    @ViewBuilder
+    private func cardForItem(_ item: String) -> some View {
+        switch item {
+        case "color": colorPropertyCard
+        case "variant": variantPropertyCard
+        case "size": sizePropertyCard
+        case "round": roundPropertyCard
+        case "icon": iconPropertyCard
+        case "closable": closablePropertyCard
+        case "checkable": checkablePropertyCard
+        default: EmptyView()
         }
     }
     

@@ -10,7 +10,38 @@ struct TypographyAPIView: View {
     
     @State var selectedItemId: String? = "api"
     @State private var targetScrollId: String?
-    @State var searchText: String = ""
+
+    // MARK: - 共享 Sections 数据（sidebar 和主内容区共用）
+    
+    private var apiSections: [DocSidebarSection] {
+        [
+            DocSidebarSection(
+                title: tr("api.typography.section.common"),
+                items: ["content", "type", "disabled"],
+                sectionId: "api"
+            ),
+            DocSidebarSection(
+                title: tr("api.typography.section.styles"),
+                items: ["mark", "underline", "delete", "strong", "italic", "code", "keyboard"],
+                sectionId: "api"
+            ),
+            DocSidebarSection(
+                title: tr("api.typography.section.title"),
+                items: ["level"],
+                sectionId: "api"
+            ),
+            DocSidebarSection(
+                title: tr("api.typography.section.paragraph"),
+                items: ["ellipsis"],
+                sectionId: "api"
+            ),
+            DocSidebarSection(
+                title: tr("api.typography.section.link"),
+                items: ["href", "action"],
+                sectionId: "api"
+            )
+        ]
+    }
     
     var body: some View {
         HStack(spacing: 0) {
@@ -20,99 +51,21 @@ struct TypographyAPIView: View {
             Divider()
             
             // 右栏：导航树
-            navigationSidebar
+            docSidebar
                 .frame(width: 280)
         }
         .background(Color(nsColor: .controlBackgroundColor))
     }
     
-    // MARK: - 右栏导航
+    // MARK: - Doc Sidebar
 
-    private var navigationSidebar: some View {
-        VStack(spacing: 0) {
-            // 搜索框
-            HStack(spacing: Moin.Constants.Spacing.xs) {
-                Image(systemName: "magnifyingglass")
-                    .foregroundStyle(.secondary)
-                    .font(.system(size: 12))
-                TextField(tr("search.placeholder"), text: $searchText)
-                    .textFieldStyle(.plain)
-                    .font(.system(size: 12))
-                if !searchText.isEmpty {
-                    Button {
-                        searchText = ""
-                    } label: {
-                        Image(systemName: "xmark.circle.fill")
-                            .foregroundStyle(.secondary)
-                            .font(.system(size: 12))
-                    }
-                    .buttonStyle(.plain)
-                }
-            }
-            .padding(Moin.Constants.Spacing.sm)
-            .background(Color(nsColor: .textBackgroundColor))
-            .cornerRadius(Moin.Constants.Radius.sm)
-            .padding(Moin.Constants.Spacing.md)
-
-            Divider()
-
-            // 导航列表
-            ScrollView {
-                VStack(alignment: .leading, spacing: Moin.Constants.Spacing.sm) {
-                    navSection(title: tr("api.typography.section.common"), items: ["content", "type", "disabled"], sectionId: "api")
-                    navSection(title: tr("api.typography.section.styles"), items: ["mark", "underline", "delete", "strong", "italic", "code", "keyboard"], sectionId: "api")
-                    navSection(title: tr("api.typography.section.title"), items: ["level"], sectionId: "api")
-                    navSection(title: tr("api.typography.section.paragraph"), items: ["ellipsis"], sectionId: "api")
-                    navSection(title: tr("api.typography.section.link"), items: ["href", "action"], sectionId: "api")
-                }
-                .padding(Moin.Constants.Spacing.md)
-            }
-        }
-    }
-
-    private func navSection(title: String, items: [String], sectionId: String) -> some View {
-        let sortedItems = items.sorted()  // 内部自动排序
-        let filteredItems = searchText.isEmpty ? sortedItems : sortedItems.filter { $0.localizedCaseInsensitiveContains(searchText) }
-
-        return Group {
-            if !filteredItems.isEmpty {
-                VStack(alignment: .leading, spacing: 0) {
-                    Text(title)
-                        .font(.system(size: 11, weight: .semibold))
-                        .foregroundStyle(.secondary)
-                        .padding(.vertical, Moin.Constants.Spacing.xs)
-
-                    ForEach(filteredItems, id: \.self) { item in
-                        navItem(name: item, sectionId: sectionId)
-                    }
-                }
-                .padding(.bottom, Moin.Constants.Spacing.md)
-            }
-        }
-    }
-    
-    private func navItem(name: String, sectionId: String) -> some View {
-        let itemId = "\(sectionId).\(name)"
-        return Button {
-            selectedItemId = itemId
-            targetScrollId = itemId
-        } label: {
-            HStack(spacing: Moin.Constants.Spacing.xs) {
-                Circle()
-                    .fill(selectedItemId == itemId ? config.token.colorPrimary : Color.secondary.opacity(0.3))
-                    .frame(width: 6, height: 6)
-                Text(name)
-                    .font(.system(size: 12, design: .monospaced))
-                    .foregroundStyle(selectedItemId == itemId ? config.token.colorPrimary : .primary)
-                Spacer()
-            }
-            .padding(.vertical, 4)
-            .padding(.horizontal, Moin.Constants.Spacing.sm)
-            .contentShape(Rectangle())
-        }
-        .buttonStyle(.plain)
-        .background(selectedItemId == itemId ? config.token.colorPrimary.opacity(0.1) : .clear)
-        .cornerRadius(Moin.Constants.Radius.sm)
+    private var docSidebar: some View {
+        DocSidebar(
+            sections: apiSections,
+            selectedItemId: $selectedItemId,
+            targetScrollId: $targetScrollId
+        )
+        .frame(width: 280)
     }
 
     // MARK: - 主内容区
@@ -127,31 +80,37 @@ struct TypographyAPIView: View {
                     .fontWeight(.semibold)
                     .scrollAnchor("api")
 
-                // Common
-                contentPropertyCard
-                typePropertyCard
-                disabledPropertyCard
-                
-                // Styles
-                markPropertyCard
-                underlinePropertyCard
-                deletePropertyCard
-                strongPropertyCard
-                italicPropertyCard
-                codePropertyCard
-                keyboardPropertyCard
-                
-                // Title
-                levelPropertyCard
-                
-                // Paragraph
-                ellipsisPropertyCard
-                
-                // Link
-                hrefPropertyCard
-                actionPropertyCard
+                // 按 sections 顺序渲染，每个 section 内按 sortedItems 排序
+                ForEach(apiSections) { section in
+                    ForEach(section.sortedItems, id: \.self) { item in
+                        cardForItem(item)
+                    }
+                }
             }
             .padding(Moin.Constants.Spacing.lg)
+        }
+    }
+    
+    // MARK: - Item -> Card 映射
+    
+    @ViewBuilder
+    private func cardForItem(_ item: String) -> some View {
+        switch item {
+        case "content": contentPropertyCard
+        case "type": typePropertyCard
+        case "disabled": disabledPropertyCard
+        case "mark": markPropertyCard
+        case "underline": underlinePropertyCard
+        case "delete": deletePropertyCard
+        case "strong": strongPropertyCard
+        case "italic": italicPropertyCard
+        case "code": codePropertyCard
+        case "keyboard": keyboardPropertyCard
+        case "level": levelPropertyCard
+        case "ellipsis": ellipsisPropertyCard
+        case "href": hrefPropertyCard
+        case "action": actionPropertyCard
+        default: EmptyView()
         }
     }
     

@@ -25,6 +25,33 @@ struct ButtonAPIView: View {
     @State var isBlock: Bool = false
     @State var isGhost: Bool = false
     
+    // MARK: - 共享 Sections 数据（sidebar 和主内容区共用）
+    
+    private var apiSections: [DocSidebarSection] {
+        [
+            DocSidebarSection(
+                title: tr("api.button.section.common"),
+                items: ["action", "label", "isDisabled", "loading", "isBlock", "isGhost"],
+                sectionId: "api"
+            ),
+            DocSidebarSection(
+                title: tr("api.button.section.style"),
+                items: ["variant", "size", "shape", "color", "fontColor", "gradient"],
+                sectionId: "api"
+            ),
+            DocSidebarSection(
+                title: tr("api.button.section.icon"),
+                items: ["icon", "iconPlacement"],
+                sectionId: "api"
+            ),
+            DocSidebarSection(
+                title: tr("api.button.section.link"),
+                items: ["href"],
+                sectionId: "api"
+            )
+        ]
+    }
+    
     // 重置所有属性到默认值
     private func resetAll() {
         selectedColor = .primary
@@ -62,36 +89,16 @@ struct ButtonAPIView: View {
     }
     
     // MARK: - Doc Sidebar
-
+    
     private var docSidebar: some View {
         DocSidebar(
-            sections: [
-                DocSidebarSection(
-                    title: tr("api.button.section.common"),
-                    items: ["action", "label", "isDisabled", "loading", "isBlock", "isGhost"],
-                    sectionId: "api"
-                ),
-                DocSidebarSection(
-                    title: tr("api.button.section.style"),
-                    items: ["variant", "size", "shape", "color", "fontColor", "gradient"],
-                    sectionId: "api"
-                ),
-                DocSidebarSection(
-                    title: tr("api.button.section.icon"),
-                    items: ["icon", "iconPlacement"],
-                    sectionId: "api"
-                ),
-                DocSidebarSection(
-                    title: tr("api.button.section.link"),
-                    items: ["href"],
-                    sectionId: "api"
-                )
-            ],
+            sections: apiSections,
             selectedItemId: $selectedItemId,
             targetScrollId: $targetScrollId
         )
         .frame(width: 280)
     }
+    
     // MARK: - 主内容区
     
     private var mainContent: some View {
@@ -120,24 +127,39 @@ struct ButtonAPIView: View {
                         .fontWeight(.semibold)
                         .scrollAnchor("api")
 
-                    actionPropertyCard
-                    colorPropertyCard
-                    fontColorPropertyCard
-                    gradientPropertyCard
-                    hrefPropertyCard
-                    iconPropertyCard
-                    iconPlacementPropertyCard
-                    blockPropertyCard
-                    disabledPropertyCard
-                    ghostPropertyCard
-                    labelPropertyCard
-                    loadingPropertyCard
-                    shapePropertyCard
-                    sizePropertyCard
-                    variantPropertyCard
+                    // 按 sections 顺序渲染，每个 section 内按 sortedItems 排序
+                    ForEach(apiSections) { section in
+                        ForEach(section.sortedItems, id: \.self) { item in
+                            cardForItem(item)
+                        }
+                    }
                 }
                 .padding(Moin.Constants.Spacing.lg)
             }
+        }
+    }
+    
+    // MARK: - Item -> Card 映射
+    
+    @ViewBuilder
+    private func cardForItem(_ item: String) -> some View {
+        switch item {
+        case "action": actionPropertyCard
+        case "label": labelPropertyCard
+        case "isDisabled": disabledPropertyCard
+        case "loading": loadingPropertyCard
+        case "isBlock": blockPropertyCard
+        case "isGhost": ghostPropertyCard
+        case "variant": variantPropertyCard
+        case "size": sizePropertyCard
+        case "shape": shapePropertyCard
+        case "color": colorPropertyCard
+        case "fontColor": fontColorPropertyCard
+        case "gradient": gradientPropertyCard
+        case "icon": iconPropertyCard
+        case "iconPlacement": iconPlacementPropertyCard
+        case "href": hrefPropertyCard
+        default: EmptyView()
         }
     }
     
