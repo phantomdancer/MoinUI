@@ -103,7 +103,50 @@
       "type_secondary": "次要颜色",
       "type_success": "成功颜色",
       "type_warning": "警告颜色",
-      "type_danger": "危险颜色"
+      "type_danger": "危险颜色",
+      "href": "链接地址",
+      "section": {
+        "common": "通用",
+        "styles": "样式",
+        "title": "标题",
+        "paragraph": "段落",
+        "link": "链接"
+      },
+      "token": {
+        "font_size": "字体大小",
+        "line_height": "行高",
+        "text_color": "文本颜色",
+        "dimensions": "尺寸",
+        "default_font_size": "默认字体大小",
+        "small_font_size": "小号字体大小",
+        "large_font_size": "大号字体大小",
+        "extra_large_font_size": "超大字体大小",
+        "h1_line_height": "H1 行高",
+        "h2_line_height": "H2 行高",
+        "h3_line_height": "H3 行高",
+        "h4_line_height": "H4 行高",
+        "h5_line_height": "H5 行高",
+        "default_line_height": "默认行高",
+        "small_line_height": "小号行高",
+        "large_line_height": "大号行高",
+        "line_width_desc": "线条粗细（用于键盘）",
+        "border_radius_xs_desc": "XS 圆角（用于代码）",
+        "border_radius_sm_desc": "SM 圆角（用于键盘）",
+        "padding_xxs_desc": "XXS 内边距（用于代码/键盘）",
+        "padding_xs_desc": "XS 内边距（用于键盘水平方向）",
+        "margin_xs_desc": "XS 外边距（段落底部边距）",
+        "primary_text": "主要文本颜色",
+        "secondary_text": "次要文本颜色",
+        "tertiary_text": "三级文本颜色",
+        "disabled_text": "禁用文本颜色",
+        "success_color": "成功色",
+        "warning_color": "警告色",
+        "danger_color": "危险色",
+        "link_color": "链接色",
+        "fill_tertiary_desc": "三级填充色（代码背景）",
+        "fill_secondary_desc": "次级填充色（键盘背景）",
+        "border_color_desc": "边框颜色（键盘边框）"
+      }
     }
   }
 }

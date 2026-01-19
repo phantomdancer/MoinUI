@@ -103,7 +103,50 @@
       "type_secondary": "Secondary color",
       "type_success": "Success color",
       "type_warning": "Warning color",
-      "type_danger": "Danger color"
+      "type_danger": "Danger color",
+      "href": "Link URL",
+      "section": {
+        "common": "Common",
+        "styles": "Styles",
+        "title": "Title",
+        "paragraph": "Paragraph",
+        "link": "Link"
+      },
+      "token": {
+        "font_size": "Font Size",
+        "line_height": "Line Height",
+        "text_color": "Text Color",
+        "dimensions": "Dimensions",
+        "default_font_size": "Default Font Size",
+        "small_font_size": "Small Font Size",
+        "large_font_size": "Large Font Size",
+        "extra_large_font_size": "Extra Large Font Size",
+        "h1_line_height": "H1 Line Height",
+        "h2_line_height": "H2 Line Height",
+        "h3_line_height": "H3 Line Height",
+        "h4_line_height": "H4 Line Height",
+        "h5_line_height": "H5 Line Height",
+        "default_line_height": "Default Line Height",
+        "small_line_height": "Small Line Height",
+        "large_line_height": "Large Line Height",
+        "line_width_desc": "Line Width (Used in Keyboard)",
+        "border_radius_xs_desc": "XS Border Radius (Used in Code)",
+        "border_radius_sm_desc": "SM Border Radius (Used in Keyboard)",
+        "padding_xxs_desc": "XXS Padding (Used in Code/Keyboard)",
+        "padding_xs_desc": "XS Padding (Used in Keyboard horizontal)",
+        "margin_xs_desc": "XS Margin (Paragraph Bottom Margin)",
+        "primary_text": "Primary Text Color",
+        "secondary_text": "Secondary Text Color",
+        "tertiary_text": "Tertiary Text Color",
+        "disabled_text": "Disabled Text Color",
+        "success_color": "Success Color",
+        "warning_color": "Warning Color",
+        "danger_color": "Danger Color",
+        "link_color": "Link Color",
+        "fill_tertiary_desc": "Tertiary Fill Color (Code Background)",
+        "fill_secondary_desc": "Secondary Fill Color (Keyboard Background)",
+        "border_color_desc": "Border Color (Keyboard Border)"
+      }
     }
   }
 }

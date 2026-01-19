@@ -59,11 +59,11 @@ struct TypographyAPIView: View {
             // 导航列表
             ScrollView {
                 VStack(alignment: .leading, spacing: Moin.Constants.Spacing.sm) {
-                    navSection(title: "Common", items: ["content", "type", "disabled"], sectionId: "api")
-                    navSection(title: "Styles", items: ["mark", "underline", "delete", "strong", "italic", "code", "keyboard"], sectionId: "api")
-                    navSection(title: "Title", items: ["level"], sectionId: "api")
-                    navSection(title: "Paragraph", items: ["ellipsis"], sectionId: "api")
-                    navSection(title: "Link", items: ["href", "action"], sectionId: "api")
+                    navSection(title: tr("api.typography.section.common"), items: ["content", "type", "disabled"], sectionId: "api")
+                    navSection(title: tr("api.typography.section.styles"), items: ["mark", "underline", "delete", "strong", "italic", "code", "keyboard"], sectionId: "api")
+                    navSection(title: tr("api.typography.section.title"), items: ["level"], sectionId: "api")
+                    navSection(title: tr("api.typography.section.paragraph"), items: ["ellipsis"], sectionId: "api")
+                    navSection(title: tr("api.typography.section.link"), items: ["href", "action"], sectionId: "api")
                 }
                 .padding(Moin.Constants.Spacing.md)
             }
@@ -121,7 +121,7 @@ struct TypographyAPIView: View {
         AnchorScrollView(targetScrollId: $targetScrollId, currentScrollId: $selectedItemId) {
             LazyVStack(alignment: .leading, spacing: Moin.Constants.Spacing.xl) {
                 // API 分组标题
-                Text("API")
+                Text(tr("doc.section.api"))
                     .font(.title3)
                     .fontWeight(.semibold)
                     .scrollAnchor("api")
@@ -375,7 +375,7 @@ struct TypographyAPIView: View {
             name: "href",
             type: "URL?",
             defaultValue: "nil",
-            description: "Link URL",
+            description: tr("api.typography.href"),
             sectionId: "api"
         ) {
             Moin.Typography.Link("MoinUI", href: URL(string: "https://github.com/phantomdancer/MoinUI.git"))

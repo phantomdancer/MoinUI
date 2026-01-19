@@ -64,22 +64,22 @@ struct TypographyTokenView: View {
             // 导航列表
             ScrollView {
                 VStack(alignment: .leading, spacing: Moin.Constants.Spacing.sm) {
-                    navSection(title: tr("token.font_size"), items: [
+                    navSection(title: tr("api.typography.token.font_size"), items: [
                         "fontSizeHeading1", "fontSizeHeading2", "fontSizeHeading3", "fontSizeHeading4", "fontSizeHeading5",
                         "fontSize", "fontSizeSM", "fontSizeLG", "fontSizeXL"
                     ], sectionId: "token")
                     
-                    navSection(title: tr("token.line_height"), items: [
+                    navSection(title: tr("api.typography.token.line_height"), items: [
                         "lineHeightHeading1", "lineHeightHeading2", "lineHeightHeading3", "lineHeightHeading4", "lineHeightHeading5",
                         "lineHeight", "lineHeightSM", "lineHeightLG"
                     ], sectionId: "token")
                     
-                    navSection(title: "Dimensions", items: [
-                        "lineWidth", "borderRadiusXS", "borderRadiusSM", 
+                    navSection(title: tr("api.typography.token.dimensions"), items: [
+                        "lineWidth", "borderRadiusXS", "borderRadiusSM",
                         "paddingXXS", "paddingXS", "marginXS"
                     ], sectionId: "token")
                     
-                    navSection(title: tr("token.text_color"), items: [
+                    navSection(title: tr("api.typography.token.text_color"), items: [
                         "colorText", "colorTextSecondary", "colorTextTertiary", "colorTextDisabled",
                         "colorSuccess", "colorWarning", "colorDanger", "colorLink",
                         "colorFillTertiary", "colorFillSecondary", "colorBorder"
@@ -96,7 +96,7 @@ struct TypographyTokenView: View {
                     resetAll()
                 }
                 
-                Text(tr("token.playground.reset_desc"))
+                Text(tr("api.typography.token.playground.reset_desc"))
                     .font(.caption)
                     .foregroundStyle(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
@@ -164,7 +164,7 @@ struct TypographyTokenView: View {
                     .scrollAnchor("token")
 
                 // Font Size
-                Text(tr("token.font_size")).font(.headline).padding(.top)
+                Text(tr("api.typography.token.font_size")).font(.headline).padding(.top)
                 fontSizeHeading1Card
                 fontSizeHeading2Card
                 fontSizeHeading3Card
@@ -176,7 +176,7 @@ struct TypographyTokenView: View {
                 fontSizeXLCard
                 
                 // Line Height
-                Text(tr("token.line_height")).font(.headline).padding(.top)
+                Text(tr("api.typography.token.line_height")).font(.headline).padding(.top)
                 lineHeightHeading1Card
                 lineHeightHeading2Card
                 lineHeightHeading3Card
@@ -187,7 +187,7 @@ struct TypographyTokenView: View {
                 lineHeightLGCard
                 
                 // Dimensions
-                Text("Dimensions").font(.headline).padding(.top)
+                Text(tr("api.typography.token.dimensions")).font(.headline).padding(.top)
                 lineWidthCard
                 borderRadiusXSCard
                 borderRadiusSMCard
@@ -196,7 +196,7 @@ struct TypographyTokenView: View {
                 marginXSCard
 
                 // Color
-                Text(tr("token.text_color")).font(.headline).padding(.top)
+                Text(tr("api.typography.token.text_color")).font(.headline).padding(.top)
                 colorTextCard
                 colorTextSecondaryCard
                 colorTextTertiaryCard
@@ -295,7 +295,7 @@ struct TypographyTokenView: View {
             name: "fontSize",
             type: "CGFloat",
             defaultValue: "14",
-            description: tr("token.default_font_size"),
+            description: tr("api.typography.token.default_font_size"),
             sectionId: "token"
         ) {
             Moin.Typography.Text(tr("typography.example.default"))
@@ -310,7 +310,7 @@ struct TypographyTokenView: View {
             name: "fontSizeSM",
             type: "CGFloat",
             defaultValue: "12",
-            description: tr("token.small_font_size"),
+            description: tr("api.typography.token.small_font_size"),
             sectionId: "token"
         ) {
             Moin.Typography.Text(tr("typography.example.keyboard"), keyboard: true)
@@ -325,7 +325,7 @@ struct TypographyTokenView: View {
             name: "fontSizeLG",
             type: "CGFloat",
             defaultValue: "16",
-            description: tr("token.large_font_size"),
+            description: tr("api.typography.token.large_font_size"),
             sectionId: "token"
         ) {
             Text(tr("typography.example.default")).font(.system(size: config.token.fontSizeLG))
@@ -340,7 +340,7 @@ struct TypographyTokenView: View {
             name: "fontSizeXL",
             type: "CGFloat",
             defaultValue: "20",
-            description: "Extra Large Font Size",
+            description: tr("api.typography.token.extra_large_font_size"),
             sectionId: "token"
         ) {
             Text(tr("typography.example.default")).font(.system(size: config.token.fontSizeXL))
@@ -357,7 +357,7 @@ struct TypographyTokenView: View {
             name: "lineHeightHeading1",
             type: "CGFloat",
             defaultValue: String(format: "%.4f", Moin.MapToken.generate(from: .default, theme: .light).lineHeightHeading1),
-            description: tr("token.h1_line_height"),
+            description: tr("api.typography.token.h1_line_height"),
             sectionId: "token"
         ) {
             Moin.Typography.Title("Line Height H1", level: .h1)
@@ -373,7 +373,7 @@ struct TypographyTokenView: View {
             name: "lineHeightHeading2",
             type: "CGFloat",
             defaultValue: String(format: "%.4f", Moin.MapToken.generate(from: .default, theme: .light).lineHeightHeading2),
-            description: tr("token.h2_line_height"),
+            description: tr("api.typography.token.h2_line_height"),
             sectionId: "token"
         ) {
             Moin.Typography.Title("Line Height H2", level: .h2)
@@ -389,7 +389,7 @@ struct TypographyTokenView: View {
             name: "lineHeightHeading3",
             type: "CGFloat",
             defaultValue: String(format: "%.4f", Moin.MapToken.generate(from: .default, theme: .light).lineHeightHeading3),
-            description: tr("token.h3_line_height"),
+            description: tr("api.typography.token.h3_line_height"),
             sectionId: "token"
         ) {
             Moin.Typography.Title("Line Height H3", level: .h3)
@@ -405,7 +405,7 @@ struct TypographyTokenView: View {
             name: "lineHeightHeading4",
             type: "CGFloat",
             defaultValue: String(format: "%.4f", Moin.MapToken.generate(from: .default, theme: .light).lineHeightHeading4),
-            description: tr("token.h4_line_height"),
+            description: tr("api.typography.token.h4_line_height"),
             sectionId: "token"
         ) {
             Moin.Typography.Title("Line Height H4", level: .h4)
@@ -421,7 +421,7 @@ struct TypographyTokenView: View {
             name: "lineHeightHeading5",
             type: "CGFloat",
             defaultValue: String(format: "%.4f", Moin.MapToken.generate(from: .default, theme: .light).lineHeightHeading5),
-            description: tr("token.h5_line_height"),
+            description: tr("api.typography.token.h5_line_height"),
             sectionId: "token"
         ) {
             Moin.Typography.Title("Line Height H5", level: .h5)
@@ -437,10 +437,10 @@ struct TypographyTokenView: View {
             name: "lineHeight",
             type: "CGFloat",
             defaultValue: String(format: "%.4f", Moin.MapToken.generate(from: .default, theme: .light).lineHeight),
-            description: tr("token.default_line_height"),
+            description: tr("api.typography.token.default_line_height"),
             sectionId: "token"
         ) {
-            Moin.Typography.Text(tr("token.default_line_height"))
+            Moin.Typography.Text(tr("api.typography.token.default_line_height"))
                 .border(Color.red.opacity(0.2))
         } editor: {
             TokenValueRow(label: "lineHeight", value: $config.token.lineHeight)
@@ -453,7 +453,7 @@ struct TypographyTokenView: View {
             name: "lineHeightSM",
             type: "CGFloat",
             defaultValue: String(format: "%.4f", Moin.MapToken.generate(from: .default, theme: .light).lineHeightSM),
-            description: "Small Line Height",
+            description: tr("api.typography.token.small_line_height"),
             sectionId: "token"
         ) {
             Text("Small Line Height").font(.system(size: 12))
@@ -470,7 +470,7 @@ struct TypographyTokenView: View {
             name: "lineHeightLG",
             type: "CGFloat",
             defaultValue: String(format: "%.4f", Moin.MapToken.generate(from: .default, theme: .light).lineHeightLG),
-            description: "Large Line Height",
+            description: tr("api.typography.token.large_line_height"),
             sectionId: "token"
         ) {
             Text("Large Line Height").font(.system(size: 16))
@@ -489,7 +489,7 @@ struct TypographyTokenView: View {
             name: "lineWidth",
             type: "CGFloat",
             defaultValue: "1",
-            description: "Line Width (Used in Keyboard)",
+            description: tr("api.typography.token.line_width_desc"),
             sectionId: "token"
         ) {
             Moin.Typography.Text("Cmd+C", keyboard: true)
@@ -504,7 +504,7 @@ struct TypographyTokenView: View {
             name: "borderRadiusXS",
             type: "CGFloat",
             defaultValue: "2",
-            description: "XS Border Radius (Used in Code)",
+            description: tr("api.typography.token.border_radius_xs_desc"),
             sectionId: "token"
         ) {
             Moin.Typography.Text(tr("typography.example.code"), code: true)
@@ -519,7 +519,7 @@ struct TypographyTokenView: View {
             name: "borderRadiusSM",
             type: "CGFloat",
             defaultValue: "4",
-            description: "SM Border Radius (Used in Keyboard)",
+            description: tr("api.typography.token.border_radius_sm_desc"),
             sectionId: "token"
         ) {
             Moin.Typography.Text("Cmd+V", keyboard: true)
@@ -534,7 +534,7 @@ struct TypographyTokenView: View {
             name: "paddingXXS",
             type: "CGFloat",
             defaultValue: "4",
-            description: "XXS Padding (Used in Code/Keyboard)",
+            description: tr("api.typography.token.padding_xxs_desc"),
             sectionId: "token"
         ) {
             HStack {
@@ -552,7 +552,7 @@ struct TypographyTokenView: View {
             name: "paddingXS",
             type: "CGFloat",
             defaultValue: "8",
-            description: "XS Padding (Used in Keyboard horizontal)",
+            description: tr("api.typography.token.padding_xs_desc"),
             sectionId: "token"
         ) {
              Moin.Typography.Text("Cmd+S", keyboard: true)
@@ -567,7 +567,7 @@ struct TypographyTokenView: View {
             name: "marginXS",
             type: "CGFloat",
             defaultValue: "8",
-            description: "XS Margin (Paragraph Bottom Margin)",
+            description: tr("api.typography.token.margin_xs_desc"),
             sectionId: "token"
         ) {
              VStack(alignment: .leading, spacing: 0) {
@@ -589,7 +589,7 @@ struct TypographyTokenView: View {
             name: "colorText",
             type: "Color",
             defaultValue: "-",
-            description: tr("token.primary_text"),
+            description: tr("api.typography.token.primary_text"),
             sectionId: "token"
         ) {
             Moin.Typography.Text(tr("typography.example.type_default"))
@@ -604,7 +604,7 @@ struct TypographyTokenView: View {
             name: "colorTextSecondary",
             type: "Color",
             defaultValue: "-",
-            description: tr("token.secondary_text"),
+            description: tr("api.typography.token.secondary_text"),
             sectionId: "token"
         ) {
             Moin.Typography.Text(tr("typography.example.type_secondary"), type: .secondary)
@@ -619,7 +619,7 @@ struct TypographyTokenView: View {
             name: "colorTextTertiary",
             type: "Color",
             defaultValue: "-",
-            description: tr("token.tertiary_text"),
+            description: tr("api.typography.token.tertiary_text"),
             sectionId: "token"
         ) {
             Text("Tertiary Text").foregroundStyle(config.token.colorTextTertiary)
@@ -634,7 +634,7 @@ struct TypographyTokenView: View {
             name: "colorTextDisabled",
             type: "Color",
             defaultValue: "-",
-            description: tr("token.disabled_text"),
+            description: tr("api.typography.token.disabled_text"),
             sectionId: "token"
         ) {
             Moin.Typography.Text(tr("typography.example.type_disabled"), disabled: true)
@@ -649,7 +649,7 @@ struct TypographyTokenView: View {
             name: "colorSuccess",
             type: "Color",
             defaultValue: "-",
-            description: tr("token.success_color"),
+            description: tr("api.typography.token.success_color"),
             sectionId: "token"
         ) {
             Moin.Typography.Text(tr("typography.example.type_success"), type: .success)
@@ -664,7 +664,7 @@ struct TypographyTokenView: View {
             name: "colorWarning",
             type: "Color",
             defaultValue: "-",
-            description: tr("token.warning_color"),
+            description: tr("api.typography.token.warning_color"),
             sectionId: "token"
         ) {
             Moin.Typography.Text(tr("typography.example.type_warning"), type: .warning)
@@ -679,7 +679,7 @@ struct TypographyTokenView: View {
             name: "colorDanger",
             type: "Color",
             defaultValue: "-",
-            description: tr("token.danger_color"),
+            description: tr("api.typography.token.danger_color"),
             sectionId: "token"
         ) {
             Moin.Typography.Text(tr("typography.example.type_danger"), type: .danger)
@@ -694,7 +694,7 @@ struct TypographyTokenView: View {
             name: "colorLink",
             type: "Color",
             defaultValue: "-",
-            description: tr("token.link_color"),
+            description: tr("api.typography.token.link_color"),
             sectionId: "token"
         ) {
             Moin.Typography.Link(tr("typography.example.link"), href: nil)
@@ -709,7 +709,7 @@ struct TypographyTokenView: View {
             name: "colorFillTertiary",
             type: "Color",
             defaultValue: "-",
-            description: "Tertiary Fill Color (Code Background)",
+            description: tr("api.typography.token.fill_tertiary_desc"),
             sectionId: "token"
         ) {
             Moin.Typography.Text(tr("typography.example.code"), code: true)
@@ -724,7 +724,7 @@ struct TypographyTokenView: View {
             name: "colorFillSecondary",
             type: "Color",
             defaultValue: "-",
-            description: "Secondary Fill Color (Keyboard Background)",
+            description: tr("api.typography.token.fill_secondary_desc"),
             sectionId: "token"
         ) {
             Moin.Typography.Text(tr("typography.example.keyboard"), keyboard: true)
@@ -739,7 +739,7 @@ struct TypographyTokenView: View {
             name: "colorBorder",
             type: "Color",
             defaultValue: "-",
-            description: "Border Color (Keyboard Border)",
+            description: tr("api.typography.token.border_color_desc"),
             sectionId: "token"
         ) {
             Moin.Typography.Text(tr("typography.example.keyboard"), keyboard: true)
