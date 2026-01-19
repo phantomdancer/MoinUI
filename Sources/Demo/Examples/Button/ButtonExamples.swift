@@ -5,6 +5,7 @@ import MoinUI
 enum ButtonExamplesTab: String, CaseIterable {
     case examples
     case api
+    case token
 }
 
 /// Button component examples
@@ -14,6 +15,7 @@ struct ButtonExamples: View {
     @State private var isLoading = false
     @State private var loadings: [Bool] = Array(repeating: false, count: 6)
     @State private var apiViewReady = false
+    @State private var tokenViewReady = false
 
     /// 锚点列表
     private let anchors: [AnchorItem] = [
@@ -32,22 +34,37 @@ struct ButtonExamples: View {
         AnchorItem(id: "shadow", titleKey: "button.shadow"),
     ]
 
+
     var body: some View {
         Group {
             if selectedTab == .examples {
                 examplesContent
-            } else if apiViewReady {
-                ButtonAPIView()
-            } else {
-                Moin.Spin()
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+            } else if selectedTab == .api {
+                if apiViewReady {
+                    ButtonAPIView()
+                } else {
+                    Moin.Spin()
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                }
+            } else if selectedTab == .token {
+                if tokenViewReady {
+                    ButtonTokenView()
+                } else {
+                    Moin.Spin()
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                }
             }
         }
         .onAppear {
-            // 页面出现时，如果是 API tab 且未准备好，则加载
+            // 页面出现时，如果是 API/Token tab 且未准备好，则加载
             if selectedTab == .api && !apiViewReady {
                 DispatchQueue.main.async {
                     apiViewReady = true
+                }
+            }
+            if selectedTab == .token && !tokenViewReady {
+                DispatchQueue.main.async {
+                    tokenViewReady = true
                 }
             }
         }
@@ -55,6 +72,11 @@ struct ButtonExamples: View {
             if newTab == .api && !apiViewReady {
                 DispatchQueue.main.async {
                     apiViewReady = true
+                }
+            }
+            if newTab == .token && !tokenViewReady {
+                DispatchQueue.main.async {
+                    tokenViewReady = true
                 }
             }
         }

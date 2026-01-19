@@ -3,7 +3,7 @@ import MoinUI
 
 // MARK: - Button Token 卡片扩展
 
-extension ButtonAPIView {
+extension ButtonTokenView {
 
     // MARK: - 边框相关 Token
 
@@ -371,6 +371,23 @@ extension ButtonAPIView {
         .scrollAnchor("token.onlyIconSizeSM")
     }
 
+    var primaryColorTokenCard: some View {
+        TokenCard(
+            name: "primaryColor",
+            type: "Color",
+            defaultValue: ".white",
+            description: tr("button.api.token.primaryColor"),
+            sectionId: "token"
+        ) {
+            Moin.Button(tr("button.label.primary"), color: .primary) {}
+        } editor: {
+            ColorPresetRow(label: "primaryColor", color: $config.components.button.primaryColor)
+        } code: {
+            "config.components.button.primaryColor = Color(...)"
+        }
+        .scrollAnchor("token.primaryColor")
+    }
+
     var solidTextColorTokenCard: some View {
         TokenCard(
             name: "solidTextColor",
@@ -566,6 +583,28 @@ extension ButtonAPIView {
             "config.components.button.contentFontSize = \(Int(config.components.button.contentFontSize))"
         }
         .scrollAnchor("token.contentFontSize")
+    }
+
+    var paddingInlineTokenCard: some View {
+        TokenCard(
+            name: "paddingInline",
+            type: "CGFloat",
+            defaultValue: "15",
+            description: tr("button.api.token.paddingInline"),
+            sectionId: "token"
+        ) {
+            HStack(spacing: Moin.Constants.Spacing.md) {
+                Moin.Button(tr("button.label.button"), color: .primary) {}
+                Text("padding: \(Int(config.components.button.paddingInline))px")
+                    .font(.system(size: 11, design: .monospaced))
+                    .foregroundStyle(.secondary)
+            }
+        } editor: {
+            TokenValueRow(label: "paddingInline", value: $config.components.button.paddingInline, range: 0...30)
+        } code: {
+            "config.components.button.paddingInline = \(Int(config.components.button.paddingInline))"
+        }
+        .scrollAnchor("token.paddingInline")
     }
 
     var paddingInlineLGTokenCard: some View {

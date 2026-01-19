@@ -95,8 +95,6 @@ struct ButtonAPIView: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: Moin.Constants.Spacing.sm) {
                     navSection(title: "API", items: ["action", "color", "fontColor", "gradient", "href", "icon", "iconPlacement", "isBlock", "isDisabled", "isGhost", "label", "loading", "shape", "size", "variant"], sectionId: "api")
-                    navSection(title: tr("doc.section.component_token"), items: ["borderColorDisabled", "contentFontSize", "contentFontSizeLG", "contentFontSizeSM", "dangerColor", "defaultActiveBg", "defaultActiveBorderColor", "defaultActiveColor", "defaultBg", "defaultBgDisabled", "defaultBorderColor", "defaultColor", "defaultGhostBorderColor", "defaultGhostColor", "defaultHoverBg", "defaultHoverBorderColor", "defaultHoverColor", "fontWeight", "ghostBg", "iconGap", "linkHoverBg", "onlyIconSize", "onlyIconSizeLG", "onlyIconSizeSM", "paddingBlock", "paddingBlockLG", "paddingBlockSM", "paddingInline", "paddingInlineLG", "paddingInlineSM", "primaryColor", "solidTextColor", "textHoverBg", "textTextActiveColor", "textTextColor", "textTextHoverColor"], sectionId: "token")
-                    navSection(title: tr("doc.section.global_token"), items: ["borderRadius", "borderRadiusLG", "borderRadiusSM", "colorPrimary", "colorPrimaryActive", "colorPrimaryHover", "colorTextDisabled", "controlHeight", "controlHeightLG", "controlHeightSM", "motionDuration"], sectionId: "global")
                 }
                 .padding(Moin.Constants.Spacing.md)
             }
@@ -189,71 +187,6 @@ struct ButtonAPIView: View {
                     shapePropertyCard
                     sizePropertyCard
                     variantPropertyCard
-
-                    Divider().padding(.vertical, Moin.Constants.Spacing.md)
-
-                    // Token 分组
-                    Text(tr("doc.section.component_token"))
-                        .font(.title3)
-                        .fontWeight(.semibold)
-                        .scrollAnchor("token")
-
-                    borderColorDisabledTokenCard
-                    contentFontSizeTokenCard
-                    contentFontSizeLGTokenCard
-                    contentFontSizeSMTokenCard
-                    dangerColorTokenCard
-                    defaultActiveBgTokenCard
-                    defaultActiveBorderColorTokenCard
-                    defaultActiveColorTokenCard
-                    defaultBgTokenCard
-                    defaultBgDisabledTokenCard
-                    defaultBorderColorTokenCard
-                    defaultColorTokenCard
-                    defaultGhostBorderColorTokenCard
-                    defaultGhostColorTokenCard
-                    defaultHoverBgTokenCard
-                    defaultHoverBorderColorTokenCard
-                    defaultHoverColorTokenCard
-                    fontWeightTokenCard
-                    ghostBgTokenCard
-                    iconGapTokenCard
-                    linkHoverBgTokenCard
-                    onlyIconSizeTokenCard
-                    onlyIconSizeLGTokenCard
-                    onlyIconSizeSMTokenCard
-                    paddingBlockTokenCard
-                    paddingBlockLGTokenCard
-                    paddingBlockSMTokenCard
-                    paddingInlineTokenCard
-                    paddingInlineLGTokenCard
-                    paddingInlineSMTokenCard
-                    primaryColorTokenCard
-                    solidTextColorTokenCard
-                    textHoverBgTokenCard
-                    textTextActiveColorTokenCard
-                    textTextColorTokenCard
-                    textTextHoverColorTokenCard
-
-                    Divider().padding(.vertical, Moin.Constants.Spacing.md)
-
-                    // 全局 Token 分组
-                    Text(tr("doc.section.global_token"))
-                        .font(.title3)
-                        .fontWeight(.semibold)
-                        .scrollAnchor("global")
-
-                    borderRadiusGlobalTokenCard
-                    borderRadiusLGGlobalTokenCard
-                    borderRadiusSMGlobalTokenCard
-                    colorPrimaryGlobalTokenCard
-                    colorPrimaryActiveGlobalTokenCard
-                    colorPrimaryHoverGlobalTokenCard
-                    colorTextDisabledGlobalTokenCard
-                    controlHeightGlobalTokenCard
-                    controlHeightLGGlobalTokenCard
-                    controlHeightSMGlobalTokenCard
-                    motionDurationGlobalTokenCard
                 }
                 .padding(Moin.Constants.Spacing.lg)
             }
@@ -390,43 +323,6 @@ Moin.Button("\(tr("button.label.custom"))", color: .custom(Color(red: 0.6, green
             "Moin.Button(\"\(tr("button.label.normal"))\", shape: .default) {}"
         }
         .scrollAnchor("api.shape")
-    }
-    
-    // MARK: - Token 卡片
-    
-    private var primaryColorTokenCard: some View {
-        TokenCard(
-            name: "primaryColor",
-            type: "Color",
-            defaultValue: ".white",
-            description: tr("button.api.token.primaryColor"),
-            sectionId: "token"
-        ) {
-            Moin.Button(tr("button.label.primary"), color: .primary) {}
-        } editor: {
-            ColorPresetRow(label: "primaryColor", color: $config.components.button.primaryColor)
-        }
-        .scrollAnchor("token.primaryColor")
-    }
-
-    private var paddingInlineTokenCard: some View {
-        TokenCard(
-            name: "paddingInline",
-            type: "CGFloat",
-            defaultValue: "15",
-            description: tr("button.api.token.paddingInline"),
-            sectionId: "token"
-        ) {
-            HStack(spacing: Moin.Constants.Spacing.md) {
-                Moin.Button(tr("button.label.button"), color: .primary) {}
-                Text("padding: \(Int(config.components.button.paddingInline))px")
-                    .font(.system(size: 11, design: .monospaced))
-                    .foregroundStyle(.secondary)
-            }
-        } editor: {
-            TokenValueRow(label: "paddingInline", value: $config.components.button.paddingInline, range: 0...30)
-        }
-        .scrollAnchor("token.paddingInline")
     }
 }
 
