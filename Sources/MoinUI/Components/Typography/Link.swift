@@ -38,12 +38,13 @@ public extension Moin.Typography {
         }
 
         public var body: some View {
-            SwiftUI.Text(content)
+            let actualLineHeight = token.fontSize * token.lineHeight  // 比率转像素
+            return SwiftUI.Text(content)
                 .font(.system(size: token.fontSize))
                 .foregroundStyle(linkColor)
                 .underline(isHovered && !disabled)
-                .lineSpacing(max(0, token.lineHeight - token.fontSize))
-                .padding(.vertical, max(0, (token.lineHeight - token.fontSize) / 2))
+                .lineSpacing(max(0, actualLineHeight - token.fontSize))
+                .padding(.vertical, max(0, (actualLineHeight - token.fontSize) / 2))
                 .onHover { hovering in
                     isHovered = hovering
                     if !disabled {

@@ -456,15 +456,18 @@ struct TypographyTokenView: View {
             description: tr("api.typography.token.small_line_height"),
             sectionId: "token"
         ) {
-            Text("Small Line Height").font(.system(size: 12))
-                .lineSpacing(config.token.lineHeightSM - 12)
+            let fontSize: CGFloat = 12
+            let actualLineHeight = fontSize * config.token.lineHeightSM
+            return Text("Small Line Height").font(.system(size: fontSize))
+                .lineSpacing(max(0, actualLineHeight - fontSize))
+                .padding(.vertical, max(0, (actualLineHeight - fontSize) / 2))
                 .border(Color.red.opacity(0.2))
         } editor: {
             TokenValueRow(label: "lineHeightSM", value: $config.token.lineHeightSM)
-        } code: { "config.token.lineHeightSM = \(Int(config.token.lineHeightSM))" }
+        } code: { "config.token.lineHeightSM = \(String(format: "%.4f", config.token.lineHeightSM))" }
         .scrollAnchor("token.lineHeightSM")
     }
-    
+
     var lineHeightLGCard: some View {
         TokenCard(
             name: "lineHeightLG",
@@ -473,12 +476,15 @@ struct TypographyTokenView: View {
             description: tr("api.typography.token.large_line_height"),
             sectionId: "token"
         ) {
-            Text("Large Line Height").font(.system(size: 16))
-                .lineSpacing(config.token.lineHeightLG - 16)
+            let fontSize: CGFloat = 16
+            let actualLineHeight = fontSize * config.token.lineHeightLG
+            return Text("Large Line Height").font(.system(size: fontSize))
+                .lineSpacing(max(0, actualLineHeight - fontSize))
+                .padding(.vertical, max(0, (actualLineHeight - fontSize) / 2))
                 .border(Color.red.opacity(0.2))
         } editor: {
             TokenValueRow(label: "lineHeightLG", value: $config.token.lineHeightLG)
-        } code: { "config.token.lineHeightLG = \(Int(config.token.lineHeightLG))" }
+        } code: { "config.token.lineHeightLG = \(String(format: "%.4f", config.token.lineHeightLG))" }
         .scrollAnchor("token.lineHeightLG")
     }
     

@@ -41,11 +41,12 @@ public extension Moin.Typography {
         }
 
         public var body: some View {
-            styledText
+            let actualLineHeight = token.fontSize * token.lineHeight  // 比率转像素
+            return styledText
                 .font(textFont)
                 .foregroundStyle(textColor)
-                .lineSpacing(max(0, token.lineHeight - token.fontSize))
-                .padding(.vertical, max(0, (token.lineHeight - token.fontSize) / 2))
+                .lineSpacing(max(0, actualLineHeight - token.fontSize))
+                .padding(.vertical, max(0, (actualLineHeight - token.fontSize) / 2))
         }
 
         @ViewBuilder

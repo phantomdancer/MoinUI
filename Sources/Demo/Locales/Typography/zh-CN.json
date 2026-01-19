@@ -145,7 +145,10 @@
         "link_color": "链接色",
         "fill_tertiary_desc": "三级填充色（代码背景）",
         "fill_secondary_desc": "次级填充色（键盘背景）",
-        "border_color_desc": "边框颜色（键盘边框）"
+        "border_color_desc": "边框颜色（键盘边框）",
+        "playground": {
+          "reset_desc": "重置所有 Token 修改"
+        }
       }
     }
   }

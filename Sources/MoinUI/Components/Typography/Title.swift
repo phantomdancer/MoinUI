@@ -35,11 +35,12 @@ public extension Moin.Typography {
         }
 
         public var body: some View {
-            styledText
+            let actualLineHeight = fontSize * lineHeightRatio  // 比率转像素
+            return styledText
                 .font(.system(size: fontSize, weight: .semibold))
                 .foregroundStyle(textColor)
-                .lineSpacing(max(0, lineHeight - fontSize))
-                .padding(.vertical, max(0, (lineHeight - fontSize) / 2))
+                .lineSpacing(max(0, actualLineHeight - fontSize))
+                .padding(.vertical, max(0, (actualLineHeight - fontSize) / 2))
         }
 
         private var styledText: some View {
@@ -65,7 +66,7 @@ public extension Moin.Typography {
             }
         }
 
-        private var lineHeight: CGFloat {
+        private var lineHeightRatio: CGFloat {
             switch level {
             case .h1: return token.lineHeightHeading1
             case .h2: return token.lineHeightHeading2

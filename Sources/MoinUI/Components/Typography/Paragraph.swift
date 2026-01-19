@@ -106,8 +106,8 @@ public extension Moin.Typography {
                         .foregroundColor(token.colorLink)
                     : SwiftUI.Text(""))
             )
-            .lineSpacing(max(0, token.lineHeight - token.fontSize))
-            .padding(.vertical, max(0, (token.lineHeight - token.fontSize) / 2))
+            .lineSpacing(max(0, actualLineHeight - token.fontSize))
+            .padding(.vertical, max(0, (actualLineHeight - token.fontSize) / 2))
             .frame(maxWidth: .infinity, alignment: .leading)
             .contentShape(Rectangle())
             .onTapGesture {
@@ -203,6 +203,11 @@ public extension Moin.Typography {
                 size: token.fontSize,
                 weight: strong ? .semibold : .regular
             )
+        }
+
+        /// 实际行高像素值 (比率转像素)
+        private var actualLineHeight: CGFloat {
+            token.fontSize * token.lineHeight
         }
 
         private var textColor: Color {

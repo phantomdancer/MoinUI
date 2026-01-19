@@ -242,15 +242,15 @@ public extension Moin {
             let fontSizeHeading4: CGFloat = 20
             let fontSizeHeading5: CGFloat = 16
 
-            // 行高派生 (Ant Design 默认 1.5714)
-            let lineHeight: CGFloat = 1.5714
-            let lineHeightSM: CGFloat = 1.6667
-            let lineHeightLG: CGFloat = 1.5
-            let lineHeightHeading1: CGFloat = 1.2105
-            let lineHeightHeading2: CGFloat = 1.2667
-            let lineHeightHeading3: CGFloat = 1.3333
-            let lineHeightHeading4: CGFloat = 1.4
-            let lineHeightHeading5: CGFloat = 1.5
+            // 行高派生 (比率，与 Ant Design 一致: (fontSize + 8) / fontSize)
+            let lineHeight: CGFloat = 1.5714          // (14 + 8) / 14
+            let lineHeightSM: CGFloat = 1.6667        // (12 + 8) / 12
+            let lineHeightLG: CGFloat = 1.5           // (16 + 8) / 16
+            let lineHeightHeading1: CGFloat = 1.2105  // (38 + 8) / 38
+            let lineHeightHeading2: CGFloat = 1.2667  // (30 + 8) / 30
+            let lineHeightHeading3: CGFloat = 1.3333  // (24 + 8) / 24
+            let lineHeightHeading4: CGFloat = 1.4     // (20 + 8) / 20
+            let lineHeightHeading5: CGFloat = 1.5     // (16 + 8) / 16
 
             // 控件高度派生
             let controlHeightXS = round(seed.controlHeight * 0.5)
