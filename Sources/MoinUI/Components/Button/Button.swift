@@ -647,7 +647,11 @@ public extension Moin {
 
             switch variant {
             case .solid:
-                if color.isDefault { return buttonToken.defaultColor }
+                if color.isDefault {
+                    if isPressed { return buttonToken.defaultActiveColor }
+                    else if isHovered { return buttonToken.defaultHoverColor }
+                    return buttonToken.defaultColor
+                }
                 return color == .danger ? buttonToken.dangerColor : buttonToken.primaryColor
 
             case .filled, .outlined, .dashed:
