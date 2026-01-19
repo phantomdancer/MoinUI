@@ -167,121 +167,102 @@ struct ButtonAPIView: View {
             .padding(.vertical, Moin.Constants.Spacing.sm)
             
             // 可滚动内容
-            ScrollViewReader { proxy in
-                ScrollView {
-                    LazyVStack(alignment: .leading, spacing: Moin.Constants.Spacing.xl) {
-                        // API 分组
-                        Text("API")
-                            .font(.title3)
-                            .fontWeight(.semibold)
-                            .id("api")
+            AnchorScrollView(scrollPosition: $scrollPosition, targetScrollId: $targetScrollId) {
+                LazyVStack(alignment: .leading, spacing: Moin.Constants.Spacing.xl) {
+                    // API 分组
+                    Text("API")
+                        .font(.title3)
+                        .fontWeight(.semibold)
+                        .id("api")
 
-                        actionPropertyCard
-                        colorPropertyCard
-                        fontColorPropertyCard
-                        gradientPropertyCard
-                        hrefPropertyCard
-                        iconPropertyCard
-                        iconPlacementPropertyCard
-                        blockPropertyCard
-                        disabledPropertyCard
-                        ghostPropertyCard
-                        labelPropertyCard
-                        loadingPropertyCard
-                        shapePropertyCard
-                        sizePropertyCard
-                        variantPropertyCard
+                    actionPropertyCard
+                    colorPropertyCard
+                    fontColorPropertyCard
+                    gradientPropertyCard
+                    hrefPropertyCard
+                    iconPropertyCard
+                    iconPlacementPropertyCard
+                    blockPropertyCard
+                    disabledPropertyCard
+                    ghostPropertyCard
+                    labelPropertyCard
+                    loadingPropertyCard
+                    shapePropertyCard
+                    sizePropertyCard
+                    variantPropertyCard
 
-                        Divider().padding(.vertical, Moin.Constants.Spacing.md)
+                    Divider().padding(.vertical, Moin.Constants.Spacing.md)
 
-                        // Token 分组
-                        Text(tr("doc.section.component_token"))
-                            .font(.title3)
-                            .fontWeight(.semibold)
-                            .id("token")
+                    // Token 分组
+                    Text(tr("doc.section.component_token"))
+                        .font(.title3)
+                        .fontWeight(.semibold)
+                        .id("token")
 
-                        borderColorDisabledTokenCard
-                        contentFontSizeTokenCard
-                        contentFontSizeLGTokenCard
-                        contentFontSizeSMTokenCard
-                        dangerColorTokenCard
-                        defaultActiveBgTokenCard
-                        defaultActiveBorderColorTokenCard
-                        defaultActiveColorTokenCard
-                        defaultBgTokenCard
-                        defaultBgDisabledTokenCard
-                        defaultBorderColorTokenCard
-                        defaultColorTokenCard
-                        defaultGhostBorderColorTokenCard
-                        defaultGhostColorTokenCard
-                        defaultHoverBgTokenCard
-                        defaultHoverBorderColorTokenCard
-                        defaultHoverColorTokenCard
-                        fontWeightTokenCard
-                        ghostBgTokenCard
-                        iconGapTokenCard
-                        linkHoverBgTokenCard
-                        onlyIconSizeTokenCard
-                        onlyIconSizeLGTokenCard
-                        onlyIconSizeSMTokenCard
-                        paddingBlockTokenCard
-                        paddingBlockLGTokenCard
-                        paddingBlockSMTokenCard
-                        paddingInlineTokenCard
-                        paddingInlineLGTokenCard
-                        paddingInlineSMTokenCard
-                        primaryColorTokenCard
-                        solidTextColorTokenCard
-                        textHoverBgTokenCard
-                        textTextActiveColorTokenCard
-                        textTextColorTokenCard
-                        textTextHoverColorTokenCard
+                    borderColorDisabledTokenCard
+                    contentFontSizeTokenCard
+                    contentFontSizeLGTokenCard
+                    contentFontSizeSMTokenCard
+                    dangerColorTokenCard
+                    defaultActiveBgTokenCard
+                    defaultActiveBorderColorTokenCard
+                    defaultActiveColorTokenCard
+                    defaultBgTokenCard
+                    defaultBgDisabledTokenCard
+                    defaultBorderColorTokenCard
+                    defaultColorTokenCard
+                    defaultGhostBorderColorTokenCard
+                    defaultGhostColorTokenCard
+                    defaultHoverBgTokenCard
+                    defaultHoverBorderColorTokenCard
+                    defaultHoverColorTokenCard
+                    fontWeightTokenCard
+                    ghostBgTokenCard
+                    iconGapTokenCard
+                    linkHoverBgTokenCard
+                    onlyIconSizeTokenCard
+                    onlyIconSizeLGTokenCard
+                    onlyIconSizeSMTokenCard
+                    paddingBlockTokenCard
+                    paddingBlockLGTokenCard
+                    paddingBlockSMTokenCard
+                    paddingInlineTokenCard
+                    paddingInlineLGTokenCard
+                    paddingInlineSMTokenCard
+                    primaryColorTokenCard
+                    solidTextColorTokenCard
+                    textHoverBgTokenCard
+                    textTextActiveColorTokenCard
+                    textTextColorTokenCard
+                    textTextHoverColorTokenCard
 
-                        Divider().padding(.vertical, Moin.Constants.Spacing.md)
+                    Divider().padding(.vertical, Moin.Constants.Spacing.md)
 
-                        // 全局 Token 分组
-                        Text(tr("doc.section.global_token"))
-                            .font(.title3)
-                            .fontWeight(.semibold)
-                            .id("global")
+                    // 全局 Token 分组
+                    Text(tr("doc.section.global_token"))
+                        .font(.title3)
+                        .fontWeight(.semibold)
+                        .id("global")
 
-                        borderRadiusGlobalTokenCard
-                        borderRadiusLGGlobalTokenCard
-                        borderRadiusSMGlobalTokenCard
-                        colorPrimaryGlobalTokenCard
-                        colorPrimaryActiveGlobalTokenCard
-                        colorPrimaryHoverGlobalTokenCard
-                        colorTextDisabledGlobalTokenCard
-                        controlHeightGlobalTokenCard
-                        controlHeightLGGlobalTokenCard
-                        controlHeightSMGlobalTokenCard
-                        motionDurationGlobalTokenCard
-                    }
-                    .padding(Moin.Constants.Spacing.lg)
-                    .scrollTargetLayout()
+                    borderRadiusGlobalTokenCard
+                    borderRadiusLGGlobalTokenCard
+                    borderRadiusSMGlobalTokenCard
+                    colorPrimaryGlobalTokenCard
+                    colorPrimaryActiveGlobalTokenCard
+                    colorPrimaryHoverGlobalTokenCard
+                    colorTextDisabledGlobalTokenCard
+                    controlHeightGlobalTokenCard
+                    controlHeightLGGlobalTokenCard
+                    controlHeightSMGlobalTokenCard
+                    motionDurationGlobalTokenCard
                 }
-                .scrollTargetBehavior(.viewAligned)
-                .scrollPosition(id: $scrollPosition, anchor: .top)
-                .onChange(of: targetScrollId) { _, newValue in
-                    if let newValue {
-                        withAnimation {
-                            proxy.scrollTo(newValue, anchor: .top)
-                        }
-                        // 二次校准，解决 LazyVStack 高度估算偏差
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                            withAnimation {
-                                proxy.scrollTo(newValue, anchor: .top)
-                            }
-                        }
-                    }
-                }
-                .onChange(of: scrollPosition) { _, newValue in
-                    if let newValue {
-                        selectedItemId = newValue
-                    }
+                .padding(Moin.Constants.Spacing.lg)
+            }
+            .onChange(of: scrollPosition) { _, newValue in
+                if let newValue {
+                    selectedItemId = newValue
                 }
             }
-            .background(Color(nsColor: .controlBackgroundColor))
         }
     }
     
