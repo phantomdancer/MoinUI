@@ -26,8 +26,8 @@ extension TagTokenView {
             ))
         } code: {
             """
-            config.components.tag.defaultBg = ...
             // \(tr("api.component_token_desc"))
+            // config.components.tag.defaultBg = Color(...)
             """
         }
         .scrollAnchor("token.defaultBg")
@@ -50,7 +50,7 @@ extension TagTokenView {
                 set: { Moin.ConfigProvider.shared.components.tag.defaultColor = $0 }
             ))
         } code: {
-            "config.components.tag.defaultColor = ..."
+            "config.components.tag.defaultColor = Color(...)"
         }
         .scrollAnchor("token.defaultColor")
     }
@@ -73,7 +73,7 @@ extension TagTokenView {
                 set: { Moin.ConfigProvider.shared.components.tag.solidTextColor = $0 }
             ))
         } code: {
-            "config.components.tag.solidTextColor = ..."
+            "config.components.tag.solidTextColor = Color(...)"
         }
         .scrollAnchor("token.solidTextColor")
     }
@@ -95,7 +95,7 @@ extension TagTokenView {
                 set: { Moin.ConfigProvider.shared.components.tag.lineWidth = $0 }
             ), range: 0...5)
         } code: {
-            "config.components.tag.lineWidth = ..."
+            "config.components.tag.lineWidth = \(Int(config.components.tag.lineWidth))"
         }
         .scrollAnchor("token.lineWidth")
     }
@@ -119,7 +119,7 @@ extension TagTokenView {
                 set: { Moin.ConfigProvider.shared.components.tag.fontSize = $0 }
             ))
         } code: {
-            "config.components.tag.fontSize = 14"
+            "config.components.tag.fontSize = \(Int(config.components.tag.fontSize))"
         }
         .scrollAnchor("token.fontSize")
     }
@@ -141,7 +141,7 @@ extension TagTokenView {
                 set: { Moin.ConfigProvider.shared.components.tag.fontSizeLG = $0 }
             ))
         } code: {
-            "config.components.tag.fontSizeLG = ..."
+            "config.components.tag.fontSizeLG = \(Int(config.components.tag.fontSizeLG))"
         }
         .scrollAnchor("token.fontSizeLG")
     }
@@ -163,7 +163,7 @@ extension TagTokenView {
                 set: { Moin.ConfigProvider.shared.components.tag.fontSizeSM = $0 }
             ))
         } code: {
-            "config.components.tag.fontSizeSM = ..."
+            "config.components.tag.fontSizeSM = \(Int(config.components.tag.fontSizeSM))"
         }
         .scrollAnchor("token.fontSizeSM")
     }
@@ -187,7 +187,7 @@ extension TagTokenView {
                 set: { Moin.ConfigProvider.shared.components.tag.paddingH = $0 }
             ))
         } code: {
-            "config.components.tag.paddingH = 10"
+            "config.components.tag.paddingH = \(Int(config.components.tag.paddingH))"
         }
         .scrollAnchor("token.paddingH")
     }
@@ -209,7 +209,7 @@ extension TagTokenView {
                 set: { Moin.ConfigProvider.shared.components.tag.paddingHLG = $0 }
             ))
         } code: {
-            "config.components.tag.paddingHLG = ..."
+            "config.components.tag.paddingHLG = \(Int(config.components.tag.paddingHLG))"
         }
         .scrollAnchor("token.paddingHLG")
     }
@@ -231,7 +231,7 @@ extension TagTokenView {
                 set: { Moin.ConfigProvider.shared.components.tag.paddingHSM = $0 }
             ))
         } code: {
-            "config.components.tag.paddingHSM = ..."
+            "config.components.tag.paddingHSM = \(Int(config.components.tag.paddingHSM))"
         }
         .scrollAnchor("token.paddingHSM")
     }
@@ -254,7 +254,7 @@ extension TagTokenView {
                 set: { Moin.ConfigProvider.shared.components.tag.paddingV = $0 }
             ))
         } code: {
-            "config.components.tag.paddingV = ..."
+            "config.components.tag.paddingV = \(Int(config.components.tag.paddingV))"
         }
         .scrollAnchor("token.paddingV")
     }
@@ -276,7 +276,7 @@ extension TagTokenView {
                 set: { Moin.ConfigProvider.shared.components.tag.paddingVLG = $0 }
             ))
         } code: {
-            "config.components.tag.paddingVLG = ..."
+            "config.components.tag.paddingVLG = \(Int(config.components.tag.paddingVLG))"
         }
         .scrollAnchor("token.paddingVLG")
     }
@@ -298,7 +298,7 @@ extension TagTokenView {
                 set: { Moin.ConfigProvider.shared.components.tag.paddingVSM = $0 }
             ))
         } code: {
-            "config.components.tag.paddingVSM = ..."
+            "config.components.tag.paddingVSM = \(Int(config.components.tag.paddingVSM))"
         }
         .scrollAnchor("token.paddingVSM")
     }
@@ -322,7 +322,7 @@ extension TagTokenView {
                 set: { Moin.ConfigProvider.shared.components.tag.iconSize = $0 }
             ))
         } code: {
-            "config.components.tag.iconSize = ..."
+            "config.components.tag.iconSize = \(Int(config.components.tag.iconSize))"
         }
         .scrollAnchor("token.iconSize")
     }
@@ -344,7 +344,7 @@ extension TagTokenView {
                 set: { Moin.ConfigProvider.shared.components.tag.iconSizeLG = $0 }
             ))
         } code: {
-            "config.components.tag.iconSizeLG = ..."
+            "config.components.tag.iconSizeLG = \(Int(config.components.tag.iconSizeLG))"
         }
         .scrollAnchor("token.iconSizeLG")
     }
@@ -366,7 +366,7 @@ extension TagTokenView {
                 set: { Moin.ConfigProvider.shared.components.tag.iconSizeSM = $0 }
             ))
         } code: {
-            "config.components.tag.iconSizeSM = ..."
+            "config.components.tag.iconSizeSM = \(Int(config.components.tag.iconSizeSM))"
         }
         .scrollAnchor("token.iconSizeSM")
     }
@@ -388,7 +388,7 @@ extension TagTokenView {
                 set: { Moin.ConfigProvider.shared.components.tag.iconGap = $0 }
             ))
         } code: {
-            "config.components.tag.iconGap = ..."
+            "config.components.tag.iconGap = \(Int(config.components.tag.iconGap))"
         }
         .scrollAnchor("token.iconGap")
     }
@@ -412,7 +412,7 @@ extension TagTokenView {
                 set: { Moin.ConfigProvider.shared.components.tag.iconGapLG = $0 }
             ))
         } code: {
-            "config.components.tag.iconGapLG = ..."
+            "config.components.tag.iconGapLG = \(Int(config.components.tag.iconGapLG))"
         }
         .scrollAnchor("token.iconGapLG")
     }
@@ -434,7 +434,7 @@ extension TagTokenView {
                 set: { Moin.ConfigProvider.shared.components.tag.iconGapSM = $0 }
             ))
         } code: {
-            "config.components.tag.iconGapSM = ..."
+            "config.components.tag.iconGapSM = \(Int(config.components.tag.iconGapSM))"
         }
         .scrollAnchor("token.iconGapSM")
     }
