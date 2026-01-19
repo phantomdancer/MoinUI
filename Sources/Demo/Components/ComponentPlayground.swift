@@ -219,6 +219,7 @@ struct TokenValueRow: View {
     let label: String
     @Binding var value: CGFloat
     var range: ClosedRange<CGFloat>? = nil  // nil 表示无限制
+    var step: CGFloat = 1
     var onChange: (() -> Void)?
 
     @State private var minusHovered = false
@@ -234,8 +235,8 @@ struct TokenValueRow: View {
             Spacer()
             HStack(spacing: 4) {
                 Button {
-                    if value > minValue {
-                        value -= 1
+                    if value - step >= minValue {
+                        value -= step
                         onChange?()
                     }
                 } label: {
@@ -258,12 +259,12 @@ struct TokenValueRow: View {
                     }
                 }
 
-                Text("\(Int(value))")
+                Text(String(format: step < 1 ? "%.1f" : "%.0f", value))
                     .font(.system(size: 11, design: .monospaced))
                     .frame(width: 30)
 
                 Button {
-                    value += 1
+                    value += step
                     onChange?()
                 } label: {
                     Image(systemName: "plus")
@@ -328,6 +329,29 @@ struct FontWeightPickerRow: View {
                 Text("Bold").tag(Font.Weight.bold)
                 Text("Heavy").tag(Font.Weight.heavy)
                 Text("Black").tag(Font.Weight.black)
+            }
+            .labelsHidden()
+            .frame(width: 120)
+        }
+    }
+}
+
+/// Token 枚举选择行
+struct EnumPickerRow<T: Hashable & CustomStringConvertible>: View {
+    let label: String
+    @Binding var selection: T
+    let options: [T]
+
+    var body: some View {
+        HStack {
+            Text(label)
+                .font(.system(size: 11, design: .monospaced))
+                .foregroundStyle(.secondary)
+            Spacer()
+            Picker("", selection: $selection) {
+                ForEach(options, id: \.self) { option in
+                    Text(option.description).tag(option)
+                }
             }
             .labelsHidden()
             .frame(width: 120)

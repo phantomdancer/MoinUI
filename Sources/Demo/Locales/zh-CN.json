@@ -227,6 +227,8 @@
       "controlHeightSM": "小号控件高度",
       "colorTextDisabled": "禁用文本色",
       "motionDuration": "动画时长",
+      "motionDurationSlow": "慢速动画时长",
+      "motionEase": "动画曲线",
       "fontSize": "字体大小",
       "margin": "外边距",
       "marginLG": "大号外边距",

@@ -19,6 +19,8 @@ struct ButtonTokenView: View {
         config.seed.colorPrimary = Moin.Colors.blue
         config.seed.borderRadius = 6
         config.seed.controlHeight = 32
+        config.seed.motionUnit = 0.1 // 重置动画 Unit
+        config.seed.motionBase = 2   // 重置动画 Base
         config.regenerateTokens()
         // 通知重置
         NotificationCenter.default.post(name: .buttonDocReset, object: nil)
@@ -72,7 +74,7 @@ struct ButtonTokenView: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: Moin.Constants.Spacing.sm) {
                     navSection(title: tr("doc.section.component_token"), items: ["borderColorDisabled", "contentFontSize", "contentFontSizeLG", "contentFontSizeSM", "dangerColor", "defaultActiveBg", "defaultActiveBorderColor", "defaultActiveColor", "defaultBg", "defaultBgDisabled", "defaultBorderColor", "defaultColor", "defaultGhostBorderColor", "defaultGhostColor", "defaultHoverBg", "defaultHoverBorderColor", "defaultHoverColor", "fontWeight", "ghostBg", "iconGap", "linkHoverBg", "onlyIconSize", "onlyIconSizeLG", "onlyIconSizeSM", "paddingBlock", "paddingBlockLG", "paddingBlockSM", "paddingInline", "paddingInlineLG", "paddingInlineSM", "primaryColor", "solidTextColor", "textHoverBg", "textTextActiveColor", "textTextColor", "textTextHoverColor"], sectionId: "token")
-                    navSection(title: tr("doc.section.global_token"), items: ["borderRadius", "borderRadiusLG", "borderRadiusSM", "colorPrimary", "colorPrimaryActive", "colorPrimaryHover", "colorTextDisabled", "controlHeight", "controlHeightLG", "controlHeightSM", "motionDuration"], sectionId: "global")
+                    navSection(title: tr("doc.section.global_token"), items: ["borderRadius", "borderRadiusLG", "borderRadiusSM", "colorPrimary", "colorPrimaryActive", "colorPrimaryHover", "colorTextDisabled", "controlHeight", "controlHeightLG", "controlHeightSM", "motionDurationMid", "motionDurationSlow", "motionEase"], sectionId: "global")
                 }
                 .padding(Moin.Constants.Spacing.md)
             }
@@ -130,14 +132,10 @@ struct ButtonTokenView: View {
             // 固定顶部重置按钮
             HStack {
                 Spacer()
-                Button {
+                Moin.Button(tr("playground.token.reset"), color: .primary, variant: .solid) {
                     resetAll()
-                } label: {
-                    Text(tr("playground.token.reset"))
-                        .font(.system(size: 12))
-                        .foregroundStyle(.blue)
                 }
-                .buttonStyle(.plain)
+                Spacer()
             }
             .padding(.horizontal, Moin.Constants.Spacing.lg)
             .padding(.vertical, Moin.Constants.Spacing.sm)
@@ -206,7 +204,9 @@ struct ButtonTokenView: View {
                     controlHeightGlobalTokenCard
                     controlHeightLGGlobalTokenCard
                     controlHeightSMGlobalTokenCard
-                    motionDurationGlobalTokenCard
+                    motionDurationMidGlobalTokenCard
+                    motionDurationSlowGlobalTokenCard
+                    motionEaseGlobalTokenCard
                 }
                 .padding(Moin.Constants.Spacing.lg)
             }

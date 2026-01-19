@@ -334,9 +334,9 @@ public extension Moin {
 
         // MARK: - Body
 
-        /// 动画：尊重 reducedMotion 设置
+        /// 动画：尊重 reducedMotion 设置和 Token 配置
         private var stateAnimation: Animation? {
-            reduceMotion ? nil : .easeInOut(duration: token.motionDuration / 2)
+            (reduceMotion || !token.motion) ? nil : token.motionEase.animation(duration: token.motionDuration)
         }
 
         public var body: some View {
@@ -357,18 +357,14 @@ public extension Moin {
                 switch phase {
                 case .active:
                     if !isHovered {
-                        withAnimation(stateAnimation) {
-                            isHovered = true
-                        }
+                        isHovered = true
                     }
                     let cursor: NSCursor = effectiveDisabled ? .operationNotAllowed : .pointingHand
                     cursor.set()
                 case .ended:
                     if isHovered {
-                        withAnimation(stateAnimation) {
-                            isHovered = false
-                            isPressed = false
-                        }
+                        isHovered = false
+                        isPressed = false
                     }
                     NSCursor.arrow.set()
                 }
@@ -377,15 +373,11 @@ public extension Moin {
                 DragGesture(minimumDistance: 0)
                     .onChanged { _ in
                         if !isPressed {
-                            withAnimation(stateAnimation) {
-                                isPressed = true
-                            }
+                            isPressed = true
                         }
                     }
                     .onEnded { _ in
-                        withAnimation(stateAnimation) {
-                            isPressed = false
-                        }
+                        isPressed = false
                     }
             )
             .task(id: loadingConfig.isLoading) {
@@ -423,6 +415,8 @@ public extension Moin {
             .overlay(borderOverlay)
             .overlay(focusRingOverlay)
             .contentShape(Rectangle())
+            .animation(stateAnimation, value: isHovered)
+            .animation(stateAnimation, value: isPressed)
         }
 
         /// 焦点环样式

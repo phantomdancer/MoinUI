@@ -9,11 +9,22 @@ public enum MoinLineType: String {
 
 // MARK: - Motion Ease
 
-public enum MoinMotionEase: String {
+public enum MoinMotionEase: String, CaseIterable, CustomStringConvertible {
     case easeInOut = "easeInOut"
     case easeOut = "easeOut"
     case easeIn = "easeIn"
     case linear = "linear"
+    
+    public var description: String { rawValue }
+    
+    public func animation(duration: Double) -> Animation {
+        switch self {
+        case .easeInOut: return .easeInOut(duration: duration)
+        case .easeOut: return .easeOut(duration: duration)
+        case .easeIn: return .easeIn(duration: duration)
+        case .linear: return .linear(duration: duration)
+        }
+    }
 }
 
 // MARK: - Moin.SeedToken

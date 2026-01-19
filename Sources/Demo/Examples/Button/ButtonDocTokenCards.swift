@@ -867,18 +867,81 @@ extension ButtonTokenView {
         .scrollAnchor("global.controlHeightSM")
     }
 
-    var motionDurationGlobalTokenCard: some View {
+    var motionDurationMidGlobalTokenCard: some View {
         TokenCard(
-            name: "motionDuration",
+            name: "motionDurationMid",
             type: "Double",
             defaultValue: "0.2",
             description: tr("api.global_token.motionDuration"),
             sectionId: "global"
         ) {
             Moin.Button(tr("button.label.button"), color: .primary) {}
+        } editor: {
+            TokenValueRow(
+                label: "motionUnit",
+                value: Binding(
+                    get: { CGFloat(config.seed.motionUnit) },
+                    set: { val in
+                        config.configureSeed { seed in
+                            seed.motionUnit = Double(val)
+                        }
+                    }
+                ),
+                range: 0...1.0,
+                step: 0.05
+            )
         } code: {
-            "config.seed.motionDuration = 0.2"
+            // 显示 motionUnit 和计算结果的注释
+            """
+            // motionDurationMid = motionBase(2) * motionUnit
+            config.seed.motionUnit = \(String(format: "%.2f", config.seed.motionUnit))
+            """
         }
         .scrollAnchor("global.motionDuration")
+    }
+
+    var motionDurationSlowGlobalTokenCard: some View {
+        TokenCard(
+            name: "motionDurationSlow",
+            type: "Double",
+            defaultValue: "0.3",
+            description: tr("api.global_token.motionDurationSlow"),
+            sectionId: "global"
+        ) {
+            Moin.Button(tr("button.label.button"), color: .primary) {}
+        } editor: {
+            TokenDisplayRow(label: "motionDurationSlow", value: String(format: "%.1fs", config.token.motionDurationSlow))
+        } code: {
+            "// \(tr("api.derived_from")) motionDurationMid * 1.5"
+        }
+        .scrollAnchor("global.motionDurationSlow")
+    }
+
+    var motionEaseGlobalTokenCard: some View {
+        TokenCard(
+            name: "motionEase",
+            type: "String",
+            defaultValue: "easeInOut",
+            description: tr("api.global_token.motionEase"),
+            sectionId: "global"
+        ) {
+            Moin.Button(tr("button.label.button"), color: .primary) {}
+        } editor: {
+            EnumPickerRow(
+                label: "motionEase",
+                selection: Binding(
+                    get: { config.seed.motionEase },
+                    set: { val in
+                        config.configureSeed { seed in
+                            seed.motionEase = val
+                        }
+                    }
+                ),
+                options: MoinMotionEase.allCases
+            )
+        } code: {
+            "config.seed.motionEase = .\(config.seed.motionEase.rawValue)"
+        }
+        .scrollAnchor("global.motionEase")
     }
 }

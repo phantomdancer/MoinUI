@@ -227,6 +227,8 @@
       "controlHeightSM": "Small control height",
       "colorTextDisabled": "Disabled text color",
       "motionDuration": "Animation duration",
+      "motionDurationSlow": "Animation duration slow",
+      "motionEase": "Animation curve",
       "fontSize": "Font size",
       "margin": "Margin",
       "marginLG": "Large margin",
