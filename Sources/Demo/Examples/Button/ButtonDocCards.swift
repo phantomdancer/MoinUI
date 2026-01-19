@@ -25,7 +25,7 @@ Moin.Button("\(tr("button.label.click_me"))", color: .primary) {
 }
 """
         }
-        .id("api.action")
+        .scrollAnchor("api.action")
     }
 
     // MARK: - FontColor 属性卡片
@@ -185,7 +185,7 @@ Moin.Button(icon: "heart.fill", shape: .circle) {}
         } code: {
             "Moin.Button(\"\(tr("button.label.loading"))\", loading: true) {}"
         }
-        .id("api.loading")
+        .scrollAnchor("api.loading")
     }
 
     // MARK: - Disabled 属性卡片
@@ -202,7 +202,7 @@ Moin.Button(icon: "heart.fill", shape: .circle) {}
         } code: {
             "Moin.Button(\"\(tr("button.label.disabled"))\", isDisabled: true) {}"
         }
-        .id("api.isDisabled")
+        .scrollAnchor("api.isDisabled")
     }
 
     // MARK: - Block 属性卡片
@@ -219,7 +219,7 @@ Moin.Button(icon: "heart.fill", shape: .circle) {}
         } code: {
             "Moin.Button(\"\(tr("button.label.block"))\", isBlock: true) {}"
         }
-        .id("api.isBlock")
+        .scrollAnchor("api.isBlock")
     }
 
     // MARK: - Ghost 属性卡片
@@ -241,7 +241,7 @@ Moin.Button(icon: "heart.fill", shape: .circle) {}
         } code: {
             "Moin.Button(\"\(tr("button.label.button"))\", isGhost: true) {}"
         }
-        .id("api.isGhost")
+        .scrollAnchor("api.isGhost")
     }
 
     // MARK: - IconPlacement 属性卡片
@@ -265,6 +265,6 @@ Moin.Button("\(tr("button.label.start"))", icon: "arrow.left", iconPlacement: .s
 Moin.Button("\(tr("button.label.end"))", icon: "arrow.right", iconPlacement: .end) {}
 """
         }
-        .id("api.iconPlacement")
+        .scrollAnchor("api.iconPlacement")
     }
 }

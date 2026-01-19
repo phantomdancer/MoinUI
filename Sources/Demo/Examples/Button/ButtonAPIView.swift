@@ -166,13 +166,13 @@ struct ButtonAPIView: View {
             .padding(.vertical, Moin.Constants.Spacing.sm)
             
             // 可滚动内容
-            AnchorScrollView(targetScrollId: $targetScrollId) {
+            AnchorScrollView(targetScrollId: $targetScrollId, currentScrollId: $selectedItemId) {
                 LazyVStack(alignment: .leading, spacing: Moin.Constants.Spacing.xl) {
                     // API 分组
                     Text("API")
                         .font(.title3)
                         .fontWeight(.semibold)
-                        .id("api")
+                        .scrollAnchor("api")
 
                     actionPropertyCard
                     colorPropertyCard
@@ -196,7 +196,7 @@ struct ButtonAPIView: View {
                     Text(tr("doc.section.component_token"))
                         .font(.title3)
                         .fontWeight(.semibold)
-                        .id("token")
+                        .scrollAnchor("token")
 
                     borderColorDisabledTokenCard
                     contentFontSizeTokenCard
@@ -241,7 +241,7 @@ struct ButtonAPIView: View {
                     Text(tr("doc.section.global_token"))
                         .font(.title3)
                         .fontWeight(.semibold)
-                        .id("global")
+                        .scrollAnchor("global")
 
                     borderRadiusGlobalTokenCard
                     borderRadiusLGGlobalTokenCard
@@ -320,7 +320,7 @@ Moin.Button("\(tr("button.label.brown"))", color: .custom(Color(red: 0.6, green:
 Moin.Button("\(tr("button.label.custom"))", color: .custom(Color(red: 0.6, green: 0.2, blue: 0.8))) {}
 """
         }
-        .id("api.color")
+        .scrollAnchor("api.color")
     }
     
     // MARK: - Variant 属性卡片
@@ -345,7 +345,7 @@ Moin.Button("\(tr("button.label.custom"))", color: .custom(Color(red: 0.6, green
         } code: {
             "Moin.Button(\"\(tr("button.label.solid"))\", variant: .solid) {}"
         }
-        .id("api.variant")
+        .scrollAnchor("api.variant")
     }
 
     // MARK: - Size 属性卡片
@@ -367,7 +367,7 @@ Moin.Button("\(tr("button.label.custom"))", color: .custom(Color(red: 0.6, green
         } code: {
             "Moin.Button(\"\(tr("button.label.medium"))\", size: .medium) {}"
         }
-        .id("api.size")
+        .scrollAnchor("api.size")
     }
 
     // MARK: - Shape 属性卡片
@@ -389,7 +389,7 @@ Moin.Button("\(tr("button.label.custom"))", color: .custom(Color(red: 0.6, green
         } code: {
             "Moin.Button(\"\(tr("button.label.normal"))\", shape: .default) {}"
         }
-        .id("api.shape")
+        .scrollAnchor("api.shape")
     }
     
     // MARK: - Token 卡片
@@ -406,7 +406,7 @@ Moin.Button("\(tr("button.label.custom"))", color: .custom(Color(red: 0.6, green
         } editor: {
             ColorPresetRow(label: "primaryColor", color: $config.components.button.primaryColor)
         }
-        .id("token.primaryColor")
+        .scrollAnchor("token.primaryColor")
     }
 
     private var paddingInlineTokenCard: some View {
@@ -426,7 +426,7 @@ Moin.Button("\(tr("button.label.custom"))", color: .custom(Color(red: 0.6, green
         } editor: {
             TokenValueRow(label: "paddingInline", value: $config.components.button.paddingInline, range: 0...30)
         }
-        .id("token.paddingInline")
+        .scrollAnchor("token.paddingInline")
     }
 }
 
@@ -579,7 +579,7 @@ struct PropertyCard<Preview: View, TryIt: View>: View {
                     .stroke(Color.primary.opacity(0.1), lineWidth: 1)
             )
         }
-        .id("\(sectionId).\(name)")
+        .scrollAnchor("\(sectionId).\(name)")
     }
 }
 
@@ -717,6 +717,6 @@ struct TokenCard<Preview: View, Editor: View>: View {
                     .stroke(Color.primary.opacity(0.1), lineWidth: 1)
             )
         }
-        .id("\(sectionId).\(name)")
+        .scrollAnchor("\(sectionId).\(name)")
     }
 }

@@ -21,7 +21,7 @@ extension ButtonAPIView {
         } code: {
             "config.components.button.borderColorDisabled = Color(...)"
         }
-        .id("token.borderColorDisabled")
+        .scrollAnchor("token.borderColorDisabled")
     }
 
     // MARK: - 颜色相关 Token
@@ -40,7 +40,7 @@ extension ButtonAPIView {
         } code: {
             "config.components.button.defaultColor = Color(...)"
         }
-        .id("token.defaultColor")
+        .scrollAnchor("token.defaultColor")
     }
 
     var defaultBgTokenCard: some View {
@@ -57,7 +57,7 @@ extension ButtonAPIView {
         } code: {
             "config.components.button.defaultBg = Color(...)"
         }
-        .id("token.defaultBg")
+        .scrollAnchor("token.defaultBg")
     }
 
     var defaultBorderColorTokenCard: some View {
@@ -74,7 +74,7 @@ extension ButtonAPIView {
         } code: {
             "config.components.button.defaultBorderColor = Color(...)"
         }
-        .id("token.defaultBorderColor")
+        .scrollAnchor("token.defaultBorderColor")
     }
 
     var dangerColorTokenCard: some View {
@@ -91,7 +91,7 @@ extension ButtonAPIView {
         } code: {
             "config.components.button.dangerColor = Color(...)"
         }
-        .id("token.dangerColor")
+        .scrollAnchor("token.dangerColor")
     }
 
     var defaultActiveBgTokenCard: some View {
@@ -108,7 +108,7 @@ extension ButtonAPIView {
         } code: {
             "config.components.button.defaultActiveBg = Color(...)"
         }
-        .id("token.defaultActiveBg")
+        .scrollAnchor("token.defaultActiveBg")
     }
 
     var defaultActiveBorderColorTokenCard: some View {
@@ -125,7 +125,7 @@ extension ButtonAPIView {
         } code: {
             "config.components.button.defaultActiveBorderColor = Color(...)"
         }
-        .id("token.defaultActiveBorderColor")
+        .scrollAnchor("token.defaultActiveBorderColor")
     }
 
     var defaultActiveColorTokenCard: some View {
@@ -142,7 +142,7 @@ extension ButtonAPIView {
         } code: {
             "config.components.button.defaultActiveColor = Color(...)"
         }
-        .id("token.defaultActiveColor")
+        .scrollAnchor("token.defaultActiveColor")
     }
 
     var defaultBgDisabledTokenCard: some View {
@@ -159,7 +159,7 @@ extension ButtonAPIView {
         } code: {
             "config.components.button.defaultBgDisabled = Color(...)"
         }
-        .id("token.defaultBgDisabled")
+        .scrollAnchor("token.defaultBgDisabled")
     }
 
     var defaultGhostBorderColorTokenCard: some View {
@@ -179,7 +179,7 @@ extension ButtonAPIView {
         } code: {
             "config.components.button.defaultGhostBorderColor = Color(...)"
         }
-        .id("token.defaultGhostBorderColor")
+        .scrollAnchor("token.defaultGhostBorderColor")
     }
 
     var defaultGhostColorTokenCard: some View {
@@ -199,7 +199,7 @@ extension ButtonAPIView {
         } code: {
             "config.components.button.defaultGhostColor = Color(...)"
         }
-        .id("token.defaultGhostColor")
+        .scrollAnchor("token.defaultGhostColor")
     }
 
     var defaultHoverBgTokenCard: some View {
@@ -216,7 +216,7 @@ extension ButtonAPIView {
         } code: {
             "config.components.button.defaultHoverBg = Color(...)"
         }
-        .id("token.defaultHoverBg")
+        .scrollAnchor("token.defaultHoverBg")
     }
 
     var defaultHoverBorderColorTokenCard: some View {
@@ -233,7 +233,7 @@ extension ButtonAPIView {
         } code: {
             "config.components.button.defaultHoverBorderColor = Color(...)"
         }
-        .id("token.defaultHoverBorderColor")
+        .scrollAnchor("token.defaultHoverBorderColor")
     }
 
     var defaultHoverColorTokenCard: some View {
@@ -250,7 +250,7 @@ extension ButtonAPIView {
         } code: {
             "config.components.button.defaultHoverColor = Color(...)"
         }
-        .id("token.defaultHoverColor")
+        .scrollAnchor("token.defaultHoverColor")
     }
 
     var fontWeightTokenCard: some View {
@@ -265,7 +265,7 @@ extension ButtonAPIView {
         } code: {
             "config.components.button.fontWeight = .bold"
         }
-        .id("token.fontWeight")
+        .scrollAnchor("token.fontWeight")
     }
 
     var ghostBgTokenCard: some View {
@@ -285,7 +285,7 @@ extension ButtonAPIView {
         } code: {
             "config.components.button.ghostBg = Color(...)"
         }
-        .id("token.ghostBg")
+        .scrollAnchor("token.ghostBg")
     }
 
     var linkHoverBgTokenCard: some View {
@@ -302,7 +302,7 @@ extension ButtonAPIView {
         } code: {
             "config.components.button.linkHoverBg = Color(...)"
         }
-        .id("token.linkHoverBg")
+        .scrollAnchor("token.linkHoverBg")
     }
 
     var onlyIconSizeTokenCard: some View {
@@ -324,7 +324,7 @@ extension ButtonAPIView {
         } code: {
             "config.components.button.onlyIconSize = \(Int(config.components.button.onlyIconSize))"
         }
-        .id("token.onlyIconSize")
+        .scrollAnchor("token.onlyIconSize")
     }
 
     var onlyIconSizeLGTokenCard: some View {
@@ -346,7 +346,7 @@ extension ButtonAPIView {
         } code: {
             "config.components.button.onlyIconSizeLG = \(Int(config.components.button.onlyIconSizeLG))"
         }
-        .id("token.onlyIconSizeLG")
+        .scrollAnchor("token.onlyIconSizeLG")
     }
 
     var onlyIconSizeSMTokenCard: some View {
@@ -368,7 +368,7 @@ extension ButtonAPIView {
         } code: {
             "config.components.button.onlyIconSizeSM = \(Int(config.components.button.onlyIconSizeSM))"
         }
-        .id("token.onlyIconSizeSM")
+        .scrollAnchor("token.onlyIconSizeSM")
     }
 
     var solidTextColorTokenCard: some View {
@@ -385,7 +385,7 @@ extension ButtonAPIView {
         } code: {
             "config.components.button.solidTextColor = Color(...)"
         }
-        .id("token.solidTextColor")
+        .scrollAnchor("token.solidTextColor")
     }
 
     var textHoverBgTokenCard: some View {
@@ -402,7 +402,7 @@ extension ButtonAPIView {
         } code: {
             "config.components.button.textHoverBg = Color(...)"
         }
-        .id("token.textHoverBg")
+        .scrollAnchor("token.textHoverBg")
     }
 
     var textTextActiveColorTokenCard: some View {
@@ -419,7 +419,7 @@ extension ButtonAPIView {
         } code: {
             "config.components.button.textTextActiveColor = Color(...)"
         }
-        .id("token.textTextActiveColor")
+        .scrollAnchor("token.textTextActiveColor")
     }
 
     var textTextColorTokenCard: some View {
@@ -436,7 +436,7 @@ extension ButtonAPIView {
         } code: {
             "config.components.button.textTextColor = Color(...)"
         }
-        .id("token.textTextColor")
+        .scrollAnchor("token.textTextColor")
     }
 
     var textTextHoverColorTokenCard: some View {
@@ -453,7 +453,7 @@ extension ButtonAPIView {
         } code: {
             "config.components.button.textTextHoverColor = Color(...)"
         }
-        .id("token.textTextHoverColor")
+        .scrollAnchor("token.textTextHoverColor")
     }
 
     // MARK: - 尺寸相关 Token
@@ -477,7 +477,7 @@ extension ButtonAPIView {
         } code: {
             "config.components.button.contentFontSizeLG = \(Int(config.components.button.contentFontSizeLG))"
         }
-        .id("token.contentFontSizeLG")
+        .scrollAnchor("token.contentFontSizeLG")
     }
 
     var contentFontSizeSMTokenCard: some View {
@@ -499,7 +499,7 @@ extension ButtonAPIView {
         } code: {
             "config.components.button.contentFontSizeSM = \(Int(config.components.button.contentFontSizeSM))"
         }
-        .id("token.contentFontSizeSM")
+        .scrollAnchor("token.contentFontSizeSM")
     }
 
     var paddingBlockTokenCard: some View {
@@ -521,7 +521,7 @@ extension ButtonAPIView {
         } code: {
             "config.components.button.paddingBlock = \(Int(config.components.button.paddingBlock))"
         }
-        .id("token.paddingBlock")
+        .scrollAnchor("token.paddingBlock")
     }
 
     var iconGapTokenCard: some View {
@@ -543,7 +543,7 @@ extension ButtonAPIView {
         } code: {
             "config.components.button.iconGap = \(Int(config.components.button.iconGap))"
         }
-        .id("token.iconGap")
+        .scrollAnchor("token.iconGap")
     }
 
     var contentFontSizeTokenCard: some View {
@@ -565,7 +565,7 @@ extension ButtonAPIView {
         } code: {
             "config.components.button.contentFontSize = \(Int(config.components.button.contentFontSize))"
         }
-        .id("token.contentFontSize")
+        .scrollAnchor("token.contentFontSize")
     }
 
     var paddingInlineLGTokenCard: some View {
@@ -587,7 +587,7 @@ extension ButtonAPIView {
         } code: {
             "config.components.button.paddingInlineLG = \(Int(config.components.button.paddingInlineLG))"
         }
-        .id("token.paddingInlineLG")
+        .scrollAnchor("token.paddingInlineLG")
     }
 
     var paddingInlineSMTokenCard: some View {
@@ -609,7 +609,7 @@ extension ButtonAPIView {
         } code: {
             "config.components.button.paddingInlineSM = \(Int(config.components.button.paddingInlineSM))"
         }
-        .id("token.paddingInlineSM")
+        .scrollAnchor("token.paddingInlineSM")
     }
 
     var paddingBlockLGTokenCard: some View {
@@ -631,7 +631,7 @@ extension ButtonAPIView {
         } code: {
             "config.components.button.paddingBlockLG = \(Int(config.components.button.paddingBlockLG))"
         }
-        .id("token.paddingBlockLG")
+        .scrollAnchor("token.paddingBlockLG")
     }
 
     var paddingBlockSMTokenCard: some View {
@@ -653,7 +653,7 @@ extension ButtonAPIView {
         } code: {
             "config.components.button.paddingBlockSM = \(Int(config.components.button.paddingBlockSM))"
         }
-        .id("token.paddingBlockSM")
+        .scrollAnchor("token.paddingBlockSM")
     }
 
     // MARK: - 全局 Token
@@ -675,7 +675,7 @@ extension ButtonAPIView {
         } code: {
             "config.seed.colorPrimary = Color(...)"
         }
-        .id("global.colorPrimary")
+        .scrollAnchor("global.colorPrimary")
     }
 
     var borderRadiusGlobalTokenCard: some View {
@@ -697,7 +697,7 @@ extension ButtonAPIView {
         } code: {
             "config.seed.borderRadius = \(Int(config.seed.borderRadius))"
         }
-        .id("global.borderRadius")
+        .scrollAnchor("global.borderRadius")
     }
 
     var controlHeightGlobalTokenCard: some View {
@@ -718,7 +718,7 @@ extension ButtonAPIView {
         } code: {
             "config.seed.controlHeight = \(Int(config.seed.controlHeight))"
         }
-        .id("global.controlHeight")
+        .scrollAnchor("global.controlHeight")
     }
 
     var borderRadiusLGGlobalTokenCard: some View {
@@ -733,7 +733,7 @@ extension ButtonAPIView {
         } code: {
             "// \(tr("api.derived_from")) borderRadius + 2"
         }
-        .id("global.borderRadiusLG")
+        .scrollAnchor("global.borderRadiusLG")
     }
 
     var borderRadiusSMGlobalTokenCard: some View {
@@ -748,7 +748,7 @@ extension ButtonAPIView {
         } code: {
             "// \(tr("api.derived_from")) borderRadius - 2"
         }
-        .id("global.borderRadiusSM")
+        .scrollAnchor("global.borderRadiusSM")
     }
 
     var colorPrimaryActiveGlobalTokenCard: some View {
@@ -763,7 +763,7 @@ extension ButtonAPIView {
         } code: {
             "// \(tr("api.derived_from")) colorPrimary"
         }
-        .id("global.colorPrimaryActive")
+        .scrollAnchor("global.colorPrimaryActive")
     }
 
     var colorPrimaryHoverGlobalTokenCard: some View {
@@ -778,7 +778,7 @@ extension ButtonAPIView {
         } code: {
             "// \(tr("api.derived_from")) colorPrimary"
         }
-        .id("global.colorPrimaryHover")
+        .scrollAnchor("global.colorPrimaryHover")
     }
 
     var colorTextDisabledGlobalTokenCard: some View {
@@ -793,7 +793,7 @@ extension ButtonAPIView {
         } code: {
             "// \(tr("api.derived_from")) colorText"
         }
-        .id("global.colorTextDisabled")
+        .scrollAnchor("global.colorTextDisabled")
     }
 
     var controlHeightLGGlobalTokenCard: some View {
@@ -808,7 +808,7 @@ extension ButtonAPIView {
         } code: {
             "// \(tr("api.derived_from")) controlHeight + 8"
         }
-        .id("global.controlHeightLG")
+        .scrollAnchor("global.controlHeightLG")
     }
 
     var controlHeightSMGlobalTokenCard: some View {
@@ -823,7 +823,7 @@ extension ButtonAPIView {
         } code: {
             "// \(tr("api.derived_from")) controlHeight - 8"
         }
-        .id("global.controlHeightSM")
+        .scrollAnchor("global.controlHeightSM")
     }
 
     var motionDurationGlobalTokenCard: some View {
@@ -838,6 +838,6 @@ extension ButtonAPIView {
         } code: {
             "config.seed.motionDuration = 0.2"
         }
-        .id("global.motionDuration")
+        .scrollAnchor("global.motionDuration")
     }
 }
