@@ -136,7 +136,8 @@
     "token": {
       "component": "Component Token",
       "global": "Global Token",
-      "reset": "Reset"
+      "reset": "Reset",
+      "reset_desc": "Reset all token changes"
     },
     "prop": {
       "title": "Text",

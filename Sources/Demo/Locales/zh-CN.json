@@ -136,7 +136,8 @@
     "token": {
       "component": "组件 Token",
       "global": "全局 Token",
-      "reset": "重置"
+      "reset": "重置",
+      "reset_desc": "重置所有 Token 修改"
     },
     "prop": {
       "title": "文本",

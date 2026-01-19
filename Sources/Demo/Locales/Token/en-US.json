@@ -79,6 +79,7 @@
       "preview": "Preview",
       "code": "Code",
       "reset": "Reset",
+      "reset_desc": "Reset all token changes",
       "colors": "Semantic Colors",
       "sizes": "Sizes",
       "variants": "Variants",

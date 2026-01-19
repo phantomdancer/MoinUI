@@ -68,6 +68,8 @@ struct ButtonTokenView: View {
             .cornerRadius(Moin.Constants.Radius.sm)
             .padding(Moin.Constants.Spacing.md)
 
+
+
             Divider()
 
             // 导航列表
@@ -78,6 +80,23 @@ struct ButtonTokenView: View {
                 }
                 .padding(Moin.Constants.Spacing.md)
             }
+            
+            Divider()
+            
+            // 底部重置按钮
+            HStack(spacing: Moin.Constants.Spacing.sm) {
+                Moin.Button(tr("playground.token.reset"), color: .primary, variant: .solid) {
+                    resetAll()
+                }
+                
+                Text(tr("token.playground.reset_desc"))
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+                
+                Spacer()
+            }
+            .padding(Moin.Constants.Spacing.md)
         }
     }
 
@@ -129,16 +148,7 @@ struct ButtonTokenView: View {
     
     private var mainContent: some View {
         VStack(spacing: 0) {
-            // 固定顶部重置按钮
-            HStack {
-                Spacer()
-                Moin.Button(tr("playground.token.reset"), color: .primary, variant: .solid) {
-                    resetAll()
-                }
-                Spacer()
-            }
-            .padding(.horizontal, Moin.Constants.Spacing.lg)
-            .padding(.vertical, Moin.Constants.Spacing.sm)
+
             
             // 可滚动内容
             AnchorScrollView(targetScrollId: $targetScrollId, currentScrollId: $selectedItemId) {

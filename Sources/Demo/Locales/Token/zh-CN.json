@@ -79,6 +79,7 @@
       "preview": "预览",
       "code": "代码",
       "reset": "重置",
+      "reset_desc": "重置所有 Token 修改",
       "colors": "语义色",
       "sizes": "尺寸",
       "variants": "变体",
