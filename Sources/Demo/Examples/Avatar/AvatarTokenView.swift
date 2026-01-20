@@ -56,7 +56,7 @@ struct AvatarTokenView: View {
             cardForItem(item)
         } footer: {
              HStack(spacing: Moin.Constants.Spacing.sm) {
-                Moin.Button(tr("playground.token.reset"), color: .custom(.primary), variant: .solid) {
+                Moin.Button(tr("playground.token.reset"), color: .primary, variant: .solid) {
                     resetAll()
                 }
                 
