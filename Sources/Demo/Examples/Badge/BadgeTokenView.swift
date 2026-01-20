@@ -35,8 +35,18 @@ struct BadgeTokenView: View {
     
     // 重置所有 Badge Token 到默认值
     private func resetAll() {
+        // 重置全局 seed token
+        config.seed.colorError = Moin.Colors.red
+        config.seed.colorSuccess = Moin.Colors.green
+        config.seed.colorPrimary = Moin.Colors.blue
+        config.seed.colorWarning = Moin.Colors.gold
+        config.seed.colorTextBase = Color(white: 0.0)
+        config.regenerateTokens()
+        
+        // 重置组件 token
         let defaultBadge = Moin.BadgeToken.generate(from: config.token)
         config.components.badge = defaultBadge
+        
         // 通知重置
         NotificationCenter.default.post(name: .badgeDocReset, object: nil)
     }

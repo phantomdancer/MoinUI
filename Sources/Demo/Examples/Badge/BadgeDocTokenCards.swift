@@ -221,12 +221,16 @@ extension BadgeTokenView {
         TokenCard(
             name: "colorDanger",
             type: "Color",
-            defaultValue: "token.colorError",
+            defaultValue: "seed.colorError",
             description: tr("badge.token.colorDanger"),
             sectionId: "global"
         ) {
             Moin.Badge(count: 5) { sampleBox }
-        } editor: { EmptyView() } code: { "// Global Token" }
+        } editor: {
+            ColorPresetRow(label: "colorError", color: $config.seed.colorError, onChange: { config.regenerateTokens() })
+        } code: {
+            "config.seed.colorError = Color(...)"
+        }
         .scrollAnchor("global.colorDanger")
     }
     
@@ -234,12 +238,16 @@ extension BadgeTokenView {
         TokenCard(
             name: "colorSuccess",
             type: "Color",
-            defaultValue: "token.colorSuccess",
+            defaultValue: "seed.colorSuccess",
             description: tr("badge.token.colorSuccess"),
             sectionId: "global"
         ) {
             Moin.Badge(count: 5, color: .success) { sampleBox }
-        } editor: { EmptyView() } code: { "// Global Token" }
+        } editor: {
+            ColorPresetRow(label: "colorSuccess", color: $config.seed.colorSuccess, onChange: { config.regenerateTokens() })
+        } code: {
+            "config.seed.colorSuccess = Color(...)"
+        }
         .scrollAnchor("global.colorSuccess")
     }
     
@@ -247,12 +255,16 @@ extension BadgeTokenView {
         TokenCard(
             name: "colorPrimary",
             type: "Color",
-            defaultValue: "token.colorPrimary",
+            defaultValue: "seed.colorPrimary",
             description: tr("badge.token.colorPrimary"),
             sectionId: "global"
         ) {
             Moin.Badge(count: 5, color: .processing) { sampleBox }
-        } editor: { EmptyView() } code: { "// Global Token" }
+        } editor: {
+            ColorPresetRow(label: "colorPrimary", color: $config.seed.colorPrimary, onChange: { config.regenerateTokens() })
+        } code: {
+            "config.seed.colorPrimary = Color(...)"
+        }
         .scrollAnchor("global.colorPrimary")
     }
     
@@ -260,12 +272,16 @@ extension BadgeTokenView {
         TokenCard(
             name: "colorWarning",
             type: "Color",
-            defaultValue: "token.colorWarning",
+            defaultValue: "seed.colorWarning",
             description: tr("badge.token.colorWarning"),
             sectionId: "global"
         ) {
             Moin.Badge(count: 5, color: .warning) { sampleBox }
-        } editor: { EmptyView() } code: { "// Global Token" }
+        } editor: {
+            ColorPresetRow(label: "colorWarning", color: $config.seed.colorWarning, onChange: { config.regenerateTokens() })
+        } code: {
+            "config.seed.colorWarning = Color(...)"
+        }
         .scrollAnchor("global.colorWarning")
     }
     
@@ -273,12 +289,16 @@ extension BadgeTokenView {
         TokenCard(
             name: "colorText",
             type: "Color",
-            defaultValue: "token.colorText",
+            defaultValue: "seed.colorTextBase",
             description: tr("badge.token.colorText"),
             sectionId: "global"
         ) {
             Moin.Badge(status: .default, text: "Text Color")
-        } editor: { EmptyView() } code: { "// Global Token" }
+        } editor: {
+            ColorPresetRow(label: "colorTextBase", color: $config.seed.colorTextBase, onChange: { config.regenerateTokens() })
+        } code: {
+            "config.seed.colorTextBase = Color(...)"
+        }
         .scrollAnchor("global.colorText")
     }
     
@@ -286,13 +306,14 @@ extension BadgeTokenView {
         TokenCard(
             name: "colorTextSecondary",
             type: "Color",
-            defaultValue: "token.colorTextSecondary",
+            defaultValue: "seed.colorTextBase",
             description: tr("badge.token.colorTextSecondary"),
             sectionId: "global"
         ) {
-             // Badge might not use this directly visible but it's listed
-             Text("Secondary").foregroundStyle(Moin.ConfigProvider.shared.token.colorTextSecondary)
-        } editor: { EmptyView() } code: { "// Global Token" }
+            Text("Secondary").foregroundStyle(Moin.ConfigProvider.shared.token.colorTextSecondary)
+        } code: {
+            "// \(tr("api.derived_from")) colorTextBase"
+        }
         .scrollAnchor("global.colorTextSecondary")
     }
     
