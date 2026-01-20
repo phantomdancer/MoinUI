@@ -108,7 +108,11 @@ struct DocSidebar<Footer: View>: View {
     }
     
     private func navItem(name: String, sectionId: String) -> some View {
-        let itemId = "\(sectionId).\(name)"
+        let parts = name.split(separator: "|", maxSplits: 1).map(String.init)
+        let realName = parts[0]
+        let label = parts.count > 1 ? parts[1] : realName
+        let itemId = "\(sectionId).\(realName)"
+        
         return Button {
             selectedItemId = itemId
             targetScrollId = itemId
@@ -117,7 +121,7 @@ struct DocSidebar<Footer: View>: View {
                 Circle()
                     .fill(selectedItemId == itemId ? config.token.colorPrimary : Color.secondary.opacity(0.3))
                     .frame(width: 6, height: 6)
-                Text(name)
+                Text(label)
                     .font(.system(size: 12, design: .monospaced))
                     .foregroundStyle(selectedItemId == itemId ? config.token.colorPrimary : .primary)
                 Spacer()
