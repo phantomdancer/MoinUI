@@ -141,3 +141,17 @@ struct BulletPoint: View {
         }
     }
 }
+
+// MARK: - RibbonCard
+
+struct RibbonCard: View {
+    var body: some View {
+        RoundedRectangle(cornerRadius: 8)
+            .fill(Color.gray.opacity(0.1))
+            .overlay(
+                RoundedRectangle(cornerRadius: 8)
+                    .strokeBorder(Color.gray.opacity(0.2))
+            )
+            .frame(width: 80, height: 60)
+    }
+}

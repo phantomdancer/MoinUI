@@ -23,7 +23,7 @@ struct BadgeAPIView: View {
             ),
             DocSidebarSection(
                 title: tr("api.badge.section.status"),
-                items: ["status.status", "status.text"],
+                items: ["status", "text"],
                 sectionId: "status"
             )
         ]
@@ -65,8 +65,8 @@ struct BadgeAPIView: View {
         case "ribbon.placement": ribbonPlacementPropertyCard
         case "ribbon.content": ribbonContentPropertyCard
         
-        case "status.status": statusStatusPropertyCard
-        case "status.text": statusTextPropertyCard
+        case "status": statusStatusPropertyCard
+        case "text": statusTextPropertyCard
         default: EmptyView()
         }
     }
@@ -231,7 +231,7 @@ struct BadgeAPIView: View {
             description: tr("badge.api.text"),
             sectionId: "ribbon"
         ) {
-            Moin.BadgeRibbon(text: "New") { ribbonCard }
+            Moin.BadgeRibbon(text: "New") { RibbonCard() }
         } code: {
             """
             Moin.BadgeRibbon(text: "New") {...}
@@ -247,7 +247,7 @@ struct BadgeAPIView: View {
             description: tr("badge.api.color"),
             sectionId: "ribbon"
         ) {
-            Moin.BadgeRibbon(text: "Cool", color: .purple) { ribbonCard }
+            Moin.BadgeRibbon(text: "Cool", color: .purple) { RibbonCard() }
         } code: {
             """
             Moin.BadgeRibbon(color: .purple) {...}
@@ -265,8 +265,8 @@ struct BadgeAPIView: View {
             sectionId: "ribbon"
         ) {
             HStack {
-                Moin.BadgeRibbon(text: "Start", placement: .start) { ribbonCard }
-                Moin.BadgeRibbon(text: "End", placement: .end) { ribbonCard }
+                Moin.BadgeRibbon(text: "Start", placement: .start) { RibbonCard() }
+                Moin.BadgeRibbon(text: "End", placement: .end) { RibbonCard() }
             }
         } code: {
             """
@@ -284,7 +284,7 @@ struct BadgeAPIView: View {
              description: tr("badge.api.content"),
              sectionId: "ribbon"
          ) {
-             Moin.BadgeRibbon(text: "H") { ribbonCard }
+             Moin.BadgeRibbon(text: "H") { RibbonCard() }
          } code: {
             """
             Moin.BadgeRibbon(text: "H") {...}
@@ -296,7 +296,7 @@ struct BadgeAPIView: View {
     
     private var statusStatusPropertyCard: some View {
         PropertyCard(
-            name: "status.status",
+            name: "status",
             type: "BadgeStatus",
             defaultValue: "-",
             description: tr("badge.api.status"),
@@ -311,7 +311,7 @@ struct BadgeAPIView: View {
     
     private var statusTextPropertyCard: some View {
          PropertyCard(
-             name: "status.text",
+             name: "text",
              type: "String?",
              defaultValue: "nil",
              description: tr("badge.api.text"),
@@ -328,13 +328,5 @@ struct BadgeAPIView: View {
         Moin.Avatar(icon: "", shape: .square)
     }
     
-    private var ribbonCard: some View {
-        RoundedRectangle(cornerRadius: 8)
-            .fill(Color.gray.opacity(0.1))
-            .overlay(
-                RoundedRectangle(cornerRadius: 8)
-                    .strokeBorder(Color.gray.opacity(0.2))
-            )
-            .frame(width: 80, height: 60)
-    }
+
 }

@@ -463,13 +463,13 @@ struct BadgeExamples: View {
         ) {
             HStack(spacing: Moin.Constants.Spacing.xl) {
                  Moin.BadgeRibbon(text: "Pushes", color: .cyan) {
-                    ribbonCard
+                    RibbonCard()
                  }
                  Moin.BadgeRibbon(text: "Hippo", color: .purple, placement: .start) {
-                    ribbonCard
+                    RibbonCard()
                  }
                  Moin.BadgeRibbon(text: "Hot", color: .error) {
-                    ribbonCard
+                    RibbonCard()
                  }
             }
         } code: {
@@ -489,13 +489,5 @@ struct BadgeExamples: View {
     private var sampleBox: some View {
         Moin.Avatar(icon: "", shape: .square)
     }
-    private var ribbonCard: some View {
-        RoundedRectangle(cornerRadius: 8)
-            .fill(Color.gray.opacity(0.1))
-            .overlay(
-                RoundedRectangle(cornerRadius: 8)
-                    .strokeBorder(Color.gray.opacity(0.2))
-            )
-            .frame(width: 80, height: 60)
-    }
+
 }
