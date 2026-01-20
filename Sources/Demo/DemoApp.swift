@@ -6,6 +6,7 @@ import os
 // MARK: - Notification Names
 extension Notification.Name {
     static let buttonDocReset = Notification.Name("buttonDocReset")
+    static let badgeDocReset = Notification.Name("badgeDocReset")
 }
 
 @main

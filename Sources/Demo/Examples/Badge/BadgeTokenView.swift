@@ -33,6 +33,14 @@ struct BadgeTokenView: View {
         ]
     }
     
+    // 重置所有 Badge Token 到默认值
+    private func resetAll() {
+        let defaultBadge = Moin.BadgeToken.generate(from: config.token)
+        config.components.badge = defaultBadge
+        // 通知重置
+        NotificationCenter.default.post(name: .badgeDocReset, object: nil)
+    }
+    
     var body: some View {
         ComponentDocBody(
             sections: tokenSections,
@@ -49,6 +57,20 @@ struct BadgeTokenView: View {
             }
         } item: { item in
             cardForItem(item)
+        } footer: {
+            HStack(spacing: Moin.Constants.Spacing.sm) {
+                Moin.Button(tr("playground.token.reset"), color: .primary, variant: .solid) {
+                    resetAll()
+                }
+                
+                Text(tr("token.playground.reset_desc"))
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+                
+                Spacer()
+            }
+            .padding(Moin.Constants.Spacing.md)
         }
     }
     

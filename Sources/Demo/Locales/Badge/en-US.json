@@ -62,7 +62,7 @@
     "badge.enum.status.error": "Error status",
     "badge.enum.status.warning": "Warning status",
     "badge.token.intro": "Badge component uses global Token colors. No component-specific Token yet.",
-    "badge.token.global": "Global Tokens Used",
+    "badge.token.global": "Global Tokens",
     "badge.token.title": "Token System",
     "badge.token.desc": "Badge component uses global Token for styling customization.",
     "badge.token.global_desc": "Below are the global color tokens used by Badge.",

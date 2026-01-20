@@ -62,7 +62,7 @@
     "badge.enum.status.error": "错误状态",
     "badge.enum.status.warning": "警告状态",
     "badge.token.intro": "Badge 组件使用全局 Token 中的颜色值，暂无组件专属 Token。",
-    "badge.token.global": "使用的全局 Token",
+    "badge.token.global": "全局 Token",
     "badge.token.title": "Token 系统",
     "badge.token.desc": "Badge 组件使用全局 Token 进行样式定制。",
     "badge.token.global_desc": "以下是 Badge 使用的全局颜色 Token。",
