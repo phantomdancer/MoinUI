@@ -25,6 +25,8 @@
     "gap_auto_scale": "Auto Scale",
     "color": "Color",
     "color_desc": "Custom background color supported.",
+    "color_standard": "Standard Colors",
+    "color_preset": "Moin Preset Colors",
     "group": "Avatar Group",
     "group_desc": "AvatarGroup controls the number of avatars shown, displaying +N for overflow.",
     "code": {

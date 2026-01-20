@@ -195,24 +195,35 @@ struct AvatarAPIView: View {
     private var backgroundColorPropertyCard: some View {
         PropertyCard(
             name: "backgroundColor",
-            type: "Color?",
+            type: "AvatarColor?",
             defaultValue: "nil",
             description: tr("avatar.api.background_color"),
-            enumValues: "Color | .black | .blue | .brown | .cyan | .gray | .green | .indigo | .mint | .orange | .pink | .purple | .red | .teal | .white | .yellow | ...",
+            enumValues: ".custom(Color) | .red | .orange | .yellow | .green | .cyan | .blue | .purple | .pink | .magenta | .volcano | .geekblue | .gold | .lime",
             sectionId: "api"
         ) {
-            HStack {
-                Moin.Avatar("U", backgroundColor: .orange)
-                 Moin.Avatar("S", backgroundColor: .blue)
-                 Moin.Avatar("E", backgroundColor: .green)
-                Moin.Avatar("R", backgroundColor: Color(red: 0.8, green: 0.2, blue: 0.5))
-             }
+            VStack(alignment: .leading, spacing: Moin.Constants.Spacing.sm) {
+                // Preset Colors
+                Text("Preset Colors").font(.caption).foregroundStyle(.secondary)
+                HStack {
+                    Moin.Avatar("W", backgroundColor: .orange)
+                    Moin.Avatar("V", backgroundColor: .volcano)
+                }
+
+                // Custom Colors
+                Text(tr("tag.custom_colors")).font(.caption).foregroundStyle(.secondary)
+                HStack {
+                    Moin.Avatar("C", backgroundColor: .custom(Color(red: 0.8, green: 0.2, blue: 0.5)))
+                    Moin.Avatar("H", backgroundColor: .custom(Color(hex: 0x722ED1)))
+                }
+            }
         } code: {
             """
-            Moin.Avatar("U", backgroundColor: .orange)
-            Moin.Avatar("S", backgroundColor: .blue)
-            Moin.Avatar("E", backgroundColor: .green)
-            Moin.Avatar("R", backgroundColor: Color(red: 0.8, green: 0.2, blue: 0.5))
+            // \(tr("avatar.color_preset"))
+            Moin.Avatar("W", backgroundColor: .orange)
+            Moin.Avatar("V", backgroundColor: .volcano)
+            
+            // \(tr("tag.custom_colors"))
+            Moin.Avatar("C", backgroundColor: .custom(Color(hex: 0x722ED1)))
             """
         }
         .scrollAnchor("api.backgroundColor")

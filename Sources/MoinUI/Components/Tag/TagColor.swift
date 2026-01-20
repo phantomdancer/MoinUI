@@ -2,7 +2,7 @@ import SwiftUI
 
 public extension Moin {
     /// Tag 颜色
-    enum TagColor: Hashable {
+    enum TagColor: Hashable, PresetColorConvertible {
         case `default`      // 灰色
         case success        // 绿色
         case processing     // 主色（进行中）
@@ -12,34 +12,7 @@ public extension Moin {
 
         /// primary 作为 processing 的别名（向后兼容）
         public static var primary: TagColor { .processing }
-
-        // MARK: - 预设颜色便捷访问
-
-        /// 红色
-        public static var red: TagColor { .custom(Moin.Colors.red) }
-        /// 火山色
-        public static var volcano: TagColor { .custom(Moin.Colors.volcano) }
-        /// 橙色
-        public static var orange: TagColor { .custom(Moin.Colors.orange) }
-        /// 金色
-        public static var gold: TagColor { .custom(Moin.Colors.gold) }
-        /// 黄色
-        public static var yellow: TagColor { .custom(Moin.Colors.yellow) }
-        /// 青柠色
-        public static var lime: TagColor { .custom(Moin.Colors.lime) }
-        /// 绿色
-        public static var green: TagColor { .custom(Moin.Colors.green) }
-        /// 青色
-        public static var cyan: TagColor { .custom(Moin.Colors.cyan) }
-        /// 蓝色
-        public static var blue: TagColor { .custom(Moin.Colors.blue) }
-        /// 极客蓝
-        public static var geekblue: TagColor { .custom(Moin.Colors.geekblue) }
-        /// 紫色
-        public static var purple: TagColor { .custom(Moin.Colors.purple) }
-        /// 洋红色
-        public static var magenta: TagColor { .custom(Moin.Colors.magenta) }
-
+        
         // MARK: - Properties
 
         /// 是否为默认颜色

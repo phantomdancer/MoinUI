@@ -14,22 +14,48 @@ public extension Moin {
         private let backgroundColor: Color? // 允许覆盖背景色
         private let gap: CGFloat // 文字距边界间距
 
-        /// 创建自定义内容的头像
+
+
+
+    /// 内部通用初始化方法
+    private init(
+        content: Content,
+        size: AvatarSize,
+        shape: AvatarShape,
+        icon: String?,
+        text: String?,
+        backgroundColor: Color?,
+        gap: CGFloat
+    ) {
+        self.content = content
+        self.size = size
+        self.shape = shape
+        self.icon = icon
+        self.text = text
+        self.backgroundColor = backgroundColor
+        self.gap = gap
+    }
+
+    /// 创建自定义内容的头像
         public init(
             size: AvatarSize = .default,
             shape: AvatarShape = .circle,
-            backgroundColor: Color? = nil,
+            backgroundColor: Moin.AvatarColor? = nil,
             gap: CGFloat = 4,
             @ViewBuilder content: () -> Content
         ) {
-            self.content = content()
-            self.size = size
-            self.shape = shape
-            self.backgroundColor = backgroundColor
-            self.gap = gap
-            self.icon = nil
-            self.text = nil
+            self.init(
+                content: content(),
+                size: size,
+                shape: shape,
+                icon: nil,
+                text: nil,
+                backgroundColor: backgroundColor?.color,
+                gap: gap
+            )
         }
+
+
 
         public var body: some View {
             ZStack {
@@ -124,38 +150,46 @@ public extension Moin {
 // MARK: - Convenience Inits
 
 public extension Moin.Avatar where Content == EmptyView {
-    /// 创建图标头像 (SF Symbol)
+
+
+    /// 创建图标头像 (AvatarColor)
     init(
         icon: String,
         size: AvatarSize = .default,
         shape: AvatarShape = .circle,
-        backgroundColor: Color? = nil,
+        backgroundColor: Moin.AvatarColor? = nil,
         gap: CGFloat = 4
     ) {
-        self.content = EmptyView()
-        self.size = size
-        self.shape = shape
-        self.backgroundColor = backgroundColor
-        self.gap = gap
-        self.icon = icon
-        self.text = nil
+        self.init(
+            content: EmptyView(),
+            size: size,
+            shape: shape,
+            icon: icon,
+            text: nil,
+            backgroundColor: backgroundColor?.color,
+            gap: gap
+        )
     }
 
-    /// 创建文本头像
+
+
+    /// 创建文本头像 (AvatarColor)
     init(
         _ text: String,
         size: AvatarSize = .default,
         shape: AvatarShape = .circle,
-        backgroundColor: Color? = nil,
+        backgroundColor: Moin.AvatarColor? = nil,
         gap: CGFloat = 4
     ) {
-        self.content = EmptyView()
-        self.size = size
-        self.shape = shape
-        self.backgroundColor = backgroundColor
-        self.gap = gap
-        self.icon = nil
-        self.text = text
+        self.init(
+            content: EmptyView(),
+            size: size,
+            shape: shape,
+            icon: nil,
+            text: text,
+            backgroundColor: backgroundColor?.color,
+            gap: gap
+        )
     }
 }
 
@@ -167,34 +201,23 @@ public extension Moin.Avatar where Content == Image {
         size: AvatarSize = .default,
         shape: AvatarShape = .circle
     ) {
-        self.content = image.resizable()
-        self.size = size
-        self.shape = shape
-        self.backgroundColor = nil
-        self.gap = 4
-        self.icon = nil
-        self.text = nil
+        self.init(
+            content: image.resizable(),
+            size: size,
+            shape: shape,
+            icon: nil,
+            text: nil,
+            backgroundColor: nil,
+            gap: 4
+        )
     }
 }
 
 // MARK: - Icon View Init
 public extension Moin.Avatar {
-    /// 创建自定义图标头像 (任意 View)
-    init(
-        size: AvatarSize = .default,
-        shape: AvatarShape = .circle,
-        backgroundColor: Color? = nil,
-        gap: CGFloat = 4,
-        @ViewBuilder icon iconContent: () -> Content
-    ) {
-        self.content = iconContent()
-        self.size = size
-        self.shape = shape
-        self.backgroundColor = backgroundColor
-        self.gap = gap
-        self.icon = nil
-        self.text = nil
-    }
+
+
+
 }
 
 // Helper needed for AnyShape
@@ -258,7 +281,7 @@ struct AvatarTextView: View {
 
 // MARK: - URL Image Init
 
-public extension Moin.Avatar where Content == AvatarAsyncImage {
+ public extension Moin.Avatar where Content == AvatarAsyncImage {
     /// 创建网络图片头像
     /// - Parameters:
     ///   - src: 图片 URL
@@ -271,13 +294,15 @@ public extension Moin.Avatar where Content == AvatarAsyncImage {
         size: AvatarSize = .default,
         shape: AvatarShape = .circle
     ) {
-        self.content = AvatarAsyncImage(url: src, fallbackIcon: fallbackIcon)
-        self.size = size
-        self.shape = shape
-        self.backgroundColor = nil
-        self.gap = 4
-        self.icon = nil
-        self.text = nil
+        self.init(
+            content: AvatarAsyncImage(url: src, fallbackIcon: fallbackIcon),
+            size: size,
+            shape: shape,
+            icon: nil,
+            text: nil,
+            backgroundColor: nil,
+            gap: 4
+        )
     }
 
     /// 创建网络图片头像 (String URL)
@@ -287,13 +312,15 @@ public extension Moin.Avatar where Content == AvatarAsyncImage {
         size: AvatarSize = .default,
         shape: AvatarShape = .circle
     ) {
-        self.content = AvatarAsyncImage(url: URL(string: src), fallbackIcon: fallbackIcon)
-        self.size = size
-        self.shape = shape
-        self.backgroundColor = nil
-        self.gap = 4
-        self.icon = nil
-        self.text = nil
+        self.init(
+            content: AvatarAsyncImage(url: URL(string: src), fallbackIcon: fallbackIcon),
+            size: size,
+            shape: shape,
+            icon: nil,
+            text: nil,
+            backgroundColor: nil,
+            gap: 4
+        )
     }
 }
 

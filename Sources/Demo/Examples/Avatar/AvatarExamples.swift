@@ -321,17 +321,37 @@ struct AvatarExamples: View {
             title: tr("avatar.color"),
             description: tr("avatar.color_desc"),
             content: {
-                HStack(spacing: 24) {
-                    Moin.Avatar("User", backgroundColor: .orange)
-                    Moin.Avatar("Admin", backgroundColor: .green)
-                    Moin.Avatar(icon: "star.fill", backgroundColor: .yellow)
+                VStack(alignment: .leading, spacing: 16) {
+                    // Preset Colors
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text(tr("avatar.color_preset")).font(.caption).foregroundStyle(.secondary)
+                        HStack(spacing: 16) {
+                            Moin.Avatar("User", backgroundColor: .orange)
+                            Moin.Avatar("V", backgroundColor: .volcano)
+                            Moin.Avatar("B", backgroundColor: .geekblue)
+                        }
+                    }
+                    
+                    // Custom
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text(tr("tag.custom_colors")).font(.caption).foregroundStyle(.secondary)
+                        HStack(spacing: 16) {
+                            Moin.Avatar("C", backgroundColor: .custom(Color(red: 0.8, green: 0.2, blue: 0.5)))
+                            Moin.Avatar("H", backgroundColor: .custom(Color(hex: 0x722ED1)))
+                        }
+                    }
                 }
             },
             code: {
                 """
+                // \(tr("avatar.color_preset"))
                 Moin.Avatar("User", backgroundColor: .orange)
-                Moin.Avatar("Admin", backgroundColor: .green)
-                Moin.Avatar(icon: "star.fill", backgroundColor: .yellow)
+                Moin.Avatar("V", backgroundColor: .volcano)
+                Moin.Avatar("B", backgroundColor: .geekblue)
+                
+                // \(tr("tag.custom_colors"))
+                Moin.Avatar("C", backgroundColor: .custom(Color(red: 0.8, green: 0.2, blue: 0.5)))
+                Moin.Avatar("H", backgroundColor: .custom(Color(hex: 0x722ED1)))
                 """
             }
         )

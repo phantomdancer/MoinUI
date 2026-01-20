@@ -31,6 +31,13 @@ struct AvatarTokenView: View {
         ]
     }
     
+    // Reset all tokens to default
+    private func resetAll() {
+        // Reset global seed to defaults (simplified approach)
+        config.seed = Moin.SeedToken()
+        config.regenerateTokens()
+    }
+    
     var body: some View {
         ComponentDocBody(
             sections: tokenSections,
@@ -47,6 +54,20 @@ struct AvatarTokenView: View {
             }
         } item: { item in
             cardForItem(item)
+        } footer: {
+             HStack(spacing: Moin.Constants.Spacing.sm) {
+                Moin.Button(tr("playground.token.reset"), color: .custom(.primary), variant: .solid) {
+                    resetAll()
+                }
+                
+                Text(tr("token.playground.reset_desc"))
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+                
+                Spacer()
+            }
+            .padding(Moin.Constants.Spacing.md)
         }
     }
     

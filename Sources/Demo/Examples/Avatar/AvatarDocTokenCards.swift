@@ -39,7 +39,7 @@ extension AvatarTokenView {
             sectionId: "token"
         ) {
             HStack {
-                Moin.Avatar("Dark", backgroundColor: .white)
+                Moin.Avatar("Dark", backgroundColor: .custom(.white))
                     .foregroundStyle(Moin.ConfigProvider.shared.components.avatar.colorText) // Force apply to show effect if component doesn't auto-apply in all cases
                 // Usually component should use this token internally.
                 Moin.Avatar("Text")
@@ -64,7 +64,7 @@ extension AvatarTokenView {
             sectionId: "token"
         ) {
             HStack {
-                Moin.Avatar("U", backgroundColor: .primary)
+                Moin.Avatar("U", backgroundColor: .custom(.primary))
             }
         } editor: {
             ColorPresetRow(label: "colorTextLight", color: Binding(

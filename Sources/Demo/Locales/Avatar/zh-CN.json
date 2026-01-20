@@ -25,6 +25,8 @@
     "gap_auto_scale": "自动缩放",
     "color": "颜色",
     "color_desc": "可以自定义背景色。",
+    "color_standard": "标准颜色",
+    "color_preset": "Moin 预设颜色",
     "group": "头像组",
     "group_desc": "头像组可以控制显示数量，超出的部分会显示 +N。",
     "code": {
