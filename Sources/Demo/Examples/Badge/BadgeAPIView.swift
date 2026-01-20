@@ -12,17 +12,17 @@ struct BadgeAPIView: View {
     private var apiSections: [DocSidebarSection] {
         [
             DocSidebarSection(
-                title: "Moin.Badge",
+                title: tr("api.badge.section.badge"),
                 items: ["count", "dot", "showZero", "overflowCount", "size", "color", "offset", "content"],
                 sectionId: "badge"
             ),
             DocSidebarSection(
-                title: "Moin.BadgeRibbon",
+                title: tr("api.badge.section.ribbon"),
                 items: ["ribbon.text", "ribbon.color", "ribbon.placement", "ribbon.content"],
                 sectionId: "ribbon"
             ),
             DocSidebarSection(
-                title: "Moin.StatusBadge",
+                title: tr("api.badge.section.status"),
                 items: ["status.status", "status.text"],
                 sectionId: "status"
             )
@@ -213,7 +213,7 @@ struct BadgeAPIView: View {
     
     private var ribbonTextPropertyCard: some View {
         PropertyCard(
-            name: "text",
+            name: "ribbon.text",
             type: "String?",
             defaultValue: "nil",
             description: tr("badge.api.text"),
@@ -223,12 +223,11 @@ struct BadgeAPIView: View {
         } code: {
             "Moin.BadgeRibbon(text: \"New\") { ... }"
         }
-        .scrollAnchor("ribbon.text")
     }
     
     private var ribbonColorPropertyCard: some View {
         PropertyCard(
-            name: "color",
+            name: "ribbon.color",
             type: "BadgeColor",
             defaultValue: ".processing",
             description: tr("badge.api.color"),
@@ -238,12 +237,11 @@ struct BadgeAPIView: View {
         } code: {
             "Moin.BadgeRibbon(color: .purple) { ... }"
         }
-        .scrollAnchor("ribbon.color")
     }
     
     private var ribbonPlacementPropertyCard: some View {
         PropertyCard(
-            name: "placement",
+            name: "ribbon.placement",
             type: "RibbonPlacement",
             defaultValue: ".end",
             description: tr("badge.api.placement"),
@@ -260,12 +258,11 @@ struct BadgeAPIView: View {
             Moin.BadgeRibbon(placement: .end) { ... }
             """
         }
-        .scrollAnchor("ribbon.placement")
     }
     
     private var ribbonContentPropertyCard: some View {
          PropertyCard(
-             name: "content",
+             name: "ribbon.content",
              type: "() -> Content",
              defaultValue: "-",
              description: tr("badge.api.content"),
@@ -275,14 +272,13 @@ struct BadgeAPIView: View {
          } code: {
              "Moin.BadgeRibbon(...) { ... }"
          }
-         .scrollAnchor("ribbon.content")
      }
     
     // MARK: - Statusbadge Properties
     
     private var statusStatusPropertyCard: some View {
         PropertyCard(
-            name: "status",
+            name: "status.status",
             type: "BadgeStatus",
             defaultValue: "-",
             description: tr("badge.api.status"),
@@ -293,12 +289,11 @@ struct BadgeAPIView: View {
         } code: {
             "Moin.Badge(status: .success)"
         }
-        .scrollAnchor("status.status")
     }
     
     private var statusTextPropertyCard: some View {
          PropertyCard(
-             name: "text",
+             name: "status.text",
              type: "String?",
              defaultValue: "nil",
              description: tr("badge.api.text"),
@@ -308,7 +303,6 @@ struct BadgeAPIView: View {
          } code: {
              "Moin.Badge(status: .error, text: \"Error Occurred\")"
          }
-         .scrollAnchor("status.text")
      }
     
     // MARK: - Helpers

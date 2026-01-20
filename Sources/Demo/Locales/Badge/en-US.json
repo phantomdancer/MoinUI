@@ -97,5 +97,8 @@
     "badge.api.ribbon_desc": "Ribbon badge component.",
     "badge.api.placement": "Ribbon placement",
     "badge.enum.placement.start": "Top Left",
-    "badge.enum.placement.end": "Top Right"
+    "badge.enum.placement.end": "Top Right",
+    "api.badge.section.badge": "Moin.Badge",
+    "api.badge.section.ribbon": "Moin.BadgeRibbon",
+    "api.badge.section.status": "Moin.StatusBadge"
 }

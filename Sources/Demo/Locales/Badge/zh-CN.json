@@ -97,5 +97,8 @@
     "badge.enum.placement.end": "右上角",
     "badge.semantic_colors": "语义颜色",
     "badge.preset_colors": "预设颜色",
-    "badge.custom_colors": "自定义颜色"
+    "badge.custom_colors": "自定义颜色",
+    "api.badge.section.badge": "Moin.Badge",
+    "api.badge.section.ribbon": "Moin.BadgeRibbon",
+    "api.badge.section.status": "Moin.StatusBadge"
 }
