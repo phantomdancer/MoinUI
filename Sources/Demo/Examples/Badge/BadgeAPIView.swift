@@ -13,18 +13,13 @@ struct BadgeAPIView: View {
         [
             DocSidebarSection(
                 title: tr("api.badge.section.badge"),
-                items: ["count", "dot", "showZero", "overflowCount", "size", "color", "offset", "content"],
+                items: ["count", "dot", "showZero", "overflowCount", "size", "color", "offset", "status", "text", "content"],
                 sectionId: "badge"
             ),
             DocSidebarSection(
                 title: tr("api.badge.section.ribbon"),
                 items: ["ribbon.text", "ribbon.color", "ribbon.placement", "ribbon.content"],
                 sectionId: "ribbon"
-            ),
-            DocSidebarSection(
-                title: tr("api.badge.section.status"),
-                items: ["status", "text"],
-                sectionId: "status"
             )
         ]
     }
@@ -38,8 +33,6 @@ struct BadgeAPIView: View {
                 Text("Moin.Badge").font(.title3).fontWeight(.semibold)
             } else if sectionId == "ribbon" {
                 Text("Moin.BadgeRibbon").font(.title3).fontWeight(.semibold)
-            } else if sectionId == "status" {
-                Text("Status").font(.title3).fontWeight(.semibold)
             }
         } item: { item in
             cardForItem(item)
@@ -65,8 +58,8 @@ struct BadgeAPIView: View {
         case "ribbon.placement": ribbonPlacementPropertyCard
         case "ribbon.content": ribbonContentPropertyCard
         
-        case "status": statusStatusPropertyCard
-        case "text": statusTextPropertyCard
+        case "status": statusPropertyCard
+        case "text": textPropertyCard
         default: EmptyView()
         }
     }
@@ -294,33 +287,35 @@ struct BadgeAPIView: View {
     
     // MARK: - Status Properties
     
-    private var statusStatusPropertyCard: some View {
+    private var statusPropertyCard: some View {
         PropertyCard(
             name: "status",
             type: "BadgeStatus",
             defaultValue: "-",
             description: tr("badge.api.status"),
             enumValues: ".success | .processing | .default | .error | .warning",
-            sectionId: "status"
+            sectionId: "badge"
         ) {
             Moin.Badge(status: .processing, text: "Success")
         } code: {
             "Moin.Badge(status: .success)"
         }
+        .scrollAnchor("badge.status")
     }
-    
-    private var statusTextPropertyCard: some View {
+
+    private var textPropertyCard: some View {
          PropertyCard(
              name: "text",
              type: "String?",
              defaultValue: "nil",
              description: tr("badge.api.text"),
-             sectionId: "status"
+             sectionId: "badge"
          ) {
              Moin.Badge(status: .error, text: "Error Occurred")
          } code: {
              "Moin.Badge(status: .error, text: \"Error Occurred\")"
          }
+         .scrollAnchor("badge.text")
      }
     
     // MARK: - Helpers
