@@ -1,6 +1,6 @@
 import Foundation
 
-/// 徽标状态（用于 StatusBadge）
+/// 徽标状态
 public enum BadgeStatus {
     case success
     case processing

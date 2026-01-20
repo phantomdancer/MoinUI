@@ -85,7 +85,7 @@
     "badge.token.paddingHSM": "Small horizontal padding",
     "badge.token.shadowRadius": "Shadow radius",
     "badge.api.badge_desc": "A badge component for displaying numbers, status dots, or red dots.",
-    "badge.api.statusbadge_desc": "A standalone status badge component for showing status dots and text.",
+    "badge.api.status_desc": "Use Badge with status property for showing status dots and text.",
     "badge.api.badgesize_desc": "Badge size enum values.",
     "badge.api.badgecolor_desc": "Badge color enum values.",
     "badge.api.badgestatus_desc": "Status badge status type enum values.",
@@ -101,5 +101,5 @@
     "badge.enum.placement.end": "Top Right",
     "api.badge.section.badge": "Moin.Badge",
     "api.badge.section.ribbon": "Moin.BadgeRibbon",
-    "api.badge.section.status": "Moin.StatusBadge"
+    "api.badge.section.status": "Status"
 }

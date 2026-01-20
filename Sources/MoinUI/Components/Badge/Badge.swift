@@ -247,22 +247,4 @@ public extension Moin.Badge where Content == EmptyView, CountView == EmptyView {
     }
 }
 
-// MARK: - StatusBadge (别名，保持兼容)
 
-public extension Moin {
-    /// 状态徽标 - Badge(status:text:) 的别名
-    @available(*, deprecated, message: "Use Moin.Badge(status:text:) instead")
-    struct StatusBadge: View {
-        private let status: BadgeStatus
-        private let text: String?
-
-        public init(status: BadgeStatus, text: String? = nil) {
-            self.status = status
-            self.text = text
-        }
-
-        public var body: some View {
-            Moin.Badge(status: status, text: text)
-        }
-    }
-}

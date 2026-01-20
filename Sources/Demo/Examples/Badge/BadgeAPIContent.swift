@@ -58,12 +58,12 @@ struct BadgeAPIContent: View {
                     ]
                 )
 
-                // StatusBadge API
-                Text("Moin.StatusBadge")
+                // Status API
+                Text("Moin.Badge (Status)")
                     .font(.title2)
                     .fontWeight(.semibold)
 
-                Text(tr("badge.api.statusbadge_desc"))
+                Text(tr("badge.api.status_desc"))
                     .foregroundStyle(.secondary)
 
                 APITable(

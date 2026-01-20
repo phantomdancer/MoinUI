@@ -85,7 +85,7 @@
     "badge.token.paddingHSM": "小号水平内边距",
     "badge.token.shadowRadius": "阴影半径",
     "badge.api.badge_desc": "用于展示数字、状态点或小红点的徽标组件。",
-    "badge.api.statusbadge_desc": "独立的状态徽标组件，用于显示状态点和文本。",
+    "badge.api.status_desc": "使用带有 status 属性的 Badge 组件来显示状态点和文本。",
     "badge.api.badgesize_desc": "徽标尺寸枚举值。",
     "badge.api.badgecolor_desc": "徽标颜色枚举值。",
     "badge.api.badgestatus_desc": "状态徽标的状态类型枚举值。",
@@ -101,5 +101,5 @@
     "badge.custom_colors": "自定义颜色",
     "api.badge.section.badge": "Moin.Badge",
     "api.badge.section.ribbon": "Moin.BadgeRibbon",
-    "api.badge.section.status": "Moin.StatusBadge"
+    "api.badge.section.status": "状态"
 }
