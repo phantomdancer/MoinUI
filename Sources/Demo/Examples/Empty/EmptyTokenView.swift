@@ -25,6 +25,13 @@ struct EmptyTokenView: View {
         ]
     }
     
+    // 重置所有 Empty Token 到默认值
+    private func resetAll() {
+        let defaultEmpty = Moin.EmptyToken.generate(from: config.token)
+        config.components.empty = defaultEmpty
+        NotificationCenter.default.post(name: .emptyDocReset, object: nil)
+    }
+    
     var body: some View {
         ComponentDocBody(
             sections: tokenSections,
@@ -37,6 +44,20 @@ struct EmptyTokenView: View {
             }
         } item: { item in
             cardForItem(item)
+        } footer: {
+            HStack(spacing: Moin.Constants.Spacing.sm) {
+                Moin.Button(tr("playground.token.reset"), color: .primary, variant: .solid) {
+                    resetAll()
+                }
+                
+                Text(tr("token.playground.reset_desc"))
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+                
+                Spacer()
+            }
+            .padding(Moin.Constants.Spacing.md)
         }
     }
     
@@ -134,9 +155,9 @@ struct EmptyTokenView: View {
             TokenValueRow(label: "imageOpacity", value: Binding(
                  get: { CGFloat(Moin.ConfigProvider.shared.components.empty.imageOpacity) },
                  set: { Moin.ConfigProvider.shared.components.empty.imageOpacity = Double($0) }
-            ), range: 0...1)
+            ), range: 0...1, step: 0.1)
         } code: {
-            "config.components.empty.imageOpacity = \(config.components.empty.imageOpacity)"
+            "config.components.empty.imageOpacity = \(String(format: "%.1f", config.components.empty.imageOpacity))"
         }
         .scrollAnchor("token.imageOpacity")
     }

@@ -52,19 +52,104 @@ struct EmptyAPIView: View {
             enumValues: ".default | .simple | .custom(Image) | .systemIcon(String) | .url(String) | .none",
             sectionId: "empty"
         ) {
-            HStack(spacing: 20) {
-                Moin.Empty(image: .simple)
-                Moin.Empty(image: .default)
+            VStack(alignment: .leading, spacing: Moin.Constants.Spacing.lg) {
+                // .default
+                imageTypeRow(
+                    name: ".default",
+                    desc: tr("empty.api.image_default")
+                ) {
+                    Moin.Empty(image: .default)
+                        .scaleEffect(0.5)
+                        .frame(height: 80)
+                }
+                
+                Divider()
+                
+                // .simple
+                imageTypeRow(
+                    name: ".simple",
+                    desc: tr("empty.api.image_simple")
+                ) {
+                    Moin.Empty(image: .simple)
+                        .scaleEffect(0.6)
+                        .frame(height: 60)
+                }
+                
+                Divider()
+                
+                // .systemIcon
+                imageTypeRow(
+                    name: ".systemIcon(String)",
+                    desc: tr("empty.api.image_system")
+                ) {
+                    Moin.Empty(image: .systemIcon("folder"))
+                        .scaleEffect(0.6)
+                        .frame(height: 60)
+                }
+                
+                Divider()
+                
+                // .url
+                imageTypeRow(
+                    name: ".url(String)",
+                    desc: tr("empty.api.image_url")
+                ) {
+                    Moin.Empty(image: .url("https://api.dicebear.com/7.x/shapes/png?seed=empty"))
+                        .scaleEffect(0.5)
+                        .frame(height: 80)
+                }
+                
+                Divider()
+                
+                // .custom
+                imageTypeRow(
+                    name: ".custom(Image)",
+                    desc: tr("empty.api.image_custom")
+                ) {
+                    Moin.Empty(image: .custom(Image(systemName: "star.circle.fill")))
+                        .scaleEffect(0.6)
+                        .frame(height: 60)
+                }
+                
+                Divider()
+                
+                // .none
+                imageTypeRow(
+                    name: ".none",
+                    desc: tr("empty.api.image_none")
+                ) {
+                    Moin.Empty(image: .none, description: tr("empty.default_description"))
+                        .frame(height: 40)
+                }
             }
-            .scaleEffect(0.5)
-            .frame(height: 100)
         } code: {
             """
-            Moin.Empty(image: .simple)
             Moin.Empty(image: .default)
+            Moin.Empty(image: .simple)
+            Moin.Empty(image: .systemIcon("folder"))
+            Moin.Empty(image: .url("https://..."))
+            Moin.Empty(image: .custom(Image(...)))
+            Moin.Empty(image: .none)
             """
         }
         .scrollAnchor("empty.image")
+    }
+    
+    @ViewBuilder
+    private func imageTypeRow<Content: View>(name: String, desc: String, @ViewBuilder content: () -> Content) -> some View {
+        VStack(alignment: .leading, spacing: Moin.Constants.Spacing.sm) {
+            HStack {
+                Text(name)
+                    .font(.system(size: 12, design: .monospaced))
+                    .fontWeight(.medium)
+                Text("-")
+                    .foregroundStyle(.secondary)
+                Text(desc)
+                    .font(.system(size: 12))
+                    .foregroundStyle(.secondary)
+            }
+            content()
+        }
     }
     
     private var descriptionPropertyCard: some View {

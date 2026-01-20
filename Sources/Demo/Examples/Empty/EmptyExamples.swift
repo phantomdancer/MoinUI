@@ -20,9 +20,11 @@ struct EmptyExamples: View {
     private let anchors: [AnchorItem] = [
         AnchorItem(id: "basic", titleKey: "empty.basic"),
         AnchorItem(id: "custom_image", titleKey: "empty.custom_image"),
+        AnchorItem(id: "custom_view", titleKey: "empty.custom_view"),
         AnchorItem(id: "image_url", titleKey: "empty.image_url"),
         AnchorItem(id: "with_action", titleKey: "empty.with_action"),
         AnchorItem(id: "simple", titleKey: "empty.simple"),
+        AnchorItem(id: "no_image", titleKey: "empty.no_image"),
         AnchorItem(id: "no_description", titleKey: "empty.no_description"),
     ]
 
@@ -74,9 +76,11 @@ struct EmptyExamples: View {
         ExamplePageWithAnchor(pageName: "Empty", anchors: anchors) { _ in
             basicExample.id("basic")
             customImageExample.id("custom_image")
+            customViewExample.id("custom_view")
             imageUrlExample.id("image_url")
             withActionExample.id("with_action")
             simpleExample.id("simple")
+            noImageExample.id("no_image")
             noDescriptionExample.id("no_description")
         }
     }
@@ -210,6 +214,48 @@ struct EmptyExamples: View {
             code: {
                 """
                 Moin.Empty(image: .default, description: "")
+                """
+            }
+        )
+    }
+
+    private var customViewExample: some View {
+        ExampleSection(
+            title: tr("empty.custom_view"),
+            description: tr("empty.custom_view_desc"),
+            content: {
+                Moin.Empty(
+                    image: .custom(Image(systemName: "star.circle.fill")),
+                    description: tr("empty.default_description")
+                )
+            },
+            code: {
+                """
+                Moin.Empty(
+                    image: .custom(Image(systemName: "star.circle.fill")),
+                    description: "\(tr("empty.default_description"))"
+                )
+                """
+            }
+        )
+    }
+
+    private var noImageExample: some View {
+        ExampleSection(
+            title: tr("empty.no_image"),
+            description: tr("empty.no_image_desc"),
+            content: {
+                Moin.Empty(
+                    image: .none,
+                    description: tr("empty.default_description")
+                )
+            },
+            code: {
+                """
+                Moin.Empty(
+                    image: .none,
+                    description: "\(tr("empty.default_description"))"
+                )
                 """
             }
         )
