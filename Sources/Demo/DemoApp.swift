@@ -202,7 +202,7 @@ struct ContentView: View {
                         if navManager.selectedItem == .space {
                             Picker("", selection: $spaceTab) {
                                 Text(tr("tab.examples")).tag(SpaceExamplesTab.examples)
-                                Text(tr("tab.playground")).tag(SpaceExamplesTab.playground)
+
                                 Text(tr("tab.api")).tag(SpaceExamplesTab.api)
                                 Text(tr("tab.token")).tag(SpaceExamplesTab.token)
                             }
@@ -214,7 +214,7 @@ struct ContentView: View {
                         if navManager.selectedItem == .divider {
                             Picker("", selection: $dividerTab) {
                                 Text(tr("tab.examples")).tag(DividerExamplesTab.examples)
-                                Text(tr("tab.playground")).tag(DividerExamplesTab.playground)
+
                                 Text(tr("tab.api")).tag(DividerExamplesTab.api)
                                 Text(tr("tab.token")).tag(DividerExamplesTab.token)
                             }
@@ -226,7 +226,7 @@ struct ContentView: View {
                         if navManager.selectedItem == .badge {
                             Picker("", selection: $badgeTab) {
                                 Text(tr("tab.examples")).tag(BadgeExamplesTab.examples)
-                                Text(tr("tab.playground")).tag(BadgeExamplesTab.playground)
+
                                 Text(tr("tab.api")).tag(BadgeExamplesTab.api)
                                 Text(tr("tab.token")).tag(BadgeExamplesTab.token)
                             }
@@ -238,7 +238,7 @@ struct ContentView: View {
                         if navManager.selectedItem == .avatar {
                             Picker("", selection: $avatarTab) {
                                 Text(tr("tab.examples")).tag(AvatarExamplesTab.examples)
-                                Text(tr("tab.playground")).tag(AvatarExamplesTab.playground)
+
                                 Text(tr("tab.api")).tag(AvatarExamplesTab.api)
                                 Text(tr("tab.token")).tag(AvatarExamplesTab.token)
                             }
@@ -250,7 +250,7 @@ struct ContentView: View {
                         if navManager.selectedItem == .empty {
                             Picker("", selection: $emptyTab) {
                                 Text(tr("tab.examples")).tag(EmptyExamplesTab.examples)
-                                Text(tr("tab.playground")).tag(EmptyExamplesTab.playground)
+
                                 Text(tr("tab.api")).tag(EmptyExamplesTab.api)
                                 Text(tr("tab.token")).tag(EmptyExamplesTab.token)
                             }
@@ -262,7 +262,7 @@ struct ContentView: View {
                         if navManager.selectedItem == .spin {
                             Picker("", selection: $spinTab) {
                                 Text(tr("tab.examples")).tag(SpinExamplesTab.examples)
-                                Text(tr("tab.playground")).tag(SpinExamplesTab.playground)
+
                                 Text(tr("tab.api")).tag(SpinExamplesTab.api)
                                 Text(tr("tab.token")).tag(SpinExamplesTab.token)
                             }

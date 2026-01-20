@@ -4,7 +4,6 @@ import MoinUI
 /// Spin Tab
 enum SpinExamplesTab: String, CaseIterable {
     case examples
-    case playground
     case api
     case token
 }
@@ -16,7 +15,6 @@ struct SpinExamples: View {
     @State private var showFullscreen = false
 
     // 懒加载状态
-    @State private var playgroundReady = false
     @State private var apiReady = false
     @State private var tokenReady = false
 
@@ -35,12 +33,6 @@ struct SpinExamples: View {
             switch selectedTab {
             case .examples:
                 examplesContent
-            case .playground:
-                if playgroundReady {
-                    playgroundContent
-                } else {
-                    loadingView
-                }
             case .api:
                 if apiReady {
                     apiContent
@@ -68,10 +60,6 @@ struct SpinExamples: View {
         switch tab {
         case .examples:
             break
-        case .playground:
-            if !playgroundReady {
-                DispatchQueue.main.async { playgroundReady = true }
-            }
         case .api:
             if !apiReady {
                 DispatchQueue.main.async { apiReady = true }
@@ -96,22 +84,16 @@ struct SpinExamples: View {
         }
     }
 
-    // MARK: - Playground Content
-
-    private var playgroundContent: some View {
-        SpinPlayground()
-    }
-
     // MARK: - API Content
 
     private var apiContent: some View {
-        SpinAPIContent()
+        SpinAPIView()
     }
 
     // MARK: - Token Content
 
     private var tokenContent: some View {
-        SpinTokenSection()
+        SpinTokenView()
     }
 
     // MARK: - Examples
@@ -290,153 +272,5 @@ struct SpinExamples: View {
                 """
             }
         )
-    }
-}
-
-// MARK: - API Content
-
-struct SpinAPIContent: View {
-    @Localized var tr
-
-    var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 24) {
-                // Moin.Spin
-                Text("Moin.Spin")
-                    .font(.title2.bold())
-
-                Text(tr("spin.api.desc"))
-                    .foregroundStyle(.secondary)
-
-                APITable(
-                    headers: (tr("api.property"), tr("api.type"), tr("api.default"), tr("api.description")),
-                    rows: [
-                        ("spinning", "Bool", "true", tr("spin.api.spinning")),
-                        ("size", "SpinSize", ".default", tr("spin.api.size")),
-                        ("tip", "String?", "nil", tr("spin.api.tip")),
-                        ("delay", "Int?", "nil", tr("spin.api.delay")),
-                        ("percent", "SpinPercent?", "nil", tr("spin.api.percent")),
-                        ("fullscreen", "Bool", "false", tr("spin.api.fullscreen")),
-                        ("indicator", "View?", "nil", tr("spin.api.indicator")),
-                        ("content", "View?", "nil", tr("spin.api.content"))
-                    ]
-                )
-
-                Divider()
-
-                // SpinSize
-                Text("SpinSize")
-                    .font(.title2.bold())
-
-                Text(tr("spin.api.size_desc"))
-                    .foregroundStyle(.secondary)
-
-                APITable(
-                    headers: (tr("api.value"), tr("api.description"), "", ""),
-                    rows: [
-                        (".small", tr("spin.api.size_small"), "", ""),
-                        (".default", tr("spin.api.size_default"), "", ""),
-                        (".large", tr("spin.api.size_large"), "", "")
-                    ],
-                    columnWidths: (140, 300, 0, 0)
-                )
-
-                Divider()
-
-                // SpinPercent
-                Text("SpinPercent")
-                    .font(.title2.bold())
-
-                Text(tr("spin.api.percent_desc"))
-                    .foregroundStyle(.secondary)
-
-                APITable(
-                    headers: (tr("api.value"), tr("api.description"), "", ""),
-                    rows: [
-                        (".value(Double)", tr("spin.api.percent_value"), "", ""),
-                        (".auto", tr("spin.api.percent_auto"), "", "")
-                    ],
-                    columnWidths: (180, 300, 0, 0)
-                )
-            }
-            .padding(24)
-        }
-    }
-}
-
-// MARK: - Token Section
-
-struct SpinTokenSection: View {
-    @Localized var tr
-    @Environment(\.moinConfig) private var config
-
-    var body: some View {
-        let token = config.components.spin
-
-        ScrollView {
-            VStack(alignment: .leading, spacing: Moin.Constants.Spacing.xl) {
-                Text(tr("spin.token.title"))
-                    .font(.title2)
-                    .fontWeight(.semibold)
-
-                Text(tr("spin.token.desc"))
-                    .foregroundStyle(.secondary)
-
-                // Size Tokens
-                Text(tr("spin.token.size"))
-                    .font(.headline)
-
-                APITable(
-                    headers: (
-                        tr("api.property"),
-                        tr("api.type"),
-                        tr("api.default"),
-                        tr("api.description")
-                    ),
-                    rows: [
-                        ("dotSize", "CGFloat", "\(Int(token.dotSize))", tr("spin.token.dotSize_desc")),
-                        ("dotSizeSM", "CGFloat", "\(Int(token.dotSizeSM))", tr("spin.token.dotSizeSM_desc")),
-                        ("dotSizeLG", "CGFloat", "\(Int(token.dotSizeLG))", tr("spin.token.dotSizeLG_desc")),
-                        ("contentHeight", "CGFloat", "\(Int(token.contentHeight))", tr("spin.token.contentHeight_desc")),
-                    ]
-                )
-
-                // Color Tokens
-                Text(tr("spin.token.color"))
-                    .font(.headline)
-
-                APITable(
-                    headers: (
-                        tr("api.property"),
-                        tr("api.type"),
-                        tr("api.default"),
-                        tr("api.description")
-                    ),
-                    rows: [
-                        ("dotColor", "Color", "colorPrimary", tr("spin.token.dotColor_desc")),
-                        ("tipColor", "Color", "colorTextTertiary", tr("spin.token.tipColor_desc")),
-                        ("maskBackground", "Color", "colorBgMask", tr("spin.token.maskBackground_desc")),
-                        ("progressTrackColor", "Color", "colorFillSecondary", tr("spin.token.progressTrackColor_desc")),
-                    ]
-                )
-
-                // Animation Tokens
-                Text(tr("spin.token.animation"))
-                    .font(.headline)
-
-                APITable(
-                    headers: (
-                        tr("api.property"),
-                        tr("api.type"),
-                        tr("api.default"),
-                        tr("api.description")
-                    ),
-                    rows: [
-                        ("motionDuration", "Double", "1.2", tr("spin.token.motionDuration_desc")),
-                    ]
-                )
-            }
-            .padding(24)
-        }
     }
 }

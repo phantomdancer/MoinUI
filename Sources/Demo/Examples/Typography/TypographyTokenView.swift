@@ -8,10 +8,7 @@ struct TypographyTokenView: View {
     @Localized var tr
     @ObservedObject var config = Moin.ConfigProvider.shared
     
-    @State var selectedItemId: String? = "token"
-    @State private var targetScrollId: String?
-
-    // MARK: - 共享 Sections 数据（sidebar 和主内容区共用）
+    // MARK: - Sections
     
     private var tokenSections: [DocSidebarSection] {
         [
@@ -57,28 +54,19 @@ struct TypographyTokenView: View {
     }
     
     var body: some View {
-        HStack(spacing: 0) {
-            // 左栏：主内容
-            mainContent
-            
-            Divider()
-            
-            // 右栏：导航树
-            docSidebar
-                .frame(width: 280)
-        }
-        .background(Color(nsColor: .controlBackgroundColor))
-    }
-    
-    // MARK: - Doc Sidebar
-
-    private var docSidebar: some View {
-        DocSidebar(
+        ComponentDocBody(
             sections: tokenSections,
-            selectedItemId: $selectedItemId,
-            targetScrollId: $targetScrollId
-        ) {
-            HStack(spacing: Moin.Constants.Spacing.sm) {
+            initialItemId: "token"
+        ) { sectionId in
+            if sectionId == "token" {
+                Text(tr("doc.section.global_token")) // Typography mostly uses global tokens or mix
+                    .font(.title3)
+                    .fontWeight(.semibold)
+            }
+        } item: { item in
+            cardForItem(item)
+        } footer: {
+             HStack(spacing: Moin.Constants.Spacing.sm) {
                 Moin.Button(tr("playground.token.reset"), color: .primary, variant: .solid) {
                     resetAll()
                 }
@@ -91,29 +79,6 @@ struct TypographyTokenView: View {
                 Spacer()
             }
             .padding(Moin.Constants.Spacing.md)
-        }
-    }
-    
-    // MARK: - 主内容区
-    
-    private var mainContent: some View {
-        // 可滚动内容
-        AnchorScrollView(targetScrollId: $targetScrollId, currentScrollId: $selectedItemId) {
-            LazyVStack(alignment: .leading, spacing: Moin.Constants.Spacing.xl) {
-                // Token 分组
-                Text(tr("doc.section.global_token"))
-                    .font(.title3)
-                    .fontWeight(.semibold)
-                    .scrollAnchor("token")
-
-                // 按 tokenSections 顺序渲染
-                ForEach(tokenSections) { section in
-                    ForEach(section.sortedItems, id: \.self) { item in
-                        cardForItem(item)
-                    }
-                }
-            }
-            .padding(Moin.Constants.Spacing.lg)
         }
     }
     
@@ -706,6 +671,3 @@ struct TypographyTokenView: View {
         .scrollAnchor("token.colorBorder")
     }
 }
-// Helper for accessing Moin.ConfigProvider.shared more easily if needed, 
-// but local 'config' is available. 
-// Note: In `lineHeightSMCard` I used `CONFIG`, which is invalid. Fixed to `config`.

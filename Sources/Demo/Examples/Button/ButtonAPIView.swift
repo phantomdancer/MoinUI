@@ -3,29 +3,11 @@ import MoinUI
 
 // MARK: - ButtonAPIView
 
-/// Button 组件 API 文档视图 - 每属性独立卡片
+/// Button 组件 API 文档视图
 struct ButtonAPIView: View {
     @Localized var tr
-    @ObservedObject var config = Moin.ConfigProvider.shared
     
-    @State var selectedItemId: String? = "api"
-    @State var scrollPosition: String?
-    @State private var targetScrollId: String?
-
-    
-    // 各属性的当前选中值
-    @State var selectedColor: Moin.ButtonColor = .primary
-    @State var selectedVariant: Moin.ButtonVariant = .solid
-    @State var selectedSize: Moin.ButtonSize = .medium
-    @State var selectedShape: Moin.ButtonShape = .default
-    @State var selectedIcon: String = "star.fill"
-    @State var selectedIconPlacement: Moin.ButtonIconPlacement = .start
-    @State var isLoading: Bool = false
-    @State var isDisabled: Bool = false
-    @State var isBlock: Bool = false
-    @State var isGhost: Bool = false
-    
-    // MARK: - 共享 Sections 数据（sidebar 和主内容区共用）
+    // MARK: - API Sections
     
     private var apiSections: [DocSidebarSection] {
         [
@@ -52,90 +34,16 @@ struct ButtonAPIView: View {
         ]
     }
     
-    // 重置所有属性到默认值
-    private func resetAll() {
-        selectedColor = .primary
-        selectedVariant = .solid
-        selectedSize = .medium
-        selectedShape = .default
-        selectedIcon = "star.fill"
-        selectedIconPlacement = .start
-        isLoading = false
-        isDisabled = false
-        isBlock = false
-        isGhost = false
-        // 重置全局token
-        config.seed.colorPrimary = Moin.Colors.blue
-        config.seed.borderRadius = 6
-        config.seed.controlHeight = 32
-        config.regenerateTokens()
-    }
-    
     var body: some View {
-        HStack(spacing: 0) {
-            // 左栏：属性卡片列表
-            mainContent
-            
-            Divider()
-            
-            // 右栏：导航树
-            docSidebar
-                .frame(width: 280)
-        }
-        .background(Color(nsColor: .controlBackgroundColor))
-        .onReceive(NotificationCenter.default.publisher(for: .buttonDocReset)) { _ in
-            resetAll()
-        }
-    }
-    
-    // MARK: - Doc Sidebar
-    
-    private var docSidebar: some View {
-        DocSidebar(
+        ComponentDocBody(
             sections: apiSections,
-            selectedItemId: $selectedItemId,
-            targetScrollId: $targetScrollId
-        )
-        .frame(width: 280)
-    }
-    
-    // MARK: - 主内容区
-    
-    private var mainContent: some View {
-        VStack(spacing: 0) {
-            // 固定顶部重置按钮
-            HStack {
-                Spacer()
-                Button {
-                    resetAll()
-                } label: {
-                    Text(tr("playground.token.reset"))
-                        .font(.system(size: 12))
-                        .foregroundStyle(.blue)
-                }
-                .buttonStyle(.plain)
+            initialItemId: "api"
+        ) { sectionId in
+            if sectionId == "api" {
+                Text("API").font(.title3).fontWeight(.semibold)
             }
-            .padding(.horizontal, Moin.Constants.Spacing.lg)
-            .padding(.vertical, Moin.Constants.Spacing.sm)
-            
-            // 可滚动内容
-            AnchorScrollView(targetScrollId: $targetScrollId, currentScrollId: $selectedItemId) {
-                LazyVStack(alignment: .leading, spacing: Moin.Constants.Spacing.xl) {
-                    // API 分组
-                    Text("API")
-                        .font(.title3)
-                        .fontWeight(.semibold)
-                        .scrollAnchor("api")
-
-                    // 按 sections 顺序渲染，每个 section 内按 sortedItems 排序
-                    ForEach(apiSections) { section in
-                        ForEach(section.sortedItems, id: \.self) { item in
-                            cardForItem(item)
-                        }
-                    }
-                }
-                .padding(Moin.Constants.Spacing.lg)
-            }
+        } item: { item in
+            cardForItem(item)
         }
     }
     
@@ -165,7 +73,7 @@ struct ButtonAPIView: View {
     
     // MARK: - Color 属性卡片
     
-    private var colorPropertyCard: some View {
+    internal var colorPropertyCard: some View {
         PropertyCard(
             name: "color",
             type: "Moin.ButtonColor",
@@ -217,18 +125,18 @@ struct ButtonAPIView: View {
             }
         } code: {
             """
-Moin.Button("\(tr("button.label.primary"))", color: .primary) {}
-Moin.Button("\(tr("button.label.cyan"))", color: .cyan) {}
-Moin.Button("\(tr("button.label.brown"))", color: .custom(Color(red: 0.6, green: 0.3, blue: 0.1))) {}
-Moin.Button("\(tr("button.label.custom"))", color: .custom(Color(red: 0.6, green: 0.2, blue: 0.8))) {}
-"""
+            Moin.Button("\(tr("button.label.primary"))", color: .primary) {}
+            Moin.Button("\(tr("button.label.cyan"))", color: .cyan) {}
+            Moin.Button("\(tr("button.label.brown"))", color: .custom(Color(red: 0.6, green: 0.3, blue: 0.1))) {}
+            Moin.Button("\(tr("button.label.custom"))", color: .custom(Color(red: 0.6, green: 0.2, blue: 0.8))) {}
+            """
         }
         .scrollAnchor("api.color")
     }
     
     // MARK: - Variant 属性卡片
     
-    private var variantPropertyCard: some View {
+    internal var variantPropertyCard: some View {
         PropertyCard(
             name: "variant",
             type: "Moin.ButtonVariant",
@@ -253,7 +161,7 @@ Moin.Button("\(tr("button.label.custom"))", color: .custom(Color(red: 0.6, green
 
     // MARK: - Size 属性卡片
 
-    private var sizePropertyCard: some View {
+    internal var sizePropertyCard: some View {
         PropertyCard(
             name: "size",
             type: "Moin.ButtonSize",
@@ -275,7 +183,7 @@ Moin.Button("\(tr("button.label.custom"))", color: .custom(Color(red: 0.6, green
 
     // MARK: - Shape 属性卡片
 
-    private var shapePropertyCard: some View {
+    internal var shapePropertyCard: some View {
         PropertyCard(
             name: "shape",
             type: "Moin.ButtonShape",
@@ -293,296 +201,5 @@ Moin.Button("\(tr("button.label.custom"))", color: .custom(Color(red: 0.6, green
             "Moin.Button(\"\(tr("button.label.normal"))\", shape: .default) {}"
         }
         .scrollAnchor("api.shape")
-    }
-}
-
-// MARK: - PropertyCard 属性卡片组件
-
-struct PropertyCard<Preview: View, TryIt: View>: View {
-    let name: String
-    let type: String
-    let defaultValue: String
-    let description: String
-    let enumValues: String?  // 可选枚举值说明
-    let sectionId: String
-    @ViewBuilder let preview: () -> Preview
-    @ViewBuilder let tryIt: (() -> TryIt)?
-    let code: () -> String
-    
-    init(
-        name: String,
-        type: String,
-        defaultValue: String,
-        description: String,
-        enumValues: String? = nil,
-        sectionId: String,
-        @ViewBuilder preview: @escaping () -> Preview,
-        @ViewBuilder tryIt: @escaping () -> TryIt,
-        code: @escaping () -> String
-    ) {
-        self.name = name
-        self.type = type
-        self.defaultValue = defaultValue
-        self.description = description
-        self.enumValues = enumValues
-        self.sectionId = sectionId
-        self.preview = preview
-        self.tryIt = tryIt
-        self.code = code
-    }
-    
-    init(
-        name: String,
-        type: String,
-        defaultValue: String,
-        description: String,
-        enumValues: String? = nil,
-        sectionId: String,
-        @ViewBuilder preview: @escaping () -> Preview,
-        code: @escaping () -> String
-    ) where TryIt == EmptyView {
-        self.name = name
-        self.type = type
-        self.defaultValue = defaultValue
-        self.description = description
-        self.enumValues = enumValues
-        self.sectionId = sectionId
-        self.preview = preview
-        self.tryIt = nil
-        self.code = code
-    }
-    
-    @Localized var tr
-    @Environment(\.moinToken) private var token
-    @Environment(\.colorScheme) private var colorScheme
-
-    private var isDarkMode: Bool { colorScheme == .dark }
-
-    var body: some View {
-        Moin.BadgeRibbon(text: name, color: .custom(.gray), placement: .end) {
-            VStack(alignment: .leading, spacing: Moin.Constants.Spacing.md) {
-                // 标题行
-                HStack {
-                    Text(name)
-                        .font(.system(size: 14, weight: .semibold, design: .monospaced))
-                        .foregroundStyle(token.colorPrimary)
-                        .textSelection(.enabled)
-                    Text(type)
-                        .font(.system(size: 12, design: .monospaced))
-                        .foregroundStyle(.secondary)
-                        .textSelection(.enabled)
-                    Text("= \(defaultValue)")
-                        .font(.system(size: 11, design: .monospaced))
-                        .foregroundStyle(.tertiary)
-                        .textSelection(.enabled)
-                    Spacer()
-                }
-
-            // 说明
-            Text(description)
-                .font(.system(size: 13))
-                .foregroundStyle(.secondary)
-                .textSelection(.enabled)
-
-            // 枚举值说明
-            if let values = enumValues {
-                Text(values)
-                    .font(.system(size: 12, design: .monospaced))
-                    .foregroundStyle(.tertiary)
-                    .textSelection(.enabled)
-                    .padding(.horizontal, Moin.Constants.Spacing.sm)
-                    .padding(.vertical, Moin.Constants.Spacing.xs)
-                    .background(Color.secondary.opacity(0.1))
-                    .cornerRadius(4)
-            }
-
-            // 预览区
-            HStack {
-                preview()
-                Spacer()
-            }
-            .padding(Moin.Constants.Spacing.md)
-            .frame(maxWidth: .infinity, alignment: .leading)
-
-            // 试一试
-            if let tryIt = tryIt {
-                VStack(alignment: .trailing, spacing: 0) {
-                    // 标签溢出到上方
-                    Text(tr("doc.try_it"))
-                        .font(.system(size: 10, weight: .medium))
-                        .foregroundStyle(token.colorPrimary)
-                        .padding(.horizontal, 8)
-                        .padding(.vertical, 3)
-                        .background(token.colorPrimary.opacity(0.15))
-                        .cornerRadius(3)
-                        .offset(y: 8)
-
-                    HStack {
-                        tryIt()
-                        Spacer()
-                    }
-                    .padding(Moin.Constants.Spacing.md)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .background(token.colorPrimary.opacity(0.05))
-                    .cornerRadius(Moin.Constants.Radius.sm)
-                }
-                .frame(maxWidth: .infinity, alignment: .trailing)
-            }
-
-            // 代码
-            ScrollView(.horizontal, showsIndicators: false) {
-                HighlightedCodeView(code: code(), fontSize: 12)
-                    .padding(Moin.Constants.Spacing.sm)
-            }
-            .background(isDarkMode ? Color(white: 0.08) : Color(white: 0.96))
-            .cornerRadius(Moin.Constants.Radius.sm)
-            }
-            .padding(Moin.Constants.Spacing.md)
-            .background(Color(nsColor: .controlBackgroundColor))
-            .cornerRadius(Moin.Constants.Radius.md)
-            .overlay(
-                RoundedRectangle(cornerRadius: Moin.Constants.Radius.md)
-                    .stroke(Color.primary.opacity(0.1), lineWidth: 1)
-            )
-        }
-        .scrollAnchor("\(sectionId).\(name)")
-    }
-}
-
-// MARK: - TokenCard Token卡片组件
-
-struct TokenCard<Preview: View, Editor: View>: View {
-    let name: String
-    let type: String
-    let defaultValue: String
-    let description: String
-    let sectionId: String
-    @ViewBuilder let preview: () -> Preview
-    @ViewBuilder let editor: (() -> Editor)?
-    let code: () -> String
-    
-    init(
-        name: String,
-        type: String,
-        defaultValue: String,
-        description: String,
-        sectionId: String,
-        @ViewBuilder preview: @escaping () -> Preview,
-        @ViewBuilder editor: @escaping () -> Editor,
-        code: @escaping () -> String = { "" }
-    ) {
-        self.name = name
-        self.type = type
-        self.defaultValue = defaultValue
-        self.description = description
-        self.sectionId = sectionId
-        self.preview = preview
-        self.editor = editor
-        self.code = code
-    }
-    
-    init(
-        name: String,
-        type: String,
-        defaultValue: String,
-        description: String,
-        sectionId: String,
-        @ViewBuilder preview: @escaping () -> Preview,
-        code: @escaping () -> String = { "" }
-    ) where Editor == EmptyView {
-        self.name = name
-        self.type = type
-        self.defaultValue = defaultValue
-        self.description = description
-        self.sectionId = sectionId
-        self.preview = preview
-        self.editor = nil
-        self.code = code
-    }
-    
-    @Localized var tr
-    @Environment(\.moinToken) private var token
-    @Environment(\.colorScheme) private var colorScheme
-
-    private var isDarkMode: Bool { colorScheme == .dark }
-
-    var body: some View {
-        Moin.BadgeRibbon(text: name, color: .custom(.gray), placement: .end) {
-            VStack(alignment: .leading, spacing: Moin.Constants.Spacing.md) {
-                // 标题行
-                HStack {
-                    Text(name)
-                        .font(.system(size: 14, weight: .semibold, design: .monospaced))
-                        .foregroundStyle(token.colorPrimary)
-                        .textSelection(.enabled)
-                    Text(type)
-                        .font(.system(size: 12, design: .monospaced))
-                        .foregroundStyle(.secondary)
-                        .textSelection(.enabled)
-                    Text("= \(defaultValue)")
-                        .font(.system(size: 11, design: .monospaced))
-                        .foregroundStyle(.tertiary)
-                        .textSelection(.enabled)
-                    Spacer()
-                }
-
-                Text(description)
-                    .font(.system(size: 13))
-                    .foregroundStyle(.secondary)
-                    .textSelection(.enabled)
-
-                // 预览
-                HStack {
-                    preview()
-                    Spacer()
-                }
-                .padding(Moin.Constants.Spacing.md)
-                .background(isDarkMode ? Color(white: 0.12) : Color(white: 0.98))
-                .cornerRadius(Moin.Constants.Radius.sm)
-
-                // 试一试
-                if let editor = editor {
-                    VStack(alignment: .trailing, spacing: 0) {
-                        Text(tr("doc.try_it"))
-                            .font(.system(size: 10, weight: .medium))
-                            .foregroundStyle(token.colorPrimary)
-                            .padding(.horizontal, 8)
-                            .padding(.vertical, 3)
-                            .background(token.colorPrimary.opacity(0.15))
-                            .cornerRadius(3)
-                            .offset(y: 8)
-
-                        HStack {
-                            editor()
-                            Spacer()
-                        }
-                        .padding(Moin.Constants.Spacing.md)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .background(token.colorPrimary.opacity(0.05))
-                        .cornerRadius(Moin.Constants.Radius.sm)
-                    }
-                    .frame(maxWidth: .infinity, alignment: .trailing)
-                }
-
-                // 代码
-                let codeText = code()
-                if !codeText.isEmpty {
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        HighlightedCodeView(code: codeText, fontSize: 12)
-                            .padding(Moin.Constants.Spacing.sm)
-                    }
-                    .background(isDarkMode ? Color(white: 0.08) : Color(white: 0.96))
-                    .cornerRadius(Moin.Constants.Radius.sm)
-                }
-            }
-            .padding(Moin.Constants.Spacing.md)
-            .background(Color(nsColor: .controlBackgroundColor))
-            .cornerRadius(Moin.Constants.Radius.md)
-            .overlay(
-                RoundedRectangle(cornerRadius: Moin.Constants.Radius.md)
-                    .stroke(Color.primary.opacity(0.1), lineWidth: 1)
-            )
-        }
-        .scrollAnchor("\(sectionId).\(name)")
     }
 }

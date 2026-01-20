@@ -8,12 +8,7 @@ struct ButtonTokenView: View {
     @Localized var tr
     @ObservedObject var config = Moin.ConfigProvider.shared
     
-    @State var selectedItemId: String? = "token"
-    @State var scrollPosition: String?
-    @State private var targetScrollId: String?
-
-    
-    // MARK: - 共享 Sections 数据（sidebar 和主内容区共用）
+    // MARK: - Token Sections
     
     private var tokenSections: [DocSidebarSection] {
         [
@@ -73,27 +68,28 @@ struct ButtonTokenView: View {
     }
     
     var body: some View {
-        HStack(spacing: 0) {
-            // 左栏：Token 卡片列表
-            mainContent
-            
-            Divider()
-            
-            // 右栏：导航树
-            docSidebar
-                .frame(width: 280)
-        }
-        .background(Color(nsColor: .controlBackgroundColor))
-    }
-    
-    // MARK: - Doc Sidebar
-
-    private var docSidebar: some View {
-        DocSidebar(
+        ComponentDocBody(
             sections: allSections,
-            selectedItemId: $selectedItemId,
-            targetScrollId: $targetScrollId
-        ) {
+            initialItemId: "token"
+        ) { sectionId in
+            if sectionId == "token" {
+                Text(tr("doc.section.component_token"))
+                    .font(.title3)
+                    .fontWeight(.semibold)
+            } else if sectionId == "global" {
+                Text(tr("doc.section.global_token"))
+                    .font(.title3)
+                    .fontWeight(.semibold)
+            }
+        } item: { item in
+            // Determine sectionId for cardForItem based on which section the item belongs to.
+            // Since item names are unique enough or handled properly inside the switch
+            if globalSections.flatMap({ $0.items }).contains(item) {
+                 cardForItem(item, sectionId: "global")
+            } else {
+                 cardForItem(item, sectionId: "token")
+            }
+        } footer: {
              HStack(spacing: Moin.Constants.Spacing.sm) {
                 Moin.Button(tr("playground.token.reset"), color: .primary, variant: .solid) {
                     resetAll()
@@ -107,46 +103,6 @@ struct ButtonTokenView: View {
                 Spacer()
             }
             .padding(Moin.Constants.Spacing.md)
-        }
-    }
-
-    // MARK: - 主内容区
-    
-    private var mainContent: some View {
-        VStack(spacing: 0) {
-            // 可滚动内容
-            AnchorScrollView(targetScrollId: $targetScrollId, currentScrollId: $selectedItemId) {
-                LazyVStack(alignment: .leading, spacing: Moin.Constants.Spacing.xl) {
-                    // Token 分组
-                    Text(tr("doc.section.component_token"))
-                        .font(.title3)
-                        .fontWeight(.semibold)
-                        .scrollAnchor("token")
-
-                    // 按 tokenSections 顺序渲染
-                    ForEach(tokenSections) { section in
-                        ForEach(section.sortedItems, id: \.self) { item in
-                            cardForItem(item, sectionId: "token")
-                        }
-                    }
-
-                    Divider().padding(.vertical, Moin.Constants.Spacing.md)
-
-                    // 全局 Token 分组
-                    Text(tr("doc.section.global_token"))
-                        .font(.title3)
-                        .fontWeight(.semibold)
-                        .scrollAnchor("global")
-
-                    // 按 globalSections 顺序渲染
-                    ForEach(globalSections) { section in
-                        ForEach(section.sortedItems, id: \.self) { item in
-                            cardForItem(item, sectionId: "global")
-                        }
-                    }
-                }
-                .padding(Moin.Constants.Spacing.lg)
-            }
         }
     }
     

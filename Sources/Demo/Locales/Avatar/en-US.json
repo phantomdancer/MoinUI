@@ -87,5 +87,9 @@
       "colorFillTertiary": "Tertiary Fill Color",
       "controlHeight": "Control Height"
     }
-  }
+  },
+  "api.avatar.section.basic": "Basic",
+  "api.avatar.section.style": "Style",
+  "api.avatar.section.advanced": "Advanced",
+  "api.avatar.section.group": "Avatar Group"
 }

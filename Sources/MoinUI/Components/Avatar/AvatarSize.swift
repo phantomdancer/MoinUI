@@ -5,19 +5,19 @@ public enum AvatarSize {
     case large
     case `default`
     case small
-    case custom(CGFloat)
+    case _custom(CGFloat)
 }
 
 // MARK: - ExpressibleByIntegerLiteral
 extension AvatarSize: ExpressibleByIntegerLiteral {
     public init(integerLiteral value: Int) {
-        self = .custom(CGFloat(value))
+        self = ._custom(CGFloat(value))
     }
 }
 
 // MARK: - ExpressibleByFloatLiteral
 extension AvatarSize: ExpressibleByFloatLiteral {
     public init(floatLiteral value: Double) {
-        self = .custom(CGFloat(value))
+        self = ._custom(CGFloat(value))
     }
 }

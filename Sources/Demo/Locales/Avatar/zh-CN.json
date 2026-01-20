@@ -87,5 +87,9 @@
       "colorFillTertiary": "三级填充色",
       "controlHeight": "控件高度"
     }
-  }
+  },
+  "api.avatar.section.basic": "基础",
+  "api.avatar.section.style": "样式",
+  "api.avatar.section.advanced": "高级",
+  "api.avatar.section.group": "头像组"
 }

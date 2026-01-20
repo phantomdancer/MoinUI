@@ -8,10 +8,7 @@ struct TypographyAPIView: View {
     @Localized var tr
     @ObservedObject var config = Moin.ConfigProvider.shared
     
-    @State var selectedItemId: String? = "api"
-    @State private var targetScrollId: String?
-
-    // MARK: - 共享 Sections 数据（sidebar 和主内容区共用）
+    // MARK: - API Sections
     
     private var apiSections: [DocSidebarSection] {
         [
@@ -44,50 +41,15 @@ struct TypographyAPIView: View {
     }
     
     var body: some View {
-        HStack(spacing: 0) {
-            // 左栏：属性卡片列表
-            mainContent
-            
-            Divider()
-            
-            // 右栏：导航树
-            docSidebar
-                .frame(width: 280)
-        }
-        .background(Color(nsColor: .controlBackgroundColor))
-    }
-    
-    // MARK: - Doc Sidebar
-
-    private var docSidebar: some View {
-        DocSidebar(
+        ComponentDocBody(
             sections: apiSections,
-            selectedItemId: $selectedItemId,
-            targetScrollId: $targetScrollId
-        )
-        .frame(width: 280)
-    }
-
-    // MARK: - 主内容区
-    
-    private var mainContent: some View {
-        // 可滚动内容
-        AnchorScrollView(targetScrollId: $targetScrollId, currentScrollId: $selectedItemId) {
-            LazyVStack(alignment: .leading, spacing: Moin.Constants.Spacing.xl) {
-                // API 分组标题
-                Text(tr("doc.section.api"))
-                    .font(.title3)
-                    .fontWeight(.semibold)
-                    .scrollAnchor("api")
-
-                // 按 sections 顺序渲染，每个 section 内按 sortedItems 排序
-                ForEach(apiSections) { section in
-                    ForEach(section.sortedItems, id: \.self) { item in
-                        cardForItem(item)
-                    }
-                }
+            initialItemId: "api"
+        ) { sectionId in
+            if sectionId == "api" {
+                Text("API").font(.title3).fontWeight(.semibold)
             }
-            .padding(Moin.Constants.Spacing.lg)
+        } item: { item in
+            cardForItem(item)
         }
     }
     

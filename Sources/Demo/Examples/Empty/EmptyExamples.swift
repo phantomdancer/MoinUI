@@ -4,7 +4,6 @@ import MoinUI
 /// Empty 组件文档页面 Tab
 enum EmptyExamplesTab: String, CaseIterable {
     case examples
-    case playground
     case api
     case token
 }
@@ -14,7 +13,6 @@ struct EmptyExamples: View {
     @Binding var selectedTab: EmptyExamplesTab
 
     // 懒加载状态
-    @State private var playgroundReady = false
     @State private var apiReady = false
     @State private var tokenReady = false
 
@@ -33,12 +31,6 @@ struct EmptyExamples: View {
             switch selectedTab {
             case .examples:
                 examplesContent
-            case .playground:
-                if playgroundReady {
-                    playgroundContent
-                } else {
-                    loadingView
-                }
             case .api:
                 if apiReady {
                     apiContent
@@ -66,10 +58,6 @@ struct EmptyExamples: View {
         switch tab {
         case .examples:
             break
-        case .playground:
-            if !playgroundReady {
-                DispatchQueue.main.async { playgroundReady = true }
-            }
         case .api:
             if !apiReady {
                 DispatchQueue.main.async { apiReady = true }
@@ -93,20 +81,14 @@ struct EmptyExamples: View {
         }
     }
 
-    // MARK: - Playground Content
-    private var playgroundContent: some View {
-        EmptyPlayground()
-            .padding(Moin.Constants.Spacing.xl)
-    }
-
     // MARK: - API Content
     private var apiContent: some View {
-        EmptyAPIContent()
+        EmptyAPIView()
     }
 
     // MARK: - Token Content
     private var tokenContent: some View {
-        EmptyTokenSection()
+        EmptyTokenView()
     }
 
     // MARK: - Examples
@@ -173,21 +155,6 @@ struct EmptyExamples: View {
                     image: .url("https://api.dicebear.com/7.x/shapes/png?seed=empty"),
                     description: "\(tr("empty.default_description"))"
                 )
-                """
-            }
-        )
-    }
-
-    private var descriptionExample: some View {
-        ExampleSection(
-            title: tr("empty.description"),
-            description: tr("empty.description_desc"),
-            content: {
-                Moin.Empty(description: tr("empty.custom_text"))
-            },
-            code: {
-                """
-                Moin.Empty(description: "\(tr("empty.custom_text"))")
                 """
             }
         )

@@ -4,7 +4,6 @@ import MoinUI
 /// Space 组件文档页面 Tab
 enum SpaceExamplesTab: String, CaseIterable {
     case examples
-    case playground
     case api
     case token
 }
@@ -15,7 +14,6 @@ struct SpaceExamples: View {
     @Binding var selectedTab: SpaceExamplesTab
 
     // 懒加载状态
-    @State private var playgroundReady = false
     @State private var apiReady = false
     @State private var tokenReady = false
 
@@ -35,12 +33,6 @@ struct SpaceExamples: View {
             switch selectedTab {
             case .examples:
                 examplesContent
-            case .playground:
-                if playgroundReady {
-                    playgroundContent
-                } else {
-                    loadingView
-                }
             case .api:
                 if apiReady {
                     apiContent
@@ -68,10 +60,6 @@ struct SpaceExamples: View {
         switch tab {
         case .examples:
             break
-        case .playground:
-            if !playgroundReady {
-                DispatchQueue.main.async { playgroundReady = true }
-            }
         case .api:
             if !apiReady {
                 DispatchQueue.main.async { apiReady = true }
@@ -97,23 +85,16 @@ struct SpaceExamples: View {
         }
     }
 
-    // MARK: - Playground Content
-
-    private var playgroundContent: some View {
-        SpacePlayground()
-            .padding(Moin.Constants.Spacing.xl)
-    }
-
     // MARK: - API Content
 
     private var apiContent: some View {
-        SpaceAPIContent()
+        SpaceAPIView()
     }
 
     // MARK: - Token Content
 
     private var tokenContent: some View {
-        SpaceTokenContent()
+        SpaceTokenView()
     }
 
     // MARK: - Examples
@@ -396,10 +377,4 @@ struct SpaceExamples: View {
             """
         }
     }
-}
-
-#Preview {
-    SpaceExamples(selectedTab: .constant(.examples))
-        .moinThemeRoot()
-        .frame(width: 800, height: 600)
 }

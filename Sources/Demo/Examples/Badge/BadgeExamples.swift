@@ -4,7 +4,6 @@ import MoinUI
 /// Badge 组件文档页面 Tab
 enum BadgeExamplesTab: String, CaseIterable {
     case examples
-    case playground
     case api
     case token
 }
@@ -15,7 +14,6 @@ struct BadgeExamples: View {
     @Binding var selectedTab: BadgeExamplesTab
 
     // 懒加载状态
-    @State private var playgroundReady = false
     @State private var apiReady = false
     @State private var tokenReady = false
 
@@ -39,12 +37,6 @@ struct BadgeExamples: View {
             switch selectedTab {
             case .examples:
                 examplesContent
-            case .playground:
-                if playgroundReady {
-                    playgroundContent
-                } else {
-                    loadingView
-                }
             case .api:
                 if apiReady {
                     apiContent
@@ -72,10 +64,6 @@ struct BadgeExamples: View {
         switch tab {
         case .examples:
             break
-        case .playground:
-            if !playgroundReady {
-                DispatchQueue.main.async { playgroundReady = true }
-            }
         case .api:
             if !apiReady {
                 DispatchQueue.main.async { apiReady = true }
@@ -105,23 +93,16 @@ struct BadgeExamples: View {
         }
     }
 
-    // MARK: - Playground Content
-
-    private var playgroundContent: some View {
-        BadgePlayground()
-            .padding(Moin.Constants.Spacing.xl)
-    }
-
     // MARK: - API Content
 
     private var apiContent: some View {
-        BadgeAPIContent()
+        BadgeAPIView()
     }
 
     // MARK: - Token Content
 
     private var tokenContent: some View {
-        BadgeTokenSection()
+        BadgeTokenView()
     }
 
     // MARK: - Examples
@@ -469,20 +450,20 @@ struct BadgeExamples: View {
             }
         } code: {
             """
-            // \(tr("tag.semantic_colors"))
+            // \(tr("badge.semantic_colors"))
             Moin.Badge(count: 5, color: .default) { ... }
             Moin.Badge(count: 5, color: .success) { ... }
             Moin.Badge(count: 5, color: .processing) { ... }
             Moin.Badge(count: 5, color: .warning) { ... }
             Moin.Badge(count: 5, color: .error) { ... }
 
-            // \(tr("tag.preset_colors"))
+            // \(tr("badge.preset_colors"))
             Moin.Badge(count: 5, color: .magenta) { ... }
             Moin.Badge(count: 5, color: .red) { ... }
             Moin.Badge(count: 5, color: .volcano) { ... }
             // ...
 
-            // \(tr("tag.custom_colors"))
+            // \(tr("badge.custom_colors"))
             Moin.Badge(count: 5, color: .custom(Color(hex: 0xf50))) { ... }
             """
         }

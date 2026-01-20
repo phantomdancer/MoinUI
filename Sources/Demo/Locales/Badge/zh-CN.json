@@ -94,5 +94,8 @@
     "badge.api.ribbon_desc": "在元素角落悬挂缎带的组件。",
     "badge.api.placement": "设置缎带位置",
     "badge.enum.placement.start": "左上角",
-    "badge.enum.placement.end": "右上角"
+    "badge.enum.placement.end": "右上角",
+    "badge.semantic_colors": "语义颜色",
+    "badge.preset_colors": "预设颜色",
+    "badge.custom_colors": "自定义颜色"
 }

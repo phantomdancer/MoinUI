@@ -8,11 +8,7 @@ struct TagAPIView: View {
     @Localized var tr
     @ObservedObject var config = Moin.ConfigProvider.shared
     
-    @State var selectedItemId: String? = "api"
-    @State var scrollPosition: String?
-    @State private var targetScrollId: String?
-
-    // MARK: - 共享 Sections 数据（sidebar 和主内容区共用）
+    // MARK: - API Sections
     
     private var apiSections: [DocSidebarSection] {
         [
@@ -30,52 +26,15 @@ struct TagAPIView: View {
     }
     
     var body: some View {
-        HStack(spacing: 0) {
-            // 左栏：属性卡片列表
-            mainContent
-            
-            Divider()
-            
-            // 右栏：导航树
-            docSidebar
-                .frame(width: 280)
-        }
-        .background(Color(nsColor: .controlBackgroundColor))
-    }
-    
-    // MARK: - 右栏导航
-
-    // MARK: - Doc Sidebar
-
-    private var docSidebar: some View {
-        DocSidebar(
+        ComponentDocBody(
             sections: apiSections,
-            selectedItemId: $selectedItemId,
-            targetScrollId: $targetScrollId
-        )
-        .frame(width: 280)
-    }
-
-    // MARK: - 主内容区
-    
-    private var mainContent: some View {
-        // 可滚动内容
-        AnchorScrollView(targetScrollId: $targetScrollId, currentScrollId: $selectedItemId) {
-            LazyVStack(alignment: .leading, spacing: Moin.Constants.Spacing.xl) {
-                // API 分组
-                Text("API")
-                    .font(.title3)
-                    .fontWeight(.semibold)
-                    .scrollAnchor("api")
-
-                // 按 sections 顺序渲染，每个 section 内按 sortedItems 排序
-                ForEach(apiSections) { section in
-                    ForEach(section.sortedItems, id: \.self) { item in
-                        cardForItem(item)
-                    }
-                }
+            initialItemId: "api"
+        ) { sectionId in
+            if sectionId == "api" {
+                Text("API").font(.title3).fontWeight(.semibold)
             }
-            .padding(Moin.Constants.Spacing.lg)
+        } item: { item in
+             cardForItem(item)
         }
     }
     
@@ -103,7 +62,7 @@ struct TagAPIView: View {
             type: "Moin.TagColor",
             defaultValue: ".default",
             description: tr("tag.api.color"),
-            enumValues: ".default | .success | .processing | .warning | .error | .custom(Color) | .magenta | .red | .volcano | .orange | .gold | .lime | .green | .cyan | .blue | .geekblue | .purple",
+            enumValues: ".default | .success | .processing | .warning | .error | Color | .magenta | .red | ...",
             sectionId: "api"
         ) {
             VStack(alignment: .leading, spacing: Moin.Constants.Spacing.sm) {

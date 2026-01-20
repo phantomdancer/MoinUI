@@ -1,0 +1,258 @@
+import SwiftUI
+import MoinUI
+
+// MARK: - SpinTokenView
+
+struct SpinTokenView: View {
+    @Localized var tr
+    @Environment(\.moinToken) var token
+    @ObservedObject var config = Moin.ConfigProvider.shared
+    
+    // MARK: - Token Sections
+    
+    private var tokenSections: [DocSidebarSection] {
+        [
+            DocSidebarSection(
+                title: tr("spin.token.size"),
+                items: ["dotSize", "dotSizeSM", "dotSizeLG", "contentHeight"],
+                sectionId: "size"
+            ),
+            DocSidebarSection(
+                title: tr("spin.token.color"),
+                items: ["dotColor", "tipColor", "maskBackground", "progressTrackColor"],
+                sectionId: "color"
+            ),
+            DocSidebarSection(
+                title: tr("spin.token.animation"),
+                items: ["motionDuration"],
+                sectionId: "animation"
+            )
+        ]
+    }
+    
+    var body: some View {
+        ComponentDocBody(
+            sections: tokenSections,
+            initialItemId: "size"
+        ) { sectionId in
+            if sectionId == "size" {
+                Text(tr("spin.token.size")).font(.title3).fontWeight(.semibold)
+            } else if sectionId == "color" {
+                Text(tr("spin.token.color")).font(.title3).fontWeight(.semibold)
+            } else if sectionId == "animation" {
+                Text(tr("spin.token.animation")).font(.title3).fontWeight(.semibold)
+            }
+        } item: { item in
+            cardForItem(item)
+        }
+    }
+    
+    @ViewBuilder
+    private func cardForItem(_ item: String) -> some View {
+        switch item {
+        // Size
+        case "dotSize": dotSizeCard
+        case "dotSizeSM": dotSizeSMCard
+        case "dotSizeLG": dotSizeLGCard
+        case "contentHeight": contentHeightCard
+        // Color
+        case "dotColor": dotColorCard
+        case "tipColor": tipColorCard
+        case "maskBackground": maskBackgroundCard
+        case "progressTrackColor": progressTrackColorCard
+        // Animation
+        case "motionDuration": motionDurationCard
+        default: EmptyView()
+        }
+    }
+    
+    // MARK: - Size Cards
+    
+    private var dotSizeCard: some View {
+        TokenCard(
+            name: "dotSize",
+            type: "CGFloat",
+            defaultValue: "20",
+            description: tr("spin.token.dotSize_desc"),
+            sectionId: "size"
+        ) {
+            Moin.Spin(size: .default)
+        } editor: {
+            TokenValueRow(label: "dotSize", value: Binding(
+                 get: { Moin.ConfigProvider.shared.components.spin.dotSize },
+                 set: { Moin.ConfigProvider.shared.components.spin.dotSize = $0 }
+            ))
+        } code: {
+            "config.components.spin.dotSize = \(Int(config.components.spin.dotSize))"
+        }
+        .scrollAnchor("size.dotSize")
+    }
+    
+    private var dotSizeSMCard: some View {
+        TokenCard(
+            name: "dotSizeSM",
+            type: "CGFloat",
+            defaultValue: "14",
+            description: tr("spin.token.dotSizeSM_desc"),
+            sectionId: "size"
+        ) {
+            Moin.Spin(size: .small)
+        } editor: {
+            TokenValueRow(label: "dotSizeSM", value: Binding(
+                 get: { Moin.ConfigProvider.shared.components.spin.dotSizeSM },
+                 set: { Moin.ConfigProvider.shared.components.spin.dotSizeSM = $0 }
+            ))
+        } code: {
+            "config.components.spin.dotSizeSM = \(Int(config.components.spin.dotSizeSM))"
+        }
+        .scrollAnchor("size.dotSizeSM")
+    }
+    
+    private var dotSizeLGCard: some View {
+        TokenCard(
+            name: "dotSizeLG",
+            type: "CGFloat",
+            defaultValue: "32",
+            description: tr("spin.token.dotSizeLG_desc"),
+            sectionId: "size"
+        ) {
+            Moin.Spin(size: .large)
+        } editor: {
+            TokenValueRow(label: "dotSizeLG", value: Binding(
+                 get: { Moin.ConfigProvider.shared.components.spin.dotSizeLG },
+                 set: { Moin.ConfigProvider.shared.components.spin.dotSizeLG = $0 }
+            ))
+        } code: {
+            "config.components.spin.dotSizeLG = \(Int(config.components.spin.dotSizeLG))"
+        }
+        .scrollAnchor("size.dotSizeLG")
+    }
+    
+    private var contentHeightCard: some View {
+        TokenCard(
+            name: "contentHeight",
+            type: "CGFloat",
+            defaultValue: "400",
+            description: tr("spin.token.contentHeight_desc"), // This is for Nested spin minimum height?
+            sectionId: "size"
+        ) {
+             Moin.Spin(spinning: true) { Text("Content") }
+        } editor: {
+            TokenValueRow(label: "contentHeight", value: Binding(
+                 get: { Moin.ConfigProvider.shared.components.spin.contentHeight },
+                 set: { Moin.ConfigProvider.shared.components.spin.contentHeight = $0 }
+            ))
+        } code: {
+            "config.components.spin.contentHeight = \(Int(config.components.spin.contentHeight))"
+        }
+        .scrollAnchor("size.contentHeight")
+    }
+    
+    // MARK: - Color Cards
+    
+    private var dotColorCard: some View {
+        TokenCard(
+            name: "dotColor",
+            type: "Color",
+            defaultValue: "token.colorPrimary",
+            description: tr("spin.token.dotColor_desc"),
+            sectionId: "color"
+        ) {
+            Moin.Spin()
+        } editor: {
+            ColorPresetRow(label: "dotColor", color: Binding(
+                 get: { Moin.ConfigProvider.shared.components.spin.dotColor },
+                 set: { Moin.ConfigProvider.shared.components.spin.dotColor = $0 }
+            ))
+        } code: {
+            "config.components.spin.dotColor = Color(...)"
+        }
+        .scrollAnchor("color.dotColor")
+    }
+    
+    private var tipColorCard: some View {
+         TokenCard(
+             name: "tipColor",
+             type: "Color",
+             defaultValue: "token.colorTextTertiary",
+             description: tr("spin.token.tipColor_desc"),
+             sectionId: "color"
+         ) {
+             Moin.Spin(tip: "Loading...")
+         } editor: {
+             ColorPresetRow(label: "tipColor", color: Binding(
+                  get: { Moin.ConfigProvider.shared.components.spin.tipColor },
+                  set: { Moin.ConfigProvider.shared.components.spin.tipColor = $0 }
+             ))
+         } code: {
+             "config.components.spin.tipColor = Color(...)"
+         }
+         .scrollAnchor("color.tipColor")
+     }
+    
+    private var maskBackgroundCard: some View {
+          TokenCard(
+              name: "maskBackground",
+              type: "Color",
+              defaultValue: "token.colorBgMask",
+              description: tr("spin.token.maskBackground_desc"),
+              sectionId: "color"
+          ) {
+              Moin.Spin(spinning: true) {
+                  Text("Content").padding(20).background(Color.white)
+              }
+          } editor: {
+              ColorPresetRow(label: "maskBackground", color: Binding(
+                   get: { Moin.ConfigProvider.shared.components.spin.maskBackground },
+                   set: { Moin.ConfigProvider.shared.components.spin.maskBackground = $0 }
+              ))
+          } code: {
+              "config.components.spin.maskBackground = Color(...)"
+          }
+          .scrollAnchor("color.maskBackground")
+      }
+    
+    private var progressTrackColorCard: some View {
+         TokenCard(
+             name: "progressTrackColor",
+             type: "Color",
+             defaultValue: "token.colorFillSecondary",
+             description: tr("spin.token.progressTrackColor_desc"),
+             sectionId: "color"
+         ) {
+             // Does basic Spin show track? Or only specific style?
+             // Assuming default spinner might use it.
+             Moin.Spin()
+         } editor: {
+             ColorPresetRow(label: "progressTrackColor", color: Binding(
+                  get: { Moin.ConfigProvider.shared.components.spin.progressTrackColor },
+                  set: { Moin.ConfigProvider.shared.components.spin.progressTrackColor = $0 }
+             ))
+         } code: {
+             "config.components.spin.progressTrackColor = Color(...)"
+         }
+         .scrollAnchor("color.progressTrackColor")
+     }
+    
+    // MARK: - Animation Cards
+    
+    private var motionDurationCard: some View {
+         TokenCard(
+             name: "motionDuration",
+             type: "Double",
+             defaultValue: "1.2",
+             description: tr("spin.token.motionDuration_desc"),
+             sectionId: "animation"
+         ) {
+             Moin.Spin()
+         } editor: {
+             TokenValueRow(label: "motionDuration", value: Binding(
+                  get: { CGFloat(Moin.ConfigProvider.shared.components.spin.motionDuration) },
+                  set: { Moin.ConfigProvider.shared.components.spin.motionDuration = Double($0) }
+             ), range: 0.1...5, step: 0.1)
+         } code: {
+             "config.components.spin.motionDuration = \(config.components.spin.motionDuration)"
+         }
+         .scrollAnchor("animation.motionDuration")
+     }
+}

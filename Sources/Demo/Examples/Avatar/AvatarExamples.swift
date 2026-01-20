@@ -4,7 +4,6 @@ import MoinUI
 /// Avatar 组件文档页面 Tab
 enum AvatarExamplesTab: String, CaseIterable {
     case examples
-    case playground
     case api
     case token
 }
@@ -14,7 +13,6 @@ struct AvatarExamples: View {
     @Binding var selectedTab: AvatarExamplesTab
 
     // 懒加载状态
-    @State private var playgroundReady = false
     @State private var apiReady = false
     @State private var tokenReady = false
 
@@ -36,12 +34,6 @@ struct AvatarExamples: View {
             switch selectedTab {
             case .examples:
                 examplesContent
-            case .playground:
-                if playgroundReady {
-                    playgroundContent
-                } else {
-                    loadingView
-                }
             case .api:
                 if apiReady {
                     apiContent
@@ -69,10 +61,6 @@ struct AvatarExamples: View {
         switch tab {
         case .examples:
             break
-        case .playground:
-            if !playgroundReady {
-                DispatchQueue.main.async { playgroundReady = true }
-            }
         case .api:
             if !apiReady {
                 DispatchQueue.main.async { apiReady = true }
@@ -99,20 +87,14 @@ struct AvatarExamples: View {
         }
     }
 
-    // MARK: - Playground Content
-    private var playgroundContent: some View {
-        AvatarPlayground()
-            .padding(Moin.Constants.Spacing.xl)
-    }
-
     // MARK: - API Content
     private var apiContent: some View {
-        AvatarAPIContent()
+        AvatarAPIView()
     }
 
     // MARK: - Token Content
     private var tokenContent: some View {
-        AvatarTokenSection()
+        AvatarTokenView()
     }
     
     // MARK: - Examples
@@ -402,4 +384,3 @@ struct AvatarExamples: View {
         )
     }
 }
-

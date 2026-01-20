@@ -4,7 +4,6 @@ import MoinUI
 /// Divider 组件文档页面 Tab
 enum DividerExamplesTab: String, CaseIterable {
     case examples
-    case playground
     case api
     case token
 }
@@ -15,7 +14,6 @@ struct DividerExamples: View {
     @Binding var selectedTab: DividerExamplesTab
 
     // 懒加载状态
-    @State private var playgroundReady = false
     @State private var apiReady = false
     @State private var tokenReady = false
 
@@ -34,12 +32,6 @@ struct DividerExamples: View {
             switch selectedTab {
             case .examples:
                 examplesContent
-            case .playground:
-                if playgroundReady {
-                    playgroundContent
-                } else {
-                    loadingView
-                }
             case .api:
                 if apiReady {
                     apiContent
@@ -67,10 +59,6 @@ struct DividerExamples: View {
         switch tab {
         case .examples:
             break
-        case .playground:
-            if !playgroundReady {
-                DispatchQueue.main.async { playgroundReady = true }
-            }
         case .api:
             if !apiReady {
                 DispatchQueue.main.async { apiReady = true }
@@ -95,23 +83,16 @@ struct DividerExamples: View {
         }
     }
 
-    // MARK: - Playground Content
-
-    private var playgroundContent: some View {
-        DividerPlayground()
-            .padding(Moin.Constants.Spacing.xl)
-    }
-
     // MARK: - API Content
 
     private var apiContent: some View {
-        DividerAPIContent()
+        DividerAPIView()
     }
 
     // MARK: - Token Content
 
     private var tokenContent: some View {
-        DividerTokenContent()
+        DividerTokenView()
     }
 
     // MARK: - Examples
@@ -311,10 +292,4 @@ struct DividerExamples: View {
             """
         }
     }
-}
-
-#Preview {
-    DividerExamples(selectedTab: .constant(.examples))
-        .moinThemeRoot()
-        .frame(width: 800, height: 600)
 }

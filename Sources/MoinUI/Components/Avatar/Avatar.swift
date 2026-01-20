@@ -70,7 +70,7 @@ public extension Moin {
             case .large: return avatarToken.sizeLG
             case .default: return avatarToken.size
             case .small: return avatarToken.sizeSM
-            case .custom(let val): return val
+            case ._custom(let val): return val
             }
         }
         
@@ -79,7 +79,7 @@ public extension Moin {
             case .large: return avatarToken.fontSizeLG
             case .default: return avatarToken.fontSize
             case .small: return avatarToken.fontSizeSM
-            case .custom(let val): return val * 0.5 // 自定义尺寸时字体粗略减半
+            case ._custom(let val): return val * 0.5 // 自定义尺寸时字体粗略减半
             }
         }
         
@@ -94,7 +94,7 @@ public extension Moin {
                 case .large: radius = avatarToken.borderRadiusLG
                 case .default: radius = avatarToken.borderRadius
                 case .small: radius = avatarToken.borderRadiusSM
-                case .custom(let val): radius = val * 0.15 // 粗略估算
+                case ._custom(let val): radius = val * 0.15 // 粗略估算
                 }
                 return AnyShape(RoundedRectangle(cornerRadius: radius))
             }

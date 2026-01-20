@@ -87,5 +87,15 @@
     "badge.api.statusbadge_desc": "A standalone status badge component for showing status dots and text.",
     "badge.api.badgesize_desc": "Badge size enum values.",
     "badge.api.badgecolor_desc": "Badge color enum values.",
-    "badge.api.badgestatus_desc": "Status badge status type enum values."
+    "badge.api.badgestatus_desc": "Status badge status type enum values.",
+    "badge.semantic_colors": "Semantic Colors",
+    "badge.preset_colors": "Preset Colors",
+    "badge.custom_colors": "Custom Colors",
+    "badge.ribbon": "Ribbon",
+    "badge.ribbon_desc": "Use ribbon badge.",
+    "badge.ribbon_placement": "Placement",
+    "badge.api.ribbon_desc": "Ribbon badge component.",
+    "badge.api.placement": "Ribbon placement",
+    "badge.enum.placement.start": "Top Left",
+    "badge.enum.placement.end": "Top Right"
 }
