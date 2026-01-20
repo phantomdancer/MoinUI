@@ -83,7 +83,9 @@ struct BadgeAPIView: View {
         ) {
             Moin.Badge(count: 5) { sampleBox }
         } code: {
-            "Moin.Badge(count: 5) { ... }"
+            """
+            Moin.Badge(count: 5) {...}
+            """
         }
         .scrollAnchor("badge.count")
     }
@@ -98,7 +100,9 @@ struct BadgeAPIView: View {
         ) {
             Moin.Badge(dot: true) { sampleBox }
         } code: {
-            "Moin.Badge(dot: true) { ... }"
+            """
+            Moin.Badge(dot: true) {...}
+            """
         }
         .scrollAnchor("badge.dot")
     }
@@ -113,7 +117,9 @@ struct BadgeAPIView: View {
         ) {
             Moin.Badge(count: 0, showZero: true) { sampleBox }
         } code: {
-            "Moin.Badge(count: 0, showZero: true) { ... }"
+            """
+            Moin.Badge(count: 0, showZero: true) {...}
+            """
         }
         .scrollAnchor("badge.showZero")
     }
@@ -128,7 +134,9 @@ struct BadgeAPIView: View {
         ) {
             Moin.Badge(count: 1000, overflowCount: 999) { sampleBox }
         } code: {
-            "Moin.Badge(count: 1000, overflowCount: 999) { ... }"
+            """
+            Moin.Badge(count: 1000, overflowCount: 999) {...}
+            """
         }
         .scrollAnchor("badge.overflowCount")
     }
@@ -148,8 +156,8 @@ struct BadgeAPIView: View {
             }
         } code: {
             """
-            Moin.Badge(size: .default) { ... }
-            Moin.Badge(size: .small) { ... }
+            Moin.Badge(size: .default) {...}
+            Moin.Badge(size: .small) {...}
             """
         }
         .scrollAnchor("badge.size")
@@ -166,7 +174,9 @@ struct BadgeAPIView: View {
         ) {
             Moin.Badge(count: 5, color: .success) { sampleBox }
         } code: {
-            "Moin.Badge(color: .success) { ... }"
+            """
+            Moin.Badge(color: .success) {...}
+            """
         }
         .scrollAnchor("badge.color")
     }
@@ -181,7 +191,9 @@ struct BadgeAPIView: View {
         ) {
             Moin.Badge(count: 5, offset: (10, -10)) { sampleBox }
         } code: {
-            "Moin.Badge(offset: (10, -10)) { ... }"
+            """
+            Moin.Badge(offset: (10, -10)) {...}
+            """
         }
         .scrollAnchor("badge.offset")
     }
@@ -221,7 +233,17 @@ struct BadgeAPIView: View {
         ) {
             Moin.BadgeRibbon(text: "New") { ribbonCard }
         } code: {
-            "Moin.BadgeRibbon(text: \"New\") { ... }"
+            """
+            Moin.BadgeRibbon(text: "New") {
+                RoundedRectangle(cornerRadius: 8)
+                    .fill(Color.gray.opacity(0.1))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 8)
+                            .strokeBorder(Color.gray.opacity(0.2))
+                    )
+                    .frame(width: 80, height: 60)
+            }
+            """
         }
     }
     
@@ -235,7 +257,17 @@ struct BadgeAPIView: View {
         ) {
             Moin.BadgeRibbon(text: "Cool", color: .purple) { ribbonCard }
         } code: {
-            "Moin.BadgeRibbon(color: .purple) { ... }"
+            """
+            Moin.BadgeRibbon(color: .purple) {
+                RoundedRectangle(cornerRadius: 8)
+                    .fill(Color.gray.opacity(0.1))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 8)
+                            .strokeBorder(Color.gray.opacity(0.2))
+                    )
+                    .frame(width: 80, height: 60)
+            }
+            """
         }
     }
     
@@ -254,8 +286,24 @@ struct BadgeAPIView: View {
             }
         } code: {
             """
-            Moin.BadgeRibbon(placement: .start) { ... }
-            Moin.BadgeRibbon(placement: .end) { ... }
+            Moin.BadgeRibbon(placement: .start) {
+                RoundedRectangle(cornerRadius: 8)
+                    .fill(Color.gray.opacity(0.1))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 8)
+                            .strokeBorder(Color.gray.opacity(0.2))
+                    )
+                    .frame(width: 80, height: 60)
+            }
+            Moin.BadgeRibbon(placement: .end) {
+                RoundedRectangle(cornerRadius: 8)
+                    .fill(Color.gray.opacity(0.1))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 8)
+                            .strokeBorder(Color.gray.opacity(0.2))
+                    )
+                    .frame(width: 80, height: 60)
+            }
             """
         }
     }
@@ -270,8 +318,18 @@ struct BadgeAPIView: View {
          ) {
              Moin.BadgeRibbon(text: "H") { ribbonCard }
          } code: {
-             "Moin.BadgeRibbon(...) { ... }"
-         }
+            """
+            Moin.BadgeRibbon(text: "H") {
+                RoundedRectangle(cornerRadius: 8)
+                    .fill(Color.gray.opacity(0.1))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 8)
+                            .strokeBorder(Color.gray.opacity(0.2))
+                    )
+                    .frame(width: 80, height: 60)
+            }
+            """
+        }
      }
     
     // MARK: - Statusbadge Properties
@@ -307,9 +365,7 @@ struct BadgeAPIView: View {
     
     // MARK: - Helpers
     private var sampleBox: some View {
-        RoundedRectangle(cornerRadius: 6)
-            .fill(Color.gray.opacity(0.3))
-            .frame(width: 40, height: 40)
+        Moin.Avatar(icon: "", shape: .square)
     }
     
     private var ribbonCard: some View {

@@ -161,10 +161,26 @@ struct SpaceExamples: View {
             }
         } code: {
             """
-            Moin.Space(size: .small) { ... }
-            Moin.Space(size: .medium) { ... }
-            Moin.Space(size: .large) { ... }
-            Moin.Space(size: 24) { ... }  // \(tr("space.pass_number"))
+            Moin.Space(size: .small) {
+                Moin.Button(tr("button.label.button"), color: .primary) {}
+                Moin.Button(tr("button.label.button"), color: .primary) {}
+                Moin.Button(tr("button.label.button"), color: .primary) {}
+            }
+            Moin.Space(size: .medium) {
+                Moin.Button(tr("button.label.button"), color: .primary) {}
+                Moin.Button(tr("button.label.button"), color: .primary) {}
+                Moin.Button(tr("button.label.button"), color: .primary) {}
+            }
+            Moin.Space(size: .large) {
+                Moin.Button(tr("button.label.button"), color: .primary) {}
+                Moin.Button(tr("button.label.button"), color: .primary) {}
+                Moin.Button(tr("button.label.button"), color: .primary) {}
+            }
+            Moin.Space(size: 24) {
+                Moin.Button(tr("button.label.button"), color: .primary) {}
+                Moin.Button(tr("button.label.button"), color: .primary) {}
+                Moin.Button(tr("button.label.button"), color: .primary) {}
+            }  // \(tr("space.pass_number"))
             """
         }
     }
@@ -223,9 +239,24 @@ struct SpaceExamples: View {
             }
         } code: {
             """
-            Moin.Space(alignment: .start) { ... }
-            Moin.Space(alignment: .center) { ... }
-            Moin.Space(alignment: .end) { ... }
+            Moin.Space(alignment: .start) {
+                Text("start:").frame(width: 50, alignment: .leading)
+                Moin.Button(tr("button.label.small"), color: .primary, size: .small) {}
+                Moin.Button(tr("button.label.medium"), color: .primary, size: .medium) {}
+                Moin.Button(tr("button.label.large"), color: .primary, size: .large) {}
+            }
+            Moin.Space(alignment: .center) {
+                Text("center:").frame(width: 50, alignment: .leading)
+                Moin.Button(tr("button.label.small"), color: .primary, size: .small) {}
+                Moin.Button(tr("button.label.medium"), color: .primary, size: .medium) {}
+                Moin.Button(tr("button.label.large"), color: .primary, size: .large) {}
+            }
+            Moin.Space(alignment: .end) {
+                Text("end:").frame(width: 50, alignment: .leading)
+                Moin.Button(tr("button.label.small"), color: .primary, size: .small) {}
+                Moin.Button(tr("button.label.medium"), color: .primary, size: .medium) {}
+                Moin.Button(tr("button.label.large"), color: .primary, size: .large) {}
+            }
             """
         }
     }

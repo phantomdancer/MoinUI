@@ -125,15 +125,9 @@ struct BadgeExamples: View {
             }
         } code: {
             """
-            Moin.Badge(count: 5) {
-                \(tr("badge.code.avatar"))
-            }
-            Moin.Badge(count: 0, showZero: true) {
-                \(tr("badge.code.avatar"))
-            }
-            Moin.Badge(count: 0) {  // \(tr("badge.code.hidden"))
-                \(tr("badge.code.avatar"))
-            }
+            Moin.Badge(count: 5) {...}
+            Moin.Badge(count: 0, showZero: true) {...}
+            Moin.Badge(count: 0) {...}
             """
         }
     }
@@ -159,10 +153,10 @@ struct BadgeExamples: View {
             }
         } code: {
             """
-            Moin.Badge(count: 99) { ... }
-            Moin.Badge(count: 100) { ... }  // \(tr("badge.code.shows_99plus"))
-            Moin.Badge(count: 999, overflowCount: 999) { ... }
-            Moin.Badge(count: 1000, overflowCount: 999) { ... }  // \(tr("badge.code.shows_999plus"))
+            Moin.Badge(count: 99) {...}
+            Moin.Badge(count: 100) {...}
+            Moin.Badge(count: 999, overflowCount: 999) {...}
+            Moin.Badge(count: 1000, overflowCount: 999) {...}
             """
         }
     }
@@ -184,12 +178,8 @@ struct BadgeExamples: View {
             }
         } code: {
             """
-            Moin.Badge(dot: true) {
-                \(tr("badge.code.avatar"))
-            }
-            Moin.Badge(dot: true) {
-                Image(systemName: "bell.fill")
-            }
+            Moin.Badge(dot: true) {...}
+            Moin.Badge(dot: true) {...}
             """
         }
     }
@@ -232,7 +222,7 @@ struct BadgeExamples: View {
             """
             @State private var count = 5
 
-            Moin.Badge(count: count) { ... }
+            Moin.Badge(count: count) {...}
 
             Button("-") { count -= 1 }
             Button("+") { count += 1 }
@@ -255,12 +245,8 @@ struct BadgeExamples: View {
             }
         } code: {
             """
-            Moin.Badge(count: 5, offset: (10, -10)) {
-                \(tr("badge.code.avatar"))
-            }
-            Moin.Badge(count: 5, offset: (-5, 5)) {
-                \(tr("badge.code.avatar"))
-            }
+            Moin.Badge(count: 5, offset: (10, -10)) {...}
+            Moin.Badge(count: 5, offset: (-5, 5)) {...}
             """
         }
     }
@@ -402,8 +388,8 @@ struct BadgeExamples: View {
             }
         } code: {
             """
-            Moin.Badge(count: 5, size: .default) { ... }
-            Moin.Badge(count: 5, size: .small) { ... }
+            Moin.Badge(count: 5, size: .default) {...}
+            Moin.Badge(count: 5, size: .small) {...}
             """
         }
     }
@@ -451,20 +437,21 @@ struct BadgeExamples: View {
         } code: {
             """
             // \(tr("badge.semantic_colors"))
-            Moin.Badge(count: 5, color: .default) { ... }
-            Moin.Badge(count: 5, color: .success) { ... }
-            Moin.Badge(count: 5, color: .processing) { ... }
-            Moin.Badge(count: 5, color: .warning) { ... }
-            Moin.Badge(count: 5, color: .error) { ... }
+            Moin.Badge(count: 5, color: .default) {...}
+            Moin.Badge(count: 5, color: .success) {...}
+            Moin.Badge(count: 5, color: .processing) {...}
+            Moin.Badge(count: 5, color: .warning) {...}
+            Moin.Badge(count: 5, color: .error) {...}
+            Moin.Badge(count: 5, color: .error) {...}
 
             // \(tr("badge.preset_colors"))
-            Moin.Badge(count: 5, color: .magenta) { ... }
-            Moin.Badge(count: 5, color: .red) { ... }
-            Moin.Badge(count: 5, color: .volcano) { ... }
+            Moin.Badge(count: 5, color: .magenta) {...}
+            Moin.Badge(count: 5, color: .red) {...}
+            Moin.Badge(count: 5, color: .volcano) {...}
             // ...
 
             // \(tr("badge.custom_colors"))
-            Moin.Badge(count: 5, color: .custom(Color(hex: 0xf50))) { ... }
+            Moin.Badge(count: 5, color: .custom(Color(hex: 0xf50))) {...}
             """
         }
     }
@@ -500,9 +487,7 @@ struct BadgeExamples: View {
     // MARK: - Helper Views
 
     private var sampleBox: some View {
-        RoundedRectangle(cornerRadius: 6)
-            .fill(Color.gray.opacity(0.3))
-            .frame(width: 40, height: 40)
+        Moin.Avatar(icon: "", shape: .square)
     }
     private var ribbonCard: some View {
         RoundedRectangle(cornerRadius: 8)

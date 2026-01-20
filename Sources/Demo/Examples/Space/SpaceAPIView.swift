@@ -64,12 +64,25 @@ struct SpaceAPIView: View {
                     Text("L")
                     Text("L")
                 }
+                 Moin.Space(size: 20) {
+                    Text("20")
+                    Text("20")
+                }
             }
         } code: {
             """
-            Moin.Space(size: .small) { ... }
-            Moin.Space(size: .large) { ... }
-            Moin.Space(size: 20) { ... }
+            Moin.Space(size: .small) {
+                Text("S")
+                Text("S")
+            }
+            Moin.Space(size: .large) {
+                Text("L")
+                Text("L")
+            }
+            Moin.Space(size: 20) {
+                Text("20")
+                Text("20")
+            }
             """
         }
         .scrollAnchor("space.size")
@@ -96,8 +109,14 @@ struct SpaceAPIView: View {
             }
         } code: {
             """
-            Moin.Space(direction: .horizontal) { ... }
-            Moin.Space(direction: .vertical) { ... }
+            Moin.Space(direction: .horizontal) {
+                Text("H")
+                Text("H")
+            }
+            Moin.Space(direction: .vertical) {
+                Text("V")
+                Text("V")
+            }
             """
         }
         .scrollAnchor("space.direction")
@@ -124,8 +143,14 @@ struct SpaceAPIView: View {
             }
         } code: {
             """
-            Moin.Space(alignment: .start) { ... }
-            Moin.Space(alignment: .center) { ... }
+            Moin.Space(alignment: .start) {
+                Text("Start")
+                Rectangle().frame(width: 10, height: 20)
+            }
+            Moin.Space(alignment: .center) {
+                Text("Center")
+                Rectangle().frame(width: 10, height: 20)
+            }
             """
         }
         .scrollAnchor("space.alignment")
@@ -144,7 +169,12 @@ struct SpaceAPIView: View {
                     Text("2")
             }
         } code: {
-            "Moin.Space(wrap: true) { ... }"
+            """
+            Moin.Space(wrap: true) {               
+                    Text("1")
+                    Text("2")
+            }
+            """
         }
         .scrollAnchor("space.wrap")
     }
@@ -186,7 +216,11 @@ struct SpaceAPIView: View {
                 Text("Item")
             }
         } code: {
-            "Moin.Space { ... }"
+            """
+            Moin.Space {
+                Text("Item")
+            }
+            """
         }
         .scrollAnchor("space.content")
     }

@@ -280,7 +280,11 @@ struct AvatarAPIView: View {
             }
         } code: {
             """
-            Moin.AvatarGroup(maxCount: 2) { ... }
+            Moin.AvatarGroup(maxCount: 2) {
+                Moin.Avatar("A")
+                Moin.Avatar("B")
+                Moin.Avatar("C")
+            }
             """
         }
         .scrollAnchor("api.group.maxCount")
