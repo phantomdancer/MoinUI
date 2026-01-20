@@ -14,44 +14,13 @@ struct EmptyAPIView: View {
                 title: "Moin.Empty",
                 items: ["image", "description", "content"],
                 sectionId: "empty"
-            ),
-            DocSidebarSection(
-                title: "ImageType",
-                items: ["image_type"], // This seems to be an Enum description, not a property list?
-                sectionId: "type"
-            )
-        ]
-    }
-    
-    // Note: older API content had a table for ImageType values.
-    // I should probably represent ImageType as a PropertyCard for "image" property with enumValues description, 
-    // OR a separate section describing the Enum values.
-    // The previous implementation had a separate table.
-    // I can put `image` property card in "Moin.Empty" section.
-    // And for "ImageType" section, maybe just one card explaining values? 
-    // Or I can integrate the Enum values into the `image` property card description?
-    // Let's integrate it into `image` property card `enumValues`.
-    
-    // But wait, `ImageType` has detailed descriptions for each case in the old table.
-    // `PropertyCard` `enumValues` usually is just a string list.
-    
-    // I will drop the separate "ImageType" section and just make `image` property card comprehensive.
-    // OR create a special card for it?
-    // Let's stick to standard `PropertyCard`. I can list enum values there.
-    
-    private var refinedApiSections: [DocSidebarSection] {
-        [
-             DocSidebarSection(
-                title: "Moin.Empty",
-                items: ["image", "description", "content"],
-                sectionId: "empty"
             )
         ]
     }
 
     var body: some View {
         ComponentDocBody(
-            sections: refinedApiSections,
+            sections: apiSections,
             initialItemId: "empty"
         ) { sectionId in
             if sectionId == "empty" {

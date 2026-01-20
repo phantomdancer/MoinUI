@@ -48,7 +48,7 @@ struct ComponentDocBody<ItemView: View, HeaderView: View, Footer: View>: View {
         HStack(spacing: 0) {
             // Main Content Area
             AnchorScrollView(targetScrollId: $targetScrollId, currentScrollId: $selectedItemId) {
-                LazyVStack(alignment: .leading, spacing: Moin.Constants.Spacing.xl) {
+                VStack(alignment: .leading, spacing: Moin.Constants.Spacing.xl) {
                     
                     ForEach(groupedSections, id: \.id) { group in
                         VStack(alignment: .leading, spacing: Moin.Constants.Spacing.xl) {

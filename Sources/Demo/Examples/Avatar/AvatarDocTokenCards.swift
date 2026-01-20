@@ -345,44 +345,15 @@ extension AvatarTokenView {
             description: tr("avatar.token.colorTextSecondary"),
             sectionId: "global"
         ) {
-            Text("Text").foregroundStyle(Moin.ConfigProvider.shared.token.colorTextSecondary)
+            Text("Text").foregroundStyle(config.token.colorTextSecondary)
         } editor: {
             ColorPresetRow(label: "colorTextSecondary", color: Binding(
-                get: { Moin.ConfigProvider.shared.token.colorTextSecondary },
-                set: { _ in
-                    // This is a global token change, normally strongly discouraged or wrapped.
-                    // Assuming for demo purposes we can change it, or just show it.
-                    // But changing global token affects everything.
-                    // TagDocTokenCards resets global token logic.
-                    // For now, allow edit but user should be aware.
-                    // Actually, Button/Tag resets global tokens in their reset logic.
-                    // For now, allow edit but user should be aware.
-                    // Actually, Button/Tag resets global tokens in their reset logic.
-                    // var seed = Moin.ConfigProvider.shared.seed
-                    // We can't easily reverse map secondary color to seed cleanly without more info
-                    // But maybe we can just set the derived property directly?
-                    // MoinToken is a struct, likely computed from Seed.
-                    // If ConfigProvider allows setting it directly (if var), or modifying Seed.
-                    // Let's check if we can modify token directly in ConfigProvider.
-                    // Usually ConfigProvider.shared.token is read-only computed from ConfigProvider.shared.seed?
-                    // If token is a struct property on ConfigProvider, we can set it.
-                    // Let's assume we can't easily edit global token here without side effects.
-                    // But the requirement says "Token页面...都需要有试一试功能".
-                    // I will provide read-only or a mock edit if possible, or just skip editing global tokens if too complex for now.
-                    // However, TagDocTokenCards allows editing fontSize via seed.
-                    // Let's just allow viewing for Global tokens if editing is hard, or edit seed if possible.
-                    // For colorTextSecondary, it's derived from base colors.
-                    // I'll skip editing for global tokens to be safe for now, as it might break other things,
-                    // unless I see how Tag handles it. Tag handles fontSize by `seed.fontSize = $0 + 2`.
-                    // I'll just skip the editor for global tokens for now to avoid errors, or make it empty.
-                    // Wait, the TokenCard signature requires `editor`.
-                    // I can pass EmptyView().
-                }
+                get: { config.token.colorTextSecondary },
+                set: { config.token.colorTextSecondary = $0 }
             ))
         } code: {
-            "// Global Token: colorTextSecondary"
+            "config.token.colorTextSecondary = Color(...)"
         }
-        .scrollAnchor("global.colorTextSecondary")
     }
 
     var globalColorFillTertiaryCard: some View {
@@ -393,29 +364,14 @@ extension AvatarTokenView {
             description: tr("avatar.token.colorFillTertiary"),
             sectionId: "global"
         ) {
-            Rectangle().fill(Moin.ConfigProvider.shared.token.colorFillTertiary).frame(width: 50, height: 50)
+            Rectangle().fill(config.token.colorFillTertiary).frame(width: 50, height: 50)
         } editor: {
-             EmptyView()
+            ColorPresetRow(label: "colorFillTertiary", color: Binding(
+                get: { config.token.colorFillTertiary },
+                set: { config.token.colorFillTertiary = $0 }
+            ))
         } code: {
-             "// Global Token: colorFillTertiary"
+            "config.token.colorFillTertiary = Color(...)"
         }
-        .scrollAnchor("global.colorFillTertiary")
-    }
-    
-    var globalControlHeightCard: some View {
-        TokenCard(
-            name: "controlHeight",
-            type: "CGFloat",
-            defaultValue: "32",
-            description: tr("avatar.token.controlHeight"),
-            sectionId: "global"
-        ) {
-            Text("H: \(Moin.ConfigProvider.shared.token.controlHeight)")
-        } editor: {
-            EmptyView()
-        } code: {
-             "// Global Token: controlHeight"
-        }
-        .scrollAnchor("global.controlHeight")
     }
 }

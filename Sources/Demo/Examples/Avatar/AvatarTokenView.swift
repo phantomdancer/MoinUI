@@ -25,7 +25,7 @@ struct AvatarTokenView: View {
             ),
             DocSidebarSection(
                 title: tr("avatar.token.global"),
-                items: ["colorTextSecondary", "colorFillTertiary", "controlHeight"],
+                items: ["colorTextSecondary", "colorFillTertiary"],
                 sectionId: "global"
             )
         ]
@@ -91,7 +91,6 @@ struct AvatarTokenView: View {
         case "groupBorderWidth": avatarGroupBorderWidthCard
         case "colorTextSecondary": globalColorTextSecondaryCard
         case "colorFillTertiary": globalColorFillTertiaryCard
-        case "controlHeight": globalControlHeightCard
         default: EmptyView()
         }
     }

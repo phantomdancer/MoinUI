@@ -65,44 +65,20 @@ struct AnchorScrollView<ID: Hashable, Content: View>: View {
             ScrollView {
                 content()
             }
-            .coordinateSpace(name: "API_SCROLL_VIEW") // 定义坐标空间
-            // 监听点击跳转
+            .coordinateSpace(name: "API_SCROLL_VIEW")
             .onChange(of: targetScrollId) { newValue in
                 if let newValue {
-                    // 第一次跳转
                     withAnimation {
                         proxy.scrollTo(newValue, anchor: .top)
                     }
-                    
-                    // 二次校准：延迟 0.1s 再次跳转
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                        withAnimation {
-                            proxy.scrollTo(newValue, anchor: .top)
-                        }
-                    }
                 }
             }
-            // 监听滚动位置（Scroll Spy）
             .onPreferenceChange(ScrollAnchorPreferenceKey.self) { preferences in
-                // 1. 过滤出所有可见或接近顶部的锚点
-                // 我们寻找 minY 刚刚小于等于 0（或某个阈值，比如 20）的最后一个锚点，
-                // 或者 minY > 0 的第一个锚点的前一个。
-                
-                // 简单算法：找出所有 minY <= 100 的锚点，取其中 minY 最大的那个（也就是最靠下的那个，即当前 Section 的 Header）。
-                // 解释：随着页面上卷，Header 的 Y 坐标会变小（变成负数）。
-                // 当前正显示的 Section，其 Header 应该是位于顶部附近或已经在上方（负值）。
-                
-                let visibleHeaders = preferences.filter { $0.anchorY <= 150 } // 150 是个宽松的阈值，允许头部稍微下来一点也算
-                
-                // 在这些在“上方”的 Header 中，Y 值最大（最接近 0）的那个，就是当前生效的 Header。
+                let visibleHeaders = preferences.filter { $0.anchorY <= 150 }
                 if let active = visibleHeaders.max(by: { $0.anchorY < $1.anchorY }),
-                   let activeId = active.id as? ID {
-                    
-                    // 只有当 ID 变化且不是用户正在点击跳转时才更新（避免跳动）
-                    // 简便起见，直接更新，配合防抖会更好，但这里直出。
-                    if currentScrollId != activeId {
-                        currentScrollId = activeId
-                    }
+                   let activeId = active.id as? ID,
+                   currentScrollId != activeId {
+                    currentScrollId = activeId
                 }
             }
         }

@@ -95,7 +95,7 @@ struct ExamplePageWithAnchor<Content: View>: View {
             HStack(alignment: .top, spacing: 0) {
                 // 左侧内容区
                 ScrollView {
-                    LazyVStack(alignment: .leading, spacing: Moin.Constants.Spacing.xl) {
+                    VStack(alignment: .leading, spacing: Moin.Constants.Spacing.xl) {
                         content(proxy)
                     }
                     .padding(Moin.Constants.Spacing.xl)

@@ -157,7 +157,7 @@ struct DividerTokenView: View {
         TokenCard(
             name: "horizontalMargin",
             type: "CGFloat",
-            defaultValue: "16", // Typo in old file said 8 or 16? Let's assume standard from old file: "8"
+            defaultValue: "16",
             description: tr("api.divider.token_horizontal_margin"),
             sectionId: "token"
         ) {
