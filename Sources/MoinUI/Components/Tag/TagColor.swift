@@ -10,8 +10,7 @@ public extension Moin {
         case error          // 红色
         case custom(SwiftUI.Color)
 
-        /// primary 作为 processing 的别名（向后兼容）
-        public static var primary: TagColor { .processing }
+
         
         // MARK: - Properties
 

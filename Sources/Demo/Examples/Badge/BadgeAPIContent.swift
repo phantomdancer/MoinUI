@@ -122,6 +122,7 @@ struct BadgeAPIContent: View {
                         (".warning", "-", "-", tr("badge.enum.color.warning")),
                         (".error", "-", "-", tr("badge.enum.color.error")),
                         (".custom(Color)", "-", "-", tr("badge.enum.color.custom")),
+                        ("Presets", "BadgeColor", "-", tr("badge.enum.color.presets")),
                     ]
                 )
 

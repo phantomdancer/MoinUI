@@ -55,6 +55,7 @@
     "badge.enum.color.warning": "警告橙色",
     "badge.enum.color.error": "错误红色",
     "badge.enum.color.custom": "自定义颜色",
+    "badge.enum.color.presets": "预设色板颜色 (red, blue, volcano, gold...)",
     "badge.enum.status.success": "成功状态",
     "badge.enum.status.processing": "进行中状态",
     "badge.enum.status.default": "默认状态",

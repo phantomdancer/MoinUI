@@ -11,7 +11,7 @@ struct BadgePlayground: View {
     @State private var isDot = false
     @State private var overflowCount: Double = 99
     @State private var selectedSize: BadgeSize = .default
-    @State private var selectedColor: BadgeColor = .default
+    @State private var selectedColor: Moin.BadgeColor = .default
 
     var body: some View {
         VStack(spacing: Moin.Constants.Spacing.xl) {
@@ -105,7 +105,7 @@ struct BadgePlayground: View {
         }
     }
 
-    private func colorButton(_ badgeColor: BadgeColor, label: String, color: Color) -> some View {
+    private func colorButton(_ badgeColor: Moin.BadgeColor, label: String, color: Color) -> some View {
         Button {
             selectedColor = badgeColor
         } label: {
@@ -122,7 +122,7 @@ struct BadgePlayground: View {
         .buttonStyle(.plain)
     }
 
-    private func isSelected(_ badgeColor: BadgeColor) -> Bool {
+    private func isSelected(_ badgeColor: Moin.BadgeColor) -> Bool {
         switch (selectedColor, badgeColor) {
         case (.default, .default), (.success, .success), (.processing, .processing),
              (.warning, .warning), (.error, .error):

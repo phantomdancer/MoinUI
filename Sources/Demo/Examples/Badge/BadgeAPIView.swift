@@ -161,7 +161,7 @@ struct BadgeAPIView: View {
             type: "BadgeColor",
             defaultValue: ".default",
             description: tr("badge.api.color"),
-             enumValues: ".default | .success | .processing | .warning | .error | .custom(Color)",
+             enumValues: ".default | .success | .processing | .warning | .error | .custom(Color) | .red | .volcano | .orange | .gold | .yellow | .lime | .green | .cyan | .blue | .geekblue | .purple | .magenta",
             sectionId: "badge"
         ) {
             Moin.Badge(count: 5, color: .success) { sampleBox }

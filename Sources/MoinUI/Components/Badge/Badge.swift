@@ -14,7 +14,7 @@ public extension Moin {
         private let showZero: Bool
         private let overflowCount: Int
         private let size: BadgeSize
-        private let color: BadgeColor
+        private let color: Moin.BadgeColor
         private let offset: (x: CGFloat, y: CGFloat)?
         private let status: BadgeStatus?
         private let text: String?
@@ -26,7 +26,7 @@ public extension Moin {
             showZero: Bool = false,
             overflowCount: Int = 99,
             size: BadgeSize = .default,
-            color: BadgeColor = .default,
+            color: Moin.BadgeColor = .default,
             offset: (x: CGFloat, y: CGFloat)? = nil,
             @ViewBuilder content: () -> Content
         ) where CountView == EmptyView {
@@ -216,7 +216,7 @@ public extension Moin.Badge where Content == EmptyView, CountView == EmptyView {
         showZero: Bool = false,
         overflowCount: Int = 99,
         size: BadgeSize = .default,
-        color: BadgeColor = .default
+        color: Moin.BadgeColor = .default
     ) {
         self.content = nil
         self.countNumber = count

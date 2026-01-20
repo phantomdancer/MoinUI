@@ -55,6 +55,7 @@
     "badge.enum.color.warning": "Warning orange",
     "badge.enum.color.error": "Error red",
     "badge.enum.color.custom": "Custom color",
+    "badge.enum.color.presets": "Preset palette colors (red, blue, volcano, gold...)",
     "badge.enum.status.success": "Success status",
     "badge.enum.status.processing": "Processing status",
     "badge.enum.status.default": "Default status",
