@@ -290,7 +290,7 @@ extension AvatarSize: Hashable {
     public static func == (lhs: AvatarSize, rhs: AvatarSize) -> Bool {
         switch (lhs, rhs) {
         case (.large, .large), (.default, .default), (.small, .small): return true
-        case (.custom(let a), .custom(let b)): return a == b
+        case (._custom(let a), ._custom(let b)): return a == b
         default: return false
         }
     }
@@ -300,7 +300,7 @@ extension AvatarSize: Hashable {
         case .large: hasher.combine(0)
         case .default: hasher.combine(1)
         case .small: hasher.combine(2)
-        case .custom(let v): hasher.combine(v)
+        case ._custom(let v): hasher.combine(v)
         }
     }
 }
@@ -311,7 +311,7 @@ extension AvatarSize: CustomStringConvertible {
         case .large: return "large"
         case .default: return "default"
         case .small: return "small"
-        case .custom(let v): return "\(Int(v))"
+        case ._custom(let v): return "\(Int(v))"
         }
     }
 }

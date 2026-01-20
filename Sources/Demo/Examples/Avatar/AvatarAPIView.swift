@@ -198,11 +198,22 @@ struct AvatarAPIView: View {
             type: "Color?",
             defaultValue: "nil",
             description: tr("avatar.api.background_color"),
+            enumValues: "Color | .black | .blue | .brown | .cyan | .gray | .green | .indigo | .mint | .orange | .pink | .purple | .red | .teal | .white | .yellow | ...",
             sectionId: "api"
         ) {
-            Moin.Avatar("U", backgroundColor: .orange)
+            HStack {
+                Moin.Avatar("U", backgroundColor: .orange)
+                 Moin.Avatar("S", backgroundColor: .blue)
+                 Moin.Avatar("E", backgroundColor: .green)
+                Moin.Avatar("R", backgroundColor: Color(red: 0.8, green: 0.2, blue: 0.5))
+             }
         } code: {
-            "Moin.Avatar(\"U\", backgroundColor: .orange)"
+            """
+            Moin.Avatar("U", backgroundColor: .orange)
+            Moin.Avatar("S", backgroundColor: .blue)
+            Moin.Avatar("E", backgroundColor: .green)
+            Moin.Avatar("R", backgroundColor: Color(red: 0.8, green: 0.2, blue: 0.5))
+            """
         }
         .scrollAnchor("api.backgroundColor")
     }

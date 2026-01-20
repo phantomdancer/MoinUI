@@ -143,7 +143,7 @@ struct _AvatarGroupContainer: _VariadicView_MultiViewRoot {
         case .large: return avatarToken.sizeLG
         case .default: return avatarToken.size
         case .small: return avatarToken.sizeSM
-        case .custom(let val): return val
+        case ._custom(let val): return val
         }
     }
 }
