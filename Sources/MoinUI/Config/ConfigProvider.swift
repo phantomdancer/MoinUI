@@ -227,6 +227,23 @@ private struct MoinEmptyTokenKey: EnvironmentKey {
     static let defaultValue = Moin.EmptyToken.default
 }
 
+private struct MoinSpinTokenKey: EnvironmentKey {
+    static let defaultValue = Moin.SpinToken.default
+}
+
+private struct MoinStatisticTokenKey: EnvironmentKey {
+    // We need to resolve from default token to get a valid default
+    static let defaultValue = Moin.StatisticToken.resolve(token: .default)
+}
+
+private struct MoinThemeKey: EnvironmentKey {
+    static let defaultValue = Moin.Theme.default
+}
+
+private struct MoinComponentsKey: EnvironmentKey {
+    static let defaultValue = Moin.ComponentToken.default
+}
+
 public extension EnvironmentValues {
     var moinConfig: Moin.ConfigProvider {
         get { self[MoinConfigProviderKey.self] }
@@ -271,6 +288,26 @@ public extension EnvironmentValues {
     var moinEmptyToken: Moin.EmptyToken {
         get { self[MoinEmptyTokenKey.self] }
         set { self[MoinEmptyTokenKey.self] = newValue }
+    }
+
+    var moinSpinToken: Moin.SpinToken {
+        get { self[MoinSpinTokenKey.self] }
+        set { self[MoinSpinTokenKey.self] = newValue }
+    }
+
+    var moinStatisticToken: Moin.StatisticToken {
+        get { self[MoinStatisticTokenKey.self] }
+        set { self[MoinStatisticTokenKey.self] = newValue }
+    }
+
+    var moinTheme: Moin.Theme {
+        get { self[MoinThemeKey.self] }
+        set { self[MoinThemeKey.self] = newValue }
+    }
+
+    var moinComponents: Moin.ComponentToken {
+        get { self[MoinComponentsKey.self] }
+        set { self[MoinComponentsKey.self] = newValue }
     }
 }
 
@@ -322,8 +359,12 @@ public extension Moin {
                 .environment(\.moinBadgeToken, config.components.badge)
                 .environment(\.moinAvatarToken, config.components.avatar)
                 .environment(\.moinEmptyToken, config.components.empty)
+                .environment(\.moinSpinToken, config.components.spin)
+                .environment(\.moinStatisticToken, config.components.statistic)
                 .environment(\.moinSpaceToken, config.components.space)
                 .environment(\.moinDividerToken, config.components.divider)
+                .environment(\.moinTheme, config.theme)
+                .environment(\.moinComponents, config.components)
                 .environmentObject(config)
         }
 

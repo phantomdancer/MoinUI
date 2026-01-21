@@ -10,6 +10,7 @@ extension Notification.Name {
     static let emptyDocReset = Notification.Name("emptyDocReset")
     static let dividerDocReset = Notification.Name("dividerDocReset")
     static let spaceDocReset = Notification.Name("spaceDocReset")
+    static let statisticDocReset = Notification.Name("statisticDocReset")
 }
 
 @main
@@ -158,6 +159,7 @@ struct ContentView: View {
     @State private var avatarTab: AvatarExamplesTab = .examples
     @State private var emptyTab: EmptyExamplesTab = .examples
     @State private var spinTab: SpinExamplesTab = .examples
+    @State private var statisticTab: StatisticExamplesTab = .examples
     @State private var buttonTab: ButtonExamplesTab = .examples
 
     var body: some View {
@@ -165,7 +167,7 @@ struct ContentView: View {
             Sidebar(selection: $navManager.selectedItem)
                 .navigationSplitViewColumnWidth(min: 240, ideal: 300, max: 420)
         } detail: {
-            DetailView(item: navManager.selectedItem, buttonTab: $buttonTab, typographyTab: $typographyTab, tagTab: $tagTab, spaceTab: $spaceTab, dividerTab: $dividerTab, badgeTab: $badgeTab, avatarTab: $avatarTab, emptyTab: $emptyTab, spinTab: $spinTab, tokenTab: $tokenTab)
+            DetailView(item: navManager.selectedItem, buttonTab: $buttonTab, typographyTab: $typographyTab, tagTab: $tagTab, spaceTab: $spaceTab, dividerTab: $dividerTab, badgeTab: $badgeTab, avatarTab: $avatarTab, emptyTab: $emptyTab, spinTab: $spinTab, statisticTab: $statisticTab, tokenTab: $tokenTab)
                 .navigationTitle(navManager.selectedItem.map { tr($0.titleKey) } ?? "MoinUI")
                 .toolbar {
                     ToolbarItemGroup(placement: .primaryAction) {
@@ -273,6 +275,18 @@ struct ContentView: View {
                             .pickerStyle(.segmented)
                             .fixedSize()
                         }
+                        
+                         // Statistic 页面显示 Tab 切换
+                        if navManager.selectedItem == .statistic {
+                            Picker("", selection: $statisticTab) {
+                                Text(tr("tab.examples")).tag(StatisticExamplesTab.examples)
+
+                                Text(tr("tab.api")).tag(StatisticExamplesTab.api)
+                                Text(tr("tab.token")).tag(StatisticExamplesTab.token)
+                            }
+                            .pickerStyle(.segmented)
+                            .fixedSize()
+                        }
 
                         Spacer()
 
@@ -317,6 +331,7 @@ enum NavItem: String, Identifiable {
     case badge
     case avatar
     case empty
+    case statistic
 
     // Components - Feedback
     case spin
@@ -346,6 +361,7 @@ enum NavItem: String, Identifiable {
         case .badge: return DemoIcons.badge
         case .avatar: return DemoIcons.avatar
         case .empty: return DemoIcons.empty
+        case .statistic: return DemoIcons.statistic
         case .spin: return DemoIcons.spin
         case .space: return DemoIcons.space
         case .divider: return DemoIcons.divider
@@ -367,6 +383,7 @@ enum NavItem: String, Identifiable {
         case .badge: return "component.badge"
         case .avatar: return "component.avatar"
         case .empty: return "component.empty"
+        case .statistic: return "component.statistic"
         case .spin: return "component.spin"
         case .space: return "component.space"
         case .divider: return "component.divider"
@@ -378,7 +395,7 @@ enum NavItem: String, Identifiable {
 
     static var overview: [NavItem] { [.introduction, .quickStart] }
     static var general: [NavItem] { [.button, .tag, .typography] }
-    static var dataDisplay: [NavItem] { [.avatar, .badge, .empty] }
+    static var dataDisplay: [NavItem] { [.avatar, .badge, .empty, .statistic] }
     static var feedback: [NavItem] { [.spin] }
     static var layout: [NavItem] { [.divider, .space] }
     static var development: [NavItem] { [.theme, .token, .configProvider, .localization, .colors] }
@@ -464,6 +481,7 @@ struct DetailView: View {
     @Binding var avatarTab: AvatarExamplesTab
     @Binding var emptyTab: EmptyExamplesTab
     @Binding var spinTab: SpinExamplesTab
+    @Binding var statisticTab: StatisticExamplesTab
     @Binding var tokenTab: TokenExamplesTab
 
     var body: some View {
@@ -491,6 +509,8 @@ struct DetailView: View {
                 EmptyExamples(selectedTab: $emptyTab)
             case .spin:
                 SpinExamples(selectedTab: $spinTab)
+            case .statistic:
+                StatisticExamplesWrapper(selectedTab: $statisticTab)
             case .space:
                 SpaceExamples(selectedTab: $spaceTab)
             case .divider:

@@ -23,6 +23,7 @@ enum DemoTranslations {
         "Locales/Localization",
         "Locales/Empty",
         "Locales/Spin",
+        "Locales/Statistic",
     ]
 
     static func register() {
