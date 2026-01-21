@@ -253,38 +253,59 @@ struct SpinExamples: View {
             description: tr("spin.custom_desc"),
             content: {
                 HStack(spacing: 40) {
-                    Moin.Spin {
-                        Image(systemName: "arrow.triangle.2.circlepath")
+                    Moin.Spin(indicator: {
+                        RotatingImage(systemName: "arrow.triangle.2.circlepath")
                             .font(.system(size: 24))
                             .foregroundStyle(.blue)
-                    }
+                    })
 
-                    Moin.Spin {
+                    Moin.Spin(indicator: {
                         ProgressView()
                             .progressViewStyle(.circular)
-                    }
+                    })
 
-                    Moin.Spin(tip: tr("spin.system_style")) {
+                    Moin.Spin(tip: tr("spin.system_style"), indicator: {
                         ProgressView()
                             .progressViewStyle(.circular)
                             .scaleEffect(1.5)
-                    }
+                    })
                 }
             },
             code: {
                 """
-                Moin.Spin {
-                    Image(systemName: "arrow.triangle.2.circlepath")
+                Moin.Spin(indicator: {
+                    RotatingImage(systemName: "arrow.triangle.2.circlepath")
                         .font(.system(size: 24))
                         .foregroundStyle(.blue)
-                }
+                })
 
-                Moin.Spin {
+                Moin.Spin(indicator: {
                     ProgressView()
                         .progressViewStyle(.circular)
-                }
+                })
+
+                Moin.Spin(tip: "\(tr("spin.system_style"))", indicator: {
+                    ProgressView()
+                        .progressViewStyle(.circular)
+                        .scaleEffect(1.5)
+                })
                 """
             }
         )
+    }
+}
+
+// MARK: - RotatingImage
+
+/// 自动旋转的图标
+private struct RotatingImage: View {
+    let systemName: String
+    @State private var isRotating = false
+
+    var body: some View {
+        Image(systemName: systemName)
+            .rotationEffect(.degrees(isRotating ? 360 : 0))
+            .animation(.linear(duration: 1).repeatForever(autoreverses: false), value: isRotating)
+            .onAppear { isRotating = true }
     }
 }

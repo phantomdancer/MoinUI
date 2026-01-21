@@ -5,6 +5,8 @@ import MoinUI
 
 struct SpinAPIView: View {
     @Localized var tr
+    @State private var delayLoading = false
+    @State private var showFullscreen = false
     
     // MARK: - API Sections
     
@@ -95,9 +97,9 @@ struct SpinAPIView: View {
             description: tr("spin.api.tip"),
             sectionId: "spin"
         ) {
-            Moin.Spin(tip: "Loading...")
+            Moin.Spin(tip: tr("spin.loading"))
         } code: {
-            "Moin.Spin(tip: \"Loading...\")"
+            "Moin.Spin(tip: \"\(tr("spin.loading"))\")"
         }
         .scrollAnchor("spin.tip")
     }
@@ -110,10 +112,25 @@ struct SpinAPIView: View {
             description: tr("spin.api.delay"),
             sectionId: "spin"
         ) {
-            // Delay is hard to visualize static, just show code
-            Text("Delay 500ms")
+            VStack(alignment: .leading, spacing: 12) {
+                Moin.Button(tr("spin.start_delay_loading")) {
+                    delayLoading = true
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                        delayLoading = false
+                    }
+                }
+                .disabled(delayLoading)
+
+                Text(tr("spin.delay_hint"))
+                    .foregroundStyle(.secondary)
+
+                if delayLoading {
+                    Moin.Spin(tip: tr("spin.loading"), delay: 500)
+                }
+            }
+            .frame(minHeight: 80)
         } code: {
-            "Moin.Spin(delay: 500)"
+            "Moin.Spin(spinning: true, delay: 500)"
         }
         .scrollAnchor("spin.delay")
     }
@@ -127,10 +144,17 @@ struct SpinAPIView: View {
             enumValues: ".value(Double) | .auto",
             sectionId: "spin"
         ) {
-            // Percent usually implies progress?
-            Moin.Spin(percent: .value(0.7))
+            HStack(spacing: 20) {
+                Moin.Spin(percent: .value(30))
+                Moin.Spin(percent: .value(70))
+                Moin.Spin(size: .large, percent: .auto)
+            }
         } code: {
-            "Moin.Spin(percent: .value(0.7))"
+            """
+            Moin.Spin(percent: .value(30))
+            Moin.Spin(percent: .value(70))
+            Moin.Spin(size: .large, percent: .auto)
+            """
         }
         .scrollAnchor("spin.percent")
     }
@@ -143,31 +167,40 @@ struct SpinAPIView: View {
             description: tr("spin.api.fullscreen"),
             sectionId: "spin"
         ) {
-            // Can't show fullscreen in card, use dummy or text
-            Text("Fullscreen Mode")
-                .foregroundStyle(.secondary)
+            Moin.Button(tr("spin.show_fullscreen")) {
+                showFullscreen = true
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                    showFullscreen = false
+                }
+            }
         } code: {
-            "Moin.Spin(fullscreen: true)"
+            "Moin.Spin(spinning: true, tip: \"\(tr("spin.fullscreen_loading"))\", fullscreen: true)"
         }
         .scrollAnchor("spin.fullscreen")
+        .overlay {
+            if showFullscreen {
+                Moin.Spin(spinning: true, tip: tr("spin.fullscreen_loading"), fullscreen: true)
+            }
+        }
     }
     
     private var indicatorPropertyCard: some View {
         PropertyCard(
             name: "indicator",
-            type: "View?",
+            type: "@ViewBuilder () -> View",
             defaultValue: "nil",
             description: tr("spin.api.indicator"),
             sectionId: "spin"
         ) {
-            Moin.Spin {
-                Image(systemName: "star.fill").foregroundStyle(.yellow)
-            }
+            Moin.Spin(indicator: {
+                SpinRotatingImage(systemName: "star.fill")
+                    .foregroundStyle(.yellow)
+            })
         } code: {
             """
-            Moin.Spin {
-                Image(systemName: "star.fill")
-            }
+            Moin.Spin(indicator: {
+                RotatingImage(systemName: "star.fill")
+            })
             """
         }
         .scrollAnchor("spin.indicator")
@@ -176,21 +209,39 @@ struct SpinAPIView: View {
     private var contentPropertyCard: some View {
         PropertyCard(
             name: "content",
-            type: "View?",
+            type: "@ViewBuilder () -> Content",
             defaultValue: "nil",
             description: tr("spin.api.content"),
             sectionId: "spin"
         ) {
             Moin.Spin(spinning: true) {
-                Text("Content").padding()
+                Text("Content")
+                    .padding()
+                    .background(Color.gray.opacity(0.1))
+                    .cornerRadius(4)
             }
         } code: {
             """
-            Moin.Spin {
+            Moin.Spin(spinning: isLoading) {
                 Text("Content")
             }
             """
         }
         .scrollAnchor("spin.content")
+    }
+}
+
+// MARK: - SpinRotatingImage
+
+/// 自动旋转的图标
+private struct SpinRotatingImage: View {
+    let systemName: String
+    @State private var isRotating = false
+
+    var body: some View {
+        Image(systemName: systemName)
+            .rotationEffect(.degrees(isRotating ? 360 : 0))
+            .animation(.linear(duration: 1).repeatForever(autoreverses: false), value: isRotating)
+            .onAppear { isRotating = true }
     }
 }
