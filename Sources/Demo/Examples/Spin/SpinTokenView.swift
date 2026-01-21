@@ -231,9 +231,31 @@ struct SpinTokenView: View {
               description: tr("spin.token.maskBackground_desc"),
               sectionId: "color"
           ) {
-              Moin.Spin(spinning: true) {
-                  Text("Content").padding(20).background(Color.white)
+              // 模拟全屏模式的遮罩效果
+              ZStack {
+                  // 背景内容
+                  VStack(spacing: 4) {
+                      Text("Background")
+                          .font(.caption)
+                      Text("Content")
+                          .font(.caption)
+                  }
+                  .frame(width: 120, height: 80)
+                  .background(Color.white)
+                  .cornerRadius(4)
+                  
+                  // 遮罩层
+                  config.components.spin.maskBackground
+                      .cornerRadius(4)
+                  
+                  // 白色指示器
+                  SpinIndicator(
+                      size: config.components.spin.dotSize,
+                      color: .white,
+                      duration: config.components.spin.motionDuration
+                  )
               }
+              .frame(width: 120, height: 80)
           } editor: {
               ColorPresetRow(label: "maskBackground", color: Binding(
                    get: { Moin.ConfigProvider.shared.components.spin.maskBackground },
