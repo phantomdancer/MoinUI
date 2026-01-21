@@ -61,7 +61,9 @@
       "token_desc": "以下是 Space 组件的设计变量，可通过 ConfigProvider 覆盖。",
       "token_small": "小间距值",
       "token_medium": "中间距值",
-      "token_large": "大间距值"
+      "token_large": "大间距值",
+      "separator": "分隔视图",
+      "separator_desc": "设置分隔符"
     }
   }
 }

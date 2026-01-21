@@ -61,7 +61,9 @@
       "token_desc": "Below are the design tokens for the Space component. Override via ConfigProvider.",
       "token_small": "Small spacing value",
       "token_medium": "Medium spacing value",
-      "token_large": "Large spacing value"
+      "token_large": "Large spacing value",
+      "separator": "Separator view",
+      "separator_desc": "Set separator"
     }
   }
 }

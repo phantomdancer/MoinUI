@@ -55,34 +55,13 @@ struct SpaceAPIView: View {
             enumValues: ".small | .medium | .large | CGFloat",
             sectionId: "space"
         ) {
-            VStack {
-                 Moin.Space(size: .small) {
-                    Text("S")
-                    Text("S")
-                }
-                 Moin.Space(size: .large) {
-                    Text("L")
-                    Text("L")
-                }
-                 Moin.Space(size: 20) {
-                    Text("20")
-                    Text("20")
-                }
-            }
+            SpaceSizeDemoView()
         } code: {
             """
-            Moin.Space(size: .small) {
-                Text("S")
-                Text("S")
-            }
-            Moin.Space(size: .large) {
-                Text("L")
-                Text("L")
-            }
-            Moin.Space(size: 20) {
-                Text("20")
-                Text("20")
-            }
+            Moin.Space(size: .small) { ... }
+            Moin.Space(size: .medium) { ... }
+            Moin.Space(size: .large) { ... }
+            Moin.Space(size: 24) { ... }
             """
         }
         .scrollAnchor("space.size")
@@ -97,26 +76,14 @@ struct SpaceAPIView: View {
             enumValues: ".horizontal | .vertical",
             sectionId: "space"
         ) {
-            HStack(spacing: 20) {
-                 Moin.Space(direction: .horizontal) {
-                    Text("H")
-                    Text("H")
-                }
-                 Moin.Space(direction: .vertical) {
-                    Text("V")
-                    Text("V")
-                }
-            }
+            SpaceDirectionDemoView()
         } code: {
             """
-            Moin.Space(direction: .horizontal) {
-                Text("H")
-                Text("H")
-            }
-            Moin.Space(direction: .vertical) {
-                Text("V")
-                Text("V")
-            }
+            // Horizontal
+            Moin.Space(direction: .horizontal) { ... }
+            
+            // Vertical
+            Moin.Space(direction: .vertical) { ... }
             """
         }
         .scrollAnchor("space.direction")
@@ -131,26 +98,18 @@ struct SpaceAPIView: View {
             enumValues: ".start | .center | .end",
             sectionId: "space"
         ) {
-            VStack(alignment: .leading, spacing: 10) {
-                Moin.Space(alignment: .start) {
-                    Text("Start")
-                    Rectangle().frame(width: 10, height: 20)
-                }
-                Moin.Space(alignment: .center) {
-                    Text("Center")
-                    Rectangle().frame(width: 10, height: 20)
-                }
-            }
+            SpaceAlignmentDemoView()
         } code: {
             """
-            Moin.Space(alignment: .start) {
-                Text("Start")
-                Rectangle().frame(width: 10, height: 20)
-            }
-            Moin.Space(alignment: .center) {
-                Text("Center")
-                Rectangle().frame(width: 10, height: 20)
-            }
+            // \(tr("space.horizontal"))
+            Moin.Space(alignment: .start) { ... }
+            Moin.Space(alignment: .center) { ... }
+            Moin.Space(alignment: .end) { ... }
+            
+            // \(tr("space.vertical"))
+            Moin.Space(direction: .vertical, alignment: .start) { ... }
+            Moin.Space(direction: .vertical, alignment: .center) { ... }
+            Moin.Space(direction: .vertical, alignment: .end) { ... }
             """
         }
         .scrollAnchor("space.alignment")
@@ -164,15 +123,13 @@ struct SpaceAPIView: View {
             description: tr("api.space.wrap"),
             sectionId: "space"
         ) {
-            Moin.Space(wrap: true) {               
-                    Text("1")
-                    Text("2")
-            }
+            SpaceWrapDemoView()
         } code: {
             """
-            Moin.Space(wrap: true) {               
-                    Text("1")
-                    Text("2")
+            Moin.Space(wrap: true) {
+                ForEach(1...10, id: \\.self) { i in
+                    Moin.Button("\\(i)") {}
+                }
             }
             """
         }
@@ -184,21 +141,27 @@ struct SpaceAPIView: View {
              name: "separator",
              type: "() -> View",
              defaultValue: "nil",
-             description: tr("api.space.separator"), // Check if this key exists or if I need to add/guess. Old file used existing texts but didn't show this prop explicitly in APITable? 
-             // Logic check: Old APITable didn't include "separator". But Example had it. 
-             // I should add it.
+             description: tr("api.space.separator"),
              sectionId: "space"
          ) {
-             Moin.Space(separator: { Text("|") }) {
-                 Text("A")
-                 Text("B")
-             }
+             SpaceSeparatorDemoView()
          } code: {
              """
-             Moin.Space(separator: { Text("|") }) {
-                 Text("A")
-                 Text("B")
-             }
+             // \(tr("space.horizontal"))
+             Moin.Space(size: .small, separator: { Moin.Divider(orientation: .vertical) }) { ... }
+
+             // \(tr("space.vertical"))
+             Moin.Space(direction: .vertical, separator: { Moin.Divider() }) { ... }
+
+             // \(tr("space.custom_separator"))
+             Moin.Space(separator: { Text("|").foregroundStyle(.secondary) }) { ... }
+
+             // \(tr("space.icon_separator"))
+             Moin.Space(separator: {
+                 Image(systemName: "star.fill")
+                     .font(.system(size: 8))
+                     .foregroundStyle(.orange)
+             }) { ... }
              """
          }
          .scrollAnchor("space.separator")
@@ -213,15 +176,20 @@ struct SpaceAPIView: View {
             sectionId: "space"
         ) {
             Moin.Space {
-                Text("Item")
+                Moin.Button("Item 1") {}
+                Moin.Button("Item 2") {}
+                Moin.Button("Item 3") {}
             }
         } code: {
             """
             Moin.Space {
-                Text("Item")
+                Moin.Button("Item 1") {}
+                Moin.Button("Item 2") {}
+                Moin.Button("Item 3") {}
             }
             """
         }
         .scrollAnchor("space.content")
     }
+
 }

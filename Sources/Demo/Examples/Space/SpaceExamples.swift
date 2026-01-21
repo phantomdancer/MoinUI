@@ -125,40 +125,7 @@ struct SpaceExamples: View {
             title: tr("space.size"),
             description: tr("space.size_desc")
         ) {
-            VStack(alignment: .leading, spacing: Moin.Constants.Spacing.md) {
-                HStack {
-                    Text("small:").frame(width: 60, alignment: .leading)
-                    Moin.Space(size: .small) {
-                        Moin.Button(tr("button.label.button"), color: .primary) {}
-                        Moin.Button(tr("button.label.button"), color: .primary) {}
-                        Moin.Button(tr("button.label.button"), color: .primary) {}
-                    }
-                }
-                HStack {
-                    Text("medium:").frame(width: 60, alignment: .leading)
-                    Moin.Space(size: .medium) {
-                        Moin.Button(tr("button.label.button"), color: .primary) {}
-                        Moin.Button(tr("button.label.button"), color: .primary) {}
-                        Moin.Button(tr("button.label.button"), color: .primary) {}
-                    }
-                }
-                HStack {
-                    Text("large:").frame(width: 60, alignment: .leading)
-                    Moin.Space(size: .large) {
-                        Moin.Button(tr("button.label.button"), color: .primary) {}
-                        Moin.Button(tr("button.label.button"), color: .primary) {}
-                        Moin.Button(tr("button.label.button"), color: .primary) {}
-                    }
-                }
-                HStack {
-                    Text("\(tr("space.custom")):").frame(width: 60, alignment: .leading)
-                    Moin.Space(size: 24) {
-                        Moin.Button(tr("button.label.button"), color: .primary) {}
-                        Moin.Button(tr("button.label.button"), color: .primary) {}
-                        Moin.Button(tr("button.label.button"), color: .primary) {}
-                    }
-                }
-            }
+            SpaceSizeDemoView()
         } code: {
             """
             Moin.Space(size: .small) {
@@ -190,11 +157,7 @@ struct SpaceExamples: View {
             title: tr("space.direction"),
             description: tr("space.direction_desc")
         ) {
-            Moin.Space(direction: .vertical) {
-                Moin.Button("\(tr("button.label.button")) 1", color: .primary) {}
-                Moin.Button("\(tr("button.label.button")) 2", color: .primary) {}
-                Moin.Button("\(tr("button.label.button")) 3", color: .primary) {}
-            }
+            SpaceDirectionDemoView()
         } code: {
             """
             Moin.Space(direction: .vertical) {
@@ -211,52 +174,18 @@ struct SpaceExamples: View {
             title: tr("space.alignment"),
             description: tr("space.alignment_desc")
         ) {
-            VStack(alignment: .leading, spacing: Moin.Constants.Spacing.md) {
-                HStack {
-                    Moin.Space(alignment: .start) {
-                        Text("start:").frame(width: 50, alignment: .leading)
-                        Moin.Button(tr("button.label.small"), color: .primary, size: .small) {}
-                        Moin.Button(tr("button.label.medium"), color: .primary, size: .medium) {}
-                        Moin.Button(tr("button.label.large"), color: .primary, size: .large) {}
-                    }
-                }
-                HStack {
-                    Moin.Space(alignment: .center) {
-                      Text("center:").frame(width: 50, alignment: .leading)
-                        Moin.Button(tr("button.label.small"), color: .primary, size: .small) {}
-                        Moin.Button(tr("button.label.medium"), color: .primary, size: .medium) {}
-                        Moin.Button(tr("button.label.large"), color: .primary, size: .large) {}
-                    }
-                }
-                HStack {
-                    Moin.Space(alignment: .end) {
-                        Text("end:").frame(width: 50, alignment: .leading)
-                        Moin.Button(tr("button.label.small"), color: .primary, size: .small) {}
-                        Moin.Button(tr("button.label.medium"), color: .primary, size: .medium) {}
-                        Moin.Button(tr("button.label.large"), color: .primary, size: .large) {}
-                    }
-                }
-            }
+            SpaceAlignmentDemoView()
         } code: {
             """
-            Moin.Space(alignment: .start) {
-                Text("start:").frame(width: 50, alignment: .leading)
-                Moin.Button(tr("button.label.small"), color: .primary, size: .small) {}
-                Moin.Button(tr("button.label.medium"), color: .primary, size: .medium) {}
-                Moin.Button(tr("button.label.large"), color: .primary, size: .large) {}
-            }
-            Moin.Space(alignment: .center) {
-                Text("center:").frame(width: 50, alignment: .leading)
-                Moin.Button(tr("button.label.small"), color: .primary, size: .small) {}
-                Moin.Button(tr("button.label.medium"), color: .primary, size: .medium) {}
-                Moin.Button(tr("button.label.large"), color: .primary, size: .large) {}
-            }
-            Moin.Space(alignment: .end) {
-                Text("end:").frame(width: 50, alignment: .leading)
-                Moin.Button(tr("button.label.small"), color: .primary, size: .small) {}
-                Moin.Button(tr("button.label.medium"), color: .primary, size: .medium) {}
-                Moin.Button(tr("button.label.large"), color: .primary, size: .large) {}
-            }
+            // \(tr("space.horizontal"))
+            Moin.Space(alignment: .start) { ... }
+            Moin.Space(alignment: .center) { ... }
+            Moin.Space(alignment: .end) { ... }
+            
+            // \(tr("space.vertical"))
+            Moin.Space(direction: .vertical, alignment: .start) { ... }
+            Moin.Space(direction: .vertical, alignment: .center) { ... }
+            Moin.Space(direction: .vertical, alignment: .end) { ... }
             """
         }
     }
@@ -266,13 +195,7 @@ struct SpaceExamples: View {
             title: tr("space.wrap"),
             description: tr("space.wrap_desc")
         ) {
-            ResizableContainer(initialWidth: 400, minWidth: 200, maxWidth: 600) {
-                Moin.Space(wrap: true) {
-                    ForEach(1...6, id: \.self) { i in
-                        Moin.Button("\(tr("button.label.button")) \(i)", color: .primary) {}
-                    }
-                }
-            }
+            SpaceWrapDemoView()
         } code: {
             """
             Moin.Space(wrap: true) {
@@ -335,43 +258,7 @@ struct SpaceExamples: View {
             title: tr("space.separator"),
             description: tr("space.separator_desc")
         ) {
-            VStack(alignment: .leading, spacing: Moin.Constants.Spacing.lg) {
-                // Horizontal with divider
-                Text("\(tr("space.horizontal")):").font(.caption).foregroundStyle(.secondary)
-                Moin.Space(size: .small, separator: { Moin.Divider(orientation: .vertical) }) {
-                    Moin.Typography.Link(tr("space.link_n").replacingOccurrences(of: "%d", with: "1")) {}
-                    Moin.Typography.Link(tr("space.link_n").replacingOccurrences(of: "%d", with: "2")) {}
-                    Moin.Typography.Link(tr("space.link_n").replacingOccurrences(of: "%d", with: "3")) {}
-                }
-
-                // Vertical with custom separator
-                Text("\(tr("space.vertical")):").font(.caption).foregroundStyle(.secondary)
-                Moin.Space(direction: .vertical, separator: { Moin.Divider() }) {
-                    Moin.Typography.Link(tr("space.link_n").replacingOccurrences(of: "%d", with: "1")) {}
-                    Moin.Typography.Link(tr("space.link_n").replacingOccurrences(of: "%d", with: "2")) {}
-                    Moin.Typography.Link(tr("space.link_n").replacingOccurrences(of: "%d", with: "3")) {}
-                }
-
-                // Custom text separator
-                Text("\(tr("space.custom_separator")):").font(.caption).foregroundStyle(.secondary)
-                Moin.Space(separator: { Text("|").foregroundStyle(.secondary) }) {
-                    Text(tr("space.nav_home"))
-                    Text(tr("space.nav_products"))
-                    Text(tr("space.nav_about"))
-                }
-
-                // Icon separator
-                Text("\(tr("space.icon_separator")):").font(.caption).foregroundStyle(.secondary)
-                Moin.Space(separator: {
-                    Image(systemName: "star.fill")
-                        .font(.system(size: 8))
-                        .foregroundStyle(.orange)
-                }) {
-                    Text("Swift")
-                    Text("SwiftUI")
-                    Text("MoinUI")
-                }
-            }
+            SpaceSeparatorDemoView()
         } code: {
             """
             // \(tr("space.horizontal"))
