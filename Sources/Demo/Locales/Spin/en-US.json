@@ -14,6 +14,7 @@
   "spin.loading": "Loading...",
   "spin.content_hint": "This content will be blurred when loading",
   "spin.delay_hint": "Shows after 500ms delay",
+  "spin.start_delay_loading": "Start Delay Loading",
   "spin.show_fullscreen": "Show Fullscreen Loading",
   "spin.fullscreen_loading": "Fullscreen Loading...",
   "spin.system_style": "System Style",

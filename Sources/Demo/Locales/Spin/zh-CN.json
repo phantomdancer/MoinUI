@@ -14,6 +14,7 @@
   "spin.loading": "加载中...",
   "spin.content_hint": "加载时此内容会变模糊",
   "spin.delay_hint": "500ms 延迟后显示",
+  "spin.start_delay_loading": "开始延迟加载",
   "spin.show_fullscreen": "显示全屏加载",
   "spin.fullscreen_loading": "全屏加载中...",
   "spin.system_style": "系统样式",

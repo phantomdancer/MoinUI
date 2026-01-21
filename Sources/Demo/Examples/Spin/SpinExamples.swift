@@ -13,6 +13,7 @@ struct SpinExamples: View {
     @Binding var selectedTab: SpinExamplesTab
     @State private var isLoading = true
     @State private var showFullscreen = false
+    @State private var delayLoading = false
 
     // 懒加载状态
     @State private var apiReady = false
@@ -194,15 +195,28 @@ struct SpinExamples: View {
             title: tr("spin.delay"),
             description: tr("spin.delay_desc"),
             content: {
-                VStack(alignment: .leading, spacing: 8) {
+                VStack(alignment: .leading, spacing: 12) {
+                    Moin.Button(tr("spin.start_delay_loading")) {
+                        delayLoading = true
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                            delayLoading = false
+                        }
+                    }
+                    .disabled(delayLoading)
+
                     Text(tr("spin.delay_hint"))
                         .foregroundStyle(.secondary)
-                    Moin.Spin(tip: "Delayed...", delay: 500)
+
+                    if delayLoading {
+                        Moin.Spin(tip: tr("spin.loading"), delay: 500)
+                    }
                 }
+                .frame(minHeight: 80)
             },
             code: {
                 """
-                Moin.Spin(tip: "Delayed...", delay: 500)
+                // \(tr("spin.loading")) \(tr("spin.delay_hint"))
+                Moin.Spin(spinning: true, delay: 500)
                 """
             }
         )
