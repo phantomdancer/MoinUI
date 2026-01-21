@@ -219,3 +219,19 @@ struct SpaceSeparatorDemoView: View {
         }
     }
 }
+
+struct SpaceSeparatorSimpleDemoView: View {
+    @Localized var tr
+    
+    var body: some View {
+        Moin.Space(size: .small, separator: {
+            Image(systemName: "star.fill")
+                .font(.system(size: 8))
+                .foregroundStyle(.orange)
+        }) {
+            Moin.Typography.Link("Item 1") {}
+            Moin.Typography.Link("Item 2") {}
+            Moin.Typography.Link("Item 3") {}
+        }
+    }
+}

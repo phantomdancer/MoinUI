@@ -144,24 +144,18 @@ struct SpaceAPIView: View {
              description: tr("api.space.separator"),
              sectionId: "space"
          ) {
-             SpaceSeparatorDemoView()
+             SpaceSeparatorSimpleDemoView()
          } code: {
              """
-             // \(tr("space.horizontal"))
-             Moin.Space(size: .small, separator: { Moin.Divider(orientation: .vertical) }) { ... }
-
-             // \(tr("space.vertical"))
-             Moin.Space(direction: .vertical, separator: { Moin.Divider() }) { ... }
-
-             // \(tr("space.custom_separator"))
-             Moin.Space(separator: { Text("|").foregroundStyle(.secondary) }) { ... }
-
-             // \(tr("space.icon_separator"))
-             Moin.Space(separator: {
+             Moin.Space(size: .small, separator: {
                  Image(systemName: "star.fill")
                      .font(.system(size: 8))
                      .foregroundStyle(.orange)
-             }) { ... }
+             }) {
+                 Moin.Typography.Link("Item 1") {}
+                 Moin.Typography.Link("Item 2") {}
+                 Moin.Typography.Link("Item 3") {}
+             }
              """
          }
          .scrollAnchor("space.separator")
