@@ -23,7 +23,7 @@ struct DividerTokenView: View {
             ),
             DocSidebarSection(
                 title: tr("api.global_token_title"),
-                items: ["borderRadius", "colorPrimary", "colorText", "lineWidth_global", "margin"],
+                items: ["colorText", "lineWidth_global"],
                 sectionId: "global"
             )
         ]
@@ -89,11 +89,9 @@ struct DividerTokenView: View {
         case "dashLength": dashLengthCard
         case "dashGap": dashGapCard
         // Global
-        case "borderRadius": globalBorderRadiusCard
-        case "colorPrimary": globalColorPrimaryCard
+        // Global
         case "colorText": globalColorTextCard
         case "lineWidth_global": globalLineWidthCard
-        case "margin": globalMarginCard
         default: EmptyView()
         }
     }
@@ -288,48 +286,6 @@ struct DividerTokenView: View {
          .scrollAnchor("token.dashGap")
      }
     
-    // MARK: - Global Cards
-    
-    private var globalBorderRadiusCard: some View {
-         TokenCard(
-            name: "borderRadius",
-            type: "CGFloat",
-            defaultValue: "6",
-            description: tr("api.global_token.borderRadius"),
-            sectionId: "global"
-        ) {
-             EmptyView()
-        } editor: {
-            TokenValueRow(label: "borderRadius", value: Binding(
-                 get: { Moin.ConfigProvider.shared.seed.borderRadius },
-                 set: { Moin.ConfigProvider.shared.seed.borderRadius = $0 }
-            ))
-        } code: {
-            "config.seed.borderRadius = \(Int(config.seed.borderRadius))"
-        }
-        .scrollAnchor("global.borderRadius")
-    }
-
-    private var globalColorPrimaryCard: some View {
-         TokenCard(
-            name: "colorPrimary",
-            type: "Color",
-            defaultValue: "token.colorPrimary",
-            description: tr("api.global_token.colorPrimary"),
-            sectionId: "global"
-        ) {
-             EmptyView()
-        } editor: {
-            ColorPresetRow(label: "colorPrimary", color: Binding(
-                 get: { Moin.ConfigProvider.shared.seed.colorPrimary },
-                 set: { Moin.ConfigProvider.shared.seed.colorPrimary = $0 }
-            ))
-        } code: {
-            "config.seed.colorPrimary = Color(...)"
-        }
-        .scrollAnchor("global.colorPrimary")
-    }
-    
     private var globalColorTextCard: some View {
          TokenCard(
             name: "colorText",
@@ -369,18 +325,4 @@ struct DividerTokenView: View {
         }
         .scrollAnchor("global.lineWidth")
     }
-    
-    private var globalMarginCard: some View {
-         TokenCard(
-            name: "margin",
-            type: "CGFloat",
-            defaultValue: "16",
-            description: tr("api.global_token.margin"),
-            sectionId: "global"
-        ) {
-             EmptyView()
-        } editor: { EmptyView() } code: { "// Global Token" }
-        .scrollAnchor("global.margin")
-    }
-
 }

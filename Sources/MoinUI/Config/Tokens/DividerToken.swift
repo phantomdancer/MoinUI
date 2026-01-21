@@ -22,7 +22,7 @@ public extension Moin {
                 verticalMargin: token.paddingLG,
                 horizontalMargin: token.paddingSM,
                 textPadding: token.padding,
-                lineWidth: 1,
+                lineWidth: token.lineWidth,
                 dashLength: 4,
                 dashGap: 4
             )
