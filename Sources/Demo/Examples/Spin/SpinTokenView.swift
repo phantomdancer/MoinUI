@@ -30,6 +30,11 @@ struct SpinTokenView: View {
         ]
     }
     
+    // 重置所有 Spin Token 到默认值
+    private func resetAll() {
+        config.components.spin = .generate(from: config.token)
+    }
+    
     var body: some View {
         ComponentDocBody(
             sections: tokenSections,
@@ -44,6 +49,20 @@ struct SpinTokenView: View {
             }
         } item: { item in
             cardForItem(item)
+        } footer: {
+            HStack(spacing: Moin.Constants.Spacing.sm) {
+                Moin.Button(tr("playground.token.reset"), color: .primary, variant: .solid) {
+                    resetAll()
+                }
+                
+                Text(tr("token.playground.reset_desc"))
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+                
+                Spacer()
+            }
+            .padding(Moin.Constants.Spacing.md)
         }
     }
     
@@ -132,15 +151,30 @@ struct SpinTokenView: View {
             name: "contentHeight",
             type: "CGFloat",
             defaultValue: "400",
-            description: tr("spin.token.contentHeight_desc"), // This is for Nested spin minimum height?
+            description: tr("spin.token.contentHeight_desc"),
             sectionId: "size"
         ) {
-             Moin.Spin(spinning: true) { Text("Content") }
+            // 使用 ScrollView 展示 contentHeight 效果
+            Moin.Spin(spinning: true, tip: tr("spin.loading")) {
+                ScrollView {
+                    VStack(spacing: 8) {
+                        ForEach(0..<10, id: \.self) { i in
+                            Text("Content Line \(i + 1)")
+                                .frame(maxWidth: .infinity)
+                                .padding(.vertical, 8)
+                                .background(Color.gray.opacity(0.1))
+                                .cornerRadius(4)
+                        }
+                    }
+                    .padding(8)
+                }
+                .frame(height: config.components.spin.contentHeight)
+            }
         } editor: {
             TokenValueRow(label: "contentHeight", value: Binding(
                  get: { Moin.ConfigProvider.shared.components.spin.contentHeight },
                  set: { Moin.ConfigProvider.shared.components.spin.contentHeight = $0 }
-            ))
+            ), range: 50...600, step: 50)
         } code: {
             "config.components.spin.contentHeight = \(Int(config.components.spin.contentHeight))"
         }

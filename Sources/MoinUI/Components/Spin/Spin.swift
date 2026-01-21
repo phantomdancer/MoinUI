@@ -175,6 +175,7 @@ public struct Spin<Content: View>: View {
             content
                 .blur(radius: (isVisible && spinning) ? 1 : 0)
                 .opacity((isVisible && spinning) ? 0.5 : 1)
+                .allowsHitTesting(!(isVisible && spinning))
 
             if isVisible && spinning {
                 VStack(spacing: 8) {
