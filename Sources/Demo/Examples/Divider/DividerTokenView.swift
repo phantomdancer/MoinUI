@@ -23,7 +23,7 @@ struct DividerTokenView: View {
             ),
             DocSidebarSection(
                 title: tr("api.global_token_title"),
-                items: ["colorText", "lineWidth_global"],
+                items: ["colorText", "globalLineWidth|lineWidth"],
                 sectionId: "global"
             )
         ]
@@ -91,7 +91,7 @@ struct DividerTokenView: View {
         // Global
         // Global
         case "colorText": globalColorTextCard
-        case "lineWidth_global": globalLineWidthCard
+        case "globalLineWidth": globalLineWidthCard
         default: EmptyView()
         }
     }
@@ -294,11 +294,15 @@ struct DividerTokenView: View {
             description: tr("api.global_token.colorText"),
             sectionId: "global"
         ) {
-             EmptyView()
+             Moin.Divider("Text")
         } editor: {
             ColorPresetRow(label: "colorText", color: Binding(
                  get: { Moin.ConfigProvider.shared.seed.colorTextBase },
-                 set: { Moin.ConfigProvider.shared.seed.colorTextBase = $0 }
+                 set: {
+                     Moin.ConfigProvider.shared.seed.colorTextBase = $0
+                     Moin.ConfigProvider.shared.regenerateTokens()
+                     Moin.ConfigProvider.shared.components.divider = Moin.DividerToken.generate(from: Moin.ConfigProvider.shared.token)
+                 }
             ))
         } code: {
             "config.seed.colorTextBase = Color(...)"
@@ -314,15 +318,19 @@ struct DividerTokenView: View {
             description: tr("api.global_token.lineWidth"),
             sectionId: "global"
         ) {
-             EmptyView()
+             Moin.Divider()
         } editor: {
             TokenValueRow(label: "lineWidth", value: Binding(
                  get: { Moin.ConfigProvider.shared.seed.lineWidth },
-                 set: { Moin.ConfigProvider.shared.seed.lineWidth = $0 }
+                 set: {
+                     Moin.ConfigProvider.shared.seed.lineWidth = $0
+                     Moin.ConfigProvider.shared.regenerateTokens()
+                     Moin.ConfigProvider.shared.components.divider = Moin.DividerToken.generate(from: Moin.ConfigProvider.shared.token)
+                 }
             ))
         } code: {
             "config.seed.lineWidth = \(Int(config.seed.lineWidth))"
         }
-        .scrollAnchor("global.lineWidth")
+        .scrollAnchor("global.globalLineWidth")
     }
 }
