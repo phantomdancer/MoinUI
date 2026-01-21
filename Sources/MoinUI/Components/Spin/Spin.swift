@@ -244,8 +244,28 @@ public struct Spin<Content: View>: View {
                     .ignoresSafeArea()
 
                 VStack(spacing: 12) {
-                    indicatorView(token: token)
-                        .colorMultiply(.white)
+                    // 全屏模式使用白色指示器
+                    if let customIndicator = indicator {
+                        customIndicator
+                    } else {
+                        let dotSize = size.dotSize(from: token)
+                        ZStack {
+                            SpinIndicator(
+                                size: dotSize,
+                                color: .white,
+                                duration: token.motionDuration
+                            )
+
+                            if let pct = currentPercent, pct > 0 {
+                                SpinProgress(
+                                    size: dotSize,
+                                    percent: pct,
+                                    color: .white,
+                                    trackColor: Color.white.opacity(0.3)
+                                )
+                            }
+                        }
+                    }
 
                     if let tip = tip {
                         Text(tip)
