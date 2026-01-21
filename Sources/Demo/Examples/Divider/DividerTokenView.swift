@@ -15,9 +15,9 @@ struct DividerTokenView: View {
             DocSidebarSection(
                 title: tr("api.component_token"),
                 items: [
-                    "textPaddingInline", "orientationMargin", "verticalMarginInline",
                     "lineColor", "textColor", "fontSize",
-                    "horizontalMarginBlock", "lineWidth", "dashLength", "dashGap"
+                    "verticalMargin", "horizontalMargin", "textPadding",
+                    "lineWidth", "dashLength", "dashGap", "orientationMargin"
                 ],
                 sectionId: "token"
             ),
@@ -78,18 +78,17 @@ struct DividerTokenView: View {
     @ViewBuilder
     private func cardForItem(_ item: String) -> some View {
         switch item {
-        // Component Tokens (Antd 对齐)
-        case "textPaddingInline": textPaddingInlineCard
-        case "orientationMargin": orientationMarginCard
-        case "verticalMarginInline": verticalMarginInlineCard
-        // Extended Tokens
+        // Component Tokens
         case "lineColor": lineColorCard
         case "textColor": textColorCard
         case "fontSize": fontSizeCard
-        case "horizontalMarginBlock": horizontalMarginBlockCard
+        case "verticalMargin": verticalMarginCard
+        case "horizontalMargin": horizontalMarginCard
+        case "textPadding": textPaddingCard
         case "lineWidth": lineWidthCard
         case "dashLength": dashLengthCard
         case "dashGap": dashGapCard
+        case "orientationMargin": orientationMarginCard
         // Global
         case "colorText": globalColorTextCard
         case "globalLineWidth": globalLineWidthCard
@@ -159,26 +158,72 @@ struct DividerTokenView: View {
         .scrollAnchor("token.fontSize")
     }
     
-    // MARK: - Antd 对齐 Token Cards
+    private var verticalMarginCard: some View {
+        TokenCard(
+            name: "verticalMargin",
+            type: "CGFloat",
+            defaultValue: "token.marginLG",
+            description: tr("api.divider.token_vertical_margin"),
+            sectionId: "token"
+        ) {
+            VStack(spacing: 0) {
+                Text("Text")
+                Moin.Divider()
+                Text("Text")
+            }
+        } editor: {
+            TokenValueRow(label: "verticalMargin", value: Binding(
+                 get: { Moin.ConfigProvider.shared.components.divider.verticalMargin },
+                 set: { Moin.ConfigProvider.shared.components.divider.verticalMargin = $0 }
+            ))
+        } code: {
+            "config.components.divider.verticalMargin = \(Int(config.components.divider.verticalMargin))"
+        }
+        .scrollAnchor("token.verticalMargin")
+    }
     
-    private var textPaddingInlineCard: some View {
+    private var horizontalMarginCard: some View {
+        TokenCard(
+            name: "horizontalMargin",
+            type: "CGFloat",
+            defaultValue: "token.marginXS",
+            description: tr("api.divider.token_horizontal_margin"),
+            sectionId: "token"
+        ) {
+             HStack(spacing: 0) {
+                Text("A")
+                Moin.Divider(orientation: .vertical)
+                Text("B")
+            }
+        } editor: {
+            TokenValueRow(label: "horizontalMargin", value: Binding(
+                 get: { Moin.ConfigProvider.shared.components.divider.horizontalMargin },
+                 set: { Moin.ConfigProvider.shared.components.divider.horizontalMargin = $0 }
+            ))
+        } code: {
+            "config.components.divider.horizontalMargin = \(Int(config.components.divider.horizontalMargin))"
+        }
+        .scrollAnchor("token.horizontalMargin")
+    }
+    
+    private var textPaddingCard: some View {
          TokenCard(
-             name: "textPaddingInline",
+             name: "textPadding",
              type: "CGFloat",
              defaultValue: "token.padding",
-             description: tr("api.divider.token_text_padding_inline"),
+             description: tr("api.divider.token_text_padding"),
              sectionId: "token"
          ) {
               Moin.Divider("Text")
          } editor: {
-             TokenValueRow(label: "textPaddingInline", value: Binding(
-                  get: { Moin.ConfigProvider.shared.components.divider.textPaddingInline },
-                  set: { Moin.ConfigProvider.shared.components.divider.textPaddingInline = $0 }
+             TokenValueRow(label: "textPadding", value: Binding(
+                  get: { Moin.ConfigProvider.shared.components.divider.textPadding },
+                  set: { Moin.ConfigProvider.shared.components.divider.textPadding = $0 }
              ))
          } code: {
-             "config.components.divider.textPaddingInline = \(Int(config.components.divider.textPaddingInline))"
+             "config.components.divider.textPadding = \(Int(config.components.divider.textPadding))"
          }
-         .scrollAnchor("token.textPaddingInline")
+         .scrollAnchor("token.textPadding")
      }
     
     private var orientationMarginCard: some View {
@@ -200,54 +245,6 @@ struct DividerTokenView: View {
          }
          .scrollAnchor("token.orientationMargin")
      }
-    
-    private var verticalMarginInlineCard: some View {
-        TokenCard(
-            name: "verticalMarginInline",
-            type: "CGFloat",
-            defaultValue: "token.marginXS",
-            description: tr("api.divider.token_vertical_margin_inline"),
-            sectionId: "token"
-        ) {
-             HStack(spacing: 0) {
-                Text("A")
-                Moin.Divider(orientation: .vertical)
-                Text("B")
-            }
-        } editor: {
-            TokenValueRow(label: "verticalMarginInline", value: Binding(
-                 get: { Moin.ConfigProvider.shared.components.divider.verticalMarginInline },
-                 set: { Moin.ConfigProvider.shared.components.divider.verticalMarginInline = $0 }
-            ))
-        } code: {
-            "config.components.divider.verticalMarginInline = \(Int(config.components.divider.verticalMarginInline))"
-        }
-        .scrollAnchor("token.verticalMarginInline")
-    }
-    
-    private var horizontalMarginBlockCard: some View {
-        TokenCard(
-            name: "horizontalMarginBlock",
-            type: "CGFloat",
-            defaultValue: "token.marginLG",
-            description: tr("api.divider.token_horizontal_margin_block"),
-            sectionId: "token"
-        ) {
-            VStack(spacing: 0) {
-                Text("Text")
-                Moin.Divider()
-                Text("Text")
-            }
-        } editor: {
-            TokenValueRow(label: "horizontalMarginBlock", value: Binding(
-                 get: { Moin.ConfigProvider.shared.components.divider.horizontalMarginBlock },
-                 set: { Moin.ConfigProvider.shared.components.divider.horizontalMarginBlock = $0 }
-            ))
-        } code: {
-            "config.components.divider.horizontalMarginBlock = \(Int(config.components.divider.horizontalMarginBlock))"
-        }
-        .scrollAnchor("token.horizontalMarginBlock")
-    }
     
     private var lineWidthCard: some View {
         TokenCard(

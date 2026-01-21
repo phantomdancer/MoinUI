@@ -4,16 +4,7 @@ import SwiftUI
 
 public extension Moin {
     struct DividerToken {
-        // MARK: - Component Token (对齐 Ant Design 命名)
-        
-        /// 文本横向内间距
-        public var textPaddingInline: CGFloat
-        /// 文本与边缘距离比例 (0~1)，用于 left/right 对齐
-        public var orientationMargin: CGFloat
-        /// 纵向分割线的横向外间距
-        public var verticalMarginInline: CGFloat
-        
-        // MARK: - Extended Token (MoinUI 扩展)
+        // MARK: - Component Token
         
         /// 分割线颜色
         public var lineColor: Color
@@ -22,26 +13,32 @@ public extension Moin {
         /// 带文本时的字号
         public var fontSize: CGFloat
         /// 水平分割线的垂直外间距
-        public var horizontalMarginBlock: CGFloat
+        public var verticalMargin: CGFloat
+        /// 垂直分割线的水平外间距
+        public var horizontalMargin: CGFloat
+        /// 文本与线条的间距
+        public var textPadding: CGFloat
         /// 分割线宽度
         public var lineWidth: CGFloat
         /// 虚线长度
         public var dashLength: CGFloat
         /// 虚线间隙
         public var dashGap: CGFloat
+        /// 文本偏移比例 (0~1)，用于 left/right 对齐
+        public var orientationMargin: CGFloat
 
         public static func generate(from token: Token) -> DividerToken {
             DividerToken(
-                textPaddingInline: token.padding,
-                orientationMargin: 0.05,
-                verticalMarginInline: token.marginXS,
                 lineColor: token.colorBorder,
                 textColor: token.colorText,
                 fontSize: token.fontSizeLG,
-                horizontalMarginBlock: token.marginLG,
+                verticalMargin: token.marginLG,
+                horizontalMargin: token.marginXS,
+                textPadding: token.padding,
                 lineWidth: token.lineWidth,
                 dashLength: 4,
-                dashGap: 4
+                dashGap: 4,
+                orientationMargin: 0.05
             )
         }
 
