@@ -107,8 +107,8 @@ https://ant.design/llms-full.txt
 ### Sources/Demo/ - Demo应用
 - **Examples/** - 组件示例展示
   - ExampleComponents.swift - 示例通用组件
-  - Avatar/ - 头像示例 + Playground + Token配置
-  - Button/ - 按钮示例 + Playground + Token配置 + API文档
+  - Avatar/ - 头像示例 + Token配置
+  - Button/ - 按钮示例 + Token配置 + API文档
   - 其他省略
 
 - **Views/** - Demo主页面视图
