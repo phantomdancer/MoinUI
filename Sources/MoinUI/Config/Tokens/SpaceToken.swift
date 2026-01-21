@@ -10,7 +10,7 @@ public extension Moin {
 
         public static func generate(from token: Token) -> SpaceToken {
             SpaceToken(
-                sizeSmall: token.paddingSM,
+                sizeSmall: token.paddingXS,
                 sizeMedium: token.padding,
                 sizeLarge: token.paddingLG
             )

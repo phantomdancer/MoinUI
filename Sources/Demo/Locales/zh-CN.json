@@ -234,6 +234,9 @@
       "margin": "外边距",
       "marginLG": "大号外边距",
       "marginXS": "超小外边距",
+      "padding": "内边距",
+      "paddingLG": "大号内边距",
+      "paddingXS": "超小内边距",
       "lineWidth": "线条粗细"
     },
     "typography": {

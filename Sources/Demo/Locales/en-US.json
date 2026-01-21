@@ -234,6 +234,9 @@
       "margin": "Margin",
       "marginLG": "Large margin",
       "marginXS": "Extra small margin",
+      "padding": "Padding",
+      "paddingLG": "Large padding",
+      "paddingXS": "Extra small padding",
       "lineWidth": "Line width"
     },
     "typography": {

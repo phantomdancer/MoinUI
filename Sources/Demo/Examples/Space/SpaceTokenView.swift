@@ -19,10 +19,24 @@ struct SpaceTokenView: View {
             ),
              DocSidebarSection(
                 title: tr("api.global_token_title"),
-                items: ["borderRadius", "fontSize", "margin", "marginLG", "marginXS", "motionDuration"],
+                items: ["paddingXS", "padding", "paddingLG"],
                 sectionId: "global"
             )
         ]
+    }
+    
+    // 重置所有 Token 到默认值
+    private func resetAll() {
+        // 重置全局 seed token
+        config.seed = .default
+        config.regenerateTokens()
+        
+        // 重置组件 token
+        let defaultSpace = Moin.SpaceToken.generate(from: config.token)
+        config.components.space = defaultSpace
+        
+        // 通知重置
+        NotificationCenter.default.post(name: .spaceDocReset, object: nil)
     }
     
     var body: some View {
@@ -37,6 +51,20 @@ struct SpaceTokenView: View {
             }
         } item: { item in
             cardForItem(item)
+        } footer: {
+            HStack(spacing: Moin.Constants.Spacing.sm) {
+                Moin.Button(tr("playground.token.reset"), color: .primary, variant: .solid) {
+                    resetAll()
+                }
+                
+                Text(tr("token.playground.reset_desc"))
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+                
+                Spacer()
+            }
+            .padding(Moin.Constants.Spacing.md)
         }
     }
     
@@ -47,12 +75,9 @@ struct SpaceTokenView: View {
         case "sizeMedium": sizeMediumCard
         case "sizeLarge": sizeLargeCard
         
-        case "borderRadius": globalBorderRadiusCard
-        case "fontSize": globalFontSizeCard
-        case "margin": globalMarginCard
-        case "marginLG": globalMarginLGCard
-        case "marginXS": globalMarginXSCard
-        case "motionDuration": globalMotionDurationCard
+        case "paddingXS": globalPaddingXSCard
+        case "padding": globalPaddingCard
+        case "paddingLG": globalPaddingLGCard
         default: EmptyView()
         }
     }
@@ -86,7 +111,7 @@ struct SpaceTokenView: View {
         TokenCard(
             name: "sizeMedium",
             type: "CGFloat",
-            defaultValue: "12", // Old file said 12? Assuming yes, based on view_file output
+            defaultValue: "12",
             description: tr("api.space.token_medium"),
             sectionId: "token"
         ) {
@@ -109,7 +134,7 @@ struct SpaceTokenView: View {
         TokenCard(
             name: "sizeLarge",
             type: "CGFloat",
-            defaultValue: "16", // Old file said 16?
+            defaultValue: "16",
             description: tr("api.space.token_large"),
             sectionId: "token"
         ) {
@@ -130,70 +155,84 @@ struct SpaceTokenView: View {
     
     // MARK: - Global
     
-    // Just placeholders usually, as seen in other files
-    private var globalBorderRadiusCard: some View {
+    private var globalPaddingXSCard: some View {
          TokenCard(
-            name: "borderRadius",
-            type: "CGFloat",
-            defaultValue: "6",
-            description: tr("api.global_token.borderRadius"),
-            sectionId: "global"
-        ) { EmptyView() } editor: { EmptyView() } code: { "// Global Token" }
-        .scrollAnchor("global.borderRadius")
-    }
-    
-    private var globalFontSizeCard: some View {
-         TokenCard(
-            name: "fontSize",
-            type: "CGFloat",
-            defaultValue: "14",
-            description: tr("api.global_token.fontSize"),
-            sectionId: "global"
-        ) { EmptyView() } editor: { EmptyView() } code: { "// Global Token" }
-        .scrollAnchor("global.fontSize")
-    }
-    
-    private var globalMarginCard: some View {
-         TokenCard(
-            name: "margin",
-            type: "CGFloat",
-            defaultValue: "16",
-            description: tr("api.global_token.margin"),
-            sectionId: "global"
-        ) { EmptyView() } editor: { EmptyView() } code: { "// Global Token" }
-        .scrollAnchor("global.margin")
-    }
-    
-    private var globalMarginLGCard: some View {
-         TokenCard(
-            name: "marginLG",
-            type: "CGFloat",
-            defaultValue: "24",
-            description: tr("api.global_token.marginLG"),
-            sectionId: "global"
-        ) { EmptyView() } editor: { EmptyView() } code: { "// Global Token" }
-        .scrollAnchor("global.marginLG")
-    }
-    
-    private var globalMarginXSCard: some View {
-         TokenCard(
-            name: "marginXS",
+            name: "paddingXS",
             type: "CGFloat",
             defaultValue: "8",
-            description: tr("api.global_token.marginXS"),
+            description: tr("api.global_token.paddingXS"),
             sectionId: "global"
-        ) { EmptyView() } editor: { EmptyView() } code: { "// Global Token" }
-        .scrollAnchor("global.marginXS")
+        ) {
+             Moin.Space(size: .small) {
+                 Color.blue.frame(width: 20, height: 20)
+                 Color.blue.frame(width: 20, height: 20)
+             }
+             .border(Color.red, width: 1)
+        } editor: {
+             TokenValueRow(label: "paddingXS", value: Binding(
+                  get: { Moin.ConfigProvider.shared.token.paddingXS },
+                  set: {
+                      Moin.ConfigProvider.shared.token.paddingXS = $0
+                      Moin.ConfigProvider.shared.components.space = Moin.SpaceToken.generate(from: Moin.ConfigProvider.shared.token)
+                  }
+             ))
+        } code: {
+            "config.token.paddingXS = \(Int(config.token.paddingXS))"
+        }
+        .scrollAnchor("global.paddingXS")
     }
     
-    private var globalMotionDurationCard: some View {
+    private var globalPaddingCard: some View {
          TokenCard(
-            name: "motionDuration",
-            type: "Double",
-            defaultValue: "0.2",
-            description: tr("api.global_token.motionDuration"),
+            name: "padding",
+            type: "CGFloat",
+            defaultValue: "16",
+            description: tr("api.global_token.padding"),
             sectionId: "global"
-        ) { EmptyView() } editor: { EmptyView() } code: { "// Global Token" }
-        .scrollAnchor("global.motionDuration")
+        ) {
+            Moin.Space(size: .medium) {
+                Color.blue.frame(width: 20, height: 20)
+                Color.blue.frame(width: 20, height: 20)
+            }
+            .border(Color.red, width: 1)
+        } editor: {
+             TokenValueRow(label: "padding", value: Binding(
+                  get: { Moin.ConfigProvider.shared.token.padding },
+                  set: {
+                      Moin.ConfigProvider.shared.token.padding = $0
+                      Moin.ConfigProvider.shared.components.space = Moin.SpaceToken.generate(from: Moin.ConfigProvider.shared.token)
+                  }
+             ))
+        } code: {
+            "config.token.padding = \(Int(config.token.padding))"
+        }
+        .scrollAnchor("global.padding")
+    }
+    
+    private var globalPaddingLGCard: some View {
+         TokenCard(
+            name: "paddingLG",
+            type: "CGFloat",
+            defaultValue: "24",
+            description: tr("api.global_token.paddingLG"),
+            sectionId: "global"
+        ) {
+            Moin.Space(size: .large) {
+                Color.blue.frame(width: 20, height: 20)
+                Color.blue.frame(width: 20, height: 20)
+            }
+            .border(Color.red, width: 1)
+        } editor: {
+             TokenValueRow(label: "paddingLG", value: Binding(
+                  get: { Moin.ConfigProvider.shared.token.paddingLG },
+                  set: {
+                      Moin.ConfigProvider.shared.token.paddingLG = $0
+                      Moin.ConfigProvider.shared.components.space = Moin.SpaceToken.generate(from: Moin.ConfigProvider.shared.token)
+                  }
+             ))
+        } code: {
+            "config.token.paddingLG = \(Int(config.token.paddingLG))"
+        }
+        .scrollAnchor("global.paddingLG")
     }
 }
