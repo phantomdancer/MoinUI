@@ -8,6 +8,7 @@ extension Notification.Name {
     static let buttonDocReset = Notification.Name("buttonDocReset")
     static let badgeDocReset = Notification.Name("badgeDocReset")
     static let emptyDocReset = Notification.Name("emptyDocReset")
+    static let dividerDocReset = Notification.Name("dividerDocReset")
 }
 
 @main

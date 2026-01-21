@@ -29,6 +29,23 @@ struct DividerTokenView: View {
         ]
     }
     
+    // 重置所有 Token 到默认值
+    private func resetAll() {
+        // 重置全局 seed token
+        config.seed.colorPrimary = Moin.Colors.blue
+        config.seed.colorTextBase = Color(white: 0.0)
+        config.seed.lineWidth = 1
+        config.seed.borderRadius = 6
+        config.regenerateTokens()
+        
+        // 重置组件 token
+        let defaultDivider = Moin.DividerToken.generate(from: config.token)
+        config.components.divider = defaultDivider
+        
+        // 通知重置
+        NotificationCenter.default.post(name: .dividerDocReset, object: nil)
+    }
+    
     var body: some View {
         ComponentDocBody(
             sections: tokenSections,
@@ -41,6 +58,20 @@ struct DividerTokenView: View {
             }
         } item: { item in
             cardForItem(item)
+        } footer: {
+            HStack(spacing: Moin.Constants.Spacing.sm) {
+                Moin.Button(tr("playground.token.reset"), color: .primary, variant: .solid) {
+                    resetAll()
+                }
+                
+                Text(tr("token.playground.reset_desc"))
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+                
+                Spacer()
+            }
+            .padding(Moin.Constants.Spacing.md)
         }
     }
     
@@ -181,7 +212,7 @@ struct DividerTokenView: View {
          TokenCard(
              name: "textPadding",
              type: "CGFloat",
-             defaultValue: "12", // Check old file: "12"
+             defaultValue: "12",
              description: tr("api.divider.token_text_padding"),
              sectionId: "token"
          ) {
@@ -268,7 +299,14 @@ struct DividerTokenView: View {
             sectionId: "global"
         ) {
              EmptyView()
-        } editor: { EmptyView() } code: { "// Global Token" }
+        } editor: {
+            TokenValueRow(label: "borderRadius", value: Binding(
+                 get: { Moin.ConfigProvider.shared.seed.borderRadius },
+                 set: { Moin.ConfigProvider.shared.seed.borderRadius = $0 }
+            ))
+        } code: {
+            "config.seed.borderRadius = \(Int(config.seed.borderRadius))"
+        }
         .scrollAnchor("global.borderRadius")
     }
 
@@ -281,7 +319,14 @@ struct DividerTokenView: View {
             sectionId: "global"
         ) {
              EmptyView()
-        } editor: { EmptyView() } code: { "// Global Token" }
+        } editor: {
+            ColorPresetRow(label: "colorPrimary", color: Binding(
+                 get: { Moin.ConfigProvider.shared.seed.colorPrimary },
+                 set: { Moin.ConfigProvider.shared.seed.colorPrimary = $0 }
+            ))
+        } code: {
+            "config.seed.colorPrimary = Color(...)"
+        }
         .scrollAnchor("global.colorPrimary")
     }
     
@@ -294,7 +339,14 @@ struct DividerTokenView: View {
             sectionId: "global"
         ) {
              EmptyView()
-        } editor: { EmptyView() } code: { "// Global Token" }
+        } editor: {
+            ColorPresetRow(label: "colorText", color: Binding(
+                 get: { Moin.ConfigProvider.shared.seed.colorTextBase },
+                 set: { Moin.ConfigProvider.shared.seed.colorTextBase = $0 }
+            ))
+        } code: {
+            "config.seed.colorTextBase = Color(...)"
+        }
         .scrollAnchor("global.colorText")
     }
 
@@ -307,7 +359,14 @@ struct DividerTokenView: View {
             sectionId: "global"
         ) {
              EmptyView()
-        } editor: { EmptyView() } code: { "// Global Token" }
+        } editor: {
+            TokenValueRow(label: "lineWidth", value: Binding(
+                 get: { Moin.ConfigProvider.shared.seed.lineWidth },
+                 set: { Moin.ConfigProvider.shared.seed.lineWidth = $0 }
+            ))
+        } code: {
+            "config.seed.lineWidth = \(Int(config.seed.lineWidth))"
+        }
         .scrollAnchor("global.lineWidth")
     }
     
