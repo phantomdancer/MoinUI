@@ -75,42 +75,49 @@ public extension Moin {
         private var horizontalLine: some View {
             lineView(isHorizontal: true)
                 .frame(height: dividerToken.lineWidth)
-                .padding(.vertical, dividerToken.verticalMargin)
+                .padding(.vertical, dividerToken.horizontalMarginBlock)
         }
 
         // MARK: - Horizontal Divider with Content
 
         @ViewBuilder
         private func horizontalDividerWithContent(_ content: Content) -> some View {
-            HStack(spacing: dividerToken.textPadding) {
-                // Left line
-                switch titlePlacement {
-                case .left:
-                    lineView(isHorizontal: true)
-                        .frame(width: 24, height: dividerToken.lineWidth)
-                case .center, .right:
-                    lineView(isHorizontal: true)
-                        .frame(height: dividerToken.lineWidth)
-                }
+            GeometryReader { geo in
+                let totalWidth = geo.size.width
+                let shortWidth = totalWidth * dividerToken.orientationMargin
+                
+                HStack(spacing: dividerToken.textPaddingInline) {
+                    // Left line
+                    switch titlePlacement {
+                    case .left:
+                        lineView(isHorizontal: true)
+                            .frame(width: shortWidth, height: dividerToken.lineWidth)
+                    case .center, .right:
+                        lineView(isHorizontal: true)
+                            .frame(height: dividerToken.lineWidth)
+                    }
 
-                // Content
-                content
-                    .font(.system(size: dividerToken.fontSize, weight: plain ? .regular : .medium))
-                    .foregroundStyle(dividerToken.textColor)
-                    .lineLimit(1)
-                    .fixedSize()
+                    // Content
+                    content
+                        .font(.system(size: dividerToken.fontSize, weight: plain ? .regular : .medium))
+                        .foregroundStyle(dividerToken.textColor)
+                        .lineLimit(1)
+                        .fixedSize()
 
-                // Right line
-                switch titlePlacement {
-                case .right:
-                    lineView(isHorizontal: true)
-                        .frame(width: 24, height: dividerToken.lineWidth)
-                case .center, .left:
-                    lineView(isHorizontal: true)
-                        .frame(height: dividerToken.lineWidth)
+                    // Right line
+                    switch titlePlacement {
+                    case .right:
+                        lineView(isHorizontal: true)
+                            .frame(width: shortWidth, height: dividerToken.lineWidth)
+                    case .center, .left:
+                        lineView(isHorizontal: true)
+                            .frame(height: dividerToken.lineWidth)
+                    }
                 }
+                .frame(maxWidth: .infinity)
             }
-            .padding(.vertical, dividerToken.verticalMargin)
+            .frame(height: dividerToken.fontSize + dividerToken.horizontalMarginBlock * 2)
+            .padding(.vertical, dividerToken.horizontalMarginBlock)
         }
 
         // MARK: - Vertical Divider
@@ -118,7 +125,7 @@ public extension Moin {
         private var verticalDivider: some View {
             lineView(isHorizontal: false)
                 .frame(width: dividerToken.lineWidth)
-                .padding(.horizontal, dividerToken.horizontalMargin)
+                .padding(.horizontal, dividerToken.verticalMarginInline)
         }
 
         // MARK: - Line View

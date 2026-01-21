@@ -168,9 +168,10 @@ config.components.divider.textColor = Color(hex: "\(config.components.divider.te
 // \(tr("token.playground.divider_sizes"))
 config.components.divider.fontSize = \(Int(config.components.divider.fontSize))
 config.components.divider.lineWidth = \(Int(config.components.divider.lineWidth))
-config.components.divider.verticalMargin = \(Int(config.components.divider.verticalMargin))
-config.components.divider.horizontalMargin = \(Int(config.components.divider.horizontalMargin))
-config.components.divider.textPadding = \(Int(config.components.divider.textPadding))
+config.components.divider.textPaddingInline = \(Int(config.components.divider.textPaddingInline))
+config.components.divider.orientationMargin = \(String(format: "%.2f", config.components.divider.orientationMargin))
+config.components.divider.verticalMarginInline = \(Int(config.components.divider.verticalMarginInline))
+config.components.divider.horizontalMarginBlock = \(Int(config.components.divider.horizontalMarginBlock))
 """
         case .empty:
             return """
