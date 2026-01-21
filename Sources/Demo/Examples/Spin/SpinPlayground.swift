@@ -8,27 +8,6 @@ class SpinPlaygroundState: ObservableObject {
     @Published var showTip: Bool = false
     @Published var tip: String = "Loading..."
     @Published var delay: Int = 0
-    @Published var showPercent: Bool = false
-    @Published var percentMode: PercentMode = .value
-    @Published var percentValue: Double = 50
-
-    enum PercentMode: String, CaseIterable, CustomStringConvertible {
-        case value = "Value"
-        case auto = "Auto"
-
-        var description: String { rawValue }
-    }
-
-    /// 当前 percent 值
-    var currentPercent: SpinPercent? {
-        guard showPercent else { return nil }
-        switch percentMode {
-        case .value:
-            return .value(percentValue)
-        case .auto:
-            return .auto
-        }
-    }
 
     /// 生成代码
     func generateCode() -> String {
@@ -45,14 +24,6 @@ class SpinPlaygroundState: ObservableObject {
         }
         if delay > 0 {
             params.append("delay: \(delay)")
-        }
-        if showPercent {
-            switch percentMode {
-            case .value:
-                params.append("percent: .value(\(Int(percentValue)))")
-            case .auto:
-                params.append("percent: .auto")
-            }
         }
 
         if params.isEmpty {
@@ -109,8 +80,7 @@ struct SpinPlayground: View {
                     spinning: state.spinning,
                     size: state.size,
                     tip: state.showTip ? state.tip : nil,
-                    delay: state.delay > 0 ? state.delay : nil,
-                    percent: state.currentPercent
+                    delay: state.delay > 0 ? state.delay : nil
                 )
             }
             .frame(minHeight: 100)
@@ -214,40 +184,6 @@ struct SpinPlayground: View {
                         get: { Double(state.delay) },
                         set: { state.delay = Int($0) }
                     ), in: 0...2000, step: 100)
-                }
-
-                Divider()
-
-                // Percent
-                TogglePropControl(
-                    label: tr("spin.prop.show_percent"),
-                    propName: "percent: SpinPercent?",
-                    value: $state.showPercent
-                )
-                if state.showPercent {
-                    VStack(alignment: .leading, spacing: 8) {
-                        SelectPropControl(
-                            label: tr("spin.prop.percent_mode"),
-                            propName: "percent",
-                            options: SpinPlaygroundState.PercentMode.allCases,
-                            value: $state.percentMode
-                        )
-
-                        if state.percentMode == .value {
-                            VStack(alignment: .leading, spacing: 4) {
-                                HStack {
-                                    Text(tr("spin.prop.percent_value"))
-                                        .font(.system(size: 11, weight: .medium))
-                                        .foregroundStyle(.secondary)
-                                    Spacer()
-                                    Text("\(Int(state.percentValue))%")
-                                        .font(.system(size: 11, design: .monospaced))
-                                        .foregroundStyle(.tertiary)
-                                }
-                                Slider(value: $state.percentValue, in: 0...100, step: 5)
-                            }
-                        }
-                    }
                 }
 
                 Divider()

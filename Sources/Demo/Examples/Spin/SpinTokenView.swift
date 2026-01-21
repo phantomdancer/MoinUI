@@ -19,7 +19,7 @@ struct SpinTokenView: View {
             ),
             DocSidebarSection(
                 title: tr("spin.token.color"),
-                items: ["dotColor", "tipColor", "maskBackground", "progressTrackColor"],
+                items: ["dotColor", "tipColor", "maskBackground"],
                 sectionId: "color"
             ),
             DocSidebarSection(
@@ -59,7 +59,6 @@ struct SpinTokenView: View {
         case "dotColor": dotColorCard
         case "tipColor": tipColorCard
         case "maskBackground": maskBackgroundCard
-        case "progressTrackColor": progressTrackColorCard
         // Animation
         case "motionDuration": motionDurationCard
         default: EmptyView()
@@ -211,28 +210,6 @@ struct SpinTokenView: View {
           }
           .scrollAnchor("color.maskBackground")
       }
-    
-    private var progressTrackColorCard: some View {
-         TokenCard(
-             name: "progressTrackColor",
-             type: "Color",
-             defaultValue: "token.colorFillSecondary",
-             description: tr("spin.token.progressTrackColor_desc"),
-             sectionId: "color"
-         ) {
-             // Does basic Spin show track? Or only specific style?
-             // Assuming default spinner might use it.
-             Moin.Spin()
-         } editor: {
-             ColorPresetRow(label: "progressTrackColor", color: Binding(
-                  get: { Moin.ConfigProvider.shared.components.spin.progressTrackColor },
-                  set: { Moin.ConfigProvider.shared.components.spin.progressTrackColor = $0 }
-             ))
-         } code: {
-             "config.components.spin.progressTrackColor = Color(...)"
-         }
-         .scrollAnchor("color.progressTrackColor")
-     }
     
     // MARK: - Animation Cards
     

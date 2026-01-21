@@ -17,12 +17,6 @@ public extension Moin {
 /// Spin(tip: "加载中...")
 /// ```
 ///
-/// ## 进度模式
-/// ```swift
-/// Spin(percent: .value(50))
-/// Spin(percent: .auto)  // 自动增长
-/// ```
-///
 /// ## 嵌套模式
 /// ```swift
 /// Spin(spinning: isLoading) {
@@ -45,8 +39,6 @@ public struct Spin<Content: View>: View {
     let tip: String?
     /// 延迟显示(毫秒)，使用 debounce 防抖
     let delay: Int?
-    /// 进度百分比
-    let percent: SpinPercent?
     /// 自定义指示器
     let indicator: AnyView?
     /// 全屏模式
@@ -57,7 +49,6 @@ public struct Spin<Content: View>: View {
     @ObservedObject private var config = Moin.ConfigProvider.shared
     @State private var isVisible: Bool = true
     @State private var delayTask: DispatchWorkItem?
-    @State private var autoPercent: Double = 0
 
     // MARK: - Init (基础)
 
@@ -66,14 +57,12 @@ public struct Spin<Content: View>: View {
         size: SpinSize = .default,
         tip: String? = nil,
         delay: Int? = nil,
-        percent: SpinPercent? = nil,
         fullscreen: Bool = false
     ) where Content == EmptyView {
         self.spinning = spinning
         self.size = size
         self.tip = tip
         self.delay = delay
-        self.percent = percent
         self.indicator = nil
         self.fullscreen = fullscreen
         self.content = nil
@@ -93,7 +82,6 @@ public struct Spin<Content: View>: View {
         self.size = size
         self.tip = tip
         self.delay = delay
-        self.percent = nil
         self.indicator = AnyView(indicator())
         self.fullscreen = fullscreen
         self.content = nil
@@ -106,14 +94,12 @@ public struct Spin<Content: View>: View {
         size: SpinSize = .default,
         tip: String? = nil,
         delay: Int? = nil,
-        percent: SpinPercent? = nil,
         @ViewBuilder content: () -> Content
     ) {
         self.spinning = spinning
         self.size = size
         self.tip = tip
         self.delay = delay
-        self.percent = percent
         self.indicator = nil
         self.fullscreen = false
         self.content = content()
@@ -135,33 +121,17 @@ public struct Spin<Content: View>: View {
         }
         .onAppear {
             setupDelay()
-            startAutoPercent()
         }
         .onChange(of: spinning) { newValue in
             if newValue {
                 setupDelay()
-                startAutoPercent()
             } else {
                 cancelDelay()
                 isVisible = false
-                autoPercent = 0
             }
         }
         .onDisappear {
             cancelDelay()
-        }
-    }
-
-    // MARK: - Computed
-
-    /// 当前显示的进度值
-    private var currentPercent: Double? {
-        guard let percent = percent else { return nil }
-        switch percent {
-        case .value(let v):
-            return v
-        case .auto:
-            return autoPercent
         }
     }
 
@@ -190,25 +160,11 @@ public struct Spin<Content: View>: View {
             customIndicator
         } else {
             let dotSize = size.dotSize(from: token)
-
-            ZStack {
-                // 旋转点指示器
-                SpinIndicator(
-                    size: dotSize,
-                    color: token.dotColor,
-                    duration: token.motionDuration
-                )
-
-                // 进度圆环（如果有 percent）
-                if let pct = currentPercent, pct > 0 {
-                    SpinProgress(
-                        size: dotSize,
-                        percent: pct,
-                        color: token.dotColor,
-                        trackColor: token.progressTrackColor
-                    )
-                }
-            }
+            SpinIndicator(
+                size: dotSize,
+                color: token.dotColor,
+                duration: token.motionDuration
+            )
         }
     }
 
@@ -249,22 +205,11 @@ public struct Spin<Content: View>: View {
                         customIndicator
                     } else {
                         let dotSize = size.dotSize(from: token)
-                        ZStack {
-                            SpinIndicator(
-                                size: dotSize,
-                                color: .white,
-                                duration: token.motionDuration
-                            )
-
-                            if let pct = currentPercent, pct > 0 {
-                                SpinProgress(
-                                    size: dotSize,
-                                    percent: pct,
-                                    color: .white,
-                                    trackColor: Color.white.opacity(0.3)
-                                )
-                            }
-                        }
+                        SpinIndicator(
+                            size: dotSize,
+                            color: .white,
+                            duration: token.motionDuration
+                        )
                     }
 
                     if let tip = tip {
@@ -305,36 +250,6 @@ public struct Spin<Content: View>: View {
         delayTask?.cancel()
         delayTask = nil
     }
-
-    /// 启动自动进度
-    private func startAutoPercent() {
-        guard case .auto = percent, spinning else { return }
-        autoPercent = 0
-
-        // antd 的自动进度算法
-        Timer.scheduledTimer(withTimeInterval: 0.2, repeats: true) { timer in
-            guard spinning, case .auto = percent else {
-                timer.invalidate()
-                return
-            }
-
-            let rest = 100 - autoPercent
-            let step: Double
-            if autoPercent <= 30 {
-                step = rest * 0.05
-            } else if autoPercent <= 70 {
-                step = rest * 0.03
-            } else if autoPercent <= 96 {
-                step = rest * 0.01
-            } else {
-                step = 0
-            }
-
-            if step > 0 {
-                autoPercent += step
-            }
-        }
-    }
 }
 
 // MARK: - Preview
@@ -348,15 +263,6 @@ public struct Spin<Content: View>: View {
         }
 
         Spin(tip: "Loading...")
-    }
-    .padding()
-}
-
-#Preview("Spin Percent") {
-    HStack(spacing: 40) {
-        Spin(percent: .value(30))
-        Spin(percent: .value(70))
-        Spin(size: .large, percent: .auto)
     }
     .padding()
 }
@@ -385,11 +291,11 @@ public struct Spin<Content: View>: View {
 }
 
 #Preview("Spin Custom Indicator") {
-    Spin {
+    Spin(indicator: {
         Image(systemName: "arrow.triangle.2.circlepath")
             .font(.system(size: 24))
             .foregroundStyle(.blue)
             .rotationEffect(.degrees(360))
             .animation(.linear(duration: 1).repeatForever(autoreverses: false), value: UUID())
-    }
+    })
 }

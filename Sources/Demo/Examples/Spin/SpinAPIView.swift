@@ -14,7 +14,7 @@ struct SpinAPIView: View {
         [
             DocSidebarSection(
                 title: "Moin.Spin",
-                items: ["spinning", "size", "tip", "delay", "percent", "fullscreen", "indicator", "content"],
+                items: ["spinning", "size", "tip", "delay", "fullscreen", "indicator", "content"],
                 sectionId: "spin"
             )
         ]
@@ -40,7 +40,6 @@ struct SpinAPIView: View {
         case "size": sizePropertyCard
         case "tip": tipPropertyCard
         case "delay": delayPropertyCard
-        case "percent": percentPropertyCard
         case "fullscreen": fullscreenPropertyCard
         case "indicator": indicatorPropertyCard
         case "content": contentPropertyCard
@@ -133,30 +132,6 @@ struct SpinAPIView: View {
             "Moin.Spin(spinning: true, delay: 500)"
         }
         .scrollAnchor("spin.delay")
-    }
-    
-    private var percentPropertyCard: some View {
-        PropertyCard(
-            name: "percent",
-            type: "SpinPercent?",
-            defaultValue: "nil",
-            description: tr("spin.api.percent"),
-            enumValues: ".value(Double) | .auto",
-            sectionId: "spin"
-        ) {
-            HStack(spacing: 20) {
-                Moin.Spin(percent: .value(30))
-                Moin.Spin(percent: .value(70))
-                Moin.Spin(size: .large, percent: .auto)
-            }
-        } code: {
-            """
-            Moin.Spin(percent: .value(30))
-            Moin.Spin(percent: .value(70))
-            Moin.Spin(size: .large, percent: .auto)
-            """
-        }
-        .scrollAnchor("spin.percent")
     }
     
     private var fullscreenPropertyCard: some View {
