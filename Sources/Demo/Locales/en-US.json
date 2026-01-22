@@ -251,23 +251,7 @@
       }
     }
   },
-  "alert": {
-    "action": "Action",
-    "action_desc": "Additional action to support user interaction.",
-    "demo": {
-      "action": {
-        "success_title": "Success Tips",
-        "undo": "UNDO",
-        "error_title": "Error Text",
-        "error_desc": "This is a very long error description text used to test the layout behavior of the action button when text wraps, ensuring content wraps correctly.",
-        "detail": "Detail",
-        "warning_title": "Warning Text",
-        "done": "Done",
-        "info_title": "Info Text",
-        "info_desc": "This is a very long info description text used to test the display of multiple buttons in a complex layout, ensuring visual coordination.",
-        "accept": "Accept",
-        "decline": "Decline"
-      }
-    }
+  "token": {
+    "colorPrimary": "Primary color"
   }
 }

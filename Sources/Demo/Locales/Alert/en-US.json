@@ -24,8 +24,23 @@
       "info_title": "Info Tips",
       "info_description": "Additional description and information about copywriting.",
       "banner_warning": "Warning: This is a banner warning message",
-      "banner_error": "Error: This is a banner error message"
-    }
+      "banner_error": "Error: This is a banner error message",
+      "action": {
+        "success_title": "Success Tips",
+        "undo": "UNDO",
+        "error_title": "Error Text",
+        "error_desc": "This is a very long error description text used to test the layout behavior of the action button when text wraps, ensuring content wraps correctly.",
+        "detail": "Detail",
+        "warning_title": "Warning Text",
+        "done": "Done",
+        "info_title": "Info Text",
+        "info_desc": "This is a very long info description text used to test the display of multiple buttons in a complex layout, ensuring visual coordination.",
+        "accept": "Accept",
+        "decline": "Decline"
+      }
+    },
+    "action": "Action",
+    "action_desc": "Additional action to support user interaction."
   },
   "api": {
     "alert": {
@@ -37,7 +52,33 @@
       "closable": "Whether Alert can be closed",
       "banner": "Whether to show as banner",
       "onClose": "Callback when Alert is closed",
+      "action": "Custom action view",
       "token_desc": "Below are the design tokens for the Alert component."
+    }
+  },
+  "token": {
+    "alert": {
+      "successBg": "Success Background Color",
+      "successBorder": "Success Border Color",
+      "successIcon": "Success Icon Color",
+      "infoBg": "Info Background Color",
+      "infoBorder": "Info Border Color",
+      "infoIcon": "Info Icon Color",
+      "warningBg": "Warning Background Color",
+      "warningBorder": "Warning Border Color",
+      "warningIcon": "Warning Icon Color",
+      "errorBg": "Error Background Color",
+      "errorBorder": "Error Border Color",
+      "errorIcon": "Error Icon Color",
+      "paddingVertical": "Vertical Padding",
+      "paddingHorizontal": "Horizontal Padding",
+      "gap": "Gap between icon and content",
+      "titleGap": "Gap between title and description",
+      "iconSize": "Icon Size",
+      "fontSize": "Description Font Size",
+      "titleFontSize": "Title Font Size",
+      "borderWidth": "Border Width",
+      "cornerRadius": "Corner Radius"
     }
   }
 }
