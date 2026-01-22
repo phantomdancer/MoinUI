@@ -6,6 +6,8 @@
     "basic_desc": "Simplest usage.",
     "unit": "Unit",
     "unit_desc": "Add prefix and suffix.",
+    "countdown": "Countdown",
+    "countdown_desc": "Countdown component using SwiftUI native Text styles.",
     "loading": "Loading",
     "loading_desc": "Loading state.",
     "demo": {
@@ -14,6 +16,8 @@
       "feedback": "Feedback",
       "unmerged": "Unmerged",
       "active": "Active",
+      "countdown": "Countdown",
+      "countdown_seconds": "60s Countdown",
       "toggle_loading": "Toggle Loading"
     }
   },

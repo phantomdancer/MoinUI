@@ -6,6 +6,8 @@
     "basic_desc": "简单的展示。",
     "unit": "单位",
     "unit_desc": "通过前缀和后缀添加单位。",
+    "countdown": "倒计时",
+    "countdown_desc": "使用 SwiftUI 原生 Text 样式实现倒计时。",
     "loading": "加载状态",
     "loading_desc": "数据加载中。",
     "demo": {
@@ -14,6 +16,8 @@
       "feedback": "反馈",
       "unmerged": "未合并",
       "active": "活跃",
+      "countdown": "倒计时",
+      "countdown_seconds": "60秒倒计时",
       "toggle_loading": "切换加载状态"
     }
   },
