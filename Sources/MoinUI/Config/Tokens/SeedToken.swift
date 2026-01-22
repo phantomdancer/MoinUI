@@ -106,7 +106,7 @@ public extension Moin {
             colorSuccess: Color = Moin.Colors.green,
             colorWarning: Color = Moin.Colors.gold,
             colorError: Color = Moin.Colors.red,
-            colorInfo: Color = Color(red: 0.55, green: 0.55, blue: 0.60),
+            colorInfo: Color? = nil,
             colorLink: Color = Moin.Colors.blue,
             colorTextBase: Color = Color(white: 0.0),
             colorBgBase: Color = Color.white,
@@ -133,7 +133,7 @@ public extension Moin {
             self.colorSuccess = colorSuccess
             self.colorWarning = colorWarning
             self.colorError = colorError
-            self.colorInfo = colorInfo
+            self.colorInfo = colorInfo ?? colorPrimary // Follow primary if not specified
             self.colorLink = colorLink
             self.colorTextBase = colorTextBase
             self.colorBgBase = colorBgBase
