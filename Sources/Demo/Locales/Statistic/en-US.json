@@ -6,8 +6,6 @@
     "basic_desc": "Simplest usage.",
     "unit": "Unit",
     "unit_desc": "Add prefix and suffix.",
-    "card": "In Card",
-    "card_desc": "Display statistic data in Card.",
     "loading": "Loading",
     "loading_desc": "Loading state.",
     "demo": {
@@ -15,6 +13,7 @@
       "account_balance": "Account Balance (CNY)",
       "feedback": "Feedback",
       "unmerged": "Unmerged",
+      "active": "Active",
       "toggle_loading": "Toggle Loading"
     }
   },

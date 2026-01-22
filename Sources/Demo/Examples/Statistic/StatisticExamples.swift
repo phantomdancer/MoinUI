@@ -7,7 +7,7 @@ struct StatisticExamples: View {
 
     private let anchors: [AnchorItem] = [
         AnchorItem(id: "basic", titleKey: "statistic.basic"),
-        AnchorItem(id: "unit", titleKey: "statistic.card"),
+        AnchorItem(id: "unit", titleKey: "statistic.unit"),
         AnchorItem(id: "loading", titleKey: "statistic.loading")
     ]
 
@@ -38,61 +38,51 @@ struct StatisticExamples: View {
     
     private var unitExample: some View {
         ExampleSection(
-            title: tr("statistic.card"),
-            description: tr("statistic.card_desc")
+            title: tr("statistic.unit"),
+            description: tr("statistic.unit_desc")
         ) {
-            HStack(spacing: 30) {
-                VStack {
-                    Moin.Statistic(
-                        title: tr("statistic.demo.feedback"),
-                        value: 1128,
-                        prefix: Image(systemName: "hand.thumbsup.fill").foregroundStyle(Color.blue)
-                    )
-                }
-                .padding()
-                .background(Color(nsColor: .controlBackgroundColor))
-                .cornerRadius(8)
-                .shadow(radius: 2)
-                
-                VStack {
-                    Moin.Statistic(
-                        title: tr("statistic.demo.unmerged"),
-                        value: 93,
-                        suffix: Text("/ 100")
-                    )
-                }
-                .padding()
-                .background(Color(nsColor: .controlBackgroundColor))
-                .cornerRadius(8)
-                .shadow(radius: 2)
-            }
-        } code: {
-            """
-            // \(tr("statistic.demo.feedback"))
-            VStack {
+            HStack(spacing: 50) {
                 Moin.Statistic(
-                    title: "\(tr("statistic.demo.feedback"))",
+                    title: tr("statistic.demo.feedback"),
                     value: 1128,
                     prefix: Image(systemName: "hand.thumbsup.fill").foregroundStyle(Color.blue)
                 )
-            }
-            .padding()
-            .background(Color(nsColor: .controlBackgroundColor))
-            .cornerRadius(8)
-            .shadow(radius: 2)
-            
-            // \(tr("statistic.demo.unmerged"))
-            VStack {
+                
                 Moin.Statistic(
-                    title: "\(tr("statistic.demo.unmerged"))",
+                    title: tr("statistic.demo.unmerged"),
                     value: 93,
                     suffix: Text("/ 100")
                 )
+                
+                Moin.Statistic(
+                    title: tr("statistic.demo.active"),
+                    value: 11.28,
+                    precision: 2,
+                    prefix: Image(systemName: "arrow.up"),
+                    suffix: Text("%")
+                )
             }
-            .padding()
-            .background(Color(nsColor: .controlBackgroundColor))
-            .cornerRadius(8)
-            .shadow(radius: 2)
+        } code: {
+            """
+            Moin.Statistic(
+                title: "\(tr("statistic.demo.feedback"))",
+                value: 1128,
+                prefix: Image(systemName: "hand.thumbsup.fill").foregroundStyle(Color.blue)
+            )
+            
+            Moin.Statistic(
+                title: "\(tr("statistic.demo.unmerged"))",
+                value: 93,
+                suffix: Text("/ 100")
+            )
+            
+            Moin.Statistic(
+                title: "\(tr("statistic.demo.active"))",
+                value: 11.28,
+                precision: 2,
+                prefix: Image(systemName: "arrow.up"),
+                suffix: Text("%")
+            )
             """
         }
     }

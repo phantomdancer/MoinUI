@@ -6,8 +6,6 @@
     "basic_desc": "简单的展示。",
     "unit": "单位",
     "unit_desc": "通过前缀和后缀添加单位。",
-    "card": "卡片展示",
-    "card_desc": "在卡片中展示统计数值。",
     "loading": "加载状态",
     "loading_desc": "数据加载中。",
     "demo": {
@@ -15,6 +13,7 @@
       "account_balance": "账户余额 (CNY)",
       "feedback": "反馈",
       "unmerged": "未合并",
+      "active": "活跃",
       "toggle_loading": "切换加载状态"
     }
   },
