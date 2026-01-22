@@ -47,15 +47,15 @@ public extension Moin {
             if isVisible {
                 let colors = colorsForType(alertToken)
                 let hasDescription = description != nil
+                // Layout selection based on description presence
+                let padding = hasDescription ? alertToken.withDescriptionPadding : alertToken.defaultPadding
                 let titleSize = hasDescription ? alertToken.titleFontSize : alertToken.fontSize
-                // Description 模式下使用较大的垂直内边距 (token.padding=16)，否则使用默认 (alertToken.paddingVertical=8)
-                let paddingV = hasDescription ? token.padding : alertToken.paddingVertical
-                let paddingH = alertToken.paddingHorizontal
+                let currentIconSize = hasDescription ? alertToken.withDescriptionIconSize : alertToken.iconSize
                 
                 HStack(alignment: hasDescription ? .top : .center, spacing: alertToken.gap) {
                     if showIcon {
                         iconForType
-                            .font(.system(size: hasDescription ? alertToken.iconSize : alertToken.fontSize))
+                            .font(.system(size: currentIconSize))
                             .foregroundStyle(colors.icon)
                             .padding(.top, hasDescription ? 4 : 0) // Optical alignment for top-aligned icon
                     }
@@ -97,8 +97,7 @@ public extension Moin {
                             .padding(.top, hasDescription ? 4 : 0) // Align with icon/title top if top-aligned
                     }
                 }
-                .padding(.vertical, paddingV)
-                .padding(.horizontal, paddingH)
+                .padding(padding)
                 .background(colors.bg)
                 .overlay(
                     RoundedRectangle(cornerRadius: banner ? 0 : alertToken.cornerRadius)
@@ -119,10 +118,10 @@ public extension Moin {
         
         private func colorsForType(_ alertToken: AlertToken) -> (bg: Color, border: Color, icon: Color) {
             switch type {
-            case .success: return (alertToken.successBg, alertToken.successBorder, alertToken.successIcon)
-            case .info: return (alertToken.infoBg, alertToken.infoBorder, alertToken.infoIcon)
-            case .warning: return (alertToken.warningBg, alertToken.warningBorder, alertToken.warningIcon)
-            case .error: return (alertToken.errorBg, alertToken.errorBorder, alertToken.errorIcon)
+            case .success: return (alertToken.colorSuccessBg, alertToken.colorSuccessBorder, alertToken.colorSuccess)
+            case .info: return (alertToken.colorInfoBg, alertToken.colorInfoBorder, alertToken.colorInfo)
+            case .warning: return (alertToken.colorWarningBg, alertToken.colorWarningBorder, alertToken.colorWarning)
+            case .error: return (alertToken.colorErrorBg, alertToken.colorErrorBorder, alertToken.colorError)
             }
         }
         

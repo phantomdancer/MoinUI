@@ -253,5 +253,8 @@
   },
   "token": {
     "colorPrimary": "Primary color"
-  }
+  },
+  "token.preset": "Preset Colors",
+  "token.size": "Sizes",
+  "token.border": "Border"
 }

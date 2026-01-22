@@ -4,71 +4,81 @@ import SwiftUI
 
 public extension Moin {
     struct AlertToken {
-        // Success 颜色
-        public var successBg: Color
-        public var successBorder: Color
-        public var successIcon: Color
+        // Success Colors
+        public var colorSuccessBg: Color
+        public var colorSuccessBorder: Color
+        public var colorSuccess: Color
         
-        // Info 颜色
-        public var infoBg: Color
-        public var infoBorder: Color
-        public var infoIcon: Color
+        // Info Colors
+        public var colorInfoBg: Color
+        public var colorInfoBorder: Color
+        public var colorInfo: Color
         
-        // Warning 颜色
-        public var warningBg: Color
-        public var warningBorder: Color
-        public var warningIcon: Color
+        // Warning Colors
+        public var colorWarningBg: Color
+        public var colorWarningBorder: Color
+        public var colorWarning: Color
         
-        // Error 颜色
-        public var errorBg: Color
-        public var errorBorder: Color
-        public var errorIcon: Color
+        // Error Colors
+        public var colorErrorBg: Color
+        public var colorErrorBorder: Color
+        public var colorError: Color
         
-        // 尺寸
-        public var paddingVertical: CGFloat
-        public var paddingHorizontal: CGFloat
-        public var iconSize: CGFloat
+        // Layout - Standard
+        public var defaultPadding: EdgeInsets
+        public var iconSize: CGFloat // Not in AntD Component Token list but needed for standard mode
+        
+        // Layout - With Description
+        public var withDescriptionPadding: EdgeInsets
+        public var withDescriptionIconSize: CGFloat
+        
+        // Common
         public var fontSize: CGFloat
-        public var titleFontSize: CGFloat
+        public var titleFontSize: CGFloat // Usually derived from fontSizeLG
         public var borderWidth: CGFloat
         public var cornerRadius: CGFloat
         
-        // 间距
+        // Gap (Moin Custom)
         public var gap: CGFloat
         public var titleGap: CGFloat
         
         public static func generate(from token: Token) -> AlertToken {
             AlertToken(
                 // Success
-                successBg: token.colorSuccessBg,
-                successBorder: token.colorSuccessBorder,
-                successIcon: token.colorSuccess,
+                colorSuccessBg: token.colorSuccessBg,
+                colorSuccessBorder: token.colorSuccessBorder,
+                colorSuccess: token.colorSuccess,
                 
                 // Info
-                infoBg: token.colorInfoBg,
-                infoBorder: token.colorInfoBorder,
-                infoIcon: token.colorInfo,
+                colorInfoBg: token.colorInfoBg,
+                colorInfoBorder: token.colorInfoBorder,
+                colorInfo: token.colorInfo,
                 
                 // Warning
-                warningBg: token.colorWarningBg,
-                warningBorder: token.colorWarningBorder,
-                warningIcon: token.colorWarning,
+                colorWarningBg: token.colorWarningBg,
+                colorWarningBorder: token.colorWarningBorder,
+                colorWarning: token.colorWarning,
                 
                 // Error
-                errorBg: token.colorDangerBg,
-                errorBorder: token.colorDangerBorder,
-                errorIcon: token.colorDanger,
+                colorErrorBg: token.colorDangerBg,
+                colorErrorBorder: token.colorDangerBorder,
+                colorError: token.colorDanger,
                 
-                // 尺寸
-                paddingVertical: token.paddingXS + 1, // 8 + 1 = 9 to match Ant Design 40px height (22 LH + 18 padding)
-                paddingHorizontal: token.padding,
-                iconSize: 16,
+                // Layout - Standard (8px 12px)
+                defaultPadding: EdgeInsets(top: 8, leading: 12, bottom: 8, trailing: 12),
+                iconSize: 16, // derived from fontSize usually
+                
+                // Layout - With Description (User: 20px 24px)
+                withDescriptionPadding: EdgeInsets(top: 20, leading: 24, bottom: 20, trailing: 24),
+                withDescriptionIconSize: 24,
+                
+                // Common
                 fontSize: token.fontSize,
                 titleFontSize: token.fontSizeLG,
-                borderWidth: 1,
+                borderWidth: token.lineWidth,
                 cornerRadius: token.borderRadius,
                 
-                // 间距
+                // Gap
                 gap: token.marginXS,
                 titleGap: token.marginXXS
             )

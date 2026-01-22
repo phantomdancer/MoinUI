@@ -250,5 +250,8 @@
         "link": "链接"
       }
     }
-  }
+  },
+  "token.preset": "预设颜色",
+  "token.size": "尺寸",
+  "token.border": "边框"
 }

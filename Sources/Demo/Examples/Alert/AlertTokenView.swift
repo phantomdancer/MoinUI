@@ -23,7 +23,8 @@ struct AlertTokenView: View {
             DocSidebarSection(
                 title: tr("token.size"),
                 items: [
-                    "paddingVertical", "paddingHorizontal", "gap", "titleGap",
+                    "defaultPadding", "withDescriptionPadding", "withDescriptionIconSize",
+                    "gap", "titleGap",
                     "iconSize", "fontSize", "titleFontSize"
                 ],
                 sectionId: "token"
@@ -76,22 +77,23 @@ struct AlertTokenView: View {
     private func cardForItem(_ item: String) -> some View {
         switch item {
         // Colors
-        case "successBg": successBgCard
-        case "successBorder": successBorderCard
-        case "successIcon": successIconCard
-        case "infoBg": infoBgCard
-        case "infoBorder": infoBorderCard
-        case "infoIcon": infoIconCard
-        case "warningBg": warningBgCard
-        case "warningBorder": warningBorderCard
-        case "warningIcon": warningIconCard
-        case "errorBg": errorBgCard
-        case "errorBorder": errorBorderCard
-        case "errorIcon": errorIconCard
+        case "colorSuccessBg": successBgCard
+        case "colorSuccessBorder": successBorderCard
+        case "colorSuccess": successIconCard
+        case "colorInfoBg": infoBgCard
+        case "colorInfoBorder": infoBorderCard
+        case "colorInfo": infoIconCard
+        case "colorWarningBg": warningBgCard
+        case "colorWarningBorder": warningBorderCard
+        case "colorWarning": warningIconCard
+        case "colorErrorBg": errorBgCard
+        case "colorErrorBorder": errorBorderCard
+        case "colorError": errorIconCard
         
         // Sizes
-        case "paddingVertical": paddingVerticalCard
-        case "paddingHorizontal": paddingHorizontalCard
+        case "defaultPadding": defaultPaddingCard
+        case "withDescriptionPadding": withDescriptionPaddingCard
+        case "withDescriptionIconSize": withDescriptionIconSizeCard
         case "gap": gapCard
         case "titleGap": titleGapCard
         case "iconSize": iconSizeCard
@@ -109,117 +111,145 @@ struct AlertTokenView: View {
     // MARK: - Cards
     
     private var successBgCard: some View {
-        TokenCard(name: "successBg", type: "Color", defaultValue: "token.colorSuccessBg", description: tr("token.alert.successBg"), sectionId: "token") {
+        TokenCard(name: "colorSuccessBg", type: "Color", defaultValue: "token.colorSuccessBg", description: tr("token.alert.colorSuccessBg"), sectionId: "token") {
             Moin.Alert(type: .success, title: tr("alert.demo.token_demo.success"))
         } editor: {
-            ColorPresetRow(label: "successBg", color: Binding(get: { config.components.alert.successBg }, set: { config.components.alert.successBg = $0 }))
-        } code: { "config.components.alert.successBg = Color(hex: \"\(config.components.alert.successBg.toHex())\")" }
+            ColorPresetRow(label: "colorSuccessBg", color: Binding(get: { config.components.alert.colorSuccessBg }, set: { config.components.alert.colorSuccessBg = $0 }))
+        } code: { "config.components.alert.colorSuccessBg = Color(hex: \"\(config.components.alert.colorSuccessBg.toHex())\")" }
     }
     
     private var successBorderCard: some View {
-        TokenCard(name: "successBorder", type: "Color", defaultValue: "token.colorSuccessBorder", description: tr("token.alert.successBorder"), sectionId: "token") {
+        TokenCard(name: "colorSuccessBorder", type: "Color", defaultValue: "token.colorSuccessBorder", description: tr("token.alert.colorSuccessBorder"), sectionId: "token") {
             Moin.Alert(type: .success, title: tr("alert.demo.token_demo.success"))
         } editor: {
-            ColorPresetRow(label: "successBorder", color: Binding(get: { config.components.alert.successBorder }, set: { config.components.alert.successBorder = $0 }))
-        } code: { "config.components.alert.successBorder = Color(hex: \"\(config.components.alert.successBorder.toHex())\")" }
+            ColorPresetRow(label: "colorSuccessBorder", color: Binding(get: { config.components.alert.colorSuccessBorder }, set: { config.components.alert.colorSuccessBorder = $0 }))
+        } code: { "config.components.alert.colorSuccessBorder = Color(hex: \"\(config.components.alert.colorSuccessBorder.toHex())\")" }
     }
     
     private var successIconCard: some View {
-        TokenCard(name: "successIcon", type: "Color", defaultValue: "token.colorSuccess", description: tr("token.alert.successIcon"), sectionId: "token") {
+        TokenCard(name: "colorSuccess", type: "Color", defaultValue: "token.colorSuccess", description: tr("token.alert.colorSuccess"), sectionId: "token") {
             Moin.Alert(type: .success, title: tr("alert.demo.token_demo.success"), showIcon: true)
         } editor: {
-            ColorPresetRow(label: "successIcon", color: Binding(get: { config.components.alert.successIcon }, set: { config.components.alert.successIcon = $0 }))
-        } code: { "config.components.alert.successIcon = Color(hex: \"\(config.components.alert.successIcon.toHex())\")" }
+            ColorPresetRow(label: "colorSuccess", color: Binding(get: { config.components.alert.colorSuccess }, set: { config.components.alert.colorSuccess = $0 }))
+        } code: { "config.components.alert.colorSuccess = Color(hex: \"\(config.components.alert.colorSuccess.toHex())\")" }
     }
     
     private var infoBgCard: some View {
-        TokenCard(name: "infoBg", type: "Color", defaultValue: "token.colorInfoBg", description: tr("token.alert.infoBg"), sectionId: "token") {
+        TokenCard(name: "colorInfoBg", type: "Color", defaultValue: "token.colorInfoBg", description: tr("token.alert.colorInfoBg"), sectionId: "token") {
             Moin.Alert(type: .info, title: tr("alert.demo.token_demo.info"))
         } editor: {
-             ColorPresetRow(label: "infoBg", color: Binding(get: { config.components.alert.infoBg }, set: { config.components.alert.infoBg = $0 }))
-        } code: { "config.components.alert.infoBg = Color(hex: \"\(config.components.alert.infoBg.toHex())\")" }
+             ColorPresetRow(label: "colorInfoBg", color: Binding(get: { config.components.alert.colorInfoBg }, set: { config.components.alert.colorInfoBg = $0 }))
+        } code: { "config.components.alert.colorInfoBg = Color(hex: \"\(config.components.alert.colorInfoBg.toHex())\")" }
     }
     
     private var infoBorderCard: some View {
-        TokenCard(name: "infoBorder", type: "Color", defaultValue: "token.colorInfoBorder", description: tr("token.alert.infoBorder"), sectionId: "token") {
+        TokenCard(name: "colorInfoBorder", type: "Color", defaultValue: "token.colorInfoBorder", description: tr("token.alert.colorInfoBorder"), sectionId: "token") {
             Moin.Alert(type: .info, title: tr("alert.demo.token_demo.info"))
         } editor: {
-             ColorPresetRow(label: "infoBorder", color: Binding(get: { config.components.alert.infoBorder }, set: { config.components.alert.infoBorder = $0 }))
-        } code: { "config.components.alert.infoBorder = Color(hex: \"\(config.components.alert.infoBorder.toHex())\")" }
+             ColorPresetRow(label: "colorInfoBorder", color: Binding(get: { config.components.alert.colorInfoBorder }, set: { config.components.alert.colorInfoBorder = $0 }))
+        } code: { "config.components.alert.colorInfoBorder = Color(hex: \"\(config.components.alert.colorInfoBorder.toHex())\")" }
     }
     
     private var infoIconCard: some View {
-        TokenCard(name: "infoIcon", type: "Color", defaultValue: "token.colorInfo", description: tr("token.alert.infoIcon"), sectionId: "token") {
+        TokenCard(name: "colorInfo", type: "Color", defaultValue: "token.colorInfo", description: tr("token.alert.colorInfo"), sectionId: "token") {
             Moin.Alert(type: .info, title: tr("alert.demo.token_demo.info"), showIcon: true)
         } editor: {
-             ColorPresetRow(label: "infoIcon", color: Binding(get: { config.components.alert.infoIcon }, set: { config.components.alert.infoIcon = $0 }))
-        } code: { "config.components.alert.infoIcon = Color(hex: \"\(config.components.alert.infoIcon.toHex())\")" }
+             ColorPresetRow(label: "colorInfo", color: Binding(get: { config.components.alert.colorInfo }, set: { config.components.alert.colorInfo = $0 }))
+        } code: { "config.components.alert.colorInfo = Color(hex: \"\(config.components.alert.colorInfo.toHex())\")" }
     }
     
     private var warningBgCard: some View {
-        TokenCard(name: "warningBg", type: "Color", defaultValue: "token.colorWarningBg", description: tr("token.alert.warningBg"), sectionId: "token") {
+        TokenCard(name: "colorWarningBg", type: "Color", defaultValue: "token.colorWarningBg", description: tr("token.alert.colorWarningBg"), sectionId: "token") {
             Moin.Alert(type: .warning, title: tr("alert.demo.token_demo.warning"))
         } editor: {
-             ColorPresetRow(label: "warningBg", color: Binding(get: { config.components.alert.warningBg }, set: { config.components.alert.warningBg = $0 }))
-        } code: { "config.components.alert.warningBg = Color(hex: \"\(config.components.alert.warningBg.toHex())\")" }
+             ColorPresetRow(label: "colorWarningBg", color: Binding(get: { config.components.alert.colorWarningBg }, set: { config.components.alert.colorWarningBg = $0 }))
+        } code: { "config.components.alert.colorWarningBg = Color(hex: \"\(config.components.alert.colorWarningBg.toHex())\")" }
     }
     
     private var warningBorderCard: some View {
-        TokenCard(name: "warningBorder", type: "Color", defaultValue: "token.colorWarningBorder", description: tr("token.alert.warningBorder"), sectionId: "token") {
+        TokenCard(name: "colorWarningBorder", type: "Color", defaultValue: "token.colorWarningBorder", description: tr("token.alert.colorWarningBorder"), sectionId: "token") {
             Moin.Alert(type: .warning, title: tr("alert.demo.token_demo.warning"))
         } editor: {
-             ColorPresetRow(label: "warningBorder", color: Binding(get: { config.components.alert.warningBorder }, set: { config.components.alert.warningBorder = $0 }))
-        } code: { "config.components.alert.warningBorder = Color(hex: \"\(config.components.alert.warningBorder.toHex())\")" }
+             ColorPresetRow(label: "colorWarningBorder", color: Binding(get: { config.components.alert.colorWarningBorder }, set: { config.components.alert.colorWarningBorder = $0 }))
+        } code: { "config.components.alert.colorWarningBorder = Color(hex: \"\(config.components.alert.colorWarningBorder.toHex())\")" }
     }
     
     private var warningIconCard: some View {
-        TokenCard(name: "warningIcon", type: "Color", defaultValue: "token.colorWarning", description: tr("token.alert.warningIcon"), sectionId: "token") {
+        TokenCard(name: "colorWarning", type: "Color", defaultValue: "token.colorWarning", description: tr("token.alert.colorWarning"), sectionId: "token") {
             Moin.Alert(type: .warning, title: tr("alert.demo.token_demo.warning"), showIcon: true)
         } editor: {
-             ColorPresetRow(label: "warningIcon", color: Binding(get: { config.components.alert.warningIcon }, set: { config.components.alert.warningIcon = $0 }))
-        } code: { "config.components.alert.warningIcon = Color(hex: \"\(config.components.alert.warningIcon.toHex())\")" }
+             ColorPresetRow(label: "colorWarning", color: Binding(get: { config.components.alert.colorWarning }, set: { config.components.alert.colorWarning = $0 }))
+        } code: { "config.components.alert.colorWarning = Color(hex: \"\(config.components.alert.colorWarning.toHex())\")" }
     }
     
     private var errorBgCard: some View {
-        TokenCard(name: "errorBg", type: "Color", defaultValue: "token.colorDangerBg", description: tr("token.alert.errorBg"), sectionId: "token") {
+        TokenCard(name: "colorErrorBg", type: "Color", defaultValue: "token.colorDangerBg", description: tr("token.alert.colorErrorBg"), sectionId: "token") {
             Moin.Alert(type: .error, title: tr("alert.demo.token_demo.error"))
         } editor: {
-             ColorPresetRow(label: "errorBg", color: Binding(get: { config.components.alert.errorBg }, set: { config.components.alert.errorBg = $0 }))
-        } code: { "config.components.alert.errorBg = Color(hex: \"\(config.components.alert.errorBg.toHex())\")" }
+             ColorPresetRow(label: "colorErrorBg", color: Binding(get: { config.components.alert.colorErrorBg }, set: { config.components.alert.colorErrorBg = $0 }))
+        } code: { "config.components.alert.colorErrorBg = Color(hex: \"\(config.components.alert.colorErrorBg.toHex())\")" }
     }
     
     private var errorBorderCard: some View {
-        TokenCard(name: "errorBorder", type: "Color", defaultValue: "token.colorDangerBorder", description: tr("token.alert.errorBorder"), sectionId: "token") {
+        TokenCard(name: "colorErrorBorder", type: "Color", defaultValue: "token.colorDangerBorder", description: tr("token.alert.colorErrorBorder"), sectionId: "token") {
             Moin.Alert(type: .error, title: tr("alert.demo.token_demo.error"))
         } editor: {
-             ColorPresetRow(label: "errorBorder", color: Binding(get: { config.components.alert.errorBorder }, set: { config.components.alert.errorBorder = $0 }))
-        } code: { "config.components.alert.errorBorder = Color(hex: \"\(config.components.alert.errorBorder.toHex())\")" }
+             ColorPresetRow(label: "colorErrorBorder", color: Binding(get: { config.components.alert.colorErrorBorder }, set: { config.components.alert.colorErrorBorder = $0 }))
+        } code: { "config.components.alert.colorErrorBorder = Color(hex: \"\(config.components.alert.colorErrorBorder.toHex())\")" }
     }
     
     private var errorIconCard: some View {
-        TokenCard(name: "errorIcon", type: "Color", defaultValue: "token.colorDanger", description: tr("token.alert.errorIcon"), sectionId: "token") {
+        TokenCard(name: "colorError", type: "Color", defaultValue: "token.colorDanger", description: tr("token.alert.colorError"), sectionId: "token") {
             Moin.Alert(type: .error, title: tr("alert.demo.token_demo.error"), showIcon: true)
         } editor: {
-             ColorPresetRow(label: "errorIcon", color: Binding(get: { config.components.alert.errorIcon }, set: { config.components.alert.errorIcon = $0 }))
-        } code: { "config.components.alert.errorIcon = Color(hex: \"\(config.components.alert.errorIcon.toHex())\")" }
+             ColorPresetRow(label: "colorError", color: Binding(get: { config.components.alert.colorError }, set: { config.components.alert.colorError = $0 }))
+        } code: { "config.components.alert.colorError = Color(hex: \"\(config.components.alert.colorError.toHex())\")" }
     }
     
-    private var paddingVerticalCard: some View {
-        TokenCard(name: "paddingVertical", type: "CGFloat", defaultValue: "token.paddingXS", description: tr("token.alert.paddingVertical"), sectionId: "token") {
-             Moin.Alert(type: .info, title: tr("alert.demo.token_demo.padding_v"))
+    private var defaultPaddingCard: some View {
+        TokenCard(name: "defaultPadding", type: "EdgeInsets", defaultValue: "8px 12px", description: tr("token.alert.defaultPadding"), sectionId: "token") {
+             Moin.Alert(type: .info, title: tr("alert.demo.token_demo.defaultPadding"))
         } editor: {
-            TokenValueRow(label: "paddingVertical", value: Binding(get: { config.components.alert.paddingVertical }, set: { config.components.alert.paddingVertical = $0 }), range: 0...48)
-        } code: { "config.components.alert.paddingVertical = \(Int(config.components.alert.paddingVertical))" }
+            VStack {
+                TokenValueRow(label: "Vertical", value: Binding(get: { config.components.alert.defaultPadding.top }, set: { 
+                    var p = config.components.alert.defaultPadding
+                    p.top = $0; p.bottom = $0
+                    config.components.alert.defaultPadding = p
+                }), range: 0...48)
+                TokenValueRow(label: "Horizontal", value: Binding(get: { config.components.alert.defaultPadding.leading }, set: { 
+                    var p = config.components.alert.defaultPadding
+                    p.leading = $0; p.trailing = $0
+                    config.components.alert.defaultPadding = p
+                }), range: 0...48)
+            }
+        } code: { "config.components.alert.defaultPadding = EdgeInsets(...)" }
     }
     
-    private var paddingHorizontalCard: some View {
-        TokenCard(name: "paddingHorizontal", type: "CGFloat", defaultValue: "token.padding", description: tr("token.alert.paddingHorizontal"), sectionId: "token") {
-             Moin.Alert(type: .info, title: tr("alert.demo.token_demo.padding_h"))
+    private var withDescriptionPaddingCard: some View {
+        TokenCard(name: "withDescriptionPadding", type: "EdgeInsets", defaultValue: "20px 24px", description: tr("token.alert.withDescriptionPadding"), sectionId: "token") {
+             Moin.Alert(type: .info, title: tr("alert.demo.token_demo.title"), description: tr("alert.demo.token_demo.description"))
         } editor: {
-            TokenValueRow(label: "paddingHorizontal", value: Binding(get: { config.components.alert.paddingHorizontal }, set: { config.components.alert.paddingHorizontal = $0 }), range: 0...48)
-        } code: { "config.components.alert.paddingHorizontal = \(Int(config.components.alert.paddingHorizontal))" }
+            VStack {
+                TokenValueRow(label: "Vertical", value: Binding(get: { config.components.alert.withDescriptionPadding.top }, set: { 
+                    var p = config.components.alert.withDescriptionPadding
+                    p.top = $0; p.bottom = $0
+                    config.components.alert.withDescriptionPadding = p
+                }), range: 0...48)
+                TokenValueRow(label: "Horizontal", value: Binding(get: { config.components.alert.withDescriptionPadding.leading }, set: { 
+                    var p = config.components.alert.withDescriptionPadding
+                    p.leading = $0; p.trailing = $0
+                    config.components.alert.withDescriptionPadding = p
+                }), range: 0...48)
+            }
+        } code: { "config.components.alert.withDescriptionPadding = EdgeInsets(...)" }
     }
-    
+    private var withDescriptionIconSizeCard: some View {
+        TokenCard(name: "withDescriptionIconSize", type: "CGFloat", defaultValue: "24", description: tr("token.alert.withDescriptionIconSize"), sectionId: "token") {
+             Moin.Alert(type: .info, title: tr("alert.demo.token_demo.title"), description: tr("alert.demo.token_demo.description"), showIcon: true)
+        } editor: {
+            TokenValueRow(label: "Icon Size", value: Binding(get: { config.components.alert.withDescriptionIconSize }, set: { config.components.alert.withDescriptionIconSize = $0 }), range: 12...48)
+        } code: { "config.components.alert.withDescriptionIconSize = \(Int(config.components.alert.withDescriptionIconSize))" }
+    }
     private var gapCard: some View {
         TokenCard(name: "gap", type: "CGFloat", defaultValue: "token.marginXS", description: tr("token.alert.gap"), sectionId: "token") {
              Moin.Alert(type: .info, title: tr("alert.demo.token_demo.gap"), showIcon: true)
