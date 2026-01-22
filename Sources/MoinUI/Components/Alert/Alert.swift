@@ -5,6 +5,7 @@ public extension Moin {
     struct Alert: View {
         @Environment(\.moinToken) private var token
         @Environment(\.moinTheme) private var theme
+        @Environment(\.moinAlertToken) private var alertToken
         
         public enum AlertType {
             case success, info, warning, error
@@ -41,24 +42,32 @@ public extension Moin {
         
         public var body: some View {
             if isVisible {
-                let alertToken = AlertToken.generate(from: token)
                 let colors = colorsForType(alertToken)
+                let hasDescription = description != nil
+                let titleSize = hasDescription ? alertToken.titleFontSize : alertToken.fontSize
+                // Description 模式下使用较大的垂直内边距 (token.padding=16)，否则使用默认 (alertToken.paddingVertical=8)
+                let paddingV = hasDescription ? token.padding : alertToken.paddingVertical
+                let paddingH = alertToken.paddingHorizontal
                 
-                HStack(alignment: .top, spacing: alertToken.gap) {
+                HStack(alignment: hasDescription ? .top : .center, spacing: alertToken.gap) {
                     if showIcon {
                         iconForType
-                            .font(.system(size: alertToken.iconSize))
+                            .font(.system(size: hasDescription ? alertToken.iconSize : alertToken.fontSize))
                             .foregroundStyle(colors.icon)
+                            .padding(.top, hasDescription ? 4 : 0) // Optical alignment for top-aligned icon
                     }
                     
                     VStack(alignment: .leading, spacing: alertToken.titleGap) {
                         Text(title)
-                            .font(.system(size: alertToken.titleFontSize))
-                            .fontWeight(.medium)
+                            .font(.system(size: titleSize))
+                            .fontWeight(hasDescription ? .medium : .regular)
+                            .fixedSize(horizontal: false, vertical: true)
+                            .frame(minHeight: hasDescription ? 22 : nil, alignment: .leading) // Min height mostly relevant for top alignment
                         
                         if let description = description {
                             Text(description)
                                 .font(.system(size: alertToken.fontSize))
+                                .fixedSize(horizontal: false, vertical: true)
                         }
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -79,9 +88,11 @@ public extension Moin {
                             .onTapGesture {
                                 handleClose()
                             }
+                            .padding(.top, hasDescription ? 4 : 0) // Align with icon/title top if top-aligned
                     }
                 }
-                .padding(alertToken.padding)
+                .padding(.vertical, paddingV)
+                .padding(.horizontal, paddingH)
                 .background(colors.bg)
                 .overlay(
                     RoundedRectangle(cornerRadius: banner ? 0 : alertToken.cornerRadius)

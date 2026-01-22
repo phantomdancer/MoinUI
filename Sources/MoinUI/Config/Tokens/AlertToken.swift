@@ -25,7 +25,8 @@ public extension Moin {
         public var errorIcon: Color
         
         // 尺寸
-        public var padding: CGFloat
+        public var paddingVertical: CGFloat
+        public var paddingHorizontal: CGFloat
         public var iconSize: CGFloat
         public var fontSize: CGFloat
         public var titleFontSize: CGFloat
@@ -59,7 +60,8 @@ public extension Moin {
                 errorIcon: token.colorDanger,
                 
                 // 尺寸
-                padding: token.padding,
+                paddingVertical: token.paddingXS + 1, // 8 + 1 = 9 to match Ant Design 40px height (22 LH + 18 padding)
+                paddingHorizontal: token.padding,
                 iconSize: 16,
                 fontSize: token.fontSize,
                 titleFontSize: token.fontSizeLG,

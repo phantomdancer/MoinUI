@@ -23,7 +23,7 @@ struct AlertTokenView: View {
             DocSidebarSection(
                 title: tr("token.size"),
                 items: [
-                    "padding", "gap", "titleGap",
+                    "paddingVertical", "paddingHorizontal", "gap", "titleGap",
                     "iconSize", "fontSize", "titleFontSize"
                 ],
                 sectionId: "token"
@@ -90,7 +90,8 @@ struct AlertTokenView: View {
         case "errorIcon": errorIconCard
         
         // Sizes
-        case "padding": paddingCard
+        case "paddingVertical": paddingVerticalCard
+        case "paddingHorizontal": paddingHorizontalCard
         case "gap": gapCard
         case "titleGap": titleGapCard
         case "iconSize": iconSizeCard
@@ -203,12 +204,20 @@ struct AlertTokenView: View {
         } code: { "config.components.alert.errorIcon = Color(...)" }
     }
     
-    private var paddingCard: some View {
-        TokenCard(name: "padding", type: "CGFloat", defaultValue: "token.padding", description: "Alert Padding", sectionId: "token") {
-             Moin.Alert(type: .info, title: "Padding Example")
+    private var paddingVerticalCard: some View {
+        TokenCard(name: "paddingVertical", type: "CGFloat", defaultValue: "token.paddingXS", description: "Vertical Padding", sectionId: "token") {
+             Moin.Alert(type: .info, title: "Padding V")
         } editor: {
-            TokenValueRow(label: "padding", value: Binding(get: { config.components.alert.padding }, set: { config.components.alert.padding = $0 }), range: 0...48)
-        } code: { "config.components.alert.padding = \(Int(config.components.alert.padding))" }
+            TokenValueRow(label: "paddingVertical", value: Binding(get: { config.components.alert.paddingVertical }, set: { config.components.alert.paddingVertical = $0 }), range: 0...48)
+        } code: { "config.components.alert.paddingVertical = \(Int(config.components.alert.paddingVertical))" }
+    }
+    
+    private var paddingHorizontalCard: some View {
+        TokenCard(name: "paddingHorizontal", type: "CGFloat", defaultValue: "token.padding", description: "Horizontal Padding", sectionId: "token") {
+             Moin.Alert(type: .info, title: "Padding H")
+        } editor: {
+            TokenValueRow(label: "paddingHorizontal", value: Binding(get: { config.components.alert.paddingHorizontal }, set: { config.components.alert.paddingHorizontal = $0 }), range: 0...48)
+        } code: { "config.components.alert.paddingHorizontal = \(Int(config.components.alert.paddingHorizontal))" }
     }
     
     private var gapCard: some View {
