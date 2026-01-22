@@ -284,7 +284,7 @@ struct AlertTokenView: View {
     
     private var titleFontSizeCard: some View {
         TokenCard(name: "titleFontSize", type: "CGFloat", defaultValue: "token.fontSizeLG", description: tr("token.alert.titleFontSize"), sectionId: "token") {
-             Moin.Alert(type: .info, title: tr("alert.demo.token_demo.title_font_size"))
+             Moin.Alert(type: .info, title: tr("alert.demo.token_demo.title_font_size"), description: tr("alert.demo.token_demo.description"))
         } editor: {
             TokenValueRow(label: "titleFontSize", value: Binding(get: { config.components.alert.titleFontSize }, set: { config.components.alert.titleFontSize = $0 }), range: 12...32)
         } code: { "config.components.alert.titleFontSize = \(Int(config.components.alert.titleFontSize))" }
