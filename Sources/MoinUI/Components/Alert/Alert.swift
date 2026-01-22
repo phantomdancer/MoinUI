@@ -2,7 +2,7 @@ import SwiftUI
 import AppKit
 
 public extension Moin {
-    struct Alert: View {
+    struct Alert<Action: View>: View {
         @Environment(\.moinToken) private var token
         @Environment(\.moinTheme) private var theme
         @Environment(\.moinAlertToken) private var alertToken
@@ -18,6 +18,7 @@ public extension Moin {
         let closable: Bool
         let banner: Bool
         let onClose: (() -> Void)?
+        let action: Action
         
         @State private var isVisible = true
         @State private var isCloseHovered = false
@@ -29,7 +30,8 @@ public extension Moin {
             showIcon: Bool = false,
             closable: Bool = false,
             banner: Bool = false,
-            onClose: (() -> Void)? = nil
+            onClose: (() -> Void)? = nil,
+            @ViewBuilder action: () -> Action
         ) {
             self.type = type
             self.title = title
@@ -38,6 +40,7 @@ public extension Moin {
             self.closable = closable
             self.banner = banner
             self.onClose = onClose
+            self.action = action()
         }
         
         public var body: some View {
@@ -71,6 +74,9 @@ public extension Moin {
                         }
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
+                    
+                    action
+                        .padding(.top, hasDescription ? 4 : 0) // Align with icon/title top if top-aligned
                     
                     if closable {
                         Image(systemName: "xmark")
@@ -125,6 +131,30 @@ public extension Moin {
                 isVisible = false
             }
             onClose?()
+        }
+    }
+}
+
+public extension Moin.Alert where Action == EmptyView {
+    init(
+        type: AlertType = .info,
+        title: String,
+        description: String? = nil,
+        showIcon: Bool = false,
+        closable: Bool = false,
+        banner: Bool = false,
+        onClose: (() -> Void)? = nil
+    ) {
+        self.init(
+            type: type,
+            title: title,
+            description: description,
+            showIcon: showIcon,
+            closable: closable,
+            banner: banner,
+            onClose: onClose
+        ) {
+            EmptyView()
         }
     }
 }

@@ -13,6 +13,7 @@ struct AlertExamples: View {
         AnchorItem(id: "closable", titleKey: "alert.closable"),
         AnchorItem(id: "icon", titleKey: "alert.icon"),
         AnchorItem(id: "description", titleKey: "alert.with_description"),
+        AnchorItem(id: "action", titleKey: "alert.action"),
         AnchorItem(id: "banner", titleKey: "alert.banner")
     ]
     
@@ -22,6 +23,7 @@ struct AlertExamples: View {
             closableExample.id("closable")
             iconExample.id("icon")
             descriptionExample.id("description")
+            actionExample.id("action")
             bannerExample.id("banner")
         }
     }
@@ -128,6 +130,77 @@ struct AlertExamples: View {
                 description: "\(tr("alert.demo.success_description"))",
                 showIcon: true
             )
+            """
+        }
+    }
+    
+    private var actionExample: some View {
+        ExampleSection(
+            title: tr("alert.action"),
+            description: tr("alert.action_desc")
+        ) {
+            VStack(spacing: 12) {
+                // Success Tips with UNDO
+                Moin.Alert(
+                    type: .success,
+                    title: tr("alert.demo.action.success_title"),
+                    showIcon: true,
+                    closable: true
+                ) {
+                    Moin.Button(tr("alert.demo.action.undo"), size: .small, variant: .text)
+                }
+                
+                // Error Text with Detail
+                Moin.Alert(
+                    type: .error,
+                    title: tr("alert.demo.action.error_title"),
+                    description: tr("alert.demo.action.error_desc"),
+                    showIcon: true
+                ) {
+                    Moin.Button(tr("alert.demo.action.detail"), color: .danger, size: .small)
+                }
+                
+                // Warning Text with Done
+                Moin.Alert(
+                    type: .warning,
+                    title: tr("alert.demo.action.warning_title"),
+                    closable: true
+                ) {
+                    Moin.Button(tr("alert.demo.action.done"), size: .small, variant: .text)
+                }
+                
+                // Info Text with Accept/Decline
+                Moin.Alert(
+                    type: .info,
+                    title: tr("alert.demo.action.info_title"),
+                    description: tr("alert.demo.action.info_desc"),
+                    closable: true
+                ) {
+                    Moin.Space(size: .small, direction: .vertical) {
+                        Moin.Button(tr("alert.demo.action.accept"), color: .primary, size: .small)
+                        Moin.Button(tr("alert.demo.action.decline"), color: .danger, size: .small, isGhost: true)
+                    }
+                }
+            }
+        } code: {
+            """
+            Moin.Alert(
+                type: .success, 
+                title: "\(tr("alert.demo.action.success_title"))", 
+                showIcon: true, 
+                closable: true
+            ) {
+                Moin.Button("\(tr("alert.demo.action.undo"))", size: .small, variant: .text)
+            }
+            
+            Moin.Alert(
+                type: .error,
+                title: "\(tr("alert.demo.action.error_title"))",
+                description: "\(tr("alert.demo.action.error_desc"))",
+                showIcon: true
+            ) {
+                Moin.Button("\(tr("alert.demo.action.detail"))", color: .danger, size: .small)
+            }
             """
         }
     }
