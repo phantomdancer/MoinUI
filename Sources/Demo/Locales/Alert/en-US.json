@@ -105,7 +105,12 @@
       "fontSize": "Description Font Size",
       "titleFontSize": "Title Font Size",
       "borderWidth": "Border Width",
-      "cornerRadius": "Corner Radius"
+      "cornerRadius": "Corner Radius",
+      "colorTextHeading": "Heading Text Color",
+      "colorText": "Text Color",
+      "colorIcon": "Close Icon Color",
+      "colorIconHover": "Close Icon Hover Color",
+      "fontSizeIcon": "Close Icon Size"
     }
   }
 }

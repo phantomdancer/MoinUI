@@ -24,9 +24,15 @@ public extension Moin {
         public var colorErrorBorder: Color
         public var colorError: Color
         
+        // Global Token Overrides for Alert
+        public var colorTextHeading: Color
+        public var colorText: Color
+        public var colorIcon: Color
+        public var colorIconHover: Color
+        
         // Layout - Standard
         public var defaultPadding: EdgeInsets
-        public var iconSize: CGFloat // Not in AntD Component Token list but needed for standard mode
+        public var iconSize: CGFloat // Type Icon size
         
         // Layout - With Description
         public var withDescriptionPadding: EdgeInsets
@@ -34,7 +40,9 @@ public extension Moin {
         
         // Common
         public var fontSize: CGFloat
-        public var titleFontSize: CGFloat // Usually derived from fontSizeLG
+        public var fontSizeIcon: CGFloat // Close Icon size
+        public var titleFontSize: CGFloat 
+        public var lineHeight: CGFloat
         public var borderWidth: CGFloat
         public var cornerRadius: CGFloat
         
@@ -64,9 +72,15 @@ public extension Moin {
                 colorErrorBorder: token.colorDangerBorder,
                 colorError: token.colorDanger,
                 
+                // Global Token Overrides
+                colorTextHeading: token.colorText, // Using colorText as heading default
+                colorText: token.colorText,
+                colorIcon: token.colorTextTertiary, // Default close icon color
+                colorIconHover: token.colorText,
+                
                 // Layout - Standard (8px 12px)
                 defaultPadding: EdgeInsets(top: 8, leading: 12, bottom: 8, trailing: 12),
-                iconSize: 16, // derived from fontSize usually
+                iconSize: 16, 
                 
                 // Layout - With Description (User: 20px 24px)
                 withDescriptionPadding: EdgeInsets(top: 20, leading: 24, bottom: 20, trailing: 24),
@@ -74,9 +88,11 @@ public extension Moin {
                 
                 // Common
                 fontSize: token.fontSize,
+                fontSizeIcon: token.fontSizeSM, // 12
                 titleFontSize: token.fontSizeLG,
+                lineHeight: token.lineHeight,
                 borderWidth: token.lineWidth,
-                cornerRadius: token.borderRadius,
+                cornerRadius: token.borderRadiusLG, // LG for Alert as per user prompt/AntD
                 
                 // Gap
                 gap: token.marginXS,

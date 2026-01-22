@@ -33,6 +33,11 @@ struct AlertTokenView: View {
                 title: tr("token.border"),
                 items: ["borderWidth", "cornerRadius"],
                 sectionId: "token"
+            ),
+            DocSidebarSection(
+                title: tr("doc.section.global_token"),
+                items: ["colorTextHeading", "colorText", "colorIcon", "colorIconHover", "fontSizeIcon"],
+                sectionId: "token"
             )
         ]
     }
@@ -103,6 +108,13 @@ struct AlertTokenView: View {
         // Border
         case "borderWidth": borderWidthCard
         case "cornerRadius": cornerRadiusCard
+        
+        // Global
+        case "colorTextHeading": colorTextHeadingCard
+        case "colorText": colorTextCard
+        case "colorIcon": colorIconCard
+        case "colorIconHover": colorIconHoverCard
+        case "fontSizeIcon": fontSizeIconCard
         
         default: EmptyView()
         }
@@ -299,10 +311,52 @@ struct AlertTokenView: View {
     }
     
     private var cornerRadiusCard: some View {
-        TokenCard(name: "cornerRadius", type: "CGFloat", defaultValue: "token.borderRadius", description: tr("token.alert.cornerRadius"), sectionId: "token") {
+        TokenCard(name: "cornerRadius", type: "CGFloat", defaultValue: "token.borderRadiusLG", description: tr("token.alert.cornerRadius"), sectionId: "token") {
              Moin.Alert(type: .info, title: tr("alert.demo.token_demo.corner_radius"))
         } editor: {
             TokenValueRow(label: "cornerRadius", value: Binding(get: { config.components.alert.cornerRadius }, set: { config.components.alert.cornerRadius = $0 }), range: 0...32)
         } code: { "config.components.alert.cornerRadius = \(Int(config.components.alert.cornerRadius))" }
+    }
+    
+    // MARK: - Global Tokens
+    
+    private var colorTextHeadingCard: some View {
+        TokenCard(name: "colorTextHeading", type: "Color", defaultValue: "token.colorText", description: tr("token.alert.colorTextHeading"), sectionId: "token") {
+            Moin.Alert(type: .info, title: tr("alert.demo.token_demo.title"))
+        } editor: {
+            ColorPresetRow(label: "colorTextHeading", color: Binding(get: { config.components.alert.colorTextHeading }, set: { config.components.alert.colorTextHeading = $0 }))
+        } code: { "config.components.alert.colorTextHeading = Color(hex: \"\(config.components.alert.colorTextHeading.toHex())\")" }
+    }
+    
+    private var colorTextCard: some View {
+        TokenCard(name: "colorText", type: "Color", defaultValue: "token.colorText", description: tr("token.alert.colorText"), sectionId: "token") {
+            Moin.Alert(type: .info, title: tr("alert.demo.token_demo.title"), description: tr("alert.demo.token_demo.description"))
+        } editor: {
+            ColorPresetRow(label: "colorText", color: Binding(get: { config.components.alert.colorText }, set: { config.components.alert.colorText = $0 }))
+        } code: { "config.components.alert.colorText = Color(hex: \"\(config.components.alert.colorText.toHex())\")" }
+    }
+    
+    private var colorIconCard: some View {
+        TokenCard(name: "colorIcon", type: "Color", defaultValue: "token.colorTextTertiary", description: tr("token.alert.colorIcon"), sectionId: "token") {
+            Moin.Alert(type: .info, title: tr("alert.demo.token_demo.closable"), closable: true)
+        } editor: {
+            ColorPresetRow(label: "colorIcon", color: Binding(get: { config.components.alert.colorIcon }, set: { config.components.alert.colorIcon = $0 }))
+        } code: { "config.components.alert.colorIcon = Color(hex: \"\(config.components.alert.colorIcon.toHex())\")" }
+    }
+    
+    private var colorIconHoverCard: some View {
+        TokenCard(name: "colorIconHover", type: "Color", defaultValue: "token.colorText", description: tr("token.alert.colorIconHover"), sectionId: "token") {
+            Moin.Alert(type: .info, title: tr("alert.demo.token_demo.closable"), closable: true)
+        } editor: {
+            ColorPresetRow(label: "colorIconHover", color: Binding(get: { config.components.alert.colorIconHover }, set: { config.components.alert.colorIconHover = $0 }))
+        } code: { "config.components.alert.colorIconHover = Color(hex: \"\(config.components.alert.colorIconHover.toHex())\")" }
+    }
+    
+    private var fontSizeIconCard: some View {
+        TokenCard(name: "fontSizeIcon", type: "CGFloat", defaultValue: "token.fontSizeSM", description: tr("token.alert.fontSizeIcon"), sectionId: "token") {
+            Moin.Alert(type: .info, title: tr("alert.demo.token_demo.closable"), closable: true)
+        } editor: {
+            TokenValueRow(label: "fontSizeIcon", value: Binding(get: { config.components.alert.fontSizeIcon }, set: { config.components.alert.fontSizeIcon = $0 }), range: 8...24)
+        } code: { "config.components.alert.fontSizeIcon = \(Int(config.components.alert.fontSizeIcon))" }
     }
 }

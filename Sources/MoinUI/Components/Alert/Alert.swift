@@ -63,6 +63,7 @@ public extension Moin {
                     VStack(alignment: .leading, spacing: alertToken.titleGap) {
                         Text(title)
                             .font(.system(size: titleSize))
+                            .foregroundStyle(alertToken.colorTextHeading)
                             .fontWeight(hasDescription ? .medium : .regular)
                             .fixedSize(horizontal: false, vertical: true)
                             .frame(minHeight: hasDescription ? 22 : nil, alignment: .leading) // Min height mostly relevant for top alignment
@@ -70,6 +71,7 @@ public extension Moin {
                         if let description = description {
                             Text(description)
                                 .font(.system(size: alertToken.fontSize))
+                                .foregroundStyle(alertToken.colorText)
                                 .fixedSize(horizontal: false, vertical: true)
                         }
                     }
@@ -80,8 +82,8 @@ public extension Moin {
                     
                     if closable {
                         Image(systemName: "xmark")
-                            .font(.system(size: 12))
-                            .foregroundStyle(isCloseHovered ? Color.secondary : Color.secondary.opacity(0.6))
+                            .font(.system(size: alertToken.fontSizeIcon))
+                            .foregroundStyle(isCloseHovered ? alertToken.colorIconHover : alertToken.colorIcon)
                             .contentShape(Rectangle())
                             .onHover { hovering in
                                 isCloseHovered = hovering
