@@ -13,7 +13,7 @@ struct StatisticAPIView: View {
             ),
             DocSidebarSection(
                 title: tr("api.button.section.style"),
-                items: ["valuestyle", "prefix", "suffix"],
+                items: ["prefix", "suffix"],
                 sectionId: "api"
             )
         ]
@@ -39,7 +39,6 @@ struct StatisticAPIView: View {
         case "value": valueCard
         case "precision": precisionCard
         case "loading": loadingCard
-        case "valuestyle": valueStyleCard
         case "prefix": prefixCard
         case "suffix": suffixCard
         default: EmptyView()
@@ -87,19 +86,37 @@ struct StatisticAPIView: View {
     private var valueCard: some View {
         PropertyCard(
             name: "value",
-            type: "String | Number",
+            type: "String | Number | View",
             defaultValue: "-",
             description: tr("api.statistic.value"),
             sectionId: "api"
         ) {
-            HStack(spacing: 20) {
+            HStack(spacing: 30) {
                 Moin.Statistic(title: "Number", value: 123456)
                 Moin.Statistic(title: "String", value: "98.5%")
+                Moin.Statistic(
+                    title: "View",
+                    value: HStack(spacing: 4) {
+                        Text("5.0")
+                            .fontWeight(.bold)
+                        Image(systemName: "star.fill")
+                            .foregroundStyle(Color.yellow)
+                    }
+                )
             }
         } code: {
             """
             Moin.Statistic(title: "Number", value: 123456)
             Moin.Statistic(title: "String", value: "98.5%")
+            Moin.Statistic(
+                title: "View",
+                value: HStack(spacing: 4) {
+                    Text("5.0")
+                        .fontWeight(.bold)
+                    Image(systemName: "star.fill")
+                        .foregroundStyle(Color.yellow)
+                }
+            )
             """
         }
     }
@@ -138,21 +155,7 @@ struct StatisticAPIView: View {
         }
     }
     
-    private var valueStyleCard: some View {
-         PropertyCard(
-            name: "valueStyle",
-            type: "Font",
-            defaultValue: "-",
-            description: tr("api.statistic.value_style"),
-            sectionId: "api"
-        ) {
-            Moin.Statistic(title: tr("statistic.demo.active_users"), value: 112893, valueStyle: .system(size: 24, weight: .bold, design: .serif))
-                .foregroundStyle(Color.purple)
-        } code: {
-            "Moin.Statistic(title: \"\(tr("statistic.demo.active_users"))\", value: 112893, valueStyle: .title) // Custom font via valueStyle param or modifiers"
-        }
-    }
-    
+
     private var prefixCard: some View {
         PropertyCard(
             name: "prefix",

@@ -11,22 +11,19 @@ public extension Moin {
         let prefix: AnyView?
         let suffix: AnyView?
         let loading: Bool
-        let valueStyle: Font?
 
         public init(
             title: String? = nil,
             value: String,
             prefix: (any View)? = nil,
             suffix: (any View)? = nil,
-            loading: Bool = false,
-            valueStyle: Font? = nil
+            loading: Bool = false
         ) {
             self.title = title.map { AnyView(Text($0)) }
             self.value = AnyView(Text(value))
             self.prefix = prefix.map { AnyView($0) }
             self.suffix = suffix.map { AnyView($0) }
             self.loading = loading
-            self.valueStyle = valueStyle
         }
 
         public init<T: View>(
@@ -34,15 +31,13 @@ public extension Moin {
             value: String,
             prefix: (any View)? = nil,
             suffix: (any View)? = nil,
-            loading: Bool = false,
-            valueStyle: Font? = nil
+            loading: Bool = false
         ) {
             self.title = AnyView(title)
             self.value = AnyView(Text(value))
             self.prefix = prefix.map { AnyView($0) }
             self.suffix = suffix.map { AnyView($0) }
             self.loading = loading
-            self.valueStyle = valueStyle
         }
         
         public init<V: View>(
@@ -50,15 +45,13 @@ public extension Moin {
             value: V,
             prefix: (any View)? = nil,
             suffix: (any View)? = nil,
-            loading: Bool = false,
-            valueStyle: Font? = nil
+            loading: Bool = false
         ) {
             self.title = title.map { AnyView(Text($0)) }
             self.value = AnyView(value)
             self.prefix = prefix.map { AnyView($0) }
             self.suffix = suffix.map { AnyView($0) }
             self.loading = loading
-            self.valueStyle = valueStyle
         }
 
         public var body: some View {
@@ -84,7 +77,7 @@ public extension Moin {
                         }
                         
                         value
-                            .font(valueStyle ?? .system(size: statisticToken.contentFontSize))
+                            .font(.system(size: statisticToken.contentFontSize))
                             .foregroundStyle(statisticToken.contentColor)
                         
                         if let suffix = suffix {
@@ -107,8 +100,7 @@ public extension Moin.Statistic {
         precision: Int? = 0,
         prefix: (any View)? = nil,
         suffix: (any View)? = nil,
-        loading: Bool = false,
-        valueStyle: Font? = nil
+        loading: Bool = false
     ) {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
@@ -124,8 +116,7 @@ public extension Moin.Statistic {
             value: formattedValue,
             prefix: prefix,
             suffix: suffix,
-            loading: loading,
-            valueStyle: valueStyle
+            loading: loading
         )
     }
     
@@ -134,8 +125,7 @@ public extension Moin.Statistic {
         value: N,
         prefix: (any View)? = nil,
         suffix: (any View)? = nil,
-        loading: Bool = false,
-        valueStyle: Font? = nil
+        loading: Bool = false
     ) {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
@@ -146,8 +136,7 @@ public extension Moin.Statistic {
             value: formattedValue,
             prefix: prefix,
             suffix: suffix,
-            loading: loading,
-            valueStyle: valueStyle
+            loading: loading
         )
     }
 }

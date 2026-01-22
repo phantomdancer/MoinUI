@@ -30,7 +30,6 @@
       "prefix": "设置数值的前缀",
       "suffix": "设置数值的后缀",
       "loading": "数值是否加载中",
-      "value_style": "设置数值区域的样式",
       "token_desc": "以下是 Statistic 组件的设计变量，可通过 ConfigProvider 覆盖。",
       "token_title_font_size": "标题字体大小",
       "token_content_font_size": "内容字体大小",

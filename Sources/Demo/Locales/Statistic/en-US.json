@@ -30,7 +30,6 @@
       "prefix": "Prefix node",
       "suffix": "Suffix node",
       "loading": "Loading state",
-      "value_style": "Custom style of value",
       "token_desc": "Below are the design tokens for the Statistic component.",
       "token_title_font_size": "Title font size",
       "token_content_font_size": "Content font size",
