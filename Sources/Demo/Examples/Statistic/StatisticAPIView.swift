@@ -56,9 +56,31 @@ struct StatisticAPIView: View {
             description: tr("api.statistic.title"),
             sectionId: "api"
         ) {
-            Moin.Statistic(title: tr("statistic.demo.account_balance"), value: 112893)
+            HStack(spacing: 30) {
+                Moin.Statistic(title: tr("statistic.demo.account_balance"), value: 112893)
+                
+                Moin.Statistic(
+                    title: HStack(spacing: 4) {
+                        Image(systemName: "star.fill")
+                            .foregroundStyle(Color.orange)
+                        Text("Rating")
+                    },
+                    value: "4.8"
+                )
+            }
         } code: {
-            "Moin.Statistic(title: \"\(tr("statistic.demo.account_balance"))\", value: 112893)"
+            """
+            Moin.Statistic(title: "\(tr("statistic.demo.account_balance"))", value: 112893)
+            
+            Moin.Statistic(
+                title: HStack(spacing: 4) {
+                    Image(systemName: "star.fill")
+                        .foregroundStyle(Color.orange)
+                    Text("Rating")
+                },
+                value: "4.8"
+            )
+            """
         }
     }
     
