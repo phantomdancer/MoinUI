@@ -97,9 +97,10 @@ Button ✅, Typography ✅, Divider ✅, Space ✅, Tag ✅, Badge ✅, Avatar �
 ## 建议实现顺序
 
 ```
-已完成: Button → Typography → Divider → Space → Tag → Badge → Avatar → Empty
+已完成: Button → Typography → Divider → Space → Tag → Badge → Avatar → Empty → Spin → Statistic
 
-下一批: Statistic → Alert → Progress
+下一批: Alert → Progress → Switch
+
 
 再下批: Progress → Switch → Checkbox → Radio
 
@@ -128,3 +129,6 @@ Button ✅, Typography ✅, Divider ✅, Space ✅, Tag ✅, Badge ✅, Avatar �
   - [ ] 添加 Title 属性 (悬停显示完整数值)
   - [ ] 添加缩放进出动画
   - [ ] 考虑实现数字滚动效果
+
+- **Statistic**:
+  - 已排除: Timer 组件 (SwiftUI 原生支持)、formatter (View 类型已覆盖)、分隔符 (NumberFormatter 处理)
