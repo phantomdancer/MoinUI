@@ -37,7 +37,7 @@ struct AlertTokenView: View {
             DocSidebarSection(
                 title: tr("doc.section.global_token"),
                 items: ["colorTextHeading", "colorText", "colorIcon", "colorIconHover", "fontSizeIcon"],
-                sectionId: "token"
+                sectionId: "global"
             )
         ]
     }
@@ -58,9 +58,12 @@ struct AlertTokenView: View {
         ) { sectionId in
             if sectionId == "token" {
                 Text(tr("doc.section.component_token")).font(.title3).fontWeight(.semibold)
+            } else if sectionId == "global" {
+                Text(tr("doc.section.global_token")).font(.title3).fontWeight(.semibold)
             }
         } item: { item in
             cardForItem(item)
+                .id(item)
         } footer: {
             HStack(spacing: Moin.Constants.Spacing.sm) {
                 Moin.Button(tr("playground.token.reset"), color: .primary, variant: .solid) {
