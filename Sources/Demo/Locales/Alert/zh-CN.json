@@ -37,6 +37,33 @@
         "info_desc": "这是一段很长的信息描述文本，用于测试多按钮组合在复杂布局下的显示效果，确保整体视觉协调。",
         "accept": "接受",
         "decline": "拒绝"
+      },
+      "api_demo": {
+        "success": "成功",
+        "info": "信息",
+        "title": "警告标题",
+        "desc_title": "标题",
+        "desc_content": "这是一段描述。",
+        "with_icon": "带图标",
+        "closable": "可关闭警告",
+        "banner": "Banner 警告",
+        "check_console": "查看控制台"
+      },
+      "token_demo": {
+        "success": "成功",
+        "info": "信息",
+        "warning": "警告",
+        "error": "错误",
+        "padding_v": "垂直内边距",
+        "padding_h": "水平内边距",
+        "gap": "间距示例",
+        "title": "标题",
+        "description": "描述",
+        "icon_size": "图标尺寸",
+        "font_size": "描述字体大小",
+        "title_font_size": "标题字体大小",
+        "border_width": "边框宽度",
+        "corner_radius": "圆角大小"
       }
     },
     "action": "操作",

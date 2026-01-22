@@ -37,6 +37,33 @@
         "info_desc": "This is a very long info description text used to test the display of multiple buttons in a complex layout, ensuring visual coordination.",
         "accept": "Accept",
         "decline": "Decline"
+      },
+      "api_demo": {
+        "success": "Success",
+        "info": "Info",
+        "title": "Alert Title",
+        "desc_title": "Title",
+        "desc_content": "This is a description.",
+        "with_icon": "With Icon",
+        "closable": "Closable Alert",
+        "banner": "Banner Alert",
+        "check_console": "Check Console"
+      },
+      "token_demo": {
+        "success": "Success",
+        "info": "Info",
+        "warning": "Warning",
+        "error": "Error",
+        "padding_v": "Padding V",
+        "padding_h": "Padding H",
+        "gap": "Gap Example",
+        "title": "Title",
+        "description": "Description",
+        "icon_size": "Icon Size",
+        "font_size": "Description Font Size",
+        "title_font_size": "Title Font Size",
+        "border_width": "Border Width",
+        "corner_radius": "Corner Radius"
       }
     },
     "action": "Action",

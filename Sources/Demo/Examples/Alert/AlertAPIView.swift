@@ -52,13 +52,13 @@ struct AlertAPIView: View {
             sectionId: "api"
         ) {
             VStack(spacing: 8) {
-                Moin.Alert(type: .success, title: "Success")
-                Moin.Alert(type: .info, title: "Info")
+                Moin.Alert(type: .success, title: tr("alert.demo.api_demo.success"))
+                Moin.Alert(type: .info, title: tr("alert.demo.api_demo.info"))
             }
         } code: {
             """
-            Moin.Alert(type: .success, title: "Success")
-            Moin.Alert(type: .info, title: "Info")
+            Moin.Alert(type: .success, title: "\(tr("alert.demo.api_demo.success"))")
+            Moin.Alert(type: .info, title: "\(tr("alert.demo.api_demo.info"))")
             // .warning, .error
             """
         }
@@ -72,9 +72,11 @@ struct AlertAPIView: View {
             description: tr("api.alert.title"),
             sectionId: "api"
         ) {
-            Moin.Alert(title: "Alert Title")
+            Moin.Alert(title: tr("alert.demo.api_demo.title"))
         } code: {
-            "Moin.Alert(title: \"Alert Title\")"
+            """
+            Moin.Alert(title: "\(tr("alert.demo.api_demo.title"))")
+            """
         }
     }
     
@@ -87,14 +89,14 @@ struct AlertAPIView: View {
             sectionId: "api"
         ) {
             Moin.Alert(
-                title: "Title",
-                description: "This is a description."
+                title: tr("alert.demo.api_demo.desc_title"),
+                description: tr("alert.demo.api_demo.desc_content")
             )
         } code: {
             """
             Moin.Alert(
-                title: "Title",
-                description: "This is a description."
+                title: "\(tr("alert.demo.api_demo.desc_title"))",
+                description: "\(tr("alert.demo.api_demo.desc_content"))"
             )
             """
         }
@@ -108,9 +110,11 @@ struct AlertAPIView: View {
             description: tr("api.alert.showIcon"),
             sectionId: "api"
         ) {
-            Moin.Alert(title: "With Icon", showIcon: true)
+            Moin.Alert(title: tr("alert.demo.api_demo.with_icon"), showIcon: true)
         } code: {
-            "Moin.Alert(title: \"With Icon\", showIcon: true)"
+            """
+            Moin.Alert(title: "\(tr("alert.demo.api_demo.with_icon"))", showIcon: true)
+            """
         }
     }
     
@@ -122,9 +126,11 @@ struct AlertAPIView: View {
             description: tr("api.alert.closable"),
             sectionId: "api"
         ) {
-            Moin.Alert(title: "Closable Alert", closable: true)
+            Moin.Alert(title: tr("alert.demo.api_demo.closable"), closable: true)
         } code: {
-            "Moin.Alert(title: \"Closable Alert\", closable: true)"
+            """
+            Moin.Alert(title: "\(tr("alert.demo.api_demo.closable"))", closable: true)
+            """
         }
     }
     
@@ -136,9 +142,11 @@ struct AlertAPIView: View {
             description: tr("api.alert.banner"),
             sectionId: "api"
         ) {
-            Moin.Alert(type: .warning, title: "Banner Alert", banner: true)
+            Moin.Alert(type: .warning, title: tr("alert.demo.api_demo.banner"), banner: true)
         } code: {
-            "Moin.Alert(type: .warning, title: \"Banner Alert\", banner: true)"
+            """
+            Moin.Alert(type: .warning, title: "\(tr("alert.demo.api_demo.banner"))", banner: true)
+            """
         }
     }
     
@@ -150,9 +158,11 @@ struct AlertAPIView: View {
             description: tr("api.alert.onClose"),
             sectionId: "api"
         ) {
-            Moin.Alert(title: "Check Console", closable: true, onClose: { print("Closed") })
+            Moin.Alert(title: tr("alert.demo.api_demo.check_console"), closable: true, onClose: { print("Closed") })
         } code: {
-            "Moin.Alert(title: \"Check Console\", closable: true, onClose: { print(\"Closed\") })"
+            """
+            Moin.Alert(title: "\(tr("alert.demo.api_demo.check_console"))", closable: true, onClose: { print("Closed") })
+            """
         }
     }
 }
