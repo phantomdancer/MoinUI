@@ -34,7 +34,7 @@ Button ✅, Typography ✅, Divider ✅, Space ✅, Tag ✅, Badge ✅, Avatar �
 
 | 组件 | 复杂度 | 说明 |
 |------|--------|------|
-| Alert | ★★☆☆☆ | 警告提示框 |
+| Alert | ★★☆☆☆ | ✅ 已完成 |
 | Progress | ★★☆☆☆ | 进度条/圆环 |
 | Switch | ★★☆☆☆ | 开关切换 |
 | Checkbox | ★★☆☆☆ | 复选框 |
@@ -97,9 +97,9 @@ Button ✅, Typography ✅, Divider ✅, Space ✅, Tag ✅, Badge ✅, Avatar �
 ## 建议实现顺序
 
 ```
-已完成: Button → Typography → Divider → Space → Tag → Badge → Avatar → Empty → Spin → Statistic
-
-下一批: Alert → Progress → Switch
+已完成: Button → Typography → Divider → Space → Tag → Badge → Avatar → Empty → Spin → Statistic → Alert
+ 
+ 下一批: Progress → Switch → Checkbox
 
 
 再下批: Progress → Switch → Checkbox → Radio

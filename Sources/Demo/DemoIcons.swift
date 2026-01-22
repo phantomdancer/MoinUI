@@ -29,6 +29,7 @@ struct DemoIcons {
     static let divider = "minus"
     
     // Feedback
+    static let alert = "exclamationmark.triangle"
     static let spin = "arrow.trianglehead.2.counterclockwise.rotate.90"
     
     // Other (Playground specific)

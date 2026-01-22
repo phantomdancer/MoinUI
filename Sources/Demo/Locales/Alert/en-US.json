@@ -1,0 +1,43 @@
+{
+  "alert": {
+    "title": "Alert",
+    "description": "Display warning messages that require attention.",
+    "basic": "Basic",
+    "basic_desc": "The simplest usage for short messages.",
+    "closable": "Closable",
+    "closable_desc": "Display close button to dismiss the alert.",
+    "icon": "Icon",
+    "icon_desc": "A relevant icon makes the information clearer.",
+    "with_description": "Description",
+    "with_description_desc": "Additional description for the alert message.",
+    "banner": "Banner",
+    "banner_desc": "Full-width display without border, suitable for page-level notifications.",
+    "demo": {
+      "success": "Success Tips",
+      "info": "Info Tips",
+      "warning": "Warning Tips",
+      "error": "Error Tips",
+      "success_closable": "Success Tips (Closable)",
+      "info_closable": "Info Tips (Closable)",
+      "success_title": "Success Tips",
+      "success_description": "Detailed description and advice about successful copywriting.",
+      "info_title": "Info Tips",
+      "info_description": "Additional description and information about copywriting.",
+      "banner_warning": "Warning: This is a banner warning message",
+      "banner_error": "Error: This is a banner error message"
+    }
+  },
+  "api": {
+    "alert": {
+      "alert_api": "Moin.Alert API",
+      "type": "Type of Alert",
+      "title": "Alert title",
+      "description": "Additional description of Alert",
+      "showIcon": "Whether to show icon",
+      "closable": "Whether Alert can be closed",
+      "banner": "Whether to show as banner",
+      "onClose": "Callback when Alert is closed",
+      "token_desc": "Below are the design tokens for the Alert component."
+    }
+  }
+}

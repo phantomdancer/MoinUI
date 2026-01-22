@@ -13,6 +13,7 @@ public extension Moin {
         public var empty: Moin.EmptyToken
         public var spin: Moin.SpinToken
         public var statistic: Moin.StatisticToken
+        public var alert: Moin.AlertToken
 
         public static func generate(from token: Token, isDark: Bool = false) -> ComponentToken {
             ComponentToken(
@@ -24,7 +25,8 @@ public extension Moin {
                 avatar: .generate(from: token),
                 empty: .generate(from: token),
                 spin: .generate(from: token),
-                statistic: .resolve(token: token)
+                statistic: .resolve(token: token),
+                alert: .generate(from: token)
             )
         }
 

@@ -1,0 +1,43 @@
+{
+  "alert": {
+    "title": "Alert 警告提示",
+    "description": "警告提示，展示需要关注的信息。",
+    "basic": "基本用法",
+    "basic_desc": "最简单的用法，适用于简短的警告提示。",
+    "closable": "可关闭",
+    "closable_desc": "显示关闭按钮，点击可关闭警告提示。",
+    "icon": "带图标",
+    "icon_desc": "可配置图标，增强视觉效果。",
+    "with_description": "含描述",
+    "with_description_desc": "含有辅助性文字的警告提示。",
+    "banner": "Banner 模式",
+    "banner_desc": "全宽显示，无边框，适合页面顶部通知。",
+    "demo": {
+      "success": "成功提示",
+      "info": "信息提示",
+      "warning": "警告提示",
+      "error": "错误提示",
+      "success_closable": "成功提示（可关闭）",
+      "info_closable": "信息提示（可关闭）",
+      "success_title": "成功提示",
+      "success_description": "这是一段成功提示的详细描述信息。",
+      "info_title": "信息提示",
+      "info_description": "这是一段信息提示的详细描述信息。",
+      "banner_warning": "警告：这是一条 Banner 警告信息",
+      "banner_error": "错误：这是一条 Banner 错误信息"
+    }
+  },
+  "api": {
+    "alert": {
+      "alert_api": "Moin.Alert API",
+      "type": "警告类型",
+      "title": "警告标题",
+      "description": "警告的辅助性文字",
+      "showIcon": "是否显示图标",
+      "closable": "是否可关闭",
+      "banner": "是否为 Banner 模式",
+      "onClose": "关闭时的回调函数",
+      "token_desc": "以下是 Alert 组件的设计变量，可通过 ConfigProvider 覆盖。"
+    }
+  }
+}
