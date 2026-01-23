@@ -139,17 +139,86 @@ struct ProgressExamples: View {
                          Moin.Progress(percent: 50, steps: 3)
                          Moin.Progress(percent: 30, steps: 5)
                          Moin.Progress(percent: 100, strokeColor: Color.green, size: .small, steps: 5)
-                         Moin.Progress(percent: 60, strokeColor: Color.green, steps: 5)
+                         Moin.Progress(percent: 60, strokeColors: [.green, .green, .red], steps: 5)
                     }
                 } code: {
                     """
                     Moin.Progress(percent: 50, steps: 3)
                     Moin.Progress(percent: 30, steps: 5)
                     Moin.Progress(percent: 100, strokeColor: .green, size: .small, steps: 5)
+                    Moin.Progress(percent: 60, strokeColors: [.green, .green, .red], steps: 5)
+                    """
+                }
+
+                // 10. Circle Steps
+                ExampleSection(title: tr("progress.circle_steps"), description: tr("progress.circle_steps_desc")) {
+                    CircleStepsDemo()
+                } code: {
+                    """
+                    Moin.Progress(
+                        percent: 50,
+                        type: .dashboard,
+                        circleSteps: .init(count: 8)
+                    )
+                    Moin.Progress(
+                        percent: 100,
+                        type: .circle,
+                        circleSteps: .init(count: 5, gap: 7)
+                    )
+                    """
+                }
+
+                // 11. Info Position
+                ExampleSection(title: tr("progress.info_position"), description: tr("progress.info_position_desc")) {
+                    VStack(spacing: 12) {
+                        Moin.Progress(
+                            percent: 0,
+                            strokeColor: Color(hex: 0xE6F4FF),
+                            size: .size(width: 200, height: 20),
+                            percentPosition: .init(align: .center, type: .inner)
+                        )
+                        Moin.Progress(
+                            percent: 10,
+                            size: .size(width: 300, height: 20),
+                            percentPosition: .init(align: .center, type: .inner)
+                        )
+                        Moin.Progress(
+                            percent: 50,
+                            strokeColor: Color(hex: 0xB7EB8F),
+                            size: .size(width: 300, height: 20),
+                            percentPosition: .init(align: .start, type: .inner)
+                        )
+                        Moin.Progress(
+                            percent: 60,
+                            strokeColor: Color(hex: 0x001342),
+                            size: .size(width: 300, height: 20),
+                            percentPosition: .init(align: .end, type: .inner)
+                        )
+                        Moin.Progress(
+                            percent: 100,
+                            size: .size(width: 400, height: 20),
+                            percentPosition: .init(align: .center, type: .inner)
+                        )
+                        Moin.Progress(percent: 60, percentPosition: .init(align: .start, type: .outer))
+                        Moin.Progress(percent: 100, percentPosition: .init(align: .start, type: .outer))
+                        Moin.Progress(percent: 60, size: .small, percentPosition: .init(align: .center, type: .outer))
+                        Moin.Progress(percent: 100, percentPosition: .init(align: .center, type: .outer))
+                    }
+                } code: {
+                    """
+                    Moin.Progress(
+                        percent: 50,
+                        size: .size(width: 300, height: 20),
+                        percentPosition: .init(align: .center, type: .inner)
+                    )
+                    Moin.Progress(
+                        percent: 60,
+                        percentPosition: .init(align: .start, type: .outer)
+                    )
                     """
                 }
                 
-                // 10. Segment
+                // 12. Segment
                 ExampleSection(title: tr("progress.segment"), description: tr("progress.segment_desc")) {
                     VStack(spacing: 16) {
                          Moin.Progress(percent: 60, success: .init(percent: 30))
@@ -165,7 +234,7 @@ struct ProgressExamples: View {
                     """
                 }
                 
-                // 11. Linecap
+                // 13. Linecap
                 ExampleSection(title: tr("progress.linecap"), description: tr("progress.linecap_desc")) {
                     VStack(spacing: 16) {
                         Moin.Progress(percent: 75, strokeLinecap: .butt)
@@ -180,7 +249,7 @@ struct ProgressExamples: View {
                     """
                 }
                 
-                // 12. Size
+                // 14. Size
                 ExampleSection(title: tr("progress.size"), description: tr("progress.size_desc")) {
                      VStack(spacing: 32) {
                          VStack(spacing: 16) {
@@ -287,6 +356,48 @@ private struct DynamicDemo: View {
                 Moin.Button(icon: "plus") {
                     increase()
                 }
+            }
+        }
+    }
+}
+
+private struct CircleStepsDemo: View {
+    @Localized var tr
+    @State private var stepsCount: Int = 5
+    @State private var stepsGap: CGFloat = 7
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 16) {
+            HStack {
+                Text(tr("progress.custom_count"))
+                Slider(value: Binding(
+                    get: { Double(stepsCount) },
+                    set: { stepsCount = Int($0) }
+                ), in: 2...10, step: 1)
+                Text("\(stepsCount)")
+            }
+
+            HStack {
+                Text(tr("progress.custom_gap"))
+                Slider(value: $stepsGap, in: 0...40, step: 4)
+                Text("\(Int(stepsGap))")
+            }
+
+            HStack(spacing: 16) {
+                Moin.Progress(
+                    percent: 50,
+                    strokeWidth: 20,
+                    railColor: Color.black.opacity(0.06),
+                    type: .dashboard,
+                    circleSteps: .init(count: 8)
+                )
+                Moin.Progress(
+                    percent: 100,
+                    strokeWidth: 20,
+                    railColor: Color.black.opacity(0.06),
+                    type: .circle,
+                    circleSteps: .init(count: stepsCount, gap: stepsGap)
+                )
             }
         }
     }

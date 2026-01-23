@@ -35,7 +35,7 @@ Button ✅, Typography ✅, Divider ✅, Space ✅, Tag ✅, Badge ✅, Avatar �
 | 组件 | 复杂度 | 说明 |
 |------|--------|------|
 | Alert | ★★☆☆☆ | ✅ 已完成 |
-| Progress | ★★☆☆☆ | ✅ 已完成 |
+| Progress | ★★☆☆☆ | ✅ 已完成 (v2: percentPosition, circleSteps, strokeColors) |
 | Switch | ★★☆☆☆ | 开关切换 |
 | Checkbox | ★★☆☆☆ | 复选框 |
 | Radio | ★★☆☆☆ | 单选框 |

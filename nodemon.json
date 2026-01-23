@@ -2,7 +2,8 @@
   "watch": [
     ".build/debug/Demo"
   ],
-  "exec": "pkill -f 'Demo' 2>/dev/null; scripts/run-demo.sh",
+  "exec": "pkill -9 -f '.build/debug/Demo' 2>/dev/null; sleep 0.3; scripts/run-demo.sh",
+  "signal": "SIGKILL",
   "restartable": "rs",
   "ignore": [],
   "verbose": true,
