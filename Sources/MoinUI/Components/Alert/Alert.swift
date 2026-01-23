@@ -81,13 +81,14 @@ public extension Moin {
         
         @ViewBuilder
         private var alertContent: some View {
-            let colors = colorsForType(alertToken)
+            let colors = colorsForType()
             let hasDescription = description != nil
             
-            // 根据是否有描述选择 padding 和尺寸
+            // 组件Token：padding 和 withDescriptionIconSize
             let padding = hasDescription ? alertToken.withDescriptionPadding : alertToken.defaultPadding
-            let titleFontSize = hasDescription ? alertToken.fontSizeLG : alertToken.fontSize
-            let currentIconSize = hasDescription ? alertToken.withDescriptionIconSize : alertToken.iconSize
+            // 全局Token：fontSize
+            let titleFontSize = hasDescription ? token.fontSizeLG : token.fontSize
+            let currentIconSize = hasDescription ? alertToken.withDescriptionIconSize : token.fontSizeLG
             
             HStack(alignment: hasDescription ? .top : .center, spacing: 0) {
                 // Icon
@@ -95,23 +96,23 @@ public extension Moin {
                     iconForType
                         .font(.system(size: currentIconSize))
                         .foregroundStyle(colors.icon)
-                        .frame(minHeight: hasDescription ? alertToken.lineHeightLG : nil)
-                        .padding(.trailing, hasDescription ? alertToken.marginSM : alertToken.marginXS)
+                        .frame(minHeight: hasDescription ? token.lineHeightLG : nil)
+                        .padding(.trailing, hasDescription ? token.marginSM : token.marginXS)
                 }
                 
                 // Section (title + description)
-                VStack(alignment: .leading, spacing: hasDescription ? alertToken.marginXS : 0) {
+                VStack(alignment: .leading, spacing: hasDescription ? token.marginXS : 0) {
                     if !title.isEmpty {
                         Text(title)
                             .font(.system(size: titleFontSize, weight: hasDescription ? .medium : .regular))
-                            .foregroundStyle(alertToken.colorTextHeading)
+                            .foregroundStyle(token.colorText) // 全局Token
                             .fixedSize(horizontal: false, vertical: true)
                     }
                     
                     if let desc = description {
                         Text(desc)
-                            .font(.system(size: alertToken.fontSize))
-                            .foregroundStyle(alertToken.colorText)
+                            .font(.system(size: token.fontSize)) // 全局Token
+                            .foregroundStyle(token.colorText) // 全局Token
                             .fixedSize(horizontal: false, vertical: true)
                     }
                 }
@@ -120,7 +121,7 @@ public extension Moin {
                 // Actions
                 if Action.self != EmptyView.self {
                     action
-                        .padding(.leading, alertToken.marginXS)
+                        .padding(.leading, token.marginXS)
                 }
                 
                 // Close button
@@ -131,10 +132,10 @@ public extension Moin {
             .padding(padding)
             .background(colors.bg)
             .overlay(
-                RoundedRectangle(cornerRadius: banner ? 0 : alertToken.borderRadiusLG)
-                    .stroke(colors.border, lineWidth: banner ? 0 : alertToken.lineWidth)
+                RoundedRectangle(cornerRadius: banner ? 0 : token.borderRadiusLG) // 全局Token
+                    .stroke(colors.border, lineWidth: banner ? 0 : token.lineWidth) // 全局Token
             )
-            .clipShape(RoundedRectangle(cornerRadius: banner ? 0 : alertToken.borderRadiusLG))
+            .clipShape(RoundedRectangle(cornerRadius: banner ? 0 : token.borderRadiusLG)) // 全局Token
         }
         
         // MARK: - Subviews
@@ -150,10 +151,10 @@ public extension Moin {
         
         private var closeButton: some View {
             Image(systemName: "xmark")
-                .font(.system(size: alertToken.fontSizeIcon))
-                .foregroundStyle(isCloseHovered ? alertToken.colorIconHover : alertToken.colorIcon)
+                .font(.system(size: token.fontSizeSM)) // 全局Token: fontSizeIcon = fontSizeSM
+                .foregroundStyle(isCloseHovered ? token.colorText : token.colorTextTertiary) // 全局Token
                 .contentShape(Rectangle())
-                .padding(.leading, alertToken.marginXS)
+                .padding(.leading, token.marginXS)
                 .onHover { hovering in
                     isCloseHovered = hovering
                     if hovering {
@@ -169,12 +170,13 @@ public extension Moin {
         
         // MARK: - Helpers
         
-        private func colorsForType(_ alertToken: AlertToken) -> (bg: Color, border: Color, icon: Color) {
+        private func colorsForType() -> (bg: Color, border: Color, icon: Color) {
+            // 全局Token: 状态颜色
             switch type {
-            case .success: return (alertToken.colorSuccessBg, alertToken.colorSuccessBorder, alertToken.colorSuccess)
-            case .info: return (alertToken.colorInfoBg, alertToken.colorInfoBorder, alertToken.colorInfo)
-            case .warning: return (alertToken.colorWarningBg, alertToken.colorWarningBorder, alertToken.colorWarning)
-            case .error: return (alertToken.colorErrorBg, alertToken.colorErrorBorder, alertToken.colorError)
+            case .success: return (token.colorSuccessBg, token.colorSuccessBorder, token.colorSuccess)
+            case .info: return (token.colorInfoBg, token.colorInfoBorder, token.colorInfo)
+            case .warning: return (token.colorWarningBg, token.colorWarningBorder, token.colorWarning)
+            case .error: return (token.colorDangerBg, token.colorDangerBorder, token.colorDanger)
             }
         }
         

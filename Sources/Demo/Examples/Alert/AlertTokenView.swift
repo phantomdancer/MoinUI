@@ -18,19 +18,17 @@ struct AlertTokenView: View {
                 ],
                 sectionId: "component"
             ),
-            // 全局 Token（其余全部）
+            // 全局 Token
             DocSidebarSection(
                 title: tr("doc.section.global_token"),
                 items: [
-                    "colorError", "colorErrorBg", "colorErrorBorder",
-                    "colorIcon", "colorIconHover",
-                    "colorInfo", "colorInfoBg", "colorInfoBorder",
                     "colorSuccess", "colorSuccessBg", "colorSuccessBorder",
-                    "colorText", "colorTextHeading",
+                    "colorInfo", "colorInfoBg", "colorInfoBorder",
                     "colorWarning", "colorWarningBg", "colorWarningBorder",
-                    "borderRadiusLG", "fontSize", "fontSizeIcon", "fontSizeLG",
-                    "lineHeight", "lineWidth",
-                    "marginSM", "marginXS"
+                    "colorError", "colorErrorBg", "colorErrorBorder",
+                    "colorText", "colorIcon", "colorIconHover",
+                    "borderRadiusLG", "fontSize", "fontSizeLG", "fontSizeIcon",
+                    "lineWidth", "marginXS", "marginSM"
                 ],
                 sectionId: "global"
             )
@@ -88,33 +86,33 @@ struct AlertTokenView: View {
         case "withDescriptionIconSize": withDescriptionIconSizeCard
         case "withDescriptionPadding": withDescriptionPaddingCard
         
-        // Global Token - Colors
-        case "colorError": colorErrorCard
-        case "colorErrorBg": colorErrorBgCard
-        case "colorErrorBorder": colorErrorBorderCard
-        case "colorIcon": colorIconCard
-        case "colorIconHover": colorIconHoverCard
-        case "colorInfo": colorInfoCard
-        case "colorInfoBg": colorInfoBgCard
-        case "colorInfoBorder": colorInfoBorderCard
+        // Global Token - Status Colors
         case "colorSuccess": colorSuccessCard
         case "colorSuccessBg": colorSuccessBgCard
         case "colorSuccessBorder": colorSuccessBorderCard
-        case "colorText": colorTextCard
-        case "colorTextHeading": colorTextHeadingCard
+        case "colorInfo": colorInfoCard
+        case "colorInfoBg": colorInfoBgCard
+        case "colorInfoBorder": colorInfoBorderCard
         case "colorWarning": colorWarningCard
         case "colorWarningBg": colorWarningBgCard
         case "colorWarningBorder": colorWarningBorderCard
+        case "colorError": colorErrorCard
+        case "colorErrorBg": colorErrorBgCard
+        case "colorErrorBorder": colorErrorBorderCard
+        
+        // Global Token - Text & Icon
+        case "colorText": colorTextCard
+        case "colorIcon": colorIconCard
+        case "colorIconHover": colorIconHoverCard
         
         // Global Token - Size
         case "borderRadiusLG": borderRadiusLGCard
         case "fontSize": fontSizeCard
-        case "fontSizeIcon": fontSizeIconCard
         case "fontSizeLG": fontSizeLGCard
-        case "lineHeight": lineHeightCard
+        case "fontSizeIcon": fontSizeIconCard
         case "lineWidth": lineWidthCard
-        case "marginSM": marginSMCard
         case "marginXS": marginXSCard
+        case "marginSM": marginSMCard
         
         default: EmptyView()
         }
@@ -168,7 +166,7 @@ struct AlertTokenView: View {
         } code: { "config.components.alert.withDescriptionPadding = EdgeInsets(...)" }
     }
     
-    // MARK: - Global Token Cards - Status Colors (可编辑 seed Token)
+    // MARK: - Global Token Cards - Status Colors (修改 seed，影响所有组件)
     
     private var colorSuccessCard: some View {
         TokenCard(name: "colorSuccess", type: "string", defaultValue: "#52c41a", description: tr("token.alert.colorSuccess"), sectionId: "global") {
@@ -181,16 +179,12 @@ struct AlertTokenView: View {
     private var colorSuccessBgCard: some View {
         TokenCard(name: "colorSuccessBg", type: "string", defaultValue: "#f6ffed", description: tr("token.alert.colorSuccessBg"), sectionId: "global") {
             Moin.Alert(type: .success, title: tr("alert.demo.token_demo.success"))
-        } editor: {
-            ColorPresetRow(label: "seed.colorSuccess", color: $config.seed.colorSuccess, onChange: { config.regenerateTokens() })
         } code: { "// \(tr("api.derived_from")) seed.colorSuccess" }
     }
     
     private var colorSuccessBorderCard: some View {
         TokenCard(name: "colorSuccessBorder", type: "string", defaultValue: "#b7eb8f", description: tr("token.alert.colorSuccessBorder"), sectionId: "global") {
             Moin.Alert(type: .success, title: tr("alert.demo.token_demo.success"))
-        } editor: {
-            ColorPresetRow(label: "seed.colorSuccess", color: $config.seed.colorSuccess, onChange: { config.regenerateTokens() })
         } code: { "// \(tr("api.derived_from")) seed.colorSuccess" }
     }
     
@@ -205,16 +199,12 @@ struct AlertTokenView: View {
     private var colorInfoBgCard: some View {
         TokenCard(name: "colorInfoBg", type: "string", defaultValue: "#e6f4ff", description: tr("token.alert.colorInfoBg"), sectionId: "global") {
             Moin.Alert(type: .info, title: tr("alert.demo.token_demo.info"))
-        } editor: {
-            ColorPresetRow(label: "seed.colorInfo", color: $config.seed.colorInfo, onChange: { config.regenerateTokens() })
         } code: { "// \(tr("api.derived_from")) seed.colorInfo" }
     }
     
     private var colorInfoBorderCard: some View {
         TokenCard(name: "colorInfoBorder", type: "string", defaultValue: "#91caff", description: tr("token.alert.colorInfoBorder"), sectionId: "global") {
             Moin.Alert(type: .info, title: tr("alert.demo.token_demo.info"))
-        } editor: {
-            ColorPresetRow(label: "seed.colorInfo", color: $config.seed.colorInfo, onChange: { config.regenerateTokens() })
         } code: { "// \(tr("api.derived_from")) seed.colorInfo" }
     }
     
@@ -229,16 +219,12 @@ struct AlertTokenView: View {
     private var colorWarningBgCard: some View {
         TokenCard(name: "colorWarningBg", type: "string", defaultValue: "#fffbe6", description: tr("token.alert.colorWarningBg"), sectionId: "global") {
             Moin.Alert(type: .warning, title: tr("alert.demo.token_demo.warning"))
-        } editor: {
-            ColorPresetRow(label: "seed.colorWarning", color: $config.seed.colorWarning, onChange: { config.regenerateTokens() })
         } code: { "// \(tr("api.derived_from")) seed.colorWarning" }
     }
     
     private var colorWarningBorderCard: some View {
         TokenCard(name: "colorWarningBorder", type: "string", defaultValue: "#ffe58f", description: tr("token.alert.colorWarningBorder"), sectionId: "global") {
             Moin.Alert(type: .warning, title: tr("alert.demo.token_demo.warning"))
-        } editor: {
-            ColorPresetRow(label: "seed.colorWarning", color: $config.seed.colorWarning, onChange: { config.regenerateTokens() })
         } code: { "// \(tr("api.derived_from")) seed.colorWarning" }
     }
     
@@ -253,31 +239,21 @@ struct AlertTokenView: View {
     private var colorErrorBgCard: some View {
         TokenCard(name: "colorErrorBg", type: "string", defaultValue: "#fff2f0", description: tr("token.alert.colorErrorBg"), sectionId: "global") {
             Moin.Alert(type: .error, title: tr("alert.demo.token_demo.error"))
-        } editor: {
-            ColorPresetRow(label: "seed.colorError", color: $config.seed.colorError, onChange: { config.regenerateTokens() })
         } code: { "// \(tr("api.derived_from")) seed.colorError" }
     }
     
     private var colorErrorBorderCard: some View {
         TokenCard(name: "colorErrorBorder", type: "string", defaultValue: "#ffccc7", description: tr("token.alert.colorErrorBorder"), sectionId: "global") {
             Moin.Alert(type: .error, title: tr("alert.demo.token_demo.error"))
-        } editor: {
-            ColorPresetRow(label: "seed.colorError", color: $config.seed.colorError, onChange: { config.regenerateTokens() })
         } code: { "// \(tr("api.derived_from")) seed.colorError" }
     }
     
-    // MARK: - Global Token Cards - Text Colors
+    // MARK: - Global Token Cards - Text & Icon
     
     private var colorTextCard: some View {
         TokenCard(name: "colorText", type: "string", defaultValue: "rgba(0,0,0,0.88)", description: tr("token.alert.colorText"), sectionId: "global") {
             Moin.Alert(type: .info, title: tr("alert.demo.token_demo.title"), description: tr("alert.demo.token_demo.description"))
         } code: { "// \(tr("api.derived_from")) seed.colorTextBase" }
-    }
-    
-    private var colorTextHeadingCard: some View {
-        TokenCard(name: "colorTextHeading", type: "string", defaultValue: "rgba(0,0,0,0.88)", description: tr("token.alert.colorTextHeading"), sectionId: "global") {
-            Moin.Alert(type: .info, title: tr("alert.demo.token_demo.title"))
-        } code: { "// \(tr("api.derived_from")) colorText" }
     }
     
     private var colorIconCard: some View {
@@ -292,7 +268,7 @@ struct AlertTokenView: View {
         } code: { "// \(tr("api.derived_from")) colorText" }
     }
     
-    // MARK: - Global Token Cards - Size (可编辑 seed Token)
+    // MARK: - Global Token Cards - Size
     
     private var borderRadiusLGCard: some View {
         TokenCard(name: "borderRadiusLG", type: "number", defaultValue: "8", description: tr("token.alert.borderRadiusLG"), sectionId: "global") {
@@ -320,19 +296,6 @@ struct AlertTokenView: View {
         } code: { "config.seed.fontSize = \(Int(config.seed.fontSize))" }
     }
     
-    private var fontSizeIconCard: some View {
-        TokenCard(name: "fontSizeIcon", type: "number", defaultValue: "12", description: tr("token.alert.fontSizeIcon"), sectionId: "global") {
-            HStack(spacing: Moin.Constants.Spacing.md) {
-                Moin.Alert(type: .info, title: tr("alert.demo.token_demo.closable"), closable: true)
-                Text("fontSizeIcon: \(Int(config.token.fontSizeSM))px")
-                    .font(.system(size: 11, design: .monospaced))
-                    .foregroundStyle(.secondary)
-            }
-        } editor: {
-            TokenValueRow(label: "seed.fontSize", value: $config.seed.fontSize, range: 10...24, onChange: { config.regenerateTokens() })
-        } code: { "// \(tr("api.derived_from")) fontSizeSM (seed.fontSize - 2)" }
-    }
-    
     private var fontSizeLGCard: some View {
         TokenCard(name: "fontSizeLG", type: "number", defaultValue: "16", description: tr("token.alert.fontSizeLG"), sectionId: "global") {
             HStack(spacing: Moin.Constants.Spacing.md) {
@@ -341,15 +304,18 @@ struct AlertTokenView: View {
                     .font(.system(size: 11, design: .monospaced))
                     .foregroundStyle(.secondary)
             }
-        } editor: {
-            TokenValueRow(label: "seed.fontSize", value: $config.seed.fontSize, range: 10...24, onChange: { config.regenerateTokens() })
         } code: { "// \(tr("api.derived_from")) seed.fontSize + 2" }
     }
     
-    private var lineHeightCard: some View {
-        TokenCard(name: "lineHeight", type: "number", defaultValue: "1.5714", description: tr("token.alert.lineHeight"), sectionId: "global") {
-            Moin.Alert(type: .info, title: tr("alert.demo.token_demo.title"), description: tr("alert.demo.token_demo.description"))
-        } code: { "// \(tr("api.derived_from")) fontSize * 1.5714" }
+    private var fontSizeIconCard: some View {
+        TokenCard(name: "fontSizeIcon", type: "number", defaultValue: "12", description: tr("token.alert.fontSizeIcon"), sectionId: "global") {
+            HStack(spacing: Moin.Constants.Spacing.md) {
+                Moin.Alert(type: .info, title: tr("alert.demo.token_demo.closable"), closable: true)
+                Text("fontSizeIcon: \(Int(config.token.fontSizeSM))px")
+                    .font(.system(size: 11, design: .monospaced))
+                    .foregroundStyle(.secondary)
+            }
+        } code: { "// \(tr("api.derived_from")) fontSizeSM (seed.fontSize - 2)" }
     }
     
     private var lineWidthCard: some View {
@@ -365,19 +331,6 @@ struct AlertTokenView: View {
         } code: { "config.seed.lineWidth = \(Int(config.seed.lineWidth))" }
     }
     
-    private var marginSMCard: some View {
-        TokenCard(name: "marginSM", type: "number", defaultValue: "12", description: tr("token.alert.marginSM"), sectionId: "global") {
-            HStack(spacing: Moin.Constants.Spacing.md) {
-                Moin.Alert(type: .info, title: tr("alert.demo.token_demo.title"), description: tr("alert.demo.token_demo.description"), showIcon: true)
-                Text("marginSM: \(Int(config.token.marginSM))px")
-                    .font(.system(size: 11, design: .monospaced))
-                    .foregroundStyle(.secondary)
-            }
-        } editor: {
-            TokenValueRow(label: "seed.sizeUnit", value: $config.seed.sizeUnit, range: 2...8, onChange: { config.regenerateTokens() })
-        } code: { "// \(tr("api.derived_from")) seed.sizeUnit * 3" }
-    }
-    
     private var marginXSCard: some View {
         TokenCard(name: "marginXS", type: "number", defaultValue: "8", description: tr("token.alert.marginXS"), sectionId: "global") {
             HStack(spacing: Moin.Constants.Spacing.md) {
@@ -389,5 +342,16 @@ struct AlertTokenView: View {
         } editor: {
             TokenValueRow(label: "seed.sizeUnit", value: $config.seed.sizeUnit, range: 2...8, onChange: { config.regenerateTokens() })
         } code: { "// \(tr("api.derived_from")) seed.sizeUnit * 2" }
+    }
+    
+    private var marginSMCard: some View {
+        TokenCard(name: "marginSM", type: "number", defaultValue: "12", description: tr("token.alert.marginSM"), sectionId: "global") {
+            HStack(spacing: Moin.Constants.Spacing.md) {
+                Moin.Alert(type: .info, title: tr("alert.demo.token_demo.title"), description: tr("alert.demo.token_demo.description"), showIcon: true)
+                Text("marginSM: \(Int(config.token.marginSM))px")
+                    .font(.system(size: 11, design: .monospaced))
+                    .foregroundStyle(.secondary)
+            }
+        } code: { "// \(tr("api.derived_from")) seed.sizeUnit * 3" }
     }
 }

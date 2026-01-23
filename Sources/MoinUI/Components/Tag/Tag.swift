@@ -84,18 +84,18 @@ public extension Moin {
             .clipShape(RoundedRectangle(cornerRadius: cornerRadius))
             .overlay(
                 RoundedRectangle(cornerRadius: cornerRadius)
-                    .strokeBorder(borderColor, lineWidth: hasBorder ? tagToken.lineWidth : 0)
+                    .strokeBorder(borderColor, lineWidth: hasBorder ? token.lineWidth : 0) // 全局Token
             )
             .onHover { isHovered = $0 }
         }
 
-        // MARK: - Size Properties
+        // MARK: - Size Properties (全局Token)
 
         private var fontSize: CGFloat {
             switch size {
-            case .large: return tagToken.fontSizeLG
-            case .medium: return tagToken.fontSize
-            case .small: return tagToken.fontSizeSM
+            case .large: return token.fontSize        // 全局Token
+            case .medium: return token.fontSizeSM     // 全局Token
+            case .small: return token.fontSizeSM - 2  // 派生
             }
         }
 
@@ -145,8 +145,8 @@ public extension Moin {
                 return 100
             }
             switch size {
-            case .large: return token.borderRadiusSM + 2
-            case .medium: return token.borderRadiusSM
+            case .large: return token.borderRadiusSM + 2   // 全局Token
+            case .medium: return token.borderRadiusSM      // 全局Token
             case .small: return max(token.borderRadiusSM - 1, 2)
             }
         }
@@ -165,11 +165,11 @@ public extension Moin {
         /// 基础色（用于派生其他颜色）
         private var baseColor: Color {
             switch color {
-            case .default: return token.colorTextSecondary
-            case .success: return token.colorSuccess
-            case .processing: return token.colorPrimary
-            case .warning: return token.colorWarning
-            case .error: return token.colorDanger
+            case .default: return token.colorTextSecondary   // 全局Token
+            case .success: return token.colorSuccess         // 全局Token
+            case .processing: return token.colorPrimary      // 全局Token
+            case .warning: return token.colorWarning         // 全局Token
+            case .error: return token.colorDanger            // 全局Token
             case .custom(let c): return c
             }
         }
@@ -212,7 +212,7 @@ public extension Moin {
                 return .clear
             case .solid:
                 if color.isDefault {
-                    return token.colorTextSecondary
+                    return token.colorTextSecondary  // 全局Token
                 }
                 return colorAt(level: 6)
             }
@@ -223,12 +223,12 @@ public extension Moin {
             switch variant {
             case .filled:
                 if color.isDefault {
-                    return token.colorBorder
+                    return token.colorBorder  // 全局Token
                 }
                 return colorAt(level: 3)
             case .outlined:
                 if color.isDefault {
-                    return token.colorBorder
+                    return token.colorBorder  // 全局Token
                 }
                 return colorAt(level: 3)
             case .solid, .borderless:

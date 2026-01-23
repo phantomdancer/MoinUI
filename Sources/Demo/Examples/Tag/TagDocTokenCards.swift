@@ -5,7 +5,7 @@ import MoinUI
 
 extension TagTokenView {
     
-    // MARK: - Color Tokens
+    // MARK: - Component Token Cards (组件专属)
 
     var tagDefaultBgTokenCard: some View {
         TokenCard(
@@ -13,7 +13,7 @@ extension TagTokenView {
             type: "Color",
             defaultValue: "token.colorFillSecondary",
             description: tr("tag.token.defaultBg"),
-            sectionId: "token"
+            sectionId: "component"
         ) {
             HStack {
                 Moin.Tag(tr("tag.example.default"), color: .default)
@@ -25,12 +25,8 @@ extension TagTokenView {
                 set: { Moin.ConfigProvider.shared.components.tag.defaultBg = $0 }
             ))
         } code: {
-            """
-            // \(tr("api.component_token_desc"))
-            // config.components.tag.defaultBg = Color(...)
-            """
+            "config.components.tag.defaultBg = Color(...)"
         }
-        .scrollAnchor("token.defaultBg")
     }
 
     var tagDefaultColorTokenCard: some View {
@@ -39,7 +35,7 @@ extension TagTokenView {
             type: "Color",
             defaultValue: "token.colorText",
             description: tr("tag.token.defaultColor"),
-            sectionId: "token"
+            sectionId: "component"
         ) {
             HStack {
                 Moin.Tag(tr("tag.example.default"), color: .default)
@@ -52,7 +48,6 @@ extension TagTokenView {
         } code: {
             "config.components.tag.defaultColor = Color(...)"
         }
-        .scrollAnchor("token.defaultColor")
     }
     
     var tagSolidTextColorTokenCard: some View {
@@ -61,7 +56,7 @@ extension TagTokenView {
             type: "Color",
             defaultValue: ".white",
             description: tr("tag.token.solidTextColor"),
-            sectionId: "token"
+            sectionId: "component"
         ) {
             HStack {
                 Moin.Tag(tr("tag.example.solid"), color: .default, variant: .solid)
@@ -75,100 +70,9 @@ extension TagTokenView {
         } code: {
             "config.components.tag.solidTextColor = Color(...)"
         }
-        .scrollAnchor("token.solidTextColor")
-    }
-    
-    var tagLineWidthTokenCard: some View {
-        TokenCard(
-            name: "lineWidth",
-            type: "CGFloat",
-            defaultValue: "token.lineWidth",
-            description: tr("tag.token.lineWidth"),
-            sectionId: "token"
-        ) {
-            HStack {
-                Moin.Tag(tr("tag.example.outlined"), variant: .outlined)
-            }
-        } editor: {
-            TokenValueRow(label: "lineWidth", value: Binding(
-                get: { Moin.ConfigProvider.shared.components.tag.lineWidth },
-                set: { Moin.ConfigProvider.shared.components.tag.lineWidth = $0 }
-            ), range: 0...5)
-        } code: {
-            "config.components.tag.lineWidth = \(Int(config.components.tag.lineWidth))"
-        }
-        .scrollAnchor("token.lineWidth")
     }
 
-    // MARK: - Font Size Tokens
-
-    var tagFontSizeTokenCard: some View {
-        TokenCard(
-            name: "fontSize",
-            type: "CGFloat",
-            defaultValue: "token.fontSizeSM",
-            description: tr("tag.token.fontSizeMD"),
-            sectionId: "token"
-        ) {
-            HStack {
-                Moin.Tag(tr("tag.example.medium"), size: .medium)
-            }
-        } editor: {
-            TokenValueRow(label: "fontSize", value: Binding(
-                get: { Moin.ConfigProvider.shared.components.tag.fontSize },
-                set: { Moin.ConfigProvider.shared.components.tag.fontSize = $0 }
-            ))
-        } code: {
-            "config.components.tag.fontSize = \(Int(config.components.tag.fontSize))"
-        }
-        .scrollAnchor("token.fontSize")
-    }
-    
-    var tagFontSizeLGTokenCard: some View {
-        TokenCard(
-            name: "fontSizeLG",
-            type: "CGFloat",
-            defaultValue: "token.fontSize",
-            description: tr("tag.token.fontSizeLG"),
-            sectionId: "token"
-        ) {
-            HStack {
-                Moin.Tag(tr("tag.example.large"), size: .large)
-            }
-        } editor: {
-            TokenValueRow(label: "fontSizeLG", value: Binding(
-                get: { Moin.ConfigProvider.shared.components.tag.fontSizeLG },
-                set: { Moin.ConfigProvider.shared.components.tag.fontSizeLG = $0 }
-            ))
-        } code: {
-            "config.components.tag.fontSizeLG = \(Int(config.components.tag.fontSizeLG))"
-        }
-        .scrollAnchor("token.fontSizeLG")
-    }
-    
-    var tagFontSizeSMTokenCard: some View {
-        TokenCard(
-            name: "fontSizeSM",
-            type: "CGFloat",
-            defaultValue: "token.fontSizeSM - 2",
-            description: tr("tag.token.fontSizeSM"),
-            sectionId: "token"
-        ) {
-            HStack {
-                Moin.Tag(tr("tag.example.small"), size: .small)
-            }
-        } editor: {
-            TokenValueRow(label: "fontSizeSM", value: Binding(
-                get: { Moin.ConfigProvider.shared.components.tag.fontSizeSM },
-                set: { Moin.ConfigProvider.shared.components.tag.fontSizeSM = $0 }
-            ))
-        } code: {
-            "config.components.tag.fontSizeSM = \(Int(config.components.tag.fontSizeSM))"
-        }
-        .scrollAnchor("token.fontSizeSM")
-    }
-
-    // MARK: - Padding Tokens
+    // MARK: - Padding Tokens (组件专属)
 
     var tagPaddingHTokenCard: some View {
         TokenCard(
@@ -176,7 +80,7 @@ extension TagTokenView {
             type: "CGFloat",
             defaultValue: "token.paddingSM",
             description: tr("tag.token.paddingHMD"),
-            sectionId: "token"
+            sectionId: "component"
         ) {
             HStack {
                 Moin.Tag(tr("tag.example.medium"), size: .medium)
@@ -189,7 +93,6 @@ extension TagTokenView {
         } code: {
             "config.components.tag.paddingH = \(Int(config.components.tag.paddingH))"
         }
-        .scrollAnchor("token.paddingH")
     }
     
     var tagPaddingHLGTokenCard: some View {
@@ -198,7 +101,7 @@ extension TagTokenView {
             type: "CGFloat",
             defaultValue: "token.paddingMD",
             description: tr("tag.token.paddingHLG"),
-            sectionId: "token"
+            sectionId: "component"
         ) {
             HStack {
                 Moin.Tag(tr("tag.example.large"), size: .large)
@@ -211,7 +114,6 @@ extension TagTokenView {
         } code: {
             "config.components.tag.paddingHLG = \(Int(config.components.tag.paddingHLG))"
         }
-        .scrollAnchor("token.paddingHLG")
     }
     
     var tagPaddingHSMTokenCard: some View {
@@ -220,7 +122,7 @@ extension TagTokenView {
             type: "CGFloat",
             defaultValue: "token.paddingXS",
             description: tr("tag.token.paddingHSM"),
-            sectionId: "token"
+            sectionId: "component"
         ) {
             HStack {
                 Moin.Tag(tr("tag.example.small"), size: .small)
@@ -233,7 +135,6 @@ extension TagTokenView {
         } code: {
             "config.components.tag.paddingHSM = \(Int(config.components.tag.paddingHSM))"
         }
-        .scrollAnchor("token.paddingHSM")
     }
     
     // Padding Vertical
@@ -243,7 +144,7 @@ extension TagTokenView {
             type: "CGFloat",
             defaultValue: "2",
             description: tr("tag.token.paddingVMD"),
-            sectionId: "token"
+            sectionId: "component"
         ) {
             HStack {
                 Moin.Tag(tr("tag.example.medium"), size: .medium)
@@ -256,7 +157,6 @@ extension TagTokenView {
         } code: {
             "config.components.tag.paddingV = \(Int(config.components.tag.paddingV))"
         }
-        .scrollAnchor("token.paddingV")
     }
     
     var tagPaddingVLGTokenCard: some View {
@@ -265,7 +165,7 @@ extension TagTokenView {
             type: "CGFloat",
             defaultValue: "3",
             description: tr("tag.token.paddingVLG"),
-            sectionId: "token"
+            sectionId: "component"
         ) {
             HStack {
                 Moin.Tag(tr("tag.example.large"), size: .large)
@@ -278,7 +178,6 @@ extension TagTokenView {
         } code: {
             "config.components.tag.paddingVLG = \(Int(config.components.tag.paddingVLG))"
         }
-        .scrollAnchor("token.paddingVLG")
     }
     
     var tagPaddingVSMTokenCard: some View {
@@ -287,7 +186,7 @@ extension TagTokenView {
             type: "CGFloat",
             defaultValue: "0",
             description: tr("tag.token.paddingVSM"),
-            sectionId: "token"
+            sectionId: "component"
         ) {
             HStack {
                 Moin.Tag(tr("tag.example.small"), size: .small)
@@ -300,18 +199,17 @@ extension TagTokenView {
         } code: {
             "config.components.tag.paddingVSM = \(Int(config.components.tag.paddingVSM))"
         }
-        .scrollAnchor("token.paddingVSM")
     }
     
-    // MARK: - Icon Tokens
+    // MARK: - Icon Tokens (组件专属)
     
     var tagIconSizeTokenCard: some View {
         TokenCard(
             name: "iconSize",
             type: "CGFloat",
-            defaultValue: "12",
+            defaultValue: "10",
             description: tr("tag.token.iconSizeMD"),
-            sectionId: "token"
+            sectionId: "component"
         ) {
             HStack {
                 Moin.Tag(tr("tag.example.apple"), size: .medium, icon: "apple.logo")
@@ -324,16 +222,15 @@ extension TagTokenView {
         } code: {
             "config.components.tag.iconSize = \(Int(config.components.tag.iconSize))"
         }
-        .scrollAnchor("token.iconSize")
     }
     
     var tagIconSizeLGTokenCard: some View {
         TokenCard(
             name: "iconSizeLG",
             type: "CGFloat",
-            defaultValue: "14",
+            defaultValue: "12",
             description: tr("tag.token.iconSizeLG"),
-            sectionId: "token"
+            sectionId: "component"
         ) {
             HStack {
                 Moin.Tag(tr("tag.example.apple"), size: .large, icon: "apple.logo")
@@ -346,16 +243,15 @@ extension TagTokenView {
         } code: {
             "config.components.tag.iconSizeLG = \(Int(config.components.tag.iconSizeLG))"
         }
-        .scrollAnchor("token.iconSizeLG")
     }
     
     var tagIconSizeSMTokenCard: some View {
         TokenCard(
             name: "iconSizeSM",
             type: "CGFloat",
-            defaultValue: "10",
+            defaultValue: "8",
             description: tr("tag.token.iconSizeSM"),
-            sectionId: "token"
+            sectionId: "component"
         ) {
             HStack {
                 Moin.Tag(tr("tag.example.apple"), size: .small, icon: "apple.logo")
@@ -368,7 +264,27 @@ extension TagTokenView {
         } code: {
             "config.components.tag.iconSizeSM = \(Int(config.components.tag.iconSizeSM))"
         }
-        .scrollAnchor("token.iconSizeSM")
+    }
+    
+    var tagCloseIconSizeTokenCard: some View {
+        TokenCard(
+            name: "closeIconSize",
+            type: "CGFloat",
+            defaultValue: "8",
+            description: tr("tag.token.closeIconSize"),
+            sectionId: "component"
+        ) {
+            HStack {
+                Moin.Tag(tr("tag.example.closable"), closable: true)
+            }
+        } editor: {
+            TokenValueRow(label: "closeIconSize", value: Binding(
+                get: { Moin.ConfigProvider.shared.components.tag.closeIconSize },
+                set: { Moin.ConfigProvider.shared.components.tag.closeIconSize = $0 }
+            ))
+        } code: {
+            "config.components.tag.closeIconSize = \(Int(config.components.tag.closeIconSize))"
+        }
     }
     
     var tagIconGapTokenCard: some View {
@@ -377,7 +293,7 @@ extension TagTokenView {
             type: "CGFloat",
             defaultValue: "4",
             description: tr("tag.token.iconGapMD"),
-            sectionId: "token"
+            sectionId: "component"
         ) {
             HStack {
                 Moin.Tag(tr("tag.example.apple"), size: .medium, icon: "apple.logo")
@@ -390,10 +306,7 @@ extension TagTokenView {
         } code: {
             "config.components.tag.iconGap = \(Int(config.components.tag.iconGap))"
         }
-        .scrollAnchor("token.iconGap")
     }
-    // Icon Gap LG/SM Omitted for brevity but included in spirit if requested. 
-    // User requested "ALL", so I should add them.
     
     var tagIconGapLGTokenCard: some View {
         TokenCard(
@@ -401,7 +314,7 @@ extension TagTokenView {
             type: "CGFloat",
             defaultValue: "4",
             description: tr("tag.token.iconGapLG"),
-            sectionId: "token"
+            sectionId: "component"
         ) {
             HStack {
                 Moin.Tag(tr("tag.example.apple"), size: .large, icon: "apple.logo")
@@ -414,7 +327,6 @@ extension TagTokenView {
         } code: {
             "config.components.tag.iconGapLG = \(Int(config.components.tag.iconGapLG))"
         }
-        .scrollAnchor("token.iconGapLG")
     }
     
     var tagIconGapSMTokenCard: some View {
@@ -423,7 +335,7 @@ extension TagTokenView {
             type: "CGFloat",
             defaultValue: "2",
             description: tr("tag.token.iconGapSM"),
-            sectionId: "token"
+            sectionId: "component"
         ) {
             HStack {
                 Moin.Tag(tr("tag.example.apple"), size: .small, icon: "apple.logo")
@@ -436,13 +348,35 @@ extension TagTokenView {
         } code: {
             "config.components.tag.iconGapSM = \(Int(config.components.tag.iconGapSM))"
         }
-        .scrollAnchor("token.iconGapSM")
     }
 
+    // MARK: - Global Tokens (全局Token，影响所有组件)
 
-    // MARK: - Global Tokens
-
-    var tagGlobalFontSizeCard: some View {
+    var tagFontSizeCard: some View {
+        TokenCard(
+            name: "fontSize",
+            type: "CGFloat",
+            defaultValue: "14",
+            description: tr("tag.token.fontSize"),
+            sectionId: "global"
+        ) {
+            HStack(spacing: Moin.Constants.Spacing.md) {
+                Moin.Tag(tr("tag.example.large"), size: .large)
+                Text("fontSize: \(Int(config.token.fontSize))px")
+                    .font(.system(size: 11, design: .monospaced))
+                    .foregroundStyle(.secondary)
+            }
+        } editor: {
+            TokenValueRow(label: "seed.fontSize", value: Binding(
+                get: { config.seed.fontSize },
+                set: { config.seed.fontSize = $0 }
+            ), range: 10...24, onChange: { config.regenerateTokens() })
+        } code: {
+            "config.seed.fontSize = \(Int(config.seed.fontSize))"
+        }
+    }
+    
+    var tagFontSizeSMCard: some View {
         TokenCard(
             name: "fontSizeSM",
             type: "CGFloat",
@@ -450,21 +384,150 @@ extension TagTokenView {
             description: tr("tag.token.fontSizeSM"),
             sectionId: "global"
         ) {
-            HStack {
-                Text(tr("tag.label.text_font_size")).font(.system(size: Moin.ConfigProvider.shared.token.fontSizeSM))
-                Moin.Tag(tr("tag.label.tag_font_size"))
+            HStack(spacing: Moin.Constants.Spacing.md) {
+                Moin.Tag(tr("tag.example.medium"), size: .medium)
+                Text("fontSizeSM: \(Int(config.token.fontSizeSM))px")
+                    .font(.system(size: 11, design: .monospaced))
+                    .foregroundStyle(.secondary)
+            }
+        } code: {
+            "// \(tr("api.derived_from")) seed.fontSize - 2"
+        }
+    }
+    
+    var tagLineWidthCard: some View {
+        TokenCard(
+            name: "lineWidth",
+            type: "CGFloat",
+            defaultValue: "1",
+            description: tr("tag.token.lineWidth"),
+            sectionId: "global"
+        ) {
+            HStack(spacing: Moin.Constants.Spacing.md) {
+                Moin.Tag(tr("tag.example.outlined"), variant: .outlined)
+                Text("lineWidth: \(Int(config.token.lineWidth))px")
+                    .font(.system(size: 11, design: .monospaced))
+                    .foregroundStyle(.secondary)
             }
         } editor: {
-            TokenValueRow(label: "fontSize", value: Binding(
-                get: { Moin.ConfigProvider.shared.token.fontSizeSM },
-                set: { 
-                    Moin.ConfigProvider.shared.seed.fontSize = $0 + 2 // approx reverse mapping
-                    Moin.ConfigProvider.shared.regenerateTokens()
-                }
-            ))
+            TokenValueRow(label: "seed.lineWidth", value: Binding(
+                get: { config.seed.lineWidth },
+                set: { config.seed.lineWidth = $0 }
+            ), range: 0...5, onChange: { config.regenerateTokens() })
         } code: {
-            "// \(tr("api.derived_from")) fontSize - 2"
+            "config.seed.lineWidth = \(Int(config.seed.lineWidth))"
         }
-        .scrollAnchor("global.fontSizeSM")
+    }
+    
+    var tagBorderRadiusSMCard: some View {
+        TokenCard(
+            name: "borderRadiusSM",
+            type: "CGFloat",
+            defaultValue: "4",
+            description: tr("tag.token.borderRadiusSM"),
+            sectionId: "global"
+        ) {
+            HStack(spacing: Moin.Constants.Spacing.md) {
+                Moin.Tag(tr("tag.example.default"))
+                Text("borderRadiusSM: \(Int(config.token.borderRadiusSM))px")
+                    .font(.system(size: 11, design: .monospaced))
+                    .foregroundStyle(.secondary)
+            }
+        } editor: {
+            TokenValueRow(label: "seed.borderRadius", value: Binding(
+                get: { config.seed.borderRadius },
+                set: { config.seed.borderRadius = $0 }
+            ), range: 0...20, onChange: { config.regenerateTokens() })
+        } code: {
+            "// \(tr("api.derived_from")) seed.borderRadius - 2"
+        }
+    }
+    
+    var tagColorSuccessCard: some View {
+        TokenCard(
+            name: "colorSuccess",
+            type: "Color",
+            defaultValue: "#52c41a",
+            description: tr("tag.token.colorSuccess"),
+            sectionId: "global"
+        ) {
+            HStack {
+                Moin.Tag(tr("tag.example.success"), color: .success)
+                Moin.Tag(tr("tag.example.success"), color: .success, variant: .solid)
+            }
+        } editor: {
+            ColorPresetRow(label: "seed.colorSuccess", color: Binding(
+                get: { config.seed.colorSuccess },
+                set: { config.seed.colorSuccess = $0 }
+            ), onChange: { config.regenerateTokens() })
+        } code: {
+            "config.seed.colorSuccess = Color(...)"
+        }
+    }
+    
+    var tagColorWarningCard: some View {
+        TokenCard(
+            name: "colorWarning",
+            type: "Color",
+            defaultValue: "#faad14",
+            description: tr("tag.token.colorWarning"),
+            sectionId: "global"
+        ) {
+            HStack {
+                Moin.Tag(tr("tag.example.warning"), color: .warning)
+                Moin.Tag(tr("tag.example.warning"), color: .warning, variant: .solid)
+            }
+        } editor: {
+            ColorPresetRow(label: "seed.colorWarning", color: Binding(
+                get: { config.seed.colorWarning },
+                set: { config.seed.colorWarning = $0 }
+            ), onChange: { config.regenerateTokens() })
+        } code: {
+            "config.seed.colorWarning = Color(...)"
+        }
+    }
+    
+    var tagColorErrorCard: some View {
+        TokenCard(
+            name: "colorError",
+            type: "Color",
+            defaultValue: "#ff4d4f",
+            description: tr("tag.token.colorError"),
+            sectionId: "global"
+        ) {
+            HStack {
+                Moin.Tag(tr("tag.example.error"), color: .error)
+                Moin.Tag(tr("tag.example.error"), color: .error, variant: .solid)
+            }
+        } editor: {
+            ColorPresetRow(label: "seed.colorError", color: Binding(
+                get: { config.seed.colorError },
+                set: { config.seed.colorError = $0 }
+            ), onChange: { config.regenerateTokens() })
+        } code: {
+            "config.seed.colorError = Color(...)"
+        }
+    }
+    
+    var tagColorPrimaryCard: some View {
+        TokenCard(
+            name: "colorPrimary",
+            type: "Color",
+            defaultValue: "#1677ff",
+            description: tr("tag.token.colorPrimary"),
+            sectionId: "global"
+        ) {
+            HStack {
+                Moin.Tag(tr("tag.example.processing"), color: .processing)
+                Moin.Tag(tr("tag.example.processing"), color: .processing, variant: .solid)
+            }
+        } editor: {
+            ColorPresetRow(label: "seed.colorPrimary", color: Binding(
+                get: { config.seed.colorPrimary },
+                set: { config.seed.colorPrimary = $0 }
+            ), onChange: { config.regenerateTokens() })
+        } code: {
+            "config.seed.colorPrimary = Color(...)"
+        }
     }
 }

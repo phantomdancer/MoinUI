@@ -3,6 +3,10 @@ import SwiftUI
 // MARK: - Moin.TagToken
 
 public extension Moin {
+    /// Tag 组件的设计变量（仅组件专属Token）
+    ///
+    /// 参考 Ant Design Tag Component Token
+    /// 全局Token（fontSize、lineWidth等）直接从全局token读取
     struct TagToken {
         /// 默认背景色
         public var defaultBg: Color
@@ -10,16 +14,8 @@ public extension Moin {
         public var defaultColor: Color
         /// 实心标签文字颜色
         public var solidTextColor: Color
-        /// 边框宽度
-        public var lineWidth: CGFloat
 
-        // MARK: - 尺寸相关 Token
-        /// 字号 (Large)
-        public var fontSizeLG: CGFloat
-        /// 字号 (Medium)
-        public var fontSize: CGFloat
-        /// 字号 (Small)
-        public var fontSizeSM: CGFloat
+        // MARK: - 图标相关 Token (组件专属)
         /// 图标尺寸 (Large)
         public var iconSizeLG: CGFloat
         /// 图标尺寸 (Medium)
@@ -38,6 +34,8 @@ public extension Moin {
         public var iconGap: CGFloat
         /// 图标间距 (Small)
         public var iconGapSM: CGFloat
+
+        // MARK: - 内边距 Token (组件专属)
         /// 水平内边距 (Large)
         public var paddingHLG: CGFloat
         /// 水平内边距 (Medium)
@@ -56,11 +54,6 @@ public extension Moin {
                 defaultBg: token.colorFillSecondary,
                 defaultColor: token.colorText,
                 solidTextColor: .white,
-                lineWidth: token.lineWidth,
-                // 字号
-                fontSizeLG: token.fontSize,
-                fontSize: token.fontSizeSM,
-                fontSizeSM: token.fontSizeSM - 2,
                 // 图标尺寸
                 iconSizeLG: 12,
                 iconSize: 10,

@@ -35,7 +35,6 @@ struct TagTokenSection: View {
                         ("defaultBg", "Color", "-", tr("tag.token.defaultBg")),
                         ("defaultColor", "Color", "-", tr("tag.token.defaultColor")),
                         ("solidTextColor", "Color", "#fff", tr("tag.token.solidTextColor")),
-                        ("lineWidth", "CGFloat", "\(Int(tagToken.lineWidth))", tr("tag.token.lineWidth")),
                     ]
                 )
 
@@ -54,9 +53,6 @@ struct TagTokenSection: View {
                         tr("api.description")
                     ),
                     rows: [
-                        ("fontSizeLG", "CGFloat", "\(Int(tagToken.fontSizeLG))", tr("tag.token.fontSizeLG")),
-                        ("fontSize", "CGFloat", "\(Int(tagToken.fontSize))", tr("tag.token.fontSizeMD")),
-                        ("fontSizeSM", "CGFloat", "\(Int(tagToken.fontSizeSM))", tr("tag.token.fontSizeSM")),
                         ("iconSizeLG", "CGFloat", "\(Int(tagToken.iconSizeLG))", tr("tag.token.iconSizeLG")),
                         ("iconSize", "CGFloat", "\(Int(tagToken.iconSize))", tr("tag.token.iconSizeMD")),
                         ("iconSizeSM", "CGFloat", "\(Int(tagToken.iconSizeSM))", tr("tag.token.iconSizeSM")),

@@ -123,11 +123,11 @@ config.components.tag.defaultBg = Color(hex: "\(config.components.tag.defaultBg.
 config.components.tag.defaultColor = Color(hex: "\(config.components.tag.defaultColor.hexString)")
 config.components.tag.solidTextColor = Color(hex: "\(config.components.tag.solidTextColor.hexString)")
 // \(tr("token.playground.tag_sizes"))
-config.components.tag.fontSize = \(Int(config.components.tag.fontSize))
-config.components.tag.fontSizeLG = \(Int(config.components.tag.fontSizeLG))
-config.components.tag.fontSizeSM = \(Int(config.components.tag.fontSizeSM))
 config.components.tag.paddingH = \(Int(config.components.tag.paddingH))
 config.components.tag.paddingV = \(Int(config.components.tag.paddingV))
+config.components.tag.iconSize = \(Int(config.components.tag.iconSize))
+// \(tr("token.playground.code_global_readonly"))
+// seed.fontSize = \(Int(config.seed.fontSize)) // -> token.fontSizeSM
 """
         case .badge:
             return """
