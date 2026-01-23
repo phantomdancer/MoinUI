@@ -8,7 +8,7 @@ struct AlertAPIView: View {
         [
             DocSidebarSection(
                 title: tr("api.button.section.common"),
-                items: ["type", "title", "description", "showIcon", "closable", "banner", "onClose"],
+                items: ["type", "title", "description", "showIcon", "closable", "banner", "action", "onClose"],
                 sectionId: "api"
             )
         ]
@@ -36,6 +36,7 @@ struct AlertAPIView: View {
         case "showIcon": showIconCard
         case "closable": closableCard
         case "banner": bannerCard
+        case "action": actionCard
         case "onClose": onCloseCard
         default: EmptyView()
         }
@@ -146,6 +147,26 @@ struct AlertAPIView: View {
         } code: {
             """
             Moin.Alert(type: .warning, title: "\(tr("alert.demo.api_demo.banner"))", banner: true)
+            """
+        }
+    }
+    
+    private var actionCard: some View {
+        PropertyCard(
+            name: "action",
+            type: "View",
+            defaultValue: "-",
+            description: tr("api.alert.action"),
+            sectionId: "api"
+        ) {
+            Moin.Alert(type: .success, title: tr("alert.demo.action.success_title"), showIcon: true) {
+                Moin.Button(tr("alert.demo.action.undo"), size: .small, variant: .text)
+            }
+        } code: {
+            """
+            Moin.Alert(type: .success, title: "Success", showIcon: true) {
+                Moin.Button("UNDO", size: .small, variant: .text)
+            }
             """
         }
     }

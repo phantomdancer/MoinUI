@@ -6,37 +6,32 @@ struct AlertTokenView: View {
     @Environment(\.moinToken) var token
     @ObservedObject var config = Moin.ConfigProvider.shared
     
-    // MARK: - Token Sections
+    // MARK: - Token Sections (与 Ant Design 一致)
     
     private var tokenSections: [DocSidebarSection] {
         [
+            // 组件 Token（仅3项）
             DocSidebarSection(
-                title: tr("token.preset"),
+                title: tr("doc.section.component_token"),
                 items: [
-                    "successBg", "successBorder", "successIcon",
-                    "infoBg", "infoBorder", "infoIcon",
-                    "warningBg", "warningBorder", "warningIcon",
-                    "errorBg", "errorBorder", "errorIcon"
+                    "defaultPadding", "withDescriptionIconSize", "withDescriptionPadding"
                 ],
-                sectionId: "token"
+                sectionId: "component"
             ),
-            DocSidebarSection(
-                title: tr("token.size"),
-                items: [
-                    "defaultPadding", "withDescriptionPadding", "withDescriptionIconSize",
-                    "gap", "titleGap",
-                    "iconSize", "fontSize", "titleFontSize"
-                ],
-                sectionId: "token"
-            ),
-            DocSidebarSection(
-                title: tr("token.border"),
-                items: ["borderWidth", "cornerRadius"],
-                sectionId: "token"
-            ),
+            // 全局 Token（其余全部）
             DocSidebarSection(
                 title: tr("doc.section.global_token"),
-                items: ["colorTextHeading", "colorText", "colorIcon", "colorIconHover", "fontSizeIcon"],
+                items: [
+                    "colorError", "colorErrorBg", "colorErrorBorder",
+                    "colorIcon", "colorIconHover",
+                    "colorInfo", "colorInfoBg", "colorInfoBorder",
+                    "colorSuccess", "colorSuccessBg", "colorSuccessBorder",
+                    "colorText", "colorTextHeading",
+                    "colorWarning", "colorWarningBg", "colorWarningBorder",
+                    "borderRadiusLG", "fontSize", "fontSizeIcon", "fontSizeLG",
+                    "lineHeight", "lineWidth",
+                    "marginSM", "marginXS"
+                ],
                 sectionId: "global"
             )
         ]
@@ -44,19 +39,23 @@ struct AlertTokenView: View {
     
     // 重置所有 Token 到默认值
     private func resetAll() {
+        // 重置 seed tokens
+        config.seed = Moin.SeedToken.default
+        config.regenerateTokens()
+        
+        // 重置组件 tokens
         let defaultAlert = Moin.AlertToken.generate(from: config.token)
         config.components.alert = defaultAlert
         
-        // 通知重置
         NotificationCenter.default.post(name: .alertDocReset, object: nil)
     }
     
     var body: some View {
         ComponentDocBody(
             sections: tokenSections,
-            initialItemId: "token"
+            initialItemId: "component"
         ) { sectionId in
-            if sectionId == "token" {
+            if sectionId == "component" {
                 Text(tr("doc.section.component_token")).font(.title3).fontWeight(.semibold)
             } else if sectionId == "global" {
                 Text(tr("doc.section.global_token")).font(.title3).fontWeight(.semibold)
@@ -84,145 +83,47 @@ struct AlertTokenView: View {
     @ViewBuilder
     private func cardForItem(_ item: String) -> some View {
         switch item {
-        // Colors
-        case "colorSuccessBg": successBgCard
-        case "colorSuccessBorder": successBorderCard
-        case "colorSuccess": successIconCard
-        case "colorInfoBg": infoBgCard
-        case "colorInfoBorder": infoBorderCard
-        case "colorInfo": infoIconCard
-        case "colorWarningBg": warningBgCard
-        case "colorWarningBorder": warningBorderCard
-        case "colorWarning": warningIconCard
-        case "colorErrorBg": errorBgCard
-        case "colorErrorBorder": errorBorderCard
-        case "colorError": errorIconCard
-        
-        // Sizes
+        // Component Token
         case "defaultPadding": defaultPaddingCard
-        case "withDescriptionPadding": withDescriptionPaddingCard
         case "withDescriptionIconSize": withDescriptionIconSizeCard
-        case "gap": gapCard
-        case "titleGap": titleGapCard
-        case "iconSize": iconSizeCard
-        case "fontSize": fontSizeCard
-        case "titleFontSize": titleFontSizeCard
+        case "withDescriptionPadding": withDescriptionPaddingCard
         
-        // Border
-        case "borderWidth": borderWidthCard
-        case "cornerRadius": cornerRadiusCard
-        
-        // Global
-        case "colorTextHeading": colorTextHeadingCard
-        case "colorText": colorTextCard
+        // Global Token - Colors
+        case "colorError": colorErrorCard
+        case "colorErrorBg": colorErrorBgCard
+        case "colorErrorBorder": colorErrorBorderCard
         case "colorIcon": colorIconCard
         case "colorIconHover": colorIconHoverCard
+        case "colorInfo": colorInfoCard
+        case "colorInfoBg": colorInfoBgCard
+        case "colorInfoBorder": colorInfoBorderCard
+        case "colorSuccess": colorSuccessCard
+        case "colorSuccessBg": colorSuccessBgCard
+        case "colorSuccessBorder": colorSuccessBorderCard
+        case "colorText": colorTextCard
+        case "colorTextHeading": colorTextHeadingCard
+        case "colorWarning": colorWarningCard
+        case "colorWarningBg": colorWarningBgCard
+        case "colorWarningBorder": colorWarningBorderCard
+        
+        // Global Token - Size
+        case "borderRadiusLG": borderRadiusLGCard
+        case "fontSize": fontSizeCard
         case "fontSizeIcon": fontSizeIconCard
+        case "fontSizeLG": fontSizeLGCard
+        case "lineHeight": lineHeightCard
+        case "lineWidth": lineWidthCard
+        case "marginSM": marginSMCard
+        case "marginXS": marginXSCard
         
         default: EmptyView()
         }
     }
     
-    // MARK: - Cards
-    
-    private var successBgCard: some View {
-        TokenCard(name: "colorSuccessBg", type: "Color", defaultValue: "token.colorSuccessBg", description: tr("token.alert.colorSuccessBg"), sectionId: "token") {
-            Moin.Alert(type: .success, title: tr("alert.demo.token_demo.success"))
-        } editor: {
-            ColorPresetRow(label: "colorSuccessBg", color: Binding(get: { config.components.alert.colorSuccessBg }, set: { config.components.alert.colorSuccessBg = $0 }))
-        } code: { "config.components.alert.colorSuccessBg = Color(hex: \"\(config.components.alert.colorSuccessBg.toHex())\")" }
-    }
-    
-    private var successBorderCard: some View {
-        TokenCard(name: "colorSuccessBorder", type: "Color", defaultValue: "token.colorSuccessBorder", description: tr("token.alert.colorSuccessBorder"), sectionId: "token") {
-            Moin.Alert(type: .success, title: tr("alert.demo.token_demo.success"))
-        } editor: {
-            ColorPresetRow(label: "colorSuccessBorder", color: Binding(get: { config.components.alert.colorSuccessBorder }, set: { config.components.alert.colorSuccessBorder = $0 }))
-        } code: { "config.components.alert.colorSuccessBorder = Color(hex: \"\(config.components.alert.colorSuccessBorder.toHex())\")" }
-    }
-    
-    private var successIconCard: some View {
-        TokenCard(name: "colorSuccess", type: "Color", defaultValue: "token.colorSuccess", description: tr("token.alert.colorSuccess"), sectionId: "token") {
-            Moin.Alert(type: .success, title: tr("alert.demo.token_demo.success"), showIcon: true)
-        } editor: {
-            ColorPresetRow(label: "colorSuccess", color: Binding(get: { config.components.alert.colorSuccess }, set: { config.components.alert.colorSuccess = $0 }))
-        } code: { "config.components.alert.colorSuccess = Color(hex: \"\(config.components.alert.colorSuccess.toHex())\")" }
-    }
-    
-    private var infoBgCard: some View {
-        TokenCard(name: "colorInfoBg", type: "Color", defaultValue: "token.colorInfoBg", description: tr("token.alert.colorInfoBg"), sectionId: "token") {
-            Moin.Alert(type: .info, title: tr("alert.demo.token_demo.info"))
-        } editor: {
-             ColorPresetRow(label: "colorInfoBg", color: Binding(get: { config.components.alert.colorInfoBg }, set: { config.components.alert.colorInfoBg = $0 }))
-        } code: { "config.components.alert.colorInfoBg = Color(hex: \"\(config.components.alert.colorInfoBg.toHex())\")" }
-    }
-    
-    private var infoBorderCard: some View {
-        TokenCard(name: "colorInfoBorder", type: "Color", defaultValue: "token.colorInfoBorder", description: tr("token.alert.colorInfoBorder"), sectionId: "token") {
-            Moin.Alert(type: .info, title: tr("alert.demo.token_demo.info"))
-        } editor: {
-             ColorPresetRow(label: "colorInfoBorder", color: Binding(get: { config.components.alert.colorInfoBorder }, set: { config.components.alert.colorInfoBorder = $0 }))
-        } code: { "config.components.alert.colorInfoBorder = Color(hex: \"\(config.components.alert.colorInfoBorder.toHex())\")" }
-    }
-    
-    private var infoIconCard: some View {
-        TokenCard(name: "colorInfo", type: "Color", defaultValue: "token.colorInfo", description: tr("token.alert.colorInfo"), sectionId: "token") {
-            Moin.Alert(type: .info, title: tr("alert.demo.token_demo.info"), showIcon: true)
-        } editor: {
-             ColorPresetRow(label: "colorInfo", color: Binding(get: { config.components.alert.colorInfo }, set: { config.components.alert.colorInfo = $0 }))
-        } code: { "config.components.alert.colorInfo = Color(hex: \"\(config.components.alert.colorInfo.toHex())\")" }
-    }
-    
-    private var warningBgCard: some View {
-        TokenCard(name: "colorWarningBg", type: "Color", defaultValue: "token.colorWarningBg", description: tr("token.alert.colorWarningBg"), sectionId: "token") {
-            Moin.Alert(type: .warning, title: tr("alert.demo.token_demo.warning"))
-        } editor: {
-             ColorPresetRow(label: "colorWarningBg", color: Binding(get: { config.components.alert.colorWarningBg }, set: { config.components.alert.colorWarningBg = $0 }))
-        } code: { "config.components.alert.colorWarningBg = Color(hex: \"\(config.components.alert.colorWarningBg.toHex())\")" }
-    }
-    
-    private var warningBorderCard: some View {
-        TokenCard(name: "colorWarningBorder", type: "Color", defaultValue: "token.colorWarningBorder", description: tr("token.alert.colorWarningBorder"), sectionId: "token") {
-            Moin.Alert(type: .warning, title: tr("alert.demo.token_demo.warning"))
-        } editor: {
-             ColorPresetRow(label: "colorWarningBorder", color: Binding(get: { config.components.alert.colorWarningBorder }, set: { config.components.alert.colorWarningBorder = $0 }))
-        } code: { "config.components.alert.colorWarningBorder = Color(hex: \"\(config.components.alert.colorWarningBorder.toHex())\")" }
-    }
-    
-    private var warningIconCard: some View {
-        TokenCard(name: "colorWarning", type: "Color", defaultValue: "token.colorWarning", description: tr("token.alert.colorWarning"), sectionId: "token") {
-            Moin.Alert(type: .warning, title: tr("alert.demo.token_demo.warning"), showIcon: true)
-        } editor: {
-             ColorPresetRow(label: "colorWarning", color: Binding(get: { config.components.alert.colorWarning }, set: { config.components.alert.colorWarning = $0 }))
-        } code: { "config.components.alert.colorWarning = Color(hex: \"\(config.components.alert.colorWarning.toHex())\")" }
-    }
-    
-    private var errorBgCard: some View {
-        TokenCard(name: "colorErrorBg", type: "Color", defaultValue: "token.colorDangerBg", description: tr("token.alert.colorErrorBg"), sectionId: "token") {
-            Moin.Alert(type: .error, title: tr("alert.demo.token_demo.error"))
-        } editor: {
-             ColorPresetRow(label: "colorErrorBg", color: Binding(get: { config.components.alert.colorErrorBg }, set: { config.components.alert.colorErrorBg = $0 }))
-        } code: { "config.components.alert.colorErrorBg = Color(hex: \"\(config.components.alert.colorErrorBg.toHex())\")" }
-    }
-    
-    private var errorBorderCard: some View {
-        TokenCard(name: "colorErrorBorder", type: "Color", defaultValue: "token.colorDangerBorder", description: tr("token.alert.colorErrorBorder"), sectionId: "token") {
-            Moin.Alert(type: .error, title: tr("alert.demo.token_demo.error"))
-        } editor: {
-             ColorPresetRow(label: "colorErrorBorder", color: Binding(get: { config.components.alert.colorErrorBorder }, set: { config.components.alert.colorErrorBorder = $0 }))
-        } code: { "config.components.alert.colorErrorBorder = Color(hex: \"\(config.components.alert.colorErrorBorder.toHex())\")" }
-    }
-    
-    private var errorIconCard: some View {
-        TokenCard(name: "colorError", type: "Color", defaultValue: "token.colorDanger", description: tr("token.alert.colorError"), sectionId: "token") {
-            Moin.Alert(type: .error, title: tr("alert.demo.token_demo.error"), showIcon: true)
-        } editor: {
-             ColorPresetRow(label: "colorError", color: Binding(get: { config.components.alert.colorError }, set: { config.components.alert.colorError = $0 }))
-        } code: { "config.components.alert.colorError = Color(hex: \"\(config.components.alert.colorError.toHex())\")" }
-    }
+    // MARK: - Component Token Cards
     
     private var defaultPaddingCard: some View {
-        TokenCard(name: "defaultPadding", type: "EdgeInsets", defaultValue: "8px 12px", description: tr("token.alert.defaultPadding"), sectionId: "token") {
+        TokenCard(name: "defaultPadding", type: "EdgeInsets", defaultValue: "8px 12px", description: tr("token.alert.defaultPadding"), sectionId: "component") {
              Moin.Alert(type: .info, title: tr("alert.demo.token_demo.defaultPadding"))
         } editor: {
             VStack {
@@ -240,8 +141,16 @@ struct AlertTokenView: View {
         } code: { "config.components.alert.defaultPadding = EdgeInsets(...)" }
     }
     
+    private var withDescriptionIconSizeCard: some View {
+        TokenCard(name: "withDescriptionIconSize", type: "number", defaultValue: "24", description: tr("token.alert.withDescriptionIconSize"), sectionId: "component") {
+             Moin.Alert(type: .info, title: tr("alert.demo.token_demo.title"), description: tr("alert.demo.token_demo.description"), showIcon: true)
+        } editor: {
+            TokenValueRow(label: "Size", value: Binding(get: { config.components.alert.withDescriptionIconSize }, set: { config.components.alert.withDescriptionIconSize = $0 }), range: 12...48)
+        } code: { "config.components.alert.withDescriptionIconSize = \(Int(config.components.alert.withDescriptionIconSize))" }
+    }
+    
     private var withDescriptionPaddingCard: some View {
-        TokenCard(name: "withDescriptionPadding", type: "EdgeInsets", defaultValue: "20px 24px", description: tr("token.alert.withDescriptionPadding"), sectionId: "token") {
+        TokenCard(name: "withDescriptionPadding", type: "EdgeInsets", defaultValue: "20px 24px", description: tr("token.alert.withDescriptionPadding"), sectionId: "component") {
              Moin.Alert(type: .info, title: tr("alert.demo.token_demo.title"), description: tr("alert.demo.token_demo.description"))
         } editor: {
             VStack {
@@ -258,108 +167,227 @@ struct AlertTokenView: View {
             }
         } code: { "config.components.alert.withDescriptionPadding = EdgeInsets(...)" }
     }
-    private var withDescriptionIconSizeCard: some View {
-        TokenCard(name: "withDescriptionIconSize", type: "CGFloat", defaultValue: "24", description: tr("token.alert.withDescriptionIconSize"), sectionId: "token") {
-             Moin.Alert(type: .info, title: tr("alert.demo.token_demo.title"), description: tr("alert.demo.token_demo.description"), showIcon: true)
+    
+    // MARK: - Global Token Cards - Status Colors (可编辑 seed Token)
+    
+    private var colorSuccessCard: some View {
+        TokenCard(name: "colorSuccess", type: "string", defaultValue: "#52c41a", description: tr("token.alert.colorSuccess"), sectionId: "global") {
+            Moin.Alert(type: .success, title: tr("alert.demo.token_demo.success"), showIcon: true)
         } editor: {
-            TokenValueRow(label: "Icon Size", value: Binding(get: { config.components.alert.withDescriptionIconSize }, set: { config.components.alert.withDescriptionIconSize = $0 }), range: 12...48)
-        } code: { "config.components.alert.withDescriptionIconSize = \(Int(config.components.alert.withDescriptionIconSize))" }
-    }
-    private var gapCard: some View {
-        TokenCard(name: "gap", type: "CGFloat", defaultValue: "token.marginXS", description: tr("token.alert.gap"), sectionId: "token") {
-             Moin.Alert(type: .info, title: tr("alert.demo.token_demo.gap"), showIcon: true)
-        } editor: {
-            TokenValueRow(label: "gap", value: Binding(get: { config.components.alert.gap }, set: { config.components.alert.gap = $0 }), range: 0...32)
-        } code: { "config.components.alert.gap = \(Int(config.components.alert.gap))" }
+            ColorPresetRow(label: "seed.colorSuccess", color: $config.seed.colorSuccess, onChange: { config.regenerateTokens() })
+        } code: { "config.seed.colorSuccess = Color(...)" }
     }
     
-    private var titleGapCard: some View {
-        TokenCard(name: "titleGap", type: "CGFloat", defaultValue: "token.marginXXS", description: tr("token.alert.titleGap"), sectionId: "token") {
-             Moin.Alert(type: .info, title: tr("alert.demo.token_demo.title"), description: tr("alert.demo.token_demo.description"))
+    private var colorSuccessBgCard: some View {
+        TokenCard(name: "colorSuccessBg", type: "string", defaultValue: "#f6ffed", description: tr("token.alert.colorSuccessBg"), sectionId: "global") {
+            Moin.Alert(type: .success, title: tr("alert.demo.token_demo.success"))
         } editor: {
-            TokenValueRow(label: "titleGap", value: Binding(get: { config.components.alert.titleGap }, set: { config.components.alert.titleGap = $0 }), range: 0...32)
-        } code: { "config.components.alert.titleGap = \(Int(config.components.alert.titleGap))" }
+            ColorPresetRow(label: "seed.colorSuccess", color: $config.seed.colorSuccess, onChange: { config.regenerateTokens() })
+        } code: { "// \(tr("api.derived_from")) seed.colorSuccess" }
     }
     
-    private var iconSizeCard: some View {
-        TokenCard(name: "iconSize", type: "CGFloat", defaultValue: "16", description: tr("token.alert.iconSize"), sectionId: "token") {
-             Moin.Alert(type: .info, title: tr("alert.demo.token_demo.icon_size"), showIcon: true)
+    private var colorSuccessBorderCard: some View {
+        TokenCard(name: "colorSuccessBorder", type: "string", defaultValue: "#b7eb8f", description: tr("token.alert.colorSuccessBorder"), sectionId: "global") {
+            Moin.Alert(type: .success, title: tr("alert.demo.token_demo.success"))
         } editor: {
-            TokenValueRow(label: "iconSize", value: Binding(get: { config.components.alert.iconSize }, set: { config.components.alert.iconSize = $0 }), range: 12...48)
-        } code: { "config.components.alert.iconSize = \(Int(config.components.alert.iconSize))" }
+            ColorPresetRow(label: "seed.colorSuccess", color: $config.seed.colorSuccess, onChange: { config.regenerateTokens() })
+        } code: { "// \(tr("api.derived_from")) seed.colorSuccess" }
     }
     
-    private var fontSizeCard: some View {
-        TokenCard(name: "fontSize", type: "CGFloat", defaultValue: "token.fontSize", description: tr("token.alert.fontSize"), sectionId: "token") {
-             Moin.Alert(type: .info, title: tr("alert.demo.token_demo.title"), description: tr("alert.demo.token_demo.font_size"))
+    private var colorInfoCard: some View {
+        TokenCard(name: "colorInfo", type: "string", defaultValue: "#1677ff", description: tr("token.alert.colorInfo"), sectionId: "global") {
+            Moin.Alert(type: .info, title: tr("alert.demo.token_demo.info"), showIcon: true)
         } editor: {
-            TokenValueRow(label: "fontSize", value: Binding(get: { config.components.alert.fontSize }, set: { config.components.alert.fontSize = $0 }), range: 10...24)
-        } code: { "config.components.alert.fontSize = \(Int(config.components.alert.fontSize))" }
+            ColorPresetRow(label: "seed.colorInfo", color: $config.seed.colorInfo, onChange: { config.regenerateTokens() })
+        } code: { "config.seed.colorInfo = Color(...)" }
     }
     
-    private var titleFontSizeCard: some View {
-        TokenCard(name: "titleFontSize", type: "CGFloat", defaultValue: "token.fontSizeLG", description: tr("token.alert.titleFontSize"), sectionId: "token") {
-             Moin.Alert(type: .info, title: tr("alert.demo.token_demo.title_font_size"), description: tr("alert.demo.token_demo.description"))
+    private var colorInfoBgCard: some View {
+        TokenCard(name: "colorInfoBg", type: "string", defaultValue: "#e6f4ff", description: tr("token.alert.colorInfoBg"), sectionId: "global") {
+            Moin.Alert(type: .info, title: tr("alert.demo.token_demo.info"))
         } editor: {
-            TokenValueRow(label: "titleFontSize", value: Binding(get: { config.components.alert.titleFontSize }, set: { config.components.alert.titleFontSize = $0 }), range: 12...32)
-        } code: { "config.components.alert.titleFontSize = \(Int(config.components.alert.titleFontSize))" }
+            ColorPresetRow(label: "seed.colorInfo", color: $config.seed.colorInfo, onChange: { config.regenerateTokens() })
+        } code: { "// \(tr("api.derived_from")) seed.colorInfo" }
     }
     
-    private var borderWidthCard: some View {
-        TokenCard(name: "borderWidth", type: "CGFloat", defaultValue: "1", description: tr("token.alert.borderWidth"), sectionId: "token") {
-             Moin.Alert(type: .info, title: tr("alert.demo.token_demo.border_width"))
+    private var colorInfoBorderCard: some View {
+        TokenCard(name: "colorInfoBorder", type: "string", defaultValue: "#91caff", description: tr("token.alert.colorInfoBorder"), sectionId: "global") {
+            Moin.Alert(type: .info, title: tr("alert.demo.token_demo.info"))
         } editor: {
-            TokenValueRow(label: "borderWidth", value: Binding(get: { config.components.alert.borderWidth }, set: { config.components.alert.borderWidth = $0 }), range: 0...10)
-        } code: { "config.components.alert.borderWidth = \(Int(config.components.alert.borderWidth))" }
+            ColorPresetRow(label: "seed.colorInfo", color: $config.seed.colorInfo, onChange: { config.regenerateTokens() })
+        } code: { "// \(tr("api.derived_from")) seed.colorInfo" }
     }
     
-    private var cornerRadiusCard: some View {
-        TokenCard(name: "cornerRadius", type: "CGFloat", defaultValue: "token.borderRadiusLG", description: tr("token.alert.cornerRadius"), sectionId: "token") {
-             Moin.Alert(type: .info, title: tr("alert.demo.token_demo.corner_radius"))
+    private var colorWarningCard: some View {
+        TokenCard(name: "colorWarning", type: "string", defaultValue: "#faad14", description: tr("token.alert.colorWarning"), sectionId: "global") {
+            Moin.Alert(type: .warning, title: tr("alert.demo.token_demo.warning"), showIcon: true)
         } editor: {
-            TokenValueRow(label: "cornerRadius", value: Binding(get: { config.components.alert.cornerRadius }, set: { config.components.alert.cornerRadius = $0 }), range: 0...32)
-        } code: { "config.components.alert.cornerRadius = \(Int(config.components.alert.cornerRadius))" }
+            ColorPresetRow(label: "seed.colorWarning", color: $config.seed.colorWarning, onChange: { config.regenerateTokens() })
+        } code: { "config.seed.colorWarning = Color(...)" }
     }
     
-    // MARK: - Global Tokens
-    
-    private var colorTextHeadingCard: some View {
-        TokenCard(name: "colorTextHeading", type: "Color", defaultValue: "token.colorText", description: tr("token.alert.colorTextHeading"), sectionId: "token") {
-            Moin.Alert(type: .info, title: tr("alert.demo.token_demo.title"))
+    private var colorWarningBgCard: some View {
+        TokenCard(name: "colorWarningBg", type: "string", defaultValue: "#fffbe6", description: tr("token.alert.colorWarningBg"), sectionId: "global") {
+            Moin.Alert(type: .warning, title: tr("alert.demo.token_demo.warning"))
         } editor: {
-            ColorPresetRow(label: "colorTextHeading", color: Binding(get: { config.components.alert.colorTextHeading }, set: { config.components.alert.colorTextHeading = $0 }))
-        } code: { "config.components.alert.colorTextHeading = Color(hex: \"\(config.components.alert.colorTextHeading.toHex())\")" }
+            ColorPresetRow(label: "seed.colorWarning", color: $config.seed.colorWarning, onChange: { config.regenerateTokens() })
+        } code: { "// \(tr("api.derived_from")) seed.colorWarning" }
     }
+    
+    private var colorWarningBorderCard: some View {
+        TokenCard(name: "colorWarningBorder", type: "string", defaultValue: "#ffe58f", description: tr("token.alert.colorWarningBorder"), sectionId: "global") {
+            Moin.Alert(type: .warning, title: tr("alert.demo.token_demo.warning"))
+        } editor: {
+            ColorPresetRow(label: "seed.colorWarning", color: $config.seed.colorWarning, onChange: { config.regenerateTokens() })
+        } code: { "// \(tr("api.derived_from")) seed.colorWarning" }
+    }
+    
+    private var colorErrorCard: some View {
+        TokenCard(name: "colorError", type: "string", defaultValue: "#ff4d4f", description: tr("token.alert.colorError"), sectionId: "global") {
+            Moin.Alert(type: .error, title: tr("alert.demo.token_demo.error"), showIcon: true)
+        } editor: {
+            ColorPresetRow(label: "seed.colorError", color: $config.seed.colorError, onChange: { config.regenerateTokens() })
+        } code: { "config.seed.colorError = Color(...)" }
+    }
+    
+    private var colorErrorBgCard: some View {
+        TokenCard(name: "colorErrorBg", type: "string", defaultValue: "#fff2f0", description: tr("token.alert.colorErrorBg"), sectionId: "global") {
+            Moin.Alert(type: .error, title: tr("alert.demo.token_demo.error"))
+        } editor: {
+            ColorPresetRow(label: "seed.colorError", color: $config.seed.colorError, onChange: { config.regenerateTokens() })
+        } code: { "// \(tr("api.derived_from")) seed.colorError" }
+    }
+    
+    private var colorErrorBorderCard: some View {
+        TokenCard(name: "colorErrorBorder", type: "string", defaultValue: "#ffccc7", description: tr("token.alert.colorErrorBorder"), sectionId: "global") {
+            Moin.Alert(type: .error, title: tr("alert.demo.token_demo.error"))
+        } editor: {
+            ColorPresetRow(label: "seed.colorError", color: $config.seed.colorError, onChange: { config.regenerateTokens() })
+        } code: { "// \(tr("api.derived_from")) seed.colorError" }
+    }
+    
+    // MARK: - Global Token Cards - Text Colors
     
     private var colorTextCard: some View {
-        TokenCard(name: "colorText", type: "Color", defaultValue: "token.colorText", description: tr("token.alert.colorText"), sectionId: "token") {
+        TokenCard(name: "colorText", type: "string", defaultValue: "rgba(0,0,0,0.88)", description: tr("token.alert.colorText"), sectionId: "global") {
             Moin.Alert(type: .info, title: tr("alert.demo.token_demo.title"), description: tr("alert.demo.token_demo.description"))
-        } editor: {
-            ColorPresetRow(label: "colorText", color: Binding(get: { config.components.alert.colorText }, set: { config.components.alert.colorText = $0 }))
-        } code: { "config.components.alert.colorText = Color(hex: \"\(config.components.alert.colorText.toHex())\")" }
+        } code: { "// \(tr("api.derived_from")) seed.colorTextBase" }
+    }
+    
+    private var colorTextHeadingCard: some View {
+        TokenCard(name: "colorTextHeading", type: "string", defaultValue: "rgba(0,0,0,0.88)", description: tr("token.alert.colorTextHeading"), sectionId: "global") {
+            Moin.Alert(type: .info, title: tr("alert.demo.token_demo.title"))
+        } code: { "// \(tr("api.derived_from")) colorText" }
     }
     
     private var colorIconCard: some View {
-        TokenCard(name: "colorIcon", type: "Color", defaultValue: "token.colorTextTertiary", description: tr("token.alert.colorIcon"), sectionId: "token") {
-            Moin.Alert(type: .info, title: tr("alert.demo.token_demo.closable"), closable: true)
-        } editor: {
-            ColorPresetRow(label: "colorIcon", color: Binding(get: { config.components.alert.colorIcon }, set: { config.components.alert.colorIcon = $0 }))
-        } code: { "config.components.alert.colorIcon = Color(hex: \"\(config.components.alert.colorIcon.toHex())\")" }
+        TokenCard(name: "colorIcon", type: "string", defaultValue: "rgba(0,0,0,0.45)", description: tr("token.alert.colorIcon"), sectionId: "global") {
+            Moin.Alert(type: .info, title: tr("alert.demo.token_demo.closable"), showIcon: true, closable: true)
+        } code: { "// \(tr("api.derived_from")) colorTextTertiary" }
     }
     
     private var colorIconHoverCard: some View {
-        TokenCard(name: "colorIconHover", type: "Color", defaultValue: "token.colorText", description: tr("token.alert.colorIconHover"), sectionId: "token") {
-            Moin.Alert(type: .info, title: tr("alert.demo.token_demo.closable"), closable: true)
+        TokenCard(name: "colorIconHover", type: "string", defaultValue: "rgba(0,0,0,0.88)", description: tr("token.alert.colorIconHover"), sectionId: "global") {
+            Moin.Alert(type: .info, title: tr("alert.demo.token_demo.closable"), showIcon: true, closable: true)
+        } code: { "// \(tr("api.derived_from")) colorText" }
+    }
+    
+    // MARK: - Global Token Cards - Size (可编辑 seed Token)
+    
+    private var borderRadiusLGCard: some View {
+        TokenCard(name: "borderRadiusLG", type: "number", defaultValue: "8", description: tr("token.alert.borderRadiusLG"), sectionId: "global") {
+            HStack(spacing: Moin.Constants.Spacing.md) {
+                Moin.Alert(type: .info, title: tr("alert.demo.token_demo.corner_radius"))
+                Text("borderRadiusLG: \(Int(config.token.borderRadiusLG))px")
+                    .font(.system(size: 11, design: .monospaced))
+                    .foregroundStyle(.secondary)
+            }
         } editor: {
-            ColorPresetRow(label: "colorIconHover", color: Binding(get: { config.components.alert.colorIconHover }, set: { config.components.alert.colorIconHover = $0 }))
-        } code: { "config.components.alert.colorIconHover = Color(hex: \"\(config.components.alert.colorIconHover.toHex())\")" }
+            TokenValueRow(label: "seed.borderRadius", value: $config.seed.borderRadius, range: 0...20, onChange: { config.regenerateTokens() })
+        } code: { "// \(tr("api.derived_from")) seed.borderRadius + 2" }
+    }
+    
+    private var fontSizeCard: some View {
+        TokenCard(name: "fontSize", type: "number", defaultValue: "14", description: tr("token.alert.fontSize"), sectionId: "global") {
+            HStack(spacing: Moin.Constants.Spacing.md) {
+                Moin.Alert(type: .info, title: tr("alert.demo.token_demo.title"), description: tr("alert.demo.token_demo.font_size"))
+                Text("fontSize: \(Int(config.token.fontSize))px")
+                    .font(.system(size: 11, design: .monospaced))
+                    .foregroundStyle(.secondary)
+            }
+        } editor: {
+            TokenValueRow(label: "seed.fontSize", value: $config.seed.fontSize, range: 10...24, onChange: { config.regenerateTokens() })
+        } code: { "config.seed.fontSize = \(Int(config.seed.fontSize))" }
     }
     
     private var fontSizeIconCard: some View {
-        TokenCard(name: "fontSizeIcon", type: "CGFloat", defaultValue: "token.fontSizeSM", description: tr("token.alert.fontSizeIcon"), sectionId: "token") {
-            Moin.Alert(type: .info, title: tr("alert.demo.token_demo.closable"), closable: true)
+        TokenCard(name: "fontSizeIcon", type: "number", defaultValue: "12", description: tr("token.alert.fontSizeIcon"), sectionId: "global") {
+            HStack(spacing: Moin.Constants.Spacing.md) {
+                Moin.Alert(type: .info, title: tr("alert.demo.token_demo.closable"), closable: true)
+                Text("fontSizeIcon: \(Int(config.token.fontSizeSM))px")
+                    .font(.system(size: 11, design: .monospaced))
+                    .foregroundStyle(.secondary)
+            }
         } editor: {
-            TokenValueRow(label: "fontSizeIcon", value: Binding(get: { config.components.alert.fontSizeIcon }, set: { config.components.alert.fontSizeIcon = $0 }), range: 8...24)
-        } code: { "config.components.alert.fontSizeIcon = \(Int(config.components.alert.fontSizeIcon))" }
+            TokenValueRow(label: "seed.fontSize", value: $config.seed.fontSize, range: 10...24, onChange: { config.regenerateTokens() })
+        } code: { "// \(tr("api.derived_from")) fontSizeSM (seed.fontSize - 2)" }
+    }
+    
+    private var fontSizeLGCard: some View {
+        TokenCard(name: "fontSizeLG", type: "number", defaultValue: "16", description: tr("token.alert.fontSizeLG"), sectionId: "global") {
+            HStack(spacing: Moin.Constants.Spacing.md) {
+                Moin.Alert(type: .info, title: tr("alert.demo.token_demo.title_font_size"), description: tr("alert.demo.token_demo.description"))
+                Text("fontSizeLG: \(Int(config.token.fontSizeLG))px")
+                    .font(.system(size: 11, design: .monospaced))
+                    .foregroundStyle(.secondary)
+            }
+        } editor: {
+            TokenValueRow(label: "seed.fontSize", value: $config.seed.fontSize, range: 10...24, onChange: { config.regenerateTokens() })
+        } code: { "// \(tr("api.derived_from")) seed.fontSize + 2" }
+    }
+    
+    private var lineHeightCard: some View {
+        TokenCard(name: "lineHeight", type: "number", defaultValue: "1.5714", description: tr("token.alert.lineHeight"), sectionId: "global") {
+            Moin.Alert(type: .info, title: tr("alert.demo.token_demo.title"), description: tr("alert.demo.token_demo.description"))
+        } code: { "// \(tr("api.derived_from")) fontSize * 1.5714" }
+    }
+    
+    private var lineWidthCard: some View {
+        TokenCard(name: "lineWidth", type: "number", defaultValue: "1", description: tr("token.alert.lineWidth"), sectionId: "global") {
+            HStack(spacing: Moin.Constants.Spacing.md) {
+                Moin.Alert(type: .info, title: tr("alert.demo.token_demo.border_width"))
+                Text("lineWidth: \(Int(config.token.lineWidth))px")
+                    .font(.system(size: 11, design: .monospaced))
+                    .foregroundStyle(.secondary)
+            }
+        } editor: {
+            TokenValueRow(label: "seed.lineWidth", value: $config.seed.lineWidth, range: 0...10, onChange: { config.regenerateTokens() })
+        } code: { "config.seed.lineWidth = \(Int(config.seed.lineWidth))" }
+    }
+    
+    private var marginSMCard: some View {
+        TokenCard(name: "marginSM", type: "number", defaultValue: "12", description: tr("token.alert.marginSM"), sectionId: "global") {
+            HStack(spacing: Moin.Constants.Spacing.md) {
+                Moin.Alert(type: .info, title: tr("alert.demo.token_demo.title"), description: tr("alert.demo.token_demo.description"), showIcon: true)
+                Text("marginSM: \(Int(config.token.marginSM))px")
+                    .font(.system(size: 11, design: .monospaced))
+                    .foregroundStyle(.secondary)
+            }
+        } editor: {
+            TokenValueRow(label: "seed.sizeUnit", value: $config.seed.sizeUnit, range: 2...8, onChange: { config.regenerateTokens() })
+        } code: { "// \(tr("api.derived_from")) seed.sizeUnit * 3" }
+    }
+    
+    private var marginXSCard: some View {
+        TokenCard(name: "marginXS", type: "number", defaultValue: "8", description: tr("token.alert.marginXS"), sectionId: "global") {
+            HStack(spacing: Moin.Constants.Spacing.md) {
+                Moin.Alert(type: .info, title: tr("alert.demo.token_demo.gap"), showIcon: true)
+                Text("marginXS: \(Int(config.token.marginXS))px")
+                    .font(.system(size: 11, design: .monospaced))
+                    .foregroundStyle(.secondary)
+            }
+        } editor: {
+            TokenValueRow(label: "seed.sizeUnit", value: $config.seed.sizeUnit, range: 2...8, onChange: { config.regenerateTokens() })
+        } code: { "// \(tr("api.derived_from")) seed.sizeUnit * 2" }
     }
 }
