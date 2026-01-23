@@ -55,5 +55,8 @@
   "spin.prop.delay": "延迟",
   "spin.prop.show_percent": "显示进度",
   "spin.prop.percent_mode": "进度模式",
-  "spin.prop.percent_value": "进度值"
+  "spin.prop.percent_value": "进度值",
+  "token.playground.spin": "Spin 加载中",
+  "token.playground.spin_sizes": "Spin 尺寸",
+  "token.playground.spin_animation": "Spin 动画"
 }

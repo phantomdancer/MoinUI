@@ -30,7 +30,7 @@ enum DemoTranslations {
     static func register() {
         for locale in Moin.Locale.allCases {
             // 1. 先加载主 Locales 目录的共享翻译
-            loadTranslations(locale: locale, subdirectory: "Locales")
+            loadTranslations(locale: locale, subdirectory: "Locales/Common")
 
             // 2. 加载各组件子目录的翻译
             for dir in componentDirs {

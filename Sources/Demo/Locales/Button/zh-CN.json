@@ -201,5 +201,40 @@
       },
       "default_text": "按钮"
     }
+  },
+  "playground": {
+    "prop": {
+      "title": "文本",
+      "title_prop": "title: String",
+      "type": "类型",
+      "type_prop": "color: Moin.ButtonColor",
+      "variant": "变体",
+      "variant_prop": "variant: Moin.ButtonVariant",
+      "size": "尺寸",
+      "size_prop": "size: Moin.ButtonSize",
+      "shape": "形状",
+      "shape_prop": "shape: Moin.ButtonShape",
+      "icon": "图标",
+      "icon_prop": "icon: String?",
+      "icon_placement": "图标位置",
+      "icon_placement_prop": "iconPlacement: Moin.ButtonIconPlacement",
+      "disabled": "禁用",
+      "disabled_prop": "isDisabled: Bool",
+      "loading": "加载中",
+      "loading_prop": "loading: Moin.ButtonLoading",
+      "block": "块级",
+      "block_prop": "isBlock: Bool",
+      "ghost": "幽灵",
+      "ghost_prop": "isGhost: Bool",
+      "custom_color": "自定义颜色",
+      "custom_color_prop": "useCustomColor: Bool",
+      "color": "颜色",
+      "color_prop": "color: Color?"
+    },
+    "default_text": "按钮"
+  },
+  "api": {
+    "component_token_desc": "以下是 Button 组件的设计变量（Design Token），可通过 ConfigProvider 覆盖。",
+    "global_token_desc": "以下是 Button 使用的全局 Token，可通过 ConfigProvider 统一配置。"
   }
 }

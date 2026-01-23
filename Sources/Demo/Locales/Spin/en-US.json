@@ -55,5 +55,8 @@
   "spin.prop.delay": "Delay",
   "spin.prop.show_percent": "Show Progress",
   "spin.prop.percent_mode": "Progress Mode",
-  "spin.prop.percent_value": "Progress Value"
+  "spin.prop.percent_value": "Progress Value",
+  "token.playground.spin": "Spin",
+  "token.playground.spin_sizes": "Spin Sizes",
+  "token.playground.spin_animation": "Spin Animation"
 }

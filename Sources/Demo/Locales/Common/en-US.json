@@ -140,45 +140,13 @@
       "global": "Global Token",
       "reset": "Reset",
       "reset_desc": "Reset all token changes"
-    },
-    "prop": {
-      "title": "Text",
-      "title_prop": "title: String",
-      "type": "Type",
-      "type_prop": "color: Moin.ButtonColor",
-      "variant": "Variant",
-      "variant_prop": "variant: Moin.ButtonVariant",
-      "size": "Size",
-      "size_prop": "size: Moin.ButtonSize",
-      "shape": "Shape",
-      "shape_prop": "shape: Moin.ButtonShape",
-      "icon": "Icon",
-      "icon_prop": "icon: String?",
-      "icon_placement": "Icon Placement",
-      "icon_placement_prop": "iconPlacement: Moin.ButtonIconPlacement",
-      "disabled": "Disabled",
-      "disabled_prop": "isDisabled: Bool",
-      "loading": "Loading",
-      "loading_prop": "loading: Moin.ButtonLoading",
-      "block": "Block",
-      "block_prop": "isBlock: Bool",
-      "ghost": "Ghost",
-      "ghost_prop": "isGhost: Bool",
-      "custom_color": "Custom Color",
-      "custom_color_prop": "useCustomColor: Bool",
-      "color": "Color",
-      "color_prop": "color: Color?"
-    },
-    "default_text": "Button"
+    }
   },
   "locale": {
     "zh": "中文",
     "en": "EN"
   },
-  "token.playground.spin": "Spin",
   "token.playground.code_spin_config": "Spin Component Config",
-  "token.playground.spin_sizes": "Spin Sizes",
-  "token.playground.spin_animation": "Spin Animation",
   "api": {
     "property": "Property",
     "method": "Method",
@@ -188,9 +156,7 @@
     "value": "Value",
     "derived_from": "Derived from",
     "component_token": "Component Token",
-    "component_token_desc": "Below are the design tokens for the Button component. Override via ConfigProvider.",
     "global_token_title": "Global Token",
-    "global_token_desc": "Below are the global tokens used by Button. Configure via ConfigProvider.",
     "config": {
       "locale": "Current locale",
       "primaryColor": "Primary color",
@@ -240,15 +206,6 @@
       "paddingLG": "Large padding",
       "paddingXS": "Extra small padding",
       "lineWidth": "Line width"
-    },
-    "typography": {
-      "section": {
-        "common": "Common",
-        "styles": "Styles",
-        "title": "Title",
-        "paragraph": "Paragraph",
-        "link": "Link"
-      }
     }
   },
   "token": {

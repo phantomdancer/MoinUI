@@ -132,3 +132,6 @@ Button ✅, Typography ✅, Divider ✅, Space ✅, Tag ✅, Badge ✅, Avatar �
 
 - **Statistic**:
   - 已排除: Timer 组件 (SwiftUI 原生支持)、formatter (View 类型已覆盖)、分隔符 (NumberFormatter 处理)
+
+- **Localization**:
+  - [x] Refactor JSON structure (separate component/common keys)
