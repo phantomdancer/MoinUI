@@ -96,6 +96,10 @@ public extension Moin {
             }
         }
 
+        public enum GapPosition {
+            case top, bottom, left, right
+        }
+
         let percent: Double
         let format: ((Double) -> AnyView)?
         let status: Status?
@@ -108,7 +112,7 @@ public extension Moin {
         let width: CGFloat? // Deprecated in AntD, mapped to size
         let success: SuccessProps?
         let gapDegree: Double? // For dashboard
-        let gapPosition: Alignment? // top/bottom/leading/trailing
+        let gapPosition: GapPosition // top/bottom/leading/trailing -> top/bottom/left/right
         let type: Variant
         let size: Size
         let steps: Int?
@@ -131,7 +135,7 @@ public extension Moin {
             width: CGFloat? = nil,
             success: SuccessProps? = nil,
             gapDegree: Double? = nil,
-            gapPosition: Alignment? = nil, // .bottom for default dashboard
+            gapPosition: GapPosition = .bottom, // .bottom for default dashboard
             type: Variant = .line,
             size: Size = .default,
             steps: Int? = nil
@@ -304,8 +308,26 @@ public extension Moin {
             let fraction = totalDegrees / 360.0
             
             // Rotation calculation based on Position
-            // Align bottom: -90 (to top) + 180 + gap/2 --> 90 + gap/2
-            let rotation: Angle = .degrees(90 + gapDeg / 2)
+            // If Circle (no gap): -90 (start at top)
+            // If Dashboard:
+            //   top: -90 + gap/2
+            //   bottom: 90 + gap/2
+            //   left: 180 + gap/2
+            //   right: 0 + gap/2
+            
+            let baseRotation: Double
+            if isDashboard {
+                switch gapPosition {
+                case .top: baseRotation = -90
+                case .bottom: baseRotation = 90
+                case .left: baseRotation = 180
+                case .right: baseRotation = 0
+                }
+            } else {
+                baseRotation = -90
+            }
+            
+            let rotation: Angle = .degrees(baseRotation + (isDashboard ? gapDeg / 2 : 0))
             
             let w = size.width ?? 120
             
