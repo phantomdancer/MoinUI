@@ -31,6 +31,7 @@ struct DemoIcons {
     // Feedback
     static let alert = "exclamationmark.triangle"
     static let spin = "arrow.trianglehead.2.counterclockwise.rotate.90"
+    static let progress = "percent"
     
     // Other (Playground specific)
     static let seed = "leaf"

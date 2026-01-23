@@ -240,6 +240,10 @@ private struct MoinAlertTokenKey: EnvironmentKey {
     static let defaultValue = Moin.AlertToken.default
 }
 
+private struct MoinProgressTokenKey: EnvironmentKey {
+    static let defaultValue = Moin.ProgressToken.default
+}
+
 private struct MoinThemeKey: EnvironmentKey {
     static let defaultValue = Moin.Theme.default
 }
@@ -309,6 +313,11 @@ public extension EnvironmentValues {
         set { self[MoinAlertTokenKey.self] = newValue }
     }
 
+    var moinProgressToken: Moin.ProgressToken {
+        get { self[MoinProgressTokenKey.self] }
+        set { self[MoinProgressTokenKey.self] = newValue }
+    }
+
     var moinTheme: Moin.Theme {
         get { self[MoinThemeKey.self] }
         set { self[MoinThemeKey.self] = newValue }
@@ -371,6 +380,7 @@ public extension Moin {
                 .environment(\.moinSpinToken, config.components.spin)
                 .environment(\.moinStatisticToken, config.components.statistic)
                 .environment(\.moinAlertToken, config.components.alert)
+                .environment(\.moinProgressToken, config.components.progress)
                 .environment(\.moinSpaceToken, config.components.space)
                 .environment(\.moinDividerToken, config.components.divider)
                 .environment(\.moinTheme, config.theme)

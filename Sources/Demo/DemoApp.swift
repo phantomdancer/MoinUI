@@ -162,6 +162,7 @@ struct ContentView: View {
     @State private var spinTab: SpinExamplesTab = .examples
     @State private var statisticTab: StatisticExamplesTab = .examples
     @State private var alertTab: AlertExamplesTab = .examples
+    @State private var progressTab: ProgressExamplesTab = .examples
     @State private var buttonTab: ButtonExamplesTab = .examples
 
     var body: some View {
@@ -169,7 +170,7 @@ struct ContentView: View {
             Sidebar(selection: $navManager.selectedItem)
                 .navigationSplitViewColumnWidth(min: 240, ideal: 300, max: 420)
         } detail: {
-            DetailView(item: navManager.selectedItem, buttonTab: $buttonTab, typographyTab: $typographyTab, tagTab: $tagTab, spaceTab: $spaceTab, dividerTab: $dividerTab, badgeTab: $badgeTab, avatarTab: $avatarTab, emptyTab: $emptyTab, spinTab: $spinTab, statisticTab: $statisticTab, alertTab: $alertTab, tokenTab: $tokenTab)
+            DetailView(item: navManager.selectedItem, buttonTab: $buttonTab, typographyTab: $typographyTab, tagTab: $tagTab, spaceTab: $spaceTab, dividerTab: $dividerTab, badgeTab: $badgeTab, avatarTab: $avatarTab, emptyTab: $emptyTab, spinTab: $spinTab, statisticTab: $statisticTab, alertTab: $alertTab, progressTab: $progressTab, tokenTab: $tokenTab)
                 .navigationTitle(navManager.selectedItem.map { tr($0.titleKey) } ?? "MoinUI")
                 .toolbar {
                     ToolbarItemGroup(placement: .primaryAction) {
@@ -301,6 +302,17 @@ struct ContentView: View {
                              .fixedSize()
                         }
 
+                        // Progress 页面显示 Tab 切换
+                        if navManager.selectedItem == .progress {
+                             Picker("", selection: $progressTab) {
+                                 Text(tr("tab.examples")).tag(ProgressExamplesTab.examples)
+                                 Text(tr("tab.api")).tag(ProgressExamplesTab.api)
+                                 Text(tr("tab.token")).tag(ProgressExamplesTab.token)
+                             }
+                             .pickerStyle(.segmented)
+                             .fixedSize()
+                        }
+
                         Spacer()
 
                         Button {
@@ -349,6 +361,7 @@ enum NavItem: String, Identifiable {
     // Components - Feedback
     case alert
     case spin
+    case progress
 
     // Components - Layout
     case space
@@ -378,6 +391,7 @@ enum NavItem: String, Identifiable {
         case .statistic: return DemoIcons.statistic
         case .alert: return DemoIcons.alert
         case .spin: return DemoIcons.spin
+        case .progress: return DemoIcons.progress
         case .space: return DemoIcons.space
         case .divider: return DemoIcons.divider
         case .configProvider: return DemoIcons.configProvider
@@ -401,6 +415,7 @@ enum NavItem: String, Identifiable {
         case .statistic: return "component.statistic"
         case .alert: return "component.alert"
         case .spin: return "component.spin"
+        case .progress: return "component.progress"
         case .space: return "component.space"
         case .divider: return "component.divider"
         case .configProvider: return "component.configProvider"
@@ -412,7 +427,7 @@ enum NavItem: String, Identifiable {
     static var overview: [NavItem] { [.introduction, .quickStart] }
     static var general: [NavItem] { [.button, .tag, .typography] }
     static var dataDisplay: [NavItem] { [.avatar, .badge, .empty, .statistic] }
-    static var feedback: [NavItem] { [.alert, .spin] }
+    static var feedback: [NavItem] { [.alert, .spin, .progress] }
     static var layout: [NavItem] { [.divider, .space] }
     static var development: [NavItem] { [.theme, .token, .configProvider, .localization, .colors] }
 }
@@ -499,6 +514,7 @@ struct DetailView: View {
     @Binding var spinTab: SpinExamplesTab
     @Binding var statisticTab: StatisticExamplesTab
     @Binding var alertTab: AlertExamplesTab
+    @Binding var progressTab: ProgressExamplesTab
     @Binding var tokenTab: TokenExamplesTab
 
     var body: some View {
@@ -530,6 +546,8 @@ struct DetailView: View {
                 StatisticExamplesWrapper(selectedTab: $statisticTab)
             case .alert:
                 AlertExamplesWrapper(selectedTab: $alertTab)
+            case .progress:
+                ProgressExamplesWrapper(selectedTab: $progressTab)
             case .space:
                 SpaceExamples(selectedTab: $spaceTab)
             case .divider:
