@@ -13,19 +13,21 @@ struct AvatarTokenView: View {
     private var tokenSections: [DocSidebarSection] {
         [
             DocSidebarSection(
-                title: tr("avatar.token.component"),
+                title: tr("doc.section.component_token"),
                 items: [
-                    "containerBg", "colorText", "colorTextLight", "groupBorderColor",
                     "size", "sizeLG", "sizeSM",
                     "fontSize", "fontSizeLG", "fontSizeSM",
-                    "borderRadius", "borderRadiusLG", "borderRadiusSM",
-                    "groupSpacing", "groupBorderWidth"
+                    "groupSpacing", "groupBorderColor"
                 ],
-                sectionId: "token"
+                sectionId: "component"
             ),
             DocSidebarSection(
-                title: tr("avatar.token.global"),
-                items: ["colorTextSecondary", "colorFillTertiary"],
+                title: tr("doc.section.global_token"),
+                items: [
+                    "containerBg", "colorText", "colorTextLight",
+                    "borderRadius", "borderRadiusLG", "borderRadiusSM",
+                    "groupBorderWidth" // Mapped to lineWidth
+                ],
                 sectionId: "global"
             )
         ]
@@ -33,27 +35,31 @@ struct AvatarTokenView: View {
     
     // Reset all tokens to default
     private func resetAll() {
-        // Reset global seed to defaults (simplified approach)
-        config.seed = Moin.SeedToken()
+        // Reset global
+        config.seed = Moin.SeedToken.default
         config.regenerateTokens()
+        
+        // Reset component
+        config.components.avatar = .generate(from: config.token)
     }
     
     var body: some View {
         ComponentDocBody(
             sections: tokenSections,
-            initialItemId: "token"
+            initialItemId: "component"
         ) { sectionId in
-            if sectionId == "token" {
-                Text(tr("avatar.token.component"))
+            if sectionId == "component" {
+                Text(tr("doc.section.component_token"))
                     .font(.title3)
                     .fontWeight(.semibold)
             } else if sectionId == "global" {
-                Text(tr("avatar.token.global"))
+                Text(tr("doc.section.global_token"))
                     .font(.title3)
                     .fontWeight(.semibold)
             }
         } item: { item in
             cardForItem(item)
+                .id(item)
         } footer: {
              HStack(spacing: Moin.Constants.Spacing.sm) {
                 Moin.Button(tr("playground.token.reset"), color: .primary, variant: .solid) {
@@ -74,23 +80,25 @@ struct AvatarTokenView: View {
     @ViewBuilder
     private func cardForItem(_ item: String) -> some View {
         switch item {
-        case "containerBg": avatarContainerBgCard
-        case "colorText": avatarColorTextCard
-        case "colorTextLight": avatarColorTextLightCard
-        case "groupBorderColor": avatarGroupBorderColorCard
+        // Component
         case "size": avatarSizeCard
         case "sizeLG": avatarSizeLGCard
         case "sizeSM": avatarSizeSMCard
         case "fontSize": avatarFontSizeCard
         case "fontSizeLG": avatarFontSizeLGCard
         case "fontSizeSM": avatarFontSizeSMCard
+        case "groupSpacing": avatarGroupSpacingCard
+        case "groupBorderColor": avatarGroupBorderColorCard
+        
+        // Global
+        case "containerBg": avatarContainerBgCard
+        case "colorText": avatarColorTextCard
+        case "colorTextLight": avatarColorTextLightCard
         case "borderRadius": avatarBorderRadiusCard
         case "borderRadiusLG": avatarBorderRadiusLGCard
         case "borderRadiusSM": avatarBorderRadiusSMCard
-        case "groupSpacing": avatarGroupSpacingCard
         case "groupBorderWidth": avatarGroupBorderWidthCard
-        case "colorTextSecondary": globalColorTextSecondaryCard
-        case "colorFillTertiary": globalColorFillTertiaryCard
+        
         default: EmptyView()
         }
     }

@@ -37,6 +37,7 @@ public extension Moin {
     /// 头像组 - 用于展示一组头像
     struct AvatarGroup<Content: View>: View {
         @Environment(\EnvironmentValues.moinAvatarToken) private var avatarToken
+        @Environment(\.moinToken) private var globalToken
 
         private let maxCount: Int?
         private let content: Content
@@ -70,7 +71,7 @@ public extension Moin {
                 _AvatarGroupContainer(
                     maxCount: maxCount,
                     spacing: avatarToken.groupSpacing,
-                    borderWidth: avatarToken.groupBorderWidth,
+                    borderWidth: globalToken.lineWidth * 2,
                     borderColor: avatarToken.groupBorderColor,
                     size: size,
                     shape: shape,
@@ -86,6 +87,8 @@ public extension Moin {
         }
     }
 }
+
+// MARK: - Internal Implementation
 
 // MARK: - Internal Implementation
 

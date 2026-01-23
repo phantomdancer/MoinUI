@@ -9,25 +9,6 @@ public extension Moin {
 /// 加载中组件
 ///
 /// 用于页面和区块的加载中状态，支持嵌套模式和全屏模式。
-///
-/// ## 基础用法
-/// ```swift
-/// Spin()
-/// Spin(size: .large)
-/// Spin(tip: "加载中...")
-/// ```
-///
-/// ## 嵌套模式
-/// ```swift
-/// Spin(spinning: isLoading) {
-///     ContentView()
-/// }
-/// ```
-///
-/// ## 全屏模式
-/// ```swift
-/// Spin(spinning: isLoading, fullscreen: true)
-/// ```
 public struct Spin<Content: View>: View {
     // MARK: - Properties
 
@@ -46,6 +27,7 @@ public struct Spin<Content: View>: View {
     /// 嵌套内容
     let content: Content?
 
+    @Environment(\.moinToken) private var globalToken
     @ObservedObject private var config = Moin.ConfigProvider.shared
     @State private var isVisible: Bool = true
     @State private var delayTask: DispatchWorkItem?
@@ -108,15 +90,15 @@ public struct Spin<Content: View>: View {
     // MARK: - Body
 
     public var body: some View {
-        let token = config.components.spin
+        let spinToken = config.components.spin
 
         Group {
             if fullscreen {
-                fullscreenView(token: token)
+                fullscreenView(token: spinToken)
             } else if content != nil {
-                nestedView(token: token)
+                nestedView(token: spinToken)
             } else {
-                spinnerView(token: token)
+                spinnerView(token: spinToken)
             }
         }
         .onAppear {
@@ -147,7 +129,7 @@ public struct Spin<Content: View>: View {
                 if let tip = tip {
                     Text(tip)
                         .font(.system(size: 14))
-                        .foregroundStyle(token.tipColor)
+                        .foregroundStyle(globalToken.colorTextTertiary) // AntD uses spinDotDefault -> colorTextDescription/colorTextTertiary
                 }
             }
         }
@@ -162,7 +144,7 @@ public struct Spin<Content: View>: View {
             let dotSize = size.dotSize(from: token)
             SpinIndicator(
                 size: dotSize,
-                color: token.dotColor,
+                color: globalToken.colorPrimary, // From Global Token
                 duration: token.motionDuration
             )
         }
@@ -184,7 +166,7 @@ public struct Spin<Content: View>: View {
                     if let tip = tip {
                         Text(tip)
                             .font(.system(size: 14))
-                            .foregroundStyle(token.tipColor)
+                            .foregroundStyle(globalToken.colorTextTertiary) // From Global Token
                     }
                 }
             }
@@ -197,11 +179,12 @@ public struct Spin<Content: View>: View {
     private func fullscreenView(token: Moin.SpinToken) -> some View {
         if isVisible && spinning {
             ZStack {
-                token.maskBackground
+                globalToken.colorBgMask // From Global Token
                     .ignoresSafeArea()
 
                 VStack(spacing: 12) {
                     // 全屏模式使用白色指示器
+                    // 注意：AntD 全屏模式下也是白色，这里可以保持
                     if let customIndicator = indicator {
                         customIndicator
                     } else {
@@ -258,45 +241,12 @@ public struct Spin<Content: View>: View {
 #Preview("Spin Basic") {
     VStack(spacing: 40) {
         HStack(spacing: 40) {
-            Spin(size: .small)
-            Spin()
-            Spin(size: .large)
+            Moin.Spin(size: .small)
+            Moin.Spin()
+            Moin.Spin(size: .large)
         }
 
-        Spin(tip: "Loading...")
+        Moin.Spin(tip: "Loading...")
     }
     .padding()
-}
-
-#Preview("Spin Nested") {
-    Spin(spinning: true, tip: "加载中...") {
-        VStack {
-            Text("Content Area")
-                .font(.title)
-            Text("This content will be blurred when loading")
-        }
-        .frame(width: 300, height: 200)
-        .background(Color.gray.opacity(0.1))
-        .cornerRadius(8)
-    }
-    .padding()
-}
-
-#Preview("Spin Fullscreen") {
-    ZStack {
-        Color.white.ignoresSafeArea()
-        Text("Background Content")
-
-        Spin(spinning: true, tip: "Loading...", fullscreen: true)
-    }
-}
-
-#Preview("Spin Custom Indicator") {
-    Spin(indicator: {
-        Image(systemName: "arrow.triangle.2.circlepath")
-            .font(.system(size: 24))
-            .foregroundStyle(.blue)
-            .rotationEffect(.degrees(360))
-            .animation(.linear(duration: 1).repeatForever(autoreverses: false), value: UUID())
-    })
 }

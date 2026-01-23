@@ -572,7 +572,7 @@ public extension Moin {
             if isGhost {
                 if isPressed { return SwiftUI.Color.white.opacity(0.25) }
                 else if isHovered { return SwiftUI.Color.white.opacity(0.15) }
-                return buttonToken.ghostBg
+                return .clear // WAS: ghostBg
             }
 
             // 禁用状态
@@ -580,7 +580,7 @@ public extension Moin {
                 switch variant {
                 case .solid:
                     if !color.isDefault { return baseColor }
-                    return buttonToken.defaultBgDisabled
+                    return token.colorBgDisabled // WAS: defaultBgDisabled
                 case .filled:
                     return baseColor.opacity(0.15)
                 case .outlined, .dashed, .text, .link:
@@ -591,9 +591,9 @@ public extension Moin {
             switch variant {
             case .solid:
                 if color.isDefault {
-                    if isPressed { return buttonToken.defaultActiveBg }
-                    else if isHovered { return buttonToken.defaultHoverBg }
-                    return buttonToken.defaultBg
+                    // Default Color: always colorBgContainer for background
+                    // (border/text change on hover)
+                    return token.colorBgContainer // WAS: defaultActiveBg, defaultHoverBg, defaultBg
                 }
                 if isPressed { return activeColor }
                 else if isHovered { return hoverColor }
@@ -610,12 +610,12 @@ public extension Moin {
                 return .clear
 
             case .text:
-                if isPressed { return buttonToken.textHoverBg.opacity(1.5) }
-                else if isHovered { return buttonToken.textHoverBg }
+                if isPressed { return token.colorFillSecondary } // WAS: textHoverBg.opacity(1.5)
+                else if isHovered { return token.colorFillTertiary } // WAS: textHoverBg
                 return .clear
 
             case .link:
-                return (isHovered || isPressed) ? buttonToken.linkHoverBg : .clear
+                return .clear // WAS: linkHoverBg
             }
         }
 
@@ -627,14 +627,14 @@ public extension Moin {
 
             // Ghost 模式：default 用白色，有色用原色
             if isGhost {
-                if effectiveDisabled { return buttonToken.defaultGhostColor.opacity(0.5) }
-                return color.isDefault ? buttonToken.defaultGhostColor : baseColor
+                if effectiveDisabled { return SwiftUI.Color.white.opacity(0.5) } // WAS: defaultGhostColor
+                return color.isDefault ?  SwiftUI.Color.white : baseColor // WAS: defaultGhostColor
             }
 
             // 禁用状态
             if effectiveDisabled {
                 if !color.isDefault {
-                    return variant == .solid ? buttonToken.solidTextColor : baseColor
+                    return variant == .solid ? SwiftUI.Color.white : baseColor // WAS: solidTextColor
                 }
                 return token.colorTextDisabled
             }
@@ -642,30 +642,27 @@ public extension Moin {
             switch variant {
             case .solid:
                 if color.isDefault {
-                    if isPressed { return buttonToken.defaultActiveColor }
-                    else if isHovered { return buttonToken.defaultHoverColor }
-                    return buttonToken.defaultColor
+                    if isPressed { return token.colorPrimaryActive } // WAS: defaultActiveColor
+                    else if isHovered { return token.colorPrimaryHover } // WAS: defaultHoverColor
+                    return token.colorText // WAS: defaultColor
                 }
-                if color == .danger {
-                    return buttonToken.dangerColor
-                } else if color == .primary {
-                    return buttonToken.primaryColor
-                } else {
-                    return buttonToken.solidTextColor
-                }
+                // Primary/Danger etc, always white text for solid
+                return SwiftUI.Color.white // WAS: primaryColor, dangerColor, solidTextColor
 
             case .filled, .outlined, .dashed:
                 if color.isDefault {
-                    if isPressed { return buttonToken.defaultActiveColor }
-                    else if isHovered { return buttonToken.defaultHoverColor }
-                    return buttonToken.defaultColor
+                    if isPressed { return token.colorPrimaryActive } // WAS: defaultActiveColor
+                    else if isHovered { return token.colorPrimaryHover } // WAS: defaultHoverColor
+                    return token.colorText // WAS: defaultColor
                 }
                 return baseColor
 
             case .text:
                 if color.isDefault {
-                    if isPressed { return buttonToken.textTextActiveColor }
-                    else if isHovered { return buttonToken.textTextHoverColor }
+                    // AntD Text Button Default Color is colorText
+                    // Hover doesn't change color typically for text button unless it's link?
+                    // MoinUI implemented color change.
+                    // Let's keep it simply text color unless overriden by buttonToken.textTextColor
                     return buttonToken.textTextColor
                 }
                 return baseColor
@@ -681,8 +678,8 @@ public extension Moin {
         private var borderColor: SwiftUI.Color {
             // Ghost 模式：default 用白色边框，有色用原色边框
             if isGhost {
-                if effectiveDisabled { return buttonToken.defaultGhostBorderColor.opacity(0.3) }
-                return color.isDefault ? buttonToken.defaultGhostBorderColor : baseColor
+                if effectiveDisabled { return SwiftUI.Color.white.opacity(0.3) } // WAS: defaultGhostBorderColor
+                return color.isDefault ? SwiftUI.Color.white : baseColor // WAS: defaultGhostBorderColor
             }
 
             // 禁用状态
@@ -690,7 +687,7 @@ public extension Moin {
                 if !color.isDefault { return baseColor }
                 switch variant {
                 case .solid, .outlined, .dashed, .filled:
-                    return buttonToken.borderColorDisabled
+                    return token.colorBorder.opacity(0.5) // WAS: borderColorDisabled
                 case .text, .link:
                     return .clear
                 }
@@ -699,19 +696,20 @@ public extension Moin {
             switch variant {
             case .solid:
                 if color.isDefault {
-                    if isPressed { return buttonToken.defaultActiveBorderColor }
-                    else if isHovered { return buttonToken.defaultHoverBorderColor }
-                    return buttonToken.defaultBorderColor
+                    if isPressed { return token.colorPrimaryActive } // WAS: defaultActiveBorderColor
+                    else if isHovered { return token.colorPrimaryHover } // WAS: defaultHoverBorderColor
+                    return token.colorBorder // WAS: defaultBorderColor
                 }
+                // Primary solid: border usually same as bg
                 if isPressed { return activeColor }
                 else if isHovered { return hoverColor }
                 return baseColor
 
             case .outlined, .dashed:
                 if color.isDefault {
-                    if isPressed { return buttonToken.defaultActiveBorderColor }
-                    else if isHovered { return buttonToken.defaultHoverBorderColor }
-                    return buttonToken.defaultBorderColor
+                    if isPressed { return token.colorPrimaryActive } // WAS: defaultActiveBorderColor
+                    else if isHovered { return token.colorPrimaryHover } // WAS: defaultHoverBorderColor
+                    return token.colorBorder // WAS: defaultBorderColor
                 }
                 return baseColor
 
@@ -799,10 +797,6 @@ public extension Moin.Button where Label == EmptyView {
         shape: Moin.ButtonShape = .circle,
         loading: Moin.ButtonLoading = false,
         isDisabled: Bool = false,
-        isGhost: Bool = false,
-        href: URL? = nil,
-        gradient: LinearGradient? = nil,
-        fontColor: SwiftUI.Color? = nil,
         action: (() -> Void)? = nil
     ) {
         self.init(
@@ -815,10 +809,10 @@ public extension Moin.Button where Label == EmptyView {
             loading: loading,
             isDisabled: isDisabled,
             isBlock: false,
-            isGhost: isGhost,
-            href: href,
-            gradient: gradient,
-            fontColor: fontColor,
+            isGhost: false,
+            href: nil,
+            gradient: nil,
+            fontColor: nil,
             action: action
         ) {
             EmptyView()

@@ -12,18 +12,19 @@ struct DividerTokenView: View {
     
     private var tokenSections: [DocSidebarSection] {
         [
+            // 组件 Token
             DocSidebarSection(
-                title: tr("api.component_token"),
-                items: [
-                    "lineColor", "textColor", "fontSize",
-                    "verticalMargin", "horizontalMargin", "textPadding",
-                    "lineWidth", "dashLength", "dashGap", "orientationMargin"
-                ],
-                sectionId: "token"
+                title: tr("doc.section.component_token"),
+                items: ["textPadding", "orientationMargin", "dashLength", "dashGap"],
+                sectionId: "component"
             ),
+            // 全局 Token
             DocSidebarSection(
-                title: tr("api.global_token_title"),
-                items: ["colorText", "globalLineWidth|lineWidth"],
+                title: tr("doc.section.global_token"),
+                items: [
+                    "colorBorder", "colorText", "fontSizeLG",
+                    "lineWidth", "marginLG", "marginXS"
+                ],
                 sectionId: "global"
             )
         ]
@@ -31,33 +32,27 @@ struct DividerTokenView: View {
     
     // 重置所有 Token 到默认值
     private func resetAll() {
-        // 重置全局 seed token
-        config.seed.colorPrimary = Moin.Colors.blue
-        config.seed.colorTextBase = Color(white: 0.0)
-        config.seed.lineWidth = 1
-        config.seed.borderRadius = 6
+        // 重置 seed tokens
+        config.seed = Moin.SeedToken.default
         config.regenerateTokens()
         
-        // 重置组件 token
-        let defaultDivider = Moin.DividerToken.generate(from: config.token)
-        config.components.divider = defaultDivider
-        
-        // 通知重置
-        NotificationCenter.default.post(name: .dividerDocReset, object: nil)
+        // 重置组件 tokens
+        config.components.divider = Moin.DividerToken.generate(from: config.token)
     }
     
     var body: some View {
         ComponentDocBody(
             sections: tokenSections,
-            initialItemId: "token"
+            initialItemId: "component"
         ) { sectionId in
-            if sectionId == "token" {
-                Text(tr("api.component_token")).font(.title3).fontWeight(.semibold)
+            if sectionId == "component" {
+                Text(tr("doc.section.component_token")).font(.title3).fontWeight(.semibold)
             } else if sectionId == "global" {
-                Text(tr("api.global_token_title")).font(.title3).fontWeight(.semibold)
+                Text(tr("doc.section.global_token")).font(.title3).fontWeight(.semibold)
             }
         } item: { item in
             cardForItem(item)
+                .id(item)
         } footer: {
             HStack(spacing: Moin.Constants.Spacing.sm) {
                 Moin.Button(tr("playground.token.reset"), color: .primary, variant: .solid) {
@@ -78,192 +73,60 @@ struct DividerTokenView: View {
     @ViewBuilder
     private func cardForItem(_ item: String) -> some View {
         switch item {
-        // Component Tokens
-        case "lineColor": lineColorCard
-        case "textColor": textColorCard
-        case "fontSize": fontSizeCard
-        case "verticalMargin": verticalMarginCard
-        case "horizontalMargin": horizontalMarginCard
+        // 组件 Tokens
         case "textPadding": textPaddingCard
-        case "lineWidth": lineWidthCard
+        case "orientationMargin": orientationMarginCard
         case "dashLength": dashLengthCard
         case "dashGap": dashGapCard
-        case "orientationMargin": orientationMarginCard
-        // Global
-        case "colorText": globalColorTextCard
-        case "globalLineWidth": globalLineWidthCard
+        // 全局 Tokens
+        case "colorBorder": colorBorderCard
+        case "colorText": colorTextCard
+        case "fontSizeLG": fontSizeLGCard
+        case "lineWidth": lineWidthCard
+        case "marginLG": marginLGCard
+        case "marginXS": marginXSCard
         default: EmptyView()
         }
     }
     
-    // MARK: - Component Cards
+    // MARK: - Component Token Cards
     
-    private var lineColorCard: some View {
+    private var textPaddingCard: some View {
         TokenCard(
-            name: "lineColor",
-            type: "Color",
-            defaultValue: "token.colorBorder",
-            description: tr("api.divider.token_line_color"),
-            sectionId: "token"
-        ) {
-            Moin.Divider()
-        } editor: {
-            ColorPresetRow(label: "lineColor", color: Binding(
-                 get: { Moin.ConfigProvider.shared.components.divider.lineColor },
-                 set: { Moin.ConfigProvider.shared.components.divider.lineColor = $0 }
-            ))
-        } code: {
-            "config.components.divider.lineColor = Color(...)"
-        }
-        .scrollAnchor("token.lineColor")
-    }
-    
-    private var textColorCard: some View {
-        TokenCard(
-            name: "textColor",
-            type: "Color",
-            defaultValue: "token.colorText",
-            description: tr("api.divider.token_text_color"),
-            sectionId: "token"
+            name: "textPadding",
+            type: "CGFloat",
+            defaultValue: "token.padding",
+            description: tr("api.divider.token_text_padding"),
+            sectionId: "component"
         ) {
             Moin.Divider("Text")
         } editor: {
-             ColorPresetRow(label: "textColor", color: Binding(
-                  get: { Moin.ConfigProvider.shared.components.divider.textColor },
-                  set: { Moin.ConfigProvider.shared.components.divider.textColor = $0 }
-             ))
-        } code: {
-            "config.components.divider.textColor = Color(...)"
-        }
-        .scrollAnchor("token.textColor")
-    }
-    
-    private var fontSizeCard: some View {
-        TokenCard(
-            name: "fontSize",
-            type: "CGFloat",
-            defaultValue: "14",
-            description: tr("api.divider.token_font_size"),
-            sectionId: "token"
-        ) {
-            Moin.Divider("Size")
-        } editor: {
-            TokenValueRow(label: "fontSize", value: Binding(
-                 get: { Moin.ConfigProvider.shared.components.divider.fontSize },
-                 set: { Moin.ConfigProvider.shared.components.divider.fontSize = $0 }
+            TokenValueRow(label: "textPadding", value: Binding(
+                get: { config.components.divider.textPadding },
+                set: { config.components.divider.textPadding = $0 }
             ))
         } code: {
-            "config.components.divider.fontSize = \(Int(config.components.divider.fontSize))"
+            "config.components.divider.textPadding = \(Int(config.components.divider.textPadding))"
         }
-        .scrollAnchor("token.fontSize")
     }
-    
-    private var verticalMarginCard: some View {
-        TokenCard(
-            name: "verticalMargin",
-            type: "CGFloat",
-            defaultValue: "token.marginLG",
-            description: tr("api.divider.token_vertical_margin"),
-            sectionId: "token"
-        ) {
-            VStack(spacing: 0) {
-                Text("Text")
-                Moin.Divider()
-                Text("Text")
-            }
-        } editor: {
-            TokenValueRow(label: "verticalMargin", value: Binding(
-                 get: { Moin.ConfigProvider.shared.components.divider.verticalMargin },
-                 set: { Moin.ConfigProvider.shared.components.divider.verticalMargin = $0 }
-            ))
-        } code: {
-            "config.components.divider.verticalMargin = \(Int(config.components.divider.verticalMargin))"
-        }
-        .scrollAnchor("token.verticalMargin")
-    }
-    
-    private var horizontalMarginCard: some View {
-        TokenCard(
-            name: "horizontalMargin",
-            type: "CGFloat",
-            defaultValue: "token.marginXS",
-            description: tr("api.divider.token_horizontal_margin"),
-            sectionId: "token"
-        ) {
-             HStack(spacing: 0) {
-                Text("A")
-                Moin.Divider(orientation: .vertical)
-                Text("B")
-            }
-        } editor: {
-            TokenValueRow(label: "horizontalMargin", value: Binding(
-                 get: { Moin.ConfigProvider.shared.components.divider.horizontalMargin },
-                 set: { Moin.ConfigProvider.shared.components.divider.horizontalMargin = $0 }
-            ))
-        } code: {
-            "config.components.divider.horizontalMargin = \(Int(config.components.divider.horizontalMargin))"
-        }
-        .scrollAnchor("token.horizontalMargin")
-    }
-    
-    private var textPaddingCard: some View {
-         TokenCard(
-             name: "textPadding",
-             type: "CGFloat",
-             defaultValue: "token.padding",
-             description: tr("api.divider.token_text_padding"),
-             sectionId: "token"
-         ) {
-              Moin.Divider("Text")
-         } editor: {
-             TokenValueRow(label: "textPadding", value: Binding(
-                  get: { Moin.ConfigProvider.shared.components.divider.textPadding },
-                  set: { Moin.ConfigProvider.shared.components.divider.textPadding = $0 }
-             ))
-         } code: {
-             "config.components.divider.textPadding = \(Int(config.components.divider.textPadding))"
-         }
-         .scrollAnchor("token.textPadding")
-     }
     
     private var orientationMarginCard: some View {
-         TokenCard(
-             name: "orientationMargin",
-             type: "CGFloat",
-             defaultValue: "0.05",
-             description: tr("api.divider.token_orientation_margin"),
-             sectionId: "token"
-         ) {
-              Moin.Divider("Left", titlePlacement: .left)
-         } editor: {
-             TokenValueRow(label: "orientationMargin", value: Binding(
-                  get: { Moin.ConfigProvider.shared.components.divider.orientationMargin },
-                  set: { Moin.ConfigProvider.shared.components.divider.orientationMargin = $0 }
-             ), range: 0...1, step: 0.1)
-         } code: {
-             "config.components.divider.orientationMargin = \(String(format: "%.2f", config.components.divider.orientationMargin))"
-         }
-         .scrollAnchor("token.orientationMargin")
-     }
-    
-    private var lineWidthCard: some View {
         TokenCard(
-            name: "lineWidth",
+            name: "orientationMargin",
             type: "CGFloat",
-            defaultValue: "1",
-            description: tr("api.divider.token_line_width"),
-            sectionId: "token"
+            defaultValue: "0.05",
+            description: tr("api.divider.token_orientation_margin"),
+            sectionId: "component"
         ) {
-             Moin.Divider()
+            Moin.Divider("Left", titlePlacement: .left)
         } editor: {
-            TokenValueRow(label: "lineWidth", value: Binding(
-                 get: { Moin.ConfigProvider.shared.components.divider.lineWidth },
-                 set: { Moin.ConfigProvider.shared.components.divider.lineWidth = $0 }
-            ))
+            TokenValueRow(label: "orientationMargin", value: Binding(
+                get: { config.components.divider.orientationMargin },
+                set: { config.components.divider.orientationMargin = $0 }
+            ), range: 0...1, step: 0.1)
         } code: {
-            "config.components.divider.lineWidth = \(Int(config.components.divider.lineWidth))"
+            "config.components.divider.orientationMargin = \(String(format: "%.2f", config.components.divider.orientationMargin))"
         }
-        .scrollAnchor("token.lineWidth")
     }
     
     private var dashLengthCard: some View {
@@ -272,85 +135,156 @@ struct DividerTokenView: View {
             type: "CGFloat",
             defaultValue: "4",
             description: tr("api.divider.token_dash_length"),
-            sectionId: "token"
+            sectionId: "component"
         ) {
-             Moin.Divider(variant: .dashed)
+            Moin.Divider(variant: .dashed)
         } editor: {
             TokenValueRow(label: "dashLength", value: Binding(
-                 get: { Moin.ConfigProvider.shared.components.divider.dashLength },
-                 set: { Moin.ConfigProvider.shared.components.divider.dashLength = $0 }
+                get: { config.components.divider.dashLength },
+                set: { config.components.divider.dashLength = $0 }
             ))
         } code: {
             "config.components.divider.dashLength = \(Int(config.components.divider.dashLength))"
         }
-        .scrollAnchor("token.dashLength")
     }
     
     private var dashGapCard: some View {
-         TokenCard(
-             name: "dashGap",
-             type: "CGFloat",
-             defaultValue: "4",
-             description: tr("api.divider.token_dash_gap"),
-             sectionId: "token"
-         ) {
-              Moin.Divider(variant: .dashed)
-         } editor: {
-             TokenValueRow(label: "dashGap", value: Binding(
-                  get: { Moin.ConfigProvider.shared.components.divider.dashGap },
-                  set: { Moin.ConfigProvider.shared.components.divider.dashGap = $0 }
-             ))
-         } code: {
-             "config.components.divider.dashGap = \(Int(config.components.divider.dashGap))"
-         }
-         .scrollAnchor("token.dashGap")
-     }
-    
-    private var globalColorTextCard: some View {
-         TokenCard(
-            name: "colorText",
-            type: "Color",
-            defaultValue: "token.colorText",
-            description: tr("api.global_token.colorText"),
-            sectionId: "global"
+        TokenCard(
+            name: "dashGap",
+            type: "CGFloat",
+            defaultValue: "4",
+            description: tr("api.divider.token_dash_gap"),
+            sectionId: "component"
         ) {
-             Moin.Divider("Text")
+            Moin.Divider(variant: .dashed)
         } editor: {
-            ColorPresetRow(label: "colorText", color: Binding(
-                 get: { Moin.ConfigProvider.shared.seed.colorTextBase },
-                 set: {
-                     Moin.ConfigProvider.shared.seed.colorTextBase = $0
-                     Moin.ConfigProvider.shared.regenerateTokens()
-                     Moin.ConfigProvider.shared.components.divider = Moin.DividerToken.generate(from: Moin.ConfigProvider.shared.token)
-                 }
+            TokenValueRow(label: "dashGap", value: Binding(
+                get: { config.components.divider.dashGap },
+                set: { config.components.divider.dashGap = $0 }
             ))
         } code: {
-            "config.seed.colorTextBase = Color(...)"
+            "config.components.divider.dashGap = \(Int(config.components.divider.dashGap))"
         }
-        .scrollAnchor("global.colorText")
     }
-
-    private var globalLineWidthCard: some View {
-         TokenCard(
+    
+    // MARK: - Global Token Cards
+    
+    private var colorBorderCard: some View {
+        TokenCard(
+            name: "colorBorder",
+            type: "Color",
+            defaultValue: "#d9d9d9",
+            description: tr("api.divider.token_line_color"),
+            sectionId: "global"
+        ) {
+            HStack(spacing: Moin.Constants.Spacing.md) {
+                Moin.Divider()
+            }
+        } code: {
+            "// \(tr("api.derived_from")) seed.colorBgBase"
+        }
+    }
+    
+    private var colorTextCard: some View {
+        TokenCard(
+            name: "colorText",
+            type: "Color",
+            defaultValue: "rgba(0,0,0,0.88)",
+            description: tr("api.divider.token_text_color"),
+            sectionId: "global"
+        ) {
+            Moin.Divider("Text")
+        } code: {
+            "// \(tr("api.derived_from")) seed.colorTextBase"
+        }
+    }
+    
+    private var fontSizeLGCard: some View {
+        TokenCard(
+            name: "fontSizeLG",
+            type: "CGFloat",
+            defaultValue: "16",
+            description: tr("api.divider.token_font_size"),
+            sectionId: "global"
+        ) {
+            HStack(spacing: Moin.Constants.Spacing.md) {
+                Moin.Divider("Text")
+                Text("fontSizeLG: \(Int(config.token.fontSizeLG))px")
+                    .font(.system(size: 11, design: .monospaced))
+                    .foregroundStyle(.secondary)
+            }
+        } editor: {
+            TokenValueRow(label: "seed.fontSize", value: Binding(
+                get: { config.seed.fontSize },
+                set: { config.seed.fontSize = $0 }
+            ), range: 10...24, onChange: { config.regenerateTokens() })
+        } code: {
+            "// fontSizeLG = seed.fontSize + 2"
+        }
+    }
+    
+    private var lineWidthCard: some View {
+        TokenCard(
             name: "lineWidth",
             type: "CGFloat",
             defaultValue: "1",
-            description: tr("api.global_token.lineWidth"),
+            description: tr("api.divider.token_line_width"),
             sectionId: "global"
         ) {
-             Moin.Divider()
+            HStack(spacing: Moin.Constants.Spacing.md) {
+                Moin.Divider()
+                Text("lineWidth: \(Int(config.token.lineWidth))px")
+                    .font(.system(size: 11, design: .monospaced))
+                    .foregroundStyle(.secondary)
+            }
         } editor: {
-            TokenValueRow(label: "lineWidth", value: Binding(
-                 get: { Moin.ConfigProvider.shared.seed.lineWidth },
-                 set: {
-                     Moin.ConfigProvider.shared.seed.lineWidth = $0
-                     Moin.ConfigProvider.shared.regenerateTokens()
-                     Moin.ConfigProvider.shared.components.divider = Moin.DividerToken.generate(from: Moin.ConfigProvider.shared.token)
-                 }
-            ))
+            TokenValueRow(label: "seed.lineWidth", value: Binding(
+                get: { config.seed.lineWidth },
+                set: { config.seed.lineWidth = $0 }
+            ), range: 0...5, onChange: { config.regenerateTokens() })
         } code: {
             "config.seed.lineWidth = \(Int(config.seed.lineWidth))"
         }
-        .scrollAnchor("global.globalLineWidth")
+    }
+    
+    private var marginLGCard: some View {
+        TokenCard(
+            name: "marginLG",
+            type: "CGFloat",
+            defaultValue: "24",
+            description: tr("api.divider.token_vertical_margin"),
+            sectionId: "global"
+        ) {
+            VStack(spacing: 0) {
+                Text("Text")
+                Moin.Divider()
+                Text("Text")
+            }
+        } editor: {
+            TokenValueRow(label: "seed.sizeUnit", value: Binding(
+                get: { config.seed.sizeUnit },
+                set: { config.seed.sizeUnit = $0 }
+            ), range: 2...8, onChange: { config.regenerateTokens() })
+        } code: {
+            "// marginLG = sizeUnit * 6 = \(Int(config.token.marginLG))"
+        }
+    }
+    
+    private var marginXSCard: some View {
+        TokenCard(
+            name: "marginXS",
+            type: "CGFloat",
+            defaultValue: "8",
+            description: tr("api.divider.token_horizontal_margin"),
+            sectionId: "global"
+        ) {
+            HStack(spacing: 0) {
+                Text("A")
+                Moin.Divider(orientation: .vertical)
+                Text("B")
+            }
+        } code: {
+            "// marginXS = sizeUnit * 2 = \(Int(config.token.marginXS))"
+        }
     }
 }

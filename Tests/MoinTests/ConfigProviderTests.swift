@@ -152,11 +152,11 @@ final class ConfigProviderTests: XCTestCase {
         let provider = Moin.ConfigProvider.shared
 
         var newComponents = Moin.ComponentToken.default
-        newComponents.button.primaryColor = .black
+        newComponents.button.contentFontSize = 30
 
         provider.components = newComponents
 
-        XCTAssertEqual(provider.components.button.primaryColor, .black)
+        XCTAssertEqual(provider.components.button.contentFontSize, 30)
     }
 
     // MARK: - Theme Tests

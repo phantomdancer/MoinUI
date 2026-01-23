@@ -32,13 +32,13 @@ public extension Moin {
         public var body: some View {
             VStack(spacing: 0) {
                 imageView
-                    .padding(.bottom, emptyToken.imageMarginBottom)
+                    .padding(.bottom, token.marginXS)  // 全局Token
 
                 if let text = resolvedDescription, !text.isEmpty {
                     Text(text)
-                        .font(.system(size: emptyToken.descriptionFontSize))
-                        .foregroundStyle(emptyToken.descriptionColor)
-                        .padding(.bottom, emptyToken.contentMarginTop)
+                        .font(.system(size: token.fontSize))  // 全局Token
+                        .foregroundStyle(token.colorTextSecondary)  // 全局Token
+                        .padding(.bottom, token.marginSM)  // 全局Token
                 }
 
                 if let content = content {
@@ -52,12 +52,12 @@ public extension Moin {
             switch imageType {
             case .default:
                 EmptyDefaultImage()
-                    .frame(height: emptyToken.imageHeight)
-                    .foregroundStyle(emptyToken.imageColor.opacity(emptyToken.imageOpacity))
+                    .frame(height: emptyToken.imageHeight)  // 组件Token
+                    .foregroundStyle(token.colorTextQuaternary.opacity(emptyToken.imageOpacity))  // 混合
             case .simple:
                 EmptySimpleImage()
-                    .frame(height: emptyToken.imageHeightSM)
-                    .foregroundStyle(emptyToken.imageColor.opacity(emptyToken.imageOpacity))
+                    .frame(height: emptyToken.imageHeightSM)  // 组件Token
+                    .foregroundStyle(token.colorTextQuaternary.opacity(emptyToken.imageOpacity))
             case .custom(let image):
                 image
                     .resizable()
@@ -66,7 +66,7 @@ public extension Moin {
             case .systemIcon(let name):
                 Image(systemName: name)
                     .font(.system(size: emptyToken.imageHeight * 0.6))
-                    .foregroundStyle(emptyToken.imageColor.opacity(emptyToken.imageOpacity))
+                    .foregroundStyle(token.colorTextQuaternary.opacity(emptyToken.imageOpacity))
                     .frame(height: emptyToken.imageHeight)
             case .url(let urlString):
                 AsyncImage(url: URL(string: urlString)) { phase in
@@ -82,11 +82,11 @@ public extension Moin {
                     case .failure:
                         EmptyDefaultImage()
                             .frame(height: emptyToken.imageHeight)
-                            .foregroundStyle(emptyToken.imageColor.opacity(emptyToken.imageOpacity))
+                            .foregroundStyle(token.colorTextQuaternary.opacity(emptyToken.imageOpacity))
                     @unknown default:
                         EmptyDefaultImage()
                             .frame(height: emptyToken.imageHeight)
-                            .foregroundStyle(emptyToken.imageColor.opacity(emptyToken.imageOpacity))
+                            .foregroundStyle(token.colorTextQuaternary.opacity(emptyToken.imageOpacity))
                     }
                 }
             case .none:

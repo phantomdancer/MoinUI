@@ -6,7 +6,9 @@ public extension Moin {
     /// Space component for setting spacing between child elements
     struct Space<Content: View, Separator: View>: View {
         @Environment(\.moinToken) private var token
-        @Environment(\.moinSpaceToken) private var spaceToken
+        
+        // Ant Design Space has no component token, uses global padding directly
+        // @Environment(\.moinSpaceToken) private var spaceToken 
 
         private let size: Moin.SpaceSize
         private let direction: Moin.SpaceDirection
@@ -56,11 +58,11 @@ public extension Moin {
         private var spacing: CGFloat {
             switch size {
             case .small:
-                return spaceToken.sizeSmall
+                return token.paddingXS
             case .medium:
-                return spaceToken.sizeMedium
+                return token.padding
             case .large:
-                return spaceToken.sizeLarge
+                return token.paddingLG
             case ._custom(let value):
                 return value
             }

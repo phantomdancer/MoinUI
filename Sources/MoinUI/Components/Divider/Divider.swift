@@ -74,8 +74,8 @@ public extension Moin {
 
         private var horizontalLine: some View {
             lineView(isHorizontal: true)
-                .frame(height: dividerToken.lineWidth)
-                .padding(.vertical, dividerToken.verticalMargin)
+                .frame(height: token.lineWidth)          // 全局Token
+                .padding(.vertical, token.marginLG)      // 全局Token
         }
 
         // MARK: - Horizontal Divider with Content
@@ -84,23 +84,23 @@ public extension Moin {
         private func horizontalDividerWithContent(_ content: Content) -> some View {
             GeometryReader { geo in
                 let totalWidth = geo.size.width
-                let shortWidth = totalWidth * dividerToken.orientationMargin
+                let shortWidth = totalWidth * dividerToken.orientationMargin  // 组件Token
                 
-                HStack(spacing: dividerToken.textPadding) {
+                HStack(spacing: dividerToken.textPadding) {  // 组件Token
                     // Left line
                     switch titlePlacement {
                     case .left:
                         lineView(isHorizontal: true)
-                            .frame(width: shortWidth, height: dividerToken.lineWidth)
+                            .frame(width: shortWidth, height: token.lineWidth)
                     case .center, .right:
                         lineView(isHorizontal: true)
-                            .frame(height: dividerToken.lineWidth)
+                            .frame(height: token.lineWidth)
                     }
 
                     // Content
                     content
-                        .font(.system(size: dividerToken.fontSize, weight: plain ? .regular : .medium))
-                        .foregroundStyle(dividerToken.textColor)
+                        .font(.system(size: token.fontSizeLG, weight: plain ? .regular : .medium))  // 全局Token
+                        .foregroundStyle(token.colorText)  // 全局Token
                         .lineLimit(1)
                         .fixedSize()
 
@@ -108,24 +108,24 @@ public extension Moin {
                     switch titlePlacement {
                     case .right:
                         lineView(isHorizontal: true)
-                            .frame(width: shortWidth, height: dividerToken.lineWidth)
+                            .frame(width: shortWidth, height: token.lineWidth)
                     case .center, .left:
                         lineView(isHorizontal: true)
-                            .frame(height: dividerToken.lineWidth)
+                            .frame(height: token.lineWidth)
                     }
                 }
                 .frame(maxWidth: .infinity)
             }
-            .frame(height: dividerToken.fontSize + dividerToken.verticalMargin * 2)
-            .padding(.vertical, dividerToken.verticalMargin)
+            .frame(height: token.fontSizeLG + token.marginLG * 2)  // 全局Token
+            .padding(.vertical, token.marginLG)                    // 全局Token
         }
 
         // MARK: - Vertical Divider
 
         private var verticalDivider: some View {
             lineView(isHorizontal: false)
-                .frame(width: dividerToken.lineWidth)
-                .padding(.horizontal, dividerToken.horizontalMargin)
+                .frame(width: token.lineWidth)           // 全局Token
+                .padding(.horizontal, token.marginXS)    // 全局Token
         }
 
         // MARK: - Line View
@@ -135,21 +135,21 @@ public extension Moin {
             switch variant {
             case .solid:
                 Rectangle()
-                    .fill(dividerToken.lineColor)
+                    .fill(token.colorBorder)  // 全局Token
             case .dashed:
                 DashedLineShape(
                     isHorizontal: isHorizontal,
-                    dashLength: dividerToken.dashLength,
-                    dashGap: dividerToken.dashGap
+                    dashLength: dividerToken.dashLength,  // 组件Token
+                    dashGap: dividerToken.dashGap         // 组件Token
                 )
-                .stroke(dividerToken.lineColor, lineWidth: dividerToken.lineWidth)
+                .stroke(token.colorBorder, lineWidth: token.lineWidth)
             case .dotted:
                 DashedLineShape(
                     isHorizontal: isHorizontal,
                     dashLength: 2,
                     dashGap: 2
                 )
-                .stroke(dividerToken.lineColor, lineWidth: dividerToken.lineWidth)
+                .stroke(token.colorBorder, lineWidth: token.lineWidth)
             }
         }
     }

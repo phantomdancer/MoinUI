@@ -14,29 +14,26 @@ public extension Moin {
         private let backgroundColor: Color? // 允许覆盖背景色
         private let gap: CGFloat // 文字距边界间距
 
+        /// 内部通用初始化方法
+        private init(
+            content: Content,
+            size: AvatarSize,
+            shape: AvatarShape,
+            icon: String?,
+            text: String?,
+            backgroundColor: Color?,
+            gap: CGFloat
+        ) {
+            self.content = content
+            self.size = size
+            self.shape = shape
+            self.icon = icon
+            self.text = text
+            self.backgroundColor = backgroundColor
+            self.gap = gap
+        }
 
-
-
-    /// 内部通用初始化方法
-    private init(
-        content: Content,
-        size: AvatarSize,
-        shape: AvatarShape,
-        icon: String?,
-        text: String?,
-        backgroundColor: Color?,
-        gap: CGFloat
-    ) {
-        self.content = content
-        self.size = size
-        self.shape = shape
-        self.icon = icon
-        self.text = text
-        self.backgroundColor = backgroundColor
-        self.gap = gap
-    }
-
-    /// 创建自定义内容的头像
+        /// 创建自定义内容的头像
         public init(
             size: AvatarSize = .default,
             shape: AvatarShape = .circle,
@@ -54,8 +51,6 @@ public extension Moin {
                 gap: gap
             )
         }
-
-
 
         public var body: some View {
             ZStack {
@@ -117,9 +112,9 @@ public extension Moin {
                 // Square 也有微小圆角
                 let radius: CGFloat
                 switch size {
-                case .large: radius = avatarToken.borderRadiusLG
-                case .default: radius = avatarToken.borderRadius
-                case .small: radius = avatarToken.borderRadiusSM
+                case .large: radius = token.borderRadiusLG
+                case .default: radius = token.borderRadius
+                case .small: radius = token.borderRadiusSM
                 case ._custom(let val): radius = val * 0.15 // 粗略估算
                 }
                 return AnyShape(RoundedRectangle(cornerRadius: radius))
@@ -130,19 +125,13 @@ public extension Moin {
             if let backgroundColor = backgroundColor {
                 return backgroundColor
             }
-            // 如果是文本，默认使用灰色背景
-            // 如果是图片 (Content)，通常图片自带全填充，背景色看不见；
-            // 这里统一给一个默认背景
-            return avatarToken.containerBg
+            // 使用全局 token 定义的 placeholder 颜色作为默认背景
+            return token.colorTextPlaceholder
         }
         
         private var contentColor: Color {
-            // 如果只有文本且背景是默认的，使用 token 定义的文本色
-            // 但如果用户自定义了背景色（例如彩色），通常文本应该是白色
-            if backgroundColor != nil {
-                return avatarToken.colorTextLight
-            }
-            return avatarToken.colorText
+            // 使用全局 token 定义的浅色实心文本颜色
+            return token.colorTextLightSolid
         }
     }
 }
@@ -150,7 +139,6 @@ public extension Moin {
 // MARK: - Convenience Inits
 
 public extension Moin.Avatar where Content == EmptyView {
-
 
     /// 创建图标头像 (AvatarColor)
     init(
@@ -170,8 +158,6 @@ public extension Moin.Avatar where Content == EmptyView {
             gap: gap
         )
     }
-
-
 
     /// 创建文本头像 (AvatarColor)
     init(
@@ -211,13 +197,6 @@ public extension Moin.Avatar where Content == Image {
             gap: 4
         )
     }
-}
-
-// MARK: - Icon View Init
-public extension Moin.Avatar {
-
-
-
 }
 
 // Helper needed for AnyShape

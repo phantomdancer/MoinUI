@@ -18,11 +18,8 @@ struct EmptyTokenSection: View {
                     .foregroundStyle(.secondary)
 
                 // 组件 Token
-                Text(tr("empty.token.component"))
+                Text(tr("doc.section.component_token"))
                     .font(.headline)
-
-                Text(tr("empty.token.component_desc"))
-                    .foregroundStyle(.secondary)
 
                 APITable(
                     headers: (
@@ -34,12 +31,27 @@ struct EmptyTokenSection: View {
                     rows: [
                         ("imageHeight", "CGFloat", "\(Int(emptyToken.imageHeight))", tr("empty.token.imageHeight")),
                         ("imageHeightSM", "CGFloat", "\(Int(emptyToken.imageHeightSM))", tr("empty.token.imageHeightSM")),
-                        ("imageColor", "Color", "-", tr("empty.token.imageColor")),
                         ("imageOpacity", "Double", "\(emptyToken.imageOpacity)", tr("empty.token.imageOpacity")),
-                        ("descriptionColor", "Color", "-", tr("empty.token.descriptionColor")),
-                        ("descriptionFontSize", "CGFloat", "\(Int(emptyToken.descriptionFontSize))", tr("empty.token.descriptionFontSize")),
-                        ("imageMarginBottom", "CGFloat", "\(Int(emptyToken.imageMarginBottom))", tr("empty.token.imageMarginBottom")),
-                        ("contentMarginTop", "CGFloat", "\(Int(emptyToken.contentMarginTop))", tr("empty.token.contentMarginTop")),
+                    ]
+                )
+                
+                // 全局 Token
+                Text(tr("doc.section.global_token"))
+                    .font(.headline)
+                
+                APITable(
+                    headers: (
+                        tr("api.property"),
+                        tr("api.type"),
+                        tr("api.default"),
+                        tr("api.description")
+                    ),
+                    rows: [
+                        ("colorTextQuaternary", "Color", "-", tr("empty.token.imageColor")),
+                        ("colorTextSecondary", "Color", "-", tr("empty.token.descriptionColor")),
+                        ("fontSize", "CGFloat", "\(Int(token.fontSize))", tr("empty.token.descriptionFontSize")),
+                        ("marginXS", "CGFloat", "\(Int(token.marginXS))", tr("empty.token.imageMarginBottom")),
+                        ("marginSM", "CGFloat", "\(Int(token.marginSM))", tr("empty.token.contentMarginTop")),
                     ]
                 )
             }

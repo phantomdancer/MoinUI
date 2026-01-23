@@ -12,43 +12,44 @@ struct SpinTokenView: View {
     
     private var tokenSections: [DocSidebarSection] {
         [
+            // 组件 Token
             DocSidebarSection(
-                title: tr("spin.token.size"),
-                items: ["dotSize", "dotSizeSM", "dotSizeLG", "contentHeight"],
-                sectionId: "size"
+                title: tr("doc.section.component_token"),
+                items: ["dotSize", "dotSizeSM", "dotSizeLG", "contentHeight", "motionDuration"],
+                sectionId: "component"
             ),
+            // 全局 Token
             DocSidebarSection(
-                title: tr("spin.token.color"),
-                items: ["dotColor", "tipColor", "maskBackground"],
-                sectionId: "color"
-            ),
-            DocSidebarSection(
-                title: tr("spin.token.animation"),
-                items: ["motionDuration"],
-                sectionId: "animation"
+                title: tr("doc.section.global_token"),
+                items: ["colorPrimary", "colorTextTertiary", "colorBgMask"],
+                sectionId: "global"
             )
         ]
     }
     
-    // 重置所有 Spin Token 到默认值
+    // 重置所有 Token 到默认值
     private func resetAll() {
+        // 重置 global
+        config.seed = Moin.SeedToken.default
+        config.regenerateTokens()
+        
+        // 重置组件
         config.components.spin = .generate(from: config.token)
     }
     
     var body: some View {
         ComponentDocBody(
             sections: tokenSections,
-            initialItemId: "size"
+            initialItemId: "component"
         ) { sectionId in
-            if sectionId == "size" {
-                Text(tr("spin.token.size")).font(.title3).fontWeight(.semibold)
-            } else if sectionId == "color" {
-                Text(tr("spin.token.color")).font(.title3).fontWeight(.semibold)
-            } else if sectionId == "animation" {
-                Text(tr("spin.token.animation")).font(.title3).fontWeight(.semibold)
+            if sectionId == "component" {
+                Text(tr("doc.section.component_token")).font(.title3).fontWeight(.semibold)
+            } else if sectionId == "global" {
+                Text(tr("doc.section.global_token")).font(.title3).fontWeight(.semibold)
             }
         } item: { item in
             cardForItem(item)
+                .id(item)
         } footer: {
             HStack(spacing: Moin.Constants.Spacing.sm) {
                 Moin.Button(tr("playground.token.reset"), color: .primary, variant: .solid) {
@@ -74,76 +75,72 @@ struct SpinTokenView: View {
         case "dotSizeSM": dotSizeSMCard
         case "dotSizeLG": dotSizeLGCard
         case "contentHeight": contentHeightCard
-        // Color
-        case "dotColor": dotColorCard
-        case "tipColor": tipColorCard
-        case "maskBackground": maskBackgroundCard
-        // Animation
         case "motionDuration": motionDurationCard
+        // Global
+        case "colorPrimary": colorPrimaryCard
+        case "colorTextTertiary": colorTextTertiaryCard
+        case "colorBgMask": colorBgMaskCard
         default: EmptyView()
         }
     }
     
-    // MARK: - Size Cards
+    // MARK: - Component Token Cards
     
     private var dotSizeCard: some View {
         TokenCard(
             name: "dotSize",
             type: "CGFloat",
-            defaultValue: "20",
+            defaultValue: "token.controlHeightLG / 2",
             description: tr("spin.token.dotSize_desc"),
-            sectionId: "size"
+            sectionId: "component"
         ) {
             Moin.Spin(size: .default)
         } editor: {
             TokenValueRow(label: "dotSize", value: Binding(
-                 get: { Moin.ConfigProvider.shared.components.spin.dotSize },
-                 set: { Moin.ConfigProvider.shared.components.spin.dotSize = $0 }
+                get: { config.components.spin.dotSize },
+                set: { config.components.spin.dotSize = $0 }
             ))
         } code: {
             "config.components.spin.dotSize = \(Int(config.components.spin.dotSize))"
         }
-        .scrollAnchor("size.dotSize")
     }
     
     private var dotSizeSMCard: some View {
         TokenCard(
             name: "dotSizeSM",
             type: "CGFloat",
-            defaultValue: "14",
+            defaultValue: "token.controlHeightLG * 0.35",
             description: tr("spin.token.dotSizeSM_desc"),
-            sectionId: "size"
+            sectionId: "component"
         ) {
             Moin.Spin(size: .small)
         } editor: {
             TokenValueRow(label: "dotSizeSM", value: Binding(
-                 get: { Moin.ConfigProvider.shared.components.spin.dotSizeSM },
-                 set: { Moin.ConfigProvider.shared.components.spin.dotSizeSM = $0 }
+                get: { config.components.spin.dotSizeSM },
+                set: { config.components.spin.dotSizeSM = $0 }
             ))
         } code: {
             "config.components.spin.dotSizeSM = \(Int(config.components.spin.dotSizeSM))"
         }
-        .scrollAnchor("size.dotSizeSM")
     }
     
     private var dotSizeLGCard: some View {
         TokenCard(
             name: "dotSizeLG",
             type: "CGFloat",
-            defaultValue: "32",
+            defaultValue: "token.controlHeight",
             description: tr("spin.token.dotSizeLG_desc"),
-            sectionId: "size"
+            sectionId: "component"
         ) {
             Moin.Spin(size: .large)
         } editor: {
             TokenValueRow(label: "dotSizeLG", value: Binding(
-                 get: { Moin.ConfigProvider.shared.components.spin.dotSizeLG },
-                 set: { Moin.ConfigProvider.shared.components.spin.dotSizeLG = $0 }
+                get: { config.components.spin.dotSizeLG },
+                set: { config.components.spin.dotSizeLG = $0 }
             ))
         } code: {
             "config.components.spin.dotSizeLG = \(Int(config.components.spin.dotSizeLG))"
         }
-        .scrollAnchor("size.dotSizeLG")
     }
     
     private var contentHeightCard: some View {
@@ -152,14 +149,14 @@ struct SpinTokenView: View {
             type: "CGFloat",
             defaultValue: "400",
             description: tr("spin.token.contentHeight_desc"),
-            sectionId: "size"
+            sectionId: "component"
         ) {
             // 使用 ScrollView 展示 contentHeight 效果
             Moin.Spin(spinning: true, tip: tr("spin.loading")) {
                 ScrollView {
                     VStack(spacing: 8) {
-                        ForEach(0..<10, id: \.self) { i in
-                            Text("Content Line \(i + 1)")
+                        ForEach(0..<5, id: \.self) { i in
+                            Text("Line \(i + 1)")
                                 .frame(maxWidth: .infinity)
                                 .padding(.vertical, 8)
                                 .background(Color.gray.opacity(0.1))
@@ -168,124 +165,102 @@ struct SpinTokenView: View {
                     }
                     .padding(8)
                 }
-                .frame(height: config.components.spin.contentHeight)
+                .frame(height: 150) // Demo中固定高度，实际使用 config.components.spin.contentHeight
             }
         } editor: {
             TokenValueRow(label: "contentHeight", value: Binding(
-                 get: { Moin.ConfigProvider.shared.components.spin.contentHeight },
-                 set: { Moin.ConfigProvider.shared.components.spin.contentHeight = $0 }
+                get: { config.components.spin.contentHeight },
+                set: { config.components.spin.contentHeight = $0 }
             ), range: 50...600, step: 50)
         } code: {
             "config.components.spin.contentHeight = \(Int(config.components.spin.contentHeight))"
         }
-        .scrollAnchor("size.contentHeight")
     }
     
-    // MARK: - Color Cards
-    
-    private var dotColorCard: some View {
+    private var motionDurationCard: some View {
         TokenCard(
-            name: "dotColor",
-            type: "Color",
-            defaultValue: "token.colorPrimary",
-            description: tr("spin.token.dotColor_desc"),
-            sectionId: "color"
+            name: "motionDuration",
+            type: "Double",
+            defaultValue: "1.2",
+            description: tr("spin.token.motionDuration_desc"),
+            sectionId: "component"
         ) {
             Moin.Spin()
         } editor: {
-            ColorPresetRow(label: "dotColor", color: Binding(
-                 get: { Moin.ConfigProvider.shared.components.spin.dotColor },
-                 set: { Moin.ConfigProvider.shared.components.spin.dotColor = $0 }
-            ))
+            TokenValueRow(label: "motionDuration", value: Binding(
+                get: { CGFloat(config.components.spin.motionDuration) },
+                set: { config.components.spin.motionDuration = Double($0) }
+            ), range: 0.1...5, step: 0.1)
         } code: {
-            "config.components.spin.dotColor = Color(...)"
+            "config.components.spin.motionDuration = \(config.components.spin.motionDuration)"
         }
-        .scrollAnchor("color.dotColor")
     }
     
-    private var tipColorCard: some View {
-         TokenCard(
-             name: "tipColor",
-             type: "Color",
-             defaultValue: "token.colorTextTertiary",
-             description: tr("spin.token.tipColor_desc"),
-             sectionId: "color"
-         ) {
-             Moin.Spin(tip: "Loading...")
-         } editor: {
-             ColorPresetRow(label: "tipColor", color: Binding(
-                  get: { Moin.ConfigProvider.shared.components.spin.tipColor },
-                  set: { Moin.ConfigProvider.shared.components.spin.tipColor = $0 }
-             ))
-         } code: {
-             "config.components.spin.tipColor = Color(...)"
-         }
-         .scrollAnchor("color.tipColor")
-     }
+    // MARK: - Global Token Cards
     
-    private var maskBackgroundCard: some View {
-          TokenCard(
-              name: "maskBackground",
-              type: "Color",
-              defaultValue: "token.colorBgMask",
-              description: tr("spin.token.maskBackground_desc"),
-              sectionId: "color"
-          ) {
-              // 模拟全屏模式的遮罩效果
-              ZStack {
-                  // 背景内容
-                  VStack(spacing: 4) {
-                      Text("Background")
-                          .font(.caption)
-                      Text("Content")
-                          .font(.caption)
-                  }
-                  .frame(width: 120, height: 80)
-                  .background(Color.white)
-                  .cornerRadius(4)
-                  
-                  // 遮罩层
-                  config.components.spin.maskBackground
-                      .cornerRadius(4)
-                  
-                  // 白色指示器
-                  SpinIndicator(
-                      size: config.components.spin.dotSize,
-                      color: .white,
-                      duration: config.components.spin.motionDuration
-                  )
-              }
-              .frame(width: 120, height: 80)
-          } editor: {
-              ColorPresetRow(label: "maskBackground", color: Binding(
-                   get: { Moin.ConfigProvider.shared.components.spin.maskBackground },
-                   set: { Moin.ConfigProvider.shared.components.spin.maskBackground = $0 }
-              ))
-          } code: {
-              "config.components.spin.maskBackground = Color(...)"
-          }
-          .scrollAnchor("color.maskBackground")
-      }
+    private var colorPrimaryCard: some View {
+        TokenCard(
+            name: "colorPrimary",
+            type: "Color",
+            defaultValue: "seed.colorPrimary",
+            description: tr("spin.token.dotColor_desc"),
+            sectionId: "global"
+        ) {
+            Moin.Spin()
+        } editor: {
+            ColorPresetRow(label: "seed.colorPrimary", color: Binding(
+                get: { config.seed.colorPrimary },
+                set: {
+                    config.seed.colorPrimary = $0
+                    config.regenerateTokens()
+                }
+            ))
+        } code: {
+            "config.seed.colorPrimary = Color(...)"
+        }
+    }
     
-    // MARK: - Animation Cards
+    private var colorTextTertiaryCard: some View {
+        TokenCard(
+            name: "colorTextTertiary",
+            type: "Color",
+            defaultValue: "token.colorTextTertiary",
+            description: tr("spin.token.tipColor_desc"),
+            sectionId: "global"
+        ) {
+            Moin.Spin(tip: "Loading...")
+        } code: {
+            "// \(tr("api.derived_from")) seed.colorTextBase"
+        }
+    }
     
-    private var motionDurationCard: some View {
-         TokenCard(
-             name: "motionDuration",
-             type: "Double",
-             defaultValue: "1.2",
-             description: tr("spin.token.motionDuration_desc"),
-             sectionId: "animation"
-         ) {
-             Moin.Spin()
-         } editor: {
-             TokenValueRow(label: "motionDuration", value: Binding(
-                  get: { CGFloat(Moin.ConfigProvider.shared.components.spin.motionDuration) },
-                  set: { Moin.ConfigProvider.shared.components.spin.motionDuration = Double($0) }
-             ), range: 0.1...5, step: 0.1)
-         } code: {
-             "config.components.spin.motionDuration = \(config.components.spin.motionDuration)"
-         }
-         .scrollAnchor("animation.motionDuration")
-     }
+    private var colorBgMaskCard: some View {
+        TokenCard(
+            name: "colorBgMask",
+            type: "Color",
+            defaultValue: "token.colorBgMask",
+            description: tr("spin.token.maskBackground_desc"),
+            sectionId: "global"
+        ) {
+            ZStack {
+                VStack(spacing: 4) {
+                    Text("Bg").font(.caption)
+                }
+                .frame(width: 80, height: 60)
+                .background(Color.white)
+                
+                config.token.colorBgMask
+                    .cornerRadius(4)
+                
+                SpinIndicator(
+                    size: config.components.spin.dotSize,
+                    color: .white,
+                    duration: config.components.spin.motionDuration
+                )
+            }
+            .frame(width: 80, height: 60)
+        } code: {
+            "// \(tr("api.derived_from")) seed.colorBgBase"
+        }
+    }
 }

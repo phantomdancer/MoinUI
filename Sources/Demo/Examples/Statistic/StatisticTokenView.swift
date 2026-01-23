@@ -3,6 +3,7 @@ import MoinUI
 
 struct StatisticTokenView: View {
     @Localized var tr
+    @Environment(\.moinToken) var token
     @ObservedObject var config = Moin.ConfigProvider.shared
     
     // MARK: - Token Sections
@@ -10,30 +11,42 @@ struct StatisticTokenView: View {
     private var tokenSections: [DocSidebarSection] {
         [
             DocSidebarSection(
-                title: tr("api.component_token"),
-                items: ["titleFontSize", "contentFontSize", "gap", "contentGap", "titleColor", "contentColor"],
-                sectionId: "token"
+                title: tr("doc.section.component_token"),
+                items: ["titleFontSize", "contentFontSize"],
+                sectionId: "component"
+            ),
+            DocSidebarSection(
+                title: tr("doc.section.global_token"),
+                items: ["colorTextDescription", "colorTextHeading", "marginXXS"],
+                sectionId: "global"
             )
         ]
     }
     
     // 重置所有 Token 到默认值
     private func resetAll() {
-        let defaultToken = Moin.StatisticToken.resolve(token: config.token)
-        config.components.statistic = defaultToken
+        // Reset Global
+        config.seed = Moin.SeedToken.default
+        config.regenerateTokens()
+        
+        // Reset Component
+        config.components.statistic = .generate(from: config.token)
         NotificationCenter.default.post(name: .statisticDocReset, object: nil)
     }
     
     var body: some View {
         ComponentDocBody(
             sections: tokenSections,
-            initialItemId: "token"
+            initialItemId: "component"
         ) { sectionId in
-            if sectionId == "token" {
-                Text(tr("api.component_token")).font(.title3).fontWeight(.semibold)
+            if sectionId == "component" {
+                Text(tr("doc.section.component_token")).font(.title3).fontWeight(.semibold)
+            } else if sectionId == "global" {
+                Text(tr("doc.section.global_token")).font(.title3).fontWeight(.semibold)
             }
         } item: { item in
             cardForItem(item)
+                .id(item)
         } footer: {
             HStack(spacing: Moin.Constants.Spacing.sm) {
                 Moin.Button(tr("playground.token.reset"), color: .primary, variant: .solid) {
@@ -54,25 +67,26 @@ struct StatisticTokenView: View {
     @ViewBuilder
     private func cardForItem(_ item: String) -> some View {
         switch item {
+        // Component
         case "titleFontSize": titleFontSizeCard
         case "contentFontSize": contentFontSizeCard
-        case "gap": gapCard
-        case "contentGap": contentGapCard
-        case "titleColor": titleColorCard
-        case "contentColor": contentColorCard
+        // Global
+        case "colorTextDescription": colorTextDescriptionCard
+        case "colorTextHeading": colorTextHeadingCard
+        case "marginXXS": marginXXSCard
         default: EmptyView()
         }
     }
     
-    // MARK: - Cards
+    // MARK: - Component Cards
     
     private var titleFontSizeCard: some View {
         TokenCard(
             name: "titleFontSize",
             type: "CGFloat",
-            defaultValue: "fontSize (14)",
+            defaultValue: "token.fontSize (14)",
             description: tr("api.statistic.token_title_font_size"),
-            sectionId: "token"
+            sectionId: "component"
         ) {
             Moin.Statistic(title: "Active Users", value: 112893)
         } editor: {
@@ -89,9 +103,9 @@ struct StatisticTokenView: View {
         TokenCard(
             name: "contentFontSize",
             type: "CGFloat",
-            defaultValue: "fontSizeHeading3 (24)",
+            defaultValue: "token.fontSizeHeading3 (24)",
             description: tr("api.statistic.token_content_font_size"),
-            sectionId: "token"
+            sectionId: "component"
         ) {
             Moin.Statistic(title: "Active Users", value: 112893)
         } editor: {
@@ -104,85 +118,56 @@ struct StatisticTokenView: View {
         }
     }
     
-    private var gapCard: some View {
+    // MARK: - Global Cards
+    
+    private var colorTextDescriptionCard: some View {
         TokenCard(
-            name: "gap",
+            name: "colorTextDescription",
+            type: "Color",
+            defaultValue: "token.colorTextDescription",
+            description: "Title Text Color",
+            sectionId: "global"
+        ) {
+            Moin.Statistic(title: "Active Users", value: 112893)
+        } code: {
+            "// \(tr("api.derived_from")) seed.colorTextBase"
+        }
+    }
+    
+    private var colorTextHeadingCard: some View {
+         TokenCard(
+            name: "colorTextHeading",
+            type: "Color",
+            defaultValue: "token.colorTextHeading",
+            description: "Content Text Color",
+            sectionId: "global"
+        ) {
+            Moin.Statistic(title: "Active Users", value: 112893)
+        } code: {
+            "// \(tr("api.derived_from")) seed.colorTextBase"
+        }
+    }
+    
+    private var marginXXSCard: some View {
+        TokenCard(
+            name: "marginXXS",
             type: "CGFloat",
-            defaultValue: "marginXXS (4)",
+            defaultValue: "4",
             description: tr("api.statistic.token_gap"),
-            sectionId: "token"
+            sectionId: "global"
         ) {
             Moin.Statistic(title: "Active Users", value: 112893)
                 .border(Color.red.opacity(0.3))
         } editor: {
-            TokenValueRow(label: "gap", value: Binding(
-                 get: { config.components.statistic.gap },
-                 set: { config.components.statistic.gap = $0 }
-            ))
+             TokenValueRow(label: "seed.sizeUnit", value: Binding(
+                  get: { Moin.ConfigProvider.shared.seed.sizeUnit },
+                  set: {
+                      Moin.ConfigProvider.shared.seed.sizeUnit = $0
+                      Moin.ConfigProvider.shared.regenerateTokens()
+                  }
+             ), range: 2...8, step: 1)
         } code: {
-            "config.components.statistic.gap = \(Int(config.components.statistic.gap))"
-        }
-    }
-    
-    private var contentGapCard: some View {
-        TokenCard(
-            name: "contentGap",
-            type: "CGFloat",
-            defaultValue: "marginXXS (4)",
-            description: tr("api.statistic.token_content_gap"),
-            sectionId: "token"
-        ) {
-             Moin.Statistic(
-                title: "Feedback",
-                value: 1128,
-                prefix: Image(systemName: "hand.thumbsup.fill").foregroundStyle(Color.blue)
-            )
-            .border(Color.red.opacity(0.3))
-        } editor: {
-            TokenValueRow(label: "contentGap", value: Binding(
-                 get: { config.components.statistic.contentGap },
-                 set: { config.components.statistic.contentGap = $0 }
-            ))
-        } code: {
-            "config.components.statistic.contentGap = \(Int(config.components.statistic.contentGap))"
-        }
-    }
-
-    private var titleColorCard: some View {
-        TokenCard(
-            name: "titleColor",
-            type: "Color",
-            defaultValue: "textSecondary",
-            description: "Title Text Color",
-            sectionId: "token"
-        ) {
-            Moin.Statistic(title: "Active Users", value: 112893)
-        } editor: {
-             ColorPresetRow(label: "titleColor", color: Binding(
-                 get: { config.components.statistic.titleColor },
-                 set: { config.components.statistic.titleColor = $0 }
-            ))
-        } code: {
-            "config.components.statistic.titleColor = .\(config.components.statistic.titleColor.description)"
-        }
-    }
-    
-    private var contentColorCard: some View {
-        TokenCard(
-            name: "contentColor",
-            type: "Color",
-            defaultValue: "text",
-            description: "Content Text Color",
-            sectionId: "token"
-        ) {
-            Moin.Statistic(title: "Active Users", value: 112893)
-        } editor: {
-             ColorPresetRow(label: "contentColor", color: Binding(
-                 get: { config.components.statistic.contentColor },
-                 set: { config.components.statistic.contentColor = $0 }
-            ))
-        } code: {
-            "config.components.statistic.contentColor = .\(config.components.statistic.contentColor.description)"
+            "// marginXXS = sizeUnit"
         }
     }
 }

@@ -100,21 +100,25 @@ token.paddingLG = \(Int(config.token.paddingLG))
         case .button:
             return """
 // \(tr("token.playground.code_button_config"))
-config.components.button.defaultColor = Color(hex: "\(config.components.button.defaultColor.hexString)")
-config.components.button.defaultBg = Color(hex: "\(config.components.button.defaultBg.hexString)")
-config.components.button.defaultBorderColor = Color(hex: "\(config.components.button.defaultBorderColor.hexString)")
-config.components.button.primaryColor = Color(hex: "\(config.components.button.primaryColor.hexString)")
-config.components.button.dangerColor = Color(hex: "\(config.components.button.dangerColor.hexString)")
 // \(tr("token.playground.button_sizes"))
 config.components.button.paddingInline = \(Int(config.components.button.paddingInline))
 config.components.button.paddingInlineLG = \(Int(config.components.button.paddingInlineLG))
 config.components.button.paddingInlineSM = \(Int(config.components.button.paddingInlineSM))
 config.components.button.paddingBlock = \(Int(config.components.button.paddingBlock))
+config.components.button.paddingBlockLG = \(Int(config.components.button.paddingBlockLG))
+config.components.button.paddingBlockSM = \(Int(config.components.button.paddingBlockSM))
 config.components.button.iconGap = \(Int(config.components.button.iconGap))
 // \(tr("token.playground.button_font"))
 config.components.button.contentFontSize = \(Int(config.components.button.contentFontSize))
 config.components.button.contentFontSizeLG = \(Int(config.components.button.contentFontSizeLG))
 config.components.button.contentFontSizeSM = \(Int(config.components.button.contentFontSizeSM))
+config.components.button.fontWeight = \(config.components.button.fontWeight.codeDescription)
+// \(tr("token.playground.style"))
+config.components.button.groupBorderColor = Color(hex: "\(config.components.button.groupBorderColor.hexString)")
+config.components.button.textTextColor = Color(hex: "\(config.components.button.textTextColor.hexString)")
+// Global Tokens (Read-only)
+// token.colorPrimary, token.colorPrimaryHover, token.colorPrimaryActive
+// token.colorText, token.colorBgContainer, token.colorBorder
 """
         case .tag:
             return """
@@ -143,56 +147,53 @@ config.components.badge.paddingH = \(Int(config.components.badge.paddingH))
         case .avatar:
             return """
 // \(tr("token.playground.code_avatar_config"))
-config.components.avatar.containerBg = Color(hex: "\(config.components.avatar.containerBg.hexString)")
-config.components.avatar.colorText = Color(hex: "\(config.components.avatar.colorText.hexString)")
-// \(tr("token.playground.avatar_sizes"))
+// Component Tokens
 config.components.avatar.size = \(Int(config.components.avatar.size))
 config.components.avatar.sizeLG = \(Int(config.components.avatar.sizeLG))
 config.components.avatar.sizeSM = \(Int(config.components.avatar.sizeSM))
-// \(tr("token.playground.avatar_group"))
 config.components.avatar.groupSpacing = \(Int(config.components.avatar.groupSpacing))
-config.components.avatar.groupBorderWidth = \(Int(config.components.avatar.groupBorderWidth))
+config.components.avatar.groupBorderColor = Color(hex: "\(config.components.avatar.groupBorderColor.hexString)")
+// \(tr("token.playground.code_global_readonly"))
+// token.colorTextPlaceholder, token.colorTextLightSolid, token.borderRadius
 """
         case .space:
             return """
 // \(tr("token.playground.code_space_config"))
-config.components.space.sizeSmall = \(Int(config.components.space.sizeSmall))
-config.components.space.sizeMedium = \(Int(config.components.space.sizeMedium))
-config.components.space.sizeLarge = \(Int(config.components.space.sizeLarge))
+// Space uses global padding tokens directly.
+// token.paddingXS, token.padding, token.paddingLG
 """
         case .divider:
             return """
 // \(tr("token.playground.code_divider_config"))
-config.components.divider.lineColor = Color(hex: "\(config.components.divider.lineColor.hexString)")
-config.components.divider.textColor = Color(hex: "\(config.components.divider.textColor.hexString)")
-// \(tr("token.playground.divider_sizes"))
-config.components.divider.fontSize = \(Int(config.components.divider.fontSize))
-config.components.divider.lineWidth = \(Int(config.components.divider.lineWidth))
-config.components.divider.verticalMargin = \(Int(config.components.divider.verticalMargin))
-config.components.divider.horizontalMargin = \(Int(config.components.divider.horizontalMargin))
+// Component Tokens
 config.components.divider.textPadding = \(Int(config.components.divider.textPadding))
 config.components.divider.orientationMargin = \(String(format: "%.2f", config.components.divider.orientationMargin))
+config.components.divider.dashLength = \(Int(config.components.divider.dashLength))
+config.components.divider.dashGap = \(Int(config.components.divider.dashGap))
+// \(tr("token.playground.code_global_readonly"))
+// token.colorBorder, token.colorText, token.lineWidth, token.marginLG
 """
         case .empty:
             return """
 // \(tr("token.playground.code_empty_config"))
+// Component Tokens
 config.components.empty.imageHeight = \(Int(config.components.empty.imageHeight))
 config.components.empty.imageHeightSM = \(Int(config.components.empty.imageHeightSM))
-config.components.empty.descriptionFontSize = \(Int(config.components.empty.descriptionFontSize))
-config.components.empty.imageMarginBottom = \(Int(config.components.empty.imageMarginBottom))
-config.components.empty.contentMarginTop = \(Int(config.components.empty.contentMarginTop))
+config.components.empty.imageOpacity = \(String(format: "%.1f", config.components.empty.imageOpacity))
+// \(tr("token.playground.code_global_readonly"))
+// token.fontSize, token.colorTextSecondary, token.marginXS, token.marginSM
 """
         case .spin:
             return """
 // \(tr("token.playground.code_spin_config"))
-config.components.spin.dotColor = Color(hex: "\(config.components.spin.dotColor.hexString)")
-config.components.spin.tipColor = Color(hex: "\(config.components.spin.tipColor.hexString)")
-// \(tr("token.playground.spin_sizes"))
+// Component Tokens
 config.components.spin.dotSize = \(Int(config.components.spin.dotSize))
 config.components.spin.dotSizeSM = \(Int(config.components.spin.dotSizeSM))
 config.components.spin.dotSizeLG = \(Int(config.components.spin.dotSizeLG))
-// \(tr("token.playground.spin_animation"))
+config.components.spin.contentHeight = \(Int(config.components.spin.contentHeight))
 config.components.spin.motionDuration = \(String(format: "%.1f", config.components.spin.motionDuration))
+// \(tr("token.playground.code_global_readonly"))
+// token.colorPrimary, token.colorTextTertiary, token.colorBgMask
 """
         }
     }

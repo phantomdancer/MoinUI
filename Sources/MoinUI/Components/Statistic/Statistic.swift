@@ -57,11 +57,11 @@ public extension Moin {
         public var body: some View {
             let statisticToken = components.statistic
             
-            VStack(alignment: .leading, spacing: statisticToken.gap) {
+            VStack(alignment: .leading, spacing: token.marginXXS) { // Uses Global Token
                 if let title = title {
                     title
                         .font(.system(size: statisticToken.titleFontSize))
-                        .foregroundStyle(statisticToken.titleColor)
+                        .foregroundStyle(token.colorTextSecondary)
                 }
                 
                 if loading {
@@ -69,21 +69,21 @@ public extension Moin {
                         .fill(Color.secondary.opacity(0.1))
                         .frame(width: 100, height: statisticToken.contentFontSize)
                 } else {
-                    HStack(spacing: statisticToken.contentGap) {
+                    HStack(spacing: token.marginXXS) {
                         if let prefix = prefix {
                             prefix
                                 .font(.system(size: statisticToken.contentFontSize))
-                                .foregroundStyle(statisticToken.contentColor)
+                                .foregroundStyle(token.colorText)
                         }
                         
                         value
                             .font(.system(size: statisticToken.contentFontSize))
-                            .foregroundStyle(statisticToken.contentColor)
+                            .foregroundStyle(token.colorText)
                         
                         if let suffix = suffix {
                             suffix
                                 .font(.system(size: statisticToken.contentFontSize))
-                                .foregroundStyle(statisticToken.contentColor)
+                                .foregroundStyle(token.colorText)
                         }
                     }
                 }

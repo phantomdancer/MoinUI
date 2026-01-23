@@ -3,42 +3,28 @@ import SwiftUI
 // MARK: - Moin.DividerToken
 
 public extension Moin {
+    /// Divider 组件的设计变量（仅组件专属Token）
+    ///
+    /// 参考 Ant Design Divider Component Token
+    /// 全局Token（lineWidth、colorBorder、fontSize等）直接从全局token读取
     struct DividerToken {
-        // MARK: - Component Token
+        // MARK: - Component Token (组件专属)
         
-        /// 分割线颜色
-        public var lineColor: Color
-        /// 带文本时的文本颜色
-        public var textColor: Color
-        /// 带文本时的字号
-        public var fontSize: CGFloat
-        /// 水平分割线的垂直外间距
-        public var verticalMargin: CGFloat
-        /// 垂直分割线的水平外间距
-        public var horizontalMargin: CGFloat
-        /// 文本与线条的间距
+        /// 文本与线条的间距 (textPaddingInline)
         public var textPadding: CGFloat
-        /// 分割线宽度
-        public var lineWidth: CGFloat
+        /// 文本偏移比例 (0~1)，用于 left/right 对齐 (orientationMargin)
+        public var orientationMargin: CGFloat
         /// 虚线长度
         public var dashLength: CGFloat
         /// 虚线间隙
         public var dashGap: CGFloat
-        /// 文本偏移比例 (0~1)，用于 left/right 对齐
-        public var orientationMargin: CGFloat
 
         public static func generate(from token: Token) -> DividerToken {
             DividerToken(
-                lineColor: token.colorBorder,
-                textColor: token.colorText,
-                fontSize: token.fontSizeLG,
-                verticalMargin: token.marginLG,
-                horizontalMargin: token.marginXS,
-                textPadding: token.padding,
-                lineWidth: token.lineWidth,
+                textPadding: token.padding,      // 1em ≈ 16px
+                orientationMargin: 0.05,         // Ant Design default
                 dashLength: 4,
-                dashGap: 4,
-                orientationMargin: 0.05
+                dashGap: 4
             )
         }
 

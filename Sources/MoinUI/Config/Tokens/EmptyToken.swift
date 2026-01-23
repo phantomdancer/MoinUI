@@ -3,31 +3,24 @@ import SwiftUI
 // MARK: - Moin.EmptyToken
 
 public extension Moin {
+    /// Empty 组件的设计变量（仅组件专属Token）
+    ///
+    /// 参考 Ant Design Empty - 没有 ComponentToken
+    /// 全局Token直接从全局token读取
     struct EmptyToken {
-        // MARK: - Image
+        // MARK: - Image (组件专属)
+        /// 图片高度
         public var imageHeight: CGFloat
+        /// 小号图片高度
         public var imageHeightSM: CGFloat
-        public var imageColor: Color
+        /// 图片透明度
         public var imageOpacity: Double
-
-        // MARK: - Description
-        public var descriptionColor: Color
-        public var descriptionFontSize: CGFloat
-
-        // MARK: - Spacing
-        public var imageMarginBottom: CGFloat
-        public var contentMarginTop: CGFloat
 
         public static func generate(from token: Token) -> EmptyToken {
             EmptyToken(
-                imageHeight: 100,
-                imageHeightSM: 40,
-                imageColor: token.colorTextQuaternary,
-                imageOpacity: 1.0,
-                descriptionColor: token.colorTextSecondary,
-                descriptionFontSize: token.fontSize,
-                imageMarginBottom: token.marginXS,
-                contentMarginTop: token.marginSM
+                imageHeight: 100,   // Ant Design default
+                imageHeightSM: 40,  // Ant Design simple
+                imageOpacity: 1.0
             )
         }
 

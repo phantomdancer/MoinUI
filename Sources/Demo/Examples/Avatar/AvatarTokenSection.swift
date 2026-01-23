@@ -32,9 +32,6 @@ struct AvatarTokenSection: View {
                         tr("api.description")
                     ),
                     rows: [
-                        ("containerBg", "Color", "-", tr("avatar.token.containerBg")),
-                        ("colorText", "Color", "-", tr("avatar.token.colorText")),
-                        ("colorTextLight", "Color", "-", tr("avatar.token.colorTextLight")),
                         ("groupBorderColor", "Color", "-", tr("avatar.token.groupBorderColor")),
                         ("size", "CGFloat", "\(Int(avatarToken.size))", tr("avatar.token.size")),
                         ("sizeLG", "CGFloat", "\(Int(avatarToken.sizeLG))", tr("avatar.token.sizeLG")),
@@ -42,11 +39,7 @@ struct AvatarTokenSection: View {
                         ("fontSize", "CGFloat", "\(Int(avatarToken.fontSize))", tr("avatar.token.fontSize")),
                         ("fontSizeLG", "CGFloat", "\(Int(avatarToken.fontSizeLG))", tr("avatar.token.fontSizeLG")),
                         ("fontSizeSM", "CGFloat", "\(Int(avatarToken.fontSizeSM))", tr("avatar.token.fontSizeSM")),
-                        ("borderRadius", "CGFloat", "\(Int(avatarToken.borderRadius))", tr("avatar.token.borderRadius")),
-                        ("borderRadiusLG", "CGFloat", "\(Int(avatarToken.borderRadiusLG))", tr("avatar.token.borderRadiusLG")),
-                        ("borderRadiusSM", "CGFloat", "\(Int(avatarToken.borderRadiusSM))", tr("avatar.token.borderRadiusSM")),
                         ("groupSpacing", "CGFloat", "\(Int(avatarToken.groupSpacing))", tr("avatar.token.groupSpacing")),
-                        ("groupBorderWidth", "CGFloat", "\(Int(avatarToken.groupBorderWidth))", tr("avatar.token.groupBorderWidth")),
                     ]
                 )
 
