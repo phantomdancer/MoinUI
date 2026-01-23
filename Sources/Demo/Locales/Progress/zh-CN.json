@@ -52,5 +52,13 @@
   "api.progress.railColor": "未完成分段的颜色",
   "api.progress.size": "进度条尺寸",
   "api.progress.format": "内容的模板函数",
-  "api.progress.strokeLinecap": "进度条的端点形状"
+  "api.progress.strokeLinecap": "进度条的端点形状",
+  "api.progress.success": "成功进度配置",
+  "api.progress.strokeWidth": "进度条线的宽度",
+  "api.progress.gapDegree": "仪表盘缺口角度",
+  "api.progress.gapPosition": "仪表盘缺口位置",
+  "api.progress.percentPosition": "进度数值位置",
+  "token.progress.lineBorderRadius": "进度条圆角",
+  "token.progress.circleTextFontSize": "圆形进度文字大小",
+  "token.progress.circleIconFontSize": "圆形进度图标大小"
 }

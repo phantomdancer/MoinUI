@@ -52,5 +52,13 @@
   "api.progress.railColor": "The color of unfilled part",
   "api.progress.size": "Progress bar size",
   "api.progress.format": "The template function of the content",
-  "api.progress.strokeLinecap": "The shape of the progress bar end"
+  "api.progress.strokeLinecap": "The shape of the progress bar end",
+  "api.progress.success": "Config for success status",
+  "api.progress.strokeWidth": "The width of progress bar line",
+  "api.progress.gapDegree": "The gap degree of dashboard",
+  "api.progress.gapPosition": "The gap position of dashboard",
+  "api.progress.percentPosition": "The position of progress value",
+  "token.progress.lineBorderRadius": "Border Radius of Line Progress",
+  "token.progress.circleTextFontSize": "Font Size of Circular Text",
+  "token.progress.circleIconFontSize": "Font Size of Circular Icon"
 }

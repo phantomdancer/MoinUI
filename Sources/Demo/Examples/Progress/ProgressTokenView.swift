@@ -19,7 +19,8 @@ struct ProgressTokenView: View {
             DocSidebarSection(
                 title: tr("doc.section.component_token"),
                 items: [
-                   "defaultColor", "remainingColor", "circleTextColor"
+                   "defaultColor", "remainingColor", "circleTextColor",
+                   "lineBorderRadius", "circleTextFontSize", "circleIconFontSize"
                 ],
                 sectionId: "component"
             ),
@@ -62,7 +63,7 @@ struct ProgressTokenView: View {
             .padding(Moin.Constants.Spacing.md)
         }
     }
-    
+
     @ViewBuilder
     private func cardForItem(_ item: String) -> some View {
         switch item {
@@ -87,6 +88,39 @@ struct ProgressTokenView: View {
             } editor: {
                 ColorPresetRow(label: "circleTextColor", color: binding(\.circleTextColor))
             } code: { "config.components.progress.circleTextColor = Color(...)" }
+            
+        case "lineBorderRadius":
+             TokenCard(name: "lineBorderRadius", type: "CGFloat", defaultValue: "100", description: tr("token.progress.lineBorderRadius"), sectionId: "component") {
+                Moin.Progress(percent: 50, strokeLinecap: .round)
+            } editor: {
+                TokenValueRow(label: "lineBorderRadius", value: binding(\.lineBorderRadius), range: 0...100, step: 1)
+            } code: { "config.components.progress.lineBorderRadius = 100" }
+
+        case "circleTextFontSize":
+             TokenCard(name: "circleTextFontSize", type: "String", defaultValue: "1em", description: tr("token.progress.circleTextFontSize"), sectionId: "component") {
+                Moin.Progress(percent: 50, type: .circle)
+            } editor: {
+                HStack {
+                    Text("circleTextFontSize")
+                    Spacer()
+                    TextField("1em", text: binding(\.circleTextFontSize))
+                        .textFieldStyle(.roundedBorder)
+                        .frame(width: 100)
+                }
+            } code: { "config.components.progress.circleTextFontSize = \"1em\"" }
+
+        case "circleIconFontSize":
+             TokenCard(name: "circleIconFontSize", type: "String", defaultValue: "1.16em", description: tr("token.progress.circleIconFontSize"), sectionId: "component") {
+                Moin.Progress(percent: 100, type: .circle)
+            } editor: {
+                HStack {
+                    Text("circleIconFontSize")
+                    Spacer()
+                    TextField("1em", text: binding(\.circleIconFontSize))
+                        .textFieldStyle(.roundedBorder)
+                        .frame(width: 100)
+                }
+            } code: { "config.components.progress.circleIconFontSize = \"1.16em\"" }
         
         // Global
         case "colorInfo":
