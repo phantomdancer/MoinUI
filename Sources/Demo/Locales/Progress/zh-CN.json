@@ -13,7 +13,7 @@
   "progress.info_position_desc": "改变进度值显示的位置。",
   "progress.custom_count": "自定义步数：",
   "progress.custom_gap": "自定义间隔：",
-  "progress.size": "进度条尺寸",
+  "progress.size": "尺寸",
   "progress.size_desc": "进度条尺寸可以动态调整。",
   "progress.status_desc": "自定义文字格式。",
   "progress.mini_size": "小型进度条",

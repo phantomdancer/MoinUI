@@ -204,13 +204,19 @@ struct ProgressExamples: View {
             """
             Moin.Progress(
                 percent: 50,
+                strokeWidth: 20,
+                strokeLinecap: .butt,
+                railColor: Color.black.opacity(0.06),
                 type: .dashboard,
                 circleSteps: .init(count: 8)
             )
             Moin.Progress(
                 percent: 100,
+                strokeWidth: 20,
+                strokeLinecap: .butt,
+                railColor: Color.black.opacity(0.06),
                 type: .circle,
-                circleSteps: .init(count: 5, gap: 7)
+                circleSteps: .init(count: stepsCount, gap: stepsGap)
             )
             """
         }
@@ -269,19 +275,15 @@ struct ProgressExamples: View {
 
     private var segmentExample: some View {
         ExampleSection(title: tr("progress.segment"), description: tr("progress.segment_desc")) {
-            VStack(alignment: .leading, spacing: 8) {
+            Moin.Space(size: .small) {
                  Moin.Progress(percent: 60, success: .init(percent: 30))
-                
-                 HStack(spacing: 8) {
-                     Moin.Progress(percent: 60, success: .init(percent: 30), type: .circle)
-                     Moin.Progress(percent: 60, success: .init(percent: 30), type: .dashboard)
-                 }
+                 Moin.Progress(percent: 60, success: .init(percent: 30), type: .circle)
+                 Moin.Progress(percent: 60, success: .init(percent: 30), type: .dashboard)
             }
         } code: {
             """
-            Moin.Progress(percent: 60, success: .init(percent: 30))
-            
-            HStack(spacing: 8) {
+            Moin.Space(size: .small) {
+                Moin.Progress(percent: 60, success: .init(percent: 30))
                 Moin.Progress(percent: 60, success: .init(percent: 30), type: .circle)
                 Moin.Progress(percent: 60, success: .init(percent: 30), type: .dashboard)
             }
@@ -291,47 +293,77 @@ struct ProgressExamples: View {
 
     private var linecapExample: some View {
         ExampleSection(title: tr("progress.linecap"), description: tr("progress.linecap_desc")) {
-            VStack(spacing: 16) {
+            Moin.Space(size: .small) {
                 Moin.Progress(percent: 75, strokeLinecap: .butt)
-                HStack(spacing: 16) {
-                     Moin.Progress(percent: 75, strokeLinecap: .butt, type: .circle)
-                     Moin.Progress(percent: 75, strokeLinecap: .butt, type: .dashboard)
-                }
+                Moin.Progress(percent: 75, strokeLinecap: .butt, type: .circle)
+                Moin.Progress(percent: 75, strokeLinecap: .butt, type: .dashboard)
             }
         } code: {
             """
-            Moin.Progress(percent: 75, strokeLinecap: .butt)
+            Moin.Space(size: .small) {
+                Moin.Progress(percent: 75, strokeLinecap: .butt)
+                Moin.Progress(percent: 75, strokeLinecap: .butt, type: .circle)
+                Moin.Progress(percent: 75, strokeLinecap: .butt, type: .dashboard)
+            }
             """
         }
     }
 
     private var sizeExample: some View {
         ExampleSection(title: tr("progress.size"), description: tr("progress.size_desc")) {
-             VStack(spacing: 32) {
-                 VStack(spacing: 16) {
+             VStack(alignment: .leading, spacing: 24) { // gap="middle" ~ 24 or 16? AntD middle is usually 16 or 24. Let's use 24 for clear separation.
+                 // Line
+                 VStack(spacing: 8) { // gap="small"
                      Moin.Progress(percent: 50)
                      Moin.Progress(percent: 50, size: .small)
-                     Moin.Progress(percent: 50, size: .size(width: 300, height: 20)) 
+                     Moin.Progress(percent: 50, size: .size(width: 300, height: 20))
                  }
                  .frame(width: 300)
                  
-                 HStack(spacing: 30) {
+                 // Circle
+                 HStack(alignment: .center, spacing: 30) {
                      Moin.Progress(percent: 50, type: .circle)
                      Moin.Progress(percent: 50, type: .circle, size: .small)
                      Moin.Progress(percent: 50, type: .circle, size: .number(20))
                  }
                  
-                 HStack(spacing: 30) {
+                 // Dashboard
+                 HStack(alignment: .center, spacing: 30) {
                      Moin.Progress(percent: 50, type: .dashboard)
                      Moin.Progress(percent: 50, type: .dashboard, size: .small)
                      Moin.Progress(percent: 50, type: .dashboard, size: .number(20))
                  }
+
+                 // Steps
+                 HStack(alignment: .center, spacing: 30) {
+                     Moin.Progress(percent: 50, size: .default, steps: 3)
+                     Moin.Progress(percent: 50, size: .small, steps: 3)
+                     Moin.Progress(percent: 50, size: .number(20), steps: 3) // Check if steps supports number size effectively
+                     Moin.Progress(percent: 50, size: .size(width: 20, height: 30), steps: 3) // Custom dimension steps
+                 }
              }
         } code: {
             """
+            // Line
+            Moin.Progress(percent: 50)
             Moin.Progress(percent: 50, size: .small)
             Moin.Progress(percent: 50, size: .size(width: 300, height: 20))
+
+            // Circle
+            Moin.Progress(percent: 50, type: .circle)
+            Moin.Progress(percent: 50, type: .circle, size: .small)
             Moin.Progress(percent: 50, type: .circle, size: .number(20))
+
+            // Dashboard
+            Moin.Progress(percent: 50, type: .dashboard)
+            Moin.Progress(percent: 50, type: .dashboard, size: .small)
+            Moin.Progress(percent: 50, type: .dashboard, size: .number(20))
+            
+            // Steps
+            Moin.Progress(percent: 50, steps: 3)
+            Moin.Progress(percent: 50, size: .small, steps: 3)
+            Moin.Progress(percent: 50, size: .number(20), steps: 3)
+            Moin.Progress(percent: 50, size: .size(width: 20, height: 30), steps: 3)
             """
         }
     }
@@ -426,37 +458,41 @@ private struct CircleStepsDemo: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-            HStack {
+            VStack(alignment: .leading, spacing: 8) {
                 Text(tr("progress.custom_count"))
+                    .font(.headline)
                 Slider(value: Binding(
                     get: { Double(stepsCount) },
                     set: { stepsCount = Int($0) }
                 ), in: 2...10, step: 1)
-                Text("\(stepsCount)")
             }
-
-            HStack {
+            
+            VStack(alignment: .leading, spacing: 8) {
                 Text(tr("progress.custom_gap"))
-                Slider(value: $stepsGap, in: 0...40, step: 4)
-                Text("\(Int(stepsGap))")
+                    .font(.headline)
+                Slider(value: $stepsGap, in: 0...40, step: 4.0)
             }
 
-            HStack(spacing: 16) {
+            HStack(spacing: 24) { // gap="middle" ~ 24
                 Moin.Progress(
                     percent: 50,
                     strokeWidth: 20,
+                    strokeLinecap: .butt,
                     railColor: Color.black.opacity(0.06),
                     type: .dashboard,
                     circleSteps: .init(count: 8)
                 )
+                
                 Moin.Progress(
                     percent: 100,
                     strokeWidth: 20,
+                    strokeLinecap: .butt,
                     railColor: Color.black.opacity(0.06),
                     type: .circle,
                     circleSteps: .init(count: stepsCount, gap: stepsGap)
                 )
             }
+            .padding(.top, 16)
         }
     }
 }

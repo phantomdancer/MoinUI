@@ -210,9 +210,14 @@ public extension Moin {
         private var effectiveStrokeWidth: CGFloat {
             if let w = strokeWidth { return w }
             if type == .line {
-                return size == .small ? 6 : 8
+                switch size {
+                case .small: return 6
+                case .default: return 8
+                case .number(let h): return h
+                case .size(_, let h): return h
+                }
             } else {
-                return size == .small ? 6 : 6 // AntD circle seems 6 default?
+                return size == .small ? 6 : 6
             }
         }
         
@@ -414,15 +419,26 @@ public extension Moin {
                         rotation: rotation
                     )
                 } else {
+                    // 1. Rail
                     Circle()
                         .trim(from: 0, to: fraction)
                         .stroke(railColor ?? progressToken.remainingColor, style: StrokeStyle(lineWidth: circleStrokeWidth, lineCap: strokeLinecap.swiftUIStyle))
                         .rotationEffect(rotation)
 
+                    // 2. Main Progress (Blue)
                     Circle()
                         .trim(from: 0, to: (validPercent / 100.0) * fraction)
                         .stroke(statusFill(), style: StrokeStyle(lineWidth: circleStrokeWidth, lineCap: strokeLinecap.swiftUIStyle))
                         .rotationEffect(rotation)
+                    
+                    // 3. Success Progress (Green) - Renders on top
+                    if let success = success, success.percent > 0 {
+                        let successPercent = max(0, min(100, success.percent))
+                        Circle()
+                            .trim(from: 0, to: (successPercent / 100.0) * fraction)
+                            .stroke(success.strokeColor ?? globalToken.colorSuccess, style: StrokeStyle(lineWidth: circleStrokeWidth, lineCap: strokeLinecap.swiftUIStyle))
+                            .rotationEffect(rotation)
+                    }
                 }
 
                 if showInfo && !isSmallCircle {
@@ -463,11 +479,16 @@ public extension Moin {
             rotation: Angle
         ) -> some View {
             let totalDegrees = 360.0 - gapDeg
-            let gapBetweenSteps = config.gap
-            let totalGapDegrees = Double(config.count) * gapBetweenSteps
-            let availableDegrees = totalDegrees - totalGapDegrees
-            let stepDegrees = availableDegrees / Double(config.count)
-            let activeCount = Int(round((validPercent / 100.0) * Double(config.count)))
+            let count = Double(config.count)
+            // Ensure we don't have negative step size. Clamping total gap.
+            // Reserve at least 2 degrees for steps if possible, or 0.
+            let maxTotalGap = max(0, totalDegrees - (count * 2.0)) 
+            let gapBetweenSteps = min(config.gap, maxTotalGap / max(1, count))
+            
+            let totalGapDegrees = count * gapBetweenSteps
+            let availableDegrees = max(0, totalDegrees - totalGapDegrees)
+            let stepDegrees = availableDegrees / max(1, count)
+            let activeCount = Int(round((validPercent / 100.0) * count))
 
             ForEach(0..<config.count, id: \.self) { index in
                 let startOffset = Double(index) * (stepDegrees + gapBetweenSteps)
