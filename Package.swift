@@ -25,7 +25,7 @@ let package = Package(
             ]
         ),
         .executableTarget(
-            name: "Demo",
+            name: "MoinUIDemo",
             dependencies: ["MoinUI", "Splash"],
             path: "Sources/Demo",
             resources: [

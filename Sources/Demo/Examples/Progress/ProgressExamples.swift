@@ -79,7 +79,7 @@ struct ProgressExamples: View {
                     DashboardDemo()
                 } code: {
                     """
-                    Moin.Progress(percent: 30, gapDegree: gapDegree, type: .dashboard)
+                    Moin.Progress(percent: 30, gapDegree: gapDegree, gapPosition: gapPosition, type: .dashboard)
                     """
                 }
                 

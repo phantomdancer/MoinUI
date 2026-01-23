@@ -1,8 +1,8 @@
 {
   "watch": [
-    ".build/debug/Demo"
+    ".build/debug/MoinUIDemo"
   ],
-  "exec": "pkill -9 -f '.build/debug/Demo' 2>/dev/null; sleep 0.3; scripts/run-demo.sh",
+  "exec": "pkill -9 -f 'MoinUIDemo' 2>/dev/null; sleep 0.3; .build/debug/MoinUIDemo",
   "signal": "SIGKILL",
   "restartable": "rs",
   "ignore": [],
