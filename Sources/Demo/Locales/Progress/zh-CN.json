@@ -7,7 +7,7 @@
   "progress.dashboard_desc": "仪表盘样式的进度。",
   "progress.steps": "步骤进度条",
   "progress.steps_desc": "带步骤的进度条。",
-  "progress.circle_steps": "圆形步骤进度",
+  "progress.circle_steps": "步骤进度圈",
   "progress.circle_steps_desc": "圆形进度条也可以有步骤。",
   "progress.info_position": "进度值位置",
   "progress.info_position_desc": "改变进度值显示的位置。",

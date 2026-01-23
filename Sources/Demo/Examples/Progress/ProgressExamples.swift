@@ -269,9 +269,10 @@ struct ProgressExamples: View {
 
     private var segmentExample: some View {
         ExampleSection(title: tr("progress.segment"), description: tr("progress.segment_desc")) {
-            VStack(spacing: 16) {
+            VStack(alignment: .leading, spacing: 8) {
                  Moin.Progress(percent: 60, success: .init(percent: 30))
-                 HStack(spacing: 16) {
+                
+                 HStack(spacing: 8) {
                      Moin.Progress(percent: 60, success: .init(percent: 30), type: .circle)
                      Moin.Progress(percent: 60, success: .init(percent: 30), type: .dashboard)
                  }
@@ -279,7 +280,11 @@ struct ProgressExamples: View {
         } code: {
             """
             Moin.Progress(percent: 60, success: .init(percent: 30))
-            Moin.Progress(percent: 60, success: .init(percent: 30), type: .circle)
+            
+            HStack(spacing: 8) {
+                Moin.Progress(percent: 60, success: .init(percent: 30), type: .circle)
+                Moin.Progress(percent: 60, success: .init(percent: 30), type: .dashboard)
+            }
             """
         }
     }
