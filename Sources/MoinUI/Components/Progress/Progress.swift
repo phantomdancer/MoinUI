@@ -479,21 +479,49 @@ public extension Moin {
             rotation: Angle
         ) -> some View {
             let totalDegrees = 360.0 - gapDeg
+            // Compensate for round caps which extend into the gap.
+            let capCompensation: Double = {
+                if strokeLinecap == .round {
+                    let perimeter = CGFloat.pi * canvasSize
+                    return Double((strokeWidth / perimeter) * 360.0)
+                }
+                return 0
+            }()
+            
             let count = Double(config.count)
             // Ensure we don't have negative step size. Clamping total gap.
-            // Reserve at least 2 degrees for steps if possible, or 0.
-            let maxTotalGap = max(0, totalDegrees - (count * 2.0)) 
+            // For Round caps, reserve at least the cap size (capCompensation) so they don't disappear.
+            // For Butt caps, reserve small visible segment (2.0).
+            let minStepDegree = strokeLinecap == .round ? capCompensation : 2.0
+            
+            let maxTotalGap = max(0, totalDegrees - (count * minStepDegree))
             let gapBetweenSteps = min(config.gap, maxTotalGap / max(1, count))
             
             let totalGapDegrees = count * gapBetweenSteps
             let availableDegrees = max(0, totalDegrees - totalGapDegrees)
             let stepDegrees = availableDegrees / max(1, count)
             let activeCount = Int(round((validPercent / 100.0) * count))
-
+            
+            let drawStepDegrees = max(0.1, stepDegrees - capCompensation)
+            // If the step is too small to even hold caps, it disappears or looks weird. max(0.1) handles negative.
+            // Re-adjust start offset to keep segments centered in their slot.
+            // Original slot center = index * (step + gap) + step/2.
+            // New drawing segment should be centered there.
+            
             ForEach(0..<config.count, id: \.self) { index in
-                let startOffset = Double(index) * (stepDegrees + gapBetweenSteps)
+                // Original logic:
+                // let startOffset = Double(index) * (stepDegrees + gapBetweenSteps)
+                // center = startOffset + stepDegrees/2
+                
+                let slotWidth = stepDegrees + gapBetweenSteps
+                let centerOffset = (Double(index) * slotWidth) + (stepDegrees / 2.0)
+                
+                // New start/end based on drawStepDegrees centered at centerOffset
+                let startOffset = centerOffset - (drawStepDegrees / 2.0)
+                
                 let startFraction = startOffset / 360.0
-                let endFraction = (startOffset + stepDegrees) / 360.0
+                let endFraction = (startOffset + drawStepDegrees) / 360.0
+
                 let isActive = index < activeCount
                 let fillStyle = isActive ? statusFill() : statusFill(isRail: true)
 

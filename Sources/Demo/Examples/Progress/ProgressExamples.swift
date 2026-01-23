@@ -205,7 +205,7 @@ struct ProgressExamples: View {
             Moin.Progress(
                 percent: 50,
                 strokeWidth: 20,
-                strokeLinecap: .butt,
+                strokeLinecap: lineCap,
                 railColor: Color.black.opacity(0.06),
                 type: .dashboard,
                 circleSteps: .init(count: 8)
@@ -213,7 +213,7 @@ struct ProgressExamples: View {
             Moin.Progress(
                 percent: 100,
                 strokeWidth: 20,
-                strokeLinecap: .butt,
+                strokeLinecap: lineCap,
                 railColor: Color.black.opacity(0.06),
                 type: .circle,
                 circleSteps: .init(count: stepsCount, gap: stepsGap)
@@ -458,39 +458,65 @@ private struct CircleStepsDemo: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-            VStack(alignment: .leading, spacing: 8) {
-                Text(tr("progress.custom_count"))
-                    .font(.headline)
-                Slider(value: Binding(
-                    get: { Double(stepsCount) },
-                    set: { stepsCount = Int($0) }
-                ), in: 2...10, step: 1)
-            }
-            
-            VStack(alignment: .leading, spacing: 8) {
-                Text(tr("progress.custom_gap"))
-                    .font(.headline)
-                Slider(value: $stepsGap, in: 0...40, step: 4.0)
+            HStack(spacing: 32) {
+                VStack(alignment: .leading, spacing: 8) {
+                    Text(tr("progress.custom_count"))
+                        .font(.headline)
+                    Slider(value: Binding(
+                        get: { Double(stepsCount) },
+                        set: { stepsCount = Int($0) }
+                    ), in: 2...10, step: 1)
+                }
+                
+                VStack(alignment: .leading, spacing: 8) {
+                    Text(tr("progress.custom_gap"))
+                        .font(.headline)
+                    Slider(value: $stepsGap, in: 0...40, step: 4.0)
+                }
             }
 
-            HStack(spacing: 24) { // gap="middle" ~ 24
-                Moin.Progress(
-                    percent: 50,
-                    strokeWidth: 20,
-                    strokeLinecap: .butt,
-                    railColor: Color.black.opacity(0.06),
-                    type: .dashboard,
-                    circleSteps: .init(count: 8)
-                )
+            VStack(spacing: 24) {
+                // Butt Linecap Row
+                HStack(spacing: 24) {
+                    Moin.Progress(
+                        percent: 50,
+                        strokeWidth: 20,
+                        strokeLinecap: .butt,
+                        railColor: Color.black.opacity(0.06),
+                        type: .dashboard,
+                        circleSteps: .init(count: 8)
+                    )
+                    
+                    Moin.Progress(
+                        percent: 100,
+                        strokeWidth: 20,
+                        strokeLinecap: .butt,
+                        railColor: Color.black.opacity(0.06),
+                        type: .circle,
+                        circleSteps: .init(count: stepsCount, gap: stepsGap)
+                    )
+                }
                 
-                Moin.Progress(
-                    percent: 100,
-                    strokeWidth: 20,
-                    strokeLinecap: .butt,
-                    railColor: Color.black.opacity(0.06),
-                    type: .circle,
-                    circleSteps: .init(count: stepsCount, gap: stepsGap)
-                )
+                // Round Linecap Row
+                HStack(spacing: 24) {
+                    Moin.Progress(
+                        percent: 50,
+                        strokeWidth: 20,
+                        strokeLinecap: .round,
+                        railColor: Color.black.opacity(0.06),
+                        type: .dashboard,
+                        circleSteps: .init(count: 8)
+                    )
+                    
+                    Moin.Progress(
+                        percent: 100,
+                        strokeWidth: 20,
+                        strokeLinecap: .round,
+                        railColor: Color.black.opacity(0.06),
+                        type: .circle,
+                        circleSteps: .init(count: stepsCount, gap: stepsGap)
+                    )
+                }
             }
             .padding(.top, 16)
         }
