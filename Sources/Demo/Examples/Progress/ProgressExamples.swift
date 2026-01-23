@@ -89,8 +89,8 @@ struct ProgressExamples: View {
                 } code: {
                     """
                     Moin.Progress(percent: percent, type: .line)
-                    Moin.Button(icon: "minus") { decline() }
-                    Moin.Button(icon: "plus") { increase() }
+                    Moin.Progress(percent: percent, type: .circle)
+                    Moin.Progress(percent: percent, type: .dashboard)
                     """
                 }
                 
@@ -344,12 +344,11 @@ private struct DynamicDemo: View {
     
     var body: some View {
         VStack(spacing: 16) {
-            VStack(spacing: 16) {
+            Moin.Space(size: .medium) {
                 Moin.Progress(percent: percent, type: .line)
                 Moin.Progress(percent: percent, type: .circle)
                 Moin.Progress(percent: percent, type: .dashboard)
-            }
-            HStack(spacing: 8) {
+                
                 Moin.Button(icon: "minus") {
                     decline()
                 }
