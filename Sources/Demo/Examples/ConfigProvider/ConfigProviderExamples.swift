@@ -19,14 +19,14 @@ struct ConfigProviderExamples: View {
         ExamplePageWithAnchor(pageName: "ConfigProvider", anchors: anchors) { _ in
             introduction
 
-            Divider()
+            Moin.Divider()
 
             basicUsage.id("basic")
             localeConfig.id("locale")
             themeConfig.id("theme")
             tokenConfig.id("token")
 
-            Divider()
+            Moin.Divider()
 
             apiReference.id("api")
         }

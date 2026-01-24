@@ -59,7 +59,7 @@ struct APITable: View {
                     headerCell(headers.3, width: columnWidths.3)
                 }
 
-                Divider()
+                Moin.Divider()
 
                 ForEach(sortedRows.indices, id: \.self) { index in
                     HStack(spacing: 0) {
@@ -71,7 +71,7 @@ struct APITable: View {
                     .background(index % 2 == 1 ? Color.primary.opacity(0.03) : Color.clear)
 
                     if index < sortedRows.count - 1 {
-                        Divider()
+                        Moin.Divider()
                     }
                 }
             }

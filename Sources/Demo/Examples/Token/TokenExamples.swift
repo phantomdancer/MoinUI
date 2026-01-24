@@ -32,23 +32,23 @@ struct TokenExamples: View {
         ExamplePageWithAnchor(pageName: "Token", anchors: anchors) { _ in
             introduction
 
-            Divider()
+            Moin.Divider()
 
             architecture.id("architecture")
 
-            Divider()
+            Moin.Divider()
 
             seedTokenSection.id("seed")
 
-            Divider()
+            Moin.Divider()
 
             mapTokenSection.id("map")
 
-            Divider()
+            Moin.Divider()
 
             componentTokenSection.id("component")
 
-            Divider()
+            Moin.Divider()
 
             usageSection.id("usage")
         }

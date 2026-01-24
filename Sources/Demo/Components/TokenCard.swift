@@ -59,7 +59,7 @@ struct TokenCard<Preview: View, Editor: View>: View {
     private var isDarkMode: Bool { colorScheme == .dark }
 
     var body: some View {
-        Moin.BadgeRibbon(text: name, color: .custom(.gray), placement: .end) {
+        ZStack(alignment: .topTrailing) {
             VStack(alignment: .leading, spacing: Moin.Constants.Spacing.md) {
                 // 标题行
                 HStack {
@@ -134,6 +134,16 @@ struct TokenCard<Preview: View, Editor: View>: View {
                 RoundedRectangle(cornerRadius: Moin.Constants.Radius.md)
                     .stroke(Color.primary.opacity(0.1), lineWidth: 1)
             )
+            
+            // Name Tag (Ribbon replacement)
+            Text(name)
+                .font(.system(size: 10, weight: .medium, design: .monospaced))
+                .foregroundStyle(.white)
+                .padding(.horizontal, 6)
+                .padding(.vertical, 2)
+                .background(Color.gray.opacity(0.8))
+                .clipShape(RoundedRectangle(cornerRadius: 4))
+                .offset(x: -8, y: 8)
         }
         .scrollAnchor("\(sectionId).\(name)")
     }

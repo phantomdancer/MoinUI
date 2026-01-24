@@ -274,7 +274,7 @@ extension ButtonTokenView {
         ) {
             HStack(spacing: 0) {
                 Moin.Button("Left", color: .primary) {}
-                Divider().frame(width: 1, height: 20).background(config.components.button.groupBorderColor)
+                Rectangle().fill(config.components.button.groupBorderColor).frame(width: 1, height: 20)
                 Moin.Button("Right", color: .primary) {}
             }
         } editor: {

@@ -63,7 +63,7 @@ struct EmptyAPIView: View {
                         .frame(height: 80)
                 }
                 
-                Divider()
+                Moin.Divider()
                 
                 // .simple
                 imageTypeRow(
@@ -75,7 +75,7 @@ struct EmptyAPIView: View {
                         .frame(height: 60)
                 }
                 
-                Divider()
+                Moin.Divider()
                 
                 // .systemIcon
                 imageTypeRow(
@@ -87,7 +87,7 @@ struct EmptyAPIView: View {
                         .frame(height: 60)
                 }
                 
-                Divider()
+                Moin.Divider()
                 
                 // .url
                 imageTypeRow(
@@ -99,7 +99,7 @@ struct EmptyAPIView: View {
                         .frame(height: 80)
                 }
                 
-                Divider()
+                Moin.Divider()
                 
                 // .custom
                 imageTypeRow(
@@ -111,7 +111,7 @@ struct EmptyAPIView: View {
                         .frame(height: 60)
                 }
                 
-                Divider()
+                Moin.Divider()
                 
                 // .none
                 imageTypeRow(

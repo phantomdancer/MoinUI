@@ -224,8 +224,8 @@ struct BadgeExamples: View {
 
             Moin.Badge(count: count) {...}
 
-            Button("-") { count -= 1 }
-            Button("+") { count += 1 }
+            Moin.Button("-") { count -= 1 }
+            Moin.Button("+") { count += 1 }
             """
         }
     }

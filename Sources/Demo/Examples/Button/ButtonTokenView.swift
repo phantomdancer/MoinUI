@@ -107,41 +107,41 @@ struct ButtonTokenView: View {
     private func cardForItem(_ item: String, sectionId: String) -> some View {
         if sectionId == "component" {
             switch item {
-            case "contentFontSize": contentFontSizeTokenCard
-            case "contentFontSizeLG": contentFontSizeLGTokenCard
-            case "contentFontSizeSM": contentFontSizeSMTokenCard
-            case "fontWeight": fontWeightTokenCard
-            case "iconGap": iconGapTokenCard
-            case "onlyIconSize": onlyIconSizeTokenCard
-            case "onlyIconSizeLG": onlyIconSizeLGTokenCard
-            case "onlyIconSizeSM": onlyIconSizeSMTokenCard
-            case "paddingBlock": paddingBlockTokenCard
-            case "paddingBlockLG": paddingBlockLGTokenCard
-            case "paddingBlockSM": paddingBlockSMTokenCard
-            case "paddingInline": paddingInlineTokenCard
-            case "paddingInlineLG": paddingInlineLGTokenCard
-            case "paddingInlineSM": paddingInlineSMTokenCard
-            case "groupBorderColor": groupBorderColorTokenCard
-            case "textTextColor": textTextColorTokenCard
-            default: EmptyView()
+            case "contentFontSize": AnyView(contentFontSizeTokenCard)
+            case "contentFontSizeLG": AnyView(contentFontSizeLGTokenCard)
+            case "contentFontSizeSM": AnyView(contentFontSizeSMTokenCard)
+            case "fontWeight": AnyView(fontWeightTokenCard)
+            case "iconGap": AnyView(iconGapTokenCard)
+            case "onlyIconSize": AnyView(onlyIconSizeTokenCard)
+            case "onlyIconSizeLG": AnyView(onlyIconSizeLGTokenCard)
+            case "onlyIconSizeSM": AnyView(onlyIconSizeSMTokenCard)
+            case "paddingBlock": AnyView(paddingBlockTokenCard)
+            case "paddingBlockLG": AnyView(paddingBlockLGTokenCard)
+            case "paddingBlockSM": AnyView(paddingBlockSMTokenCard)
+            case "paddingInline": AnyView(paddingInlineTokenCard)
+            case "paddingInlineLG": AnyView(paddingInlineLGTokenCard)
+            case "paddingInlineSM": AnyView(paddingInlineSMTokenCard)
+            case "groupBorderColor": AnyView(groupBorderColorTokenCard)
+            case "textTextColor": AnyView(textTextColorTokenCard)
+            default: AnyView(EmptyView())
             }
         } else {
             // global
             switch item {
-            case "borderRadius": borderRadiusGlobalTokenCard
-            case "borderRadiusLG": borderRadiusLGGlobalTokenCard
-            case "borderRadiusSM": borderRadiusSMGlobalTokenCard
-            case "colorPrimary": colorPrimaryGlobalTokenCard
-            case "colorPrimaryActive": colorPrimaryActiveGlobalTokenCard
-            case "colorPrimaryHover": colorPrimaryHoverGlobalTokenCard
-            case "colorText": colorTextGlobalTokenCard
-            case "colorTextDisabled": colorTextDisabledGlobalTokenCard
-            case "colorBgContainer": colorBgContainerGlobalTokenCard
-            case "colorBorder": colorBorderGlobalTokenCard
-            case "controlHeight": controlHeightGlobalTokenCard
-            case "controlHeightLG": controlHeightLGGlobalTokenCard
-            case "controlHeightSM": controlHeightSMGlobalTokenCard
-            default: EmptyView()
+            case "borderRadius": AnyView(borderRadiusGlobalTokenCard)
+            case "borderRadiusLG": AnyView(borderRadiusLGGlobalTokenCard)
+            case "borderRadiusSM": AnyView(borderRadiusSMGlobalTokenCard)
+            case "colorPrimary": AnyView(colorPrimaryGlobalTokenCard)
+            case "colorPrimaryActive": AnyView(colorPrimaryActiveGlobalTokenCard)
+            case "colorPrimaryHover": AnyView(colorPrimaryHoverGlobalTokenCard)
+            case "colorText": AnyView(colorTextGlobalTokenCard)
+            case "colorTextDisabled": AnyView(colorTextDisabledGlobalTokenCard)
+            case "colorBgContainer": AnyView(colorBgContainerGlobalTokenCard)
+            case "colorBorder": AnyView(colorBorderGlobalTokenCard)
+            case "controlHeight": AnyView(controlHeightGlobalTokenCard)
+            case "controlHeightLG": AnyView(controlHeightLGGlobalTokenCard)
+            case "controlHeightSM": AnyView(controlHeightSMGlobalTokenCard)
+            default: AnyView(EmptyView())
             }
         }
     }

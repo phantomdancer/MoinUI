@@ -17,13 +17,13 @@ struct LocalizationExamples: View {
         ExamplePageWithAnchor(pageName: "Localization", anchors: anchors) { _ in
             introduction
 
-            Divider()
+            Moin.Divider()
 
             basicUsage.id("basic")
             customTranslations.id("custom")
             jsonTranslations.id("json")
 
-            Divider()
+            Moin.Divider()
 
             apiReference.id("api")
         }

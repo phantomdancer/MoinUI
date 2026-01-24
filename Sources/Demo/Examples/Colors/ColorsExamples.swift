@@ -35,22 +35,22 @@ struct ColorsExamples: View {
         ExamplePageWithAnchor(pageName: "Colors", anchors: anchors) { _ in
             introduction
 
-            Divider()
+            Moin.Divider()
 
             colorPalettes.id("palette")
 
-            Divider()
+            Moin.Divider()
 
             paletteGenerator.id("generator")
 
-            Divider()
+            Moin.Divider()
 
             semanticUsageSection.id("semantic")
             presetUsageSection.id("preset")
             paletteUsageSection.id("level")
             generateUsageSection.id("generate")
 
-            Divider()
+            Moin.Divider()
 
             apiReference.id("api")
         }
@@ -118,7 +118,7 @@ struct ColorsExamples: View {
 
                 Spacer()
 
-                Button(tr("colors.generate")) {
+                Moin.Button(tr("colors.generate"), color: .primary) {
                     generatedPalette = Moin.ColorPalette.generate(from: customColor)
                 }
             }

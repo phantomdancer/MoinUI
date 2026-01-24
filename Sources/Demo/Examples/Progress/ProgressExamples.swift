@@ -88,7 +88,7 @@ struct ProgressExamples: View {
                 }
                 .frame(maxWidth: .infinity)
                 
-                Divider()
+                Moin.Divider()
 
                 // Circle Mini
                 HStack(spacing: 16) {
@@ -404,7 +404,7 @@ private struct DashboardDemo: View {
             }
             .frame(minWidth: 350, maxWidth: .infinity, alignment: .leading)
             
-            Divider()
+            Moin.Divider()
             
             VStack {
                 Moin.Progress(percent: 30, gapDegree: gapDegree, gapPosition: gapPosition, type: .dashboard)
@@ -489,7 +489,7 @@ private struct CircleStepsDemo: View {
             }
             .frame(width: 220)
             
-            Divider()
+            Moin.Divider()
 
             // Preview
             VStack(spacing: 24) {

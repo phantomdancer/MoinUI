@@ -37,7 +37,7 @@ struct DividerTokenSection: View {
             )
 
             // MARK: - Global Token
-            Divider()
+            Moin.Divider()
                 .padding(.top, Moin.Constants.Spacing.lg)
 
             Text(tr("api.global_token_title"))

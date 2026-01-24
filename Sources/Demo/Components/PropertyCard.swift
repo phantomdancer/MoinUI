@@ -64,7 +64,7 @@ struct PropertyCard<Preview: View, TryIt: View>: View {
     private var isDarkMode: Bool { colorScheme == .dark }
 
     var body: some View {
-        Moin.BadgeRibbon(text: name, color: .custom(.gray), placement: .end) {
+        ZStack(alignment: .topTrailing) {
             VStack(alignment: .leading, spacing: Moin.Constants.Spacing.md) {
                 // 标题行
                 HStack {
@@ -83,64 +83,64 @@ struct PropertyCard<Preview: View, TryIt: View>: View {
                     Spacer()
                 }
 
-            // 说明
-            Text(description)
-                .font(.system(size: 13))
-                .foregroundStyle(.secondary)
-                .textSelection(.enabled)
-
-            // 枚举值说明
-            if let values = enumValues {
-                Text(values)
-                    .font(.system(size: 12, design: .monospaced))
-                    .foregroundStyle(.tertiary)
+                // 说明
+                Text(description)
+                    .font(.system(size: 13))
+                    .foregroundStyle(.secondary)
                     .textSelection(.enabled)
-                    .padding(.horizontal, Moin.Constants.Spacing.sm)
-                    .padding(.vertical, Moin.Constants.Spacing.xs)
-                    .background(Color.secondary.opacity(0.1))
-                    .cornerRadius(4)
-            }
 
-            // 预览区
-            HStack {
-                preview()
-                Spacer()
-            }
-            .padding(Moin.Constants.Spacing.md)
-            .frame(maxWidth: .infinity, alignment: .leading)
-
-            // 试一试
-            if let tryIt = tryIt {
-                VStack(alignment: .trailing, spacing: 0) {
-                    // 标签溢出到上方
-                    Text(tr("doc.try_it"))
-                        .font(.system(size: 10, weight: .medium))
-                        .foregroundStyle(token.colorPrimary)
-                        .padding(.horizontal, 8)
-                        .padding(.vertical, 3)
-                        .background(token.colorPrimary.opacity(0.15))
-                        .cornerRadius(3)
-                        .offset(y: 8)
-
-                    HStack {
-                        tryIt()
-                        Spacer()
-                    }
-                    .padding(Moin.Constants.Spacing.md)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .background(token.colorPrimary.opacity(0.05))
-                    .cornerRadius(Moin.Constants.Radius.sm)
+                // 枚举值说明
+                if let values = enumValues {
+                    Text(values)
+                        .font(.system(size: 12, design: .monospaced))
+                        .foregroundStyle(.tertiary)
+                        .textSelection(.enabled)
+                        .padding(.horizontal, Moin.Constants.Spacing.sm)
+                        .padding(.vertical, Moin.Constants.Spacing.xs)
+                        .background(Color.secondary.opacity(0.1))
+                        .cornerRadius(4)
                 }
-                .frame(maxWidth: .infinity, alignment: .trailing)
-            }
 
-            // 代码
-            ScrollView(.horizontal, showsIndicators: false) {
-                HighlightedCodeView(code: code(), fontSize: 12)
-                    .padding(Moin.Constants.Spacing.sm)
-            }
-            .background(isDarkMode ? Color(white: 0.08) : Color(white: 0.96))
-            .cornerRadius(Moin.Constants.Radius.sm)
+                // 预览区
+                HStack {
+                    preview()
+                    Spacer()
+                }
+                .padding(Moin.Constants.Spacing.md)
+                .frame(maxWidth: .infinity, alignment: .leading)
+
+                // 试一试
+                if let tryIt = tryIt {
+                    VStack(alignment: .trailing, spacing: 0) {
+                        // 标签溢出到上方
+                        Text(tr("doc.try_it"))
+                            .font(.system(size: 10, weight: .medium))
+                            .foregroundStyle(token.colorPrimary)
+                            .padding(.horizontal, 8)
+                            .padding(.vertical, 3)
+                            .background(token.colorPrimary.opacity(0.15))
+                            .cornerRadius(3)
+                            .offset(y: 8)
+
+                        HStack {
+                            tryIt()
+                            Spacer()
+                        }
+                        .padding(Moin.Constants.Spacing.md)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .background(token.colorPrimary.opacity(0.05))
+                        .cornerRadius(Moin.Constants.Radius.sm)
+                    }
+                    .frame(maxWidth: .infinity, alignment: .trailing)
+                }
+
+                // 代码
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HighlightedCodeView(code: code(), fontSize: 12)
+                        .padding(Moin.Constants.Spacing.sm)
+                }
+                .background(isDarkMode ? Color(white: 0.08) : Color(white: 0.96))
+                .cornerRadius(Moin.Constants.Radius.sm)
             }
             .padding(Moin.Constants.Spacing.md)
             .background(Color(nsColor: .controlBackgroundColor))
@@ -149,6 +149,16 @@ struct PropertyCard<Preview: View, TryIt: View>: View {
                 RoundedRectangle(cornerRadius: Moin.Constants.Radius.md)
                     .stroke(Color.primary.opacity(0.1), lineWidth: 1)
             )
+            
+            // Name Tag (Ribbon replacement)
+            Text(name)
+                .font(.system(size: 10, weight: .medium, design: .monospaced))
+                .foregroundStyle(.white)
+                .padding(.horizontal, 6)
+                .padding(.vertical, 2)
+                .background(Color.gray.opacity(0.8))
+                .clipShape(RoundedRectangle(cornerRadius: 4))
+                .offset(x: -8, y: 8)
         }
         .scrollAnchor("\(sectionId).\(name)")
     }

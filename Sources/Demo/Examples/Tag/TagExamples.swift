@@ -330,13 +330,11 @@ struct ClosableTagExample: View {
                     }
 
                     if tags.isEmpty {
-                        Button(tr("tag.reset")) {
+                        Moin.Button(tr("tag.reset"), variant: .dashed) {
                             withAnimation {
                                 tags = ["Tag 1", "Tag 2", "Tag 3"]
                             }
                         }
-                        .buttonStyle(.plain)
-                        .foregroundStyle(.secondary)
                     }
                 }
             }
