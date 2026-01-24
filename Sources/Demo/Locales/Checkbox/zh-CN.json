@@ -1,0 +1,13 @@
+{
+  "checkbox.basic": "基本用法",
+  "checkbox.basic_desc": "最简单的用法。",
+  "checkbox.disabled": "不可用",
+  "checkbox.disabled_desc": "checkbox 不可用。",
+  "checkbox.indeterminate": "全选",
+  "checkbox.indeterminate_desc": "在实现全选效果时，你可能会用到 checkbox.indeterminate 属性。",
+  "checkbox.apple": "苹果",
+  "checkbox.pear": "梨",
+  "checkbox.orange": "橘子",
+  "checkbox.check_all": "全选",
+  "component.checkbox": "Checkbox 多选框"
+}

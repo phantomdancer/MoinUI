@@ -256,6 +256,10 @@ private struct MoinSwitchTokenKey: EnvironmentKey {
     static let defaultValue = Moin.SwitchToken.default
 }
 
+private struct MoinCheckboxTokenKey: EnvironmentKey {
+    static let defaultValue = Moin.CheckboxToken.default
+}
+
 public extension EnvironmentValues {
     var moinConfig: Moin.ConfigProvider {
         get { self[MoinConfigProviderKey.self] }
@@ -336,6 +340,11 @@ public extension EnvironmentValues {
         get { self[MoinSwitchTokenKey.self] }
         set { self[MoinSwitchTokenKey.self] = newValue }
     }
+
+    var moinCheckboxToken: Moin.CheckboxToken {
+        get { self[MoinCheckboxTokenKey.self] }
+        set { self[MoinCheckboxTokenKey.self] = newValue }
+    }
 }
 
 // MARK: - View Modifier
@@ -391,6 +400,7 @@ public extension Moin {
                 .environment(\.moinAlertToken, config.components.alert)
                 .environment(\.moinProgressToken, config.components.progress)
                 .environment(\.moinSwitchToken, config.components.switch)
+                .environment(\.moinCheckboxToken, config.components.checkbox)
                 .environment(\.moinSpaceToken, config.components.space)
                 .environment(\.moinDividerToken, config.components.divider)
                 .environment(\.moinTheme, config.theme)

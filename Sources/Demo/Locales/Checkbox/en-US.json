@@ -1,0 +1,13 @@
+{
+  "checkbox.basic": "Basic Usage",
+  "checkbox.basic_desc": "Basic usage.",
+  "checkbox.disabled": "Disabled",
+  "checkbox.disabled_desc": "Checkbox unavailable.",
+  "checkbox.indeterminate": "Check all",
+  "checkbox.indeterminate_desc": "The indeterminate property can help you to achieve a 'check all' effect.",
+  "checkbox.apple": "Apple",
+  "checkbox.pear": "Pear",
+  "checkbox.orange": "Orange",
+  "checkbox.check_all": "Check all",
+  "component.checkbox": "Checkbox"
+}
