@@ -67,97 +67,87 @@ public extension Moin {
             // Ant Design spec: extends by 30% when pressed
             let handleWidth = isPressed ? actualHandleSize * 1.3 : actualHandleSize
             
+            // Layout inversion: Content drives size
+            // This ensures text is never truncated if it exceeds minWidth.
+            let innerMin = size == .small ? token.innerMinMarginSM : token.innerMinMargin
+            let innerMax = size == .small ? token.innerMaxMarginSM : token.innerMaxMargin
+            let actualMinWidth = size == .small ? token.trackMinWidthSM : token.trackMinWidth
+            
             return HStack {
-                // Track
-                let actualMinWidth = size == .small ? token.trackMinWidthSM : token.trackMinWidth
-                let innerMin = size == .small ? token.innerMinMarginSM : token.innerMinMargin
-                let innerMax = size == .small ? token.innerMaxMarginSM : token.innerMaxMargin
-                
+                if isOn {
+                    checkedChildren
+                        .font(.system(size: 12))
+                        .foregroundColor(.white)
+                        .lineLimit(1)
+                        .padding(.leading, innerMin)
+                        .padding(.trailing, innerMax)
+                        .transition(.opacity)
+                } else {
+                    uncheckedContent
+                        .font(.system(size: 12))
+                        .foregroundColor(.white)
+                        .lineLimit(1)
+                        .padding(.leading, innerMax)
+                        .padding(.trailing, innerMin)
+                        .transition(.opacity)
+                }
+            }
+            .frame(minWidth: actualMinWidth, maxHeight: .infinity)
+            .frame(height: actualTrackHeight)
+            .background(
                 Capsule()
                     .fill(finalBg)
-                    .frame(height: actualTrackHeight)
-                    .frame(minWidth: actualMinWidth)
-                    .animation(.easeInOut(duration: 0.2), value: finalBg)
-                    .overlay(
-                        // Children Content (Text/Icon)
-                        // Logic derived from Ant Design:
-                        // Unchecked: Handle Left. Content Right. P-Start: innerMax, P-End: innerMin
-                        // Checked: Handle Right. Content Left. P-Start: innerMin, P-End: innerMax
-                        HStack {
-                            if isOn {
-                                checkedChildren
-                                    .font(.system(size: 12))
-                                    .foregroundColor(.white)
-                                    .lineLimit(1) // Keep single line but allow expansion of container
-                                    .padding(.leading, innerMin)
-                                    .padding(.trailing, innerMax)
-                                    .opacity(isOn ? 1 : 0)
-                                    .transition(.opacity)
-                            } else {
-                                Spacer()
-                                uncheckedContent
-                                    .font(.system(size: 12))
-                                    .foregroundColor(.white)
-                                    .lineLimit(1)
-                                    .padding(.leading, innerMax)
-                                    .padding(.trailing, innerMin)
-                                    .opacity(isOn ? 0 : 1)
-                                    .transition(.opacity)
-                            }
-                        }
-                    )
-                    .overlay(
-                        // Handle with Spacer for Animation
-                        HStack(spacing: 0) {
-                            if isOn { Spacer() }
-                            
-                            Capsule()
-                                .fill(token.handleBg)
-                                .shadow(color: token.handleShadow, radius: 1, x: 0, y: 1)
-                                .frame(width: handleWidth, height: actualHandleSize)
-                                .padding(token.trackPadding)
-                                .overlay(
-                                    Group {
-                                        if loading {
-                                            Circle()
-                                                .trim(from: 0, to: 0.8)
-                                                .stroke(style: StrokeStyle(lineWidth: 1.5, lineCap: .round))
-                                                .fill(isOn ? token.colorPrimary : token.colorTextQuaternary)
-                                                .rotationEffect(Angle(degrees: 360))
-                                                .frame(width: actualHandleSize * 0.7, height: actualHandleSize * 0.7)
-                                                .modifier(SpinningModifier())
-                                        }
-                                    }
-                                )
-                            
-                            if !isOn { Spacer() }
-                        }
-                    )
-                    .fixedSize()
-                    .gesture(
-                        DragGesture(minimumDistance: 0)
-                            .onChanged { _ in
-                                if isEnabled && !loading && !isPressed {
-                                    withAnimation(.easeInOut(duration: 0.1)) {
-                                        isPressed = true
-                                    }
+            )
+            .overlay(
+                // Handle
+                HStack(spacing: 0) {
+                    if isOn { Spacer() }
+                    
+                    Capsule()
+                        .fill(token.handleBg)
+                        .shadow(color: token.handleShadow, radius: 1, x: 0, y: 1)
+                        .frame(width: handleWidth, height: actualHandleSize)
+                        .padding(token.trackPadding)
+                        .overlay(
+                            Group {
+                                if loading {
+                                    Circle()
+                                        .trim(from: 0, to: 0.8)
+                                        .stroke(style: StrokeStyle(lineWidth: 1.5, lineCap: .round))
+                                        .fill(isOn ? token.colorPrimary : token.colorTextQuaternary)
+                                        .rotationEffect(Angle(degrees: 360))
+                                        .frame(width: actualHandleSize * 0.7, height: actualHandleSize * 0.7)
+                                        .modifier(SpinningModifier())
                                 }
                             }
-                            .onEnded { _ in
-                                guard isEnabled && !loading else { return }
-                                // Animate release and toggle
-                                withAnimation(.easeInOut(duration: 0.2)) {
-                                    isPressed = false
-                                    isOn.toggle()
-                                }
-                                onChange?(isOn)
-                            }
-                    )
-                    .onHover { hover in
+                        )
+                    
+                    if !isOn { Spacer() }
+                },
+                alignment: .center
+            )
+            // Animations
+            .animation(.spring(response: 0.3, dampingFraction: 0.7, blendDuration: 0), value: isOn) // Slide
+            .animation(.spring(response: 0.3, dampingFraction: 0.6, blendDuration: 0), value: isPressed) // Press effect
+            .animation(.easeInOut(duration: 0.2), value: finalBg) // Color
+            .gesture(
+                DragGesture(minimumDistance: 0)
+                    .onChanged { _ in
+                        if isEnabled && !loading && !isPressed {
+                            isPressed = true
+                        }
+                    }
+                    .onEnded { _ in
                         guard isEnabled && !loading else { return }
-                        withAnimation(.easeInOut(duration: 0.1)) {
-                            isHovering = hover
-                        }
+                        isPressed = false
+                        isOn.toggle()
+                        onChange?(isOn)
+                    }
+            )
+            .onHover { hover in
+                guard isEnabled && !loading else { return }
+                withAnimation(.easeInOut(duration: 0.1)) {
+                    isHovering = hover
                 }
             }
         }
