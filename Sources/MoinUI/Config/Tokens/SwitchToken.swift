@@ -54,6 +54,11 @@ public extension Moin {
         /// Handle 颜色
         public var handleBg: Color
         
+        /// 加载状态透明度
+        public var opacityLoading: CGFloat
+        /// 动效时长
+        public var motionDuration: TimeInterval
+        
         // MARK: - Defaults
         
         public static let `default` = SwitchToken(
@@ -75,7 +80,9 @@ public extension Moin {
             colorTextTertiary: Color(hex: 0x000000, alpha: 0.45),
             colorTextDisabled: Color(hex: 0x000000, alpha: 0.25),
             colorBgDisabled: Color(hex: 0x000000, alpha: 0.15),
-            handleBg: .white
+            handleBg: .white,
+            opacityLoading: 0.65,
+            motionDuration: 0.2
         )
         
         // MARK: - Resolution
@@ -119,11 +126,13 @@ public extension Moin {
                 innerMaxMarginSM: innerMaxMarginSM,
                 colorPrimary: token.colorPrimary,
                 colorPrimaryHover: token.colorPrimaryHover,
-                colorTextQuaternary: isDark ? Color(hex: 0xFFFFFF, alpha: 0.25) : Color(hex: 0x000000, alpha: 0.25),
-                colorTextTertiary: isDark ? Color(hex: 0xFFFFFF, alpha: 0.35) : Color(hex: 0x000000, alpha: 0.45),
+                colorTextQuaternary: token.colorTextQuaternary,
+                colorTextTertiary: token.colorTextTertiary,
                 colorTextDisabled: token.colorTextDisabled,
                 colorBgDisabled: isDark ? Color(hex: 0xFFFFFF, alpha: 0.15) : token.colorBgDisabled,
-                handleBg: isDark ? Color(hex: 0x141414) : .white
+                handleBg: isDark ? Color(hex: 0x141414) : .white,
+                opacityLoading: 0.65, // Standard AntD default
+                motionDuration: 0.2   // Standard motionDurationMid
             )
             
             return common

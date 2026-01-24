@@ -1,4 +1,5 @@
 import SwiftUI
+import AppKit
 
 public extension Moin {
     struct Switch<CheckedContent: View, UncheckedContent: View>: View {
@@ -17,24 +18,29 @@ public extension Moin {
         var checkedChildren: CheckedContent
         
         /// 未选中时的内容 (Text/Icon)
-        var uncheckedContent: UncheckedContent
+        var unCheckedChildren: UncheckedContent
         
         /// 变更回调
         var onChange: ((Bool) -> Void)?
         
+        /// 是否禁用 (手动控制，以支持 Disabled Cursor)
+        var isDisabled: Bool
+        
         public init(
             isOn: Binding<Bool>,
             loading: Bool = false,
+            isDisabled: Bool = false,
             size: ControlSize = .regular,
             @ViewBuilder checkedChildren: () -> CheckedContent,
-            @ViewBuilder uncheckedContent: () -> UncheckedContent,
+            @ViewBuilder unCheckedChildren: () -> UncheckedContent,
             onChange: ((Bool) -> Void)? = nil
         ) {
             self._isOn = isOn
             self.loading = loading
+            self.isDisabled = isDisabled
             self.size = size
             self.checkedChildren = checkedChildren()
-            self.uncheckedContent = uncheckedContent()
+            self.unCheckedChildren = unCheckedChildren()
             self.onChange = onChange
         }
         
@@ -56,9 +62,12 @@ public extension Moin {
             // If disabled & isOn -> primary color with opacity
             // If disabled & !isOn -> quaternary color with opacity
             
+            let isEffectiveDisabled = !isEnabled || isDisabled
+            
             let finalBg: Color
-            if !isEnabled || loading {
-                finalBg = (isOn ? token.colorPrimary : token.colorTextQuaternary).opacity(0.4)
+            if isEffectiveDisabled || loading {
+                // Use token.opacityLoading defined in SwitchToken
+                finalBg = (isOn ? token.colorPrimary : token.colorTextQuaternary).opacity(token.opacityLoading)
             } else {
                  finalBg = isHovering ? styleBgHover : styleBg
             }
@@ -87,7 +96,7 @@ public extension Moin {
                     .padding(.trailing, innerMax)
                     .opacity(0)
                 
-                uncheckedContent
+                unCheckedChildren
                     .font(.system(size: 12))
                     .lineLimit(1)
                     .padding(.leading, innerMax)
@@ -113,7 +122,7 @@ public extension Moin {
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .opacity(isOn ? 1 : 0)
                     
-                    uncheckedContent
+                    unCheckedChildren
                         .font(.system(size: 12))
                         .foregroundColor(.white)
                         .lineLimit(1)
@@ -151,27 +160,46 @@ public extension Moin {
                 alignment: .center
             )
             // Animations
-            .animation(.spring(response: 0.3, dampingFraction: 0.7, blendDuration: 0), value: isOn) // Slide
-            .animation(.spring(response: 0.3, dampingFraction: 0.6, blendDuration: 0), value: isPressed) // Press effect
-            .animation(.easeInOut(duration: 0.2), value: finalBg) // Color
+            // Using spring for natural feel, but responsiveness could be tuned by motionDuration if needed.
+            // For now, we keep spring but maybe could use `response` derived from motionDuration? 
+            // 0.2s duration approx 0.3 response. 
+            .animation(.spring(response: token.motionDuration + 0.1, dampingFraction: 0.7, blendDuration: 0), value: isOn) // Slide
+            .animation(.spring(response: token.motionDuration + 0.1, dampingFraction: 0.6, blendDuration: 0), value: isPressed) // Press effect
+            .animation(.easeInOut(duration: token.motionDuration), value: finalBg) // Color
             .gesture(
                 DragGesture(minimumDistance: 0)
                     .onChanged { _ in
-                        if isEnabled && !loading && !isPressed {
+                        if isEnabled && !isDisabled && !loading && !isPressed {
                             isPressed = true
                         }
                     }
                     .onEnded { _ in
-                        guard isEnabled && !loading else { return }
+                        guard isEnabled && !isDisabled && !loading else { return }
                         isPressed = false
                         isOn.toggle()
                         onChange?(isOn)
                     }
             )
-            .onHover { hover in
-                guard isEnabled && !loading else { return }
-                withAnimation(.easeInOut(duration: 0.1)) {
-                    isHovering = hover
+            .contentShape(Capsule())
+            .onContinuousHover { phase in
+                switch phase {
+                case .active:
+                    let isInteractable = isEnabled && !isDisabled && !loading
+                    let cursor: NSCursor = isInteractable ? .pointingHand : .operationNotAllowed
+                    cursor.set()
+                    
+                    if isInteractable && !isHovering {
+                        withAnimation(.easeInOut(duration: 0.1)) {
+                            isHovering = true
+                        }
+                    }
+                case .ended:
+                    NSCursor.arrow.set()
+                    guard isHovering else { return }
+                    withAnimation(.easeInOut(duration: 0.1)) {
+                        isHovering = false
+                        isPressed = false
+                    }
                 }
             }
         }
@@ -184,15 +212,17 @@ public extension Moin.Switch where CheckedContent == EmptyView, UncheckedContent
     init(
         isOn: Binding<Bool>,
         loading: Bool = false,
+        isDisabled: Bool = false,
         size: ControlSize = .regular,
         onChange: ((Bool) -> Void)? = nil
     ) {
         self.init(
             isOn: isOn,
             loading: loading,
+            isDisabled: isDisabled,
             size: size,
             checkedChildren: { EmptyView() },
-            uncheckedContent: { EmptyView() },
+            unCheckedChildren: { EmptyView() },
             onChange: onChange
         )
     }
@@ -202,6 +232,7 @@ public extension Moin.Switch where CheckedContent == Text, UncheckedContent == T
     init(
         isOn: Binding<Bool>,
         loading: Bool = false,
+        isDisabled: Bool = false,
         size: ControlSize = .regular,
         checkedText: String,
         uncheckedText: String,
@@ -210,9 +241,10 @@ public extension Moin.Switch where CheckedContent == Text, UncheckedContent == T
         self.init(
             isOn: isOn,
             loading: loading,
+            isDisabled: isDisabled,
             size: size,
             checkedChildren: { Text(checkedText) },
-            uncheckedContent: { Text(uncheckedText) },
+            unCheckedChildren: { Text(uncheckedText) },
             onChange: onChange
         )
     }

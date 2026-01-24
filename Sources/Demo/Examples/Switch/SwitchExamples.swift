@@ -77,9 +77,7 @@ struct SwitchExamples: View {
     }
     
     private var apiContent: some View {
-        // Placeholder for API View
-        Text("Switch API Documentation") 
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
+        SwitchAPIView()
     }
     
     private var tokenContent: some View {
@@ -118,20 +116,16 @@ struct SwitchExamples: View {
             description: tr("switch.disabled_desc"),
             content: {
                 HStack(spacing: 20) {
-                    Moin.Switch(isOn: .constant(true))
-                        .disabled(true)
+                    Moin.Switch(isOn: .constant(true), isDisabled: true)
                     
-                    Moin.Switch(isOn: .constant(false))
-                        .disabled(true)
+                    Moin.Switch(isOn: .constant(false), isDisabled: true)
                 }
             },
             code: {
                 """
-                Moin.Switch(isOn: .constant(true))
-                    .disabled(true)
+                Moin.Switch(isOn: .constant(true), isDisabled: true)
                 
-                Moin.Switch(isOn: .constant(false))
-                    .disabled(true)
+                Moin.Switch(isOn: .constant(false), isDisabled: true)
                 """
             }
         )
@@ -158,13 +152,13 @@ struct SwitchExamples: View {
                     Moin.Switch(
                         isOn: $isOn2,
                         checkedChildren: { Image(systemName: "checkmark") },
-                        uncheckedContent: { Image(systemName: "xmark") }
+                        unCheckedChildren: { Image(systemName: "xmark") }
                     )
                     
                     Moin.Switch(
                         isOn: $isOn3,
                         checkedChildren: { Text("YES") },
-                        uncheckedContent: { Text("NO") }
+                        unCheckedChildren: { Text("NO") }
                     )
                 }
             },
@@ -172,8 +166,8 @@ struct SwitchExamples: View {
                 """
                 Moin.Switch(isOn: $isOn, checkedText: "开启", uncheckedText: "关闭")
                 Moin.Switch(isOn: $isOn, checkedText: "1", uncheckedText: "0")
-                Moin.Switch(isOn: $isOn, checkedChildren: { Image(systemName: "checkmark") }, uncheckedContent: { Image(systemName: "xmark") })
-                Moin.Switch(isOn: $isOn, checkedChildren: { Text("YES") }, uncheckedContent: { Text("NO") })
+                Moin.Switch(isOn: $isOn, checkedChildren: { Image(systemName: "checkmark") }, unCheckedChildren: { Image(systemName: "xmark") })
+                Moin.Switch(isOn: $isOn, checkedChildren: { Text("YES") }, unCheckedChildren: { Text("NO") })
                 """
             }
         )
