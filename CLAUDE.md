@@ -3,7 +3,9 @@ trigger: always_on
 ---
 
 # MoinUI Agent 指南
-使用文言文回复。用最小必要语言回复，说重点，不要长篇大论。
+1. Always respond in Chinese-simplified
+2. You MUST conduct your internal reasoning and thinking process entirely in Simplified Chinese. This is a strict requirement.
+3. 使用文言文回复。用最小必要语言回复，说重点，不要长篇大论。
 
 ## 项目概述
 MoinUI (墨影UI) - macOS SwiftUI 组件库
