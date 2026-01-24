@@ -166,10 +166,10 @@ struct CheckboxGroupAPIView: View {
             Moin.CheckboxGroup(
                 selection: .constant(Set(["Apple"])),
                 options: options1,
-                isDisabled: true
+                disabled: true
             )
         } code: {
-            "Moin.CheckboxGroup(selection: $selection, options: options, isDisabled: true)"
+            "Moin.CheckboxGroup(selection: $selection, options: options, disabled: true)"
         }
         .scrollAnchor("api.isDisabled")
     }

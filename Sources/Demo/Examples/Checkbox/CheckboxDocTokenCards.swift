@@ -99,7 +99,7 @@ extension CheckboxTokenView {
             description: tr("doc.global.colorTextDisabled"),
             sectionId: "global"
         ) {
-            Moin.Checkbox(tr("component.checkbox"), checked: $colorTextDisabledChecked, isDisabled: true)
+            Moin.Checkbox(tr("component.checkbox"), checked: $colorTextDisabledChecked, disabled: true)
                 .id(config.token.colorTextDisabled)
         } editor: {
             ColorPresetRow(label: "colorTextDisabled", color: $config.token.colorTextDisabled) {
@@ -119,7 +119,7 @@ extension CheckboxTokenView {
             description: tr("doc.global.colorBgDisabled"),
             sectionId: "global"
         ) {
-            Moin.Checkbox(tr("component.checkbox"), checked: $colorBgDisabledChecked, isDisabled: true)
+            Moin.Checkbox(tr("component.checkbox"), checked: $colorBgDisabledChecked, disabled: true)
                 .id(config.token.colorBgDisabled)
         } editor: {
             ColorPresetRow(label: "colorBgDisabled", color: $config.token.colorBgDisabled) {

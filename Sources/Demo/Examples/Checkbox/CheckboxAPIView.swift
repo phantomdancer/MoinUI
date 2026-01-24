@@ -106,11 +106,11 @@ struct CheckboxAPIView: View {
             sectionId: "api"
         ) {
             HStack {
-                Moin.Checkbox("Disabled", checked: .constant(false), isDisabled: true)
-                Moin.Checkbox("Disabled Checked", checked: .constant(true), isDisabled: true)
+                Moin.Checkbox("Disabled", checked: .constant(false), disabled: true)
+                Moin.Checkbox("Disabled Checked", checked: .constant(true), disabled: true)
             }
         } code: {
-            "Moin.Checkbox(\"Checkbox\", checked: $checked, isDisabled: true)"
+            "Moin.Checkbox(\"Checkbox\", checked: $checked, disabled: true)"
         }
         .scrollAnchor("api.isDisabled")
     }
@@ -257,10 +257,10 @@ struct CheckboxAPIView: View {
             Moin.CheckboxGroup(
                 selection: .constant(Set(["Apple"])),
                 options: plainOptions,
-                isDisabled: true
+                disabled: true
             )
         } code: {
-            "Moin.CheckboxGroup(selection: $selection, options: options, isDisabled: true)"
+            "Moin.CheckboxGroup(selection: $selection, options: options, disabled: true)"
         }
         .scrollAnchor("checkboxgroup.isDisabled")
     }

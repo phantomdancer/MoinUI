@@ -4,7 +4,7 @@ public extension Moin {
     struct Checkbox<Label: View>: View {
         @Binding var checked: Bool
         var indeterminate: Bool
-        var isDisabled: Bool
+        var disabled: Bool
 
         let label: Label
         
@@ -15,19 +15,19 @@ public extension Moin {
         public init(
             checked: Binding<Bool>,
             indeterminate: Bool = false,
-            isDisabled: Bool = false,
+            disabled: Bool = false,
             @ViewBuilder label: () -> Label
         ) {
             self._checked = checked
             self.indeterminate = indeterminate
-            self.isDisabled = isDisabled
+            self.disabled = disabled
             self.label = label()
         }
         
         @State private var isHovering: Bool = false
         
         private var isEffectiveDisabled: Bool {
-            !isEnabled || isDisabled
+            !isEnabled || disabled
         }
         
         public var body: some View {
@@ -132,22 +132,22 @@ public extension Moin {
 // MARK: - Convenience Initializers
 
 public extension Moin.Checkbox where Label == Text {
-    init(_ titleKey: LocalizedStringKey, checked: Binding<Bool>, indeterminate: Bool = false, isDisabled: Bool = false) {
-        self.init(checked: checked, indeterminate: indeterminate, isDisabled: isDisabled) {
+    init(_ titleKey: LocalizedStringKey, checked: Binding<Bool>, indeterminate: Bool = false, disabled: Bool = false) {
+        self.init(checked: checked, indeterminate: indeterminate, disabled: disabled) {
             Text(titleKey)
         }
     }
-    
-    init<S>(_ title: S, checked: Binding<Bool>, indeterminate: Bool = false, isDisabled: Bool = false) where S : StringProtocol {
-        self.init(checked: checked, indeterminate: indeterminate, isDisabled: isDisabled) {
+
+    init<S>(_ title: S, checked: Binding<Bool>, indeterminate: Bool = false, disabled: Bool = false) where S : StringProtocol {
+        self.init(checked: checked, indeterminate: indeterminate, disabled: disabled) {
             Text(title)
         }
     }
 }
 
 public extension Moin.Checkbox where Label == EmptyView {
-    init(checked: Binding<Bool>, indeterminate: Bool = false, isDisabled: Bool = false) {
-        self.init(checked: checked, indeterminate: indeterminate, isDisabled: isDisabled) {
+    init(checked: Binding<Bool>, indeterminate: Bool = false, disabled: Bool = false) {
+        self.init(checked: checked, indeterminate: indeterminate, disabled: disabled) {
             EmptyView()
         }
     }

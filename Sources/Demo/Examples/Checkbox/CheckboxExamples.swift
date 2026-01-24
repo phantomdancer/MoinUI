@@ -110,19 +110,19 @@ struct CheckboxExamples: View {
             content: {
                 HStack(spacing: 20) {
                 HStack(spacing: 20) {
-                    Moin.Checkbox(tr("component.checkbox"), checked: .constant(false), isDisabled: true)
-                    Moin.Checkbox(tr("component.checkbox"), checked: .constant(true), isDisabled: true)
-                    Moin.Checkbox(tr("component.checkbox"), checked: .constant(true), indeterminate: true, isDisabled: true)
+                    Moin.Checkbox(tr("component.checkbox"), checked: .constant(false), disabled: true)
+                    Moin.Checkbox(tr("component.checkbox"), checked: .constant(true), disabled: true)
+                    Moin.Checkbox(tr("component.checkbox"), checked: .constant(true), indeterminate: true, disabled: true)
                 }
                 }
             },
             code: {
                 """
-                Moin.Checkbox("\(tr("component.checkbox"))", checked: .constant(false), isDisabled: true)
+                Moin.Checkbox("\(tr("component.checkbox"))", checked: .constant(false), disabled: true)
                     
-                Moin.Checkbox("\(tr("component.checkbox"))", checked: .constant(true), isDisabled: true)
+                Moin.Checkbox("\(tr("component.checkbox"))", checked: .constant(true), disabled: true)
 
-                Moin.Checkbox("\(tr("component.checkbox"))", checked: .constant(true), indeterminate: true, isDisabled: true)
+                Moin.Checkbox("\(tr("component.checkbox"))", checked: .constant(true), indeterminate: true, disabled: true)
                 """
             }
         )
@@ -290,7 +290,7 @@ struct CheckboxExamples: View {
                     Moin.CheckboxGroup(
                         selection: $groupSelection3,
                         options: optionsWithDisabled,
-                        isDisabled: true
+                        disabled: true
                     )
                 }
             },
@@ -307,7 +307,7 @@ struct CheckboxExamples: View {
                 Moin.CheckboxGroup(
                     selection: $selection3,
                     options: optionsWithDisabled,
-                    isDisabled: true
+                    disabled: true
                 )
                 """
             }
