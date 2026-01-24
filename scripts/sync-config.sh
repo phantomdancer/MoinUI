@@ -22,8 +22,8 @@ for target in "${TARGETS[@]}"; do
 done
 
 # 同步 Skills 目录
-SKILL_SOURCE=".claude/skills/notify-bark"
-SKILL_TARGET=".agent/skills/notify-bark"
+SKILL_SOURCE=".claude/skills"
+SKILL_TARGET=".agent/skills"
 
 if [ -d "$SKILL_SOURCE" ]; then
     mkdir -p "$(dirname "$SKILL_TARGET")"

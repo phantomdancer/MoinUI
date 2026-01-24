@@ -45,7 +45,7 @@ MoinUI (墨影UI) - macOS SwiftUI 组件库
 4. **Demo**: 添加示例和翻译(示例代码code中也需要国际化)
 5. **结束时**: 用 `write_memory` / `edit_memory` 更新 roadmap 等记忆
 6. **回复**: 完成后回复的最后一行必须为：✅ 어머!
-7. **通知**: 使用Bark MCP发送任务完成通知
+7. **通知**: 使用notify-bark skill发送任务完成通知
 
 使用serena操作记忆，如果serena不可用，可自行阅读 .serena/memories目录下的记忆文件。
 

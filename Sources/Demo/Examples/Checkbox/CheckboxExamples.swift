@@ -35,15 +35,13 @@ struct CheckboxExamples: View {
                 examplesContent
             case .api:
                 if apiReady {
-                    // CheckboxAPIView()
-                    Text("API View Coming Soon")
+                    CheckboxAPIView()
                 } else {
                     loadingView
                 }
             case .token:
                 if tokenReady {
-                    // CheckboxTokenView()
-                    Text("Token View Coming Soon")
+                    CheckboxTokenView()
                 } else {
                     loadingView
                 }
