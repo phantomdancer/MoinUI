@@ -39,5 +39,9 @@
   "checkbox.api.token.colorBorderDisabled": "Checkbox 禁用状态边框颜色。",
   "checkbox.api.token.colorTextDisabled": "Checkbox 禁用状态文本和勾选标记颜色。",
   "checkbox.api.token.paddingXS": "Checkbox 文本与选框之间的间距。",
-  "checkbox.api.token.motionDurationSlow": "Checkbox 动画持续时间。"
+  "checkbox.api.token.motionDurationSlow": "Checkbox 动画持续时间。",
+  "checkboxgroup.api.selection": "选中项的集合，使用 Binding 进行双向绑定。",
+  "checkboxgroup.api.options": "Checkbox 选项数组，支持自定义标签和禁用状态。",
+  "checkboxgroup.api.direction": "排列方向，可选纵向或横向布局。",
+  "checkboxgroup.api.isDisabled": "禁用整个 CheckboxGroup，所有选项都无法交互。"
 }

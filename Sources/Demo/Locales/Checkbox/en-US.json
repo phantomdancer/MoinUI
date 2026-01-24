@@ -39,5 +39,9 @@
   "checkbox.api.token.colorBorderDisabled": "Border color of disabled checkbox.",
   "checkbox.api.token.colorTextDisabled": "Text and checkmark color in disabled state.",
   "checkbox.api.token.paddingXS": "Spacing between checkbox text and the box.",
-  "checkbox.api.token.motionDurationSlow": "Animation duration for checkbox."
+  "checkbox.api.token.motionDurationSlow": "Animation duration for checkbox.",
+  "checkboxgroup.api.selection": "Set of selected values with two-way binding.",
+  "checkboxgroup.api.options": "Array of checkbox options supporting custom labels and disabled state.",
+  "checkboxgroup.api.direction": "Layout direction, can be vertical or horizontal.",
+  "checkboxgroup.api.isDisabled": "Disable the entire CheckboxGroup, all options become non-interactive."
 }

@@ -1,20 +1,17 @@
 import SwiftUI
 import MoinUI
 
-struct CheckboxAPIView: View {
+struct CheckboxGroupAPIView: View {
     @Localized var tr
 
     // MARK: - State Variables
 
-    @State private var checkedState = true
-    @State private var indeterminateState = true
-    @State private var labelState = true
     @State private var selection1: Set<String> = ["Apple"]
     @State private var selection2: Set<String> = ["London"]
 
-    private let plainOptions = ["Apple", "Pear", "Orange"]
+    private let options1 = ["Apple", "Pear", "Orange"]
 
-    private var objectOptions: [Moin.CheckboxOption<String>] {
+    private var options2: [Moin.CheckboxOption<String>] {
         [
             .init(label: tr("checkbox.london"), value: "London"),
             .init(label: tr("checkbox.paris"), value: "Paris"),
@@ -25,14 +22,9 @@ struct CheckboxAPIView: View {
     private var apiSections: [DocSidebarSection] {
         [
             DocSidebarSection(
-                title: tr("component.checkbox"),
-                items: ["checked", "indeterminate", "isDisabled", "label"],
-                sectionId: "checkbox"
-            ),
-            DocSidebarSection(
-                title: tr("checkbox.group"),
-                items: ["selection", "options", "direction", "groupDisabled"],
-                sectionId: "checkboxgroup"
+                title: tr("api.section.common"),
+                items: ["selection", "options", "direction", "isDisabled"],
+                sectionId: "api"
             )
         ]
     }
@@ -40,12 +32,10 @@ struct CheckboxAPIView: View {
     var body: some View {
         ComponentDocBody(
             sections: apiSections,
-            initialItemId: "checkbox"
+            initialItemId: "api"
         ) { sectionId in
-            if sectionId == "checkbox" {
-                Text(tr("component.checkbox")).font(.title3).fontWeight(.semibold)
-            } else if sectionId == "checkboxgroup" {
-                Text(tr("checkbox.group")).font(.title3).fontWeight(.semibold)
+            if sectionId == "api" {
+                Text("API").font(.title3).fontWeight(.semibold)
             }
         } item: { item in
             cardForItem(item)
@@ -55,94 +45,13 @@ struct CheckboxAPIView: View {
     @ViewBuilder
     private func cardForItem(_ item: String) -> some View {
         switch item {
-        case "checked": checkedPropertyCard
-        case "indeterminate": indeterminatePropertyCard
-        case "isDisabled": disabledPropertyCard
-        case "label": labelPropertyCard
         case "selection": selectionPropertyCard
         case "options": optionsPropertyCard
         case "direction": directionPropertyCard
-        case "groupDisabled": groupDisabledPropertyCard
+        case "isDisabled": disabledPropertyCard
         default: EmptyView()
         }
     }
-
-    private var checkedPropertyCard: some View {
-        PropertyCard(
-            name: "checked",
-            type: "Binding<Bool>",
-            defaultValue: "-",
-            description: tr("checkbox.api.checked"),
-            sectionId: "api"
-        ) {
-            Moin.Checkbox(tr("component.checkbox"), checked: $checkedState)
-        } code: {
-            "Moin.Checkbox(\"Checkbox\", checked: $checked)"
-        }
-        .scrollAnchor("api.checked")
-    }
-
-    private var indeterminatePropertyCard: some View {
-        PropertyCard(
-            name: "indeterminate",
-            type: "Bool",
-            defaultValue: "false",
-            description: tr("checkbox.api.indeterminate"),
-            sectionId: "api"
-        ) {
-            Moin.Checkbox(tr("component.checkbox"), checked: $indeterminateState, indeterminate: true)
-        } code: {
-            "Moin.Checkbox(\"Checkbox\", checked: $checked, indeterminate: true)"
-        }
-        .scrollAnchor("api.indeterminate")
-    }
-
-    private var disabledPropertyCard: some View {
-        PropertyCard(
-            name: "isDisabled",
-            type: "Bool",
-            defaultValue: "false",
-            description: tr("checkbox.api.disabled"),
-            sectionId: "api"
-        ) {
-            HStack {
-                Moin.Checkbox("Disabled", checked: .constant(false), isDisabled: true)
-                Moin.Checkbox("Disabled Checked", checked: .constant(true), isDisabled: true)
-            }
-        } code: {
-            "Moin.Checkbox(\"Checkbox\", checked: $checked, isDisabled: true)"
-        }
-        .scrollAnchor("api.isDisabled")
-    }
-
-    private var labelPropertyCard: some View {
-        PropertyCard(
-            name: "label",
-            type: "View",
-            defaultValue: "-",
-            description: tr("checkbox.api.label"),
-            sectionId: "api"
-        ) {
-            Moin.Checkbox(checked: $labelState) {
-                HStack(spacing: 4) {
-                    Image(systemName: "star.fill").foregroundColor(.yellow)
-                    Text("Custom Label")
-                }
-            }
-        } code: {
-            """
-            Moin.Checkbox(checked: $checked) {
-                HStack {
-                    Image(systemName: "star.fill")
-                    Text("Custom Label")
-                }
-            }
-            """
-        }
-        .scrollAnchor("api.label")
-    }
-
-    // MARK: - CheckboxGroup API Cards
 
     private var selectionPropertyCard: some View {
         PropertyCard(
@@ -153,7 +62,7 @@ struct CheckboxAPIView: View {
             sectionId: "api"
         ) {
             VStack(alignment: .leading, spacing: Moin.Constants.Spacing.sm) {
-                Moin.CheckboxGroup(selection: $selection1, options: plainOptions)
+                Moin.CheckboxGroup(selection: $selection1, options: options1)
                 Text("Selected: \(selection1.sorted().joined(separator: ", "))")
                     .font(.caption)
                     .foregroundStyle(.secondary)
@@ -166,7 +75,7 @@ struct CheckboxAPIView: View {
             Moin.CheckboxGroup(selection: $selection, options: options)
             """
         }
-        .scrollAnchor("checkboxgroup.selection")
+        .scrollAnchor("api.selection")
     }
 
     private var optionsPropertyCard: some View {
@@ -178,7 +87,7 @@ struct CheckboxAPIView: View {
             sectionId: "api"
         ) {
             VStack(alignment: .leading, spacing: Moin.Constants.Spacing.sm) {
-                Moin.CheckboxGroup(selection: $selection2, options: objectOptions)
+                Moin.CheckboxGroup(selection: $selection2, options: options2)
                 Text("Selected: \(selection2.sorted().joined(separator: ", "))")
                     .font(.caption)
                     .foregroundStyle(.secondary)
@@ -194,7 +103,7 @@ struct CheckboxAPIView: View {
             Moin.CheckboxGroup(selection: $selection, options: options)
             """
         }
-        .scrollAnchor("checkboxgroup.options")
+        .scrollAnchor("api.options")
     }
 
     private var directionPropertyCard: some View {
@@ -212,7 +121,7 @@ struct CheckboxAPIView: View {
                     .foregroundStyle(.secondary)
                 Moin.CheckboxGroup(
                     selection: .constant(Set(["Apple", "Pear"])),
-                    options: plainOptions,
+                    options: options1,
                     direction: .vertical
                 )
 
@@ -224,7 +133,7 @@ struct CheckboxAPIView: View {
                     .foregroundStyle(.secondary)
                 Moin.CheckboxGroup(
                     selection: .constant(Set(["Apple", "Pear"])),
-                    options: plainOptions,
+                    options: options1,
                     direction: .horizontal
                 )
             }
@@ -243,10 +152,10 @@ struct CheckboxAPIView: View {
             )
             """
         }
-        .scrollAnchor("checkboxgroup.direction")
+        .scrollAnchor("api.direction")
     }
 
-    private var groupDisabledPropertyCard: some View {
+    private var disabledPropertyCard: some View {
         PropertyCard(
             name: "isDisabled",
             type: "Bool",
@@ -256,13 +165,12 @@ struct CheckboxAPIView: View {
         ) {
             Moin.CheckboxGroup(
                 selection: .constant(Set(["Apple"])),
-                options: plainOptions,
+                options: options1,
                 isDisabled: true
             )
         } code: {
             "Moin.CheckboxGroup(selection: $selection, options: options, isDisabled: true)"
         }
-        .scrollAnchor("checkboxgroup.isDisabled")
+        .scrollAnchor("api.isDisabled")
     }
 }
-
