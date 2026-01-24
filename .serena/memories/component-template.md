@@ -97,6 +97,7 @@ Token 页面必须支持**实时预览**和**修改生效**。
 
 ### 4. 优化与细节 (Optimizations)
 
+*   **内部组件优先**: 在 Demo、API 示例和 Token 预览中，凡涉及基础元素（如按钮、图标、分割线等），**优先使用 MoinUI 已实现的组件**（如 `Moin.Button`, `Moin.Divider`），而非 SwiftUI 原生组件。这能确保风格统一并测试组件间的协同工作。
 *   **无障碍 (A11y)**: 虽未强制，但应考虑基本的 label 和 hint。
 *   **布局与响应**: 组件应适应不同尺寸 (Size) 和紧凑环境 (Compact Context)。
 *   **动画**: 使用 Token 定义的动画参数 (`motionDuration`, `motionEase`)。
