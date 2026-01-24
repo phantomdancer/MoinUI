@@ -43,7 +43,7 @@ MoinUI (墨影UI) - macOS SwiftUI 组件库
 2. **编写代码**: 遵循命名约定和 Token 规则
 3. **构建测试**: `swift build && swift test`
 4. **Demo**: 添加示例和翻译(示例代码code中也需要国际化)
-5. **结束时**: 用 `write_memory` / `edit_memory` 更新 roadmap 等记忆
+5. **结束时**: 用 `write_memory` / `edit_memory` 更新 roadmap 等记忆。不要招行GIT 提交。
 6. **回复**: 完成后回复的最后一行必须为：✅ 어머!
 7. **通知**: 使用notify-bark skill发送任务完成通知
 
