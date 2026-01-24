@@ -20,19 +20,26 @@ public extension Moin {
         let options: [RadioOption<Value>]
         let direction: Axis
         let disabled: Bool
+        let optionType: RadioOptionType
+        let buttonStyle: RadioButtonStyle
 
         @Environment(\.moinRadioToken) private var radioToken
+        @Environment(\.moinToken) private var token
 
         public init(
             selection: Binding<Value>,
             options: [RadioOption<Value>],
             direction: Axis = .horizontal,
-            disabled: Bool = false
+            disabled: Bool = false,
+            optionType: RadioOptionType = .default,
+            buttonStyle: RadioButtonStyle = .outline
         ) {
             self._selection = selection
             self.options = options
             self.direction = direction
             self.disabled = disabled
+            self.optionType = optionType
+            self.buttonStyle = buttonStyle
         }
 
         public init(
@@ -40,12 +47,16 @@ public extension Moin {
             options: [Value],
             labelProvider: (Value) -> String = { "\($0)" },
             direction: Axis = .horizontal,
-            disabled: Bool = false
+            disabled: Bool = false,
+            optionType: RadioOptionType = .default,
+            buttonStyle: RadioButtonStyle = .outline
         ) {
             self._selection = selection
             self.options = options.map { RadioOption(label: labelProvider($0), value: $0) }
             self.direction = direction
             self.disabled = disabled
+            self.optionType = optionType
+            self.buttonStyle = buttonStyle
         }
 
         /// Map-based initializer for complex configurations (similar to Ant Design options prop)
@@ -54,11 +65,15 @@ public extension Moin {
             selection: Binding<Value>,
             mapOptions: [[String: Any]],
             direction: Axis = .horizontal,
-            disabled: Bool = false
+            disabled: Bool = false,
+            optionType: RadioOptionType = .default,
+            buttonStyle: RadioButtonStyle = .outline
         ) {
             self._selection = selection
             self.direction = direction
             self.disabled = disabled
+            self.optionType = optionType
+            self.buttonStyle = buttonStyle
             self.options = mapOptions.compactMap { dict in
                 guard let label = dict["label"] as? String,
                       let value = dict["value"] as? Value else {
@@ -74,11 +89,15 @@ public extension Moin {
             selection: Binding<Value>,
             stringMapOptions: [[String: String]],
             direction: Axis = .horizontal,
-            disabled: Bool = false
+            disabled: Bool = false,
+            optionType: RadioOptionType = .default,
+            buttonStyle: RadioButtonStyle = .outline
         ) where Value == String {
             self._selection = selection
             self.direction = direction
             self.disabled = disabled
+            self.optionType = optionType
+            self.buttonStyle = buttonStyle
             self.options = stringMapOptions.compactMap { dict in
                 guard let label = dict["label"],
                       let value = dict["value"] else {
@@ -90,9 +109,17 @@ public extension Moin {
         }
 
         public var body: some View {
+            if optionType == .button {
+                buttonGroupBody
+            } else {
+                defaultBody
+            }
+        }
+        
+        private var defaultBody: some View {
             let layout = direction == .horizontal ? AnyLayout(HStackLayout(spacing: radioToken.wrapperMarginEnd)) : AnyLayout(VStackLayout(alignment: .leading, spacing: radioToken.wrapperMarginEnd))
 
-            layout {
+            return layout {
                 ForEach(options) { option in
                     Radio(
                         checked: Binding(
@@ -109,6 +136,50 @@ public extension Moin {
                     }
                 }
             }
+        }
+        
+        private var buttonGroupBody: some View {
+            // Button style: use negative spacing to overlap borders (margin-left: -1px equivalent)
+            let spacing = -radioToken.lineWidth
+            let layout = direction == .horizontal 
+                ? AnyLayout(HStackLayout(spacing: spacing)) 
+                : AnyLayout(VStackLayout(spacing: spacing))
+            
+            return layout {
+                ForEach(Array(options.enumerated()), id: \.element.id) { index, option in
+                    let position = getPosition(index: index, count: options.count)
+                    
+                    RadioButton(
+                        checked: Binding(
+                            get: { selection == option.value },
+                            set: { isChecked in
+                                if isChecked {
+                                    selection = option.value
+                                }
+                            }
+                        ),
+                        disabled: disabled || option.disabled,
+                        buttonStyle: buttonStyle,
+                        position: position,
+                        direction: direction
+                    ) {
+                        Text(option.label)
+                    }
+                    .zIndex(selection == option.value ? 1 : 0) // Ensure selected border is on top if overlapping
+                }
+            }
+        }
+        private func getPosition(index: Int, count: Int) -> RadioButtonPosition {
+            if count == 1 {
+                return .single
+            }
+            if index == 0 {
+                return .first
+            }
+            if index == count - 1 {
+                return .last
+            }
+            return .middle
         }
     }
 

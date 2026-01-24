@@ -37,5 +37,9 @@
   "radio.pie_chart": "Pie",
   "radio.dot_chart": "Dot",
   "radio.direction_horizontal": "Horizontal",
-  "radio.direction_vertical": "Vertical"
+  "radio.direction_vertical": "Vertical",
+  "radio.button_style": "Radio Button Style",
+  "radio.button_style_desc": "The combination of radio button style.",
+  "radio.button_outline": "Outline",
+  "radio.button_solid": "Solid"
 }

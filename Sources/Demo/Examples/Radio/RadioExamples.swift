@@ -36,7 +36,8 @@ struct RadioExamples: View {
         AnchorItem(id: "group_disabled", titleKey: "radio.group_disabled"),
         AnchorItem(id: "group_optional", titleKey: "radio.group_optional"),
         AnchorItem(id: "custom_view", titleKey: "radio.custom_view"),
-        AnchorItem(id: "direction", titleKey: "radio.direction")
+        AnchorItem(id: "direction", titleKey: "radio.direction"),
+        AnchorItem(id: "button_style", titleKey: "radio.button_style")
     ]
     
     var body: some View {
@@ -92,6 +93,7 @@ struct RadioExamples: View {
             groupExampleOptional.id("group_optional")
             customLabelExample.id("custom_view")
             directionExample.id("direction")
+            buttonStyleExample.id("button_style")
         }
     }
     
@@ -398,6 +400,66 @@ struct RadioExamples: View {
                 """
                 Moin.RadioGroup(selection: $selection, options: options, direction: .horizontal)
                 Moin.RadioGroup(selection: $selection, options: options, direction: .vertical)
+                """
+            }
+        )
+    }
+    
+    // MARK: - Button Style Example
+    @State private var buttonStyleSelection = "Apple"
+    
+    private var buttonStyleExample: some View {
+        ExampleSection(
+            title: tr("radio.button_style"),
+            description: tr("radio.button_style_desc"),
+            content: {
+                VStack(alignment: .leading, spacing: 20) {
+                    VStack(alignment: .leading, spacing: 10) {
+                        Text(tr("radio.button_outline"))
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                        
+                        Moin.RadioGroup(
+                            selection: $buttonStyleSelection,
+                            options: plainOptions,
+                            optionType: .button // Default buttonStyle is .outline
+                        )
+                    }
+                    
+                    Moin.Divider()
+                    
+                    VStack(alignment: .leading, spacing: 10) {
+                        Text(tr("radio.button_solid"))
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                        
+                        Moin.RadioGroup(
+                            selection: $buttonStyleSelection,
+                            options: plainOptions,
+                            optionType: .button,
+                            buttonStyle: .solid
+                        )
+                    }
+                }
+            },
+            code: {
+                """
+                @State private var selection = "Apple"
+
+                // Outline (Default Button Style)
+                Moin.RadioGroup(
+                    selection: $selection, 
+                    options: options, 
+                    optionType: .button
+                )
+                
+                // Solid
+                Moin.RadioGroup(
+                    selection: $selection, 
+                    options: options, 
+                    optionType: .button, 
+                    buttonStyle: .solid
+                )
                 """
             }
         )

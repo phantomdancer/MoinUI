@@ -37,5 +37,9 @@
   "radio.pie_chart": "饼图",
   "radio.dot_chart": "点图",
   "radio.direction_horizontal": "水平排列",
-  "radio.direction_vertical": "垂直排列"
+  "radio.direction_vertical": "垂直排列",
+  "radio.button_style": "按钮样式",
+  "radio.button_style_desc": "按钮样式的单选组合。",
+  "radio.button_outline": "描边",
+  "radio.button_solid": "填色"
 }
