@@ -5,7 +5,10 @@
   "radio.disabled": "不可用",
   "radio.disabled_desc": "Radio 不可用。",
   "radio.group": "单选组合",
-  "radio.group_optional": "单选组合(可选)",
+  "radio.group_plain": "单选组合 (基础)",
+  "radio.group_object": "单选组合 (对象)",
+  "radio.group_disabled": "单选组合 (禁用)",
+  "radio.group_optional": "单选组合 (可选)",
   "radio.group_desc": "一组互斥的 Radio 配合使用。",
   "radio.apple": "苹果",
   "radio.pear": "梨",
@@ -23,5 +26,14 @@
   "token.radio.global": "全局 Token",
   "token.radio.component": "组件 Token",
   "doc.component.radioSize": "Radio 组件尺寸。",
-  "doc.component.dotSize": "内部圆点尺寸。"
+  "doc.component.dotSize": "内部圆点尺寸。",
+  "radio.clear_selection": "清除选中",
+  "radio.custom_view": "自定义视图",
+  "radio.custom_view_desc": "自定义 Radio 的内容视图。",
+  "radio.direction": "排列方向",
+  "radio.direction_desc": "支持纵向或横向排列。",
+  "radio.line_chart": "折线图",
+  "radio.bar_chart": "柱状图",
+  "radio.pie_chart": "饼图",
+  "radio.dot_chart": "点图"
 }

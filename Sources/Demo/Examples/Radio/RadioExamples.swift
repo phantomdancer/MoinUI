@@ -1,6 +1,14 @@
 import SwiftUI
 import MoinUI
 
+// MARK: - Icons for Custom Chart Example
+// MARK: - Model for Custom Chart Example
+private struct ChartOption: Identifiable {
+    let id: String
+    let icon: String
+    let label: String
+}
+
 enum RadioExamplesTab: String, CaseIterable {
     case examples
     case api
@@ -19,11 +27,16 @@ struct RadioExamples: View {
     @State private var apiReady = false
     @State private var tokenReady = false
     
+    // Anchors for sidebar navigation
     private let anchors: [AnchorItem] = [
         AnchorItem(id: "basic", titleKey: "radio.basic"),
         AnchorItem(id: "disabled", titleKey: "radio.disabled"),
-        AnchorItem(id: "group", titleKey: "radio.group"),
-        AnchorItem(id: "group_optional", titleKey: "radio.group_optional")
+        AnchorItem(id: "group_plain", titleKey: "radio.group_plain"),
+        AnchorItem(id: "group_object", titleKey: "radio.group_object"),
+        AnchorItem(id: "group_disabled", titleKey: "radio.group_disabled"),
+        AnchorItem(id: "group_optional", titleKey: "radio.group_optional"),
+        AnchorItem(id: "custom_view", titleKey: "radio.custom_view"),
+        AnchorItem(id: "direction", titleKey: "radio.direction")
     ]
     
     var body: some View {
@@ -73,8 +86,12 @@ struct RadioExamples: View {
         ExamplePageWithAnchor(pageName: "Radio", anchors: anchors) { _ in
             basicExample.id("basic")
             disabledExample.id("disabled")
-            groupExample.id("group")
+            groupExamplePlain.id("group_plain")
+            groupExampleObject.id("group_object")
+            groupExampleDisabled.id("group_disabled")
             groupExampleOptional.id("group_optional")
+            customLabelExample.id("custom_view")
+            directionExample.id("direction")
         }
     }
     
@@ -87,13 +104,13 @@ struct RadioExamples: View {
             title: tr("radio.basic"),
             description: tr("radio.basic_desc"),
             content: {
-                Moin.Radio("Radio", checked: $basicChecked)
+                Moin.Radio(tr("component.radio"), checked: $basicChecked)
             },
             code: {
                 """
                 @State private var checked = false
                 
-                Moin.Radio("Radio", checked: $checked)
+                Moin.Radio("\(tr("component.radio"))", checked: $checked)
                 """
             }
         )
@@ -105,53 +122,130 @@ struct RadioExamples: View {
             description: tr("radio.disabled_desc"),
             content: {
                 HStack(spacing: 20) {
-                    Moin.Radio("Disabled", checked: .constant(false), disabled: true)
-                    Moin.Radio("Disabled", checked: .constant(true), disabled: true)
+                    Moin.Radio(tr("radio.disabled"), checked: .constant(false), disabled: true)
+                    Moin.Radio(tr("radio.disabled"), checked: .constant(true), disabled: true)
                 }
             },
             code: {
                 """
-                Moin.Radio("Disabled", checked: .constant(false), disabled: true)
-                Moin.Radio("Disabled", checked: .constant(true), disabled: true)
+                Moin.Radio("\(tr("radio.disabled"))", checked: .constant(false), disabled: true)
+                Moin.Radio("\(tr("radio.disabled"))", checked: .constant(true), disabled: true)
                 """
             }
         )
     }
     
-    @State private var groupSelection = 1
+    // MARK: - Group Example 1: Plain Options
+    @State private var groupSelectionPlain = ""
+    private var plainOptions: [String] {
+        [tr("radio.apple"), tr("radio.pear"), tr("radio.orange")]
+    }
     
-    private var groupExample: some View {
+    private var groupExamplePlain: some View {
         ExampleSection(
-            title: tr("radio.group"),
+            title: tr("radio.group_plain"),
             description: tr("radio.group_desc"),
             content: {
-                VStack(alignment: .leading, spacing: 20) {
-                    Moin.RadioGroup(selection: $groupSelection, options: [1, 2, 3, 4]) { val in
-                        switch val {
-                        case 1: return "A"
-                        case 2: return "B"
-                        case 3: return "C"
-                        case 4: return "D"
-                        default: return ""
-                        }
-                    }
+                VStack(alignment: .leading, spacing: 10) {
+                    Moin.RadioGroup(
+                        selection: $groupSelectionPlain,
+                        options: plainOptions
+                    )
                     
-                    Text("Selected: \(groupSelection)")
+                    Text("Selected: \(groupSelectionPlain)")
+                        .foregroundStyle(.secondary)
+                }
+                .onAppear {
+                    if groupSelectionPlain.isEmpty {
+                        groupSelectionPlain = plainOptions.first ?? ""
+                    }
+                }
+            },
+            code: {
+                """
+                @State private var selection = ""
+                let options = ["\(tr("radio.apple"))", "\(tr("radio.pear"))", "\(tr("radio.orange"))"]
+                
+                Moin.RadioGroup(selection: $selection, options: options)
+                    .onAppear {
+                        selection = options.first ?? ""
+                    }
+                """
+            }
+        )
+    }
+    
+    // MARK: - Group Example 2: Object Options
+    @State private var groupSelectionObject = "London"
+    private var objectOptions: [Moin.RadioOption<String>] {
+        [
+            .init(label: tr("radio.london"), value: "London"),
+            .init(label: tr("radio.paris"), value: "Paris"),
+            .init(label: tr("radio.new_york"), value: "New York")
+        ]
+    }
+    
+    private var groupExampleObject: some View {
+        ExampleSection(
+            title: tr("radio.group_object"),
+            description: tr("radio.group_desc"),
+            content: {
+                VStack(alignment: .leading, spacing: 10) {
+                    Moin.RadioGroup(
+                        selection: $groupSelectionObject,
+                        options: objectOptions
+                    )
+                    
+                    Text("Selected: \(groupSelectionObject)")
                         .foregroundStyle(.secondary)
                 }
             },
             code: {
                 """
-                @State private var selection = 1
+                @State private var selection = "London"
                 
-                Moin.RadioGroup(selection: $selection, options: [1, 2, 3, 4]) { val in
-                    ["A", "B", "C", "D"][val - 1]
+                private var options: [Moin.RadioOption<String>] {
+                    [
+                        .init(label: "\(tr("radio.london"))", value: "London"),
+                        .init(label: "\(tr("radio.paris"))", value: "Paris"),
+                        .init(label: "\(tr("radio.new_york"))", value: "New York")
+                    ]
                 }
+                
+                Moin.RadioGroup(selection: $selection, options: options)
                 """
             }
         )
     }
     
+    // MARK: - Group Example 3: Disabled Group
+    @State private var groupSelectionDisabled = "Apple"
+    
+    private var groupExampleDisabled: some View {
+        ExampleSection(
+            title: tr("radio.group_disabled"),
+            description: tr("radio.group_desc"),
+            content: {
+                VStack(alignment: .leading, spacing: 10) {
+                    Moin.RadioGroup(
+                        selection: $groupSelectionDisabled,
+                        options: objectOptions, // Reuse options from above
+                        disabled: true
+                    )
+                }
+            },
+            code: {
+                """
+                @State private var selection = "London"
+                
+                // Uses objectOptions from Example 2
+                Moin.RadioGroup(selection: $selection, options: options, disabled: true)
+                """
+            }
+        )
+    }
+    
+    // MARK: - Group Example 4: Optional Selection with Disabled Items
     @State private var optionalSelection: String? = "Apple"
     private var optionsWithDisabled: [Moin.RadioOption<String>] {
         [
@@ -175,8 +269,8 @@ struct RadioExamples: View {
                     Text("Selected: \(optionalSelection ?? "nil")")
                         .foregroundStyle(.secondary)
                     
-                    Moin.Button("Clear Selection") {
-                         optionalSelection = nil // This won't visually deselect nicely unless we handle logic correctly mapping nil to nothing matches
+                    Moin.Button(tr("radio.clear_selection")) {
+                         optionalSelection = nil
                     }
                 }
             },
@@ -184,9 +278,128 @@ struct RadioExamples: View {
                 """
                 @State private var selection: String? = "Apple"
                 
+                private var options: [Moin.RadioOption<String>] {
+                    [
+                        .init(label: "\(tr("radio.apple"))", value: "Apple"),
+                        .init(label: "\(tr("radio.pear"))", value: "Pear"),
+                        .init(label: "\(tr("radio.orange"))", value: "Orange", disabled: true)
+                    ]
+                }
+                
                 Moin.RadioGroup(
                     selection: Binding(get: { selection ?? "" }, set: { selection = $0 }), 
                     options: options
+                )
+                
+                Moin.Button("\(tr("radio.clear_selection"))") {
+                     selection = nil
+                }
+                """
+            }
+        )
+    }
+    
+    // MARK: - Custom Label Example (Chart)
+    @State private var customSelection = "Line"
+    
+    private var chartOptionsData: [ChartOption] {
+        [
+            ChartOption(id: "Line", icon: "chart.xyaxis.line", label: tr("radio.line_chart")),
+            ChartOption(id: "Bar", icon: "chart.bar", label: tr("radio.bar_chart")),
+            ChartOption(id: "Pie", icon: "chart.pie", label: tr("radio.pie_chart")),
+            ChartOption(id: "Dot", icon: "circle.grid.2x2", label: tr("radio.dot_chart"))
+        ]
+    }
+    
+    private var customLabelExample: some View {
+        ExampleSection(
+            title: tr("radio.custom_view"),
+            description: tr("radio.custom_view_desc"),
+            content: {
+                Moin.RadioGroupView(
+                    selection: $customSelection,
+                    data: chartOptionsData,
+                    value: \.id // Use 'id' property as the selection value
+                ) { option in
+                    VStack(spacing: 4) {
+                        Image(systemName: option.icon)
+                            .font(.system(size: 18))
+                        Text(option.label)
+                    }
+                    .padding(.vertical, 4)
+                    .padding(.horizontal, 8)
+                }
+            },
+            code: {
+                """
+                struct ChartOption: Identifiable {
+                    let id: String
+                    let icon: String
+                    let label: String
+                }
+                
+                @State private var selection = "Line"
+                let options = [
+                    ChartOption(id: "Line", icon: "chart.xyaxis.line", label: "\(tr("radio.line_chart"))"),
+                    ChartOption(id: "Bar", icon: "chart.bar", label: "\(tr("radio.bar_chart"))"),
+                    ...
+                ]
+                
+                Moin.RadioGroupView(
+                    selection: $selection, 
+                    data: options, 
+                    value: \\.id
+                ) { option in
+                    VStack(spacing: 4) {
+                        Image(systemName: option.icon)
+                        Text(option.label)
+                    }
+                }
+                """
+            }
+        )
+    }
+    
+    // MARK: - Direction Example
+    @State private var directionSelection = "Apple"
+    @State private var layoutDirection: Axis = .vertical
+    
+    private var directionExample: some View {
+        ExampleSection(
+            title: tr("radio.direction"),
+            description: tr("radio.direction_desc"),
+            content: {
+                VStack(alignment: .leading, spacing: 20) {
+                    Moin.RadioGroup(
+                        selection: $directionSelection,
+                        options: plainOptions, // [Apple, Pear, Orange]
+                        direction: layoutDirection
+                    )
+                    
+                    Moin.Divider()
+                    
+                    Text(tr("radio.direction") + ":")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                    
+                    Moin.RadioGroup(
+                        selection: $layoutDirection,
+                        options: [
+                             Moin.RadioOption(label: tr("radio.direction_horizontal"), value: Axis.horizontal),
+                             Moin.RadioOption(label: tr("radio.direction_vertical"), value: Axis.vertical)
+                        ]
+                    )
+                }
+            },
+            code: {
+                """
+                @State private var direction: Axis = .vertical
+                @State private var selection = "Apple"
+                
+                Moin.RadioGroup(
+                    selection: $selection,
+                    options: options,
+                    direction: direction
                 )
                 """
             }

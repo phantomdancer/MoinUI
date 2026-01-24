@@ -25,7 +25,8 @@ struct CheckboxExamples: View {
         AnchorItem(id: "indeterminate", titleKey: "checkbox.indeterminate"),
         AnchorItem(id: "group_plain", titleKey: "checkbox.group_plain"),
         AnchorItem(id: "group_object", titleKey: "checkbox.group_object"),
-        AnchorItem(id: "group_disabled", titleKey: "checkbox.group_disabled")
+        AnchorItem(id: "group_disabled", titleKey: "checkbox.group_disabled"),
+        AnchorItem(id: "direction", titleKey: "checkbox.direction")
     ]
     
     var body: some View {
@@ -79,6 +80,7 @@ struct CheckboxExamples: View {
             groupExamplePlain.id("group_plain")
             groupExampleObject.id("group_object")
             groupExampleDisabled.id("group_disabled")
+            directionExample.id("direction")
         }
     }
     
@@ -109,11 +111,9 @@ struct CheckboxExamples: View {
             description: tr("checkbox.disabled_desc"),
             content: {
                 HStack(spacing: 20) {
-                HStack(spacing: 20) {
                     Moin.Checkbox(tr("component.checkbox"), checked: .constant(false), disabled: true)
                     Moin.Checkbox(tr("component.checkbox"), checked: .constant(true), disabled: true)
                     Moin.Checkbox(tr("component.checkbox"), checked: .constant(true), indeterminate: true, disabled: true)
-                }
                 }
             },
             code: {
@@ -194,9 +194,6 @@ struct CheckboxExamples: View {
             }
         )
     }
-    
-    // State variables moved to be closer to usage, or grouped if needed.
-    // SwiftUI View state must be top-level in the struct, but we can group them logically.
     
     // MARK: - Group Example 1: Numeric IDs (Plain Options)
     @State private var groupSelection1: Set<String> = ["Apple"]
@@ -308,6 +305,63 @@ struct CheckboxExamples: View {
                     selection: $selection3,
                     options: optionsWithDisabled,
                     disabled: true
+                )
+                """
+            }
+        )
+    }
+    
+    // MARK: - Direction Example
+    @State private var directionSelection = Set<String>(["Apple"])
+    @State private var layoutDirection: Axis = .vertical
+    
+    private var directionExample: some View {
+        ExampleSection(
+            title: tr("checkbox.direction"),
+            description: tr("checkbox.direction_desc"),
+            content: {
+                VStack(alignment: .leading, spacing: 20) {
+                    Text(tr("checkbox.direction_horizontal") + ":")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                    
+                    Moin.CheckboxGroup(
+                        selection: $directionSelection,
+                        options: plainOptions,
+                        direction: .horizontal
+                    )
+                    
+                    Moin.Divider()
+                    
+                    Text(tr("checkbox.direction_vertical") + ":")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                    
+                    Moin.CheckboxGroup(
+                        selection: $directionSelection,
+                        options: plainOptions,
+                        direction: .vertical
+                    )
+                }
+            },
+            code: {
+                """
+                @State private var selection: Set<String> = ["Apple"]
+                
+                // Horizontal (Default)
+                Moin.CheckboxGroup(
+                    selection: $selection,
+                    options: options,
+                    direction: .horizontal
+                )
+                
+                Moin.Divider()
+                
+                // Vertical
+                Moin.CheckboxGroup(
+                    selection: $selection,
+                    options: options,
+                    direction: .vertical
                 )
                 """
             }

@@ -5,6 +5,9 @@
   "radio.disabled": "Disabled",
   "radio.disabled_desc": "Radio unavailable.",
   "radio.group": "Radio Group",
+  "radio.group_plain": "Radio Group (Plain)",
+  "radio.group_object": "Radio Group (Object)",
+  "radio.group_disabled": "Radio Group (Disabled)",
   "radio.group_optional": "Radio Group (Optional)",
   "radio.group_desc": "A group of radio components.",
   "radio.apple": "Apple",
@@ -23,5 +26,14 @@
   "token.radio.global": "Global Token",
   "token.radio.component": "Component Token",
   "doc.component.radioSize": "Size of the radio button.",
-  "doc.component.dotSize": "Size of the inner dot."
+  "doc.component.dotSize": "Size of the inner dot.",
+  "radio.clear_selection": "Clear Selection",
+  "radio.custom_view": "Custom View",
+  "radio.custom_view_desc": "Customize radio content with any View.",
+  "radio.direction": "Direction",
+  "radio.direction_desc": "Vertical or horizontal layout.",
+  "radio.line_chart": "Line",
+  "radio.bar_chart": "Bar",
+  "radio.pie_chart": "Pie",
+  "radio.dot_chart": "Dot"
 }

@@ -67,5 +67,9 @@
   "doc.global.fontSize": "基础字体大小，用于复选框标签文字的大小。",
   "doc.global.motionDurationFast": "快速动画时长，用于迅速的动画过渡。",
   "doc.global.motionDurationMid": "中速动画时长，用于中等速度的动画过渡。",
-  "doc.global.motionDurationSlow": "缓慢动画时长，用于平缓的动画过渡。"
+  "doc.global.motionDurationSlow": "缓慢动画时长，用于平缓的动画过渡。",
+  "checkbox.direction": "排列方向",
+  "checkbox.direction_desc": "支持纵向或横向排列。",
+  "checkbox.direction_horizontal": "水平排列",
+  "checkbox.direction_vertical": "垂直排列"
 }

@@ -67,5 +67,9 @@
   "doc.global.fontSize": "Base font size for checkbox label text.",
   "doc.global.motionDurationFast": "Fast animation duration for quick transitions.",
   "doc.global.motionDurationMid": "Medium animation duration for moderate speed transitions.",
-  "doc.global.motionDurationSlow": "Slow animation duration for smooth transitions."
+  "doc.global.motionDurationSlow": "Slow animation duration for smooth transitions.",
+  "checkbox.direction": "Layout Direction",
+  "checkbox.direction_desc": "Support vertical or horizontal layout.",
+  "checkbox.direction_horizontal": "Horizontal",
+  "checkbox.direction_vertical": "Vertical"
 }
