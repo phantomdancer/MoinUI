@@ -21,6 +21,7 @@ public extension Moin {
         let buttonStyle: RadioButtonStyle
         let position: RadioButtonPosition
         let direction: Axis
+        let onHover: ((Bool) -> Void)?
         let label: Label
         
         @Environment(\.moinRadioToken) private var radioToken
@@ -35,6 +36,7 @@ public extension Moin {
             buttonStyle: RadioButtonStyle = .outline,
             position: RadioButtonPosition = .single,
             direction: Axis = .horizontal,
+            onHover: ((Bool) -> Void)? = nil,
             @ViewBuilder label: () -> Label
         ) {
             self._checked = checked
@@ -42,6 +44,7 @@ public extension Moin {
             self.buttonStyle = buttonStyle
             self.position = position
             self.direction = direction
+            self.onHover = onHover
             self.label = label()
         }
         
@@ -198,6 +201,7 @@ public extension Moin {
                         withAnimation(.easeInOut(duration: radioToken.motionDurationMid)) {
                             isHovering = hover
                         }
+                        onHover?(hover)
                         if hover { NSCursor.pointingHand.set() } else { NSCursor.arrow.set() }
                     } else {
                         if hover { NSCursor.operationNotAllowed.set() } else { NSCursor.arrow.set() }

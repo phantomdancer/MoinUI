@@ -22,6 +22,8 @@ public extension Moin {
         let disabled: Bool
         let optionType: RadioOptionType
         let buttonStyle: RadioButtonStyle
+        
+        @State private var hoveredValue: Value?
 
         @Environment(\.moinRadioToken) private var radioToken
         @Environment(\.moinToken) private var token
@@ -161,11 +163,14 @@ public extension Moin {
                         disabled: disabled || option.disabled,
                         buttonStyle: buttonStyle,
                         position: position,
-                        direction: direction
+                        direction: direction,
+                        onHover: { isHovering in
+                            hoveredValue = isHovering ? option.value : nil
+                        }
                     ) {
                         Text(option.label)
                     }
-                    .zIndex(selection == option.value ? 1 : 0) // Ensure selected border is on top if overlapping
+                    .zIndex(selection == option.value || hoveredValue == option.value ? 1 : 0) // Ensure selected or hovered border is on top
                 }
             }
         }
