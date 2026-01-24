@@ -62,14 +62,14 @@ def send_macos_notification(title, body):
         print(f"Warning: Failed to send macOS notification: {e}", file=sys.stderr)
 
 def main():
-    parser = argparse.ArgumentParser(description='Send Bark notification')
-    parser.add_argument('--key', help='Bark device key (or set BARK_KEY env var)')
-    parser.add_argument('--title', required=True, help='Notification title')
-    parser.add_argument('--body', required=True, help='Notification body')
-    parser.add_argument('--group', help='Notification group')
-    parser.add_argument('--level', help='Notification level (active, timeSensitive, passive)')
-    parser.add_argument('--icon', default='https://github.com/Finb/Bark/blob/master/Bark/Assets.xcassets/AppIcon.appiconset/Icon-60@3x.png?raw=true', help='Notification icon URL')
-    parser.add_argument('--url', help='Click URL')
+    parser = argparse.ArgumentParser(description='发送 Bark 通知 (Send Bark notification)')
+    parser.add_argument('--key', help='Bark 设备密钥 (或设置 BARK_KEY 环境变量)')
+    parser.add_argument('--title', required=True, help='通知标题 (必须使用简体中文-文言文，如“事项已毕”)')
+    parser.add_argument('--body', required=True, help='通知内容 (必须使用简体中文-文言文，如“功能开发完备”)')
+    parser.add_argument('--group', help='通知分组 (Notification group)')
+    parser.add_argument('--level', help='通知级别 (active, timeSensitive, passive)')
+    parser.add_argument('--icon', default='https://bark.day.app/_media/Icon.png', help='通知图标 URL')
+    parser.add_argument('--url', help='跳转 URL (Click URL)')
     
     args = parser.parse_args()
     

@@ -1,55 +1,57 @@
 ---
 name: notify-bark
-description: Send mobile push notifications to the user via the Bark app and local macOS notifications. Use this to notify the user when a task is complete EVERYTIME.标题和内容都需要是文言文的。不要用英语。
+description: 通过 Bark App 和本地 macOS 通知向用户发送移动推送通知。每次任务完成时必须使用此功能。标题和内容必须使用**简体中文-文言文**，切勿使用英语。
 ---
 
-# Notify Bark Skill
+# Notify Bark Skill (Bark 通知技能)
 
-This skill allows you to send push notifications to the user's iOS device using the Bark app, and simultaneously sends a local desktop notification if running on macOS.
+此技能允许你使用 Bark 应用向用户的 iOS 设备发送推送通知，并在 macOS 上同时发送本地桌面通知。
 
-## Prerequisites
+## 前置条件
 
-1. The user must have the **Bark** app installed on their iOS device.
-2. The user must provide their **Bark Key** (device key).
+1. 用户必须在 iOS 设备上安装 **Bark** 应用。
+2. 用户必须提供 **Bark Key** (设备密钥)。
 
-## Setup
+## 设置
 
-The skill script requires the Bark Key. You can provide it in two ways:
-1.  Set the `BARK_KEY` environment variable.
-2.  Pass the `--key` argument to the script.
-3.  Create a `config.json` file in the `scripts/` directory with `{"bark_key": "YOUR_KEY"}`. (Recommended)
+脚本需要 Bark Key。你可以通过以下方式提供：
+1.  设置 `BARK_KEY` 环境变量。
+2.  向脚本传递 `--key` 参数。
+3.  在 `scripts/` 目录下创建一个 `config.json` 文件，内容为 `{"bark_key": "YOUR_KEY"}`。（推荐）
 
-## Usage
+## 使用方法
 
-Use the `run_command` tool to execute the python script included in this skill.
+使用 `run_command` 工具执行包含在此技能中的 python 脚本。
+
+**⚠️ 重要规则：调用接口时，`--title` 和 `--body` 参数必须严格使用“简体中文-文言文”风格，切勿使用英语或白话文。**
 
 ```bash
-python3 .agent/skills/notify-bark/scripts/send.py --title "Task Complete" --body "Message Body"
+python3 .agent/skills/notify-bark/scripts/send.py --title "任务已成" --body "按钮组件重构完毕，请君查阅。"
 ```
 
-### Arguments
+### 参数说明
 
-- `--title`: (Required) The title of the notification，需要传递文言文.
-- `--body`: (Required) The content of the notification，需要传递文言文.
-- `--key`: The Bark device key (optional if `BARK_KEY` env var is set).
-- `--group`: Group notifications (e.g., "MoinUI").
-- `--level`: Interruption level (`active`, `timeSensitive`, `passive`).
-- `--icon`: URL for the notification icon.
-- `--url`: URL to open when notification is clicked.
+- `--title`: (必填) 通知标题。**必须使用文言文**（如：事项已毕、构建成功）。
+- `--body`: (必填) 通知内容。**必须使用文言文**（如：功能开发完备，请君审阅）。
+- `--key`: Bark 设备密钥 (如果设置了 `BARK_KEY` 环境变量则可选)。
+- `--group`: 通知分组 (例如: "MoinUI")。
+- `--level`: 中断级别 (`active`, `timeSensitive`, `passive`)。
+- `--icon`: 通知图标的 URL。
+- `--url`: 点击通知时打开的 URL。
 
-## Example: Notify on Task Completion
+## 示例：任务完成通知
 
-When you have finished a significant task (e.g., "Refactor Button Component"), run this command:
+当你完成了一项重要任务（例如：“重构按钮组件”），运行此命令：
 
 ```bash
 python3 .agent/skills/notify-bark/scripts/send.py \
-  --title "任务完毕" \
-  --body "按钮组件重构完毕，请查阅。" \
+  --title "任务已毕" \
+  --body "按钮组件重构已毕，请君查阅。" \
   --group "MoinUI"
 ```
 
-## Troubleshooting
+## 故障排除
 
-- If the notification fails, ensure the `BARK_KEY` is correct.
-- Check if the device has internet access.
-- Check the output of the command for error messages.
+- 如果通知发送失败，请确保 `BARK_KEY` 正确。
+- 检查设备是否连接到互联网。
+- 检查命令输出的错误信息。
