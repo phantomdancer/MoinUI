@@ -59,6 +59,7 @@ struct ProgressTokenView: View {
                 Text(tr("token.playground.reset_desc"))
                     .font(.caption)
                     .foregroundStyle(.secondary)
+                Spacer()
             }
             .padding(Moin.Constants.Spacing.md)
         }
@@ -97,30 +98,18 @@ struct ProgressTokenView: View {
             } code: { "config.components.progress.lineBorderRadius = 100" }
 
         case "circleTextFontSize":
-             TokenCard(name: "circleTextFontSize", type: "String", defaultValue: "1em", description: tr("token.progress.circleTextFontSize"), sectionId: "component") {
+             TokenCard(name: "circleTextFontSize", type: "CGFloat", defaultValue: "14", description: tr("token.progress.circleTextFontSize"), sectionId: "component") {
                 Moin.Progress(percent: 50, type: .circle)
             } editor: {
-                HStack {
-                    Text("circleTextFontSize")
-                    Spacer()
-                    TextField("1em", text: binding(\.circleTextFontSize))
-                        .textFieldStyle(.roundedBorder)
-                        .frame(width: 100)
-                }
-            } code: { "config.components.progress.circleTextFontSize = \"1em\"" }
+                TokenValueRow(label: "circleTextFontSize", value: binding(\.circleTextFontSize), range: 1...100, step: 1)
+            } code: { "config.components.progress.circleTextFontSize = \(String(format: "%.2f", config.components.progress.circleTextFontSize))" }
 
         case "circleIconFontSize":
-             TokenCard(name: "circleIconFontSize", type: "String", defaultValue: "1.16em", description: tr("token.progress.circleIconFontSize"), sectionId: "component") {
+             TokenCard(name: "circleIconFontSize", type: "CGFloat", defaultValue: "16", description: tr("token.progress.circleIconFontSize"), sectionId: "component") {
                 Moin.Progress(percent: 100, type: .circle)
             } editor: {
-                HStack {
-                    Text("circleIconFontSize")
-                    Spacer()
-                    TextField("1em", text: binding(\.circleIconFontSize))
-                        .textFieldStyle(.roundedBorder)
-                        .frame(width: 100)
-                }
-            } code: { "config.components.progress.circleIconFontSize = \"1.16em\"" }
+                TokenValueRow(label: "circleIconFontSize", value: binding(\.circleIconFontSize), range: 1...100, step: 1)
+            } code: { "config.components.progress.circleIconFontSize = \(String(format: "%.2f", config.components.progress.circleIconFontSize))" }
         
         // Global
         case "colorInfo":
@@ -180,7 +169,7 @@ struct ProgressTokenView: View {
                         config.token.marginXS = $0
                         config.components.progress = Moin.ProgressToken.generate(from: config.token)
                     }
-                ), range: 0...50, step: 1)
+                ), range: 0...50, step: 4)
             }
             
         case "fontSize":
@@ -198,7 +187,7 @@ struct ProgressTokenView: View {
             
         case "fontSizeSM":
              TokenCard(name: "fontSizeSM", type: "number", defaultValue: "12", description: tr("token.progress.fontSizeSM"), sectionId: "global") {
-                 Moin.Progress(percent: 50, type: .circle)
+                 Moin.Progress(percent: 100, type: .circle)
             } editor: {
                 TokenValueRow(label: "token.fontSizeSM", value: Binding(
                     get: { config.token.fontSizeSM },
@@ -206,7 +195,9 @@ struct ProgressTokenView: View {
                         config.token.fontSizeSM = $0
                         config.components.progress = Moin.ProgressToken.generate(from: config.token)
                     }
-                ), range: 8...100, step: 1)
+                ), range: 8...100, step: 4)
+            } code: {
+                "// fontSizeSM: \(Int(config.token.fontSizeSM)) => IconSize: \(String(format: "%.0f", config.components.progress.circleIconFontSize))"
             }
             
         default: EmptyView()

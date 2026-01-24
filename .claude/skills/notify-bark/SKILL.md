@@ -1,6 +1,6 @@
 ---
 name: notify-bark
-description: Send mobile push notifications to the user via the Bark app and local macOS notifications. Use this to notify the user when a long-running task is complete, or when you need their attention.
+description: Send mobile push notifications to the user via the Bark app and local macOS notifications. Use this to notify the user when a task is complete EVERYTIME.
 ---
 
 # Notify Bark Skill

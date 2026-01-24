@@ -22,11 +22,11 @@ public extension Moin {
         
         /// 圆形进度条文本大小
         /// Text size of circular progress bar
-        public var circleTextFontSize: String // "1em"
+        public var circleTextFontSize: CGFloat
         
         /// 圆形进度条图标大小
         /// Icon size of circular progress bar
-        public var circleIconFontSize: String // "14px/12px -> 1.16em"
+        public var circleIconFontSize: CGFloat
         
         public static func generate(from token: Token) -> ProgressToken {
             return ProgressToken(
@@ -34,8 +34,8 @@ public extension Moin {
                 remainingColor: token.colorFillSecondary,
                 circleTextColor: token.colorText,
                 lineBorderRadius: 100, // 默认很大，capsule
-                circleTextFontSize: "1em",
-                circleIconFontSize: String(format: "%.2fem", token.fontSize / token.fontSizeSM)
+                circleTextFontSize: token.fontSize,
+                circleIconFontSize: (token.fontSize * (token.fontSize / token.fontSizeSM)).rounded()
             )
         }
         

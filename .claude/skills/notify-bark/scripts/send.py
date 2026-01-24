@@ -68,7 +68,7 @@ def main():
     parser.add_argument('--body', required=True, help='Notification body')
     parser.add_argument('--group', help='Notification group')
     parser.add_argument('--level', help='Notification level (active, timeSensitive, passive)')
-    parser.add_argument('--icon', help='Notification icon URL')
+    parser.add_argument('--icon', default='https://github.com/Finb/Bark/blob/master/Bark/Assets.xcassets/AppIcon.appiconset/Icon-60@3x.png?raw=true', help='Notification icon URL')
     parser.add_argument('--url', help='Click URL')
     
     args = parser.parse_args()

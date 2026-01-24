@@ -241,14 +241,7 @@ public extension Moin {
             return AnyShapeStyle(color)
         }
         
-        // Helper to parse fontSize string like "1em"
-        private func parseFontSize(_ sizeStr: String) -> CGFloat {
-            if sizeStr.hasSuffix("em"), let val = Double(sizeStr.dropLast(2)) {
-                return globalToken.fontSize * CGFloat(val)
-            }
-            // Fallback or other units parsing could go here
-            return globalToken.fontSize
-        }
+
 
         public var body: some View {
             Group {
@@ -545,15 +538,15 @@ public extension Moin {
                 } else {
                     if currentStatus == .exception {
                         Image(systemName: isCircle ? "xmark" : "xmark.circle.fill")
-                            .font(.system(size: isCircle ? parseFontSize(progressToken.circleIconFontSize) : globalToken.fontSize))
+                            .font(.system(size: isCircle ? progressToken.circleIconFontSize : globalToken.fontSize))
                             .foregroundStyle(globalToken.colorDanger)
                     } else if currentStatus == .success {
                         Image(systemName: isCircle ? "checkmark" : "checkmark.circle.fill")
-                            .font(.system(size: isCircle ? parseFontSize(progressToken.circleIconFontSize) : globalToken.fontSize))
+                            .font(.system(size: isCircle ? progressToken.circleIconFontSize : globalToken.fontSize))
                             .foregroundStyle(globalToken.colorSuccess)
                     } else {
                         Text("\(Int(percent))%")
-                            .font(.system(size: isCircle ? parseFontSize(progressToken.circleTextFontSize) : (isInner ? effectiveStrokeWidth * 0.7 : globalToken.fontSize)))
+                            .font(.system(size: isCircle ? progressToken.circleTextFontSize : (isInner ? effectiveStrokeWidth * 0.7 : globalToken.fontSize)))
                             .lineLimit(1)
                             .minimumScaleFactor(0.5)
                     }
