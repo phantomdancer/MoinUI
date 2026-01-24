@@ -370,36 +370,47 @@ struct RadioExamples: View {
             description: tr("radio.direction_desc"),
             content: {
                 VStack(alignment: .leading, spacing: 20) {
-                    Moin.RadioGroup(
-                        selection: $directionSelection,
-                        options: plainOptions, // [Apple, Pear, Orange]
-                        direction: layoutDirection
-                    )
-                    
-                    Moin.Divider()
-                    
-                    Text(tr("radio.direction") + ":")
+                    Text(tr("radio.direction_horizontal") + ":")
                         .font(.caption)
                         .foregroundStyle(.secondary)
                     
                     Moin.RadioGroup(
-                        selection: $layoutDirection,
-                        options: [
-                             Moin.RadioOption(label: tr("radio.direction_horizontal"), value: Axis.horizontal),
-                             Moin.RadioOption(label: tr("radio.direction_vertical"), value: Axis.vertical)
-                        ]
+                        selection: $directionSelection,
+                        options: plainOptions,
+                        direction: .horizontal
+                    )
+                    
+                    Moin.Divider()
+                    
+                    Text(tr("radio.direction_vertical") + ":")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                    
+                    Moin.RadioGroup(
+                        selection: $directionSelection,
+                        options: plainOptions,
+                        direction: .vertical
                     )
                 }
             },
             code: {
                 """
-                @State private var direction: Axis = .vertical
                 @State private var selection = "Apple"
                 
+                // Horizontal (Default)
                 Moin.RadioGroup(
                     selection: $selection,
                     options: options,
-                    direction: direction
+                    direction: .horizontal
+                )
+                
+                Moin.Divider()
+                
+                // Vertical
+                Moin.RadioGroup(
+                    selection: $selection,
+                    options: options,
+                    direction: .vertical
                 )
                 """
             }

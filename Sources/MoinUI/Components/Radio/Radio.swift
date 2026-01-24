@@ -74,12 +74,11 @@ public extension Moin {
                     .background(Circle().fill(backgroundColor))
                 
                 // Dot
-                if checked {
-                    Circle()
-                        .fill(isEffectiveDisabled ? radioToken.colorDotDisabled : radioToken.colorDot)
-                        .frame(width: radioToken.dotSize, height: radioToken.dotSize)
-                        .transition(.scale)
-                }
+                Circle()
+                    .fill(isEffectiveDisabled ? radioToken.colorDotDisabled : radioToken.colorDot)
+                    .frame(width: radioToken.dotSize, height: radioToken.dotSize)
+                    .scaleEffect(checked ? 1 : 0)
+                    .opacity(checked ? 1 : 0)
             }
             .frame(width: radioToken.radioSize, height: radioToken.radioSize)
             .animation(.easeInOut(duration: radioToken.motionDurationMid), value: checked)
