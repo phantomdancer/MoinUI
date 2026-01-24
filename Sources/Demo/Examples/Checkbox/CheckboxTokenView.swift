@@ -8,52 +8,54 @@ struct CheckboxTokenView: View {
     @Localized var tr
     @ObservedObject var config = Moin.ConfigProvider.shared
 
+    // MARK: - Interactive States for TOKEN previews
+    @State var colorPrimaryChecked = true
+    @State var colorBorderChecked = false
+    @State var colorBgContainerChecked = false
+    @State var colorTextChecked = true
+    @State var colorTextDisabledChecked = true
+    @State var colorBgDisabledChecked = false
+    @State var borderRadiusSMChecked = true
+    @State var lineWidthChecked = false
+    @State var lineWidthBoldChecked = true
+    @State var paddingXSChecked = true
+    @State var fontSizeChecked = true
+    @State var motionDurationFastChecked = true
+    @State var motionDurationMidChecked = true
+    @State var motionDurationSlowChecked = true
+
     // MARK: - Token Sections
 
-    // Component Tokens Sections
-    private var componentSections: [DocSidebarSection] {
+    private var tokenSections: [DocSidebarSection] {
         [
             DocSidebarSection(
-                title: tr("doc.section.component_token"),
-                items: ["checkboxSize", "borderRadius", "lineWidth", "lineWidthBold"],
-                sectionId: "component"
-            ),
-            DocSidebarSection(
-                title: tr("doc.section.colors"),
-                items: ["colorPrimary", "colorPrimaryHover", "colorBorder", "colorBgContainer", "colorWhite"],
-                sectionId: "component"
-            ),
-            DocSidebarSection(
-                title: tr("doc.section.disabled"),
-                items: ["colorBgContainerDisabled", "colorBorderDisabled", "colorTextDisabled"],
-                sectionId: "component"
-            ),
-            DocSidebarSection(
-                title: tr("doc.section.layout"),
-                items: ["paddingXS", "motionDurationSlow"],
-                sectionId: "component"
-            )
-        ]
-    }
-
-    // Global Tokens Sections
-    private var globalSections: [DocSidebarSection] {
-        [
-            DocSidebarSection(
-                title: tr("doc.section.global_token"),
+                title: tr("token.checkbox.global"),
                 items: [
-                    "borderRadiusSM", "lineWidth", "lineWidthBold",
-                    "colorPrimary", "colorPrimaryHover",
-                    "colorBorder", "colorBgContainer", "colorBgDisabled",
-                    "colorTextDisabled", "paddingXS", "motionDurationSlow"
+                    // Colors - Primary
+                    "colorPrimary",
+                    // Colors - Border & Background
+                    "colorBorder",
+                    "colorBgContainer",
+                    // Colors - Text & Disabled
+                    "colorText",
+                    "colorTextDisabled",
+                    "colorBgDisabled",
+                    // Sizes & Borders
+                    "borderRadiusSM",
+                    "lineWidth",
+                    "lineWidthBold",
+                    // Spacing
+                    "paddingXS",
+                    // Typography
+                    "fontSize",
+                    // Motion
+                    "motionDurationFast",
+                    "motionDurationMid",
+                    "motionDurationSlow"
                 ],
                 sectionId: "global"
             )
         ]
-    }
-
-    private var allSections: [DocSidebarSection] {
-        componentSections + globalSections
     }
 
     // 重置所有 Token 到默认值
@@ -71,24 +73,16 @@ struct CheckboxTokenView: View {
 
     var body: some View {
         ComponentDocBody(
-            sections: allSections,
-            initialItemId: "component"
+            sections: tokenSections,
+            initialItemId: "global"
         ) { sectionId in
-            if sectionId == "component" {
-                Text(tr("doc.section.component_token"))
-                    .font(.title3)
-                    .fontWeight(.semibold)
-            } else if sectionId == "global" {
-                Text(tr("doc.section.global_token"))
+            if sectionId == "global" {
+                Text(tr("token.checkbox.global"))
                     .font(.title3)
                     .fontWeight(.semibold)
             }
         } item: { item in
-            if globalSections.flatMap({ $0.items }).contains(item) {
-                cardForItem(item, sectionId: "global")
-            } else {
-                cardForItem(item, sectionId: "component")
-            }
+            cardForItem(item)
         } footer: {
             HStack(spacing: Moin.Constants.Spacing.sm) {
                 Moin.Button(tr("playground.token.reset"), color: .primary, variant: .solid) {
@@ -109,41 +103,23 @@ struct CheckboxTokenView: View {
     // MARK: - Item -> Card 映射
 
     @ViewBuilder
-    private func cardForItem(_ item: String, sectionId: String) -> some View {
-        if sectionId == "component" {
-            switch item {
-            case "checkboxSize": AnyView(checkboxSizeTokenCard)
-            case "borderRadius": AnyView(borderRadiusTokenCard)
-            case "lineWidth": AnyView(lineWidthTokenCard)
-            case "lineWidthBold": AnyView(lineWidthBoldTokenCard)
-            case "colorPrimary": AnyView(colorPrimaryTokenCard)
-            case "colorPrimaryHover": AnyView(colorPrimaryHoverTokenCard)
-            case "colorBorder": AnyView(colorBorderTokenCard)
-            case "colorBgContainer": AnyView(colorBgContainerTokenCard)
-            case "colorWhite": AnyView(colorWhiteTokenCard)
-            case "colorBgContainerDisabled": AnyView(colorBgContainerDisabledTokenCard)
-            case "colorBorderDisabled": AnyView(colorBorderDisabledTokenCard)
-            case "colorTextDisabled": AnyView(colorTextDisabledTokenCard)
-            case "paddingXS": AnyView(paddingXSTokenCard)
-            case "motionDurationSlow": AnyView(motionDurationSlowTokenCard)
-            default: AnyView(EmptyView())
-            }
-        } else {
-            // global
-            switch item {
-            case "borderRadiusSM": AnyView(borderRadiusSMGlobalTokenCard)
-            case "lineWidth": AnyView(lineWidthGlobalTokenCard)
-            case "lineWidthBold": AnyView(lineWidthBoldGlobalTokenCard)
-            case "colorPrimary": AnyView(colorPrimaryGlobalTokenCard)
-            case "colorPrimaryHover": AnyView(colorPrimaryHoverGlobalTokenCard)
-            case "colorBorder": AnyView(colorBorderGlobalTokenCard)
-            case "colorBgContainer": AnyView(colorBgContainerGlobalTokenCard)
-            case "colorBgDisabled": AnyView(colorBgDisabledGlobalTokenCard)
-            case "colorTextDisabled": AnyView(colorTextDisabledGlobalTokenCard)
-            case "paddingXS": AnyView(paddingXSGlobalTokenCard)
-            case "motionDurationSlow": AnyView(motionDurationSlowGlobalTokenCard)
-            default: AnyView(EmptyView())
-            }
+    private func cardForItem(_ item: String) -> some View {
+        switch item {
+        case "colorPrimary": AnyView(colorPrimaryGlobalTokenCard)
+        case "colorBorder": AnyView(colorBorderGlobalTokenCard)
+        case "colorBgContainer": AnyView(colorBgContainerGlobalTokenCard)
+        case "colorText": AnyView(colorTextGlobalTokenCard)
+        case "colorTextDisabled": AnyView(colorTextDisabledGlobalTokenCard)
+        case "colorBgDisabled": AnyView(colorBgDisabledGlobalTokenCard)
+        case "borderRadiusSM": AnyView(borderRadiusSMGlobalTokenCard)
+        case "lineWidth": AnyView(lineWidthGlobalTokenCard)
+        case "lineWidthBold": AnyView(lineWidthBoldGlobalTokenCard)
+        case "paddingXS": AnyView(paddingXSGlobalTokenCard)
+        case "fontSize": AnyView(fontSizeGlobalTokenCard)
+        case "motionDurationFast": AnyView(motionDurationFastGlobalTokenCard)
+        case "motionDurationMid": AnyView(motionDurationMidGlobalTokenCard)
+        case "motionDurationSlow": AnyView(motionDurationSlowGlobalTokenCard)
+        default: AnyView(EmptyView())
         }
     }
 }

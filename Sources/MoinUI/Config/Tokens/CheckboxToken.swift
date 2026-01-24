@@ -21,11 +21,9 @@ public extension Moin {
         public var lineWidthBold: CGFloat
         
         // MARK: - Colors
-        
+
         /// 开启状态背景色
         public var colorPrimary: Color
-        /// 开启状态悬停背景色
-        public var colorPrimaryHover: Color
         
         /// 默认/未选中 边框颜色
         public var colorBorder: Color
@@ -52,6 +50,10 @@ public extension Moin {
         
         // MARK: - Motion
         
+        /// 快速动画时长
+        public var motionDurationFast: Double
+        /// 中速动画时长
+        public var motionDurationMid: Double
         public var motionDurationSlow: Double
         
         // MARK: - Defaults
@@ -62,7 +64,6 @@ public extension Moin {
             lineWidth: 1,
             lineWidthBold: 2,
             colorPrimary: Moin.Colors.blue6,
-            colorPrimaryHover: Moin.Colors.blue5,
             colorBorder: Color(hex: 0xD9D9D9),
             colorBgContainer: .white,
             colorWhite: .white,
@@ -70,6 +71,8 @@ public extension Moin {
             colorBorderDisabled: Color(hex: 0xD9D9D9),
             colorTextDisabled: Color(hex: 0x000000, alpha: 0.25),
             paddingXS: 8,
+            motionDurationFast: 0.1,
+            motionDurationMid: 0.2,
             motionDurationSlow: 0.3
         )
         
@@ -82,7 +85,6 @@ public extension Moin {
                 lineWidth: token.lineWidth,
                 lineWidthBold: token.lineWidthBold,
                 colorPrimary: token.colorPrimary,
-                colorPrimaryHover: token.colorPrimaryHover,
                 colorBorder: token.colorBorder,
                 colorBgContainer: token.colorBgContainer,
                 colorWhite: .white,
@@ -90,6 +92,8 @@ public extension Moin {
                 colorBorderDisabled: token.colorBorder,
                 colorTextDisabled: token.colorTextDisabled,
                 paddingXS: token.paddingXS,
+                motionDurationFast: token.motionDurationFast,
+                motionDurationMid: token.motionDurationMid,
                 motionDurationSlow: token.motionDurationSlow
             )
         }

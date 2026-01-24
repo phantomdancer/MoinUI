@@ -53,7 +53,7 @@ public extension Moin {
                     if !isEffectiveDisabled {
                         NSCursor.pointingHand.set()
                         if !isHovering {
-                            withAnimation(.easeInOut(duration: 0.2)) { isHovering = true }
+                            withAnimation(.easeInOut(duration: checkboxToken.motionDurationMid)) { isHovering = true }
                         }
                     } else {
                         NSCursor.operationNotAllowed.set()
@@ -61,7 +61,7 @@ public extension Moin {
                 case .ended:
                     NSCursor.arrow.set()
                     if isHovering {
-                        withAnimation(.easeInOut(duration: 0.2)) { isHovering = false }
+                        withAnimation(.easeInOut(duration: checkboxToken.motionDurationMid)) { isHovering = false }
                     }
                 }
             }
@@ -93,7 +93,7 @@ public extension Moin {
             .frame(width: checkboxToken.checkboxSize, height: checkboxToken.checkboxSize)
             .animation(.easeInOut(duration: checkboxToken.motionDurationSlow), value: checked)
             .animation(.easeInOut(duration: checkboxToken.motionDurationSlow), value: indeterminate)
-            .animation(.easeInOut(duration: 0.2), value: isHovering) // Hover animation
+            .animation(.easeInOut(duration: checkboxToken.motionDurationMid), value: isHovering)
         }
         
         private var boxBackgroundColor: Color {
