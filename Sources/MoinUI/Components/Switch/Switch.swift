@@ -73,30 +73,55 @@ public extension Moin {
             let innerMax = size == .small ? token.innerMaxMarginSM : token.innerMaxMargin
             let actualMinWidth = size == .small ? token.trackMinWidthSM : token.trackMinWidth
             
-            return HStack {
-                if isOn {
+            // Layout inversion: Content drives size
+            // To ensure no width jitter and correct alignment, we use a "Ghost" ZStack 
+            // to measure the maximum width required by either state, then overlay the real content.
+            
+            return ZStack {
+                // Ghost Content for Sizing
+                // Both are present but invisible, ensuring the container adds up to the max width needed.
+                checkedChildren
+                    .font(.system(size: 12))
+                    .lineLimit(1)
+                    .padding(.leading, innerMin)
+                    .padding(.trailing, innerMax)
+                    .opacity(0)
+                
+                uncheckedContent
+                    .font(.system(size: 12))
+                    .lineLimit(1)
+                    .padding(.leading, innerMax)
+                    .padding(.trailing, innerMin)
+                    .opacity(0)
+            }
+            .frame(minWidth: actualMinWidth)
+            .frame(height: actualTrackHeight)
+            .background(
+                Capsule()
+                    .fill(finalBg)
+            )
+            .overlay(
+                // Visible Content Layer
+                // Now we can use maxWidth: .infinity because the parent frame is fixed by the ghost content.
+                ZStack {
                     checkedChildren
                         .font(.system(size: 12))
                         .foregroundColor(.white)
                         .lineLimit(1)
                         .padding(.leading, innerMin)
                         .padding(.trailing, innerMax)
-                        .transition(.opacity)
-                } else {
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .opacity(isOn ? 1 : 0)
+                    
                     uncheckedContent
                         .font(.system(size: 12))
                         .foregroundColor(.white)
                         .lineLimit(1)
                         .padding(.leading, innerMax)
                         .padding(.trailing, innerMin)
-                        .transition(.opacity)
+                        .frame(maxWidth: .infinity, alignment: .trailing)
+                        .opacity(isOn ? 0 : 1)
                 }
-            }
-            .frame(minWidth: actualMinWidth, maxHeight: .infinity)
-            .frame(height: actualTrackHeight)
-            .background(
-                Capsule()
-                    .fill(finalBg)
             )
             .overlay(
                 // Handle
