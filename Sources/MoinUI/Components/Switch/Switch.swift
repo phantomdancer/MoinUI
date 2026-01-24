@@ -39,98 +39,125 @@ public extension Moin {
         }
         
         @State private var isHovering: Bool = false
+        @State private var isPressed: Bool = false
         
         // MARK: - Body
-        
+
         public var body: some View {
-            let actualTrackHeight = size == .small ? token.trackHeight - 4 : token.trackHeight
-            let actualHandleSize = size == .small ? token.handleSize - 4 : token.handleSize
+            // ... (keep variable definitions)
+            let actualTrackHeight = size == .small ? token.trackHeightSM : token.trackHeight
+            let actualHandleSize = size == .small ? token.handleSizeSM : token.handleSize
+            
             let styleBg = isOn ? token.colorPrimary : token.colorTextQuaternary
             let styleBgHover = isOn ? token.colorPrimaryHover : token.colorTextTertiary
             
-            // Disabled colors
-            let finalBg = (isEnabled && !loading) ? (isHovering ? styleBgHover : styleBg) : token.colorBgDisabled
+            // Disabled colors logic:
+            // If disabled, use base color but with opacity (0.4 usually in AntD)
+            // If disabled & isOn -> primary color with opacity
+            // If disabled & !isOn -> quaternary color with opacity
             
-            // Animation offset
-            // We need to calculate width dynamically or fix it.
-            // AntDesign logic: minWidth.
-            // If contents are wider, track expands.
+            let finalBg: Color
+            if !isEnabled || loading {
+                finalBg = (isOn ? token.colorPrimary : token.colorTextQuaternary).opacity(0.4)
+            } else {
+                 finalBg = isHovering ? styleBgHover : styleBg
+            }
             
-            HStack {
-                ZStack(alignment: .leading) {
-                    // Track
-                    Capsule()
-                        .fill(finalBg)
-                        .frame(height: actualTrackHeight)
-                        .frame(minWidth: token.trackMinWidth)
-                        .animation(.easeInOut(duration: 0.2), value: finalBg)
-                    
-                    // Children Content (Text/Icon)
-                    // If ON, show checkedChildren on Left.
-                    // If OFF, show uncheckedContent on Right.
-                    HStack {
-                        if isOn {
-                            checkedChildren
-                                .font(.system(size: 12))
-                                .foregroundColor(.white)
-                                .lineLimit(1)
-                                .padding(.leading, actualHandleSize + token.innerMargin * 2)
-                                .padding(.trailing, token.innerMargin + 4)
-                                .opacity(isOn ? 1 : 0)
-                                .transition(.opacity)
-                        } else {
-                            Spacer()
-                            uncheckedContent
-                                .font(.system(size: 12))
-                                .foregroundColor(.white)
-                                .lineLimit(1)
-                                .padding(.leading, token.innerMargin + 4)
-                                .padding(.trailing, actualHandleSize + token.innerMargin * 2)
-                                .opacity(isOn ? 0 : 1)
-                                .transition(.opacity)
-                        }
-                    }
+            // Handle Width Calculation
+            // Ant Design spec: extends by 30% when pressed
+            let handleWidth = isPressed ? actualHandleSize * 1.3 : actualHandleSize
+            
+            return HStack {
+                // Track
+                let actualMinWidth = size == .small ? token.trackMinWidthSM : token.trackMinWidth
+                let innerMin = size == .small ? token.innerMinMarginSM : token.innerMinMargin
+                let innerMax = size == .small ? token.innerMaxMarginSM : token.innerMaxMargin
+                
+                Capsule()
+                    .fill(finalBg)
                     .frame(height: actualTrackHeight)
-                    .frame(minWidth: token.trackMinWidth)
-                    
-                    // Handle
-                    Circle()
-                        .fill(token.handleBg)
-                        .shadow(color: token.handleShadow, radius: 1, x: 0, y: 1)
-                        .padding(token.innerMargin)
-                        .frame(width: actualTrackHeight, height: actualTrackHeight) // Wrapper frame matches track height
-                        .overlay(
-                            // Loading Spinner
-                            Group {
-                                if loading {
-                                    // Use Moin.Spin or simulated spinner
-                                    Circle()
-                                        .trim(from: 0, to: 0.8)
-                                        .stroke(style: StrokeStyle(lineWidth: 1.5, lineCap: .round))
-                                        .fill(isOn ? token.colorPrimary : token.colorTextQuaternary) // Spinner color
-                                        .rotationEffect(Angle(degrees: 360)) // Need persistent animation
-                                        .frame(width: actualHandleSize * 0.7, height: actualHandleSize * 0.7)
-                                        // Implementing simple spin animation later or use Moin.Spin if available as simple view
-                                        // For now static or simple rotating view modifier
-                                        .modifier(SpinningModifier())
+                    .frame(minWidth: actualMinWidth)
+                    .animation(.easeInOut(duration: 0.2), value: finalBg)
+                    .overlay(
+                        // Children Content (Text/Icon)
+                        // Logic derived from Ant Design:
+                        // Unchecked: Handle Left. Content Right. P-Start: innerMax, P-End: innerMin
+                        // Checked: Handle Right. Content Left. P-Start: innerMin, P-End: innerMax
+                        HStack {
+                            if isOn {
+                                checkedChildren
+                                    .font(.system(size: 12))
+                                    .foregroundColor(.white)
+                                    .lineLimit(1) // Keep single line but allow expansion of container
+                                    .padding(.leading, innerMin)
+                                    .padding(.trailing, innerMax)
+                                    .opacity(isOn ? 1 : 0)
+                                    .transition(.opacity)
+                            } else {
+                                Spacer()
+                                uncheckedContent
+                                    .font(.system(size: 12))
+                                    .foregroundColor(.white)
+                                    .lineLimit(1)
+                                    .padding(.leading, innerMax)
+                                    .padding(.trailing, innerMin)
+                                    .opacity(isOn ? 0 : 1)
+                                    .transition(.opacity)
+                            }
+                        }
+                    )
+                    .overlay(
+                        // Handle with Spacer for Animation
+                        HStack(spacing: 0) {
+                            if isOn { Spacer() }
+                            
+                            Capsule()
+                                .fill(token.handleBg)
+                                .shadow(color: token.handleShadow, radius: 1, x: 0, y: 1)
+                                .frame(width: handleWidth, height: actualHandleSize)
+                                .padding(token.trackPadding)
+                                .overlay(
+                                    Group {
+                                        if loading {
+                                            Circle()
+                                                .trim(from: 0, to: 0.8)
+                                                .stroke(style: StrokeStyle(lineWidth: 1.5, lineCap: .round))
+                                                .fill(isOn ? token.colorPrimary : token.colorTextQuaternary)
+                                                .rotationEffect(Angle(degrees: 360))
+                                                .frame(width: actualHandleSize * 0.7, height: actualHandleSize * 0.7)
+                                                .modifier(SpinningModifier())
+                                        }
+                                    }
+                                )
+                            
+                            if !isOn { Spacer() }
+                        }
+                    )
+                    .fixedSize()
+                    .gesture(
+                        DragGesture(minimumDistance: 0)
+                            .onChanged { _ in
+                                if isEnabled && !loading && !isPressed {
+                                    withAnimation(.easeInOut(duration: 0.1)) {
+                                        isPressed = true
+                                    }
                                 }
                             }
-                        )
-                        .frame(maxWidth: .infinity, alignment: isOn ? .trailing : .leading)
-                }
-                .fixedSize()
-                .onTapGesture {
-                    guard isEnabled && !loading else { return }
-                    withAnimation(.easeInOut(duration: 0.2)) {
-                        isOn.toggle()
-                    }
-                    onChange?(isOn)
-                }
-                .onHover { hover in
-                    guard isEnabled && !loading else { return }
-                    withAnimation(.easeInOut(duration: 0.1)) {
-                        isHovering = hover
-                    }
+                            .onEnded { _ in
+                                guard isEnabled && !loading else { return }
+                                // Animate release and toggle
+                                withAnimation(.easeInOut(duration: 0.2)) {
+                                    isPressed = false
+                                    isOn.toggle()
+                                }
+                                onChange?(isOn)
+                            }
+                    )
+                    .onHover { hover in
+                        guard isEnabled && !loading else { return }
+                        withAnimation(.easeInOut(duration: 0.1)) {
+                            isHovering = hover
+                        }
                 }
             }
         }
@@ -189,3 +216,4 @@ private struct SpinningModifier: ViewModifier {
             .onAppear { isSpinning = true }
     }
 }
+
