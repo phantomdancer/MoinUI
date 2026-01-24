@@ -137,9 +137,8 @@ public extension Moin {
                             Group {
                                 if loading {
                                     Circle()
-                                        .trim(from: 0, to: 0.8)
-                                        .stroke(style: StrokeStyle(lineWidth: 1.5, lineCap: .round))
-                                        .fill(isOn ? token.colorPrimary : token.colorTextQuaternary)
+                                        .trim(from: 0, to: 0.25)
+                                        .stroke((isOn ? token.colorPrimary : token.colorTextQuaternary).opacity(0.5), style: StrokeStyle(lineWidth: 1.5, lineCap: .round))
                                         .rotationEffect(Angle(degrees: 360))
                                         .frame(width: actualHandleSize * 0.7, height: actualHandleSize * 0.7)
                                         .modifier(SpinningModifier())
