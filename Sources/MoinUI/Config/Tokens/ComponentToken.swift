@@ -17,6 +17,7 @@ public extension Moin {
         public var progress: Moin.ProgressToken
         public var `switch`: Moin.SwitchToken
         public var checkbox: Moin.CheckboxToken
+        public var radio: Moin.RadioToken
 
         public static func generate(from token: Token, isDark: Bool = false) -> ComponentToken {
             ComponentToken(
@@ -32,7 +33,8 @@ public extension Moin {
                 alert: .generate(from: token),
                 progress: .generate(from: token),
                 switch: .resolve(token: token, isDark: isDark),
-                checkbox: .resolve(token: token)
+                checkbox: .resolve(token: token),
+                radio: .resolve(token: token)
             )
         }
 

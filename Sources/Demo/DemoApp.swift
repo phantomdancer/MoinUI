@@ -166,13 +166,14 @@ struct ContentView: View {
     @State private var buttonTab: ButtonExamplesTab = .examples
     @State private var switchTab: SwitchExamplesTab = .examples
     @State private var checkboxTab: CheckboxExamplesTab = .examples
+    @State private var radioTab: RadioExamplesTab = .examples
 
     var body: some View {
         NavigationSplitView {
             Sidebar(selection: $navManager.selectedItem)
                 .navigationSplitViewColumnWidth(min: 240, ideal: 300, max: 420)
         } detail: {
-            DetailView(item: navManager.selectedItem, buttonTab: $buttonTab, switchTab: $switchTab, checkboxTab: $checkboxTab, typographyTab: $typographyTab, tagTab: $tagTab, spaceTab: $spaceTab, dividerTab: $dividerTab, badgeTab: $badgeTab, avatarTab: $avatarTab, emptyTab: $emptyTab, spinTab: $spinTab, statisticTab: $statisticTab, alertTab: $alertTab, progressTab: $progressTab, tokenTab: $tokenTab)
+            DetailView(item: navManager.selectedItem, buttonTab: $buttonTab, switchTab: $switchTab, checkboxTab: $checkboxTab, radioTab: $radioTab, typographyTab: $typographyTab, tagTab: $tagTab, spaceTab: $spaceTab, dividerTab: $dividerTab, badgeTab: $badgeTab, avatarTab: $avatarTab, emptyTab: $emptyTab, spinTab: $spinTab, statisticTab: $statisticTab, alertTab: $alertTab, progressTab: $progressTab, tokenTab: $tokenTab)
                 .navigationTitle(navManager.selectedItem.map { tr($0.titleKey) } ?? "MoinUI")
                 .toolbar {
                     ToolbarItemGroup(placement: .primaryAction) {
@@ -204,6 +205,16 @@ struct ContentView: View {
                                 Text(tr("tab.examples")).tag(CheckboxExamplesTab.examples)
                                 Text("API").tag(CheckboxExamplesTab.api)
                                 Text("Token").tag(CheckboxExamplesTab.token)
+                            }
+                            .pickerStyle(.segmented)
+                        }
+
+                        // Radio 页面显示 Tab 切换
+                        if navManager.selectedItem == .radio {
+                            Picker("", selection: $radioTab) {
+                                Text(tr("tab.examples")).tag(RadioExamplesTab.examples)
+                                Text("API").tag(RadioExamplesTab.api)
+                                Text("Token").tag(RadioExamplesTab.token)
                             }
                             .pickerStyle(.segmented)
                             .fixedSize()
@@ -383,6 +394,8 @@ enum NavItem: String, Identifiable {
     case statistic
     case `switch`
     case checkbox
+    case radio
+
 
     // Components - Feedback
     case alert
@@ -417,6 +430,7 @@ enum NavItem: String, Identifiable {
         case .statistic: return DemoIcons.statistic
         case .switch: return DemoIcons.switchIcon
         case .checkbox: return DemoIcons.checkbox
+        case .radio: return DemoIcons.radio
         case .alert: return DemoIcons.alert
         case .spin: return DemoIcons.spin
         case .progress: return DemoIcons.progress
@@ -443,6 +457,7 @@ enum NavItem: String, Identifiable {
         case .statistic: return "component.statistic"
         case .switch: return "component.switch"
         case .checkbox: return "component.checkbox"
+        case .radio: return "component.radio"
         case .alert: return "component.alert"
         case .spin: return "component.spin"
         case .progress: return "component.progress"
@@ -456,7 +471,7 @@ enum NavItem: String, Identifiable {
 
     static var overview: [NavItem] { [.introduction, .quickStart] }
     static var general: [NavItem] { [.button, .tag, .typography] }
-    static var dataEntry: [NavItem] { [.switch, .checkbox] }
+    static var dataEntry: [NavItem] { [.switch, .checkbox, .radio] }
     static var dataDisplay: [NavItem] { [.avatar, .badge, .empty, .statistic] }
     static var feedback: [NavItem] { [.alert, .spin, .progress] }
     static var layout: [NavItem] { [.divider, .space] }
@@ -545,6 +560,7 @@ struct DetailView: View {
     @Binding var buttonTab: ButtonExamplesTab
     @Binding var switchTab: SwitchExamplesTab
     @Binding var checkboxTab: CheckboxExamplesTab
+    @Binding var radioTab: RadioExamplesTab
     @Binding var typographyTab: TypographyExamplesTab
     @Binding var tagTab: TagExamplesTab
     @Binding var spaceTab: SpaceExamplesTab
@@ -575,6 +591,8 @@ struct DetailView: View {
                 SwitchExamples(selectedTab: $switchTab)
             case .checkbox:
                 CheckboxExamples(selectedTab: $checkboxTab)
+            case .radio:
+                RadioExamples(selectedTab: $radioTab)
             case .typography:
                 TypographyExamples(selectedTab: $typographyTab)
             case .tag:

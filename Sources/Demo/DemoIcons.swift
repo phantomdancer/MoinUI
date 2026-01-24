@@ -25,6 +25,7 @@ struct DemoIcons {
     static let statistic = "number"
     static let switchIcon = "switch.2"
     static let checkbox = "checkmark.square"
+    static let radio = "smallcircle.filled.circle"
     
     // Layout
     static let space = "rectangle.split.3x1"

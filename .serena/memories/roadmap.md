@@ -38,7 +38,7 @@ Button ✅, Typography ✅, Divider ✅, Space ✅, Tag ✅, Badge ✅, Avatar �
 | Progress | ★★☆☆☆ | ✅ 已完成 (v2: percentPosition, circleSteps, strokeColors) |
 | Switch | ★★☆☆☆ | ✅ 已完成 |
 | Checkbox | ★★☆☆☆ | ✅ 已完成 |
-| Radio | ★★☆☆☆ | 单选框 |
+| Radio | ★★☆☆☆ | ✅ 已完成 |
 | Skeleton | ★★☆☆☆ | 骨架屏占位 |
 | Result | ★★☆☆☆ | 结果页面 |
 | Timeline | ★★☆☆☆ | 时间轴 |
@@ -97,9 +97,9 @@ Button ✅, Typography ✅, Divider ✅, Space ✅, Tag ✅, Badge ✅, Avatar �
 ## 建议实现顺序
 
 ```
-已完成: Button → Typography → Divider → Space → Tag → Badge → Avatar → Empty → Spin → Statistic → Alert → Progress → Switch → Checkbox
+已完成: Button → Typography → Divider → Space → Tag → Badge → Avatar → Empty → Spin → Statistic → Alert → Progress → Switch → Checkbox → Radio
 
-下一批: Radio
+下一批: Skeleton
 
 
 再下批: Radio
