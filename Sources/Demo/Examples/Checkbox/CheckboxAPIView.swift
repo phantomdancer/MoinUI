@@ -4,6 +4,12 @@ import MoinUI
 struct CheckboxAPIView: View {
     @Localized var tr
 
+    // MARK: - State Variables
+
+    @State private var checkedState = true
+    @State private var indeterminateState = true
+    @State private var labelState = true
+
     private var apiSections: [DocSidebarSection] {
         [
             DocSidebarSection(
@@ -46,7 +52,7 @@ struct CheckboxAPIView: View {
             description: tr("checkbox.api.checked"),
             sectionId: "api"
         ) {
-            Moin.Checkbox(tr("component.checkbox"), checked: .constant(true))
+            Moin.Checkbox(tr("component.checkbox"), checked: $checkedState)
         } code: {
             "Moin.Checkbox(\"Checkbox\", checked: $checked)"
         }
@@ -61,7 +67,7 @@ struct CheckboxAPIView: View {
             description: tr("checkbox.api.indeterminate"),
             sectionId: "api"
         ) {
-            Moin.Checkbox(tr("component.checkbox"), checked: .constant(true), indeterminate: true)
+            Moin.Checkbox(tr("component.checkbox"), checked: $indeterminateState, indeterminate: true)
         } code: {
             "Moin.Checkbox(\"Checkbox\", checked: $checked, indeterminate: true)"
         }
@@ -94,7 +100,7 @@ struct CheckboxAPIView: View {
             description: tr("checkbox.api.label"),
             sectionId: "api"
         ) {
-            Moin.Checkbox(checked: .constant(true)) {
+            Moin.Checkbox(checked: $labelState) {
                 HStack(spacing: 4) {
                     Image(systemName: "star.fill").foregroundColor(.yellow)
                     Text("Custom Label")
