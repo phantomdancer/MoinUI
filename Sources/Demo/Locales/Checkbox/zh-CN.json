@@ -9,5 +9,16 @@
   "checkbox.pear": "梨",
   "checkbox.orange": "橘子",
   "checkbox.check_all": "全选",
+  "checkbox.group": "Checkbox 组",
+  "checkbox.group_plain": "Checkbox 组 (基础)",
+  "checkbox.group_object": "Checkbox 组 (对象)",
+  "checkbox.group_disabled": "Checkbox 组 (禁用)",
+  "checkbox.group_desc": "方便的从数组生成 Checkbox 组。",
+  "checkbox.london": "伦敦",
+  "checkbox.paris": "巴黎",
+  "checkbox.new_york": "纽约",
+  "checkbox.sun": "太阳",
+  "checkbox.moon": "月亮",
+  "checkbox.star": "星星",
   "component.checkbox": "Checkbox 多选框"
 }

@@ -29,8 +29,8 @@ python3 .agent/skills/notify-bark/scripts/send.py --title "Task Complete" --body
 
 ### Arguments
 
-- `--title`: (Required) The title of the notification.
-- `--body`: (Required) The content of the notification.
+- `--title`: (Required) The title of the notification，需要传递文言文.
+- `--body`: (Required) The content of the notification，需要传递文言文.
 - `--key`: The Bark device key (optional if `BARK_KEY` env var is set).
 - `--group`: Group notifications (e.g., "MoinUI").
 - `--level`: Interruption level (`active`, `timeSensitive`, `passive`).
@@ -43,8 +43,8 @@ When you have finished a significant task (e.g., "Refactor Button Component"), r
 
 ```bash
 python3 .agent/skills/notify-bark/scripts/send.py \
-  --title "Task Completed" \
-  --body "Button component refactoring is finished. Please review." \
+  --title "任务完毕" \
+  --body "按钮组件重构完毕，请查阅。" \
   --group "MoinUI"
 ```
 

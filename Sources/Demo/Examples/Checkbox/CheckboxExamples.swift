@@ -11,6 +11,10 @@ struct CheckboxExamples: View {
     @Localized var tr
     @Binding var selectedTab: CheckboxExamplesTab
     
+    init(selectedTab: Binding<CheckboxExamplesTab>) {
+        self._selectedTab = selectedTab
+    }
+    
     // Lazy load states
     @State private var apiReady = false
     @State private var tokenReady = false
@@ -18,7 +22,10 @@ struct CheckboxExamples: View {
     private let anchors: [AnchorItem] = [
         AnchorItem(id: "basic", titleKey: "checkbox.basic"),
         AnchorItem(id: "disabled", titleKey: "checkbox.disabled"),
-        AnchorItem(id: "indeterminate", titleKey: "checkbox.indeterminate")
+        AnchorItem(id: "indeterminate", titleKey: "checkbox.indeterminate"),
+        AnchorItem(id: "group_plain", titleKey: "checkbox.group_plain"),
+        AnchorItem(id: "group_object", titleKey: "checkbox.group_object"),
+        AnchorItem(id: "group_disabled", titleKey: "checkbox.group_disabled")
     ]
     
     var body: some View {
@@ -71,6 +78,9 @@ struct CheckboxExamples: View {
             basicExample.id("basic")
             disabledExample.id("disabled")
             indeterminateExample.id("indeterminate")
+            groupExamplePlain.id("group_plain")
+            groupExampleObject.id("group_object")
+            groupExampleDisabled.id("group_disabled")
         }
     }
     
@@ -182,6 +192,125 @@ struct CheckboxExamples: View {
                     Moin.Checkbox("\(tr("checkbox.pear"))", checked: $options[1])
                     Moin.Checkbox("\(tr("checkbox.orange"))", checked: $options[2])
                 }
+                """
+            }
+        )
+    }
+    
+    // State variables moved to be closer to usage, or grouped if needed.
+    // SwiftUI View state must be top-level in the struct, but we can group them logically.
+    
+    // MARK: - Group Example 1: Numeric IDs (Plain Options)
+    @State private var groupSelection1: Set<String> = ["Apple"]
+    private let plainOptions = ["Apple", "Pear", "Orange"]
+    
+    // MARK: - Group Example 2: City Options (Object)
+    @State private var groupSelection2: Set<String> = ["London"]
+    private var groupOptions: [Moin.CheckboxOption<String>] {
+        [
+            .init(label: tr("checkbox.london"), value: "London"),
+            .init(label: tr("checkbox.paris"), value: "Paris"),
+            .init(label: tr("checkbox.new_york"), value: "New York")
+        ]
+    }
+    
+    // MARK: - Group Example 3: Celestial Options (With Disabled)
+    @State private var groupSelection3: Set<String> = ["Sun"]
+    
+    private var optionsWithDisabled: [Moin.CheckboxOption<String>] {
+        [
+            .init(label: tr("checkbox.sun"), value: "Sun"),
+            .init(label: tr("checkbox.moon"), value: "Moon"),
+            .init(label: tr("checkbox.star"), value: "Star", disabled: false)
+        ]
+    }
+    
+    private var groupExamplePlain: some View {
+        ExampleSection(
+            title: tr("checkbox.group_plain"),
+            description: tr("checkbox.group_desc"),
+            content: {
+                // Example 1: Plain Options
+                VStack(alignment: .leading, spacing: 10) {
+                    Moin.CheckboxGroup(
+                        selection: $groupSelection1,
+                        options: plainOptions
+                    )
+                }
+            },
+            code: {
+                """
+                // 1. Plain Options
+                @State private var selection1: Set<String> = ["Apple"]
+                let plainOptions = ["Apple", "Pear", "Orange"]
+                
+                Moin.CheckboxGroup(
+                    selection: $selection1,
+                    options: plainOptions
+                )
+                """
+            }
+        )
+    }
+    
+    private var groupExampleObject: some View {
+        ExampleSection(
+            title: tr("checkbox.group_object"),
+            description: tr("checkbox.group_desc"),
+            content: {
+                // Example 2: Object Options (Cities)
+                VStack(alignment: .leading, spacing: 10) {
+                    Moin.CheckboxGroup(
+                        selection: $groupSelection2,
+                        options: groupOptions
+                    )
+                }
+            },
+            code: {
+                """
+                // 2. Object Options
+                @State private var selection2: Set<String> = ["London"]
+                let groupOptions: [Moin.CheckboxOption<String>] = [
+                    .init(label: "\(tr("checkbox.london"))", value: "London"),
+                    .init(label: "\(tr("checkbox.paris"))", value: "Paris"),
+                    .init(label: "\(tr("checkbox.new_york"))", value: "New York")
+                ]
+                
+                Moin.CheckboxGroup(selection: $selection2, options: groupOptions)
+                """
+            }
+        )
+    }
+    
+    private var groupExampleDisabled: some View {
+        ExampleSection(
+            title: tr("checkbox.group_disabled"),
+            description: tr("checkbox.group_desc"),
+            content: {
+                // Example 3: Disabled Group (Celestial)
+                VStack(alignment: .leading, spacing: 10) {
+                    Moin.CheckboxGroup(
+                        selection: $groupSelection3,
+                        options: optionsWithDisabled,
+                        isDisabled: true
+                    )
+                }
+            },
+            code: {
+                """
+                // 3. Disabled Group
+                @State private var selection3: Set<String> = ["Sun"]
+                let optionsWithDisabled: [Moin.CheckboxOption<String>] = [
+                    .init(label: "\(tr("checkbox.sun"))", value: "Sun"),
+                    .init(label: "\(tr("checkbox.moon"))", value: "Moon"),
+                    .init(label: "\(tr("checkbox.star"))", value: "Star", disabled: false)
+                ]
+                
+                Moin.CheckboxGroup(
+                    selection: $selection3,
+                    options: optionsWithDisabled,
+                    isDisabled: true
+                )
                 """
             }
         )

@@ -9,5 +9,16 @@
   "checkbox.pear": "Pear",
   "checkbox.orange": "Orange",
   "checkbox.check_all": "Check all",
+  "checkbox.group": "Checkbox Group",
+  "checkbox.group_plain": "Checkbox Group (Plain)",
+  "checkbox.group_object": "Checkbox Group (Object)",
+  "checkbox.group_disabled": "Checkbox Group (Disabled)",
+  "checkbox.group_desc": "Generate a group of checkboxes from an array.",
+  "checkbox.london": "London",
+  "checkbox.paris": "Paris",
+  "checkbox.new_york": "New York",
+  "checkbox.sun": "Sun",
+  "checkbox.moon": "Moon",
+  "checkbox.star": "Star",
   "component.checkbox": "Checkbox"
 }
