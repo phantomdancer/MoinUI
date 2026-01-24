@@ -208,14 +208,15 @@ struct SwitchTokenView: View {
             
         case "colorTextQuaternary":
              TokenCard(name: "colorTextQuaternary", type: "Color", defaultValue: "rgba(0,0,0,0.25)", description: tr("token.switch.colorTextQuaternary"), sectionId: "global") {
-                InteractiveSwitch(isOn: false, checkedText: "开启", uncheckedText: "关闭")
+                InteractiveSwitch(isOn: false, checkedText: "On", uncheckedText: "Off")
                     .id(token.colorTextQuaternary)
             } editor: {
                  ColorPresetRow(label: "token.colorTextQuaternary", color: Binding(
                     get: { config.token.colorTextQuaternary },
                     set: {
                         config.token.colorTextQuaternary = $0
-                        config.regenerateTokens()
+                        // Do not regenerate from seed, just update components based on modified token
+                        config.components = Moin.ComponentToken.generate(from: config.token, isDark: config.isDarkMode)
                     }
                  ))
             } code: {
@@ -224,14 +225,15 @@ struct SwitchTokenView: View {
             
         case "colorTextTertiary":
              TokenCard(name: "colorTextTertiary", type: "Color", defaultValue: "rgba(0,0,0,0.45)", description: tr("token.switch.colorTextTertiary"), sectionId: "global") {
-                InteractiveSwitch(isOn: true, checkedText: "Hover Me", uncheckedText: "Hover Me") // Hover state uses this for bg
+                InteractiveSwitch(isOn: false, checkedText: "Hover (On)", uncheckedText: "Hover (Off)") // Hover state uses this for bg
                      .id(token.colorTextTertiary)
             } editor: {
                  ColorPresetRow(label: "token.colorTextTertiary", color: Binding(
                     get: { config.token.colorTextTertiary },
                     set: {
                         config.token.colorTextTertiary = $0
-                        config.regenerateTokens()
+                        // Do not regenerate from seed, just update components based on modified token
+                        config.components = Moin.ComponentToken.generate(from: config.token, isDark: config.isDarkMode)
                     }
                  ))
             } code: {
