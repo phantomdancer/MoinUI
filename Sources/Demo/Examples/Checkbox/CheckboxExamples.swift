@@ -216,7 +216,7 @@ struct CheckboxExamples: View {
         [
             .init(label: tr("checkbox.sun"), value: "Sun"),
             .init(label: tr("checkbox.moon"), value: "Moon"),
-            .init(label: tr("checkbox.star"), value: "Star", disabled: false)
+            .init(label: tr("checkbox.star"), value: "Star")
         ]
     }
     
@@ -293,17 +293,9 @@ struct CheckboxExamples: View {
             },
             code: {
                 """
-                // 3. Disabled Group
-                @State private var selection3: Set<String> = ["Sun"]
-                let optionsWithDisabled: [Moin.CheckboxOption<String>] = [
-                    .init(label: "\(tr("checkbox.sun"))", value: "Sun"),
-                    .init(label: "\(tr("checkbox.moon"))", value: "Moon"),
-                    .init(label: "\(tr("checkbox.star"))", value: "Star", disabled: false)
-                ]
-                
                 Moin.CheckboxGroup(
                     selection: $selection3,
-                    options: optionsWithDisabled,
+                    options: options,
                     disabled: true
                 )
                 """
@@ -320,49 +312,38 @@ struct CheckboxExamples: View {
             title: tr("checkbox.direction"),
             description: tr("checkbox.direction_desc"),
             content: {
-                VStack(alignment: .leading, spacing: 20) {
-                    Text(tr("checkbox.direction_horizontal") + ":")
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
+                HStack(alignment: .top, spacing: 40) {
+                    // Horizontal Column
+                    VStack(alignment: .leading, spacing: 10) {
+                        Text(tr("checkbox.direction_horizontal"))
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                        
+                        Moin.CheckboxGroup(
+                            selection: $directionSelection,
+                            options: plainOptions,
+                            direction: .horizontal
+                        )
+                    }
                     
-                    Moin.CheckboxGroup(
-                        selection: $directionSelection,
-                        options: plainOptions,
-                        direction: .horizontal
-                    )
-                    
-                    Moin.Divider()
-                    
-                    Text(tr("checkbox.direction_vertical") + ":")
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-                    
-                    Moin.CheckboxGroup(
-                        selection: $directionSelection,
-                        options: plainOptions,
-                        direction: .vertical
-                    )
+                    // Vertical Column
+                    VStack(alignment: .leading, spacing: 10) {
+                        Text(tr("checkbox.direction_vertical"))
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                        
+                        Moin.CheckboxGroup(
+                            selection: $directionSelection,
+                            options: plainOptions,
+                            direction: .vertical
+                        )
+                    }
                 }
             },
             code: {
                 """
-                @State private var selection: Set<String> = ["Apple"]
-                
-                // Horizontal (Default)
-                Moin.CheckboxGroup(
-                    selection: $selection,
-                    options: options,
-                    direction: .horizontal
-                )
-                
-                Moin.Divider()
-                
-                // Vertical
-                Moin.CheckboxGroup(
-                    selection: $selection,
-                    options: options,
-                    direction: .vertical
-                )
+                Moin.CheckboxGroup(selection: $selection, options: options, direction: .horizontal)
+                Moin.CheckboxGroup(selection: $selection, options: options, direction: .vertical)
                 """
             }
         )

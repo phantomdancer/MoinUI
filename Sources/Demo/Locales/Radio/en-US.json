@@ -35,5 +35,7 @@
   "radio.line_chart": "Line",
   "radio.bar_chart": "Bar",
   "radio.pie_chart": "Pie",
-  "radio.dot_chart": "Dot"
+  "radio.dot_chart": "Dot",
+  "radio.direction_horizontal": "Horizontal",
+  "radio.direction_vertical": "Vertical"
 }

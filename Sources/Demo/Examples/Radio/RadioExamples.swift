@@ -236,9 +236,6 @@ struct RadioExamples: View {
             },
             code: {
                 """
-                @State private var selection = "London"
-                
-                // Uses objectOptions from Example 2
                 Moin.RadioGroup(selection: $selection, options: options, disabled: true)
                 """
             }
@@ -369,49 +366,38 @@ struct RadioExamples: View {
             title: tr("radio.direction"),
             description: tr("radio.direction_desc"),
             content: {
-                VStack(alignment: .leading, spacing: 20) {
-                    Text(tr("radio.direction_horizontal") + ":")
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
+                HStack(alignment: .top, spacing: 40) {
+                    // Horizontal Column
+                    VStack(alignment: .leading, spacing: 10) {
+                        Text(tr("radio.direction_horizontal"))
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                        
+                        Moin.RadioGroup(
+                            selection: $directionSelection,
+                            options: plainOptions,
+                            direction: .horizontal
+                        )
+                    }
                     
-                    Moin.RadioGroup(
-                        selection: $directionSelection,
-                        options: plainOptions,
-                        direction: .horizontal
-                    )
-                    
-                    Moin.Divider()
-                    
-                    Text(tr("radio.direction_vertical") + ":")
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-                    
-                    Moin.RadioGroup(
-                        selection: $directionSelection,
-                        options: plainOptions,
-                        direction: .vertical
-                    )
+                    // Vertical Column
+                    VStack(alignment: .leading, spacing: 10) {
+                        Text(tr("radio.direction_vertical"))
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                        
+                        Moin.RadioGroup(
+                            selection: $directionSelection,
+                            options: plainOptions,
+                            direction: .vertical
+                        )
+                    }
                 }
             },
             code: {
                 """
-                @State private var selection = "Apple"
-                
-                // Horizontal (Default)
-                Moin.RadioGroup(
-                    selection: $selection,
-                    options: options,
-                    direction: .horizontal
-                )
-                
-                Moin.Divider()
-                
-                // Vertical
-                Moin.RadioGroup(
-                    selection: $selection,
-                    options: options,
-                    direction: .vertical
-                )
+                Moin.RadioGroup(selection: $selection, options: options, direction: .horizontal)
+                Moin.RadioGroup(selection: $selection, options: options, direction: .vertical)
                 """
             }
         )

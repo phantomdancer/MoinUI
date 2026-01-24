@@ -35,5 +35,7 @@
   "radio.line_chart": "折线图",
   "radio.bar_chart": "柱状图",
   "radio.pie_chart": "饼图",
-  "radio.dot_chart": "点图"
+  "radio.dot_chart": "点图",
+  "radio.direction_horizontal": "水平排列",
+  "radio.direction_vertical": "垂直排列"
 }
