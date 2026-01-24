@@ -15,6 +15,7 @@ public extension Moin {
         public var statistic: Moin.StatisticToken
         public var alert: Moin.AlertToken
         public var progress: Moin.ProgressToken
+        public var `switch`: Moin.SwitchToken
 
         public static func generate(from token: Token, isDark: Bool = false) -> ComponentToken {
             ComponentToken(
@@ -28,7 +29,8 @@ public extension Moin {
                 spin: .generate(from: token),
                 statistic: .resolve(token: token),
                 alert: .generate(from: token),
-                progress: .generate(from: token)
+                progress: .generate(from: token),
+                switch: .resolve(token: token, isDark: isDark)
             )
         }
 

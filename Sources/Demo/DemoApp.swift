@@ -164,13 +164,14 @@ struct ContentView: View {
     @State private var alertTab: AlertExamplesTab = .examples
     @State private var progressTab: ProgressExamplesTab = .examples
     @State private var buttonTab: ButtonExamplesTab = .examples
+    @State private var switchTab: SwitchExamplesTab = .examples
 
     var body: some View {
         NavigationSplitView {
             Sidebar(selection: $navManager.selectedItem)
                 .navigationSplitViewColumnWidth(min: 240, ideal: 300, max: 420)
         } detail: {
-            DetailView(item: navManager.selectedItem, buttonTab: $buttonTab, typographyTab: $typographyTab, tagTab: $tagTab, spaceTab: $spaceTab, dividerTab: $dividerTab, badgeTab: $badgeTab, avatarTab: $avatarTab, emptyTab: $emptyTab, spinTab: $spinTab, statisticTab: $statisticTab, alertTab: $alertTab, progressTab: $progressTab, tokenTab: $tokenTab)
+            DetailView(item: navManager.selectedItem, buttonTab: $buttonTab, switchTab: $switchTab, typographyTab: $typographyTab, tagTab: $tagTab, spaceTab: $spaceTab, dividerTab: $dividerTab, badgeTab: $badgeTab, avatarTab: $avatarTab, emptyTab: $emptyTab, spinTab: $spinTab, statisticTab: $statisticTab, alertTab: $alertTab, progressTab: $progressTab, tokenTab: $tokenTab)
                 .navigationTitle(navManager.selectedItem.map { tr($0.titleKey) } ?? "MoinUI")
                 .toolbar {
                     ToolbarItemGroup(placement: .primaryAction) {
@@ -180,6 +181,17 @@ struct ContentView: View {
                                 Text(tr("tab.examples")).tag(ButtonExamplesTab.examples)
                                 Text("API").tag(ButtonExamplesTab.api)
                                 Text("Token").tag(ButtonExamplesTab.token)
+                            }
+                            .pickerStyle(.segmented)
+                            .fixedSize()
+                        }
+
+                        // Switch 页面显示 Tab 切换
+                        if navManager.selectedItem == .switch {
+                            Picker("", selection: $switchTab) {
+                                Text(tr("tab.examples")).tag(SwitchExamplesTab.examples)
+                                Text("API").tag(SwitchExamplesTab.api)
+                                Text("Token").tag(SwitchExamplesTab.token)
                             }
                             .pickerStyle(.segmented)
                             .fixedSize()
@@ -357,6 +369,7 @@ enum NavItem: String, Identifiable {
     case avatar
     case empty
     case statistic
+    case `switch`
 
     // Components - Feedback
     case alert
@@ -389,6 +402,7 @@ enum NavItem: String, Identifiable {
         case .avatar: return DemoIcons.avatar
         case .empty: return DemoIcons.empty
         case .statistic: return DemoIcons.statistic
+        case .switch: return DemoIcons.switchIcon
         case .alert: return DemoIcons.alert
         case .spin: return DemoIcons.spin
         case .progress: return DemoIcons.progress
@@ -413,6 +427,7 @@ enum NavItem: String, Identifiable {
         case .avatar: return "component.avatar"
         case .empty: return "component.empty"
         case .statistic: return "component.statistic"
+        case .switch: return "component.switch"
         case .alert: return "component.alert"
         case .spin: return "component.spin"
         case .progress: return "component.progress"
@@ -426,6 +441,7 @@ enum NavItem: String, Identifiable {
 
     static var overview: [NavItem] { [.introduction, .quickStart] }
     static var general: [NavItem] { [.button, .tag, .typography] }
+    static var dataEntry: [NavItem] { [.switch] }
     static var dataDisplay: [NavItem] { [.avatar, .badge, .empty, .statistic] }
     static var feedback: [NavItem] { [.alert, .spin, .progress] }
     static var layout: [NavItem] { [.divider, .space] }
@@ -469,6 +485,14 @@ struct Sidebar: View {
                 }
             }
 
+            Section(tr("nav.data_entry")) {
+                ForEach(NavItem.dataEntry) { item in
+                    NavigationLink(value: item) {
+                        Label(tr(item.titleKey), systemImage: item.icon)
+                    }
+                }
+            }
+
             Section(tr("nav.data_display")) {
                 ForEach(NavItem.dataDisplay) { item in
                     NavigationLink(value: item) {
@@ -504,6 +528,7 @@ struct Sidebar: View {
 struct DetailView: View {
     let item: NavItem?
     @Binding var buttonTab: ButtonExamplesTab
+    @Binding var switchTab: SwitchExamplesTab
     @Binding var typographyTab: TypographyExamplesTab
     @Binding var tagTab: TagExamplesTab
     @Binding var spaceTab: SpaceExamplesTab
@@ -530,6 +555,8 @@ struct DetailView: View {
                 TokenExamples(selectedTab: $tokenTab)
             case .button:
                 ButtonExamples(selectedTab: $buttonTab)
+            case .switch:
+                SwitchExamples(selectedTab: $switchTab)
             case .typography:
                 TypographyExamples(selectedTab: $typographyTab)
             case .tag:

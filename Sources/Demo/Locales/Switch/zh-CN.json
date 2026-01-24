@@ -1,0 +1,12 @@
+{
+  "switch.basic": "基本用法",
+  "switch.basic_desc": "最简单的用法。",
+  "switch.disabled": "不可用",
+  "switch.disabled_desc": "Switch 失效状态。",
+  "switch.text_icon": "文字和图标",
+  "switch.text_icon_desc": "带有文字或图标的 Switch。",
+  "switch.loading": "加载中",
+  "switch.loading_desc": "标识 Switch 处于加载状态。",
+  "switch.size": "两种大小",
+  "switch.size_desc": "size=\"small\" 表示小号开关。"
+}

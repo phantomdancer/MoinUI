@@ -1,0 +1,12 @@
+{
+  "switch.basic": "Basic",
+  "switch.basic_desc": "The most basic usage.",
+  "switch.disabled": "Disabled",
+  "switch.disabled_desc": "Disabled state of Switch.",
+  "switch.text_icon": "Text & Icon",
+  "switch.text_icon_desc": "Switch with text or icon.",
+  "switch.loading": "Loading",
+  "switch.loading_desc": "Indicates loading state of Switch.",
+  "switch.size": "Two sizes",
+  "switch.size_desc": "size=\"small\" stands for small switch."
+}

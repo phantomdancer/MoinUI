@@ -23,6 +23,7 @@ struct DemoIcons {
     static let avatar = "person.crop.circle"
     static let empty = "tray"
     static let statistic = "number"
+    static let switchIcon = "switch.2"
     
     // Layout
     static let space = "rectangle.split.3x1"

@@ -45,6 +45,7 @@
     "theme": "Theme",
     "token": "Token System",
     "general": "General",
+    "data_entry": "Data Entry",
     "data_display": "Data Display",
     "feedback": "Feedback",
     "layout": "Layout",
@@ -65,6 +66,7 @@
     "spin": "Spin",
     "statistic": "Statistic",
     "alert": "Alert",
+    "switch": "Switch",
     "progress": "Progress",
     "colors": "Colors"
   },
