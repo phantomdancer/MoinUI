@@ -457,11 +457,18 @@ private struct CircleStepsDemo: View {
     @State private var stepsGap: CGFloat = 7
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            HStack(spacing: 32) {
+        HStack(alignment: .center, spacing: 32) {
+            // Controls
+            VStack(alignment: .leading, spacing: 24) {
                 VStack(alignment: .leading, spacing: 8) {
-                    Text(tr("progress.custom_count"))
-                        .font(.headline)
+                    HStack {
+                        Text(tr("progress.custom_count"))
+                            .font(.headline)
+                        Spacer()
+                        Text("\(stepsCount)")
+                            .monospacedDigit()
+                            .foregroundStyle(.secondary)
+                    }
                     Slider(value: Binding(
                         get: { Double(stepsCount) },
                         set: { stepsCount = Int($0) }
@@ -469,12 +476,22 @@ private struct CircleStepsDemo: View {
                 }
                 
                 VStack(alignment: .leading, spacing: 8) {
-                    Text(tr("progress.custom_gap"))
-                        .font(.headline)
+                    HStack {
+                        Text(tr("progress.custom_gap"))
+                            .font(.headline)
+                        Spacer()
+                        Text("\(Int(stepsGap))")
+                            .monospacedDigit()
+                            .foregroundStyle(.secondary)
+                    }
                     Slider(value: $stepsGap, in: 0...40, step: 4.0)
                 }
             }
+            .frame(width: 220)
+            
+            Divider()
 
+            // Preview
             VStack(spacing: 24) {
                 // Butt Linecap Row
                 HStack(spacing: 24) {
@@ -518,7 +535,7 @@ private struct CircleStepsDemo: View {
                     )
                 }
             }
-            .padding(.top, 16)
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
     }
 }
