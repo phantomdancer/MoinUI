@@ -40,7 +40,7 @@ public extension Moin {
             direction: Axis = .horizontal,
             onHover: ((Bool) -> Void)? = nil,
             block: Bool = false,
-            size: RadioSize = .default,
+            size: RadioSize = .middle,
             @ViewBuilder label: () -> Label
         ) {
             self._checked = checked
@@ -148,7 +148,7 @@ public extension Moin {
             switch size {
             case .small:
                 return (radioToken.buttonPaddingXSHorizontal, radioToken.buttonPaddingXSVertical)
-            case .default:
+            case .middle:
                 return (radioToken.buttonPaddingDefaultHorizontal, radioToken.buttonPaddingDefaultVertical)
             case .large:
                 return (radioToken.buttonPaddingLargeHorizontal, radioToken.buttonPaddingLargeVertical)

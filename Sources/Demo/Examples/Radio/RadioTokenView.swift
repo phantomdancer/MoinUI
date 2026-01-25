@@ -23,19 +23,19 @@ struct RadioTokenView: View {
                     // Colors - Border & Background
                     "colorBorder",
                     "colorBgContainer",
-                    "colorDot",
+                    "radioColor",
                     // Colors - Disabled
                     "colorBgContainerDisabled",
                     "colorBorderDisabled",
                     "colorTextDisabled",
-                    "colorDotDisabled",
+                    "dotColorDisabled",
                     // Sizes & Borders
                     "radioSize",
                     "dotSize",
                     "lineWidth",
                     // Spacing
                     "paddingXS",
-                    "wrapperMarginEnd",
+                    "wrapperMarginInlineEnd",
                     // Motion
                     "motionDurationMid",
                     "motionDurationSlow"
@@ -107,16 +107,16 @@ struct RadioTokenView: View {
         case "colorPrimary": AnyView(colorPrimaryGlobalTokenCard)
         case "colorBorder": AnyView(colorBorderGlobalTokenCard)
         case "colorBgContainer": AnyView(colorBgContainerGlobalTokenCard)
-        case "colorDot": AnyView(colorDotGlobalTokenCard)
+        case "radioColor": AnyView(radioColorGlobalTokenCard)
         case "colorBgContainerDisabled": AnyView(colorBgContainerDisabledGlobalTokenCard)
         case "colorBorderDisabled": AnyView(colorBorderDisabledGlobalTokenCard)
         case "colorTextDisabled": AnyView(colorTextDisabledGlobalTokenCard)
-        case "colorDotDisabled": AnyView(colorDotDisabledGlobalTokenCard)
+        case "dotColorDisabled": AnyView(dotColorDisabledGlobalTokenCard)
         case "radioSize": AnyView(radioSizeGlobalTokenCard)
         case "dotSize": AnyView(dotSizeGlobalTokenCard)
         case "lineWidth": AnyView(lineWidthGlobalTokenCard)
         case "paddingXS": AnyView(paddingXSGlobalTokenCard)
-        case "wrapperMarginEnd": AnyView(wrapperMarginEndGlobalTokenCard)
+        case "wrapperMarginInlineEnd": AnyView(wrapperMarginInlineEndGlobalTokenCard)
         case "motionDurationMid": AnyView(motionDurationMidGlobalTokenCard)
         case "motionDurationSlow": AnyView(motionDurationSlowGlobalTokenCard)
         default: AnyView(EmptyView())

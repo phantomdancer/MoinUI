@@ -123,9 +123,9 @@ extension RadioTokenView {
         .scrollAnchor("global.colorBgContainer")
     }
     
-    var colorDotGlobalTokenCard: some View {
+    var radioColorGlobalTokenCard: some View {
         TokenCard(
-            name: "colorDot",
+            name: "radioColor",
             type: "Color",
             defaultValue: "#1677ff",
             description: tr("doc.global.colorPrimary"),
@@ -133,20 +133,20 @@ extension RadioTokenView {
         ) {
             Moin.Radio("Radio", checked: $checked)
         } editor: {
-             // colorDot is typically colorPrimary. We can render it but editing 'colorDot' specifically isn't possible via 'config.token.colorDot' because that doesn't exist.
-             // But we can edit config.components.radio.colorDot?
+             // radioColor is typically colorPrimary. We can render it but editing 'radioColor' specifically isn't possible via 'config.token.radioColor' because that doesn't exist.
+             // But we can edit config.components.radio.radioColor?
              // But here we are in Global section.
              // If we want to show it comes from Primary, we can just show it.
-             // Or allow editing radio.colorDot component token.
+             // Or allow editing radio.radioColor component token.
              // Let's make this a Component Token editor masquerading in global section if we want?
              // No, let's just use ColorPresetRow relative to Component Token if possible.
-             ColorPresetRow(label: "colorDot", color: $config.components.radio.colorDot) {
+             ColorPresetRow(label: "radioColor", color: $config.components.radio.radioColor) {
                  // direct update
              }
         } code: {
-            "config.components.radio.colorDot = ..."
+            "config.components.radio.radioColor = ..."
         }
-        .scrollAnchor("global.colorDot")
+        .scrollAnchor("global.radioColor")
     }
 
     // MARK: - Disabled Colors
@@ -212,9 +212,9 @@ extension RadioTokenView {
         .scrollAnchor("global.colorTextDisabled")
     }
     
-    var colorDotDisabledGlobalTokenCard: some View {
+    var dotColorDisabledGlobalTokenCard: some View {
         TokenCard(
-            name: "colorDotDisabled",
+            name: "dotColorDisabled",
             type: "Color",
             defaultValue: "rgba(0,0,0,0.25)",
             description: tr("doc.global.colorTextDisabled"),
@@ -222,12 +222,12 @@ extension RadioTokenView {
         ) {
             Moin.Radio("Radio", checked: .constant(true), disabled: true)
         } editor: {
-             ColorPresetRow(label: "colorDotDisabled", color: $config.components.radio.colorDotDisabled) {
+             ColorPresetRow(label: "dotColorDisabled", color: $config.components.radio.dotColorDisabled) {
              }
         } code: {
-            "config.components.radio.colorDotDisabled = ..."
+            "config.components.radio.dotColorDisabled = ..."
         }
-        .scrollAnchor("global.colorDotDisabled")
+        .scrollAnchor("global.dotColorDisabled")
     }
 
     // MARK: - Borders & Spacing
@@ -282,9 +282,9 @@ extension RadioTokenView {
         .scrollAnchor("global.paddingXS")
     }
     
-    var wrapperMarginEndGlobalTokenCard: some View {
+    var wrapperMarginInlineEndGlobalTokenCard: some View {
         TokenCard(
-            name: "wrapperMarginEnd",
+            name: "wrapperMarginInlineEnd",
             type: "CGFloat",
             defaultValue: "8",
             description: tr("doc.global.paddingXS"),
@@ -292,18 +292,18 @@ extension RadioTokenView {
         ) {
              HStack(spacing: Moin.Constants.Spacing.md) {
                  // Should show a group to demonstrate spacing
-                 Moin.RadioGroup(selection: .constant(1), options: [1, 2])
+                 Moin.RadioGroup(value: Binding.constant(1), options: [1, 2])
                     .id(config.token.paddingXS)
              }
         } editor: {
-            // wrapperMarginEnd usually comes from paddingXS
+            // wrapperMarginInlineEnd usually comes from paddingXS
             TokenValueRow(label: "paddingXS", value: $config.token.paddingXS, range: 4...16) {
                 config.components = Moin.ComponentToken.generate(from: config.token, isDark: config.isDarkMode)
             }
         } code: {
             "config.token.paddingXS = \(Int(config.token.paddingXS))"
         }
-        .scrollAnchor("global.wrapperMarginEnd")
+        .scrollAnchor("global.wrapperMarginInlineEnd")
     }
 
     // MARK: - Motion Tokens

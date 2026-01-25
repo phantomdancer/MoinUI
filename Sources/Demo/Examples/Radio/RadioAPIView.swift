@@ -12,7 +12,7 @@ struct RadioAPIView: View {
     @State private var selection2: String = "London"
 
     private let plainOptions = [1, 2, 3]
-    
+
     private var objectOptions: [Moin.RadioOption<String>] {
         [
             .init(label: tr("radio.london"), value: "London"),
@@ -30,7 +30,7 @@ struct RadioAPIView: View {
             ),
             DocSidebarSection(
                 title: tr("radio.group"),
-                items: ["selection", "options", "direction", "groupDisabled"],
+                items: ["value", "options", "orientation", "groupDisabled"],
                 sectionId: "radiogroup"
             )
         ]
@@ -57,9 +57,9 @@ struct RadioAPIView: View {
         case "checked": checkedPropertyCard
         case "isDisabled": disabledPropertyCard
         case "label": labelPropertyCard
-        case "selection": selectionPropertyCard
+        case "value": valuePropertyCard
         case "options": optionsPropertyCard
-        case "direction": directionPropertyCard
+        case "orientation": orientationPropertyCard
         case "groupDisabled": groupDisabledPropertyCard
         default: EmptyView()
         }
@@ -127,29 +127,29 @@ struct RadioAPIView: View {
 
     // MARK: - RadioGroup API Cards
 
-    private var selectionPropertyCard: some View {
+    private var valuePropertyCard: some View {
         PropertyCard(
-            name: "selection",
+            name: "value",
             type: "Binding<Value>",
             defaultValue: "-",
             description: tr("radiogroup.api.selection"),
             sectionId: "api"
         ) {
             VStack(alignment: .leading, spacing: Moin.Constants.Spacing.sm) {
-                Moin.RadioGroup(selection: $selection1, options: plainOptions)
+                Moin.RadioGroup(value: $selection1, options: plainOptions)
                 Text("Selected: \(selection1)")
                     .font(.caption)
                     .foregroundStyle(.secondary)
             }
         } code: {
             """
-            @State private var selection: Int = 1
+            @State private var value: Int = 1
             let options = [1, 2, 3]
 
-            Moin.RadioGroup(selection: $selection, options: options)
+            Moin.RadioGroup(value: $value, options: options)
             """
         }
-        .scrollAnchor("radiogroup.selection")
+        .scrollAnchor("radiogroup.value")
     }
 
     private var optionsPropertyCard: some View {
@@ -161,7 +161,7 @@ struct RadioAPIView: View {
             sectionId: "api"
         ) {
             VStack(alignment: .leading, spacing: Moin.Constants.Spacing.sm) {
-                Moin.RadioGroup(selection: $selection2, options: objectOptions)
+                Moin.RadioGroup(value: $selection2, options: objectOptions)
                 Text("Selected: \(selection2)")
                     .font(.caption)
                     .foregroundStyle(.secondary)
@@ -173,15 +173,15 @@ struct RadioAPIView: View {
                 .init(label: "Paris", value: "Paris")
             ]
 
-            Moin.RadioGroup(selection: $selection, options: options)
+            Moin.RadioGroup(value: $value, options: options)
             """
         }
         .scrollAnchor("radiogroup.options")
     }
 
-    private var directionPropertyCard: some View {
+    private var orientationPropertyCard: some View {
         PropertyCard(
-            name: "direction",
+            name: "orientation",
             type: "Axis",
             defaultValue: ".horizontal",
             description: tr("radiogroup.api.direction"),
@@ -193,9 +193,9 @@ struct RadioAPIView: View {
                     .font(.caption)
                     .foregroundStyle(.secondary)
                 Moin.RadioGroup(
-                    selection: .constant(1),
+                    value: Binding.constant(1),
                     options: plainOptions,
-                    direction: .vertical
+                    orientation: .vertical
                 )
 
                 Divider()
@@ -205,21 +205,21 @@ struct RadioAPIView: View {
                     .font(.caption)
                     .foregroundStyle(.secondary)
                 Moin.RadioGroup(
-                    selection: .constant(1),
+                    value: Binding.constant(1),
                     options: plainOptions,
-                    direction: .horizontal
+                    orientation: .horizontal
                 )
             }
         } code: {
             """
             Moin.RadioGroup(
-                selection: $selection,
+                value: $value,
                 options: options,
-                direction: .vertical
+                orientation: .vertical
             )
             """
         }
-        .scrollAnchor("radiogroup.direction")
+        .scrollAnchor("radiogroup.orientation")
     }
 
     private var groupDisabledPropertyCard: some View {
@@ -231,12 +231,12 @@ struct RadioAPIView: View {
             sectionId: "api"
         ) {
             Moin.RadioGroup(
-                selection: .constant(1),
+                value: Binding.constant(1),
                 options: plainOptions,
                 disabled: true
             )
         } code: {
-            "Moin.RadioGroup(selection: $selection, options: options, disabled: true)"
+            "Moin.RadioGroup(value: $value, options: options, disabled: true)"
         }
         .scrollAnchor("radiogroup.isDisabled")
     }

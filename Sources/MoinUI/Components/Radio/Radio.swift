@@ -75,7 +75,7 @@ public extension Moin {
                 
                 // Dot
                 Circle()
-                    .fill(isEffectiveDisabled ? radioToken.colorDotDisabled : radioToken.colorDot)
+                    .fill(isEffectiveDisabled ? radioToken.dotColorDisabled : radioToken.radioColor)
                     .frame(width: radioToken.dotSize, height: radioToken.dotSize)
                     .scaleEffect(checked ? 1 : 0)
                     .opacity(checked ? 1 : 0)
