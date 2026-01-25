@@ -534,8 +534,8 @@ extension RadioTokenView {
             description: tr("doc.global.motionDurationMid"),
             sectionId: "global"
         ) {
-            HStack(spacing: Moin.Constants.Spacing.md) {
-                Moin.Radio("Radio", checked: $checked)
+            VStack(alignment: .leading, spacing: Moin.Constants.Spacing.sm) {
+                Moin.RadioGroup(value: $groupValue, options: [1, 2, 3])
                     .id(config.token.motionDurationMid)
                 Text("duration: \(String(format: "%.1f", config.token.motionDurationMid))s")
                     .font(.system(size: 11, design: .monospaced))
@@ -559,8 +559,8 @@ extension RadioTokenView {
             description: tr("doc.global.motionDurationSlow"),
             sectionId: "global"
         ) {
-            HStack(spacing: Moin.Constants.Spacing.md) {
-                Moin.Radio("Radio", checked: $checked)
+            VStack(alignment: .leading, spacing: Moin.Constants.Spacing.sm) {
+                Moin.RadioGroup(value: $groupValue, options: [1, 2, 3])
                     .id(config.token.motionDurationSlow)
                 Text("duration: \(String(format: "%.1f", config.token.motionDurationSlow))s")
                     .font(.system(size: 11, design: .monospaced))
