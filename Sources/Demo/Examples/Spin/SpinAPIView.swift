@@ -14,7 +14,7 @@ struct SpinAPIView: View {
         [
             DocSidebarSection(
                 title: "Moin.Spin",
-                items: ["spinning", "size", "tip", "delay", "fullscreen", "indicator", "content"],
+                items: [.init(id: "spinning"), .init(id: "size"), .init(id: "tip"), .init(id: "delay"), .init(id: "fullscreen"), .init(id: "indicator"), .init(id: "content")],
                 sectionId: "spin"
             )
         ]

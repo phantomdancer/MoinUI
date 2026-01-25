@@ -15,16 +15,13 @@ struct EmptyTokenView: View {
             // 组件 Token
             DocSidebarSection(
                 title: tr("doc.section.component_token"),
-                items: ["imageHeight", "imageHeightSM", "imageOpacity"],
+                items: [.init(id: "imageHeight"), .init(id: "imageHeightSM"), .init(id: "imageOpacity")],
                 sectionId: "component"
             ),
             // 全局 Token
             DocSidebarSection(
                 title: tr("doc.section.global_token"),
-                items: [
-                    "colorTextQuaternary", "colorTextSecondary",
-                    "fontSize", "marginXS", "marginSM"
-                ],
+                items: [.init(id: "colorTextQuaternary"), .init(id: "colorTextSecondary"), .init(id: "fontSize"), .init(id: "marginXS"), .init(id: "marginSM")],
                 sectionId: "global"
             )
         ]

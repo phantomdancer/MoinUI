@@ -13,23 +13,13 @@ struct AlertTokenView: View {
             // 组件 Token（仅3项）
             DocSidebarSection(
                 title: tr("doc.section.component_token"),
-                items: [
-                    "defaultPadding", "withDescriptionIconSize", "withDescriptionPadding"
-                ],
+                items: [.init(id: "defaultPadding"), .init(id: "withDescriptionIconSize"), .init(id: "withDescriptionPadding")],
                 sectionId: "component"
             ),
             // 全局 Token
             DocSidebarSection(
                 title: tr("doc.section.global_token"),
-                items: [
-                    "colorSuccess", "colorSuccessBg", "colorSuccessBorder",
-                    "colorInfo", "colorInfoBg", "colorInfoBorder",
-                    "colorWarning", "colorWarningBg", "colorWarningBorder",
-                    "colorError", "colorErrorBg", "colorErrorBorder",
-                    "colorText", "colorIcon", "colorIconHover",
-                    "borderRadiusLG", "fontSize", "fontSizeLG", "fontSizeIcon",
-                    "lineWidth", "marginXS", "marginSM"
-                ],
+                items: [.init(id: "colorSuccess"), .init(id: "colorSuccessBg"), .init(id: "colorSuccessBorder"), .init(id: "colorInfo"), .init(id: "colorInfoBg"), .init(id: "colorInfoBorder"), .init(id: "colorWarning"), .init(id: "colorWarningBg"), .init(id: "colorWarningBorder"), .init(id: "colorError"), .init(id: "colorErrorBg"), .init(id: "colorErrorBorder"), .init(id: "colorText"), .init(id: "colorIcon"), .init(id: "colorIconHover"), .init(id: "borderRadiusLG"), .init(id: "fontSize"), .init(id: "fontSizeLG"), .init(id: "fontSizeIcon"), .init(id: "lineWidth"), .init(id: "marginXS"), .init(id: "marginSM")],
                 sectionId: "global"
             )
         ]

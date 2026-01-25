@@ -13,23 +13,23 @@ struct AvatarAPIView: View {
         [
             DocSidebarSection(
                 title: tr("api.avatar.section.basic"),
-                items: ["icon", "text", "image", "src", "fallbackIcon"],
+                items: [.init(id: "icon"), .init(id: "text"), .init(id: "image"), .init(id: "src"), .init(id: "fallbackIcon")],
                 sectionId: "api"
             ),
             DocSidebarSection(
                 title: tr("api.avatar.section.style"),
-                items: ["size", "shape", "backgroundColor"],
+                items: [.init(id: "size"), .init(id: "shape"), .init(id: "backgroundColor")],
                 sectionId: "api"
             ),
             DocSidebarSection(
                 title: tr("api.avatar.section.advanced"),
-                items: ["gap", "content"],
+                items: [.init(id: "gap"), .init(id: "content")],
                 sectionId: "api"
             ),
             DocSidebarSection(
                 title: tr("api.avatar.section.group"),
-                items: ["group.maxCount", "group.content"],
-                sectionId: "api"
+                items: [.init(id: "groupMaxCount", displayName: "maxCount"), .init(id: "groupContent", displayName: "content")],
+                sectionId: "avatargroup"
             )
         ]
     }
@@ -62,8 +62,8 @@ struct AvatarAPIView: View {
         case "backgroundColor": backgroundColorPropertyCard
         case "gap": gapPropertyCard
         case "content": contentPropertyCard
-        case "group.maxCount": groupMaxCountPropertyCard
-        case "group.content": groupContentPropertyCard
+        case "groupMaxCount": groupMaxCountPropertyCard
+        case "groupContent": groupContentPropertyCard
         default: EmptyView()
         }
     }
@@ -271,7 +271,7 @@ struct AvatarAPIView: View {
             type: "Int?",
             defaultValue: "nil",
             description: tr("avatar.api.max_count"),
-            sectionId: "api"
+            sectionId: "avatargroup"
         ) {
             Moin.AvatarGroup(maxCount: 2) {
                 Moin.Avatar("A")
@@ -287,16 +287,16 @@ struct AvatarAPIView: View {
             }
             """
         }
-        .scrollAnchor("api.group.maxCount")
+        .scrollAnchor("avatargroup.groupMaxCount")
     }
-    
+
     private var groupContentPropertyCard: some View {
         PropertyCard(
             name: "content",
             type: "@ViewBuilder",
             defaultValue: "-",
             description: tr("avatar.api.group_content"),
-            sectionId: "api"
+            sectionId: "avatargroup"
         ) {
             Moin.AvatarGroup {
                 Moin.Avatar("A")
@@ -310,6 +310,6 @@ struct AvatarAPIView: View {
             }
             """
         }
-         .scrollAnchor("api.group.content")
+        .scrollAnchor("avatargroup.groupContent")
     }
 }

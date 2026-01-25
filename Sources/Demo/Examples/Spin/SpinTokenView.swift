@@ -15,13 +15,13 @@ struct SpinTokenView: View {
             // 组件 Token
             DocSidebarSection(
                 title: tr("doc.section.component_token"),
-                items: ["dotSize", "dotSizeSM", "dotSizeLG", "contentHeight", "motionDuration"],
+                items: [.init(id: "dotSize"), .init(id: "dotSizeSM"), .init(id: "dotSizeLG"), .init(id: "contentHeight"), .init(id: "motionDuration")],
                 sectionId: "component"
             ),
             // 全局 Token
             DocSidebarSection(
                 title: tr("doc.section.global_token"),
-                items: ["colorPrimary", "colorTextTertiary", "colorBgMask"],
+                items: [.init(id: "colorPrimary"), .init(id: "colorTextTertiary"), .init(id: "colorBgMask")],
                 sectionId: "global"
             )
         ]

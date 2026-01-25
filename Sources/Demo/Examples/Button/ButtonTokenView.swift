@@ -15,17 +15,17 @@ struct ButtonTokenView: View {
         [
             DocSidebarSection(
                 title: tr("api.button.section.font"),
-                items: ["contentFontSize", "contentFontSizeSM", "contentFontSizeLG", "fontWeight"],
+                items: [.init(id: "contentFontSize"), .init(id: "contentFontSizeSM"), .init(id: "contentFontSizeLG"), .init(id: "fontWeight")],
                 sectionId: "component"
             ),
             DocSidebarSection(
                 title: tr("api.button.section.dimensions"),
-                items: ["paddingBlock", "paddingBlockSM", "paddingBlockLG", "paddingInline", "paddingInlineSM", "paddingInlineLG", "iconGap", "onlyIconSize", "onlyIconSizeSM", "onlyIconSizeLG"],
+                items: [.init(id: "paddingBlock"), .init(id: "paddingBlockSM"), .init(id: "paddingBlockLG"), .init(id: "paddingInline"), .init(id: "paddingInlineSM"), .init(id: "paddingInlineLG"), .init(id: "iconGap"), .init(id: "onlyIconSize"), .init(id: "onlyIconSizeSM"), .init(id: "onlyIconSizeLG")],
                 sectionId: "component"
             ),
             DocSidebarSection(
                 title: tr("api.button.section.style"),
-                items: ["groupBorderColor", "textTextColor"], // Shadows skipped for brevity or add if needed
+                items: [.init(id: "groupBorderColor"), .init(id: "textTextColor")], // Shadows skipped for brevity or add if needed
                 sectionId: "component"
             )
         ]
@@ -36,12 +36,7 @@ struct ButtonTokenView: View {
         [
             DocSidebarSection(
                 title: tr("doc.section.global_token"),
-                items: [
-                   "borderRadius", "borderRadiusLG", "borderRadiusSM",
-                   "colorPrimary", "colorPrimaryActive", "colorPrimaryHover",
-                   "colorText", "colorTextDisabled", "colorBgContainer", "colorBorder",
-                   "controlHeight", "controlHeightLG", "controlHeightSM"
-                ],
+                items: [.init(id: "borderRadius"), .init(id: "borderRadiusLG"), .init(id: "borderRadiusSM"), .init(id: "colorPrimary"), .init(id: "colorPrimaryActive"), .init(id: "colorPrimaryHover"), .init(id: "colorText"), .init(id: "colorTextDisabled"), .init(id: "colorBgContainer"), .init(id: "colorBorder"), .init(id: "controlHeight"), .init(id: "controlHeightLG"), .init(id: "controlHeightSM")],
                 sectionId: "global"
             )
         ]

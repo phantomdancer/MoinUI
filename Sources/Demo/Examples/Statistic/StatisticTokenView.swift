@@ -12,12 +12,12 @@ struct StatisticTokenView: View {
         [
             DocSidebarSection(
                 title: tr("doc.section.component_token"),
-                items: ["titleFontSize", "contentFontSize"],
+                items: [.init(id: "titleFontSize"), .init(id: "contentFontSize")],
                 sectionId: "component"
             ),
             DocSidebarSection(
                 title: tr("doc.section.global_token"),
-                items: ["colorTextDescription", "colorTextHeading", "marginXXS"],
+                items: [.init(id: "colorTextDescription"), .init(id: "colorTextHeading"), .init(id: "marginXXS")],
                 sectionId: "global"
             )
         ]

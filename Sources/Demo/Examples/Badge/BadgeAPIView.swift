@@ -13,7 +13,7 @@ struct BadgeAPIView: View {
         [
             DocSidebarSection(
                 title: tr("api.badge.section.badge"),
-                items: ["count", "dot", "showZero", "overflowCount", "size", "color", "offset", "status", "text", "content"],
+                items: [.init(id: "count"), .init(id: "dot"), .init(id: "showZero"), .init(id: "overflowCount"), .init(id: "size"), .init(id: "color"), .init(id: "offset"), .init(id: "status"), .init(id: "text"), .init(id: "content")],
                 sectionId: "badge"
             ),
             DocSidebarSection(

@@ -8,7 +8,7 @@ struct ProgressAPIView: View {
         [
             DocSidebarSection(
                 title: tr("api.button.section.common"),
-                items: ["percent", "type", "status", "showInfo", "steps", "strokeColor", "railColor", "size", "format", "strokeLinecap", "strokeWidth", "success", "gapDegree", "gapPosition", "percentPosition"],
+                items: [.init(id: "percent"), .init(id: "type"), .init(id: "status"), .init(id: "showInfo"), .init(id: "steps"), .init(id: "strokeColor"), .init(id: "railColor"), .init(id: "size"), .init(id: "format"), .init(id: "strokeLinecap"), .init(id: "strokeWidth"), .init(id: "success"), .init(id: "gapDegree"), .init(id: "gapPosition"), .init(id: "percentPosition")],
                 sectionId: "api"
             )
         ]

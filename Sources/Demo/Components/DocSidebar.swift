@@ -19,20 +19,6 @@ struct DocSidebarSection: Identifiable {
     let items: [DocSidebarItem]
     let sectionId: String // Prefix for anchor, e.g. "api" or "token"
 
-    /// 便捷初始化：直接传入字符串数组（id 和 displayName 相同）
-    init(title: String, items: [String], sectionId: String) {
-        self.title = title
-        self.items = items.map { DocSidebarItem(id: $0) }
-        self.sectionId = sectionId
-    }
-
-    /// 完整初始化：传入 DocSidebarItem 数组
-    init(title: String, items: [DocSidebarItem], sectionId: String) {
-        self.title = title
-        self.items = items
-        self.sectionId = sectionId
-    }
-
     /// 返回排序后的 items，供主内容区和侧边栏共用
     var sortedItems: [DocSidebarItem] {
         items.sorted { $0.displayName < $1.displayName }

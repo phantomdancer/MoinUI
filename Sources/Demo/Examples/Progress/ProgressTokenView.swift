@@ -18,18 +18,12 @@ struct ProgressTokenView: View {
         [
             DocSidebarSection(
                 title: tr("doc.section.component_token"),
-                items: [
-                   "defaultColor", "remainingColor", "circleTextColor",
-                   "lineBorderRadius", "circleTextFontSize", "circleIconFontSize"
-                ],
+                items: [.init(id: "defaultColor"), .init(id: "remainingColor"), .init(id: "circleTextColor"), .init(id: "lineBorderRadius"), .init(id: "circleTextFontSize"), .init(id: "circleIconFontSize")],
                 sectionId: "component"
             ),
             DocSidebarSection(
                 title: tr("doc.section.global_token"),
-                items: [
-                    "colorInfo", "colorSuccess", "colorError", "colorText", "colorFillSecondary",
-                    "marginXS", "fontSize", "fontSizeSM"
-                ],
+                items: [.init(id: "colorInfo"), .init(id: "colorSuccess"), .init(id: "colorError"), .init(id: "colorText"), .init(id: "colorFillSecondary"), .init(id: "marginXS"), .init(id: "fontSize"), .init(id: "fontSizeSM")],
                 sectionId: "global"
             )
         ]

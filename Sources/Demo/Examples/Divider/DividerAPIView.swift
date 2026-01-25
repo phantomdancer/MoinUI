@@ -12,7 +12,7 @@ struct DividerAPIView: View {
         [
             DocSidebarSection(
                 title: "Moin.Divider",
-                items: ["orientation", "variant", "titlePlacement", "plain", "title", "content"],
+                items: [.init(id: "orientation"), .init(id: "variant"), .init(id: "titlePlacement"), .init(id: "plain"), .init(id: "title"), .init(id: "content")],
                 sectionId: "divider"
             )
         ]

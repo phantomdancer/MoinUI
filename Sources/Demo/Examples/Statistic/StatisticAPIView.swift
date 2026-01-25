@@ -8,12 +8,12 @@ struct StatisticAPIView: View {
         [
             DocSidebarSection(
                 title: tr("api.button.section.common"),
-                items: ["title", "value", "precision", "loading"],
+                items: [.init(id: "title"), .init(id: "value"), .init(id: "precision"), .init(id: "loading")],
                 sectionId: "api"
             ),
             DocSidebarSection(
                 title: tr("api.button.section.style"),
-                items: ["prefix", "suffix"],
+                items: [.init(id: "prefix"), .init(id: "suffix")],
                 sectionId: "api"
             )
         ]

@@ -8,7 +8,7 @@ struct AlertAPIView: View {
         [
             DocSidebarSection(
                 title: tr("api.button.section.common"),
-                items: ["type", "title", "description", "showIcon", "closable", "banner", "action", "onClose"],
+                items: [.init(id: "type"), .init(id: "title"), .init(id: "description"), .init(id: "showIcon"), .init(id: "closable"), .init(id: "banner"), .init(id: "action"), .init(id: "onClose")],
                 sectionId: "api"
             )
         ]

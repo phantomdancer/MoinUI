@@ -8,7 +8,7 @@ struct SwitchAPIView: View {
         [
             DocSidebarSection(
                 title: tr("api.button.section.common"),
-                items: ["isOn", "loading", "disabled", "checkedChildren", "unCheckedChildren", "size", "onChange"],
+                items: [.init(id: "isOn"), .init(id: "loading"), .init(id: "disabled"), .init(id: "checkedChildren"), .init(id: "unCheckedChildren"), .init(id: "size"), .init(id: "onChange")],
                 sectionId: "api"
             )
         ]
@@ -80,20 +80,20 @@ struct SwitchAPIView: View {
     
     private var disabledCard: some View {
         PropertyCard(
-            name: "isDisabled",
+            name: "disabled",
             type: "Bool",
             defaultValue: "false",
             description: tr("api.switch.disabled"),
             sectionId: "api"
         ) {
             HStack {
-                Moin.Switch(isOn: .constant(true), isDisabled: true)
-                Moin.Switch(isOn: .constant(false), isDisabled: true)
+                Moin.Switch(isOn: .constant(true), disabled: true)
+                Moin.Switch(isOn: .constant(false), disabled: true)
             }
         } code: {
             """
-            Moin.Switch(isOn: .constant(true), isDisabled: true)
-            Moin.Switch(isOn: .constant(false), isDisabled: true)
+            Moin.Switch(isOn: .constant(true), disabled: true)
+            Moin.Switch(isOn: .constant(false), disabled: true)
             """
         }
     }

@@ -14,20 +14,12 @@ struct BadgeTokenView: View {
         [
             DocSidebarSection(
                 title: tr("badge.token.component"),
-                items: [
-                    "indicatorHeight", "indicatorHeightSM",
-                    "dotSize", "dotSizeSM",
-                    "textFontSize", "textFontSizeSM",
-                    "statusSize",
-                    "paddingH", "paddingHSM",
-                    "shadowRadius"
-                ],
+                items: [.init(id: "indicatorHeight"), .init(id: "indicatorHeightSM"), .init(id: "dotSize"), .init(id: "dotSizeSM"), .init(id: "textFontSize"), .init(id: "textFontSizeSM"), .init(id: "statusSize"), .init(id: "paddingH"), .init(id: "paddingHSM"), .init(id: "shadowRadius")],
                 sectionId: "token"
             ),
             DocSidebarSection(
                 title: tr("badge.token.global"),
-                items: ["colorDanger", "colorSuccess", "colorPrimary", "colorWarning",
-                    "colorText", "colorTextSecondary"],
+                items: [.init(id: "colorDanger"), .init(id: "colorSuccess"), .init(id: "colorPrimary"), .init(id: "colorWarning"), .init(id: "colorText"), .init(id: "colorTextSecondary")],
                 sectionId: "global"
             )
         ]

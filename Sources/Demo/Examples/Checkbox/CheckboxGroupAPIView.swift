@@ -23,7 +23,7 @@ struct CheckboxGroupAPIView: View {
         [
             DocSidebarSection(
                 title: tr("api.section.common"),
-                items: ["selection", "options", "direction", "isDisabled"],
+                items: [.init(id: "selection"), .init(id: "options"), .init(id: "direction"), .init(id: "isDisabled")],
                 sectionId: "api"
             )
         ]

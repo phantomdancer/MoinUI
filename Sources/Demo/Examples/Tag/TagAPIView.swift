@@ -14,12 +14,12 @@ struct TagAPIView: View {
         [
             DocSidebarSection(
                 title: tr("api.tag.section.style"),
-                items: ["variant", "size", "color", "round"],
+                items: [.init(id: "variant"), .init(id: "size"), .init(id: "color"), .init(id: "round")],
                 sectionId: "api"
             ),
             DocSidebarSection(
                 title: tr("api.tag.section.feature"),
-                items: ["icon", "closable", "checkable"],
+                items: [.init(id: "icon"), .init(id: "closable"), .init(id: "checkable")],
                 sectionId: "api"
             )
         ]

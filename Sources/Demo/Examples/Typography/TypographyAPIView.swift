@@ -14,27 +14,27 @@ struct TypographyAPIView: View {
         [
             DocSidebarSection(
                 title: tr("api.typography.section.common"),
-                items: ["content", "type", "disabled"],
+                items: [.init(id: "content"), .init(id: "type"), .init(id: "disabled")],
                 sectionId: "api"
             ),
             DocSidebarSection(
                 title: tr("api.typography.section.styles"),
-                items: ["mark", "underline", "delete", "strong", "italic", "code", "keyboard"],
+                items: [.init(id: "mark"), .init(id: "underline"), .init(id: "delete"), .init(id: "strong"), .init(id: "italic"), .init(id: "code"), .init(id: "keyboard")],
                 sectionId: "api"
             ),
             DocSidebarSection(
                 title: tr("api.typography.section.title"),
-                items: ["level"],
+                items: [.init(id: "level")],
                 sectionId: "api"
             ),
             DocSidebarSection(
                 title: tr("api.typography.section.paragraph"),
-                items: ["ellipsis"],
+                items: [.init(id: "ellipsis")],
                 sectionId: "api"
             ),
             DocSidebarSection(
                 title: tr("api.typography.section.link"),
-                items: ["href", "action"],
+                items: [.init(id: "href"), .init(id: "action")],
                 sectionId: "api"
             )
         ]

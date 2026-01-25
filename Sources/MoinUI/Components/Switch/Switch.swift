@@ -24,12 +24,12 @@ public extension Moin {
         var onChange: ((Bool) -> Void)?
         
         /// 是否禁用 (手动控制，以支持 Disabled Cursor)
-        var isDisabled: Bool
+        var disabled: Bool
         
         public init(
             isOn: Binding<Bool>,
             loading: Bool = false,
-            isDisabled: Bool = false,
+            disabled: Bool = false,
             size: ControlSize = .regular,
             @ViewBuilder checkedChildren: () -> CheckedContent,
             @ViewBuilder unCheckedChildren: () -> UncheckedContent,
@@ -37,7 +37,7 @@ public extension Moin {
         ) {
             self._isOn = isOn
             self.loading = loading
-            self.isDisabled = isDisabled
+            self.disabled = disabled
             self.size = size
             self.checkedChildren = checkedChildren()
             self.unCheckedChildren = unCheckedChildren()
@@ -62,7 +62,7 @@ public extension Moin {
             // If disabled & isOn -> primary color with opacity
             // If disabled & !isOn -> quaternary color with opacity
             
-            let isEffectiveDisabled = !isEnabled || isDisabled
+            let isEffectiveDisabled = !isEnabled || disabled
             
             let finalBg: Color
             if isEffectiveDisabled || loading {
@@ -169,12 +169,12 @@ public extension Moin {
             .gesture(
                 DragGesture(minimumDistance: 0)
                     .onChanged { _ in
-                        if isEnabled && !isDisabled && !loading && !isPressed {
+                        if isEnabled && !disabled && !loading && !isPressed {
                             isPressed = true
                         }
                     }
                     .onEnded { _ in
-                        guard isEnabled && !isDisabled && !loading else { return }
+                        guard isEnabled && !disabled && !loading else { return }
                         isPressed = false
                         isOn.toggle()
                         onChange?(isOn)
@@ -184,7 +184,7 @@ public extension Moin {
             .onContinuousHover { phase in
                 switch phase {
                 case .active:
-                    let isInteractable = isEnabled && !isDisabled && !loading
+                    let isInteractable = isEnabled && !disabled && !loading
                     let cursor: NSCursor = isInteractable ? .pointingHand : .operationNotAllowed
                     cursor.set()
                     
@@ -212,14 +212,14 @@ public extension Moin.Switch where CheckedContent == EmptyView, UncheckedContent
     init(
         isOn: Binding<Bool>,
         loading: Bool = false,
-        isDisabled: Bool = false,
+        disabled: Bool = false,
         size: ControlSize = .regular,
         onChange: ((Bool) -> Void)? = nil
     ) {
         self.init(
             isOn: isOn,
             loading: loading,
-            isDisabled: isDisabled,
+            disabled: disabled,
             size: size,
             checkedChildren: { EmptyView() },
             unCheckedChildren: { EmptyView() },
@@ -232,7 +232,7 @@ public extension Moin.Switch where CheckedContent == Text, UncheckedContent == T
     init(
         isOn: Binding<Bool>,
         loading: Bool = false,
-        isDisabled: Bool = false,
+        disabled: Bool = false,
         size: ControlSize = .regular,
         checkedText: String,
         uncheckedText: String,
@@ -241,7 +241,7 @@ public extension Moin.Switch where CheckedContent == Text, UncheckedContent == T
         self.init(
             isOn: isOn,
             loading: loading,
-            isDisabled: isDisabled,
+            disabled: disabled,
             size: size,
             checkedChildren: { Text(checkedText) },
             unCheckedChildren: { Text(uncheckedText) },

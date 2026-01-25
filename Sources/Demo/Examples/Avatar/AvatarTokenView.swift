@@ -14,20 +14,12 @@ struct AvatarTokenView: View {
         [
             DocSidebarSection(
                 title: tr("doc.section.component_token"),
-                items: [
-                    "size", "sizeLG", "sizeSM",
-                    "fontSize", "fontSizeLG", "fontSizeSM",
-                    "groupSpacing", "groupBorderColor"
-                ],
+                items: [.init(id: "size"), .init(id: "sizeLG"), .init(id: "sizeSM"), .init(id: "fontSize"), .init(id: "fontSizeLG"), .init(id: "fontSizeSM"), .init(id: "groupSpacing"), .init(id: "groupBorderColor")],
                 sectionId: "component"
             ),
             DocSidebarSection(
                 title: tr("doc.section.global_token"),
-                items: [
-                    "containerBg", "colorText", "colorTextLight",
-                    "borderRadius", "borderRadiusLG", "borderRadiusSM",
-                    "groupBorderWidth" // Mapped to lineWidth
-                ],
+                items: [.init(id: "containerBg"), .init(id: "colorText"), .init(id: "colorTextLight"), .init(id: "borderRadius"), .init(id: "borderRadiusLG"), .init(id: "borderRadiusSM"), .init(id: "groupBorderWidth")],
                 sectionId: "global"
             )
         ]

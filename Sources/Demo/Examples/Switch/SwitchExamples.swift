@@ -116,16 +116,16 @@ struct SwitchExamples: View {
             description: tr("switch.disabled_desc"),
             content: {
                 HStack(spacing: 20) {
-                    Moin.Switch(isOn: .constant(true), isDisabled: true)
+                    Moin.Switch(isOn: .constant(true), disabled: true)
                     
-                    Moin.Switch(isOn: .constant(false), isDisabled: true)
+                    Moin.Switch(isOn: .constant(false), disabled: true)
                 }
             },
             code: {
                 """
-                Moin.Switch(isOn: .constant(true), isDisabled: true)
+                Moin.Switch(isOn: .constant(true), disabled: true)
                 
-                Moin.Switch(isOn: .constant(false), isDisabled: true)
+                Moin.Switch(isOn: .constant(false), disabled: true)
                 """
             }
         )

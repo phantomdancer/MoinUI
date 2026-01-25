@@ -18,42 +18,13 @@ struct RadioTokenView: View {
             // Component Token (在上)
             DocSidebarSection(
                 title: tr("token.radio.component"),
-                items: [
-                    // Button Tokens
-                    "buttonBg",
-                    "buttonCheckedBg",
-                    "buttonCheckedBgDisabled",
-                    "buttonCheckedColorDisabled",
-                    "buttonColor",
-                    "buttonPaddingInline",
-                    "buttonSolidCheckedActiveBg",
-                    "buttonSolidCheckedBg",
-                    "buttonSolidCheckedColor",
-                    "buttonSolidCheckedHoverBg",
-                    // Radio Tokens
-                    "dotColorDisabled",
-                    "dotSize",
-                    "radioSize",
-                    "wrapperMarginInlineEnd"
-                ],
+                items: [.init(id: "buttonBg"), .init(id: "buttonCheckedBg"), .init(id: "buttonCheckedBgDisabled"), .init(id: "buttonCheckedColorDisabled"), .init(id: "buttonColor"), .init(id: "buttonPaddingInline"), .init(id: "buttonSolidCheckedActiveBg"), .init(id: "buttonSolidCheckedBg"), .init(id: "buttonSolidCheckedColor"), .init(id: "buttonSolidCheckedHoverBg"), .init(id: "dotColorDisabled"), .init(id: "dotSize"), .init(id: "radioSize"), .init(id: "wrapperMarginInlineEnd")],
                 sectionId: "component"
             ),
             // Global Token (在下)
             DocSidebarSection(
                 title: tr("token.radio.global"),
-                items: [
-                    "colorBgContainer",
-                    "colorBgContainerDisabled",
-                    "colorBorder",
-                    "colorPrimary",
-                    "colorPrimaryHover",
-                    "colorText",
-                    "colorTextDisabled",
-                    "lineWidth",
-                    "motionDurationMid",
-                    "motionDurationSlow",
-                    "paddingXS"
-                ],
+                items: [.init(id: "colorBgContainer"), .init(id: "colorBgContainerDisabled"), .init(id: "colorBorder"), .init(id: "colorPrimary"), .init(id: "colorPrimaryHover"), .init(id: "colorText"), .init(id: "colorTextDisabled"), .init(id: "lineWidth"), .init(id: "motionDurationMid"), .init(id: "motionDurationSlow"), .init(id: "paddingXS")],
                 sectionId: "global"
             )
         ]

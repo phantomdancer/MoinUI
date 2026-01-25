@@ -14,35 +14,22 @@ struct TypographyTokenView: View {
         [
             DocSidebarSection(
                 title: tr("api.typography.token.font_size"),
-                items: [
-                    "fontSizeHeading1", "fontSizeHeading2", "fontSizeHeading3", "fontSizeHeading4", "fontSizeHeading5",
-                    "fontSize", "fontSizeSM", "fontSizeLG", "fontSizeXL"
-                ],
+                items: [.init(id: "fontSizeHeading1"), .init(id: "fontSizeHeading2"), .init(id: "fontSizeHeading3"), .init(id: "fontSizeHeading4"), .init(id: "fontSizeHeading5"), .init(id: "fontSize"), .init(id: "fontSizeSM"), .init(id: "fontSizeLG"), .init(id: "fontSizeXL")],
                 sectionId: "token"
             ),
             DocSidebarSection(
                 title: tr("api.typography.token.line_height"),
-                items: [
-                    "lineHeightHeading1", "lineHeightHeading2", "lineHeightHeading3", "lineHeightHeading4", "lineHeightHeading5",
-                    "lineHeight", "lineHeightSM", "lineHeightLG"
-                ],
+                items: [.init(id: "lineHeightHeading1"), .init(id: "lineHeightHeading2"), .init(id: "lineHeightHeading3"), .init(id: "lineHeightHeading4"), .init(id: "lineHeightHeading5"), .init(id: "lineHeight"), .init(id: "lineHeightSM"), .init(id: "lineHeightLG")],
                 sectionId: "token"
             ),
             DocSidebarSection(
                 title: tr("api.typography.token.dimensions"),
-                items: [
-                    "lineWidth", "borderRadiusXS", "borderRadiusSM",
-                    "paddingXXS", "paddingXS", "marginXS"
-                ],
+                items: [.init(id: "lineWidth"), .init(id: "borderRadiusXS"), .init(id: "borderRadiusSM"), .init(id: "paddingXXS"), .init(id: "paddingXS"), .init(id: "marginXS")],
                 sectionId: "token"
             ),
             DocSidebarSection(
                 title: tr("api.typography.token.text_color"),
-                items: [
-                    "colorText", "colorTextSecondary", "colorTextTertiary", "colorTextDisabled",
-                    "colorSuccess", "colorWarning", "colorDanger", "colorLink",
-                    "colorFillTertiary", "colorFillSecondary", "colorBorder"
-                ],
+                items: [.init(id: "colorText"), .init(id: "colorTextSecondary"), .init(id: "colorTextTertiary"), .init(id: "colorTextDisabled"), .init(id: "colorSuccess"), .init(id: "colorWarning"), .init(id: "colorDanger"), .init(id: "colorLink"), .init(id: "colorFillTertiary"), .init(id: "colorFillSecondary"), .init(id: "colorBorder")],
                 sectionId: "token"
             )
         ]

@@ -12,7 +12,7 @@ struct EmptyAPIView: View {
         [
             DocSidebarSection(
                 title: "Moin.Empty",
-                items: ["image", "description", "content"],
+                items: [.init(id: "image"), .init(id: "description"), .init(id: "content")],
                 sectionId: "empty"
             )
         ]

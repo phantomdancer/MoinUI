@@ -11,19 +11,12 @@ struct SwitchTokenView: View {
         [
             DocSidebarSection(
                 title: tr("doc.section.component_token"),
-                items: [
-                   "handleBg", "handleShadow", "handleSize", "handleSizeSM",
-                   "innerMaxMargin", "innerMaxMarginSM", "innerMinMargin", "innerMinMarginSM",
-                   "trackHeight", "trackHeightSM", "trackMinWidth", "trackMinWidthSM", "trackPadding"
-                ],
+                items: [.init(id: "handleBg"), .init(id: "handleShadow"), .init(id: "handleSize"), .init(id: "handleSizeSM"), .init(id: "innerMaxMargin"), .init(id: "innerMaxMarginSM"), .init(id: "innerMinMargin"), .init(id: "innerMinMarginSM"), .init(id: "trackHeight"), .init(id: "trackHeightSM"), .init(id: "trackMinWidth"), .init(id: "trackMinWidthSM"), .init(id: "trackPadding")],
                 sectionId: "component"
             ),
             DocSidebarSection(
                 title: tr("doc.section.global_token"),
-                items: [
-                    "colorPrimary", "colorTextQuaternary", "colorTextTertiary", 
-                    "opacityLoading", "motionDurationMid"
-                ],
+                items: [.init(id: "colorPrimary"), .init(id: "colorTextQuaternary"), .init(id: "colorTextTertiary"), .init(id: "opacityLoading"), .init(id: "motionDurationMid")],
                 sectionId: "global"
             )
         ]
@@ -278,25 +271,25 @@ struct SwitchTokenView: View {
 private struct InteractiveSwitch: View {
     @State var isOn: Bool
     var loading: Bool
-    var isDisabled: Bool
+    var disabled: Bool
     var size: ControlSize
     var checkedText: String?
     var uncheckedText: String?
     
-    init(isOn: Bool = true, loading: Bool = false, isDisabled: Bool = false, size: ControlSize = .regular, checkedText: String? = nil, uncheckedText: String? = nil) {
+    init(isOn: Bool = true, loading: Bool = false, disabled: Bool = false, size: ControlSize = .regular, checkedText: String? = nil, uncheckedText: String? = nil) {
         self._isOn = State(initialValue: isOn)
         self.loading = loading
-        self.isDisabled = isDisabled
+        self.disabled = disabled
         self.size = size
         self.checkedText = checkedText
         self.uncheckedText = uncheckedText
     }
-    
+
     var body: some View {
         if let checked = checkedText, let unchecked = uncheckedText {
-            Moin.Switch(isOn: $isOn, loading: loading, isDisabled: isDisabled, size: size, checkedText: checked, uncheckedText: unchecked)
+            Moin.Switch(isOn: $isOn, loading: loading, disabled: disabled, size: size, checkedText: checked, uncheckedText: unchecked)
         } else {
-            Moin.Switch(isOn: $isOn, loading: loading, isDisabled: isDisabled, size: size)
+            Moin.Switch(isOn: $isOn, loading: loading, disabled: disabled, size: size)
         }
     }
 }

@@ -31,7 +31,7 @@ struct RadioAPIView: View {
         [
             DocSidebarSection(
                 title: tr("component.radio"),
-                items: ["checked", "disabled", "label"],
+                items: [.init(id: "checked"), .init(id: "disabled"), .init(id: "label")],
                 sectionId: "radio"
             ),
             DocSidebarSection(
@@ -193,9 +193,9 @@ struct RadioAPIView: View {
         } code: {
             """
             let options: [Moin.RadioOption<String>] = [
-                .init(label: "London", value: "London"),
-                .init(label: "Paris", value: "Paris"),
-                .init(label: "New York", value: "New York")
+                .init(label: "\(tr("radio.london"))", value: "London"),
+                .init(label: "\(tr("radio.paris"))", value: "Paris"),
+                .init(label: "\(tr("radio.new_york"))", value: "New York")
             ]
 
             Moin.RadioGroup(value: $value, options: options)

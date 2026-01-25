@@ -13,22 +13,22 @@ struct ButtonAPIView: View {
         [
             DocSidebarSection(
                 title: tr("api.button.section.common"),
-                items: ["action", "label", "isDisabled", "loading", "isBlock", "isGhost"],
+                items: [.init(id: "action"), .init(id: "label"), .init(id: "isDisabled"), .init(id: "loading"), .init(id: "isBlock"), .init(id: "isGhost")],
                 sectionId: "api"
             ),
             DocSidebarSection(
                 title: tr("api.button.section.style"),
-                items: ["variant", "size", "shape", "color", "fontColor", "gradient"],
+                items: [.init(id: "variant"), .init(id: "size"), .init(id: "shape"), .init(id: "color"), .init(id: "fontColor"), .init(id: "gradient")],
                 sectionId: "api"
             ),
             DocSidebarSection(
                 title: tr("api.button.section.icon"),
-                items: ["icon", "iconPlacement"],
+                items: [.init(id: "icon"), .init(id: "iconPlacement")],
                 sectionId: "api"
             ),
             DocSidebarSection(
                 title: tr("api.button.section.link"),
-                items: ["href"],
+                items: [.init(id: "href")],
                 sectionId: "api"
             )
         ]

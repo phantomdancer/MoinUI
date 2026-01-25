@@ -14,7 +14,7 @@ struct SpaceTokenView: View {
         [
              DocSidebarSection(
                 title: tr("doc.section.global_token"),
-                items: ["paddingXS", "padding", "paddingLG"],
+                items: [.init(id: "paddingXS"), .init(id: "padding"), .init(id: "paddingLG")],
                 sectionId: "global"
             )
         ]

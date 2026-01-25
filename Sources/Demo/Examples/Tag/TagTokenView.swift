@@ -15,24 +15,13 @@ struct TagTokenView: View {
             // 组件 Token
             DocSidebarSection(
                 title: tr("doc.section.component_token"),
-                items: [
-                    "defaultBg", "defaultColor", "solidTextColor",
-                    "paddingH", "paddingHSM", "paddingHLG",
-                    "paddingV", "paddingVSM", "paddingVLG",
-                    "iconSize", "iconSizeSM", "iconSizeLG",
-                    "closeIconSize",
-                    "iconGap", "iconGapSM", "iconGapLG"
-                ],
+                items: [.init(id: "defaultBg"), .init(id: "defaultColor"), .init(id: "solidTextColor"), .init(id: "paddingH"), .init(id: "paddingHSM"), .init(id: "paddingHLG"), .init(id: "paddingV"), .init(id: "paddingVSM"), .init(id: "paddingVLG"), .init(id: "iconSize"), .init(id: "iconSizeSM"), .init(id: "iconSizeLG"), .init(id: "closeIconSize"), .init(id: "iconGap"), .init(id: "iconGapSM"), .init(id: "iconGapLG")],
                 sectionId: "component"
             ),
             // 全局 Token
             DocSidebarSection(
                 title: tr("doc.section.global_token"),
-                items: [
-                    "fontSize", "fontSizeSM",
-                    "lineWidth", "borderRadiusSM",
-                    "colorPrimary", "colorSuccess", "colorWarning", "colorError"
-                ],
+                items: [.init(id: "fontSize"), .init(id: "fontSizeSM"), .init(id: "lineWidth"), .init(id: "borderRadiusSM"), .init(id: "colorPrimary"), .init(id: "colorSuccess"), .init(id: "colorWarning"), .init(id: "colorError")],
                 sectionId: "global"
             )
         ]

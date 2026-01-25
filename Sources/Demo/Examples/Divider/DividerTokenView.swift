@@ -15,16 +15,13 @@ struct DividerTokenView: View {
             // 组件 Token
             DocSidebarSection(
                 title: tr("doc.section.component_token"),
-                items: ["textPadding", "orientationMargin", "dashLength", "dashGap"],
+                items: [.init(id: "textPadding"), .init(id: "orientationMargin"), .init(id: "dashLength"), .init(id: "dashGap")],
                 sectionId: "component"
             ),
             // 全局 Token
             DocSidebarSection(
                 title: tr("doc.section.global_token"),
-                items: [
-                    "colorBorder", "colorText", "fontSizeLG",
-                    "lineWidth", "marginLG", "marginXS"
-                ],
+                items: [.init(id: "colorBorder"), .init(id: "colorText"), .init(id: "fontSizeLG"), .init(id: "lineWidth"), .init(id: "marginLG"), .init(id: "marginXS")],
                 sectionId: "global"
             )
         ]

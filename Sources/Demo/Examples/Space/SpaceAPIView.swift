@@ -12,7 +12,7 @@ struct SpaceAPIView: View {
         [
             DocSidebarSection(
                 title: "Moin.Space",
-                items: ["size", "direction", "alignment", "wrap", "separator", "content"],
+                items: [.init(id: "size"), .init(id: "direction"), .init(id: "alignment"), .init(id: "wrap"), .init(id: "separator"), .init(id: "content")],
                 sectionId: "space"
             )
         ]

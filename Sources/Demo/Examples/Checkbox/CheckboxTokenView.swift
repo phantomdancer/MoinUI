@@ -30,29 +30,7 @@ struct CheckboxTokenView: View {
         [
             DocSidebarSection(
                 title: tr("token.checkbox.global"),
-                items: [
-                    // Colors - Primary
-                    "colorPrimary",
-                    // Colors - Border & Background
-                    "colorBorder",
-                    "colorBgContainer",
-                    // Colors - Text & Disabled
-                    "colorText",
-                    "colorTextDisabled",
-                    "colorBgDisabled",
-                    // Sizes & Borders
-                    "borderRadiusSM",
-                    "lineWidth",
-                    "lineWidthBold",
-                    // Spacing
-                    "paddingXS",
-                    // Typography
-                    "fontSize",
-                    // Motion
-                    "motionDurationFast",
-                    "motionDurationMid",
-                    "motionDurationSlow"
-                ],
+                items: [.init(id: "colorPrimary"), .init(id: "colorBorder"), .init(id: "colorBgContainer"), .init(id: "colorText"), .init(id: "colorTextDisabled"), .init(id: "colorBgDisabled"), .init(id: "borderRadiusSM"), .init(id: "lineWidth"), .init(id: "lineWidthBold"), .init(id: "paddingXS"), .init(id: "fontSize"), .init(id: "motionDurationFast"), .init(id: "motionDurationMid"), .init(id: "motionDurationSlow")],
                 sectionId: "global"
             )
         ]
