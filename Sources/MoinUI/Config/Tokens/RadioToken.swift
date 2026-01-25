@@ -1,18 +1,47 @@
 import SwiftUI
 
 public extension Moin {
+    enum RadioSize {
+        case small
+        case `default`
+        case large
+    }
+
     struct RadioToken: Equatable {
-        
+
         // MARK: - Sizes
-        
+
         /// Radio 尺寸
         /// Default: 16
         public var radioSize: CGFloat
-        
+
         /// 内部圆点尺寸
         /// Default: 8
         public var dotSize: CGFloat
-        
+
+        // MARK: - Button Sizes
+
+        /// Button 样式 - 小号 padding 水平
+        /// Default: 11
+        public var buttonPaddingXSHorizontal: CGFloat
+        /// Button 样式 - 小号 padding 竖直
+        /// Default: 3
+        public var buttonPaddingXSVertical: CGFloat
+
+        /// Button 样式 - 默认 padding 水平
+        /// Default: 15
+        public var buttonPaddingDefaultHorizontal: CGFloat
+        /// Button 样式 - 默认 padding 竖直
+        /// Default: 5
+        public var buttonPaddingDefaultVertical: CGFloat
+
+        /// Button 样式 - 大号 padding 水平
+        /// Default: 23
+        public var buttonPaddingLargeHorizontal: CGFloat
+        /// Button 样式 - 大号 padding 竖直
+        /// Default: 7
+        public var buttonPaddingLargeVertical: CGFloat
+
         // MARK: - Borders
         
         /// 边框宽度
@@ -65,6 +94,12 @@ public extension Moin {
         public static let `default` = RadioToken(
             radioSize: 16,
             dotSize: 8,
+            buttonPaddingXSHorizontal: 11,
+            buttonPaddingXSVertical: 3,
+            buttonPaddingDefaultHorizontal: 15,
+            buttonPaddingDefaultVertical: 5,
+            buttonPaddingLargeHorizontal: 23,
+            buttonPaddingLargeVertical: 7,
             lineWidth: 1,
             colorPrimary: Moin.Colors.blue6,
             colorBorder: Color(hex: 0xD9D9D9),
@@ -86,6 +121,12 @@ public extension Moin {
             RadioToken(
                 radioSize: 16,
                 dotSize: 8,
+                buttonPaddingXSHorizontal: 11,
+                buttonPaddingXSVertical: 3,
+                buttonPaddingDefaultHorizontal: 15,
+                buttonPaddingDefaultVertical: 5,
+                buttonPaddingLargeHorizontal: 23,
+                buttonPaddingLargeVertical: 7,
                 lineWidth: token.lineWidth,
                 colorPrimary: token.colorPrimary,
                 colorBorder: token.colorBorder,

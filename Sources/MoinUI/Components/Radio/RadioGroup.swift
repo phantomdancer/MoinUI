@@ -23,7 +23,8 @@ public extension Moin {
         let optionType: RadioOptionType
         let buttonStyle: RadioButtonStyle
         let block: Bool
-        
+        let size: RadioSize
+
         @State private var hoveredValue: Value?
 
         @Environment(\.moinRadioToken) private var radioToken
@@ -36,7 +37,8 @@ public extension Moin {
             disabled: Bool = false,
             optionType: RadioOptionType = .default,
             buttonStyle: RadioButtonStyle = .outline,
-            block: Bool = false
+            block: Bool = false,
+            size: RadioSize = .default
         ) {
             self._selection = selection
             self.options = options
@@ -45,6 +47,7 @@ public extension Moin {
             self.optionType = optionType
             self.buttonStyle = buttonStyle
             self.block = block
+            self.size = size
         }
 
         public init(
@@ -55,7 +58,8 @@ public extension Moin {
             disabled: Bool = false,
             optionType: RadioOptionType = .default,
             buttonStyle: RadioButtonStyle = .outline,
-            block: Bool = false
+            block: Bool = false,
+            size: RadioSize = .default
         ) {
             self._selection = selection
             self.options = options.map { RadioOption(label: labelProvider($0), value: $0) }
@@ -64,6 +68,7 @@ public extension Moin {
             self.optionType = optionType
             self.buttonStyle = buttonStyle
             self.block = block
+            self.size = size
         }
 
         /// Map-based initializer for complex configurations (similar to Ant Design options prop)
@@ -75,7 +80,8 @@ public extension Moin {
             disabled: Bool = false,
             optionType: RadioOptionType = .default,
             buttonStyle: RadioButtonStyle = .outline,
-            block: Bool = false
+            block: Bool = false,
+            size: RadioSize = .default
         ) {
             self._selection = selection
             self.direction = direction
@@ -83,6 +89,7 @@ public extension Moin {
             self.optionType = optionType
             self.buttonStyle = buttonStyle
             self.block = block
+            self.size = size
             self.options = mapOptions.compactMap { dict in
                 guard let label = dict["label"] as? String,
                       let value = dict["value"] as? Value else {
@@ -92,7 +99,7 @@ public extension Moin {
                 return RadioOption(label: label, value: value, disabled: disabled)
             }
         }
-        
+
         /// String-only Map initializer (specifically for when Value is String, avoiding Any casting issues)
         public init(
             selection: Binding<Value>,
@@ -101,7 +108,8 @@ public extension Moin {
             disabled: Bool = false,
             optionType: RadioOptionType = .default,
             buttonStyle: RadioButtonStyle = .outline,
-            block: Bool = false
+            block: Bool = false,
+            size: RadioSize = .default
         ) where Value == String {
             self._selection = selection
             self.direction = direction
@@ -109,6 +117,7 @@ public extension Moin {
             self.optionType = optionType
             self.buttonStyle = buttonStyle
             self.block = block
+            self.size = size
             self.options = stringMapOptions.compactMap { dict in
                 guard let label = dict["label"],
                       let value = dict["value"] else {
@@ -156,14 +165,14 @@ public extension Moin {
         private var buttonGroupBody: some View {
             // Button style: use negative spacing to overlap borders (margin-left: -1px equivalent)
             let spacing = -radioToken.lineWidth
-            let layout = direction == .horizontal 
-                ? AnyLayout(HStackLayout(spacing: spacing)) 
+            let layout = direction == .horizontal
+                ? AnyLayout(HStackLayout(spacing: spacing))
                 : AnyLayout(VStackLayout(spacing: spacing))
-            
+
             return layout {
                 ForEach(Array(options.enumerated()), id: \.element.id) { index, option in
                     let position = getPosition(index: index, count: options.count)
-                    
+
                     RadioButton(
                         checked: Binding(
                             get: { selection == option.value },
@@ -180,7 +189,8 @@ public extension Moin {
                         onHover: { isHovering in
                             hoveredValue = isHovering ? option.value : nil
                         },
-                        block: block
+                        block: block,
+                        size: size
                     ) {
                         Text(option.label)
                     }

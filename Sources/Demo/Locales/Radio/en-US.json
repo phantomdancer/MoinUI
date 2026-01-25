@@ -42,6 +42,11 @@
   "radio.button_style_desc": "The combination of radio button style.",
   "radio.button_outline": "Outline",
   "radio.button_solid": "Solid",
+  "radio.button_size": "Radio Button Size",
+  "radio.button_size_desc": "Radio button size variants.",
+  "radio.size_large": "Large",
+  "radio.size_default": "Default",
+  "radio.size_small": "Small",
   "radio.block": "Block",
   "radio.block_desc": "Radio buttons fill the container width."
 }

@@ -42,6 +42,11 @@
   "radio.button_style_desc": "按钮样式的单选组合。",
   "radio.button_outline": "描边",
   "radio.button_solid": "填色",
+  "radio.button_size": "按钮尺寸",
+  "radio.button_size_desc": "按钮尺寸变体。",
+  "radio.size_large": "大",
+  "radio.size_default": "默认",
+  "radio.size_small": "小",
   "radio.block": "填满整行",
   "radio.block_desc": "让单选按钮组撑满父容器宽度。"
 }

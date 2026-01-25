@@ -24,13 +24,14 @@ public extension Moin {
         let onHover: ((Bool) -> Void)?
         let label: Label
         let block: Bool
-        
+        let size: RadioSize
+
         @Environment(\.moinRadioToken) private var radioToken
         @Environment(\.moinToken) private var token
         @Environment(\.isEnabled) private var isEnabled
-        
+
         @State private var isHovering: Bool = false
-        
+
         public init(
             checked: Binding<Bool>,
             disabled: Bool = false,
@@ -39,6 +40,7 @@ public extension Moin {
             direction: Axis = .horizontal,
             onHover: ((Bool) -> Void)? = nil,
             block: Bool = false,
+            size: RadioSize = .default,
             @ViewBuilder label: () -> Label
         ) {
             self._checked = checked
@@ -48,6 +50,7 @@ public extension Moin {
             self.direction = direction
             self.onHover = onHover
             self.block = block
+            self.size = size
             self.label = label()
         }
         
@@ -138,7 +141,20 @@ public extension Moin {
         private var isEffectiveDisabled: Bool {
             !isEnabled || disabled
         }
-        
+
+        // MARK: - Size Configuration
+
+        private var paddings: (horizontal: CGFloat, vertical: CGFloat) {
+            switch size {
+            case .small:
+                return (radioToken.buttonPaddingXSHorizontal, radioToken.buttonPaddingXSVertical)
+            case .default:
+                return (radioToken.buttonPaddingDefaultHorizontal, radioToken.buttonPaddingDefaultVertical)
+            case .large:
+                return (radioToken.buttonPaddingLargeHorizontal, radioToken.buttonPaddingLargeVertical)
+            }
+        }
+
         // MARK: - Colors
         
         private var backgroundColor: Color {
@@ -176,8 +192,8 @@ public extension Moin {
                 .font(.system(size: token.fontSize))
                 .foregroundStyle(foregroundColor)
                 .frame(maxWidth: block ? .infinity : nil) // Expand only if block is true
-                .padding(.vertical, 5) // Approximate height control
-                .padding(.horizontal, 15)
+                .padding(.vertical, paddings.vertical)
+                .padding(.horizontal, paddings.horizontal)
                 .background(
                     SegmentedShape(position: position, direction: direction, radius: 6)
                         .fill(backgroundColor)

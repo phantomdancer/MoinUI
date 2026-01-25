@@ -38,6 +38,7 @@ struct RadioExamples: View {
         AnchorItem(id: "custom_view", titleKey: "radio.custom_view"),
         AnchorItem(id: "direction", titleKey: "radio.direction"),
         AnchorItem(id: "button_style", titleKey: "radio.button_style"),
+        AnchorItem(id: "button_size", titleKey: "radio.button_size"),
         AnchorItem(id: "block", titleKey: "radio.block")
     ]
     
@@ -95,6 +96,7 @@ struct RadioExamples: View {
             customLabelExample.id("custom_view")
             directionExample.id("direction")
             buttonStyleExample.id("button_style")
+            buttonSizeExample.id("button_size")
             blockExample.id("block")
         }
     }
@@ -466,6 +468,69 @@ struct RadioExamples: View {
                     options: options, 
                     optionType: .button, 
                     buttonStyle: .solid
+                )
+                """
+            }
+        )
+    }
+
+    // MARK: - Button Size Example
+    @State private var buttonSizeSelection = "Apple"
+    
+    private var buttonSizeExample: some View {
+        ExampleSection(
+            title: tr("radio.button_size"),
+            description: tr("radio.button_size_desc"),
+            content: {
+                VStack(alignment: .leading, spacing: 20) {
+                    Moin.RadioGroup(
+                        selection: $buttonSizeSelection,
+                        options: plainOptions,
+                        optionType: .button,
+                        size: .large
+                    )
+
+                    Moin.RadioGroup(
+                        selection: $buttonSizeSelection,
+                        options: plainOptions,
+                        optionType: .button,
+                        size: .default
+                    )
+
+                    Moin.RadioGroup(
+                        selection: $buttonSizeSelection,
+                        options: plainOptions,
+                        optionType: .button,
+                        size: .small
+                    )
+                }
+            },
+            code: {
+                """
+                @State private var selection = "Apple"
+
+                // Large
+                Moin.RadioGroup(
+                    selection: $selection,
+                    options: options,
+                    optionType: .button,
+                    size: .large
+                )
+
+                // Default
+                Moin.RadioGroup(
+                    selection: $selection,
+                    options: options,
+                    optionType: .button,
+                    size: .default
+                )
+
+                // Small
+                Moin.RadioGroup(
+                    selection: $selection,
+                    options: options,
+                    optionType: .button,
+                    size: .small
                 )
                 """
             }
