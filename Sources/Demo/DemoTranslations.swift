@@ -29,6 +29,7 @@ enum DemoTranslations {
         "Locales/Switch",
         "Locales/Checkbox",
         "Locales/Radio",
+        "Locales/Skeleton",
     ]
 
     static func register() {

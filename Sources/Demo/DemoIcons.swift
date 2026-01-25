@@ -35,6 +35,7 @@ struct DemoIcons {
     static let alert = "exclamationmark.triangle"
     static let spin = "arrow.trianglehead.2.counterclockwise.rotate.90"
     static let progress = "percent"
+    static let skeleton = "rectangle.dashed"
     
     // Other (Playground specific)
     static let seed = "leaf"

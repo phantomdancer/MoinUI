@@ -68,6 +68,9 @@
     "alert": "Alert",
     "switch": "Switch",
     "progress": "Progress",
+    "checkbox": "Checkbox",
+    "radio": "Radio",
+    "skeleton": "Skeleton",
     "colors": "Colors"
   },
   "home": {

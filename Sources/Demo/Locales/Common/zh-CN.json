@@ -68,6 +68,9 @@
     "alert": "Alert 警告提示",
     "switch": "Switch 开关",
     "progress": "Progress 进度条",
+    "checkbox": "Checkbox 多选框",
+    "radio": "Radio 单选框",
+    "skeleton": "Skeleton 骨架屏",
     "colors": "Colors 颜色集合"
   },
   "home": {

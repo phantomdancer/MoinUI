@@ -97,12 +97,9 @@ Button ✅, Typography ✅, Divider ✅, Space ✅, Tag ✅, Badge ✅, Avatar �
 ## 建议实现顺序
 
 ```
-已完成: Button → Typography → Divider → Space → Tag → Badge → Avatar → Empty → Spin → Statistic → Alert → Progress → Switch → Checkbox → Radio
+已完成: Button → Typography → Divider → Space → Tag → Badge → Avatar → Empty → Spin → Statistic → Alert → Progress → Switch → Checkbox → Radio → Skeleton
 
-下一批: Skeleton
-
-
-再下批: Radio
+下一批: Rate
 
 再下批: Rate → Slider → Input → Card → Collapse → Tabs
 
