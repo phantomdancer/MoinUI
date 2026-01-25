@@ -41,5 +41,7 @@
   "radio.button_style": "Radio Button Style",
   "radio.button_style_desc": "The combination of radio button style.",
   "radio.button_outline": "Outline",
-  "radio.button_solid": "Solid"
+  "radio.button_solid": "Solid",
+  "radio.block": "Block",
+  "radio.block_desc": "Radio buttons fill the container width."
 }

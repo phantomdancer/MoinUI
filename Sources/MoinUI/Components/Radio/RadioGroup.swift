@@ -22,6 +22,7 @@ public extension Moin {
         let disabled: Bool
         let optionType: RadioOptionType
         let buttonStyle: RadioButtonStyle
+        let block: Bool
         
         @State private var hoveredValue: Value?
 
@@ -34,7 +35,8 @@ public extension Moin {
             direction: Axis = .horizontal,
             disabled: Bool = false,
             optionType: RadioOptionType = .default,
-            buttonStyle: RadioButtonStyle = .outline
+            buttonStyle: RadioButtonStyle = .outline,
+            block: Bool = false
         ) {
             self._selection = selection
             self.options = options
@@ -42,6 +44,7 @@ public extension Moin {
             self.disabled = disabled
             self.optionType = optionType
             self.buttonStyle = buttonStyle
+            self.block = block
         }
 
         public init(
@@ -51,7 +54,8 @@ public extension Moin {
             direction: Axis = .horizontal,
             disabled: Bool = false,
             optionType: RadioOptionType = .default,
-            buttonStyle: RadioButtonStyle = .outline
+            buttonStyle: RadioButtonStyle = .outline,
+            block: Bool = false
         ) {
             self._selection = selection
             self.options = options.map { RadioOption(label: labelProvider($0), value: $0) }
@@ -59,6 +63,7 @@ public extension Moin {
             self.disabled = disabled
             self.optionType = optionType
             self.buttonStyle = buttonStyle
+            self.block = block
         }
 
         /// Map-based initializer for complex configurations (similar to Ant Design options prop)
@@ -69,13 +74,15 @@ public extension Moin {
             direction: Axis = .horizontal,
             disabled: Bool = false,
             optionType: RadioOptionType = .default,
-            buttonStyle: RadioButtonStyle = .outline
+            buttonStyle: RadioButtonStyle = .outline,
+            block: Bool = false
         ) {
             self._selection = selection
             self.direction = direction
             self.disabled = disabled
             self.optionType = optionType
             self.buttonStyle = buttonStyle
+            self.block = block
             self.options = mapOptions.compactMap { dict in
                 guard let label = dict["label"] as? String,
                       let value = dict["value"] as? Value else {
@@ -93,13 +100,15 @@ public extension Moin {
             direction: Axis = .horizontal,
             disabled: Bool = false,
             optionType: RadioOptionType = .default,
-            buttonStyle: RadioButtonStyle = .outline
+            buttonStyle: RadioButtonStyle = .outline,
+            block: Bool = false
         ) where Value == String {
             self._selection = selection
             self.direction = direction
             self.disabled = disabled
             self.optionType = optionType
             self.buttonStyle = buttonStyle
+            self.block = block
             self.options = stringMapOptions.compactMap { dict in
                 guard let label = dict["label"],
                       let value = dict["value"] else {
@@ -119,7 +128,10 @@ public extension Moin {
         }
         
         private var defaultBody: some View {
-            let layout = direction == .horizontal ? AnyLayout(HStackLayout(spacing: radioToken.wrapperMarginEnd)) : AnyLayout(VStackLayout(alignment: .leading, spacing: radioToken.wrapperMarginEnd))
+            let layoutSpacing = block ? 0 : radioToken.wrapperMarginEnd
+            let layout = direction == .horizontal 
+                ? AnyLayout(HStackLayout(spacing: layoutSpacing)) 
+                : AnyLayout(VStackLayout(alignment: .leading, spacing: layoutSpacing))
 
             return layout {
                 ForEach(options) { option in
@@ -136,6 +148,7 @@ public extension Moin {
                     ) {
                         Text(option.label)
                     }
+                    .frame(maxWidth: block ? .infinity : nil)
                 }
             }
         }
@@ -166,7 +179,8 @@ public extension Moin {
                         direction: direction,
                         onHover: { isHovering in
                             hoveredValue = isHovering ? option.value : nil
-                        }
+                        },
+                        block: block
                     ) {
                         Text(option.label)
                     }

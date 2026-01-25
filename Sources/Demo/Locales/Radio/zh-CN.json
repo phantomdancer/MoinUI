@@ -41,5 +41,7 @@
   "radio.button_style": "按钮样式",
   "radio.button_style_desc": "按钮样式的单选组合。",
   "radio.button_outline": "描边",
-  "radio.button_solid": "填色"
+  "radio.button_solid": "填色",
+  "radio.block": "填满整行",
+  "radio.block_desc": "让单选按钮组撑满父容器宽度。"
 }

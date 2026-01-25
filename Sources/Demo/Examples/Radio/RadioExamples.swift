@@ -37,7 +37,8 @@ struct RadioExamples: View {
         AnchorItem(id: "group_optional", titleKey: "radio.group_optional"),
         AnchorItem(id: "custom_view", titleKey: "radio.custom_view"),
         AnchorItem(id: "direction", titleKey: "radio.direction"),
-        AnchorItem(id: "button_style", titleKey: "radio.button_style")
+        AnchorItem(id: "button_style", titleKey: "radio.button_style"),
+        AnchorItem(id: "block", titleKey: "radio.block")
     ]
     
     var body: some View {
@@ -94,6 +95,7 @@ struct RadioExamples: View {
             customLabelExample.id("custom_view")
             directionExample.id("direction")
             buttonStyleExample.id("button_style")
+            blockExample.id("block")
         }
     }
     
@@ -459,6 +461,66 @@ struct RadioExamples: View {
                     options: options, 
                     optionType: .button, 
                     buttonStyle: .solid
+                )
+                """
+            }
+        )
+    }
+    
+    // MARK: - Block Example
+    @State private var blockSelection = "Apple"
+    
+    private var blockExample: some View {
+        ExampleSection(
+            title: tr("radio.block"),
+            description: tr("radio.block_desc"),
+            content: {
+                VStack(alignment: .leading, spacing: 20) {
+                    Moin.RadioGroup(
+                        selection: $blockSelection,
+                        options: plainOptions,
+                        block: true
+                    )
+                    
+                    Moin.RadioGroup(
+                        selection: $blockSelection,
+                        options: plainOptions,
+                        optionType: .button,
+                        block: true
+                    )
+                    
+                    Moin.RadioGroup(
+                        selection: $blockSelection,
+                        options: plainOptions,
+                        optionType: .button,
+                        buttonStyle: .solid,
+                        block: true
+                    )
+                }
+            },
+            code: {
+                """
+                @State private var selection = "Apple"
+
+                Moin.RadioGroup(
+                    selection: $selection, 
+                    options: options,
+                    block: true
+                )
+
+                Moin.RadioGroup(
+                    selection: $selection, 
+                    options: options, 
+                    optionType: .button,
+                    block: true
+                )
+                
+                Moin.RadioGroup(
+                    selection: $selection, 
+                    options: options, 
+                    optionType: .button,
+                    buttonStyle: .solid,
+                    block: true
                 )
                 """
             }

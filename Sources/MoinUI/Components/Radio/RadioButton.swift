@@ -23,6 +23,7 @@ public extension Moin {
         let direction: Axis
         let onHover: ((Bool) -> Void)?
         let label: Label
+        let block: Bool
         
         @Environment(\.moinRadioToken) private var radioToken
         @Environment(\.moinToken) private var token
@@ -37,6 +38,7 @@ public extension Moin {
             position: RadioButtonPosition = .single,
             direction: Axis = .horizontal,
             onHover: ((Bool) -> Void)? = nil,
+            block: Bool = false,
             @ViewBuilder label: () -> Label
         ) {
             self._checked = checked
@@ -45,6 +47,7 @@ public extension Moin {
             self.position = position
             self.direction = direction
             self.onHover = onHover
+            self.block = block
             self.label = label()
         }
         
@@ -172,7 +175,7 @@ public extension Moin {
             label
                 .font(.system(size: token.fontSize))
                 .foregroundStyle(foregroundColor)
-                .frame(maxWidth: .infinity) // Prepare for expanding, controlled by parent container mostly
+                .frame(maxWidth: block ? .infinity : nil) // Expand only if block is true
                 .padding(.vertical, 5) // Approximate height control
                 .padding(.horizontal, 15)
                 .background(
