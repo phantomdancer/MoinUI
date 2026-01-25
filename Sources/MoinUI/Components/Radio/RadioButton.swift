@@ -156,35 +156,41 @@ public extension Moin {
         }
 
         // MARK: - Colors
-        
+
         private var backgroundColor: Color {
             if isEffectiveDisabled {
-                return token.colorBgDisabled
+                if checked {
+                    return radioToken.buttonCheckedBgDisabled
+                }
+                return radioToken.buttonBg
             }
             if checked {
-                return buttonStyle == .solid ? token.colorPrimary : token.colorBgContainer
+                if buttonStyle == .solid {
+                    return isHovering ? radioToken.buttonSolidCheckedHoverBg : radioToken.buttonSolidCheckedBg
+                }
+                return radioToken.buttonCheckedBg
             }
-            return token.colorBgContainer
+            return radioToken.buttonBg
         }
-        
+
         private var foregroundColor: Color {
             if isEffectiveDisabled {
-                return token.colorTextDisabled
+                return radioToken.buttonCheckedColorDisabled
             }
             if checked {
-                return buttonStyle == .solid ? Color.white : token.colorPrimary
+                return buttonStyle == .solid ? radioToken.buttonSolidCheckedColor : radioToken.colorPrimary
             }
-            return isHovering ? token.colorPrimary : token.colorText
+            return isHovering ? radioToken.colorPrimary : radioToken.buttonColor
         }
-        
+
         private var borderColor: Color {
             if isEffectiveDisabled {
-                return token.colorBorder
+                return radioToken.colorBorder
             }
             if checked {
-                return token.colorPrimary
+                return buttonStyle == .solid ? radioToken.buttonSolidCheckedBg : radioToken.colorPrimary
             }
-            return isHovering ? token.colorPrimary : token.colorBorder
+            return isHovering ? radioToken.colorPrimary : radioToken.colorBorder
         }
         
         public var body: some View {

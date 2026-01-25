@@ -8,10 +8,16 @@ struct RadioAPIView: View {
 
     @State private var checkedState = false
     @State private var labelState = false
-    @State private var selection1: Int = 1
-    @State private var selection2: String = "London"
+    @State private var valueState1: Int = 1
+    @State private var valueState2: String = "London"
+    @State private var blockState: String = "A"
+    @State private var buttonStyleState: String = "A"
+    @State private var optionTypeState: String = "A"
+    @State private var sizeState: String = "A"
+    @State private var verticalState: String = "A"
 
     private let plainOptions = [1, 2, 3]
+    private let stringOptions = ["A", "B", "C"]
 
     private var objectOptions: [Moin.RadioOption<String>] {
         [
@@ -25,12 +31,12 @@ struct RadioAPIView: View {
         [
             DocSidebarSection(
                 title: tr("component.radio"),
-                items: ["checked", "isDisabled", "label"],
+                items: ["checked", "disabled", "label"],
                 sectionId: "radio"
             ),
             DocSidebarSection(
                 title: tr("radio.group"),
-                items: ["value", "options", "orientation", "groupDisabled"],
+                items: ["value", "options", "block", "buttonStyle", "optionType", "orientation", "size", "vertical", "groupDisabled"],
                 sectionId: "radiogroup"
             )
         ]
@@ -54,48 +60,57 @@ struct RadioAPIView: View {
     @ViewBuilder
     private func cardForItem(_ item: String) -> some View {
         switch item {
+        // Radio
         case "checked": checkedPropertyCard
-        case "isDisabled": disabledPropertyCard
+        case "disabled": disabledPropertyCard
         case "label": labelPropertyCard
+        // RadioGroup
         case "value": valuePropertyCard
         case "options": optionsPropertyCard
+        case "block": blockPropertyCard
+        case "buttonStyle": buttonStylePropertyCard
+        case "optionType": optionTypePropertyCard
         case "orientation": orientationPropertyCard
+        case "size": sizePropertyCard
+        case "vertical": verticalPropertyCard
         case "groupDisabled": groupDisabledPropertyCard
         default: EmptyView()
         }
     }
 
+    // MARK: - Radio API Cards
+
     private var checkedPropertyCard: some View {
         PropertyCard(
             name: "checked",
             type: "Binding<Bool>",
-            defaultValue: "-",
+            defaultValue: "false",
             description: tr("radio.api.checked"),
-            sectionId: "api"
+            sectionId: "radio"
         ) {
             Moin.Radio("Radio", checked: $checkedState)
         } code: {
             "Moin.Radio(\"Radio\", checked: $checked)"
         }
-        .scrollAnchor("api.checked")
+        .scrollAnchor("radio.checked")
     }
 
     private var disabledPropertyCard: some View {
         PropertyCard(
-            name: "isDisabled",
+            name: "disabled",
             type: "Bool",
             defaultValue: "false",
             description: tr("radio.api.disabled"),
-            sectionId: "api"
+            sectionId: "radio"
         ) {
-            HStack {
+            HStack(spacing: 16) {
                 Moin.Radio("Disabled", checked: .constant(false), disabled: true)
-                Moin.Radio("Checked Disabled", checked: .constant(true), disabled: true)
+                Moin.Radio("Checked", checked: .constant(true), disabled: true)
             }
         } code: {
             "Moin.Radio(\"Radio\", checked: $checked, disabled: true)"
         }
-        .scrollAnchor("api.isDisabled")
+        .scrollAnchor("radio.disabled")
     }
 
     private var labelPropertyCard: some View {
@@ -104,7 +119,7 @@ struct RadioAPIView: View {
             type: "View",
             defaultValue: "-",
             description: tr("radio.api.label"),
-            sectionId: "api"
+            sectionId: "radio"
         ) {
             Moin.Radio(checked: $labelState) {
                 HStack(spacing: 4) {
@@ -122,7 +137,7 @@ struct RadioAPIView: View {
             }
             """
         }
-        .scrollAnchor("api.label")
+        .scrollAnchor("radio.label")
     }
 
     // MARK: - RadioGroup API Cards
@@ -132,21 +147,20 @@ struct RadioAPIView: View {
             name: "value",
             type: "Binding<Value>",
             defaultValue: "-",
-            description: tr("radiogroup.api.selection"),
-            sectionId: "api"
+            description: tr("radiogroup.api.value"),
+            sectionId: "radiogroup"
         ) {
             VStack(alignment: .leading, spacing: Moin.Constants.Spacing.sm) {
-                Moin.RadioGroup(value: $selection1, options: plainOptions)
-                Text("Selected: \(selection1)")
+                Moin.RadioGroup(value: $valueState1, options: plainOptions)
+                Text("value: \(valueState1)")
                     .font(.caption)
                     .foregroundStyle(.secondary)
             }
         } code: {
             """
             @State private var value: Int = 1
-            let options = [1, 2, 3]
 
-            Moin.RadioGroup(value: $value, options: options)
+            Moin.RadioGroup(value: $value, options: [1, 2, 3])
             """
         }
         .scrollAnchor("radiogroup.value")
@@ -155,14 +169,14 @@ struct RadioAPIView: View {
     private var optionsPropertyCard: some View {
         PropertyCard(
             name: "options",
-            type: "[RadioOption<Value>]",
+            type: "[RadioOption<Value>] | [Value]",
             defaultValue: "-",
             description: tr("radiogroup.api.options"),
-            sectionId: "api"
+            sectionId: "radiogroup"
         ) {
             VStack(alignment: .leading, spacing: Moin.Constants.Spacing.sm) {
-                Moin.RadioGroup(value: $selection2, options: objectOptions)
-                Text("Selected: \(selection2)")
+                Moin.RadioGroup(value: $valueState2, options: objectOptions)
+                Text("value: \(valueState2)")
                     .font(.caption)
                     .foregroundStyle(.secondary)
             }
@@ -170,7 +184,8 @@ struct RadioAPIView: View {
             """
             let options: [Moin.RadioOption<String>] = [
                 .init(label: "London", value: "London"),
-                .init(label: "Paris", value: "Paris")
+                .init(label: "Paris", value: "Paris"),
+                .init(label: "New York", value: "New York")
             ]
 
             Moin.RadioGroup(value: $value, options: options)
@@ -179,36 +194,147 @@ struct RadioAPIView: View {
         .scrollAnchor("radiogroup.options")
     }
 
+    private var blockPropertyCard: some View {
+        PropertyCard(
+            name: "block",
+            type: "Bool",
+            defaultValue: "false",
+            description: tr("radiogroup.api.block"),
+            sectionId: "radiogroup"
+        ) {
+            VStack(alignment: .leading, spacing: 12) {
+                Moin.RadioGroup(
+                    value: $blockState,
+                    options: stringOptions,
+                    optionType: .button,
+                    block: true
+                )
+            }
+        } code: {
+            """
+            Moin.RadioGroup(
+                value: $value,
+                options: options,
+                optionType: .button,
+                block: true
+            )
+            """
+        }
+        .scrollAnchor("radiogroup.block")
+    }
+
+    private var buttonStylePropertyCard: some View {
+        PropertyCard(
+            name: "buttonStyle",
+            type: "RadioButtonStyle",
+            defaultValue: ".outline",
+            description: tr("radiogroup.api.buttonStyle"),
+            enumValues: ".outline | .solid",
+            sectionId: "radiogroup"
+        ) {
+            VStack(alignment: .leading, spacing: 12) {
+                Text("outline").font(.caption).foregroundStyle(.secondary)
+                Moin.RadioGroup(
+                    value: $buttonStyleState,
+                    options: stringOptions,
+                    optionType: .button,
+                    buttonStyle: .outline
+                )
+                Text("solid").font(.caption).foregroundStyle(.secondary)
+                Moin.RadioGroup(
+                    value: $buttonStyleState,
+                    options: stringOptions,
+                    optionType: .button,
+                    buttonStyle: .solid
+                )
+            }
+        } code: {
+            """
+            // outline (default)
+            Moin.RadioGroup(
+                value: $value,
+                options: options,
+                optionType: .button,
+                buttonStyle: .outline
+            )
+
+            // solid
+            Moin.RadioGroup(
+                value: $value,
+                options: options,
+                optionType: .button,
+                buttonStyle: .solid
+            )
+            """
+        }
+        .scrollAnchor("radiogroup.buttonStyle")
+    }
+
+    private var optionTypePropertyCard: some View {
+        PropertyCard(
+            name: "optionType",
+            type: "RadioOptionType",
+            defaultValue: ".default",
+            description: tr("radiogroup.api.optionType"),
+            enumValues: ".default | .button",
+            sectionId: "radiogroup"
+        ) {
+            VStack(alignment: .leading, spacing: 12) {
+                Text("default").font(.caption).foregroundStyle(.secondary)
+                Moin.RadioGroup(
+                    value: $optionTypeState,
+                    options: stringOptions,
+                    optionType: .default
+                )
+                Text("button").font(.caption).foregroundStyle(.secondary)
+                Moin.RadioGroup(
+                    value: $optionTypeState,
+                    options: stringOptions,
+                    optionType: .button
+                )
+            }
+        } code: {
+            """
+            // default
+            Moin.RadioGroup(value: $value, options: options)
+
+            // button
+            Moin.RadioGroup(
+                value: $value,
+                options: options,
+                optionType: .button
+            )
+            """
+        }
+        .scrollAnchor("radiogroup.optionType")
+    }
+
     private var orientationPropertyCard: some View {
         PropertyCard(
             name: "orientation",
             type: "Axis",
             defaultValue: ".horizontal",
-            description: tr("radiogroup.api.direction"),
-            enumValues: ".vertical | .horizontal",
-            sectionId: "api"
+            description: tr("radiogroup.api.orientation"),
+            enumValues: ".horizontal | .vertical",
+            sectionId: "radiogroup"
         ) {
-            VStack(alignment: .leading, spacing: Moin.Constants.Spacing.md) {
-                Text("Vertical")
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
-                Moin.RadioGroup(
-                    value: Binding.constant(1),
-                    options: plainOptions,
-                    orientation: .vertical
-                )
-
-                Divider()
-                    .padding(.vertical, Moin.Constants.Spacing.sm)
-
-                Text("Horizontal")
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
-                Moin.RadioGroup(
-                    value: Binding.constant(1),
-                    options: plainOptions,
-                    orientation: .horizontal
-                )
+            HStack(alignment: .top, spacing: 32) {
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("horizontal").font(.caption).foregroundStyle(.secondary)
+                    Moin.RadioGroup(
+                        value: Binding.constant(1),
+                        options: plainOptions,
+                        orientation: .horizontal
+                    )
+                }
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("vertical").font(.caption).foregroundStyle(.secondary)
+                    Moin.RadioGroup(
+                        value: Binding.constant(1),
+                        options: plainOptions,
+                        orientation: .vertical
+                    )
+                }
             }
         } code: {
             """
@@ -222,13 +348,93 @@ struct RadioAPIView: View {
         .scrollAnchor("radiogroup.orientation")
     }
 
+    private var sizePropertyCard: some View {
+        PropertyCard(
+            name: "size",
+            type: "RadioSize",
+            defaultValue: ".middle",
+            description: tr("radiogroup.api.size"),
+            enumValues: ".large | .middle | .small",
+            sectionId: "radiogroup"
+        ) {
+            VStack(alignment: .leading, spacing: 12) {
+                HStack(spacing: 8) {
+                    Text("large").font(.caption).foregroundStyle(.secondary).frame(width: 50, alignment: .leading)
+                    Moin.RadioGroup(
+                        value: $sizeState,
+                        options: stringOptions,
+                        optionType: .button,
+                        size: .large
+                    )
+                }
+                HStack(spacing: 8) {
+                    Text("middle").font(.caption).foregroundStyle(.secondary).frame(width: 50, alignment: .leading)
+                    Moin.RadioGroup(
+                        value: $sizeState,
+                        options: stringOptions,
+                        optionType: .button,
+                        size: .middle
+                    )
+                }
+                HStack(spacing: 8) {
+                    Text("small").font(.caption).foregroundStyle(.secondary).frame(width: 50, alignment: .leading)
+                    Moin.RadioGroup(
+                        value: $sizeState,
+                        options: stringOptions,
+                        optionType: .button,
+                        size: .small
+                    )
+                }
+            }
+        } code: {
+            """
+            Moin.RadioGroup(
+                value: $value,
+                options: options,
+                optionType: .button,
+                size: .large  // .middle | .small
+            )
+            """
+        }
+        .scrollAnchor("radiogroup.size")
+    }
+
+    private var verticalPropertyCard: some View {
+        PropertyCard(
+            name: "vertical",
+            type: "Bool",
+            defaultValue: "false",
+            description: tr("radiogroup.api.vertical"),
+            sectionId: "radiogroup"
+        ) {
+            Moin.RadioGroup(
+                value: $verticalState,
+                options: [
+                    .init(label: "A", value: "A"),
+                    .init(label: "B", value: "B"),
+                    .init(label: "C", value: "C")
+                ],
+                vertical: true
+            )
+        } code: {
+            """
+            Moin.RadioGroup(
+                value: $value,
+                options: options,
+                vertical: true
+            )
+            """
+        }
+        .scrollAnchor("radiogroup.vertical")
+    }
+
     private var groupDisabledPropertyCard: some View {
         PropertyCard(
-            name: "isDisabled",
+            name: "disabled",
             type: "Bool",
             defaultValue: "false",
             description: tr("radiogroup.api.isDisabled"),
-            sectionId: "api"
+            sectionId: "radiogroup"
         ) {
             Moin.RadioGroup(
                 value: Binding.constant(1),
@@ -238,6 +444,6 @@ struct RadioAPIView: View {
         } code: {
             "Moin.RadioGroup(value: $value, options: options, disabled: true)"
         }
-        .scrollAnchor("radiogroup.isDisabled")
+        .scrollAnchor("radiogroup.disabled")
     }
 }
