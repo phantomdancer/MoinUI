@@ -422,7 +422,7 @@ struct RadioExamples: View {
                         
                         Moin.RadioGroup(
                             selection: $buttonStyleSelection,
-                            options: plainOptions,
+                            options: buttonOptions,
                             optionType: .button // Default buttonStyle is .outline
                         )
                     }
@@ -435,7 +435,7 @@ struct RadioExamples: View {
                         
                         Moin.RadioGroup(
                             selection: $buttonStyleSelection,
-                            options: plainOptions,
+                            options: buttonOptions,
                             optionType: .button,
                             buttonStyle: .solid
                         )
@@ -446,6 +446,12 @@ struct RadioExamples: View {
             code: {
                 """
                 @State private var selection = "Apple"
+
+                let options: [Moin.RadioOption<String>] = [
+                    .init(label: "\(tr("radio.apple"))", value: "Apple"),
+                    .init(label: "\(tr("radio.pear"))", value: "Pear"),
+                    .init(label: "\(tr("radio.orange"))", value: "Orange", disabled: true)
+                ]
 
                 // Outline (Default Button Style)
                 Moin.RadioGroup(
@@ -464,6 +470,14 @@ struct RadioExamples: View {
                 """
             }
         )
+    }
+    
+    private var buttonOptions: [Moin.RadioOption<String>] {
+        [
+            .init(label: tr("radio.apple"), value: "Apple"),
+            .init(label: tr("radio.pear"), value: "Pear"),
+            .init(label: tr("radio.orange"), value: "Orange", disabled: true)
+        ]
     }
     
     // MARK: - Block Example
