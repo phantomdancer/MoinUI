@@ -262,16 +262,15 @@ struct RadioExamples: View {
             description: tr("radio.group_desc"),
             content: {
                 VStack(alignment: .leading, spacing: 20) {
-                    Moin.RadioGroup(selection: Binding(
-                        get: { optionalSelection ?? "" },
-                        set: { optionalSelection = $0 }
-                    ), options: optionsWithDisabled)
-                    
-                    Text("Selected: \(optionalSelection ?? "nil")")
-                        .foregroundStyle(.secondary)
-                    
-                    Moin.Button(tr("radio.clear_selection")) {
-                         optionalSelection = nil
+                    HStack(spacing: 10) {
+                        Moin.RadioGroup(selection: Binding(
+                            get: { optionalSelection ?? "" },
+                            set: { optionalSelection = $0 }
+                        ), options: optionsWithDisabled)
+                        
+                        Moin.Button(tr("radio.clear_selection")) {
+                            optionalSelection = nil
+                        }
                     }
                 }
             },
@@ -415,7 +414,7 @@ struct RadioExamples: View {
             title: tr("radio.button_style"),
             description: tr("radio.button_style_desc"),
             content: {
-                VStack(alignment: .leading, spacing: 20) {
+                HStack(alignment: .top, spacing: 40) {
                     VStack(alignment: .leading, spacing: 10) {
                         Text(tr("radio.button_outline"))
                             .font(.caption)
@@ -427,8 +426,7 @@ struct RadioExamples: View {
                             optionType: .button // Default buttonStyle is .outline
                         )
                     }
-                    
-                    Moin.Divider()
+                    .frame(maxWidth: .infinity, alignment: .topLeading)
                     
                     VStack(alignment: .leading, spacing: 10) {
                         Text(tr("radio.button_solid"))
@@ -442,6 +440,7 @@ struct RadioExamples: View {
                             buttonStyle: .solid
                         )
                     }
+                    .frame(maxWidth: .infinity, alignment: .topLeading)
                 }
             },
             code: {
