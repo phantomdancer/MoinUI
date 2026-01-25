@@ -10,6 +10,8 @@ struct RadioTokenView: View {
 
     // MARK: - Interactive States for TOKEN previews
     @State var checked = true
+    @State var buttonValue: String = "A"
+    @State var groupValue: Int = 1
 
     // MARK: - Token Sections (Component Token first, then Global Token)
 

@@ -82,7 +82,7 @@ extension RadioTokenView {
             sectionId: "component"
         ) {
             HStack(spacing: Moin.Constants.Spacing.md) {
-                Moin.RadioGroup(value: Binding.constant(1), options: [1, 2, 3])
+                Moin.RadioGroup(value: $groupValue, options: [1, 2, 3])
                     .id(config.components.radio.wrapperMarginInlineEnd)
             }
         } editor: {
@@ -105,7 +105,7 @@ extension RadioTokenView {
             sectionId: "component"
         ) {
             Moin.RadioGroup(
-                value: Binding.constant("A"),
+                value: $buttonValue,
                 options: ["A", "B", "C"],
                 optionType: .button
             )
@@ -127,7 +127,7 @@ extension RadioTokenView {
             sectionId: "component"
         ) {
             Moin.RadioGroup(
-                value: Binding.constant("A"),
+                value: $buttonValue,
                 options: ["A", "B", "C"],
                 optionType: .button,
                 buttonStyle: .outline
@@ -150,7 +150,7 @@ extension RadioTokenView {
             sectionId: "component"
         ) {
             Moin.RadioGroup(
-                value: Binding.constant("A"),
+                value: $buttonValue,
                 options: ["A", "B", "C"],
                 disabled: true,
                 optionType: .button
@@ -173,7 +173,7 @@ extension RadioTokenView {
             sectionId: "component"
         ) {
             Moin.RadioGroup(
-                value: Binding.constant("A"),
+                value: $buttonValue,
                 options: ["A", "B", "C"],
                 disabled: true,
                 optionType: .button
@@ -196,7 +196,7 @@ extension RadioTokenView {
             sectionId: "component"
         ) {
             Moin.RadioGroup(
-                value: Binding.constant("B"),
+                value: $buttonValue,
                 options: ["A", "B", "C"],
                 optionType: .button
             )
@@ -246,7 +246,7 @@ extension RadioTokenView {
             sectionId: "component"
         ) {
             Moin.RadioGroup(
-                value: Binding.constant("A"),
+                value: $buttonValue,
                 options: ["A", "B", "C"],
                 optionType: .button,
                 buttonStyle: .solid
@@ -269,7 +269,7 @@ extension RadioTokenView {
             sectionId: "component"
         ) {
             Moin.RadioGroup(
-                value: Binding.constant("A"),
+                value: $buttonValue,
                 options: ["A", "B", "C"],
                 optionType: .button,
                 buttonStyle: .solid
@@ -292,7 +292,7 @@ extension RadioTokenView {
             sectionId: "component"
         ) {
             Moin.RadioGroup(
-                value: Binding.constant("A"),
+                value: $buttonValue,
                 options: ["A", "B", "C"],
                 optionType: .button,
                 buttonStyle: .solid
@@ -315,7 +315,7 @@ extension RadioTokenView {
             sectionId: "component"
         ) {
             Moin.RadioGroup(
-                value: Binding.constant("A"),
+                value: $buttonValue,
                 options: ["A", "B", "C"],
                 optionType: .button,
                 buttonStyle: .solid
