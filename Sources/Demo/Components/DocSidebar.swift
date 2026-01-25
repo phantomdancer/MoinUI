@@ -1,16 +1,41 @@
 import SwiftUI
 import MoinUI
 
+/// Sidebar Navigation Item Model
+struct DocSidebarItem: Identifiable, Equatable {
+    var id: String          // 内部 ID，用于锚点和匹配
+    var displayName: String // 显示名称，用于 UI 展示
+
+    init(id: String, displayName: String? = nil) {
+        self.id = id
+        self.displayName = displayName ?? id
+    }
+}
+
 /// Sidebar Navigation Section Model
 struct DocSidebarSection: Identifiable {
     let id = UUID()
     let title: String
-    let items: [String] // Items will be sorted automatically by DocSidebar
+    let items: [DocSidebarItem]
     let sectionId: String // Prefix for anchor, e.g. "api" or "token"
-    
+
+    /// 便捷初始化：直接传入字符串数组（id 和 displayName 相同）
+    init(title: String, items: [String], sectionId: String) {
+        self.title = title
+        self.items = items.map { DocSidebarItem(id: $0) }
+        self.sectionId = sectionId
+    }
+
+    /// 完整初始化：传入 DocSidebarItem 数组
+    init(title: String, items: [DocSidebarItem], sectionId: String) {
+        self.title = title
+        self.items = items
+        self.sectionId = sectionId
+    }
+
     /// 返回排序后的 items，供主内容区和侧边栏共用
-    var sortedItems: [String] {
-        items.sorted()
+    var sortedItems: [DocSidebarItem] {
+        items.sorted { $0.displayName < $1.displayName }
     }
 }
 
@@ -86,9 +111,9 @@ struct DocSidebar<Footer: View>: View {
         .background(Color(nsColor: .controlBackgroundColor))
     }
 
-    private func navSection(title: String, items: [String], sectionId: String) -> some View {
-        let sortedItems = items.sorted()
-        let filteredItems = searchText.isEmpty ? sortedItems : sortedItems.filter { $0.localizedCaseInsensitiveContains(searchText) }
+    private func navSection(title: String, items: [DocSidebarItem], sectionId: String) -> some View {
+        let sortedItems = items.sorted { $0.displayName < $1.displayName }
+        let filteredItems = searchText.isEmpty ? sortedItems : sortedItems.filter { $0.displayName.localizedCaseInsensitiveContains(searchText) }
 
         return Group {
             if !filteredItems.isEmpty {
@@ -98,21 +123,18 @@ struct DocSidebar<Footer: View>: View {
                         .foregroundStyle(.secondary)
                         .padding(.vertical, Moin.Constants.Spacing.xs)
 
-                    ForEach(filteredItems, id: \.self) { item in
-                        navItem(name: item, sectionId: sectionId)
+                    ForEach(filteredItems) { item in
+                        navItem(item: item, sectionId: sectionId)
                     }
                 }
                 .padding(.bottom, Moin.Constants.Spacing.md)
             }
         }
     }
-    
-    private func navItem(name: String, sectionId: String) -> some View {
-        let parts = name.split(separator: "|", maxSplits: 1).map(String.init)
-        let realName = parts[0]
-        let label = parts.count > 1 ? parts[1] : realName
-        let itemId = "\(sectionId).\(realName)"
-        
+
+    private func navItem(item: DocSidebarItem, sectionId: String) -> some View {
+        let itemId = "\(sectionId).\(item.id)"
+
         return Button {
             selectedItemId = itemId
             targetScrollId = itemId
@@ -121,7 +143,7 @@ struct DocSidebar<Footer: View>: View {
                 Circle()
                     .fill(selectedItemId == itemId ? config.token.colorPrimary : Color.secondary.opacity(0.3))
                     .frame(width: 6, height: 6)
-                Text(label)
+                Text(item.displayName)
                     .font(.system(size: 12, design: .monospaced))
                     .foregroundStyle(selectedItemId == itemId ? config.token.colorPrimary : .primary)
                 Spacer()

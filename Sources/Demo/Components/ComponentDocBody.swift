@@ -60,10 +60,8 @@ struct ComponentDocBody<ItemView: View, HeaderView: View, Footer: View>: View {
                             ForEach(group.sections) { section in
                                 // We flatten sub-sections (like "Style", "Feature") here, 
                                 // only displaying their items.
-                                ForEach(section.sortedItems, id: \.self) { item in
-                                    // Extract ID part (before |) for itemBuilder
-                                    let itemId = item.split(separator: "|", maxSplits: 1).first.map(String.init) ?? item
-                                    itemBuilder(itemId)
+                                ForEach(section.sortedItems) { item in
+                                    itemBuilder(item.id)
                                 }
                             }
                             

@@ -79,7 +79,8 @@ struct ButtonTokenView: View {
                     .fontWeight(.semibold)
             }
         } item: { item in
-            if globalSections.flatMap({ $0.items }).contains(item) {
+            let globalItemIds = globalSections.flatMap { $0.items.map { $0.id } }
+            if globalItemIds.contains(item) {
                  cardForItem(item, sectionId: "global")
             } else {
                  cardForItem(item, sectionId: "component")

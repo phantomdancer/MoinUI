@@ -10,45 +10,51 @@ struct RadioTokenView: View {
 
     // MARK: - Interactive States for TOKEN previews
     @State var checked = true
-    
-    // MARK: - Token Sections
+
+    // MARK: - Token Sections (Component Token first, then Global Token)
 
     private var tokenSections: [DocSidebarSection] {
         [
-            DocSidebarSection(
-                title: tr("token.radio.global"),
-                items: [
-                    // Colors - Primary
-                    "colorPrimary",
-                    // Colors - Border & Background
-                    "colorBorder",
-                    "colorBgContainer",
-                    "radioColor",
-                    // Colors - Disabled
-                    "colorBgContainerDisabled",
-                    "colorBorderDisabled",
-                    "colorTextDisabled",
-                    "dotColorDisabled",
-                    // Sizes & Borders
-                    "radioSize",
-                    "dotSize",
-                    "lineWidth",
-                    // Spacing
-                    "paddingXS",
-                    "wrapperMarginInlineEnd",
-                    // Motion
-                    "motionDurationMid",
-                    "motionDurationSlow"
-                ],
-                sectionId: "global"
-            ),
+            // Component Token (在上)
             DocSidebarSection(
                 title: tr("token.radio.component"),
                 items: [
+                    // Button Tokens
+                    "buttonBg",
+                    "buttonCheckedBg",
+                    "buttonCheckedBgDisabled",
+                    "buttonCheckedColorDisabled",
+                    "buttonColor",
+                    "buttonPaddingInline",
+                    "buttonSolidCheckedActiveBg",
+                    "buttonSolidCheckedBg",
+                    "buttonSolidCheckedColor",
+                    "buttonSolidCheckedHoverBg",
+                    // Radio Tokens
+                    "dotColorDisabled",
+                    "dotSize",
                     "radioSize",
-                    "dotSize"
+                    "wrapperMarginInlineEnd"
                 ],
                 sectionId: "component"
+            ),
+            // Global Token (在下)
+            DocSidebarSection(
+                title: tr("token.radio.global"),
+                items: [
+                    "colorBgContainer",
+                    "colorBgContainerDisabled",
+                    "colorBorder",
+                    "colorPrimary",
+                    "colorPrimaryHover",
+                    "colorText",
+                    "colorTextDisabled",
+                    "lineWidth",
+                    "motionDurationMid",
+                    "motionDurationSlow",
+                    "paddingXS"
+                ],
+                sectionId: "global"
             )
         ]
     }
@@ -69,14 +75,14 @@ struct RadioTokenView: View {
     var body: some View {
         ComponentDocBody(
             sections: tokenSections,
-            initialItemId: "global"
+            initialItemId: "component"
         ) { sectionId in
-            if sectionId == "global" {
-                Text(tr("token.radio.global"))
+            if sectionId == "component" {
+                Text(tr("token.radio.component"))
                     .font(.title3)
                     .fontWeight(.semibold)
-            } else if sectionId == "component" {
-                Text(tr("token.radio.component"))
+            } else if sectionId == "global" {
+                Text(tr("token.radio.global"))
                     .font(.title3)
                     .fontWeight(.semibold)
             }
@@ -104,21 +110,33 @@ struct RadioTokenView: View {
     @ViewBuilder
     private func cardForItem(_ item: String) -> some View {
         switch item {
-        case "colorPrimary": AnyView(colorPrimaryGlobalTokenCard)
-        case "colorBorder": AnyView(colorBorderGlobalTokenCard)
+        // Component Tokens
+        case "buttonBg": AnyView(buttonBgTokenCard)
+        case "buttonCheckedBg": AnyView(buttonCheckedBgTokenCard)
+        case "buttonCheckedBgDisabled": AnyView(buttonCheckedBgDisabledTokenCard)
+        case "buttonCheckedColorDisabled": AnyView(buttonCheckedColorDisabledTokenCard)
+        case "buttonColor": AnyView(buttonColorTokenCard)
+        case "buttonPaddingInline": AnyView(buttonPaddingInlineTokenCard)
+        case "buttonSolidCheckedActiveBg": AnyView(buttonSolidCheckedActiveBgTokenCard)
+        case "buttonSolidCheckedBg": AnyView(buttonSolidCheckedBgTokenCard)
+        case "buttonSolidCheckedColor": AnyView(buttonSolidCheckedColorTokenCard)
+        case "buttonSolidCheckedHoverBg": AnyView(buttonSolidCheckedHoverBgTokenCard)
+        case "dotColorDisabled": AnyView(dotColorDisabledTokenCard)
+        case "dotSize": AnyView(dotSizeTokenCard)
+        case "radioSize": AnyView(radioSizeTokenCard)
+        case "wrapperMarginInlineEnd": AnyView(wrapperMarginInlineEndTokenCard)
+        // Global Tokens
         case "colorBgContainer": AnyView(colorBgContainerGlobalTokenCard)
-        case "radioColor": AnyView(radioColorGlobalTokenCard)
         case "colorBgContainerDisabled": AnyView(colorBgContainerDisabledGlobalTokenCard)
-        case "colorBorderDisabled": AnyView(colorBorderDisabledGlobalTokenCard)
+        case "colorBorder": AnyView(colorBorderGlobalTokenCard)
+        case "colorPrimary": AnyView(colorPrimaryGlobalTokenCard)
+        case "colorPrimaryHover": AnyView(colorPrimaryHoverGlobalTokenCard)
+        case "colorText": AnyView(colorTextGlobalTokenCard)
         case "colorTextDisabled": AnyView(colorTextDisabledGlobalTokenCard)
-        case "dotColorDisabled": AnyView(dotColorDisabledGlobalTokenCard)
-        case "radioSize": AnyView(radioSizeGlobalTokenCard)
-        case "dotSize": AnyView(dotSizeGlobalTokenCard)
         case "lineWidth": AnyView(lineWidthGlobalTokenCard)
-        case "paddingXS": AnyView(paddingXSGlobalTokenCard)
-        case "wrapperMarginInlineEnd": AnyView(wrapperMarginInlineEndGlobalTokenCard)
         case "motionDurationMid": AnyView(motionDurationMidGlobalTokenCard)
         case "motionDurationSlow": AnyView(motionDurationSlowGlobalTokenCard)
+        case "paddingXS": AnyView(paddingXSGlobalTokenCard)
         default: AnyView(EmptyView())
         }
     }

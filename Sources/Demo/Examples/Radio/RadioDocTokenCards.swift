@@ -7,7 +7,7 @@ extension RadioTokenView {
 
     // MARK: - Component Tokens
 
-    var radioSizeGlobalTokenCard: some View {
+    var radioSizeTokenCard: some View {
         TokenCard(
             name: "radioSize",
             type: "CGFloat",
@@ -24,7 +24,6 @@ extension RadioTokenView {
             }
         } editor: {
             TokenValueRow(label: "radioSize", value: $config.components.radio.radioSize, range: 12...32) {
-                // Direct update
             }
         } code: {
             "config.components.radio.radioSize = \(Int(config.components.radio.radioSize))"
@@ -32,7 +31,7 @@ extension RadioTokenView {
         .scrollAnchor("component.radioSize")
     }
 
-    var dotSizeGlobalTokenCard: some View {
+    var dotSizeTokenCard: some View {
         TokenCard(
             name: "dotSize",
             type: "CGFloat",
@@ -49,7 +48,6 @@ extension RadioTokenView {
             }
         } editor: {
             TokenValueRow(label: "dotSize", value: $config.components.radio.dotSize, range: 4...16) {
-                // Direct update
             }
         } code: {
             "config.components.radio.dotSize = \(Int(config.components.radio.dotSize))"
@@ -57,9 +55,281 @@ extension RadioTokenView {
         .scrollAnchor("component.dotSize")
     }
 
-    // MARK: - Global Tokens
+    var dotColorDisabledTokenCard: some View {
+        TokenCard(
+            name: "dotColorDisabled",
+            type: "Color",
+            defaultValue: "rgba(0,0,0,0.25)",
+            description: tr("doc.component.dotColorDisabled"),
+            sectionId: "component"
+        ) {
+            Moin.Radio("Radio", checked: .constant(true), disabled: true)
+        } editor: {
+            ColorPresetRow(label: "dotColorDisabled", color: $config.components.radio.dotColorDisabled) {
+            }
+        } code: {
+            "config.components.radio.dotColorDisabled = ..."
+        }
+        .scrollAnchor("component.dotColorDisabled")
+    }
 
-    // MARK: - Primary Colors
+    var wrapperMarginInlineEndTokenCard: some View {
+        TokenCard(
+            name: "wrapperMarginInlineEnd",
+            type: "CGFloat",
+            defaultValue: "8",
+            description: tr("doc.component.wrapperMarginInlineEnd"),
+            sectionId: "component"
+        ) {
+            HStack(spacing: Moin.Constants.Spacing.md) {
+                Moin.RadioGroup(value: Binding.constant(1), options: [1, 2, 3])
+                    .id(config.components.radio.wrapperMarginInlineEnd)
+            }
+        } editor: {
+            TokenValueRow(label: "wrapperMarginInlineEnd", value: $config.components.radio.wrapperMarginInlineEnd, range: 0...24) {
+            }
+        } code: {
+            "config.components.radio.wrapperMarginInlineEnd = \(Int(config.components.radio.wrapperMarginInlineEnd))"
+        }
+        .scrollAnchor("component.wrapperMarginInlineEnd")
+    }
+
+    // MARK: - Button Style Component Tokens
+
+    var buttonBgTokenCard: some View {
+        TokenCard(
+            name: "buttonBg",
+            type: "Color",
+            defaultValue: "#ffffff",
+            description: tr("doc.component.buttonBg"),
+            sectionId: "component"
+        ) {
+            Moin.RadioGroup(
+                value: Binding.constant("A"),
+                options: ["A", "B", "C"],
+                optionType: .button
+            )
+        } editor: {
+            ColorPresetRow(label: "buttonBg", color: $config.components.radio.buttonBg) {
+            }
+        } code: {
+            "config.components.radio.buttonBg = ..."
+        }
+        .scrollAnchor("component.buttonBg")
+    }
+
+    var buttonCheckedBgTokenCard: some View {
+        TokenCard(
+            name: "buttonCheckedBg",
+            type: "Color",
+            defaultValue: "#ffffff",
+            description: tr("doc.component.buttonCheckedBg"),
+            sectionId: "component"
+        ) {
+            Moin.RadioGroup(
+                value: Binding.constant("A"),
+                options: ["A", "B", "C"],
+                optionType: .button,
+                buttonStyle: .outline
+            )
+        } editor: {
+            ColorPresetRow(label: "buttonCheckedBg", color: $config.components.radio.buttonCheckedBg) {
+            }
+        } code: {
+            "config.components.radio.buttonCheckedBg = ..."
+        }
+        .scrollAnchor("component.buttonCheckedBg")
+    }
+
+    var buttonCheckedBgDisabledTokenCard: some View {
+        TokenCard(
+            name: "buttonCheckedBgDisabled",
+            type: "Color",
+            defaultValue: "#f5f5f5",
+            description: tr("doc.component.buttonCheckedBgDisabled"),
+            sectionId: "component"
+        ) {
+            Moin.RadioGroup(
+                value: Binding.constant("A"),
+                options: ["A", "B", "C"],
+                disabled: true,
+                optionType: .button
+            )
+        } editor: {
+            ColorPresetRow(label: "buttonCheckedBgDisabled", color: $config.components.radio.buttonCheckedBgDisabled) {
+            }
+        } code: {
+            "config.components.radio.buttonCheckedBgDisabled = ..."
+        }
+        .scrollAnchor("component.buttonCheckedBgDisabled")
+    }
+
+    var buttonCheckedColorDisabledTokenCard: some View {
+        TokenCard(
+            name: "buttonCheckedColorDisabled",
+            type: "Color",
+            defaultValue: "rgba(0,0,0,0.25)",
+            description: tr("doc.component.buttonCheckedColorDisabled"),
+            sectionId: "component"
+        ) {
+            Moin.RadioGroup(
+                value: Binding.constant("A"),
+                options: ["A", "B", "C"],
+                disabled: true,
+                optionType: .button
+            )
+        } editor: {
+            ColorPresetRow(label: "buttonCheckedColorDisabled", color: $config.components.radio.buttonCheckedColorDisabled) {
+            }
+        } code: {
+            "config.components.radio.buttonCheckedColorDisabled = ..."
+        }
+        .scrollAnchor("component.buttonCheckedColorDisabled")
+    }
+
+    var buttonColorTokenCard: some View {
+        TokenCard(
+            name: "buttonColor",
+            type: "Color",
+            defaultValue: "rgba(0,0,0,0.88)",
+            description: tr("doc.component.buttonColor"),
+            sectionId: "component"
+        ) {
+            Moin.RadioGroup(
+                value: Binding.constant("B"),
+                options: ["A", "B", "C"],
+                optionType: .button
+            )
+        } editor: {
+            ColorPresetRow(label: "buttonColor", color: $config.components.radio.buttonColor) {
+            }
+        } code: {
+            "config.components.radio.buttonColor = ..."
+        }
+        .scrollAnchor("component.buttonColor")
+    }
+
+    var buttonPaddingInlineTokenCard: some View {
+        TokenCard(
+            name: "buttonPaddingInline",
+            type: "CGFloat",
+            defaultValue: "15",
+            description: tr("doc.component.buttonPaddingInline"),
+            sectionId: "component"
+        ) {
+            HStack(spacing: Moin.Constants.Spacing.md) {
+                Moin.RadioGroup(
+                    value: Binding.constant("A"),
+                    options: ["A", "B", "C"],
+                    optionType: .button
+                )
+                .id(config.components.radio.buttonPaddingInline)
+                Text("padding: \(Int(config.components.radio.buttonPaddingInline))px")
+                    .font(.system(size: 11, design: .monospaced))
+                    .foregroundStyle(.secondary)
+            }
+        } editor: {
+            TokenValueRow(label: "buttonPaddingInline", value: $config.components.radio.buttonPaddingInline, range: 8...32) {
+            }
+        } code: {
+            "config.components.radio.buttonPaddingInline = \(Int(config.components.radio.buttonPaddingInline))"
+        }
+        .scrollAnchor("component.buttonPaddingInline")
+    }
+
+    var buttonSolidCheckedActiveBgTokenCard: some View {
+        TokenCard(
+            name: "buttonSolidCheckedActiveBg",
+            type: "Color",
+            defaultValue: "#0958d9",
+            description: tr("doc.component.buttonSolidCheckedActiveBg"),
+            sectionId: "component"
+        ) {
+            Moin.RadioGroup(
+                value: Binding.constant("A"),
+                options: ["A", "B", "C"],
+                optionType: .button,
+                buttonStyle: .solid
+            )
+        } editor: {
+            ColorPresetRow(label: "buttonSolidCheckedActiveBg", color: $config.components.radio.buttonSolidCheckedActiveBg) {
+            }
+        } code: {
+            "config.components.radio.buttonSolidCheckedActiveBg = ..."
+        }
+        .scrollAnchor("component.buttonSolidCheckedActiveBg")
+    }
+
+    var buttonSolidCheckedBgTokenCard: some View {
+        TokenCard(
+            name: "buttonSolidCheckedBg",
+            type: "Color",
+            defaultValue: "#1677ff",
+            description: tr("doc.component.buttonSolidCheckedBg"),
+            sectionId: "component"
+        ) {
+            Moin.RadioGroup(
+                value: Binding.constant("A"),
+                options: ["A", "B", "C"],
+                optionType: .button,
+                buttonStyle: .solid
+            )
+        } editor: {
+            ColorPresetRow(label: "buttonSolidCheckedBg", color: $config.components.radio.buttonSolidCheckedBg) {
+            }
+        } code: {
+            "config.components.radio.buttonSolidCheckedBg = ..."
+        }
+        .scrollAnchor("component.buttonSolidCheckedBg")
+    }
+
+    var buttonSolidCheckedColorTokenCard: some View {
+        TokenCard(
+            name: "buttonSolidCheckedColor",
+            type: "Color",
+            defaultValue: "#ffffff",
+            description: tr("doc.component.buttonSolidCheckedColor"),
+            sectionId: "component"
+        ) {
+            Moin.RadioGroup(
+                value: Binding.constant("A"),
+                options: ["A", "B", "C"],
+                optionType: .button,
+                buttonStyle: .solid
+            )
+        } editor: {
+            ColorPresetRow(label: "buttonSolidCheckedColor", color: $config.components.radio.buttonSolidCheckedColor) {
+            }
+        } code: {
+            "config.components.radio.buttonSolidCheckedColor = ..."
+        }
+        .scrollAnchor("component.buttonSolidCheckedColor")
+    }
+
+    var buttonSolidCheckedHoverBgTokenCard: some View {
+        TokenCard(
+            name: "buttonSolidCheckedHoverBg",
+            type: "Color",
+            defaultValue: "#4096ff",
+            description: tr("doc.component.buttonSolidCheckedHoverBg"),
+            sectionId: "component"
+        ) {
+            Moin.RadioGroup(
+                value: Binding.constant("A"),
+                options: ["A", "B", "C"],
+                optionType: .button,
+                buttonStyle: .solid
+            )
+        } editor: {
+            ColorPresetRow(label: "buttonSolidCheckedHoverBg", color: $config.components.radio.buttonSolidCheckedHoverBg) {
+            }
+        } code: {
+            "config.components.radio.buttonSolidCheckedHoverBg = ..."
+        }
+        .scrollAnchor("component.buttonSolidCheckedHoverBg")
+    }
+
+    // MARK: - Global Tokens
 
     var colorPrimaryGlobalTokenCard: some View {
         TokenCard(
@@ -81,7 +351,50 @@ extension RadioTokenView {
         .scrollAnchor("global.colorPrimary")
     }
 
-    // MARK: - Border & Background Colors
+    var colorPrimaryHoverGlobalTokenCard: some View {
+        TokenCard(
+            name: "colorPrimaryHover",
+            type: "Color",
+            defaultValue: "#4096ff",
+            description: tr("doc.global.colorPrimaryHover"),
+            sectionId: "global"
+        ) {
+            VStack(alignment: .leading, spacing: 8) {
+                Text("Hover over the radio button to see effect")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                Moin.Radio("Radio", checked: .constant(false))
+                    .id(config.token.colorPrimaryHover)
+            }
+        } editor: {
+            ColorPresetRow(label: "colorPrimaryHover", color: $config.token.colorPrimaryHover) {
+                config.components = Moin.ComponentToken.generate(from: config.token, isDark: config.isDarkMode)
+            }
+        } code: {
+            "config.token.colorPrimaryHover = \(config.token.colorPrimaryHover.description)"
+        }
+        .scrollAnchor("global.colorPrimaryHover")
+    }
+
+    var colorTextGlobalTokenCard: some View {
+        TokenCard(
+            name: "colorText",
+            type: "Color",
+            defaultValue: "rgba(0,0,0,0.88)",
+            description: tr("doc.global.colorText"),
+            sectionId: "global"
+        ) {
+            Moin.Radio("Radio Label", checked: $checked)
+                .id(config.token.colorText)
+        } editor: {
+            ColorPresetRow(label: "colorText", color: $config.token.colorText) {
+                config.components = Moin.ComponentToken.generate(from: config.token, isDark: config.isDarkMode)
+            }
+        } code: {
+            "config.token.colorText = \(config.token.colorText.description)"
+        }
+        .scrollAnchor("global.colorText")
+    }
 
     var colorBorderGlobalTokenCard: some View {
         TokenCard(
@@ -91,7 +404,7 @@ extension RadioTokenView {
             description: tr("doc.global.colorBorder"),
             sectionId: "global"
         ) {
-            Moin.Radio("Radio", checked: .constant(false)) // Unchecked shows border
+            Moin.Radio("Radio", checked: .constant(false))
                 .id(config.token.colorBorder)
         } editor: {
             ColorPresetRow(label: "colorBorder", color: $config.token.colorBorder) {
@@ -122,34 +435,6 @@ extension RadioTokenView {
         }
         .scrollAnchor("global.colorBgContainer")
     }
-    
-    var radioColorGlobalTokenCard: some View {
-        TokenCard(
-            name: "radioColor",
-            type: "Color",
-            defaultValue: "#1677ff",
-            description: tr("doc.global.colorPrimary"),
-            sectionId: "global"
-        ) {
-            Moin.Radio("Radio", checked: $checked)
-        } editor: {
-             // radioColor is typically colorPrimary. We can render it but editing 'radioColor' specifically isn't possible via 'config.token.radioColor' because that doesn't exist.
-             // But we can edit config.components.radio.radioColor?
-             // But here we are in Global section.
-             // If we want to show it comes from Primary, we can just show it.
-             // Or allow editing radio.radioColor component token.
-             // Let's make this a Component Token editor masquerading in global section if we want?
-             // No, let's just use ColorPresetRow relative to Component Token if possible.
-             ColorPresetRow(label: "radioColor", color: $config.components.radio.radioColor) {
-                 // direct update
-             }
-        } code: {
-            "config.components.radio.radioColor = ..."
-        }
-        .scrollAnchor("global.radioColor")
-    }
-
-    // MARK: - Disabled Colors
 
     var colorBgContainerDisabledGlobalTokenCard: some View {
         TokenCard(
@@ -171,27 +456,6 @@ extension RadioTokenView {
         .scrollAnchor("global.colorBgContainerDisabled")
     }
 
-    var colorBorderDisabledGlobalTokenCard: some View {
-        TokenCard(
-            name: "colorBorderDisabled",
-            type: "Color",
-            defaultValue: "#d9d9d9",
-            description: tr("doc.global.colorBorder"), // Reuses colorBorder description or similar
-            sectionId: "global"
-        ) {
-            Moin.Radio("Radio", checked: .constant(false), disabled: true)
-                .id(config.token.colorBorder)
-        } editor: {
-            // Usually comes from colorBorder
-            ColorPresetRow(label: "colorBorder", color: $config.token.colorBorder) {
-                 config.components = Moin.ComponentToken.generate(from: config.token, isDark: config.isDarkMode)
-            }
-        } code: {
-             "config.token.colorBorder = ..."
-        }
-        .scrollAnchor("global.colorBorderDisabled")
-    }
-
     var colorTextDisabledGlobalTokenCard: some View {
         TokenCard(
             name: "colorTextDisabled",
@@ -211,26 +475,6 @@ extension RadioTokenView {
         }
         .scrollAnchor("global.colorTextDisabled")
     }
-    
-    var dotColorDisabledGlobalTokenCard: some View {
-        TokenCard(
-            name: "dotColorDisabled",
-            type: "Color",
-            defaultValue: "rgba(0,0,0,0.25)",
-            description: tr("doc.global.colorTextDisabled"),
-            sectionId: "global"
-        ) {
-            Moin.Radio("Radio", checked: .constant(true), disabled: true)
-        } editor: {
-             ColorPresetRow(label: "dotColorDisabled", color: $config.components.radio.dotColorDisabled) {
-             }
-        } code: {
-            "config.components.radio.dotColorDisabled = ..."
-        }
-        .scrollAnchor("global.dotColorDisabled")
-    }
-
-    // MARK: - Borders & Spacing
 
     var lineWidthGlobalTokenCard: some View {
         TokenCard(
@@ -281,32 +525,6 @@ extension RadioTokenView {
         }
         .scrollAnchor("global.paddingXS")
     }
-    
-    var wrapperMarginInlineEndGlobalTokenCard: some View {
-        TokenCard(
-            name: "wrapperMarginInlineEnd",
-            type: "CGFloat",
-            defaultValue: "8",
-            description: tr("doc.global.paddingXS"),
-            sectionId: "global"
-        ) {
-             HStack(spacing: Moin.Constants.Spacing.md) {
-                 // Should show a group to demonstrate spacing
-                 Moin.RadioGroup(value: Binding.constant(1), options: [1, 2])
-                    .id(config.token.paddingXS)
-             }
-        } editor: {
-            // wrapperMarginInlineEnd usually comes from paddingXS
-            TokenValueRow(label: "paddingXS", value: $config.token.paddingXS, range: 4...16) {
-                config.components = Moin.ComponentToken.generate(from: config.token, isDark: config.isDarkMode)
-            }
-        } code: {
-            "config.token.paddingXS = \(Int(config.token.paddingXS))"
-        }
-        .scrollAnchor("global.wrapperMarginInlineEnd")
-    }
-
-    // MARK: - Motion Tokens
 
     var motionDurationMidGlobalTokenCard: some View {
         TokenCard(

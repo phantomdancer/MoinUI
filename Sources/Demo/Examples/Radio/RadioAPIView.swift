@@ -36,7 +36,17 @@ struct RadioAPIView: View {
             ),
             DocSidebarSection(
                 title: tr("radio.group"),
-                items: ["value", "options", "block", "buttonStyle", "optionType", "orientation", "size", "vertical", "groupDisabled"],
+                items: [
+                    DocSidebarItem(id: "value"),
+                    DocSidebarItem(id: "options"),
+                    DocSidebarItem(id: "block"),
+                    DocSidebarItem(id: "buttonStyle"),
+                    DocSidebarItem(id: "optionType"),
+                    DocSidebarItem(id: "orientation"),
+                    DocSidebarItem(id: "size"),
+                    DocSidebarItem(id: "vertical"),
+                    DocSidebarItem(id: "groupDisabled", displayName: "disabled")
+                ],
                 sectionId: "radiogroup"
             )
         ]
@@ -444,6 +454,6 @@ struct RadioAPIView: View {
         } code: {
             "Moin.RadioGroup(value: $value, options: options, disabled: true)"
         }
-        .scrollAnchor("radiogroup.disabled")
+        .scrollAnchor("radiogroup.groupDisabled")
     }
 }
