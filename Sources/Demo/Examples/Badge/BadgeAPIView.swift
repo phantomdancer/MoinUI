@@ -18,7 +18,12 @@ struct BadgeAPIView: View {
             ),
             DocSidebarSection(
                 title: tr("api.badge.section.ribbon"),
-                items: ["text|text", "color|color", "placement|placement", "content|content"],
+                items: [
+                    DocSidebarItem(id: "ribbonText", displayName: "text"),
+                    DocSidebarItem(id: "ribbonColor", displayName: "color"),
+                    DocSidebarItem(id: "ribbonPlacement", displayName: "placement"),
+                    DocSidebarItem(id: "ribbonContent", displayName: "content")
+                ],
                 sectionId: "ribbon"
             )
         ]
@@ -53,10 +58,10 @@ struct BadgeAPIView: View {
         case "offset": offsetPropertyCard
         case "content": contentPropertyCard
         
-        case "text|text": ribbonTextPropertyCard
-        case "color|color": ribbonColorPropertyCard
-        case "placement|placement": ribbonPlacementPropertyCard
-        case "content|content": ribbonContentPropertyCard
+        case "ribbonText": ribbonTextPropertyCard
+        case "ribbonColor": ribbonColorPropertyCard
+        case "ribbonPlacement": ribbonPlacementPropertyCard
+        case "ribbonContent": ribbonContentPropertyCard
         
         case "status": statusPropertyCard
         case "text": textPropertyCard
@@ -230,7 +235,7 @@ struct BadgeAPIView: View {
             Moin.BadgeRibbon(text: "New") {...}
             """
         }
-        .scrollAnchor("ribbon.text")
+        .scrollAnchor("ribbon.ribbonText")
     }
     
     private var ribbonColorPropertyCard: some View {
@@ -247,7 +252,7 @@ struct BadgeAPIView: View {
             Moin.BadgeRibbon(color: .purple) {...}
             """
         }
-        .scrollAnchor("ribbon.color")
+        .scrollAnchor("ribbon.ribbonColor")
     }
     
     private var ribbonPlacementPropertyCard: some View {
@@ -269,7 +274,7 @@ struct BadgeAPIView: View {
             Moin.BadgeRibbon(placement: .end) {...}
             """
         }
-        .scrollAnchor("ribbon.placement")
+        .scrollAnchor("ribbon.ribbonPlacement")
     }
     
     private var ribbonContentPropertyCard: some View {
@@ -286,7 +291,7 @@ struct BadgeAPIView: View {
             Moin.BadgeRibbon(text: "H") {...}
             """
         }
-        .scrollAnchor("ribbon.content")
+        .scrollAnchor("ribbon.ribbonContent")
      }
     
     // MARK: - Status Properties
