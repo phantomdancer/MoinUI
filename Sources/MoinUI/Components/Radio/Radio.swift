@@ -103,7 +103,7 @@ public extension Moin {
                 return radioToken.colorPrimary
             }
             if isHovering {
-                return radioToken.colorPrimary
+                return radioToken.colorPrimaryHover
             }
             return radioToken.colorBorder
         }

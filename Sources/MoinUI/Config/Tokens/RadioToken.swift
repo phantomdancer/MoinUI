@@ -53,6 +53,9 @@ public extension Moin {
         /// 开启状态主色 (Border & Dot)
         public var colorPrimary: Color
 
+        /// 悬停状态主色
+        public var colorPrimaryHover: Color
+
         /// 默认/未选中 边框颜色
         public var colorBorder: Color
         /// 默认/未选中 背景颜色
@@ -127,6 +130,7 @@ public extension Moin {
             buttonPaddingLargeVertical: 7,
             lineWidth: 1,
             colorPrimary: Moin.Colors.blue6,
+            colorPrimaryHover: Moin.Colors.blue5,
             colorBorder: Color(hex: 0xD9D9D9),
             colorBgContainer: .white,
             radioColor: Moin.Colors.blue6,
@@ -165,6 +169,7 @@ public extension Moin {
                 buttonPaddingLargeVertical: 7,
                 lineWidth: token.lineWidth,
                 colorPrimary: token.colorPrimary,
+                colorPrimaryHover: token.colorPrimaryHover,
                 colorBorder: token.colorBorder,
                 colorBgContainer: token.colorBgContainer,
                 radioColor: token.colorPrimary,

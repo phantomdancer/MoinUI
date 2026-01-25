@@ -31,6 +31,7 @@ public extension Moin {
         @Environment(\.isEnabled) private var isEnabled
 
         @State private var isHovering: Bool = false
+        @State private var isPressed: Bool = false
 
         public init(
             checked: Binding<Bool>,
@@ -147,11 +148,11 @@ public extension Moin {
         private var paddings: (horizontal: CGFloat, vertical: CGFloat) {
             switch size {
             case .small:
-                return (radioToken.buttonPaddingXSHorizontal, radioToken.buttonPaddingXSVertical)
+                return (radioToken.buttonPaddingInline - 4, radioToken.buttonPaddingXSVertical)
             case .middle:
-                return (radioToken.buttonPaddingDefaultHorizontal, radioToken.buttonPaddingDefaultVertical)
+                return (radioToken.buttonPaddingInline, radioToken.buttonPaddingDefaultVertical)
             case .large:
-                return (radioToken.buttonPaddingLargeHorizontal, radioToken.buttonPaddingLargeVertical)
+                return (radioToken.buttonPaddingInline + 8, radioToken.buttonPaddingLargeVertical)
             }
         }
 
@@ -166,6 +167,9 @@ public extension Moin {
             }
             if checked {
                 if buttonStyle == .solid {
+                    if isPressed {
+                        return radioToken.buttonSolidCheckedActiveBg
+                    }
                     return isHovering ? radioToken.buttonSolidCheckedHoverBg : radioToken.buttonSolidCheckedBg
                 }
                 return radioToken.buttonCheckedBg
@@ -175,7 +179,8 @@ public extension Moin {
 
         private var foregroundColor: Color {
             if isEffectiveDisabled {
-                return radioToken.buttonCheckedColorDisabled
+                // 禁用时：选中用 buttonCheckedColorDisabled，未选中用 colorTextDisabled
+                return checked ? radioToken.buttonCheckedColorDisabled : radioToken.colorTextDisabled
             }
             if checked {
                 return buttonStyle == .solid ? radioToken.buttonSolidCheckedColor : radioToken.colorPrimary
@@ -214,13 +219,24 @@ public extension Moin {
                         .strokeBorder(borderColor, lineWidth: radioToken.lineWidth)
                 )
                 .contentShape(SegmentedShape(position: position, direction: direction, radius: 6)) // Hit testing
-                .onTapGesture {
-                    if !isEffectiveDisabled {
-                        withAnimation(.easeInOut(duration: radioToken.motionDurationMid)) {
-                            checked = true
+                .gesture(
+                    DragGesture(minimumDistance: 0)
+                        .onChanged { _ in
+                            if !isEffectiveDisabled && !isPressed {
+                                withAnimation(.easeInOut(duration: 0.05)) {
+                                    isPressed = true
+                                }
+                            }
                         }
-                    }
-                }
+                        .onEnded { _ in
+                            if !isEffectiveDisabled {
+                                withAnimation(.easeInOut(duration: radioToken.motionDurationMid)) {
+                                    isPressed = false
+                                    checked = true
+                                }
+                            }
+                        }
+                )
                 .onHover { hover in
                     if !isEffectiveDisabled {
                         withAnimation(.easeInOut(duration: radioToken.motionDurationMid)) {
