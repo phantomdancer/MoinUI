@@ -145,11 +145,3 @@ private struct ExampleSection<Content: View>: View {
         }
     }
 }
-
-// MARK: - Preview
-
-#Preview("Spin Examples") {
-    SpinExamples()
-        .frame(width: 600, height: 800)
-        .moinThemeRoot()
-}

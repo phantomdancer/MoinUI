@@ -213,7 +213,7 @@ struct SkeletonTokenView: View {
             description: tr("skeleton.token_avatar_sm"),
             sectionId: "avatar"
         ) {
-            SkeletonElement.avatar(size: .small, active: true)
+            Skeleton.Avatar(size: .small, active: true)
         } editor: {
             TokenValueRow(label: "avatarSizeSM", value: Binding(
                 get: { config.components.skeleton.avatarSizeSM },
@@ -232,7 +232,7 @@ struct SkeletonTokenView: View {
             description: tr("skeleton.token_avatar_default"),
             sectionId: "avatar"
         ) {
-            SkeletonElement.avatar(size: .default, active: true)
+            Skeleton.Avatar(size: .default, active: true)
         } editor: {
             TokenValueRow(label: "avatarSize", value: Binding(
                 get: { config.components.skeleton.avatarSize },
@@ -251,7 +251,7 @@ struct SkeletonTokenView: View {
             description: tr("skeleton.token_avatar_lg"),
             sectionId: "avatar"
         ) {
-            SkeletonElement.avatar(size: .large, active: true)
+            Skeleton.Avatar(size: .large, active: true)
         } editor: {
             TokenValueRow(label: "avatarSizeLG", value: Binding(
                 get: { config.components.skeleton.avatarSizeLG },

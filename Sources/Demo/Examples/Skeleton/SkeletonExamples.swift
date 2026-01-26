@@ -155,8 +155,8 @@ struct SkeletonExamples: View {
                     Skeleton(
                         active: true,
                         avatar: nil,
-                        title: SkeletonTitleConfig(width: 200),
-                        paragraph: SkeletonParagraphConfig(rows: 2, width: 150),
+                        title: Skeleton.TitleConfig(width: 200),
+                        paragraph: Skeleton.ParagraphConfig(rows: 2, width: 150),
                         round: false
                     )
                 }
@@ -174,8 +174,8 @@ struct SkeletonExamples: View {
                 Skeleton(
                     active: true,
                     avatar: nil,
-                    title: SkeletonTitleConfig(width: 200),
-                    paragraph: SkeletonParagraphConfig(rows: 2, width: 150),
+                    title: Skeleton.TitleConfig(width: 200),
+                    paragraph: Skeleton.ParagraphConfig(rows: 2, width: 150),
                     round: false
                 )
                 """
@@ -191,49 +191,49 @@ struct SkeletonExamples: View {
                 VStack(spacing: 24) {
                     // 头像元素
                     HStack(spacing: 16) {
-                        SkeletonElement.avatar(active: true)
-                        SkeletonElement.avatar(shape: .square, active: true)
-                        SkeletonElement.avatar(size: .large, active: true)
-                        SkeletonElement.avatar(size: .small, active: true)
+                        Skeleton.Avatar(active: true)
+                        Skeleton.Avatar(shape: .square, active: true)
+                        Skeleton.Avatar(size: .large, active: true)
+                        Skeleton.Avatar(size: .small, active: true)
                     }
 
                     // 按钮元素
                     HStack(spacing: 16) {
-                        SkeletonElement.button(active: true)
-                        SkeletonElement.button(shape: .circle, active: true)
-                        SkeletonElement.button(shape: .round, active: true)
-                        SkeletonElement.button(size: .small, active: true)
+                        Skeleton.Button(active: true)
+                        Skeleton.Button(shape: .circle, active: true)
+                        Skeleton.Button(shape: .round, active: true)
+                        Skeleton.Button(size: .small, active: true)
                     }
 
                     // 输入框元素
-                    SkeletonElement.input(active: true)
+                    Skeleton.Input(active: true)
                         .frame(width: 200)
 
                     // 图片元素
                     HStack(spacing: 16) {
-                        SkeletonElement.image(active: true)
-                        SkeletonElement.image(width: 120, height: 80, active: true)
+                        Skeleton.Image(active: true)
+                        Skeleton.Image(width: 120, height: 80, active: true)
                     }
                 }
             },
             code: {
                 """
                 // \(tr("skeleton.avatar_element"))
-                SkeletonElement.avatar(active: true)
-                SkeletonElement.avatar(shape: .square, active: true)
-                SkeletonElement.avatar(size: .large, active: true)
+                Skeleton.Avatar(active: true)
+                Skeleton.Avatar(shape: .square, active: true)
+                Skeleton.Avatar(size: .large, active: true)
 
                 // \(tr("skeleton.button_element"))
-                SkeletonElement.button(active: true)
-                SkeletonElement.button(shape: .circle, active: true)
-                SkeletonElement.button(shape: .round, active: true)
+                Skeleton.Button(active: true)
+                Skeleton.Button(shape: .circle, active: true)
+                Skeleton.Button(shape: .round, active: true)
 
                 // \(tr("skeleton.input_element"))
-                SkeletonElement.input(active: true)
+                Skeleton.Input(active: true)
 
                 // \(tr("skeleton.image_element"))
-                SkeletonElement.image(active: true)
-                SkeletonElement.image(width: 120, height: 80, active: true)
+                Skeleton.Image(active: true)
+                Skeleton.Image(width: 120, height: 80, active: true)
                 """
             }
         )

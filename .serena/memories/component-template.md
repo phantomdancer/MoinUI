@@ -102,6 +102,79 @@ Token 页面必须支持**实时预览**和**修改生效**。
 *   **布局与响应**: 组件应适应不同尺寸 (Size) 和紧凑环境 (Compact Context)。
 *   **动画**: 使用 Token 定义的动画参数 (`motionDuration`, `motionEase`)。
 
+## 命名空间子组件模式
+
+当组件需要子组件时（如 `Skeleton.Avatar`, `Skeleton.Button`），使用 **直接嵌套类型模式**：
+
+### 问题
+Swift 泛型类型不支持嵌套类型含静态存储属性，导致 `Skeleton<Content>.Avatar` 无法实现。
+
+### 解决方案
+1. **主组件使用 `AnyView` 类型擦除**，避免泛型：
+```swift
+public struct Skeleton: View {  // 非泛型
+    let content: AnyView?
+    
+    public init<Content: View>(
+        loading: Bool,
+        @ViewBuilder content: () -> Content
+    ) {
+        self.content = AnyView(content())
+    }
+}
+```
+
+2. **子组件直接定义在 extension 中**（无需 typealias）：
+```swift
+public extension Skeleton {
+    struct Avatar: View {
+        let size: Size
+        let shape: AvatarShape
+        let active: Bool
+        
+        public init(
+            size: Size = .default,
+            shape: AvatarShape = .circle,
+            active: Bool = false
+        ) { ... }
+        
+        public var body: some View { ... }
+    }
+    
+    struct Button: View { ... }
+    
+    // 配置类型带 Config 后缀
+    struct AvatarConfig { ... }
+    struct TitleConfig { ... }
+    
+    // 枚举也定义在 extension 中
+    enum Size { case small, `default`, large, custom(CGFloat) }
+    enum AvatarShape { case circle, square }
+}
+```
+
+### 使用效果
+```swift
+// 子组件（与 Ant Design 一致）
+Skeleton.Avatar(active: true)
+Skeleton.Button(shape: .round, active: true)
+
+// 配置类型（带 Config 后缀区分）
+Skeleton.TitleConfig(width: 200)
+Skeleton.ParagraphConfig(rows: 3)
+```
+
+### 命名约定
+- **子组件（View）**：`Skeleton.Avatar` - 无后缀
+- **配置类型**：`Skeleton.AvatarConfig` - 带 `Config` 后缀
+- **枚举**：`Skeleton.Size`, `Skeleton.AvatarShape` - 简短命名
+
+### 注意事项
+- 不暴露顶层类型如 `SkeletonAvatar`，用户只能使用 `Skeleton.Avatar`
+- 所有嵌套类型通过 `public extension Skeleton {}` 定义
+
+---
+
 ## 检查清单
 
 - [ ] **交互体验**: 可点击状态显示 `.pointingHand`，禁用状态显示 `.operationNotAllowed`。

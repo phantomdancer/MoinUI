@@ -235,18 +235,3 @@ public struct Spin<Content: View>: View {
         delayTask = nil
     }
 }
-
-// MARK: - Preview
-
-#Preview("Spin Basic") {
-    VStack(spacing: 40) {
-        HStack(spacing: 40) {
-            Moin.Spin(size: .small)
-            Moin.Spin()
-            Moin.Spin(size: .large)
-        }
-
-        Moin.Spin(tip: "Loading...")
-    }
-    .padding()
-}

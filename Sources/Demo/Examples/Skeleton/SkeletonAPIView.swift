@@ -17,7 +17,7 @@ struct SkeletonAPIView: View {
                 sectionId: "skeleton"
             ),
             DocSidebarSection(
-                title: "SkeletonElement",
+                title: "Skeleton.Element",
                 items: [.init(id: "element.avatar"), .init(id: "element.button"), .init(id: "element.input"), .init(id: "element.image")],
                 sectionId: "element"
             )
@@ -32,7 +32,7 @@ struct SkeletonAPIView: View {
             if sectionId == "skeleton" {
                 Text("Skeleton").font(.title3).fontWeight(.semibold)
             } else if sectionId == "element" {
-                Text("SkeletonElement").font(.title3).fontWeight(.semibold)
+                Text("Skeleton.Element").font(.title3).fontWeight(.semibold)
             }
         } item: { item in
             cardForItem(item)
@@ -209,27 +209,27 @@ struct SkeletonAPIView: View {
         .scrollAnchor("skeleton.loading")
     }
 
-    // MARK: - SkeletonElement Cards
+    // MARK: - Skeleton.Element Cards
 
     private var elementAvatarCard: some View {
         PropertyCard(
-            name: "avatar(size:shape:active:)",
-            type: "SkeletonElement",
+            name: "Avatar(size:shape:active:)",
+            type: "Skeleton.Avatar",
             defaultValue: "-",
             description: tr("skeleton.element_avatar"),
             sectionId: "element"
         ) {
             HStack(spacing: 16) {
-                SkeletonElement.avatar(active: true)
-                SkeletonElement.avatar(shape: .square, active: true)
-                SkeletonElement.avatar(size: .large, active: true)
-                SkeletonElement.avatar(size: .small, active: true)
+                Skeleton.Avatar(active: true)
+                Skeleton.Avatar(shape: .square, active: true)
+                Skeleton.Avatar(size: .large, active: true)
+                Skeleton.Avatar(size: .small, active: true)
             }
         } code: {
             """
-            SkeletonElement.avatar(active: true)
-            SkeletonElement.avatar(shape: .square, active: true)
-            SkeletonElement.avatar(size: .large, active: true)
+            Skeleton.Avatar(active: true)
+            Skeleton.Avatar(shape: .square, active: true)
+            Skeleton.Avatar(size: .large, active: true)
             """
         }
         .scrollAnchor("element.avatar")
@@ -237,22 +237,22 @@ struct SkeletonAPIView: View {
 
     private var elementButtonCard: some View {
         PropertyCard(
-            name: "button(size:shape:block:active:)",
-            type: "SkeletonElement",
+            name: "Button(size:shape:block:active:)",
+            type: "Skeleton.Button",
             defaultValue: "-",
             description: tr("skeleton.element_button"),
             sectionId: "element"
         ) {
             HStack(spacing: 16) {
-                SkeletonElement.button(active: true)
-                SkeletonElement.button(shape: .circle, active: true)
-                SkeletonElement.button(shape: .round, active: true)
+                Skeleton.Button(active: true)
+                Skeleton.Button(shape: .circle, active: true)
+                Skeleton.Button(shape: .round, active: true)
             }
         } code: {
             """
-            SkeletonElement.button(active: true)
-            SkeletonElement.button(shape: .circle, active: true)
-            SkeletonElement.button(shape: .round, active: true)
+            Skeleton.Button(active: true)
+            Skeleton.Button(shape: .circle, active: true)
+            Skeleton.Button(shape: .round, active: true)
             """
         }
         .scrollAnchor("element.button")
@@ -260,36 +260,36 @@ struct SkeletonAPIView: View {
 
     private var elementInputCard: some View {
         PropertyCard(
-            name: "input(size:active:)",
-            type: "SkeletonElement",
+            name: "Input(size:active:)",
+            type: "Skeleton.Input",
             defaultValue: "-",
             description: tr("skeleton.element_input"),
             sectionId: "element"
         ) {
-            SkeletonElement.input(active: true)
+            Skeleton.Input(active: true)
                 .frame(width: 200)
         } code: {
-            "SkeletonElement.input(active: true)"
+            "Skeleton.Input(active: true)"
         }
         .scrollAnchor("element.input")
     }
 
     private var elementImageCard: some View {
         PropertyCard(
-            name: "image(width:height:active:)",
-            type: "SkeletonElement",
+            name: "Image(width:height:active:)",
+            type: "Skeleton.Image",
             defaultValue: "-",
             description: tr("skeleton.element_image"),
             sectionId: "element"
         ) {
             HStack(spacing: 16) {
-                SkeletonElement.image(active: true)
-                SkeletonElement.image(width: 120, height: 80, active: true)
+                Skeleton.Image(active: true)
+                Skeleton.Image(width: 120, height: 80, active: true)
             }
         } code: {
             """
-            SkeletonElement.image(active: true)
-            SkeletonElement.image(width: 120, height: 80, active: true)
+            Skeleton.Image(active: true)
+            Skeleton.Image(width: 120, height: 80, active: true)
             """
         }
         .scrollAnchor("element.image")

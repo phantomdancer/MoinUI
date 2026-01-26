@@ -27,28 +27,32 @@ public extension Moin {
 /// // 带头像
 /// Skeleton(avatar: true, active: true)
 ///
+/// // 子组件
+/// Skeleton.Avatar(active: true)
+/// Skeleton.Button(shape: .round, active: true)
+///
 /// // 条件渲染
 /// Skeleton(loading: isLoading) {
 ///     Text("Content loaded")
 /// }
 /// ```
-public struct Skeleton<Content: View>: View {
+public struct Skeleton: View {
     // MARK: - Properties
 
     /// 是否显示动画
     let active: Bool
     /// 是否显示头像
-    let avatar: SkeletonAvatarConfig?
+    let avatar: AvatarConfig?
     /// 是否显示标题
-    let title: SkeletonTitleConfig?
+    let title: TitleConfig?
     /// 是否显示段落
-    let paragraph: SkeletonParagraphConfig?
+    let paragraph: ParagraphConfig?
     /// 是否圆角
     let round: Bool
     /// 是否加载中（控制是否显示骨架屏）
     let loading: Bool
     /// 实际内容
-    let content: Content?
+    let content: AnyView?
 
     @Environment(\.moinToken) private var globalToken
     @ObservedObject private var config = Moin.ConfigProvider.shared
@@ -61,7 +65,7 @@ public struct Skeleton<Content: View>: View {
         title: Bool = true,
         paragraph: Bool = true,
         round: Bool = false
-    ) where Content == EmptyView {
+    ) {
         self.active = active
         self.avatar = avatar ? .default : nil
         self.title = title ? .default : nil
@@ -75,11 +79,11 @@ public struct Skeleton<Content: View>: View {
 
     public init(
         active: Bool = false,
-        avatar: SkeletonAvatarConfig?,
-        title: SkeletonTitleConfig?,
-        paragraph: SkeletonParagraphConfig?,
+        avatar: AvatarConfig?,
+        title: TitleConfig?,
+        paragraph: ParagraphConfig?,
         round: Bool = false
-    ) where Content == EmptyView {
+    ) {
         self.active = active
         self.avatar = avatar
         self.title = title
@@ -91,7 +95,7 @@ public struct Skeleton<Content: View>: View {
 
     // MARK: - Init (条件渲染)
 
-    public init(
+    public init<Content: View>(
         loading: Bool,
         active: Bool = false,
         avatar: Bool = false,
@@ -106,7 +110,7 @@ public struct Skeleton<Content: View>: View {
         self.paragraph = paragraph ? .default : nil
         self.round = round
         self.loading = loading
-        self.content = content()
+        self.content = AnyView(content())
     }
 
     // MARK: - Body
@@ -128,7 +132,7 @@ public struct Skeleton<Content: View>: View {
         HStack(alignment: .top, spacing: 16) {
             // 头像
             if let avatarConfig = avatar {
-                SkeletonElement.avatar(
+                Skeleton.Avatar(
                     size: avatarConfig.size,
                     shape: avatarConfig.shape,
                     active: active
@@ -139,7 +143,7 @@ public struct Skeleton<Content: View>: View {
             VStack(alignment: .leading, spacing: 0) {
                 // 标题
                 if let titleConfig = title {
-                    SkeletonElement.block(
+                    Skeleton.Block(
                         width: titleConfig.width ?? (avatar != nil ? 200 : 300),
                         height: token.titleHeight,
                         radius: round ? token.titleHeight / 2 : token.blockRadius,
@@ -151,7 +155,7 @@ public struct Skeleton<Content: View>: View {
                 if let paragraphConfig = paragraph {
                     let rows = paragraphConfig.rows ?? (title != nil ? 3 : 4)
                     ForEach(0..<rows, id: \.self) { index in
-                        SkeletonElement.block(
+                        Skeleton.Block(
                             width: paragraphWidth(for: index, total: rows, config: paragraphConfig),
                             height: token.paragraphLineHeight,
                             radius: round ? token.paragraphLineHeight / 2 : token.blockRadius,
@@ -167,7 +171,7 @@ public struct Skeleton<Content: View>: View {
 
     // MARK: - Private
 
-    private func paragraphWidth(for index: Int, total: Int, config: SkeletonParagraphConfig) -> CGFloat? {
+    private func paragraphWidth(for index: Int, total: Int, config: ParagraphConfig) -> CGFloat? {
         if let widths = config.widths, index < widths.count {
             return widths[index]
         }
@@ -182,115 +186,350 @@ public struct Skeleton<Content: View>: View {
     }
 }
 
-// MARK: - Avatar Config
+// MARK: - Skeleton.AvatarConfig
 
-public struct SkeletonAvatarConfig {
-    public let size: SkeletonSize
-    public let shape: SkeletonAvatarShape
+public extension Skeleton {
+    struct AvatarConfig {
+        public let size: Size
+        public let shape: AvatarShape
 
-    public init(size: SkeletonSize = .default, shape: SkeletonAvatarShape = .circle) {
-        self.size = size
-        self.shape = shape
+        public init(size: Size = .default, shape: AvatarShape = .circle) {
+            self.size = size
+            self.shape = shape
+        }
+
+        public static let `default` = AvatarConfig()
     }
-
-    public static let `default` = SkeletonAvatarConfig()
 }
 
-// MARK: - Title Config
+// MARK: - Skeleton.TitleConfig
 
-public struct SkeletonTitleConfig {
-    public let width: CGFloat?
+public extension Skeleton {
+    struct TitleConfig {
+        public let width: CGFloat?
 
-    public init(width: CGFloat? = nil) {
-        self.width = width
+        public init(width: CGFloat? = nil) {
+            self.width = width
+        }
+
+        public static let `default` = TitleConfig()
     }
-
-    public static let `default` = SkeletonTitleConfig()
 }
 
-// MARK: - Paragraph Config
+// MARK: - Skeleton.ParagraphConfig
 
-public struct SkeletonParagraphConfig {
-    public let rows: Int?
-    public let width: CGFloat?
-    public let widths: [CGFloat]?
+public extension Skeleton {
+    struct ParagraphConfig {
+        public let rows: Int?
+        public let width: CGFloat?
+        public let widths: [CGFloat]?
 
-    public init(rows: Int? = nil, width: CGFloat? = nil) {
-        self.rows = rows
-        self.width = width
-        self.widths = nil
+        public init(rows: Int? = nil, width: CGFloat? = nil) {
+            self.rows = rows
+            self.width = width
+            self.widths = nil
+        }
+
+        public init(rows: Int? = nil, widths: [CGFloat]) {
+            self.rows = rows
+            self.width = nil
+            self.widths = widths
+        }
+
+        public static let `default` = ParagraphConfig()
     }
-
-    public init(rows: Int? = nil, widths: [CGFloat]) {
-        self.rows = rows
-        self.width = nil
-        self.widths = widths
-    }
-
-    public static let `default` = SkeletonParagraphConfig()
 }
 
-// MARK: - Size
+// MARK: - Skeleton.Size
 
-public enum SkeletonSize {
-    case small
-    case `default`
-    case large
-    case custom(CGFloat)
+public extension Skeleton {
+    enum Size {
+        case small
+        case `default`
+        case large
+        case custom(CGFloat)
 
-    func avatarSize(from token: Moin.SkeletonToken) -> CGFloat {
-        switch self {
-        case .small: return token.avatarSizeSM
-        case .default: return token.avatarSize
-        case .large: return token.avatarSizeLG
-        case .custom(let size): return size
+        func avatarSize(from token: Moin.SkeletonToken) -> CGFloat {
+            switch self {
+            case .small: return token.avatarSizeSM
+            case .default: return token.avatarSize
+            case .large: return token.avatarSizeLG
+            case .custom(let size): return size
+            }
+        }
+
+        func buttonHeight(from token: Moin.SkeletonToken) -> CGFloat {
+            switch self {
+            case .small: return token.buttonHeightSM
+            case .default: return token.buttonHeight
+            case .large: return token.buttonHeightLG
+            case .custom(let size): return size
+            }
+        }
+
+        func inputHeight(from token: Moin.SkeletonToken) -> CGFloat {
+            switch self {
+            case .small: return token.inputHeightSM
+            case .default: return token.inputHeight
+            case .large: return token.inputHeightLG
+            case .custom(let size): return size
+            }
         }
     }
+}
 
-    func buttonHeight(from token: Moin.SkeletonToken) -> CGFloat {
-        switch self {
-        case .small: return token.buttonHeightSM
-        case .default: return token.buttonHeight
-        case .large: return token.buttonHeightLG
-        case .custom(let size): return size
+// MARK: - Skeleton.AvatarShape
+
+public extension Skeleton {
+    enum AvatarShape {
+        case circle
+        case square
+    }
+}
+
+// MARK: - Skeleton.ButtonShape
+
+public extension Skeleton {
+    enum ButtonShape {
+        case `default`
+        case circle
+        case round
+        case square
+    }
+}
+
+// MARK: - Skeleton.Avatar
+
+public extension Skeleton {
+    /// 头像骨架元素
+    struct Avatar: View {
+        let size: Size
+        let shape: AvatarShape
+        let active: Bool
+
+        @Environment(\.moinToken) private var globalToken
+        @ObservedObject private var config = Moin.ConfigProvider.shared
+
+        public init(
+            size: Size = .default,
+            shape: AvatarShape = .circle,
+            active: Bool = false
+        ) {
+            self.size = size
+            self.shape = shape
+            self.active = active
+        }
+
+        public var body: some View {
+            let token = config.components.skeleton
+            let avatarSize = size.avatarSize(from: token)
+
+            if shape == .circle {
+                skeletonBackground(token: token, active: active)
+                    .frame(width: avatarSize, height: avatarSize)
+                    .clipShape(Circle())
+            } else {
+                skeletonBackground(token: token, active: active)
+                    .frame(width: avatarSize, height: avatarSize)
+                    .clipShape(RoundedRectangle(cornerRadius: token.blockRadius))
+            }
         }
     }
+}
 
-    func inputHeight(from token: Moin.SkeletonToken) -> CGFloat {
-        switch self {
-        case .small: return token.inputHeightSM
-        case .default: return token.inputHeight
-        case .large: return token.inputHeightLG
-        case .custom(let size): return size
+// MARK: - Skeleton.Button
+
+public extension Skeleton {
+    /// 按钮骨架元素
+    struct Button: View {
+        let size: Size
+        let shape: ButtonShape
+        let block: Bool
+        let active: Bool
+
+        @Environment(\.moinToken) private var globalToken
+        @ObservedObject private var config = Moin.ConfigProvider.shared
+
+        public init(
+            size: Size = .default,
+            shape: ButtonShape = .default,
+            block: Bool = false,
+            active: Bool = false
+        ) {
+            self.size = size
+            self.shape = shape
+            self.block = block
+            self.active = active
+        }
+
+        public var body: some View {
+            let token = config.components.skeleton
+            let height = size.buttonHeight(from: token)
+            let width: CGFloat? = {
+                switch shape {
+                case .circle: return height
+                case .default, .round, .square: return block ? nil : 66
+                }
+            }()
+            let cornerRadius: CGFloat = {
+                switch shape {
+                case .circle: return height / 2
+                case .round: return height / 2
+                case .square: return 0
+                case .default: return token.blockRadius
+                }
+            }()
+
+            skeletonBackground(token: token, active: active)
+                .frame(width: width, height: height)
+                .frame(maxWidth: block ? .infinity : nil)
+                .clipShape(RoundedRectangle(cornerRadius: cornerRadius))
         }
     }
 }
 
-// MARK: - Avatar Shape
+// MARK: - Skeleton.Input
 
-public enum SkeletonAvatarShape {
-    case circle
-    case square
-}
+public extension Skeleton {
+    /// 输入框骨架元素
+    struct Input: View {
+        let size: Size
+        let active: Bool
 
-// MARK: - Button Shape
+        @Environment(\.moinToken) private var globalToken
+        @ObservedObject private var config = Moin.ConfigProvider.shared
 
-public enum SkeletonButtonShape {
-    case `default`
-    case circle
-    case round
-    case square
-}
+        public init(
+            size: Size = .default,
+            active: Bool = false
+        ) {
+            self.size = size
+            self.active = active
+        }
 
-// MARK: - Preview
+        public var body: some View {
+            let token = config.components.skeleton
+            let height = size.inputHeight(from: token)
 
-#Preview("Skeleton") {
-    VStack(spacing: 32) {
-        Skeleton()
-        Skeleton(active: true)
-        Skeleton(active: true, avatar: true)
-        Skeleton(active: true, round: true)
+            skeletonBackground(token: token, active: active)
+                .frame(height: height)
+                .frame(maxWidth: .infinity)
+                .clipShape(RoundedRectangle(cornerRadius: token.blockRadius))
+        }
     }
-    .padding()
-    .frame(width: 400)
+}
+
+// MARK: - Skeleton.Image
+
+public extension Skeleton {
+    /// 图片骨架元素
+    struct Image: View {
+        let width: CGFloat?
+        let height: CGFloat?
+        let active: Bool
+
+        @Environment(\.moinToken) private var globalToken
+        @ObservedObject private var config = Moin.ConfigProvider.shared
+
+        public init(
+            width: CGFloat? = nil,
+            height: CGFloat? = nil,
+            active: Bool = false
+        ) {
+            self.width = width
+            self.height = height
+            self.active = active
+        }
+
+        public var body: some View {
+            let token = config.components.skeleton
+
+            skeletonBackground(token: token, active: active)
+                .frame(width: width ?? 96, height: height ?? 96)
+                .clipShape(RoundedRectangle(cornerRadius: token.blockRadius))
+        }
+    }
+}
+
+// MARK: - Skeleton.Block
+
+public extension Skeleton {
+    /// 基础块骨架元素
+    struct Block: View {
+        let width: CGFloat?
+        let height: CGFloat
+        let radius: CGFloat
+        let active: Bool
+
+        @Environment(\.moinToken) private var globalToken
+        @ObservedObject private var config = Moin.ConfigProvider.shared
+
+        public init(
+            width: CGFloat? = nil,
+            height: CGFloat,
+            radius: CGFloat = 4,
+            active: Bool = false
+        ) {
+            self.width = width
+            self.height = height
+            self.radius = radius
+            self.active = active
+        }
+
+        public var body: some View {
+            let token = config.components.skeleton
+
+            if let width = width {
+                skeletonBackground(token: token, active: active)
+                    .frame(width: width, height: height)
+                    .clipShape(RoundedRectangle(cornerRadius: radius))
+            } else {
+                GeometryReader { geometry in
+                    skeletonBackground(token: token, active: active)
+                        .frame(width: geometry.size.width, height: height)
+                        .clipShape(RoundedRectangle(cornerRadius: radius))
+                }
+                .frame(height: height)
+            }
+        }
+    }
+}
+
+// MARK: - Skeleton Background Helper
+
+@ViewBuilder
+private func skeletonBackground(token: Moin.SkeletonToken, active: Bool) -> some View {
+    if active {
+        TimelineView(.animation) { timeline in
+            let phase = timeline.date.timeIntervalSinceReferenceDate.truncatingRemainder(dividingBy: token.motionDuration) / token.motionDuration
+
+            Rectangle()
+                .fill(token.color)
+                .overlay(
+                    GeometryReader { geometry in
+                        let shimmerWidth = max(geometry.size.width * 0.5, 60)
+                        let totalTravel = geometry.size.width + shimmerWidth
+
+                        Rectangle()
+                            .fill(
+                                LinearGradient(
+                                    colors: [
+                                        .clear,
+                                        token.colorGradientEnd.opacity(0.5),
+                                        .clear
+                                    ],
+                                    startPoint: .leading,
+                                    endPoint: .trailing
+                                )
+                            )
+                            .frame(width: shimmerWidth)
+                            .offset(x: -shimmerWidth + phase * totalTravel)
+                    }
+                    .clipped()
+                )
+        }
+    } else {
+        Rectangle()
+            .fill(token.color)
+    }
 }

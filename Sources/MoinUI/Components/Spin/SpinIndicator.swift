@@ -105,23 +105,3 @@ private struct SpinDot: View {
             }
     }
 }
-
-// MARK: - Preview
-
-#Preview("SpinIndicator Sizes") {
-    HStack(spacing: 40) {
-        VStack {
-            SpinIndicator(size: 14, color: .blue)
-            Text("Small")
-        }
-        VStack {
-            SpinIndicator(size: 20, color: .blue)
-            Text("Default")
-        }
-        VStack {
-            SpinIndicator(size: 32, color: .blue)
-            Text("Large")
-        }
-    }
-    .padding()
-}
