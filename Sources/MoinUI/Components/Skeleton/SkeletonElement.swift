@@ -13,7 +13,6 @@ public struct SkeletonElement: View {
 
     @Environment(\.moinToken) private var globalToken
     @ObservedObject private var config = Moin.ConfigProvider.shared
-    @State private var animationPhase: CGFloat = 0
 
     // MARK: - Element Type
 
@@ -84,15 +83,7 @@ public struct SkeletonElement: View {
 
     public var body: some View {
         let token = config.components.skeleton
-
         elementView(token: token)
-            .onAppear {
-                if active {
-                    withAnimation(.linear(duration: token.motionDuration).repeatForever(autoreverses: false)) {
-                        animationPhase = 1
-                    }
-                }
-            }
     }
 
     // MARK: - Views
@@ -192,14 +183,34 @@ public struct SkeletonElement: View {
     @ViewBuilder
     private func skeletonBackground(token: Moin.SkeletonToken) -> some View {
         if active {
-            Rectangle()
-                .fill(
-                    LinearGradient(
-                        colors: [token.color, token.colorGradientEnd, token.color],
-                        startPoint: UnitPoint(x: animationPhase - 1, y: 0.5),
-                        endPoint: UnitPoint(x: animationPhase, y: 0.5)
+            TimelineView(.animation) { timeline in
+                let phase = timeline.date.timeIntervalSinceReferenceDate.truncatingRemainder(dividingBy: token.motionDuration) / token.motionDuration
+
+                Rectangle()
+                    .fill(token.color)
+                    .overlay(
+                        GeometryReader { geometry in
+                            let shimmerWidth = max(geometry.size.width * 0.5, 60)
+                            let totalTravel = geometry.size.width + shimmerWidth
+
+                            Rectangle()
+                                .fill(
+                                    LinearGradient(
+                                        colors: [
+                                            .clear,
+                                            token.colorGradientEnd.opacity(0.5),
+                                            .clear
+                                        ],
+                                        startPoint: .leading,
+                                        endPoint: .trailing
+                                    )
+                                )
+                                .frame(width: shimmerWidth)
+                                .offset(x: -shimmerWidth + phase * totalTravel)
+                        }
+                        .clipped()
                     )
-                )
+            }
         } else {
             Rectangle()
                 .fill(token.color)

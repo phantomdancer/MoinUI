@@ -11,7 +11,7 @@ public extension Moin {
         case solid
     }
     
-    public enum RadioButtonPosition: Sendable {
+    enum RadioButtonPosition: Sendable {
         case first, middle, last, single
     }
     
