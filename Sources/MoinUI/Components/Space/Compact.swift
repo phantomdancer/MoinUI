@@ -25,7 +25,7 @@ private struct CompactItemSizeReader: ViewModifier {
 public extension Moin {
     /// Compact layout with zero spacing and merged borders
     struct SpaceCompact: View {
-        let direction: SpaceDirection
+        let direction: _SpaceDirection
         let items: [AnyView]
 
         @State private var maxWidth: CGFloat = 0
@@ -79,7 +79,7 @@ public extension Moin {
 public extension Moin.SpaceCompact {
     /// Two items
     init<V0: View, V1: View>(
-        direction: Moin.SpaceDirection = .horizontal,
+        direction: _SpaceDirection = .horizontal,
         @ViewBuilder content: () -> TupleView<(V0, V1)>
     ) {
         self.direction = direction
@@ -89,7 +89,7 @@ public extension Moin.SpaceCompact {
 
     /// Three items
     init<V0: View, V1: View, V2: View>(
-        direction: Moin.SpaceDirection = .horizontal,
+        direction: _SpaceDirection = .horizontal,
         @ViewBuilder content: () -> TupleView<(V0, V1, V2)>
     ) {
         self.direction = direction
@@ -99,7 +99,7 @@ public extension Moin.SpaceCompact {
 
     /// Four items
     init<V0: View, V1: View, V2: View, V3: View>(
-        direction: Moin.SpaceDirection = .horizontal,
+        direction: _SpaceDirection = .horizontal,
         @ViewBuilder content: () -> TupleView<(V0, V1, V2, V3)>
     ) {
         self.direction = direction
@@ -109,7 +109,7 @@ public extension Moin.SpaceCompact {
 
     /// Five items
     init<V0: View, V1: View, V2: View, V3: View, V4: View>(
-        direction: Moin.SpaceDirection = .horizontal,
+        direction: _SpaceDirection = .horizontal,
         @ViewBuilder content: () -> TupleView<(V0, V1, V2, V3, V4)>
     ) {
         self.direction = direction
@@ -119,7 +119,7 @@ public extension Moin.SpaceCompact {
 
     /// Six items
     init<V0: View, V1: View, V2: View, V3: View, V4: View, V5: View>(
-        direction: Moin.SpaceDirection = .horizontal,
+        direction: _SpaceDirection = .horizontal,
         @ViewBuilder content: () -> TupleView<(V0, V1, V2, V3, V4, V5)>
     ) {
         self.direction = direction
@@ -129,7 +129,7 @@ public extension Moin.SpaceCompact {
 
     /// Single item
     init<V0: View>(
-        direction: Moin.SpaceDirection = .horizontal,
+        direction: _SpaceDirection = .horizontal,
         @ViewBuilder content: () -> V0
     ) {
         self.direction = direction

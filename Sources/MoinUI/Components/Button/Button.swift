@@ -3,11 +3,11 @@ import AppKit
 
 /// Unified button shape that can represent different shapes
 private struct ButtonShapeStyle: Shape {
-    let shapeType: Moin.ButtonShape
+    let shapeType: _ButtonShape
     let cornerRadius: CGFloat
     let compactContext: Moin.SpaceCompactContext
 
-    init(shapeType: Moin.ButtonShape, cornerRadius: CGFloat, compactContext: Moin.SpaceCompactContext = .none) {
+    init(shapeType: _ButtonShape, cornerRadius: CGFloat, compactContext: Moin.SpaceCompactContext = .none) {
         self.shapeType = shapeType
         self.cornerRadius = cornerRadius
         self.compactContext = compactContext
@@ -192,37 +192,6 @@ extension Path {
     }
 }
 
-/// 图标位置 - 与 antd iconPlacement 一致
-public extension Moin {
-    enum ButtonIconPlacement {
-        case start
-        case end
-    }
-}
-
-
-/// Loading 配置 - 支持 delay 和自定义 icon
-public extension Moin {
-    struct ButtonLoading: ExpressibleByBooleanLiteral, Equatable {
-        public let isLoading: Bool
-        public let delay: TimeInterval?
-        public let icon: String?
-
-        public init(_ isLoading: Bool = true, delay: TimeInterval? = nil, icon: String? = nil) {
-            self.isLoading = isLoading
-            self.delay = delay
-            self.icon = icon
-        }
-
-        public init(booleanLiteral value: Bool) {
-            self.isLoading = value
-            self.delay = nil
-            self.icon = nil
-        }
-    }
-}
-
-
 // MARK: - Loading Indicator Component
 
 private struct LoadingIndicator: View {
@@ -250,15 +219,15 @@ public extension Moin {
         private let action: (() -> Void)?
         private let label: Label
         private let color: Moin.ButtonColor
-        private let size: Moin.ButtonSize
-        private let variant: Moin.ButtonVariant
-        private let shape: Moin.ButtonShape
-        private let loadingConfig: Moin.ButtonLoading
+        private let size: Size
+        private let variant: Variant
+        private let shape: Shape
+        private let loadingConfig: Loading
         private let isDisabled: Bool
         private let isBlock: Bool
         private let isGhost: Bool
         private let icon: String?
-        private let iconPlacement: Moin.ButtonIconPlacement
+        private let iconPlacement: IconPlacement
         private let href: URL?
         private let gradient: LinearGradient?
         private let fontColor: SwiftUI.Color?
@@ -276,12 +245,12 @@ public extension Moin {
 
         public init(
             color: Moin.ButtonColor = .default,
-            size: Moin.ButtonSize = .medium,
-            variant: Moin.ButtonVariant = .solid,
-            shape: Moin.ButtonShape = .default,
+            size: Size = .medium,
+            variant: Variant = .solid,
+            shape: Shape = .default,
             icon: String? = nil,
-            iconPlacement: Moin.ButtonIconPlacement = .start,
-            loading: Moin.ButtonLoading = false,
+            iconPlacement: IconPlacement = .start,
+            loading: Loading = false,
             isDisabled: Bool = false,
             isBlock: Bool = false,
             isGhost: Bool = false,
@@ -753,12 +722,12 @@ public extension Moin.Button where Label == Text {
     init(
         _ title: String,
         color: Moin.ButtonColor = .default,
-        size: Moin.ButtonSize = .medium,
-        variant: Moin.ButtonVariant = .solid,
-        shape: Moin.ButtonShape = .default,
+        size: Size = .medium,
+        variant: Variant = .solid,
+        shape: Shape = .default,
         icon: String? = nil,
-        iconPlacement: Moin.ButtonIconPlacement = .start,
-        loading: Moin.ButtonLoading = false,
+        iconPlacement: IconPlacement = .start,
+        loading: Loading = false,
         isDisabled: Bool = false,
         isBlock: Bool = false,
         isGhost: Bool = false,
@@ -792,10 +761,10 @@ public extension Moin.Button where Label == EmptyView {
     init(
         icon iconName: String,
         color: Moin.ButtonColor = .default,
-        size: Moin.ButtonSize = .medium,
-        variant: Moin.ButtonVariant = .solid,
-        shape: Moin.ButtonShape = .circle,
-        loading: Moin.ButtonLoading = false,
+        size: Size = .medium,
+        variant: Variant = .solid,
+        shape: Shape = .circle,
+        loading: Loading = false,
         isDisabled: Bool = false,
         action: (() -> Void)? = nil
     ) {

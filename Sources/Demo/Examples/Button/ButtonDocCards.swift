@@ -176,7 +176,7 @@ Moin.Button(icon: "heart.fill", shape: .circle) {}
     var loadingPropertyCard: some View {
         PropertyCard(
             name: "loading",
-            type: "Moin.ButtonLoading",
+            type: "Moin.Button.Loading",
             defaultValue: "false",
             description: tr("button.api.loading"),
             sectionId: "api"
@@ -249,7 +249,7 @@ Moin.Button(icon: "heart.fill", shape: .circle) {}
     var iconPlacementPropertyCard: some View {
         PropertyCard(
             name: "iconPlacement",
-            type: "Moin.ButtonIconPlacement",
+            type: "Moin.Button.IconPlacement",
             defaultValue: ".start",
             description: tr("button.api.iconPlacement"),
             enumValues: ".start | .end",

@@ -129,7 +129,7 @@ struct SpaceAlignmentDemoView: View {
     }
     
     // Helper views moved inside here or as private/internal
-    private func alignmentBox(title: String, alignment: Moin.SpaceAlignment) -> some View {
+    private func alignmentBox(title: String, alignment: Moin.Space.Alignment) -> some View {
         VStack {
             Text(title).font(.caption).foregroundStyle(.secondary)
             Moin.Space(alignment: alignment) {
@@ -145,7 +145,7 @@ struct SpaceAlignmentDemoView: View {
         }
     }
 
-    private func alignmentBoxVertical(title: String, alignment: Moin.SpaceAlignment) -> some View {
+    private func alignmentBoxVertical(title: String, alignment: Moin.Space.Alignment) -> some View {
         VStack {
             Text(title).font(.caption).foregroundStyle(.secondary)
             Moin.Space(direction: .vertical, alignment: alignment) {

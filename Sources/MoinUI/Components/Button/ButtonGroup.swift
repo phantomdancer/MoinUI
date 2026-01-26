@@ -1,15 +1,15 @@
 import SwiftUI
 
-// MARK: - Moin.ButtonGroup
+// MARK: - Moin.Button.Group
 
-public extension Moin {
+public extension Moin.Button {
     /// 按钮组组件
-    struct ButtonGroup<Content: View>: View {
-        private let size: Moin.ButtonSize
+    struct Group<Content: View>: View {
+        private let size: _ButtonSize
         private let content: Content
 
         public init(
-            size: Moin.ButtonSize = .medium,
+            size: _ButtonSize = .medium,
             @ViewBuilder content: () -> Content
         ) {
             self.size = size
@@ -36,7 +36,7 @@ enum MoinButtonGroupPosition {
 // MARK: - 环境变量
 
 private struct MoinButtonGroupSizeKey: EnvironmentKey {
-    static let defaultValue: Moin.ButtonSize? = nil
+    static let defaultValue: _ButtonSize? = nil
 }
 
 private struct MoinButtonGroupPositionKey: EnvironmentKey {
@@ -44,7 +44,7 @@ private struct MoinButtonGroupPositionKey: EnvironmentKey {
 }
 
 extension EnvironmentValues {
-    var moinButtonGroupSize: Moin.ButtonSize? {
+    var moinButtonGroupSize: _ButtonSize? {
         get { self[MoinButtonGroupSizeKey.self] }
         set { self[MoinButtonGroupSizeKey.self] = newValue }
     }

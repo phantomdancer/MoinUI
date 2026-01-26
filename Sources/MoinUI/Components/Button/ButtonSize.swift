@@ -1,13 +1,16 @@
 import SwiftUI
 
-// MARK: - Moin.ButtonSize
+// MARK: - _ButtonSize (internal name, use Moin.Button.Size)
 
-public extension Moin {
-    /// Button size
-    enum ButtonSize {
-        case small
-        case medium
-        case large
-    }
+/// Button size
+public enum _ButtonSize {
+    case small
+    case medium
+    case large
 }
 
+// MARK: - Moin.Button.Size typealias
+
+public extension Moin.Button {
+    typealias Size = _ButtonSize
+}

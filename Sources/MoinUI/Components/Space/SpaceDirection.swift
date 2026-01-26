@@ -1,11 +1,15 @@
 import SwiftUI
 
-// MARK: - Moin.SpaceDirection
+// MARK: - _SpaceDirection (internal name, use Moin.Space.Direction)
 
-public extension Moin {
-    /// Space direction
-    enum SpaceDirection: Sendable {
-        case horizontal
-        case vertical
-    }
+/// Space direction
+public enum _SpaceDirection: Sendable {
+    case horizontal
+    case vertical
+}
+
+// MARK: - Moin.Space.Direction typealias
+
+public extension Moin.Space {
+    typealias Direction = _SpaceDirection
 }

@@ -1,12 +1,16 @@
 import SwiftUI
 
-// MARK: - Moin.SpaceAlignment
+// MARK: - _SpaceAlignment (internal name, use Moin.Space.Alignment)
 
-public extension Moin {
-    /// Space alignment
-    enum SpaceAlignment {
-        case start
-        case end
-        case center
-    }
+/// Space alignment
+public enum _SpaceAlignment {
+    case start
+    case end
+    case center
+}
+
+// MARK: - Moin.Space.Alignment typealias
+
+public extension Moin.Space {
+    typealias Alignment = _SpaceAlignment
 }

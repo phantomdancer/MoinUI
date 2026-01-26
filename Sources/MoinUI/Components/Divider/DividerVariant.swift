@@ -1,12 +1,16 @@
 import SwiftUI
 
-// MARK: - Moin.DividerVariant
+// MARK: - _DividerVariant (internal name, use Moin.Divider.Variant)
 
-public extension Moin {
-    /// Divider line variant
-    enum DividerVariant: String, CaseIterable {
-        case solid
-        case dashed
-        case dotted
-    }
+/// Divider line variant
+public enum _DividerVariant: String, CaseIterable {
+    case solid
+    case dashed
+    case dotted
+}
+
+// MARK: - Moin.Divider.Variant typealias
+
+public extension Moin.Divider {
+    typealias Variant = _DividerVariant
 }

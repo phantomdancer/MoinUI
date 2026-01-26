@@ -11,9 +11,9 @@ public extension Moin {
         @State private var isCloseHovered = false
 
         private let text: String
-        private let color: TagColor
-        private let variant: TagVariant
-        private let size: TagSize
+        private let color: _TagColor
+        private let variant: _TagVariant
+        private let size: _TagSize
         private let round: Bool
         private let icon: String?
         private let closable: Bool
@@ -31,9 +31,9 @@ public extension Moin {
         ///   - onClose: 关闭回调
         public init(
             _ text: String,
-            color: TagColor = .default,
-            variant: TagVariant = .filled,
-            size: TagSize = .medium,
+            color: _TagColor = .default,
+            variant: _TagVariant = .filled,
+            size: _TagSize = .medium,
             round: Bool = false,
             icon: String? = nil,
             closable: Bool = false,
@@ -163,7 +163,7 @@ public extension Moin {
         }
 
         /// 基础色（用于派生其他颜色）
-        private var baseColor: Color {
+        private var baseColor: SwiftUI.Color {
             switch color {
             case .default: return token.colorTextSecondary   // 全局Token
             case .success: return token.colorSuccess         // 全局Token
@@ -183,7 +183,7 @@ public extension Moin {
         }
 
         /// 前景色
-        private var foregroundColor: Color {
+        private var foregroundColor: SwiftUI.Color {
             switch variant {
             case .filled, .borderless:
                 if color.isDefault {
@@ -201,7 +201,7 @@ public extension Moin {
         }
 
         /// 背景色
-        private var backgroundColor: Color {
+        private var backgroundColor: SwiftUI.Color {
             switch variant {
             case .filled, .borderless:
                 if color.isDefault {
@@ -209,7 +209,7 @@ public extension Moin {
                 }
                 return colorAt(level: 1)
             case .outlined:
-                return .clear
+                return SwiftUI.Color.clear
             case .solid:
                 if color.isDefault {
                     return token.colorTextSecondary  // 全局Token
@@ -219,7 +219,7 @@ public extension Moin {
         }
 
         /// 边框色
-        private var borderColor: Color {
+        private var borderColor: SwiftUI.Color {
             switch variant {
             case .filled:
                 if color.isDefault {
@@ -232,12 +232,12 @@ public extension Moin {
                 }
                 return colorAt(level: 3)
             case .solid, .borderless:
-                return .clear
+                return SwiftUI.Color.clear
             }
         }
 
         /// 获取指定级别的颜色
-        private func colorAt(level: Int) -> Color {
+        private func colorAt(level: Int) -> SwiftUI.Color {
             // 自定义颜色使用动态色板
             if let palette = palette {
                 return palette[level]
@@ -259,7 +259,7 @@ public extension Moin {
         }
 
         /// Token 语义色色阶
-        private func tokenColorLevel(base: Color, level: Int) -> Color {
+        private func tokenColorLevel(base: SwiftUI.Color, level: Int) -> SwiftUI.Color {
             let palette = Moin.ColorPalette.generate(from: base, theme: isDark ? .dark : .light)
             return palette[level]
         }

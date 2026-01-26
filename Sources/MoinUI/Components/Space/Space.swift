@@ -10,9 +10,9 @@ public extension Moin {
         // Ant Design Space has no component token, uses global padding directly
         // @Environment(\.moinSpaceToken) private var spaceToken 
 
-        private let size: Moin.SpaceSize
-        private let direction: Moin.SpaceDirection
-        private let alignment: Moin.SpaceAlignment
+        private let size: _SpaceSize
+        private let direction: _SpaceDirection
+        private let alignment: _SpaceAlignment
         private let wrap: Bool
         private let separator: Separator?
         private let content: Content
@@ -26,9 +26,9 @@ public extension Moin {
         ///   - separator: Separator view between items
         ///   - content: Child views
         public init(
-            size: Moin.SpaceSize = .medium,
-            direction: Moin.SpaceDirection = .horizontal,
-            alignment: Moin.SpaceAlignment = .center,
+            size: _SpaceSize = .medium,
+            direction: _SpaceDirection = .horizontal,
+            alignment: _SpaceAlignment = .center,
             wrap: Bool = false,
             @ViewBuilder separator: () -> Separator,
             @ViewBuilder content: () -> Content
@@ -91,9 +91,9 @@ public extension Moin {
 public extension Moin.Space where Separator == EmptyView {
     /// Initialize Space component without separator
     init(
-        size: Moin.SpaceSize = .medium,
-        direction: Moin.SpaceDirection = .horizontal,
-        alignment: Moin.SpaceAlignment = .center,
+        size: _SpaceSize = .medium,
+        direction: _SpaceDirection = .horizontal,
+        alignment: _SpaceAlignment = .center,
         wrap: Bool = false,
         @ViewBuilder content: () -> Content
     ) {
@@ -109,7 +109,7 @@ public extension Moin.Space where Separator == EmptyView {
 // MARK: - SpaceLayout
 
 private struct SpaceLayout<Separator: View> {
-    let direction: Moin.SpaceDirection
+    let direction: _SpaceDirection
     let spacing: CGFloat
     let verticalAlignment: VerticalAlignment
     let horizontalAlignment: HorizontalAlignment

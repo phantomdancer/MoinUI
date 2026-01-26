@@ -139,7 +139,7 @@ struct ButtonAPIView: View {
     internal var variantPropertyCard: some View {
         PropertyCard(
             name: "variant",
-            type: "Moin.ButtonVariant",
+            type: "Moin.Button.Variant",
             defaultValue: ".solid",
             description: tr("button.api.variant"),
             enumValues: ".solid | .outlined | .dashed | .filled | .text | .link",
@@ -164,7 +164,7 @@ struct ButtonAPIView: View {
     internal var sizePropertyCard: some View {
         PropertyCard(
             name: "size",
-            type: "Moin.ButtonSize",
+            type: "Moin.Button.Size",
             defaultValue: ".medium",
             description: tr("button.api.size"),
             enumValues: ".small | .medium | .large",
@@ -186,7 +186,7 @@ struct ButtonAPIView: View {
     internal var shapePropertyCard: some View {
         PropertyCard(
             name: "shape",
-            type: "Moin.ButtonShape",
+            type: "Moin.Button.Shape",
             defaultValue: ".default",
             description: tr("button.api.shape"),
             enumValues: ".default | .round | .circle",

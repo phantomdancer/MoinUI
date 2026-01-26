@@ -1,10 +1,16 @@
 import SwiftUI
 
-public extension Moin {
-    /// 标签尺寸
-    enum TagSize {
-        case small
-        case medium
-        case large
-    }
+// MARK: - _TagSize (internal name, use Moin.Tag.Size)
+
+/// 标签尺寸
+public enum _TagSize {
+    case small
+    case medium
+    case large
+}
+
+// MARK: - Moin.Tag.Size typealias
+
+public extension Moin.Tag {
+    typealias Size = _TagSize
 }

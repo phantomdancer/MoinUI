@@ -25,9 +25,9 @@ struct TagAPIContent: View {
                     ),
                     rows: [
                         ("text", "String", "-", tr("tag.api.text")),
-                        ("color", "Moin.TagColor", ".default", tr("tag.api.color")),
-                        ("variant", "Moin.TagVariant", ".filled", tr("tag.api.variant")),
-                        ("size", "Moin.TagSize", ".medium", tr("tag.api.size")),
+                        ("color", "Moin.Tag.Color", ".default", tr("tag.api.color")),
+                        ("variant", "Moin.Tag.Variant", ".filled", tr("tag.api.variant")),
+                        ("size", "Moin.Tag.Size", ".medium", tr("tag.api.size")),
                         ("round", "Bool", "false", tr("tag.api.round")),
                         ("icon", "String?", "nil", tr("tag.api.icon")),
                         ("closable", "Bool", "false", tr("tag.api.closable")),
@@ -58,7 +58,7 @@ struct TagAPIContent: View {
                 )
 
                 // TagColor
-                Text("Moin.TagColor")
+                Text("Moin.Tag.Color")
                     .font(.title2)
                     .fontWeight(.semibold)
 
@@ -84,7 +84,7 @@ struct TagAPIContent: View {
                 )
 
                 // TagVariant
-                Text("Moin.TagVariant")
+                Text("Moin.Tag.Variant")
                     .font(.title2)
                     .fontWeight(.semibold)
 
@@ -107,7 +107,7 @@ struct TagAPIContent: View {
                 )
 
                 // TagSize
-                Text("Moin.TagSize")
+                Text("Moin.Tag.Size")
                     .font(.title2)
                     .fontWeight(.semibold)
 

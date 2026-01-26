@@ -14,7 +14,7 @@ public extension Moin {
     /// Compact context passed through environment
     struct SpaceCompactContext: Equatable, Sendable {
         public let isCompact: Bool
-        public let direction: SpaceDirection
+        public let direction: _SpaceDirection
         public let position: SpaceCompactPosition
         public let fillWidth: Bool  // For vertical compact: fill to max width
 
@@ -27,7 +27,7 @@ public extension Moin {
 
         public init(
             isCompact: Bool,
-            direction: SpaceDirection,
+            direction: _SpaceDirection,
             position: SpaceCompactPosition,
             fillWidth: Bool = false
         ) {

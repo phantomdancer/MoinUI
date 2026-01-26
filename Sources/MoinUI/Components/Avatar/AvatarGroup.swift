@@ -3,11 +3,11 @@ import SwiftUI
 // MARK: - Environment Keys for Group Context
 
 private struct AvatarGroupSizeKey: EnvironmentKey {
-    static let defaultValue: AvatarSize? = nil
+    static let defaultValue: Moin.Avatar.Size? = nil
 }
 
 private struct AvatarGroupShapeKey: EnvironmentKey {
-    static let defaultValue: AvatarShape? = nil
+    static let defaultValue: Moin.Avatar.Shape? = nil
 }
 
 private struct AvatarGroupGapKey: EnvironmentKey {
@@ -15,12 +15,12 @@ private struct AvatarGroupGapKey: EnvironmentKey {
 }
 
 extension EnvironmentValues {
-    var avatarGroupSize: AvatarSize? {
+    var avatarGroupSize: Moin.Avatar.Size? {
         get { self[AvatarGroupSizeKey.self] }
         set { self[AvatarGroupSizeKey.self] = newValue }
     }
 
-    var avatarGroupShape: AvatarShape? {
+    var avatarGroupShape: Moin.Avatar.Shape? {
         get { self[AvatarGroupShapeKey.self] }
         set { self[AvatarGroupShapeKey.self] = newValue }
     }
@@ -31,18 +31,18 @@ extension EnvironmentValues {
     }
 }
 
-// MARK: - AvatarGroup
+// MARK: - Avatar.Group
 
-public extension Moin {
+public extension Moin.Avatar {
     /// 头像组 - 用于展示一组头像
-    struct AvatarGroup<Content: View>: View {
+    struct Group<Content: View>: View {
         @Environment(\EnvironmentValues.moinAvatarToken) private var avatarToken
         @Environment(\.moinToken) private var globalToken
 
         private let maxCount: Int?
         private let content: Content
-        private let size: AvatarSize
-        private let shape: AvatarShape
+        private let size: Moin.Avatar.Size
+        private let shape: Moin.Avatar.Shape
         private let gap: CGFloat
 
         /// 创建头像组
@@ -54,8 +54,8 @@ public extension Moin {
         ///   - content: 头像列表
         public init(
             maxCount: Int? = nil,
-            size: AvatarSize = .default,
-            shape: AvatarShape = .circle,
+            size: Moin.Avatar.Size = .default,
+            shape: Moin.Avatar.Shape = .circle,
             gap: CGFloat = 4,
             @ViewBuilder content: () -> Content
         ) {
@@ -90,15 +90,13 @@ public extension Moin {
 
 // MARK: - Internal Implementation
 
-// MARK: - Internal Implementation
-
 struct _AvatarGroupContainer: _VariadicView_MultiViewRoot {
     let maxCount: Int?
     let spacing: CGFloat
     let borderWidth: CGFloat
     let borderColor: Color
-    let size: AvatarSize
-    let shape: AvatarShape
+    let size: Moin.Avatar.Size
+    let shape: Moin.Avatar.Shape
     let gap: CGFloat
     let avatarToken: Moin.AvatarToken
 
@@ -132,7 +130,7 @@ struct _AvatarGroupContainer: _VariadicView_MultiViewRoot {
         }
     }
 
-    private func resolveShape(_ shape: AvatarShape) -> AnyShape {
+    private func resolveShape(_ shape: Moin.Avatar.Shape) -> AnyShape {
         switch shape {
         case .circle:
             return AnyShape(Circle())
@@ -141,7 +139,7 @@ struct _AvatarGroupContainer: _VariadicView_MultiViewRoot {
         }
     }
 
-    private func resolveSize(_ size: AvatarSize) -> CGFloat {
+    private func resolveSize(_ size: Moin.Avatar.Size) -> CGFloat {
         switch size {
         case .large: return avatarToken.sizeLG
         case .default: return avatarToken.size
@@ -150,3 +148,24 @@ struct _AvatarGroupContainer: _VariadicView_MultiViewRoot {
         }
     }
 }
+
+// Helper for AnyShape
+struct AnyShape: Shape, @unchecked Sendable {
+    private let _path: @Sendable (CGRect) -> Path
+
+    init<S: Shape>(_ wrapped: S) {
+        _path = { rect in
+            let path = wrapped.path(in: rect)
+            return path
+        }
+    }
+
+    func path(in rect: CGRect) -> Path {
+        _path(rect)
+    }
+}
+
+// MARK: - 兼容旧 API
+
+@available(*, deprecated, renamed: "Moin.Avatar.Group")
+public typealias MoinAvatarGroup<Content: View> = Moin.Avatar.Group<Content>

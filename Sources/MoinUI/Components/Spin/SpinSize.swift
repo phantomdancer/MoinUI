@@ -1,9 +1,9 @@
 import SwiftUI
 
-// MARK: - SpinSize
+// MARK: - _SpinSize (internal name, use Spin.Size)
 
 /// Spin 组件尺寸
-public enum SpinSize: String, CaseIterable, CustomStringConvertible {
+public enum _SpinSize: String, CaseIterable, CustomStringConvertible {
     case small
     case `default`
     case large
@@ -21,4 +21,10 @@ public enum SpinSize: String, CaseIterable, CustomStringConvertible {
             return token.dotSizeLG
         }
     }
+}
+
+// MARK: - Spin.Size typealias
+
+public extension Spin {
+    typealias Size = _SpinSize
 }

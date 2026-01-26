@@ -1,5 +1,7 @@
 import SwiftUI
 
+// MARK: - Moin.Badge
+
 public extension Moin {
     /// 徽标组件 - 用于展示数字、状态或小红点
     struct Badge<Content: View, CountView: View>: View {
@@ -13,10 +15,10 @@ public extension Moin {
         private let dot: Bool
         private let showZero: Bool
         private let overflowCount: Int
-        private let size: BadgeSize
+        private let size: Size
         private let color: Moin.BadgeColor
         private let offset: (x: CGFloat, y: CGFloat)?
-        private let status: BadgeStatus?
+        private let status: Status?
         private let text: String?
 
         /// 创建带数字的徽标
@@ -25,7 +27,7 @@ public extension Moin {
             dot: Bool = false,
             showZero: Bool = false,
             overflowCount: Int = 99,
-            size: BadgeSize = .default,
+            size: Size = .default,
             color: Moin.BadgeColor = .default,
             offset: (x: CGFloat, y: CGFloat)? = nil,
             @ViewBuilder content: () -> Content
@@ -46,7 +48,7 @@ public extension Moin {
         /// 创建带自定义指示器的徽标（类似 Ant Design count={<Icon/>}）
         public init(
             count: @escaping () -> CountView,
-            size: BadgeSize = .default,
+            size: Size = .default,
             offset: (x: CGFloat, y: CGFloat)? = nil,
             @ViewBuilder content: () -> Content
         ) {
@@ -65,17 +67,14 @@ public extension Moin {
 
         public var body: some View {
             if let content = content {
-                // 带内容模式
                 content
                     .overlay(alignment: .topTrailing) {
                         badgeIndicator
                             .offset(x: offsetX, y: offsetY)
                     }
             } else if let status = status {
-                // 状态模式（独立使用）
                 statusView(status)
             } else {
-                // 独立徽标模式
                 badgeIndicator
             }
         }
@@ -83,7 +82,6 @@ public extension Moin {
         @ViewBuilder
         private var badgeIndicator: some View {
             if let countView = countView {
-                // 自定义指示器
                 countView
             } else if dot {
                 dotView
@@ -113,7 +111,7 @@ public extension Moin {
                 .shadow(color: resolvedBadgeColor.opacity(badgeToken.shadowOpacity), radius: badgeToken.shadowRadius, x: 0, y: 1)
         }
 
-        private func statusView(_ status: BadgeStatus) -> some View {
+        private func statusView(_ status: Status) -> some View {
             HStack(spacing: 6) {
                 Circle()
                     .fill(statusColor(status))
@@ -127,7 +125,7 @@ public extension Moin {
             }
         }
 
-        private func statusColor(_ status: BadgeStatus) -> Color {
+        private func statusColor(_ status: Status) -> Color {
             switch status {
             case .success: return token.colorSuccess
             case .processing: return token.colorPrimary
@@ -137,7 +135,7 @@ public extension Moin {
             }
         }
 
-        // MARK: - Size Properties (from Token)
+        // MARK: - Size Properties
 
         private var fontSize: CGFloat {
             switch size {
@@ -173,13 +171,11 @@ public extension Moin {
 
         private var offsetX: CGFloat {
             if let x = offset?.x { return x }
-            // dot 模式使用自身尺寸的一半，数字模式使用高度的一半
             return dot ? (dotSize / 2) : (height / 2)
         }
 
         private var offsetY: CGFloat {
             if let y = offset?.y { return y }
-            // dot 模式使用自身尺寸的一半，数字模式使用高度的一半
             return dot ? -(dotSize / 2) : -(height / 2)
         }
 
@@ -215,7 +211,7 @@ public extension Moin.Badge where Content == EmptyView, CountView == EmptyView {
         dot: Bool = false,
         showZero: Bool = false,
         overflowCount: Int = 99,
-        size: BadgeSize = .default,
+        size: Size = .default,
         color: Moin.BadgeColor = .default
     ) {
         self.content = nil
@@ -232,7 +228,7 @@ public extension Moin.Badge where Content == EmptyView, CountView == EmptyView {
     }
 
     /// 创建状态徽标（独立使用，类似 Ant Design）
-    init(status: BadgeStatus, text: String? = nil) {
+    init(status: Status, text: String? = nil) {
         self.content = nil
         self.countNumber = nil
         self.countView = nil
@@ -246,5 +242,3 @@ public extension Moin.Badge where Content == EmptyView, CountView == EmptyView {
         self.text = text
     }
 }
-
-

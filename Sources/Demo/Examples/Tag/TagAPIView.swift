@@ -59,7 +59,7 @@ struct TagAPIView: View {
     private var colorPropertyCard: some View {
         PropertyCard(
             name: "color",
-            type: "Moin.TagColor",
+            type: "Moin.Tag.Color",
             defaultValue: ".default",
             description: tr("tag.api.color"),
             enumValues: ".default | .success | .processing | .warning | .error | Color | .magenta | .red | ...",
@@ -107,7 +107,7 @@ struct TagAPIView: View {
     private var variantPropertyCard: some View {
         PropertyCard(
             name: "variant",
-            type: "Moin.TagVariant",
+            type: "Moin.Tag.Variant",
             defaultValue: ".filled",
             description: tr("tag.api.variant"),
             enumValues: ".filled | .outlined | .solid | .borderless",
@@ -129,7 +129,7 @@ struct TagAPIView: View {
     private var sizePropertyCard: some View {
         PropertyCard(
             name: "size",
-            type: "Moin.TagSize",
+            type: "Moin.Tag.Size",
             defaultValue: ".medium",
             description: tr("tag.api.size"),
             enumValues: ".small | .medium | .large",

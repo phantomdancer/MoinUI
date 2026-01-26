@@ -1,28 +1,32 @@
 import SwiftUI
 
-// MARK: - Moin.SpaceSize
+// MARK: - _SpaceSize (internal name, use Moin.Space.Size)
 
-public extension Moin {
-    /// Space size
-    enum SpaceSize {
-        case small
-        case medium
-        case large
-        /// 内部使用，请直接传数字如 `size: 24`
-        case _custom(CGFloat)
-    }
+/// Space size
+public enum _SpaceSize {
+    case small
+    case medium
+    case large
+    /// 内部使用，请直接传数字如 `size: 24`
+    case _custom(CGFloat)
 }
 
 // MARK: - ExpressibleByIntegerLiteral & ExpressibleByFloatLiteral
 
-extension Moin.SpaceSize: ExpressibleByIntegerLiteral {
+extension _SpaceSize: ExpressibleByIntegerLiteral {
     public init(integerLiteral value: Int) {
         self = ._custom(CGFloat(value))
     }
 }
 
-extension Moin.SpaceSize: ExpressibleByFloatLiteral {
+extension _SpaceSize: ExpressibleByFloatLiteral {
     public init(floatLiteral value: Double) {
         self = ._custom(CGFloat(value))
     }
+}
+
+// MARK: - Moin.Space.Size typealias
+
+public extension Moin.Space {
+    typealias Size = _SpaceSize
 }

@@ -23,15 +23,15 @@ struct SpaceAPIContent: View {
                         tr("api.description")
                     ),
                     rows: [
-                        ("size", "Moin.SpaceSize", ".medium", tr("api.space.size")),
-                        ("direction", "Moin.SpaceDirection", ".horizontal", tr("api.space.direction")),
-                        ("alignment", "Moin.SpaceAlignment", ".center", tr("api.space.alignment")),
+                        ("size", "Moin.Space.Size", ".medium", tr("api.space.size")),
+                        ("direction", "Moin.Space.Direction", ".horizontal", tr("api.space.direction")),
+                        ("alignment", "Moin.Space.Alignment", ".center", tr("api.space.alignment")),
                         ("wrap", "Bool", "false", tr("api.space.wrap")),
                         ("content", "@ViewBuilder () -> View", "-", tr("api.space.content")),
                     ]
                 )
 
-                Text("Moin.SpaceSize")
+                Text("Moin.Space.Size")
                     .font(.headline)
                     .padding(.top, Moin.Constants.Spacing.md)
 
@@ -50,7 +50,7 @@ struct SpaceAPIContent: View {
                     ]
                 )
 
-                Text("Moin.SpaceDirection")
+                Text("Moin.Space.Direction")
                     .font(.headline)
                     .padding(.top, Moin.Constants.Spacing.md)
 
@@ -67,7 +67,7 @@ struct SpaceAPIContent: View {
                     ]
                 )
 
-                Text("Moin.SpaceAlignment")
+                Text("Moin.Space.Alignment")
                     .font(.headline)
                     .padding(.top, Moin.Constants.Spacing.md)
 

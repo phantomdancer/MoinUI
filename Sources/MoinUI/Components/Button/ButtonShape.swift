@@ -1,16 +1,19 @@
 import SwiftUI
 
-// MARK: - Moin.ButtonShape
+// MARK: - _ButtonShape (internal name, use Moin.Button.Shape)
 
-public extension Moin {
-    /// Button shape
-    enum ButtonShape: Sendable {
-        /// Default rounded corners based on size
-        case `default`
-        /// Fully rounded corners (pill shape)
-        case round
-        /// Circular button (equal width and height)
-        case circle
-    }
+/// Button shape
+public enum _ButtonShape: Sendable {
+    /// Default rounded corners based on size
+    case `default`
+    /// Fully rounded corners (pill shape)
+    case round
+    /// Circular button (equal width and height)
+    case circle
 }
 
+// MARK: - Moin.Button.Shape typealias
+
+public extension Moin.Button {
+    typealias Shape = _ButtonShape
+}

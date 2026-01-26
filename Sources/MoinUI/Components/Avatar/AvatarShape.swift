@@ -1,7 +1,11 @@
-import Foundation
+import SwiftUI
 
-/// 头像形状
-public enum AvatarShape: String, CaseIterable {
-    case circle
-    case square
+// MARK: - Moin.Avatar.Shape
+
+public extension Moin.Avatar {
+    /// 头像形状
+    enum Shape: String, CaseIterable {
+        case circle
+        case square
+    }
 }

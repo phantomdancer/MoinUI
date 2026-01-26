@@ -252,7 +252,7 @@ struct SpinTokenView: View {
                 config.token.colorBgMask
                     .cornerRadius(4)
                 
-                SpinIndicator(
+                _SpinIndicator(
                     size: config.components.spin.dotSize,
                     color: .white,
                     duration: config.components.spin.motionDuration

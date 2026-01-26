@@ -1,12 +1,16 @@
 import SwiftUI
 
-// MARK: - Moin.DividerTitlePlacement
+// MARK: - _DividerTitlePlacement (internal name, use Moin.Divider.TitlePlacement)
 
-public extension Moin {
-    /// Title placement for horizontal divider with text
-    enum DividerTitlePlacement: String, CaseIterable {
-        case left
-        case center
-        case right
-    }
+/// Title placement for horizontal divider with text
+public enum _DividerTitlePlacement: String, CaseIterable {
+    case left
+    case center
+    case right
+}
+
+// MARK: - Moin.Divider.TitlePlacement typealias
+
+public extension Moin.Divider {
+    typealias TitlePlacement = _DividerTitlePlacement
 }

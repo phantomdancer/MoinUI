@@ -8,9 +8,9 @@ public extension Moin {
         @Environment(\.moinToken) private var token
         @Environment(\.moinDividerToken) private var dividerToken
 
-        private let orientation: DividerOrientation
-        private let variant: DividerVariant
-        private let titlePlacement: DividerTitlePlacement
+        private let orientation: _DividerOrientation
+        private let variant: _DividerVariant
+        private let titlePlacement: _DividerTitlePlacement
         private let plain: Bool
         private let content: Content?
 
@@ -18,8 +18,8 @@ public extension Moin {
 
         /// Basic divider without text
         public init(
-            orientation: DividerOrientation = .horizontal,
-            variant: DividerVariant = .solid
+            orientation: _DividerOrientation = .horizontal,
+            variant: _DividerVariant = .solid
         ) where Content == EmptyView {
             self.orientation = orientation
             self.variant = variant
@@ -31,9 +31,9 @@ public extension Moin {
         /// Divider with text title
         public init(
             _ title: String,
-            orientation: DividerOrientation = .horizontal,
-            variant: DividerVariant = .solid,
-            titlePlacement: DividerTitlePlacement = .center,
+            orientation: _DividerOrientation = .horizontal,
+            variant: _DividerVariant = .solid,
+            titlePlacement: _DividerTitlePlacement = .center,
             plain: Bool = false
         ) where Content == Text {
             self.orientation = orientation
@@ -45,9 +45,9 @@ public extension Moin {
 
         /// Divider with custom content
         public init(
-            orientation: DividerOrientation = .horizontal,
-            variant: DividerVariant = .solid,
-            titlePlacement: DividerTitlePlacement = .center,
+            orientation: _DividerOrientation = .horizontal,
+            variant: _DividerVariant = .solid,
+            titlePlacement: _DividerTitlePlacement = .center,
             plain: Bool = false,
             @ViewBuilder content: () -> Content
         ) {

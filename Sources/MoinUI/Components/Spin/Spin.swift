@@ -15,7 +15,7 @@ public struct Spin<Content: View>: View {
     /// 是否旋转
     let spinning: Bool
     /// 尺寸
-    let size: SpinSize
+    let size: Size
     /// 提示文案
     let tip: String?
     /// 延迟显示(毫秒)，使用 debounce 防抖
@@ -36,7 +36,7 @@ public struct Spin<Content: View>: View {
 
     public init(
         spinning: Bool = true,
-        size: SpinSize = .default,
+        size: Size = .default,
         tip: String? = nil,
         delay: Int? = nil,
         fullscreen: Bool = false
@@ -52,13 +52,13 @@ public struct Spin<Content: View>: View {
 
     // MARK: - Init (自定义指示器)
 
-    public init<Indicator: View>(
+    public init<IndicatorView: View>(
         spinning: Bool = true,
-        size: SpinSize = .default,
+        size: Size = .default,
         tip: String? = nil,
         delay: Int? = nil,
         fullscreen: Bool = false,
-        @ViewBuilder indicator: () -> Indicator
+        @ViewBuilder indicator: () -> IndicatorView
     ) where Content == EmptyView {
         self.spinning = spinning
         self.size = size
@@ -73,7 +73,7 @@ public struct Spin<Content: View>: View {
 
     public init(
         spinning: Bool = true,
-        size: SpinSize = .default,
+        size: Size = .default,
         tip: String? = nil,
         delay: Int? = nil,
         @ViewBuilder content: () -> Content
@@ -119,7 +119,6 @@ public struct Spin<Content: View>: View {
 
     // MARK: - Views
 
-    /// 基础旋转视图
     @ViewBuilder
     private func spinnerView(token: Moin.SpinToken) -> some View {
         if isVisible && spinning {
@@ -129,28 +128,26 @@ public struct Spin<Content: View>: View {
                 if let tip = tip {
                     Text(tip)
                         .font(.system(size: 14))
-                        .foregroundStyle(globalToken.colorTextTertiary) // AntD uses spinDotDefault -> colorTextDescription/colorTextTertiary
+                        .foregroundStyle(globalToken.colorTextTertiary)
                 }
             }
         }
     }
 
-    /// 指示器视图
     @ViewBuilder
     private func indicatorView(token: Moin.SpinToken) -> some View {
         if let customIndicator = indicator {
             customIndicator
         } else {
             let dotSize = size.dotSize(from: token)
-            SpinIndicator(
+            Indicator(
                 size: dotSize,
-                color: globalToken.colorPrimary, // From Global Token
+                color: globalToken.colorPrimary,
                 duration: token.motionDuration
             )
         }
     }
 
-    /// 嵌套模式视图
     @ViewBuilder
     private func nestedView(token: Moin.SpinToken) -> some View {
         ZStack {
@@ -166,7 +163,7 @@ public struct Spin<Content: View>: View {
                     if let tip = tip {
                         Text(tip)
                             .font(.system(size: 14))
-                            .foregroundStyle(globalToken.colorTextTertiary) // From Global Token
+                            .foregroundStyle(globalToken.colorTextTertiary)
                     }
                 }
             }
@@ -174,22 +171,19 @@ public struct Spin<Content: View>: View {
         .animation(.easeInOut(duration: 0.3), value: spinning)
     }
 
-    /// 全屏模式视图
     @ViewBuilder
     private func fullscreenView(token: Moin.SpinToken) -> some View {
         if isVisible && spinning {
             ZStack {
-                globalToken.colorBgMask // From Global Token
+                globalToken.colorBgMask
                     .ignoresSafeArea()
 
                 VStack(spacing: 12) {
-                    // 全屏模式使用白色指示器
-                    // 注意：AntD 全屏模式下也是白色，这里可以保持
                     if let customIndicator = indicator {
                         customIndicator
                     } else {
                         let dotSize = size.dotSize(from: token)
-                        SpinIndicator(
+                        Indicator(
                             size: dotSize,
                             color: .white,
                             duration: token.motionDuration
@@ -209,7 +203,6 @@ public struct Spin<Content: View>: View {
 
     // MARK: - Private
 
-    /// 设置延迟显示（debounce 防抖）
     private func setupDelay() {
         cancelDelay()
 
@@ -229,7 +222,6 @@ public struct Spin<Content: View>: View {
         }
     }
 
-    /// 取消延迟任务
     private func cancelDelay() {
         delayTask?.cancel()
         delayTask = nil
