@@ -190,29 +190,59 @@ struct SkeletonExamples: View {
             content: {
                 VStack(spacing: 24) {
                     // 头像元素
-                    HStack(spacing: 16) {
-                        Moin.SkeletonAvatar(active: true)
-                        Moin.SkeletonAvatar(shape: .square, active: true)
-                        Moin.SkeletonAvatar(size: .large, active: true)
-                        Moin.SkeletonAvatar(size: .small, active: true)
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text(tr("skeleton.avatar_element")).font(.caption).foregroundStyle(.secondary)
+                        HStack(spacing: 16) {
+                            Moin.SkeletonAvatar(active: true)
+                            Moin.SkeletonAvatar(shape: .square, active: true)
+                            Moin.SkeletonAvatar(size: .large, active: true)
+                            Moin.SkeletonAvatar(size: .small, active: true)
+                        }
                     }
 
                     // 按钮元素
-                    HStack(spacing: 16) {
-                        Moin.SkeletonButton(active: true)
-                        Moin.SkeletonButton(shape: .circle, active: true)
-                        Moin.SkeletonButton(shape: .round, active: true)
-                        Moin.SkeletonButton(size: .small, active: true)
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text(tr("skeleton.button_element")).font(.caption).foregroundStyle(.secondary)
+                        HStack(spacing: 16) {
+                            Moin.SkeletonButton(active: true)
+                            Moin.SkeletonButton(shape: .circle, active: true)
+                            Moin.SkeletonButton(shape: .round, active: true)
+                            Moin.SkeletonButton(shape: .square, active: true)
+                            Moin.SkeletonButton(shape: .default, active: true)
+                        }
                     }
 
                     // 输入框元素
-                    Moin.SkeletonInput(active: true)
-                        .frame(width: 200)
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text(tr("skeleton.input_element")).font(.caption).foregroundStyle(.secondary)
+                        HStack(spacing: 16) {
+                            Moin.SkeletonInput(active: true)
+                            Moin.SkeletonInput(size: .small, active: true)
+                            Moin.SkeletonInput(size: .large, active: true)
+                            Moin.SkeletonInput(block: true, active: true)
+                        }
+                    }
 
                     // 图片元素
-                    HStack(spacing: 16) {
-                        Moin.SkeletonImage(active: true)
-                        Moin.SkeletonImage(width: 120, height: 80, active: true)
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text(tr("skeleton.image_element")).font(.caption).foregroundStyle(.secondary)
+                        HStack(spacing: 16) {
+                            Moin.SkeletonImage(active: true)
+                            Moin.SkeletonImage(width: 120, height: 80, active: true)
+                        }
+                    }
+
+                    // Node 元素
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text(tr("skeleton.node_element")).font(.caption).foregroundStyle(.secondary)
+                        HStack(spacing: 16) {
+                            Moin.SkeletonNode(active: true)
+                            Moin.SkeletonNode(active: true) {
+                                Circle()
+                                    .fill(Color.blue)
+                                    .frame(width: 40, height: 40)
+                            }
+                        }
                     }
                 }
             },
@@ -222,18 +252,33 @@ struct SkeletonExamples: View {
                 Moin.SkeletonAvatar(active: true)
                 Moin.SkeletonAvatar(shape: .square, active: true)
                 Moin.SkeletonAvatar(size: .large, active: true)
+                Moin.SkeletonAvatar(size: .small, active: true)
+                Moin.SkeletonAvatar(size: 48, active: true)  // 自定义尺寸
 
                 // \(tr("skeleton.button_element"))
                 Moin.SkeletonButton(active: true)
                 Moin.SkeletonButton(shape: .circle, active: true)
                 Moin.SkeletonButton(shape: .round, active: true)
+                Moin.SkeletonButton(shape: .square, active: true)
+                Moin.SkeletonButton(size: .small, active: true)
+                Moin.SkeletonButton(size: .large, active: true)
+                Moin.SkeletonButton(block: true, active: true)
 
                 // \(tr("skeleton.input_element"))
                 Moin.SkeletonInput(active: true)
+                Moin.SkeletonInput(size: .small, active: true)
+                Moin.SkeletonInput(size: .large, active: true)
+                Moin.SkeletonInput(block: true, active: true)
 
                 // \(tr("skeleton.image_element"))
                 Moin.SkeletonImage(active: true)
                 Moin.SkeletonImage(width: 120, height: 80, active: true)
+
+                // \(tr("skeleton.node_element"))
+                Moin.SkeletonNode(active: true)
+                Moin.SkeletonNode(active: true) {
+                    Circle().fill(Color.blue).frame(width: 40, height: 40)
+                }
                 """
             }
         )

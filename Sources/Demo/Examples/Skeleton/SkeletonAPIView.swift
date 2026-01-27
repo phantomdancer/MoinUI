@@ -17,9 +17,29 @@ struct SkeletonAPIView: View {
                 sectionId: "skeleton"
             ),
             DocSidebarSection(
-                title: "Skeleton.Element",
-                items: [.init(id: "element.avatar"), .init(id: "element.button"), .init(id: "element.input"), .init(id: "element.image")],
-                sectionId: "element"
+                title: "Skeleton.Avatar",
+                items: [.init(id: "avatar.size"), .init(id: "avatar.shape"), .init(id: "avatar.active")],
+                sectionId: "avatar"
+            ),
+            DocSidebarSection(
+                title: "Skeleton.Button",
+                items: [.init(id: "button.size"), .init(id: "button.shape"), .init(id: "button.block"), .init(id: "button.active")],
+                sectionId: "button"
+            ),
+            DocSidebarSection(
+                title: "Skeleton.Input",
+                items: [.init(id: "input.size"), .init(id: "input.block"), .init(id: "input.active")],
+                sectionId: "input"
+            ),
+            DocSidebarSection(
+                title: "Skeleton.Image",
+                items: [.init(id: "image.width"), .init(id: "image.height"), .init(id: "image.active")],
+                sectionId: "image"
+            ),
+            DocSidebarSection(
+                title: "Skeleton.Node",
+                items: [.init(id: "node.active"), .init(id: "node.content")],
+                sectionId: "node"
             )
         ]
     }
@@ -29,10 +49,21 @@ struct SkeletonAPIView: View {
             sections: apiSections,
             initialItemId: "skeleton"
         ) { sectionId in
-            if sectionId == "skeleton" {
+            switch sectionId {
+            case "skeleton":
                 Text("Skeleton").font(.title3).fontWeight(.semibold)
-            } else if sectionId == "element" {
-                Text("Skeleton.Element").font(.title3).fontWeight(.semibold)
+            case "avatar":
+                Text("Skeleton.Avatar").font(.title3).fontWeight(.semibold)
+            case "button":
+                Text("Skeleton.Button").font(.title3).fontWeight(.semibold)
+            case "input":
+                Text("Skeleton.Input").font(.title3).fontWeight(.semibold)
+            case "image":
+                Text("Skeleton.Image").font(.title3).fontWeight(.semibold)
+            case "node":
+                Text("Skeleton.Node").font(.title3).fontWeight(.semibold)
+            default:
+                EmptyView()
             }
         } item: { item in
             cardForItem(item)
@@ -42,16 +73,39 @@ struct SkeletonAPIView: View {
     @ViewBuilder
     private func cardForItem(_ item: String) -> some View {
         switch item {
+        // Skeleton Properties
         case "active": activePropertyCard
         case "avatar": avatarPropertyCard
         case "title": titlePropertyCard
         case "paragraph": paragraphPropertyCard
         case "round": roundPropertyCard
         case "loading": loadingPropertyCard
-        case "element.avatar": elementAvatarCard
-        case "element.button": elementButtonCard
-        case "element.input": elementInputCard
-        case "element.image": elementImageCard
+
+        // Avatar Properties
+        case "avatar.size": avatarSizePropertyCard
+        case "avatar.shape": avatarShapePropertyCard
+        case "avatar.active": avatarActivePropertyCard
+
+        // Button Properties
+        case "button.size": buttonSizePropertyCard
+        case "button.shape": buttonShapePropertyCard
+        case "button.block": buttonBlockPropertyCard
+        case "button.active": buttonActivePropertyCard
+
+        // Input Properties
+        case "input.size": inputSizePropertyCard
+        case "input.block": inputBlockPropertyCard
+        case "input.active": inputActivePropertyCard
+
+        // Image Properties
+        case "image.width": imageWidthPropertyCard
+        case "image.height": imageHeightPropertyCard
+        case "image.active": imageActivePropertyCard
+
+        // Node Properties
+        case "node.active": nodeActivePropertyCard
+        case "node.content": nodeContentPropertyCard
+
         default: EmptyView()
         }
     }
@@ -209,81 +263,289 @@ struct SkeletonAPIView: View {
         .scrollAnchor("skeleton.loading")
     }
 
-    // MARK: - Skeleton.Element Cards
+    // MARK: - Avatar Property Cards
 
-    private var elementAvatarCard: some View {
+    private var avatarSizePropertyCard: some View {
         PropertyCard(
-            name: "Avatar(size:shape:active:)",
-            type: "Skeleton.Avatar",
-            defaultValue: "-",
-            description: tr("skeleton.element_avatar"),
-            sectionId: "element"
+            name: "size",
+            type: "Skeleton.Size",
+            defaultValue: ".default",
+            description: "头像尺寸，支持预设值 .small、.default、.large 或自定义数值",
+            sectionId: "avatar"
         ) {
             HStack(spacing: 16) {
-                Moin.SkeletonAvatar(active: true)
-                Moin.SkeletonAvatar(shape: .square, active: true)
-                Moin.SkeletonAvatar(size: .large, active: true)
                 Moin.SkeletonAvatar(size: .small, active: true)
+                Moin.SkeletonAvatar(size: .default, active: true)
+                Moin.SkeletonAvatar(size: .large, active: true)
+                Moin.SkeletonAvatar(size: 48, active: true)
             }
         } code: {
             """
-            Moin.SkeletonAvatar(active: true)
-            Moin.SkeletonAvatar(shape: .square, active: true)
+            Moin.SkeletonAvatar(size: .small, active: true)
+            Moin.SkeletonAvatar(size: .default, active: true)
             Moin.SkeletonAvatar(size: .large, active: true)
+            Moin.SkeletonAvatar(size: 48, active: true)  // 自定义尺寸
             """
         }
-        .scrollAnchor("element.avatar")
+        .scrollAnchor("avatar.size")
     }
 
-    private var elementButtonCard: some View {
+    private var avatarShapePropertyCard: some View {
         PropertyCard(
-            name: "Button(size:shape:block:active:)",
-            type: "Skeleton.Button",
-            defaultValue: "-",
-            description: tr("skeleton.element_button"),
-            sectionId: "element"
+            name: "shape",
+            type: "AvatarShape",
+            defaultValue: ".circle",
+            description: "头像形状，支持 .circle（圆形）或 .square（方形）",
+            sectionId: "avatar"
         ) {
             HStack(spacing: 16) {
-                Moin.SkeletonButton(active: true)
+                Moin.SkeletonAvatar(shape: .circle, active: true)
+                Moin.SkeletonAvatar(shape: .square, active: true)
+            }
+        } code: {
+            """
+            Moin.SkeletonAvatar(shape: .circle, active: true)
+            Moin.SkeletonAvatar(shape: .square, active: true)
+            """
+        }
+        .scrollAnchor("avatar.shape")
+    }
+
+    private var avatarActivePropertyCard: some View {
+        PropertyCard(
+            name: "active",
+            type: "Bool",
+            defaultValue: "false",
+            description: "是否显示动画效果",
+            sectionId: "avatar"
+        ) {
+            HStack(spacing: 32) {
+                VStack {
+                    Moin.SkeletonAvatar(active: false)
+                    Text("active: false").font(.caption).foregroundStyle(.secondary)
+                }
+                VStack {
+                    Moin.SkeletonAvatar(active: true)
+                    Text("active: true").font(.caption).foregroundStyle(.secondary)
+                }
+            }
+        } code: {
+            """
+            Moin.SkeletonAvatar(active: false)
+            Moin.SkeletonAvatar(active: true)
+            """
+        }
+        .scrollAnchor("avatar.active")
+    }
+
+    // MARK: - Button Property Cards
+
+    private var buttonSizePropertyCard: some View {
+        PropertyCard(
+            name: "size",
+            type: "Skeleton.Size",
+            defaultValue: ".default",
+            description: "按钮尺寸，支持预设值 .small、.default、.large 或自定义数值",
+            sectionId: "button"
+        ) {
+            HStack(spacing: 16) {
+                Moin.SkeletonButton(size: .small, active: true)
+                Moin.SkeletonButton(size: .default, active: true)
+                Moin.SkeletonButton(size: .large, active: true)
+            }
+        } code: {
+            """
+            Moin.SkeletonButton(size: .small, active: true)
+            Moin.SkeletonButton(size: .default, active: true)
+            Moin.SkeletonButton(size: .large, active: true)
+            """
+        }
+        .scrollAnchor("button.size")
+    }
+
+    private var buttonShapePropertyCard: some View {
+        PropertyCard(
+            name: "shape",
+            type: "ButtonShape",
+            defaultValue: ".default",
+            description: "按钮形状，支持 .default（默认）、.circle（圆形）、.round（圆角）、.square（方形）",
+            sectionId: "button"
+        ) {
+            HStack(spacing: 16) {
+                Moin.SkeletonButton(shape: .default, active: true)
                 Moin.SkeletonButton(shape: .circle, active: true)
                 Moin.SkeletonButton(shape: .round, active: true)
+                Moin.SkeletonButton(shape: .square, active: true)
             }
         } code: {
             """
-            Moin.SkeletonButton(active: true)
+            Moin.SkeletonButton(shape: .default, active: true)
             Moin.SkeletonButton(shape: .circle, active: true)
             Moin.SkeletonButton(shape: .round, active: true)
+            Moin.SkeletonButton(shape: .square, active: true)
             """
         }
-        .scrollAnchor("element.button")
+        .scrollAnchor("button.shape")
     }
 
-    private var elementInputCard: some View {
+    private var buttonBlockPropertyCard: some View {
         PropertyCard(
-            name: "Input(size:active:)",
-            type: "Skeleton.Input",
-            defaultValue: "-",
-            description: tr("skeleton.element_input"),
-            sectionId: "element"
-        ) {
-            Moin.SkeletonInput(active: true)
-                .frame(width: 200)
-        } code: {
-            "Moin.SkeletonInput(active: true)"
-        }
-        .scrollAnchor("element.input")
-    }
-
-    private var elementImageCard: some View {
-        PropertyCard(
-            name: "Image(width:height:active:)",
-            type: "Skeleton.Image",
-            defaultValue: "-",
-            description: tr("skeleton.element_image"),
-            sectionId: "element"
+            name: "block",
+            type: "Bool",
+            defaultValue: "false",
+            description: "是否为块级元素（撑满容器宽度）",
+            sectionId: "button"
         ) {
             HStack(spacing: 16) {
-                Moin.SkeletonImage(active: true)
+                Moin.SkeletonButton(block: false, active: true)
+                Moin.SkeletonButton(block: true, active: true)
+                    .frame(width: 150)
+            }
+        } code: {
+            """
+            Moin.SkeletonButton(block: false, active: true)
+            Moin.SkeletonButton(block: true, active: true)
+            """
+        }
+        .scrollAnchor("button.block")
+    }
+
+    private var buttonActivePropertyCard: some View {
+        PropertyCard(
+            name: "active",
+            type: "Bool",
+            defaultValue: "false",
+            description: "是否显示动画效果",
+            sectionId: "button"
+        ) {
+            HStack(spacing: 32) {
+                VStack {
+                    Moin.SkeletonButton(active: false)
+                    Text("active: false").font(.caption).foregroundStyle(.secondary)
+                }
+                VStack {
+                    Moin.SkeletonButton(active: true)
+                    Text("active: true").font(.caption).foregroundStyle(.secondary)
+                }
+            }
+        } code: {
+            """
+            Moin.SkeletonButton(active: false)
+            Moin.SkeletonButton(button: true)
+            """
+        }
+        .scrollAnchor("button.active")
+    }
+
+    // MARK: - Input Property Cards
+
+    private var inputSizePropertyCard: some View {
+        PropertyCard(
+            name: "size",
+            type: "Skeleton.Size",
+            defaultValue: ".default",
+            description: "输入框尺寸，支持预设值 .small、.default、.large 或自定义数值",
+            sectionId: "input",
+            preview: {
+                HStack(spacing: 16) {
+                    Moin.SkeletonInput(size: .small, active: true)
+                    Moin.SkeletonInput(size: .default, active: true)
+                    Moin.SkeletonInput(size: .large, active: true)
+                }
+            },
+            code: {
+                """
+                Moin.SkeletonInput(size: .small, active: true)
+                Moin.SkeletonInput(size: .default, active: true)
+                Moin.SkeletonInput(size: .large, active: true)
+                """
+            }
+        )
+        .scrollAnchor("input.size")
+    }
+
+    private var inputBlockPropertyCard: some View {
+        PropertyCard(
+            name: "block",
+            type: "Bool",
+            defaultValue: "false",
+            description: "是否为块级元素（撑满容器宽度）",
+            sectionId: "input"
+        ) {
+            HStack(spacing: 16) {
+                Moin.SkeletonInput(block: false, active: true)
+                Moin.SkeletonInput(block: true, active: true)
+                    .frame(width: 200)
+            }
+        } code: {
+            """
+            Moin.SkeletonInput(block: false, active: true)
+            Moin.SkeletonInput(block: true, active: true)
+            """
+        }
+        .scrollAnchor("input.block")
+    }
+
+    private var inputActivePropertyCard: some View {
+        PropertyCard(
+            name: "active",
+            type: "Bool",
+            defaultValue: "false",
+            description: "是否显示动画效果",
+            sectionId: "input"
+        ) {
+            HStack(spacing: 32) {
+                VStack {
+                    Moin.SkeletonInput(active: false)
+                    Text("active: false").font(.caption).foregroundStyle(.secondary)
+                }
+                VStack {
+                    Moin.SkeletonInput(active: true)
+                    Text("active: true").font(.caption).foregroundStyle(.secondary)
+                }
+            }
+        } code: {
+            """
+            Moin.SkeletonInput(active: false)
+            Moin.SkeletonInput(active: true)
+            """
+        }
+        .scrollAnchor("input.active")
+    }
+
+    // MARK: - Image Property Cards
+
+    private var imageWidthPropertyCard: some View {
+        PropertyCard(
+            name: "width",
+            type: "CGFloat?",
+            defaultValue: "nil",
+            description: "图片宽度，nil 时使用默认值 96",
+            sectionId: "image"
+        ) {
+            HStack(spacing: 16) {
+                Moin.SkeletonImage(width: nil, active: true)
+                Moin.SkeletonImage(width: 120, active: true)
+            }
+        } code: {
+            """
+            Moin.SkeletonImage(active: true)
+            Moin.SkeletonImage(width: 120, active: true)
+            """
+        }
+        .scrollAnchor("image.width")
+    }
+
+    private var imageHeightPropertyCard: some View {
+        PropertyCard(
+            name: "height",
+            type: "CGFloat?",
+            defaultValue: "nil",
+            description: "图片高度，nil 时使用默认值 96",
+            sectionId: "image"
+        ) {
+            HStack(spacing: 16) {
+                Moin.SkeletonImage(height: nil, active: true)
                 Moin.SkeletonImage(width: 120, height: 80, active: true)
             }
         } code: {
@@ -292,6 +554,97 @@ struct SkeletonAPIView: View {
             Moin.SkeletonImage(width: 120, height: 80, active: true)
             """
         }
-        .scrollAnchor("element.image")
+        .scrollAnchor("image.height")
+    }
+
+    private var imageActivePropertyCard: some View {
+        PropertyCard(
+            name: "active",
+            type: "Bool",
+            defaultValue: "false",
+            description: "是否显示动画效果",
+            sectionId: "image"
+        ) {
+            HStack(spacing: 32) {
+                VStack {
+                    Moin.SkeletonImage(active: false)
+                    Text("active: false").font(.caption).foregroundStyle(.secondary)
+                }
+                VStack {
+                    Moin.SkeletonImage(active: true)
+                    Text("active: true").font(.caption).foregroundStyle(.secondary)
+                }
+            }
+        } code: {
+            """
+            Moin.SkeletonImage(active: false)
+            Moin.SkeletonImage(active: true)
+            """
+        }
+        .scrollAnchor("image.active")
+    }
+
+    // MARK: - Node Property Cards
+
+    private var nodeActivePropertyCard: some View {
+        PropertyCard(
+            name: "active",
+            type: "Bool",
+            defaultValue: "false",
+            description: "是否显示动画效果，当传入 content 时 active=true 会在内容上覆盖半透明骨架层",
+            sectionId: "node"
+        ) {
+            HStack(spacing: 16) {
+                Moin.SkeletonNode(active: false)
+                Moin.SkeletonNode(active: true)
+                Moin.SkeletonNode(active: true) {
+                    Circle()
+                        .fill(Color.blue)
+                        .frame(width: 40, height: 40)
+                }
+            }
+        } code: {
+            """
+            Moin.SkeletonNode(active: false)
+            Moin.SkeletonNode(active: true)
+            Moin.SkeletonNode(active: true) {
+                Circle().fill(Color.blue).frame(width: 40, height: 40)
+            }
+            """
+        }
+        .scrollAnchor("node.active")
+    }
+
+    private var nodeContentPropertyCard: some View {
+        PropertyCard(
+            name: "content",
+            type: "View?",
+            defaultValue: "nil",
+            description: "自定义内容，支持传入任意子视图。传入内容后，active=true 时会在内容上覆盖半透明骨架层",
+            sectionId: "node"
+        ) {
+            HStack(spacing: 16) {
+                Moin.SkeletonNode(active: true)
+                Moin.SkeletonNode(active: true) {
+                    Circle()
+                        .fill(Color.blue)
+                        .frame(width: 40, height: 40)
+                }
+                Moin.SkeletonNode(active: false) {
+                    Text("Content")
+                        .padding()
+                        .background(Color.gray.opacity(0.2))
+                        .cornerRadius(8)
+                }
+            }
+        } code: {
+            """
+            Moin.SkeletonNode(active: true)
+            Moin.SkeletonNode(active: true) {
+                Circle().fill(Color.blue).frame(width: 40, height: 40)
+            }
+            """
+        }
+        .scrollAnchor("node.content")
     }
 }
