@@ -206,7 +206,7 @@ struct TagAPIView: View {
     private var checkablePropertyCard: some View {
         PropertyCard(
             name: "checkable",
-            type: "_CheckableTag",
+            type: "Moin.Tag.Checkable",
             defaultValue: "-",
             description: tr("tag.api.checkable"),
             sectionId: "api"

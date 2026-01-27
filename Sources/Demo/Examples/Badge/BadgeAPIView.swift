@@ -37,7 +37,7 @@ struct BadgeAPIView: View {
             if sectionId == "badge" {
                 Text("Moin.Badge").font(.title3).fontWeight(.semibold)
             } else if sectionId == "ribbon" {
-                Text("_BadgeRibbon").font(.title3).fontWeight(.semibold)
+                Text("Moin.Badge.Ribbon").font(.title3).fontWeight(.semibold)
             }
         } item: { item in
             cardForItem(item)
