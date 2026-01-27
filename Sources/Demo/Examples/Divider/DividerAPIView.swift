@@ -174,12 +174,12 @@ struct DividerAPIView: View {
             description: tr("api.divider.content"),
             sectionId: "divider"
         ) {
-            Moin.Divider {
+            _Divider {
                  Image(systemName: "scissors")
             }
         } code: {
             """
-            Moin.Divider {
+            _Divider {
                 Image(systemName: "scissors")
             }
             """

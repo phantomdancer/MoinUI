@@ -153,7 +153,7 @@ struct RadioExamples: View {
             description: tr("radio.group_desc"),
             content: {
                 VStack(alignment: .leading, spacing: 10) {
-                    Moin.RadioGroup(
+                    Moin.Radio.Group(
                         value: $groupSelectionPlain,
                         options: plainOptions
                     )
@@ -172,7 +172,7 @@ struct RadioExamples: View {
                 @State private var selection = ""
                 let options = ["\(tr("radio.apple"))", "\(tr("radio.pear"))", "\(tr("radio.orange"))"]
                 
-                Moin.RadioGroup(value: $selection, options: options)
+                Moin.Radio.Group(value: $selection, options: options)
                     .onAppear {
                         selection = options.first ?? ""
                     }
@@ -183,7 +183,7 @@ struct RadioExamples: View {
     
     // MARK: - Group Example 2: Object Options
     @State private var groupSelectionObject = "London"
-    private var objectOptions: [Moin.RadioOption<String>] {
+    private var objectOptions: [_RadioOption<String>] {
         [
             .init(label: tr("radio.london"), value: "London"),
             .init(label: tr("radio.paris"), value: "Paris"),
@@ -197,7 +197,7 @@ struct RadioExamples: View {
             description: tr("radio.group_desc"),
             content: {
                 VStack(alignment: .leading, spacing: 10) {
-                    Moin.RadioGroup(
+                    Moin.Radio.Group(
                         value: $groupSelectionObject,
                         options: objectOptions
                     )
@@ -210,7 +210,7 @@ struct RadioExamples: View {
                 """
                 @State private var selection = "London"
                 
-                private var options: [Moin.RadioOption<String>] {
+                private var options: [_RadioOption<String>] {
                     [
                         .init(label: "\(tr("radio.london"))", value: "London"),
                         .init(label: "\(tr("radio.paris"))", value: "Paris"),
@@ -218,7 +218,7 @@ struct RadioExamples: View {
                     ]
                 }
                 
-                Moin.RadioGroup(value: $selection, options: options)
+                Moin.Radio.Group(value: $selection, options: options)
                 """
             }
         )
@@ -233,7 +233,7 @@ struct RadioExamples: View {
             description: tr("radio.group_desc"),
             content: {
                 VStack(alignment: .leading, spacing: 10) {
-                    Moin.RadioGroup(
+                    Moin.Radio.Group(
                         value: $groupSelectionDisabled,
                         options: objectOptions, // Reuse options from above
                         disabled: true
@@ -242,7 +242,7 @@ struct RadioExamples: View {
             },
             code: {
                 """
-                Moin.RadioGroup(value: $selection, options: options, disabled: true)
+                Moin.Radio.Group(value: $selection, options: options, disabled: true)
                 """
             }
         )
@@ -250,7 +250,7 @@ struct RadioExamples: View {
     
     // MARK: - Group Example 4: Optional Selection with Disabled Items
     @State private var optionalSelection: String? = "Apple"
-    private var optionsWithDisabled: [Moin.RadioOption<String>] {
+    private var optionsWithDisabled: [_RadioOption<String>] {
         [
             .init(label: tr("radio.apple"), value: "Apple"),
             .init(label: tr("radio.pear"), value: "Pear"),
@@ -265,7 +265,7 @@ struct RadioExamples: View {
             content: {
                 VStack(alignment: .leading, spacing: 20) {
                     HStack(spacing: 10) {
-                        Moin.RadioGroup(value: Binding(
+                        Moin.Radio.Group(value: Binding(
                             get: { optionalSelection ?? "" },
                             set: { optionalSelection = $0 }
                         ), options: optionsWithDisabled)
@@ -280,7 +280,7 @@ struct RadioExamples: View {
                 """
                 @State private var selection: String? = "Apple"
                 
-                private var options: [Moin.RadioOption<String>] {
+                private var options: [_RadioOption<String>] {
                     [
                         .init(label: "\(tr("radio.apple"))", value: "Apple"),
                         .init(label: "\(tr("radio.pear"))", value: "Pear"),
@@ -288,7 +288,7 @@ struct RadioExamples: View {
                     ]
                 }
                 
-                Moin.RadioGroup(
+                Moin.Radio.Group(
                     value: Binding(get: { selection ?? "" }, set: { selection = $0 }),
                     options: options
                 )
@@ -318,7 +318,7 @@ struct RadioExamples: View {
             title: tr("radio.custom_view"),
             description: tr("radio.custom_view_desc"),
             content: {
-                Moin.RadioGroupView(
+                Moin.Radio.GroupView(
                     value: $customSelection,
                     data: chartOptionsData,
                     valuePath: \.id // Use 'id' property as the selection value
@@ -347,7 +347,7 @@ struct RadioExamples: View {
                     ...
                 ]
                 
-                Moin.RadioGroupView(
+                Moin.Radio.Group(
                     value: $selection,
                     data: options,
                     valuePath: \\.id
@@ -378,7 +378,7 @@ struct RadioExamples: View {
                             .font(.caption)
                             .foregroundStyle(.secondary)
                         
-                        Moin.RadioGroup(
+                        Moin.Radio.Group(
                             value: $directionSelection,
                             options: plainOptions,
                             orientation: .horizontal
@@ -391,7 +391,7 @@ struct RadioExamples: View {
                             .font(.caption)
                             .foregroundStyle(.secondary)
                         
-                        Moin.RadioGroup(
+                        Moin.Radio.Group(
                             value: $directionSelection,
                             options: plainOptions,
                             orientation: .vertical
@@ -401,8 +401,8 @@ struct RadioExamples: View {
             },
             code: {
                 """
-                Moin.RadioGroup(value: $selection, options: options, orientation: .horizontal)
-                Moin.RadioGroup(value: $selection, options: options, orientation: .vertical)
+                Moin.Radio.Group(value: $selection, options: options, orientation: .horizontal)
+                Moin.Radio.Group(value: $selection, options: options, orientation: .vertical)
                 """
             }
         )
@@ -422,7 +422,7 @@ struct RadioExamples: View {
                             .font(.caption)
                             .foregroundStyle(.secondary)
                         
-                        Moin.RadioGroup(
+                        Moin.Radio.Group(
                             value: $buttonStyleSelection,
                             options: buttonOptions,
                             optionType: .button // Default buttonStyle is .outline
@@ -435,7 +435,7 @@ struct RadioExamples: View {
                             .font(.caption)
                             .foregroundStyle(.secondary)
                         
-                        Moin.RadioGroup(
+                        Moin.Radio.Group(
                             value: $buttonStyleSelection,
                             options: buttonOptions,
                             optionType: .button,
@@ -449,21 +449,21 @@ struct RadioExamples: View {
                 """
                 @State private var selection = "Apple"
 
-                let options: [Moin.RadioOption<String>] = [
+                let options: [_RadioOption<String>] = [
                     .init(label: "\(tr("radio.apple"))", value: "Apple"),
                     .init(label: "\(tr("radio.pear"))", value: "Pear"),
                     .init(label: "\(tr("radio.orange"))", value: "Orange", disabled: true)
                 ]
 
                 // Outline (Default Button Style)
-                Moin.RadioGroup(
+                Moin.Radio.Group(
                     value: $selection,
                     options: options,
                     optionType: .button
                 )
 
                 // Solid
-                Moin.RadioGroup(
+                Moin.Radio.Group(
                     value: $selection,
                     options: options,
                     optionType: .button,
@@ -483,21 +483,21 @@ struct RadioExamples: View {
             description: tr("radio.button_size_desc"),
             content: {
                 VStack(alignment: .leading, spacing: 20) {
-                    Moin.RadioGroup(
+                    Moin.Radio.Group(
                         value: $buttonSizeSelection,
                         options: plainOptions,
                         optionType: .button,
                         size: .large
                     )
 
-                    Moin.RadioGroup(
+                    Moin.Radio.Group(
                         value: $buttonSizeSelection,
                         options: plainOptions,
                         optionType: .button,
                         size: .middle
                     )
 
-                    Moin.RadioGroup(
+                    Moin.Radio.Group(
                         value: $buttonSizeSelection,
                         options: plainOptions,
                         optionType: .button,
@@ -510,7 +510,7 @@ struct RadioExamples: View {
                 @State private var selection = "Apple"
 
                 // Large
-                Moin.RadioGroup(
+                Moin.Radio.Group(
                     value: $selection,
                     options: options,
                     optionType: .button,
@@ -518,7 +518,7 @@ struct RadioExamples: View {
                 )
 
                 // Middle (Default)
-                Moin.RadioGroup(
+                Moin.Radio.Group(
                     value: $selection,
                     options: options,
                     optionType: .button,
@@ -526,7 +526,7 @@ struct RadioExamples: View {
                 )
 
                 // Small
-                Moin.RadioGroup(
+                Moin.Radio.Group(
                     value: $selection,
                     options: options,
                     optionType: .button,
@@ -537,7 +537,7 @@ struct RadioExamples: View {
         )
     }
     
-    private var buttonOptions: [Moin.RadioOption<String>] {
+    private var buttonOptions: [_RadioOption<String>] {
         [
             .init(label: tr("radio.apple"), value: "Apple"),
             .init(label: tr("radio.pear"), value: "Pear"),
@@ -554,20 +554,20 @@ struct RadioExamples: View {
             description: tr("radio.block_desc"),
             content: {
                 VStack(alignment: .leading, spacing: 20) {
-                    Moin.RadioGroup(
+                    Moin.Radio.Group(
                         value: $blockSelection,
                         options: plainOptions,
                         block: true
                     )
 
-                    Moin.RadioGroup(
+                    Moin.Radio.Group(
                         value: $blockSelection,
                         options: plainOptions,
                         optionType: .button,
                         block: true
                     )
 
-                    Moin.RadioGroup(
+                    Moin.Radio.Group(
                         value: $blockSelection,
                         options: plainOptions,
                         optionType: .button,
@@ -580,20 +580,20 @@ struct RadioExamples: View {
                 """
                 @State private var selection = "Apple"
 
-                Moin.RadioGroup(
+                Moin.Radio.Group(
                     value: $selection,
                     options: options,
                     block: true
                 )
 
-                Moin.RadioGroup(
+                Moin.Radio.Group(
                     value: $selection,
                     options: options,
                     optionType: .button,
                     block: true
                 )
 
-                Moin.RadioGroup(
+                Moin.Radio.Group(
                     value: $selection,
                     options: options,
                     optionType: .button,

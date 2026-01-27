@@ -9,8 +9,4 @@ public enum _DividerTitlePlacement: String, CaseIterable {
     case right
 }
 
-// MARK: - Moin.Divider.TitlePlacement typealias
 
-public extension Moin.Divider {
-    typealias TitlePlacement = _DividerTitlePlacement
-}

@@ -154,7 +154,7 @@ struct DividerExamples: View {
             VStack(alignment: .leading, spacing: 0) {
                 Text(tr("divider.lorem_short"))
 
-                Moin.Divider {
+                _Divider {
                     HStack(spacing: 4) {
                         Image(systemName: "star.fill")
                             .foregroundStyle(.yellow)
@@ -185,7 +185,7 @@ struct DividerExamples: View {
         } code: {
             """
             // \(tr("divider.custom_icon_text"))
-            Moin.Divider {
+            _Divider {
                 HStack(spacing: 4) {
                     Image(systemName: "star.fill")
                         .foregroundStyle(.yellow)

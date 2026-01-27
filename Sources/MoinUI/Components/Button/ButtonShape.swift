@@ -12,8 +12,3 @@ public enum _ButtonShape: Sendable {
     case circle
 }
 
-// MARK: - Moin.Button.Shape typealias
-
-public extension Moin.Button {
-    typealias Shape = _ButtonShape
-}

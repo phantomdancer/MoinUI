@@ -37,7 +37,7 @@ struct BadgeAPIView: View {
             if sectionId == "badge" {
                 Text("Moin.Badge").font(.title3).fontWeight(.semibold)
             } else if sectionId == "ribbon" {
-                Text("Moin.BadgeRibbon").font(.title3).fontWeight(.semibold)
+                Text("_BadgeRibbon").font(.title3).fontWeight(.semibold)
             }
         } item: { item in
             cardForItem(item)
@@ -229,10 +229,10 @@ struct BadgeAPIView: View {
             description: tr("badge.api.text"),
             sectionId: "ribbon"
         ) {
-            Moin.BadgeRibbon(text: "New") { RibbonCard() }
+            Moin.Badge.Ribbon(text: "New") { RibbonCard() }
         } code: {
             """
-            Moin.BadgeRibbon(text: "New") {...}
+            Moin.Badge.Ribbon(text: "New") {...}
             """
         }
         .scrollAnchor("ribbon.ribbonText")
@@ -246,10 +246,10 @@ struct BadgeAPIView: View {
             description: tr("badge.api.color"),
             sectionId: "ribbon"
         ) {
-            Moin.BadgeRibbon(text: "Cool", color: .purple) { RibbonCard() }
+            Moin.Badge.Ribbon(text: "Cool", color: .purple) { RibbonCard() }
         } code: {
             """
-            Moin.BadgeRibbon(color: .purple) {...}
+            Moin.Badge.Ribbon(color: .purple) {...}
             """
         }
         .scrollAnchor("ribbon.ribbonColor")
@@ -265,13 +265,13 @@ struct BadgeAPIView: View {
             sectionId: "ribbon"
         ) {
             HStack {
-                Moin.BadgeRibbon(text: "Start", placement: .start) { RibbonCard() }
-                Moin.BadgeRibbon(text: "End", placement: .end) { RibbonCard() }
+                Moin.Badge.Ribbon(text: "Start", placement: .start) { RibbonCard() }
+                Moin.Badge.Ribbon(text: "End", placement: .end) { RibbonCard() }
             }
         } code: {
             """
-            Moin.BadgeRibbon(placement: .start) {...}
-            Moin.BadgeRibbon(placement: .end) {...}
+            Moin.Badge.Ribbon(placement: .start) {...}
+            Moin.Badge.Ribbon(placement: .end) {...}
             """
         }
         .scrollAnchor("ribbon.ribbonPlacement")
@@ -285,10 +285,10 @@ struct BadgeAPIView: View {
              description: tr("badge.api.content"),
              sectionId: "ribbon"
          ) {
-             Moin.BadgeRibbon(text: "H") { RibbonCard() }
+             Moin.Badge.Ribbon(text: "H") { RibbonCard() }
          } code: {
             """
-            Moin.BadgeRibbon(text: "H") {...}
+            Moin.Badge.Ribbon(text: "H") {...}
             """
         }
         .scrollAnchor("ribbon.ribbonContent")

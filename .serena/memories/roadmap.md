@@ -17,7 +17,7 @@
 ## 按复杂度排序（简单优先，无依赖优先）
 
 ### 已完成
-Button ✅, Typography ✅, Divider ✅, Space ✅, Tag ✅, Badge ✅, Avatar ✅, Empty ✅, Spin ✅, Statistic ✅, Alert ✅, Progress ✅, Switch ✅, Checkbox ✅ (TOKEN 完整化), Icon ⏭
+Button ✅, Typography ✅, Divider ✅, Space ✅, Tag ✅, Badge ✅, Avatar ✅, Empty ✅, Spin ✅, Statistic ✅, Alert ✅, Progress ✅, Switch ✅, Checkbox ✅, Radio ✅, Skeleton ✅, Icon ⏭
 
 ### 第一梯队：极简组件（无依赖，几乎无状态）
 
@@ -39,7 +39,7 @@ Button ✅, Typography ✅, Divider ✅, Space ✅, Tag ✅, Badge ✅, Avatar �
 | Switch | ★★☆☆☆ | ✅ 已完成 |
 | Checkbox | ★★☆☆☆ | ✅ 已完成 |
 | Radio | ★★☆☆☆ | ✅ 已完成 |
-| Skeleton | ★★☆☆☆ | 骨架屏占位 |
+| Skeleton | ★★☆☆☆ | ✅ 已完成 |
 | Result | ★★☆☆☆ | 结果页面 |
 | Timeline | ★★☆☆☆ | 时间轴 |
 
@@ -97,7 +97,17 @@ Button ✅, Typography ✅, Divider ✅, Space ✅, Tag ✅, Badge ✅, Avatar �
 ## 建议实现顺序
 
 ```
-已完成: Button → Typography → Divider → Space → Tag → Badge → Avatar → Empty → Spin → Statistic → Alert → Progress → Switch → Checkbox → Radio → Skeleton
+已完成: Button → Typography → Divider → Space → Tag → Badge → Avatar → Empty → Spin → Statistic → Alert → Progress → Switch → Checkbox → Radio → Skeleton ✅
+
+### 架构重构 (2026-01-27)
+- ✅ 全部组件采用 Factory 模式：`Moin.Component("title")` 直接调用
+- 模式: `struct _MoinComponentFactory` + `callAsFunction` 方法
+- 类型访问: `Moin.Component.Size`, `Moin.Component.Color` 等 (typealias)
+- 子组件: `Moin.Component.SubComponent(...)` (实例属性 Factory)
+  - Tag.Checkable, Badge.Ribbon, Avatar.Group, Space.Compact
+  - Spin.Indicator, Button.Loading, Checkbox.Group
+  - Radio.Group, Radio.GroupView
+- Demo 中禁止使用下划线开头的内部类型（如 `_Tag`）
 
 下一批: Rate
 

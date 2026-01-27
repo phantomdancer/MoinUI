@@ -298,13 +298,13 @@ struct AvatarAPIView: View {
             description: tr("avatar.api.group_content"),
             sectionId: "avatargroup"
         ) {
-            Moin.Avatar.Group {
+            _AvatarGroup {
                 Moin.Avatar("A")
                 Moin.Avatar("B")
             }
         } code: {
             """
-            Moin.Avatar.Group {
+            _AvatarGroup {
                 Moin.Avatar("A")
                 Moin.Avatar("B")
             }

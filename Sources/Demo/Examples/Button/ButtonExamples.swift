@@ -256,16 +256,16 @@ struct ButtonExamples: View {
                     Moin.Button(tr("button.label.loading"), color: .primary, loading: true) {}
                     Moin.Button(tr("button.label.loading"), color: .primary, size: .small, loading: true) {}
                     Moin.Button(icon: "power", color: .primary, loading: true) {}
-                    Moin.Button(tr("button.label.custom"), color: .primary, loading: _ButtonLoading(true, icon: "face.smiling")) {}
+                    Moin.Button(tr("button.label.custom"), color: .primary, loading: Moin.Button.Loading(true, icon: "face.smiling")) {}
                 }
                 HStack(spacing: Moin.Constants.Spacing.md) {
-                    Moin.Button(tr("button.label.click_load"), color: .primary, loading: _ButtonLoading(loadings[0])) {
+                    Moin.Button(tr("button.label.click_load"), color: .primary, loading: Moin.Button.Loading(loadings[0])) {
                         enterLoading(0)
                     }
-                    Moin.Button(tr("button.label.icon_end"), color: .primary, iconPlacement: .end, loading: _ButtonLoading(loadings[1])) {
+                    Moin.Button(tr("button.label.icon_end"), color: .primary, iconPlacement: .end, loading: Moin.Button.Loading(loadings[1])) {
                         enterLoading(1)
                     }
-                    Moin.Button(tr("button.label.delay"), color: .primary, loading: _ButtonLoading(loadings[2], delay: 0.5)) {
+                    Moin.Button(tr("button.label.delay"), color: .primary, loading: Moin.Button.Loading(loadings[2], delay: 0.5)) {
                         enterLoading(2)
                     }
                 }
@@ -276,10 +276,10 @@ struct ButtonExamples: View {
             Moin.Button("\(tr("button.label.loading"))", color: .primary, loading: true) {}
 
             // \(tr("button.label.custom"))
-            Moin.Button("\(tr("button.label.custom"))", color: .primary, loading: _ButtonLoading(true, icon: "face.smiling")) {}
+            Moin.Button("\(tr("button.label.custom"))", color: .primary, loading: Moin.Button.Loading(true, icon: "face.smiling")) {}
 
             // \(tr("button.label.delay"))
-            Moin.Button("\(tr("button.label.delay"))", color: .primary, loading: _ButtonLoading(isLoading, delay: 0.5)) {}
+            Moin.Button("\(tr("button.label.delay"))", color: .primary, loading: Moin.Button.Loading(isLoading, delay: 0.5)) {}
             """
         }
     }

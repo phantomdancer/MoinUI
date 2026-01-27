@@ -11,7 +11,7 @@ struct CheckboxGroupAPIView: View {
 
     private let options1 = ["Apple", "Pear", "Orange"]
 
-    private var options2: [Moin.CheckboxOption<String>] {
+    private var options2: [_CheckboxOption<String>] {
         [
             .init(label: tr("checkbox.london"), value: "London"),
             .init(label: tr("checkbox.paris"), value: "Paris"),
@@ -62,7 +62,7 @@ struct CheckboxGroupAPIView: View {
             sectionId: "api"
         ) {
             VStack(alignment: .leading, spacing: Moin.Constants.Spacing.sm) {
-                Moin.CheckboxGroup(selection: $selection1, options: options1)
+                Moin.Checkbox.Group(selection: $selection1, options: options1)
                 Text("Selected: \(selection1.sorted().joined(separator: ", "))")
                     .font(.caption)
                     .foregroundStyle(.secondary)
@@ -72,7 +72,7 @@ struct CheckboxGroupAPIView: View {
             @State private var selection: Set<String> = ["Apple"]
             let options = ["Apple", "Pear", "Orange"]
 
-            Moin.CheckboxGroup(selection: $selection, options: options)
+            Moin.Checkbox.Group(selection: $selection, options: options)
             """
         }
         .scrollAnchor("api.selection")
@@ -87,20 +87,20 @@ struct CheckboxGroupAPIView: View {
             sectionId: "api"
         ) {
             VStack(alignment: .leading, spacing: Moin.Constants.Spacing.sm) {
-                Moin.CheckboxGroup(selection: $selection2, options: options2)
+                Moin.Checkbox.Group(selection: $selection2, options: options2)
                 Text("Selected: \(selection2.sorted().joined(separator: ", "))")
                     .font(.caption)
                     .foregroundStyle(.secondary)
             }
         } code: {
             """
-            let options: [Moin.CheckboxOption<String>] = [
+            let options: [_CheckboxOption<String>] = [
                 .init(label: "London", value: "London"),
                 .init(label: "Paris", value: "Paris"),
                 .init(label: "New York", value: "New York")
             ]
 
-            Moin.CheckboxGroup(selection: $selection, options: options)
+            Moin.Checkbox.Group(selection: $selection, options: options)
             """
         }
         .scrollAnchor("api.options")
@@ -119,7 +119,7 @@ struct CheckboxGroupAPIView: View {
                 Text("Vertical")
                     .font(.caption)
                     .foregroundStyle(.secondary)
-                Moin.CheckboxGroup(
+                Moin.Checkbox.Group(
                     selection: .constant(Set(["Apple", "Pear"])),
                     options: options1,
                     direction: .vertical
@@ -131,7 +131,7 @@ struct CheckboxGroupAPIView: View {
                 Text("Horizontal")
                     .font(.caption)
                     .foregroundStyle(.secondary)
-                Moin.CheckboxGroup(
+                Moin.Checkbox.Group(
                     selection: .constant(Set(["Apple", "Pear"])),
                     options: options1,
                     direction: .horizontal
@@ -139,13 +139,13 @@ struct CheckboxGroupAPIView: View {
             }
         } code: {
             """
-            Moin.CheckboxGroup(
+            Moin.Checkbox.Group(
                 selection: $selection,
                 options: options,
                 direction: .vertical
             )
 
-            Moin.CheckboxGroup(
+            Moin.Checkbox.Group(
                 selection: $selection,
                 options: options,
                 direction: .horizontal
@@ -163,13 +163,13 @@ struct CheckboxGroupAPIView: View {
             description: tr("checkboxgroup.api.isDisabled"),
             sectionId: "api"
         ) {
-            Moin.CheckboxGroup(
+            Moin.Checkbox.Group(
                 selection: .constant(Set(["Apple"])),
                 options: options1,
                 disabled: true
             )
         } code: {
-            "Moin.CheckboxGroup(selection: $selection, options: options, disabled: true)"
+            "Moin.Checkbox.Group(selection: $selection, options: options, disabled: true)"
         }
         .scrollAnchor("api.isDisabled")
     }

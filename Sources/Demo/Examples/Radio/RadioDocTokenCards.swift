@@ -82,7 +82,7 @@ extension RadioTokenView {
             sectionId: "component"
         ) {
             HStack(spacing: Moin.Constants.Spacing.md) {
-                Moin.RadioGroup(value: $groupValue, options: [1, 2, 3])
+                Moin.Radio.Group(value: $groupValue, options: [1, 2, 3])
                     .id(config.components.radio.wrapperMarginInlineEnd)
             }
         } editor: {
@@ -104,7 +104,7 @@ extension RadioTokenView {
             description: tr("doc.component.buttonBg"),
             sectionId: "component"
         ) {
-            Moin.RadioGroup(
+            Moin.Radio.Group(
                 value: $buttonValue,
                 options: ["A", "B", "C"],
                 optionType: .button
@@ -126,7 +126,7 @@ extension RadioTokenView {
             description: tr("doc.component.buttonCheckedBg"),
             sectionId: "component"
         ) {
-            Moin.RadioGroup(
+            Moin.Radio.Group(
                 value: $buttonValue,
                 options: ["A", "B", "C"],
                 optionType: .button,
@@ -149,7 +149,7 @@ extension RadioTokenView {
             description: tr("doc.component.buttonCheckedBgDisabled"),
             sectionId: "component"
         ) {
-            Moin.RadioGroup(
+            Moin.Radio.Group(
                 value: $buttonValue,
                 options: ["A", "B", "C"],
                 disabled: true,
@@ -172,7 +172,7 @@ extension RadioTokenView {
             description: tr("doc.component.buttonCheckedColorDisabled"),
             sectionId: "component"
         ) {
-            Moin.RadioGroup(
+            Moin.Radio.Group(
                 value: $buttonValue,
                 options: ["A", "B", "C"],
                 disabled: true,
@@ -195,7 +195,7 @@ extension RadioTokenView {
             description: tr("doc.component.buttonColor"),
             sectionId: "component"
         ) {
-            Moin.RadioGroup(
+            Moin.Radio.Group(
                 value: $buttonValue,
                 options: ["A", "B", "C"],
                 optionType: .button
@@ -218,7 +218,7 @@ extension RadioTokenView {
             sectionId: "component"
         ) {
             HStack(spacing: Moin.Constants.Spacing.md) {
-                Moin.RadioGroup(
+                Moin.Radio.Group(
                     value: Binding.constant("A"),
                     options: ["A", "B", "C"],
                     optionType: .button
@@ -245,7 +245,7 @@ extension RadioTokenView {
             description: tr("doc.component.buttonSolidCheckedActiveBg"),
             sectionId: "component"
         ) {
-            Moin.RadioGroup(
+            Moin.Radio.Group(
                 value: $buttonValue,
                 options: ["A", "B", "C"],
                 optionType: .button,
@@ -268,7 +268,7 @@ extension RadioTokenView {
             description: tr("doc.component.buttonSolidCheckedBg"),
             sectionId: "component"
         ) {
-            Moin.RadioGroup(
+            Moin.Radio.Group(
                 value: $buttonValue,
                 options: ["A", "B", "C"],
                 optionType: .button,
@@ -291,7 +291,7 @@ extension RadioTokenView {
             description: tr("doc.component.buttonSolidCheckedColor"),
             sectionId: "component"
         ) {
-            Moin.RadioGroup(
+            Moin.Radio.Group(
                 value: $buttonValue,
                 options: ["A", "B", "C"],
                 optionType: .button,
@@ -314,7 +314,7 @@ extension RadioTokenView {
             description: tr("doc.component.buttonSolidCheckedHoverBg"),
             sectionId: "component"
         ) {
-            Moin.RadioGroup(
+            Moin.Radio.Group(
                 value: $buttonValue,
                 options: ["A", "B", "C"],
                 optionType: .button,
@@ -535,7 +535,7 @@ extension RadioTokenView {
             sectionId: "global"
         ) {
             VStack(alignment: .leading, spacing: Moin.Constants.Spacing.sm) {
-                Moin.RadioGroup(value: $groupValue, options: [1, 2, 3])
+                Moin.Radio.Group(value: $groupValue, options: [1, 2, 3])
                     .id(config.token.motionDurationMid)
                 Text("duration: \(String(format: "%.1f", config.token.motionDurationMid))s")
                     .font(.system(size: 11, design: .monospaced))
@@ -560,7 +560,7 @@ extension RadioTokenView {
             sectionId: "global"
         ) {
             VStack(alignment: .leading, spacing: Moin.Constants.Spacing.sm) {
-                Moin.RadioGroup(value: $groupValue, options: [1, 2, 3])
+                Moin.Radio.Group(value: $groupValue, options: [1, 2, 3])
                     .id(config.token.motionDurationSlow)
                 Text("duration: \(String(format: "%.1f", config.token.motionDurationSlow))s")
                     .font(.system(size: 11, design: .monospaced))

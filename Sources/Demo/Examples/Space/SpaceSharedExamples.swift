@@ -92,7 +92,7 @@ struct SpaceBasicDemoView: View {
     @Localized var tr
     
     var body: some View {
-        Moin.Space {
+        _Space {
             Moin.Button("\(tr("button.label.button")) 1", color: .primary) {}
             Moin.Button("\(tr("button.label.button")) 2", color: .primary) {}
             Moin.Button("\(tr("button.label.button")) 3", color: .primary) {}
@@ -129,7 +129,7 @@ struct SpaceAlignmentDemoView: View {
     }
     
     // Helper views moved inside here or as private/internal
-    private func alignmentBox(title: String, alignment: Moin.Space.Alignment) -> some View {
+    private func alignmentBox(title: String, alignment: _SpaceAlignment) -> some View {
         VStack {
             Text(title).font(.caption).foregroundStyle(.secondary)
             Moin.Space(alignment: alignment) {
@@ -145,7 +145,7 @@ struct SpaceAlignmentDemoView: View {
         }
     }
 
-    private func alignmentBoxVertical(title: String, alignment: Moin.Space.Alignment) -> some View {
+    private func alignmentBoxVertical(title: String, alignment: _SpaceAlignment) -> some View {
         VStack {
             Text(title).font(.caption).foregroundStyle(.secondary)
             Moin.Space(direction: .vertical, alignment: alignment) {

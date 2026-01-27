@@ -19,7 +19,7 @@ struct RadioAPIView: View {
     private let plainOptions = [1, 2, 3]
     private let stringOptions = ["A", "B", "C"]
 
-    private var objectOptions: [Moin.RadioOption<String>] {
+    private var objectOptions: [_RadioOption<String>] {
         [
             .init(label: tr("radio.london"), value: "London"),
             .init(label: tr("radio.paris"), value: "Paris"),
@@ -161,7 +161,7 @@ struct RadioAPIView: View {
             sectionId: "radiogroup"
         ) {
             VStack(alignment: .leading, spacing: Moin.Constants.Spacing.sm) {
-                Moin.RadioGroup(value: $valueState1, options: plainOptions)
+                Moin.Radio.Group(value: $valueState1, options: plainOptions)
                 Text("value: \(valueState1)")
                     .font(.caption)
                     .foregroundStyle(.secondary)
@@ -170,7 +170,7 @@ struct RadioAPIView: View {
             """
             @State private var value: Int = 1
 
-            Moin.RadioGroup(value: $value, options: [1, 2, 3])
+            Moin.Radio.Group(value: $value, options: [1, 2, 3])
             """
         }
         .scrollAnchor("radiogroup.value")
@@ -185,20 +185,20 @@ struct RadioAPIView: View {
             sectionId: "radiogroup"
         ) {
             VStack(alignment: .leading, spacing: Moin.Constants.Spacing.sm) {
-                Moin.RadioGroup(value: $valueState2, options: objectOptions)
+                Moin.Radio.Group(value: $valueState2, options: objectOptions)
                 Text("value: \(valueState2)")
                     .font(.caption)
                     .foregroundStyle(.secondary)
             }
         } code: {
             """
-            let options: [Moin.RadioOption<String>] = [
+            let options: [_RadioOption<String>] = [
                 .init(label: "\(tr("radio.london"))", value: "London"),
                 .init(label: "\(tr("radio.paris"))", value: "Paris"),
                 .init(label: "\(tr("radio.new_york"))", value: "New York")
             ]
 
-            Moin.RadioGroup(value: $value, options: options)
+            Moin.Radio.Group(value: $value, options: options)
             """
         }
         .scrollAnchor("radiogroup.options")
@@ -213,7 +213,7 @@ struct RadioAPIView: View {
             sectionId: "radiogroup"
         ) {
             VStack(alignment: .leading, spacing: 12) {
-                Moin.RadioGroup(
+                Moin.Radio.Group(
                     value: $blockState,
                     options: stringOptions,
                     optionType: .button,
@@ -222,7 +222,7 @@ struct RadioAPIView: View {
             }
         } code: {
             """
-            Moin.RadioGroup(
+            Moin.Radio.Group(
                 value: $value,
                 options: options,
                 optionType: .button,
@@ -244,14 +244,14 @@ struct RadioAPIView: View {
         ) {
             VStack(alignment: .leading, spacing: 12) {
                 Text("outline").font(.caption).foregroundStyle(.secondary)
-                Moin.RadioGroup(
+                Moin.Radio.Group(
                     value: $buttonStyleState,
                     options: stringOptions,
                     optionType: .button,
                     buttonStyle: .outline
                 )
                 Text("solid").font(.caption).foregroundStyle(.secondary)
-                Moin.RadioGroup(
+                Moin.Radio.Group(
                     value: $buttonStyleState,
                     options: stringOptions,
                     optionType: .button,
@@ -261,7 +261,7 @@ struct RadioAPIView: View {
         } code: {
             """
             // outline (default)
-            Moin.RadioGroup(
+            Moin.Radio.Group(
                 value: $value,
                 options: options,
                 optionType: .button,
@@ -269,7 +269,7 @@ struct RadioAPIView: View {
             )
 
             // solid
-            Moin.RadioGroup(
+            Moin.Radio.Group(
                 value: $value,
                 options: options,
                 optionType: .button,
@@ -291,13 +291,13 @@ struct RadioAPIView: View {
         ) {
             VStack(alignment: .leading, spacing: 12) {
                 Text("default").font(.caption).foregroundStyle(.secondary)
-                Moin.RadioGroup(
+                Moin.Radio.Group(
                     value: $optionTypeState,
                     options: stringOptions,
                     optionType: .default
                 )
                 Text("button").font(.caption).foregroundStyle(.secondary)
-                Moin.RadioGroup(
+                Moin.Radio.Group(
                     value: $optionTypeState,
                     options: stringOptions,
                     optionType: .button
@@ -306,10 +306,10 @@ struct RadioAPIView: View {
         } code: {
             """
             // default
-            Moin.RadioGroup(value: $value, options: options)
+            Moin.Radio.Group(value: $value, options: options)
 
             // button
-            Moin.RadioGroup(
+            Moin.Radio.Group(
                 value: $value,
                 options: options,
                 optionType: .button
@@ -331,7 +331,7 @@ struct RadioAPIView: View {
             HStack(alignment: .top, spacing: 32) {
                 VStack(alignment: .leading, spacing: 8) {
                     Text("horizontal").font(.caption).foregroundStyle(.secondary)
-                    Moin.RadioGroup(
+                    Moin.Radio.Group(
                         value: Binding.constant(1),
                         options: plainOptions,
                         orientation: .horizontal
@@ -339,7 +339,7 @@ struct RadioAPIView: View {
                 }
                 VStack(alignment: .leading, spacing: 8) {
                     Text("vertical").font(.caption).foregroundStyle(.secondary)
-                    Moin.RadioGroup(
+                    Moin.Radio.Group(
                         value: Binding.constant(1),
                         options: plainOptions,
                         orientation: .vertical
@@ -348,7 +348,7 @@ struct RadioAPIView: View {
             }
         } code: {
             """
-            Moin.RadioGroup(
+            Moin.Radio.Group(
                 value: $value,
                 options: options,
                 orientation: .vertical
@@ -370,7 +370,7 @@ struct RadioAPIView: View {
             VStack(alignment: .leading, spacing: 12) {
                 HStack(spacing: 8) {
                     Text("large").font(.caption).foregroundStyle(.secondary).frame(width: 50, alignment: .leading)
-                    Moin.RadioGroup(
+                    Moin.Radio.Group(
                         value: $sizeState,
                         options: stringOptions,
                         optionType: .button,
@@ -379,7 +379,7 @@ struct RadioAPIView: View {
                 }
                 HStack(spacing: 8) {
                     Text("middle").font(.caption).foregroundStyle(.secondary).frame(width: 50, alignment: .leading)
-                    Moin.RadioGroup(
+                    Moin.Radio.Group(
                         value: $sizeState,
                         options: stringOptions,
                         optionType: .button,
@@ -388,7 +388,7 @@ struct RadioAPIView: View {
                 }
                 HStack(spacing: 8) {
                     Text("small").font(.caption).foregroundStyle(.secondary).frame(width: 50, alignment: .leading)
-                    Moin.RadioGroup(
+                    Moin.Radio.Group(
                         value: $sizeState,
                         options: stringOptions,
                         optionType: .button,
@@ -398,7 +398,7 @@ struct RadioAPIView: View {
             }
         } code: {
             """
-            Moin.RadioGroup(
+            Moin.Radio.Group(
                 value: $value,
                 options: options,
                 optionType: .button,
@@ -417,21 +417,21 @@ struct RadioAPIView: View {
             description: tr("radiogroup.api.vertical"),
             sectionId: "radiogroup"
         ) {
-            Moin.RadioGroup(
+            Moin.Radio.Group(
                 value: $verticalState,
                 options: [
                     .init(label: "A", value: "A"),
                     .init(label: "B", value: "B"),
                     .init(label: "C", value: "C")
                 ],
-                vertical: true
+                orientation: .vertical
             )
         } code: {
             """
-            Moin.RadioGroup(
+            Moin.Radio.Group(
                 value: $value,
                 options: options,
-                vertical: true
+                orientation: .vertical
             )
             """
         }
@@ -446,13 +446,13 @@ struct RadioAPIView: View {
             description: tr("radiogroup.api.isDisabled"),
             sectionId: "radiogroup"
         ) {
-            Moin.RadioGroup(
+            Moin.Radio.Group(
                 value: Binding.constant(1),
                 options: plainOptions,
                 disabled: true
             )
         } code: {
-            "Moin.RadioGroup(value: $value, options: options, disabled: true)"
+            "Moin.Radio.Group(value: $value, options: options, disabled: true)"
         }
         .scrollAnchor("radiogroup.groupDisabled")
     }

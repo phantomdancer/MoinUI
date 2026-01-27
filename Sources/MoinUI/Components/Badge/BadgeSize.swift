@@ -8,8 +8,4 @@ public enum _BadgeSize {
     case small
 }
 
-// MARK: - Moin.Badge.Size typealias
 
-public extension Moin.Badge {
-    typealias Size = _BadgeSize
-}

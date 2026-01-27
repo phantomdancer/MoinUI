@@ -98,8 +98,4 @@ struct _SpinDot: View {
     }
 }
 
-// MARK: - Spin.Indicator typealias
 
-public extension Spin {
-    typealias Indicator = _SpinIndicator
-}

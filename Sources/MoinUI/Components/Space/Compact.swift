@@ -1,4 +1,3 @@
-// Moin.SpaceCompact - Compact layout with auto position detection
 import SwiftUI
 
 // MARK: - Size Preference Key
@@ -22,61 +21,61 @@ private struct CompactItemSizeReader: ViewModifier {
     }
 }
 
-public extension Moin {
-    /// Compact layout with zero spacing and merged borders
-    struct SpaceCompact: View {
-        let direction: _SpaceDirection
-        let items: [AnyView]
+// MARK: - _SpaceCompact (internal name, use Moin.Space.Compact)
 
-        @State private var maxWidth: CGFloat = 0
+/// Compact layout with zero spacing and merged borders
+public struct _SpaceCompact: View {
+    let direction: _SpaceDirection
+    let items: [AnyView]
 
-        public var body: some View {
-            if direction == .horizontal {
-                HStack(spacing: 0) {
-                    ForEach(Array(items.enumerated()), id: \.offset) { index, item in
-                        item
-                            .environment(\.moinSpaceCompactContext, context(for: index))
-                    }
-                }
-            } else {
-                VStack(alignment: .leading, spacing: 0) {
-                    ForEach(Array(items.enumerated()), id: \.offset) { index, item in
-                        item
-                            .modifier(CompactItemSizeReader(index: index))
-                            .frame(width: maxWidth > 0 ? maxWidth : nil, alignment: .leading)
-                            .environment(\.moinSpaceCompactContext, context(for: index))
-                    }
-                }
-                .onPreferenceChange(CompactItemSizePreference.self) { sizes in
-                    maxWidth = sizes.values.map(\.width).max() ?? 0
+    @State private var maxWidth: CGFloat = 0
+
+    public var body: some View {
+        if direction == .horizontal {
+            HStack(spacing: 0) {
+                ForEach(Array(items.enumerated()), id: \.offset) { index, item in
+                    item
+                        .environment(\.moinSpaceCompactContext, context(for: index))
                 }
             }
-        }
-
-        private func context(for index: Int) -> SpaceCompactContext {
-            let position: SpaceCompactPosition
-            if items.count == 1 {
-                position = .only
-            } else if index == 0 {
-                position = .first
-            } else if index == items.count - 1 {
-                position = .last
-            } else {
-                position = .middle
+        } else {
+            VStack(alignment: .leading, spacing: 0) {
+                ForEach(Array(items.enumerated()), id: \.offset) { index, item in
+                    item
+                        .modifier(CompactItemSizeReader(index: index))
+                        .frame(width: maxWidth > 0 ? maxWidth : nil, alignment: .leading)
+                        .environment(\.moinSpaceCompactContext, context(for: index))
+                }
             }
-            return SpaceCompactContext(
-                isCompact: true,
-                direction: direction,
-                position: position,
-                fillWidth: direction == .vertical && maxWidth > 0
-            )
+            .onPreferenceChange(CompactItemSizePreference.self) { sizes in
+                maxWidth = sizes.values.map(\.width).max() ?? 0
+            }
         }
+    }
+
+    private func context(for index: Int) -> _SpaceCompactContext {
+        let position: _SpaceCompactPosition
+        if items.count == 1 {
+            position = .only
+        } else if index == 0 {
+            position = .first
+        } else if index == items.count - 1 {
+            position = .last
+        } else {
+            position = .middle
+        }
+        return _SpaceCompactContext(
+            isCompact: true,
+            direction: direction,
+            position: position,
+            fillWidth: direction == .vertical && maxWidth > 0
+        )
     }
 }
 
 // MARK: - Convenience initializers
 
-public extension Moin.SpaceCompact {
+public extension _SpaceCompact {
     /// Two items
     init<V0: View, V1: View>(
         direction: _SpaceDirection = .horizontal,
@@ -136,3 +135,5 @@ public extension Moin.SpaceCompact {
         self.items = [AnyView(content())]
     }
 }
+
+

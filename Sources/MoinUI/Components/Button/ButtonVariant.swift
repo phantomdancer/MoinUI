@@ -18,8 +18,3 @@ public enum _ButtonVariant {
     case link
 }
 
-// MARK: - Moin.Button.Variant typealias
-
-public extension Moin.Button {
-    typealias Variant = _ButtonVariant
-}

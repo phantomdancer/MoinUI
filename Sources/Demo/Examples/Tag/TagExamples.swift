@@ -362,17 +362,17 @@ struct CheckableTagExample: View {
             description: tr("tag.checkable_desc")
         ) {
             HStack(spacing: Moin.Constants.Spacing.sm) {
-                Moin.CheckableTag(tr("tag.example.movies"), isChecked: $checked1)
-                Moin.CheckableTag(tr("tag.example.books"), isChecked: $checked2)
-                Moin.CheckableTag(tr("tag.example.music"), isChecked: $checked3)
+                Moin.Tag.Checkable(tr("tag.example.movies"), isChecked: $checked1)
+                Moin.Tag.Checkable(tr("tag.example.books"), isChecked: $checked2)
+                Moin.Tag.Checkable(tr("tag.example.music"), isChecked: $checked3)
             }
         } code: {
             """
             @State private var checked = false
 
-            Moin.CheckableTag("\(tr("tag.example.movies"))", isChecked: $checked)
-            Moin.CheckableTag("\(tr("tag.example.books"))", isChecked: $checked)
-            Moin.CheckableTag("\(tr("tag.example.music"))", isChecked: $checked)
+            Moin.Tag.Checkable("\(tr("tag.example.movies"))", isChecked: $checked)
+            Moin.Tag.Checkable("\(tr("tag.example.books"))", isChecked: $checked)
+            Moin.Tag.Checkable("\(tr("tag.example.music"))", isChecked: $checked)
             """
         }
     }

@@ -8,8 +8,3 @@ public enum _ButtonIconPlacement {
     case end
 }
 
-// MARK: - Moin.Button.IconPlacement typealias
-
-public extension Moin.Button {
-    typealias IconPlacement = _ButtonIconPlacement
-}

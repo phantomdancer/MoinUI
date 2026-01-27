@@ -462,22 +462,22 @@ struct BadgeExamples: View {
             description: tr("badge.ribbon_desc")
         ) {
             HStack(spacing: Moin.Constants.Spacing.xl) {
-                 Moin.BadgeRibbon(text: "Pushes", color: .cyan) {
+                 Moin.Badge.Ribbon(text: "Pushes", color: .cyan) {
                     RibbonCard()
                  }
-                 Moin.BadgeRibbon(text: "Hippo", color: .purple, placement: .start) {
+                 Moin.Badge.Ribbon(text: "Hippo", color: .purple, placement: .start) {
                     RibbonCard()
                  }
-                 Moin.BadgeRibbon(text: "Hot", color: .error) {
+                 Moin.Badge.Ribbon(text: "Hot", color: .error) {
                     RibbonCard()
                  }
             }
         } code: {
             """
-            Moin.BadgeRibbon(text: "Pushes", color: .cyan) {
+            Moin.Badge.Ribbon(text: "Pushes", color: .cyan) {
                 Card()
             }
-            Moin.BadgeRibbon(text: "Hippo", placement: .start) {
+            Moin.Badge.Ribbon(text: "Hippo", placement: .start) {
                 Card()
             }
             """

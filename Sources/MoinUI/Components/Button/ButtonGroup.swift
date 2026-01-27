@@ -1,28 +1,26 @@
 import SwiftUI
 
-// MARK: - Moin.Button.Group
+// MARK: - _ButtonGroup (internal name, use Moin.Button.Group)
 
-public extension Moin.Button {
-    /// 按钮组组件
-    struct Group<Content: View>: View {
-        private let size: _ButtonSize
-        private let content: Content
+/// 按钮组组件
+public struct _ButtonGroup<Content: View>: View {
+    private let size: _ButtonSize
+    private let content: Content
 
-        public init(
-            size: _ButtonSize = .medium,
-            @ViewBuilder content: () -> Content
-        ) {
-            self.size = size
-            self.content = content()
+    public init(
+        size: _ButtonSize = .medium,
+        @ViewBuilder content: () -> Content
+    ) {
+        self.size = size
+        self.content = content()
+    }
+
+    public var body: some View {
+        HStack(spacing: -1) {
+            content
         }
-
-        public var body: some View {
-            HStack(spacing: -1) {
-                content
-            }
-            .environment(\.moinButtonGroupSize, size)
-            .environment(\.moinButtonGroupPosition, .middle)
-        }
+        .environment(\.moinButtonGroupSize, size)
+        .environment(\.moinButtonGroupPosition, .middle)
     }
 }
 

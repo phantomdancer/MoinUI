@@ -201,7 +201,7 @@ struct CheckboxExamples: View {
     
     // MARK: - Group Example 2: City Options (Object)
     @State private var groupSelection2: Set<String> = ["London"]
-    private var groupOptions: [Moin.CheckboxOption<String>] {
+    private var groupOptions: [_CheckboxOption<String>] {
         [
             .init(label: tr("checkbox.london"), value: "London"),
             .init(label: tr("checkbox.paris"), value: "Paris"),
@@ -212,7 +212,7 @@ struct CheckboxExamples: View {
     // MARK: - Group Example 3: Celestial Options (With Disabled)
     @State private var groupSelection3: Set<String> = ["Sun"]
     
-    private var optionsWithDisabled: [Moin.CheckboxOption<String>] {
+    private var optionsWithDisabled: [_CheckboxOption<String>] {
         [
             .init(label: tr("checkbox.sun"), value: "Sun"),
             .init(label: tr("checkbox.moon"), value: "Moon"),
@@ -227,7 +227,7 @@ struct CheckboxExamples: View {
             content: {
                 // Example 1: Plain Options
                 VStack(alignment: .leading, spacing: 10) {
-                    Moin.CheckboxGroup(
+                    Moin.Checkbox.Group(
                         selection: $groupSelection1,
                         options: plainOptions
                     )
@@ -239,7 +239,7 @@ struct CheckboxExamples: View {
                 @State private var selection1: Set<String> = ["Apple"]
                 let plainOptions = ["Apple", "Pear", "Orange"]
                 
-                Moin.CheckboxGroup(
+                Moin.Checkbox.Group(
                     selection: $selection1,
                     options: plainOptions
                 )
@@ -255,7 +255,7 @@ struct CheckboxExamples: View {
             content: {
                 // Example 2: Object Options (Cities)
                 VStack(alignment: .leading, spacing: 10) {
-                    Moin.CheckboxGroup(
+                    Moin.Checkbox.Group(
                         selection: $groupSelection2,
                         options: groupOptions
                     )
@@ -265,13 +265,13 @@ struct CheckboxExamples: View {
                 """
                 // 2. Object Options
                 @State private var selection2: Set<String> = ["London"]
-                let groupOptions: [Moin.CheckboxOption<String>] = [
+                let groupOptions: [_CheckboxOption<String>] = [
                     .init(label: "\(tr("checkbox.london"))", value: "London"),
                     .init(label: "\(tr("checkbox.paris"))", value: "Paris"),
                     .init(label: "\(tr("checkbox.new_york"))", value: "New York")
                 ]
                 
-                Moin.CheckboxGroup(selection: $selection2, options: groupOptions)
+                Moin.Checkbox.Group(selection: $selection2, options: groupOptions)
                 """
             }
         )
@@ -284,7 +284,7 @@ struct CheckboxExamples: View {
             content: {
                 // Example 3: Disabled Group (Celestial)
                 VStack(alignment: .leading, spacing: 10) {
-                    Moin.CheckboxGroup(
+                    Moin.Checkbox.Group(
                         selection: $groupSelection3,
                         options: optionsWithDisabled,
                         disabled: true
@@ -293,7 +293,7 @@ struct CheckboxExamples: View {
             },
             code: {
                 """
-                Moin.CheckboxGroup(
+                Moin.Checkbox.Group(
                     selection: $selection3,
                     options: options,
                     disabled: true
@@ -319,7 +319,7 @@ struct CheckboxExamples: View {
                             .font(.caption)
                             .foregroundStyle(.secondary)
                         
-                        Moin.CheckboxGroup(
+                        Moin.Checkbox.Group(
                             selection: $directionSelection,
                             options: plainOptions,
                             direction: .horizontal
@@ -332,7 +332,7 @@ struct CheckboxExamples: View {
                             .font(.caption)
                             .foregroundStyle(.secondary)
                         
-                        Moin.CheckboxGroup(
+                        Moin.Checkbox.Group(
                             selection: $directionSelection,
                             options: plainOptions,
                             direction: .vertical
@@ -342,8 +342,8 @@ struct CheckboxExamples: View {
             },
             code: {
                 """
-                Moin.CheckboxGroup(selection: $selection, options: options, direction: .horizontal)
-                Moin.CheckboxGroup(selection: $selection, options: options, direction: .vertical)
+                Moin.Checkbox.Group(selection: $selection, options: options, direction: .horizontal)
+                Moin.Checkbox.Group(selection: $selection, options: options, direction: .vertical)
                 """
             }
         )

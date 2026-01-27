@@ -1,21 +1,18 @@
 import SwiftUI
 
-public extension Moin {
-    typealias Spin = MoinUI.Spin
-}
 
-// MARK: - Spin
+// MARK: - _Spin (internal name, use Moin.Spin.View)
 
 /// 加载中组件
 ///
 /// 用于页面和区块的加载中状态，支持嵌套模式和全屏模式。
-public struct Spin<Content: View>: View {
+public struct _Spin<Content: View>: View {
     // MARK: - Properties
 
     /// 是否旋转
     let spinning: Bool
     /// 尺寸
-    let size: Size
+    let size: _SpinSize
     /// 提示文案
     let tip: String?
     /// 延迟显示(毫秒)，使用 debounce 防抖
@@ -36,7 +33,7 @@ public struct Spin<Content: View>: View {
 
     public init(
         spinning: Bool = true,
-        size: Size = .default,
+        size: _SpinSize = .default,
         tip: String? = nil,
         delay: Int? = nil,
         fullscreen: Bool = false
@@ -54,7 +51,7 @@ public struct Spin<Content: View>: View {
 
     public init<IndicatorView: View>(
         spinning: Bool = true,
-        size: Size = .default,
+        size: _SpinSize = .default,
         tip: String? = nil,
         delay: Int? = nil,
         fullscreen: Bool = false,
@@ -73,7 +70,7 @@ public struct Spin<Content: View>: View {
 
     public init(
         spinning: Bool = true,
-        size: Size = .default,
+        size: _SpinSize = .default,
         tip: String? = nil,
         delay: Int? = nil,
         @ViewBuilder content: () -> Content
@@ -140,7 +137,7 @@ public struct Spin<Content: View>: View {
             customIndicator
         } else {
             let dotSize = size.dotSize(from: token)
-            Indicator(
+            _SpinIndicator(
                 size: dotSize,
                 color: globalToken.colorPrimary,
                 duration: token.motionDuration
@@ -183,7 +180,7 @@ public struct Spin<Content: View>: View {
                         customIndicator
                     } else {
                         let dotSize = size.dotSize(from: token)
-                        Indicator(
+                        _SpinIndicator(
                             size: dotSize,
                             color: .white,
                             duration: token.motionDuration
@@ -227,3 +224,8 @@ public struct Spin<Content: View>: View {
         delayTask = nil
     }
 }
+
+
+
+// MARK: - Moin.Spin Extensions
+

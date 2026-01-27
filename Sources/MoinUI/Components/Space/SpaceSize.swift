@@ -25,8 +25,4 @@ extension _SpaceSize: ExpressibleByFloatLiteral {
     }
 }
 
-// MARK: - Moin.Space.Size typealias
 
-public extension Moin.Space {
-    typealias Size = _SpaceSize
-}

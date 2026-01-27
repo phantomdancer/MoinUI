@@ -9,8 +9,4 @@ public enum _TagSize {
     case large
 }
 
-// MARK: - Moin.Tag.Size typealias
 
-public extension Moin.Tag {
-    typealias Size = _TagSize
-}

@@ -101,18 +101,18 @@ struct SkeletonExamples: View {
             description: tr("skeleton.basic_desc"),
             content: {
                 VStack(spacing: 24) {
-                    Skeleton()
-                    Skeleton(avatar: true)
+                    Moin.Skeleton()
+                    Moin.Skeleton(avatar: true)
                 }
                 .frame(width: 350)
             },
             code: {
                 """
                 // \(tr("skeleton.default"))
-                Skeleton()
+                Moin.Skeleton()
 
                 // \(tr("skeleton.with_avatar"))
-                Skeleton(avatar: true)
+                Moin.Skeleton(avatar: true)
                 """
             }
         )
@@ -124,16 +124,16 @@ struct SkeletonExamples: View {
             description: tr("skeleton.active_desc"),
             content: {
                 VStack(spacing: 24) {
-                    Skeleton(active: true)
-                    Skeleton(active: true, avatar: true)
+                    Moin.Skeleton(active: true)
+                    Moin.Skeleton(active: true, avatar: true)
                 }
                 .frame(width: 350)
             },
             code: {
                 """
                 // \(tr("skeleton.animation"))
-                Skeleton(active: true)
-                Skeleton(active: true, avatar: true)
+                Moin.Skeleton(active: true)
+                Moin.Skeleton(active: true, avatar: true)
                 """
             }
         )
@@ -146,17 +146,17 @@ struct SkeletonExamples: View {
             content: {
                 VStack(spacing: 24) {
                     // 只有段落
-                    Skeleton(active: true, title: false, paragraph: true)
+                    Moin.Skeleton(active: true, title: false, paragraph: true)
 
                     // 圆角模式
-                    Skeleton(active: true, avatar: true, round: true)
+                    Moin.Skeleton(active: true, avatar: true, round: true)
 
                     // 自定义段落行数
-                    Skeleton(
+                    Moin.Skeleton(
                         active: true,
                         avatar: nil,
-                        title: Skeleton.TitleConfig(width: 200),
-                        paragraph: Skeleton.ParagraphConfig(rows: 2, width: 150),
+                        title: _Skeleton.TitleConfig(width: 200),
+                        paragraph: _Skeleton.ParagraphConfig(rows: 2, width: 150),
                         round: false
                     )
                 }
@@ -165,17 +165,17 @@ struct SkeletonExamples: View {
             code: {
                 """
                 // \(tr("skeleton.paragraph_only"))
-                Skeleton(active: true, title: false, paragraph: true)
+                Moin.Skeleton(active: true, title: false, paragraph: true)
 
                 // \(tr("skeleton.round_mode"))
-                Skeleton(active: true, avatar: true, round: true)
+                Moin.Skeleton(active: true, avatar: true, round: true)
 
                 // \(tr("skeleton.custom_config"))
-                Skeleton(
+                Moin.Skeleton(
                     active: true,
                     avatar: nil,
-                    title: Skeleton.TitleConfig(width: 200),
-                    paragraph: Skeleton.ParagraphConfig(rows: 2, width: 150),
+                    title: _Skeleton.TitleConfig(width: 200),
+                    paragraph: _Skeleton.ParagraphConfig(rows: 2, width: 150),
                     round: false
                 )
                 """
@@ -191,49 +191,49 @@ struct SkeletonExamples: View {
                 VStack(spacing: 24) {
                     // 头像元素
                     HStack(spacing: 16) {
-                        Skeleton.Avatar(active: true)
-                        Skeleton.Avatar(shape: .square, active: true)
-                        Skeleton.Avatar(size: .large, active: true)
-                        Skeleton.Avatar(size: .small, active: true)
+                        _Skeleton.Avatar(active: true)
+                        _Skeleton.Avatar(shape: .square, active: true)
+                        _Skeleton.Avatar(size: .large, active: true)
+                        _Skeleton.Avatar(size: .small, active: true)
                     }
 
                     // 按钮元素
                     HStack(spacing: 16) {
-                        Skeleton.Button(active: true)
-                        Skeleton.Button(shape: .circle, active: true)
-                        Skeleton.Button(shape: .round, active: true)
-                        Skeleton.Button(size: .small, active: true)
+                        _Skeleton.Button(active: true)
+                        _Skeleton.Button(shape: .circle, active: true)
+                        _Skeleton.Button(shape: .round, active: true)
+                        _Skeleton.Button(size: .small, active: true)
                     }
 
                     // 输入框元素
-                    Skeleton.Input(active: true)
+                    _Skeleton.Input(active: true)
                         .frame(width: 200)
 
                     // 图片元素
                     HStack(spacing: 16) {
-                        Skeleton.Image(active: true)
-                        Skeleton.Image(width: 120, height: 80, active: true)
+                        _Skeleton.SkeletonImage(active: true)
+                        _Skeleton.SkeletonImage(width: 120, height: 80, active: true)
                     }
                 }
             },
             code: {
                 """
                 // \(tr("skeleton.avatar_element"))
-                Skeleton.Avatar(active: true)
-                Skeleton.Avatar(shape: .square, active: true)
-                Skeleton.Avatar(size: .large, active: true)
+                _Skeleton.Avatar(active: true)
+                _Skeleton.Avatar(shape: .square, active: true)
+                _Skeleton.Avatar(size: .large, active: true)
 
                 // \(tr("skeleton.button_element"))
-                Skeleton.Button(active: true)
-                Skeleton.Button(shape: .circle, active: true)
-                Skeleton.Button(shape: .round, active: true)
+                _Skeleton.Button(active: true)
+                _Skeleton.Button(shape: .circle, active: true)
+                _Skeleton.Button(shape: .round, active: true)
 
                 // \(tr("skeleton.input_element"))
-                Skeleton.Input(active: true)
+                _Skeleton.Input(active: true)
 
                 // \(tr("skeleton.image_element"))
-                Skeleton.Image(active: true)
-                Skeleton.Image(width: 120, height: 80, active: true)
+                _Skeleton.SkeletonImage(active: true)
+                _Skeleton.SkeletonImage(width: 120, height: 80, active: true)
                 """
             }
         )
@@ -248,7 +248,7 @@ struct SkeletonExamples: View {
                     Toggle(tr("skeleton.toggle_loading"), isOn: $isLoading)
                         .frame(width: 160)
 
-                    Skeleton(loading: isLoading, active: true, avatar: true) {
+                    Moin.Skeleton(loading: isLoading, active: true, avatar: true) {
                         HStack(spacing: 16) {
                             Circle()
                                 .fill(Color.blue)
@@ -268,7 +268,7 @@ struct SkeletonExamples: View {
             },
             code: {
                 """
-                Skeleton(loading: isLoading, active: true, avatar: true) {
+                Moin.Skeleton(loading: isLoading, active: true, avatar: true) {
                     HStack(spacing: 16) {
                         // \(tr("skeleton.actual_content"))
                         Circle()

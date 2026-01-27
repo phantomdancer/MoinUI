@@ -9,8 +9,4 @@ public enum _DividerVariant: String, CaseIterable {
     case dotted
 }
 
-// MARK: - Moin.Divider.Variant typealias
 
-public extension Moin.Divider {
-    typealias Variant = _DividerVariant
-}

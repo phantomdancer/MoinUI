@@ -101,7 +101,7 @@ struct SkeletonTokenView: View {
             description: tr("skeleton.token_color"),
             sectionId: "component"
         ) {
-            Skeleton(active: false)
+            Moin.Skeleton(active: false)
                 .frame(width: 200)
         } code: {
             "config.components.skeleton.color"
@@ -116,7 +116,7 @@ struct SkeletonTokenView: View {
             description: tr("skeleton.token_color_gradient"),
             sectionId: "component"
         ) {
-            Skeleton(active: true)
+            Moin.Skeleton(active: true)
                 .frame(width: 200)
         } code: {
             "config.components.skeleton.colorGradientEnd"
@@ -131,7 +131,7 @@ struct SkeletonTokenView: View {
             description: tr("skeleton.token_title_height"),
             sectionId: "component"
         ) {
-            Skeleton(active: true, title: true, paragraph: false)
+            Moin.Skeleton(active: true, title: true, paragraph: false)
                 .frame(width: 200)
         } editor: {
             TokenValueRow(label: "titleHeight", value: Binding(
@@ -151,7 +151,7 @@ struct SkeletonTokenView: View {
             description: tr("skeleton.token_paragraph_height"),
             sectionId: "component"
         ) {
-            Skeleton(active: true, title: false, paragraph: true)
+            Moin.Skeleton(active: true, title: false, paragraph: true)
                 .frame(width: 200)
         } editor: {
             TokenValueRow(label: "paragraphLineHeight", value: Binding(
@@ -171,7 +171,7 @@ struct SkeletonTokenView: View {
             description: tr("skeleton.token_block_radius"),
             sectionId: "component"
         ) {
-            Skeleton(active: true)
+            Moin.Skeleton(active: true)
                 .frame(width: 200)
         } editor: {
             TokenValueRow(label: "blockRadius", value: Binding(
@@ -191,7 +191,7 @@ struct SkeletonTokenView: View {
             description: tr("skeleton.token_motion_duration"),
             sectionId: "component"
         ) {
-            Skeleton(active: true)
+            Moin.Skeleton(active: true)
                 .frame(width: 200)
         } editor: {
             TokenValueRow(label: "motionDuration", value: Binding(
@@ -213,7 +213,7 @@ struct SkeletonTokenView: View {
             description: tr("skeleton.token_avatar_sm"),
             sectionId: "avatar"
         ) {
-            Skeleton.Avatar(size: .small, active: true)
+            _Skeleton.Avatar(size: .small, active: true)
         } editor: {
             TokenValueRow(label: "avatarSizeSM", value: Binding(
                 get: { config.components.skeleton.avatarSizeSM },
@@ -232,7 +232,7 @@ struct SkeletonTokenView: View {
             description: tr("skeleton.token_avatar_default"),
             sectionId: "avatar"
         ) {
-            Skeleton.Avatar(size: .default, active: true)
+            _Skeleton.Avatar(size: .default, active: true)
         } editor: {
             TokenValueRow(label: "avatarSize", value: Binding(
                 get: { config.components.skeleton.avatarSize },
@@ -251,7 +251,7 @@ struct SkeletonTokenView: View {
             description: tr("skeleton.token_avatar_lg"),
             sectionId: "avatar"
         ) {
-            Skeleton.Avatar(size: .large, active: true)
+            _Skeleton.Avatar(size: .large, active: true)
         } editor: {
             TokenValueRow(label: "avatarSizeLG", value: Binding(
                 get: { config.components.skeleton.avatarSizeLG },

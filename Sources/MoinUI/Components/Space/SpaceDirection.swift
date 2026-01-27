@@ -8,8 +8,4 @@ public enum _SpaceDirection: Sendable {
     case vertical
 }
 
-// MARK: - Moin.Space.Direction typealias
 
-public extension Moin.Space {
-    typealias Direction = _SpaceDirection
-}

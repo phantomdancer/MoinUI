@@ -5,9 +5,9 @@ import AppKit
 private struct ButtonShapeStyle: Shape {
     let shapeType: _ButtonShape
     let cornerRadius: CGFloat
-    let compactContext: Moin.SpaceCompactContext
+    let compactContext: _SpaceCompactContext
 
-    init(shapeType: _ButtonShape, cornerRadius: CGFloat, compactContext: Moin.SpaceCompactContext = .none) {
+    init(shapeType: _ButtonShape, cornerRadius: CGFloat, compactContext: _SpaceCompactContext = .none) {
         self.shapeType = shapeType
         self.cornerRadius = cornerRadius
         self.compactContext = compactContext
@@ -211,55 +211,53 @@ private struct LoadingIndicator: View {
     }
 }
 
-// MARK: - Moin.Button
+// MARK: - _Button (use Moin.Button)
 
-public extension Moin {
-    /// MoinUI Button Component
-    struct Button<Label: View>: View {
-        private let action: (() -> Void)?
-        private let label: Label
-        private let color: Moin.ButtonColor
-        private let size: Size
-        private let variant: Variant
-        private let shape: Shape
-        private let loadingConfig: Loading
-        private let isDisabled: Bool
-        private let isBlock: Bool
-        private let isGhost: Bool
-        private let icon: String?
-        private let iconPlacement: IconPlacement
-        private let href: URL?
-        private let gradient: LinearGradient?
-        private let fontColor: SwiftUI.Color?
+public struct _Button<Label: View>: View {
+    private let action: (() -> Void)?
+    private let label: Label
+    private let color: _ButtonColor
+    private let size: _ButtonSize
+    private let variant: _ButtonVariant
+    private let shape: _ButtonShape
+    private let loadingConfig: _ButtonLoading
+    private let isDisabled: Bool
+    private let isBlock: Bool
+    private let isGhost: Bool
+    private let icon: String?
+    private let iconPlacement: _ButtonIconPlacement
+    private let href: URL?
+    private let gradient: LinearGradient?
+    private let fontColor: SwiftUI.Color?
 
-        @State private var isHovered = false
-        @State private var isPressed = false
-        @State private var showLoading = false
-        @FocusState private var isFocused: Bool
+    @State private var isHovered = false
+    @State private var isPressed = false
+    @State private var showLoading = false
+    @FocusState private var isFocused: Bool
 
-        // 使用 Environment 获取配置，避免每个按钮都订阅 ObservedObject
-        @Environment(\.moinToken) private var token
-        @Environment(\.moinButtonToken) private var buttonToken
-        @Environment(\.moinSpaceCompactContext) private var compactContext
-        @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    // 使用 Environment 获取配置，避免每个按钮都订阅 ObservedObject
+    @Environment(\.moinToken) private var token
+    @Environment(\.moinButtonToken) private var buttonToken
+    @Environment(\.moinSpaceCompactContext) private var compactContext
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
-        public init(
-            color: Moin.ButtonColor = .default,
-            size: Size = .medium,
-            variant: Variant = .solid,
-            shape: Shape = .default,
-            icon: String? = nil,
-            iconPlacement: IconPlacement = .start,
-            loading: Loading = false,
-            isDisabled: Bool = false,
-            isBlock: Bool = false,
-            isGhost: Bool = false,
-            href: URL? = nil,
-            gradient: LinearGradient? = nil,
-            fontColor: SwiftUI.Color? = nil,
-            action: (() -> Void)? = nil,
-            @ViewBuilder label: () -> Label
-        ) {
+    public init(
+        color: _ButtonColor = .default,
+        size: _ButtonSize = .medium,
+        variant: _ButtonVariant = .solid,
+        shape: _ButtonShape = .default,
+        icon: String? = nil,
+        iconPlacement: _ButtonIconPlacement = .start,
+        loading: _ButtonLoading = false,
+        isDisabled: Bool = false,
+        isBlock: Bool = false,
+        isGhost: Bool = false,
+        href: URL? = nil,
+        gradient: LinearGradient? = nil,
+        fontColor: SwiftUI.Color? = nil,
+        action: (() -> Void)? = nil,
+        @ViewBuilder label: () -> Label
+    ) {
             self.color = color
             self.size = size
             self.variant = variant
@@ -712,22 +710,21 @@ public extension Moin {
                 showLoading = false
             }
         }
-    }
 }
 
 
 // MARK: - Convenience Initializers
 
-public extension Moin.Button where Label == Text {
+public extension _Button where Label == Text {
     init(
         _ title: String,
-        color: Moin.ButtonColor = .default,
-        size: Size = .medium,
-        variant: Variant = .solid,
-        shape: Shape = .default,
+        color: _ButtonColor = .default,
+        size: _ButtonSize = .medium,
+        variant: _ButtonVariant = .solid,
+        shape: _ButtonShape = .default,
         icon: String? = nil,
-        iconPlacement: IconPlacement = .start,
-        loading: Loading = false,
+        iconPlacement: _ButtonIconPlacement = .start,
+        loading: _ButtonLoading = false,
         isDisabled: Bool = false,
         isBlock: Bool = false,
         isGhost: Bool = false,
@@ -757,14 +754,14 @@ public extension Moin.Button where Label == Text {
     }
 }
 
-public extension Moin.Button where Label == EmptyView {
+public extension _Button where Label == EmptyView {
     init(
         icon iconName: String,
-        color: Moin.ButtonColor = .default,
-        size: Size = .medium,
-        variant: Variant = .solid,
-        shape: Shape = .circle,
-        loading: Loading = false,
+        color: _ButtonColor = .default,
+        size: _ButtonSize = .medium,
+        variant: _ButtonVariant = .solid,
+        shape: _ButtonShape = .circle,
+        loading: _ButtonLoading = false,
         isDisabled: Bool = false,
         action: (() -> Void)? = nil
     ) {
@@ -786,5 +783,132 @@ public extension Moin.Button where Label == EmptyView {
         ) {
             EmptyView()
         }
+    }
+}
+
+// MARK: - _MoinButtonFactory
+
+/// Button 工厂，支持 Moin.Button("title") 语法
+public struct _MoinButtonFactory {
+    public typealias Color = _ButtonColor
+    public typealias Size = _ButtonSize
+    public typealias Variant = _ButtonVariant
+    public typealias Shape = _ButtonShape
+    public typealias IconPlacement = _ButtonIconPlacement
+    public typealias Group = _ButtonGroup
+
+    /// Moin.Button.Loading(true, icon: "face.smiling")
+    public let Loading = _MoinButtonLoadingFactory()
+
+    public init() {}
+
+    /// 文本按钮
+    public func callAsFunction(
+        _ title: String,
+        color: _ButtonColor = .default,
+        size: _ButtonSize = .medium,
+        variant: _ButtonVariant = .solid,
+        shape: _ButtonShape = .default,
+        icon: String? = nil,
+        iconPlacement: _ButtonIconPlacement = .start,
+        loading: _ButtonLoading = false,
+        isDisabled: Bool = false,
+        isBlock: Bool = false,
+        isGhost: Bool = false,
+        href: URL? = nil,
+        gradient: LinearGradient? = nil,
+        fontColor: SwiftUI.Color? = nil,
+        action: (() -> Void)? = nil
+    ) -> _Button<Text> {
+        _Button(
+            title,
+            color: color,
+            size: size,
+            variant: variant,
+            shape: shape,
+            icon: icon,
+            iconPlacement: iconPlacement,
+            loading: loading,
+            isDisabled: isDisabled,
+            isBlock: isBlock,
+            isGhost: isGhost,
+            href: href,
+            gradient: gradient,
+            fontColor: fontColor,
+            action: action
+        )
+    }
+
+    /// 图标按钮
+    public func callAsFunction(
+        icon iconName: String,
+        color: _ButtonColor = .default,
+        size: _ButtonSize = .medium,
+        variant: _ButtonVariant = .solid,
+        shape: _ButtonShape = .circle,
+        loading: _ButtonLoading = false,
+        isDisabled: Bool = false,
+        action: (() -> Void)? = nil
+    ) -> _Button<EmptyView> {
+        _Button(
+            icon: iconName,
+            color: color,
+            size: size,
+            variant: variant,
+            shape: shape,
+            loading: loading,
+            isDisabled: isDisabled,
+            action: action
+        )
+    }
+
+    /// 自定义内容按钮
+    public func callAsFunction<Label: View>(
+        color: _ButtonColor = .default,
+        size: _ButtonSize = .medium,
+        variant: _ButtonVariant = .solid,
+        shape: _ButtonShape = .default,
+        icon: String? = nil,
+        iconPlacement: _ButtonIconPlacement = .start,
+        loading: _ButtonLoading = false,
+        isDisabled: Bool = false,
+        isBlock: Bool = false,
+        isGhost: Bool = false,
+        href: URL? = nil,
+        gradient: LinearGradient? = nil,
+        fontColor: SwiftUI.Color? = nil,
+        action: (() -> Void)? = nil,
+        @ViewBuilder label: () -> Label
+    ) -> _Button<Label> {
+        _Button(
+            color: color,
+            size: size,
+            variant: variant,
+            shape: shape,
+            icon: icon,
+            iconPlacement: iconPlacement,
+            loading: loading,
+            isDisabled: isDisabled,
+            isBlock: isBlock,
+            isGhost: isGhost,
+            href: href,
+            gradient: gradient,
+            fontColor: fontColor,
+            action: action,
+            label: label
+        )
+    }
+}
+
+/// Moin.Button.Loading Factory
+public struct _MoinButtonLoadingFactory {
+    public init() {}
+
+    public func callAsFunction(
+        _ isLoading: Bool = true,
+        delay: TimeInterval? = nil,
+        icon: String? = nil
+    ) -> _ButtonLoading {
+        _ButtonLoading(isLoading, delay: delay, icon: icon)
     }
 }

@@ -31,8 +31,4 @@ public enum _TagColor: Hashable, Moin.PresetColorConvertible {
     }
 }
 
-// MARK: - Moin.Tag.Color typealias
 
-public extension Moin.Tag {
-    typealias Color = _TagColor
-}

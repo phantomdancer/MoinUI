@@ -206,7 +206,7 @@ struct TagAPIView: View {
     private var checkablePropertyCard: some View {
         PropertyCard(
             name: "checkable",
-            type: "Moin.CheckableTag",
+            type: "_CheckableTag",
             defaultValue: "-",
             description: tr("tag.api.checkable"),
             sectionId: "api"
@@ -216,7 +216,7 @@ struct TagAPIView: View {
             let label = tr("tag.label.check_me")
             return """
             @State var checked = false
-            Moin.CheckableTag("\(label)", isChecked: $checked)
+            Moin.Tag.Checkable("\(label)", isChecked: $checked)
             """
         }
         .scrollAnchor("api.checkable")
@@ -228,6 +228,6 @@ private struct CheckableTagDemo: View {
     @State private var checked = false
     @Localized var tr
     var body: some View {
-        Moin.CheckableTag(tr("tag.label.check_me"), isChecked: $checked)
+        Moin.Tag.Checkable(tr("tag.label.check_me"), isChecked: $checked)
     }
 }

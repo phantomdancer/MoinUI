@@ -1,12 +1,6 @@
 import SwiftUI
 
 public extension Moin {
-    enum RadioSize {
-        case small
-        case middle
-        case large
-    }
-
     struct RadioToken: Equatable {
 
         // MARK: - Sizes

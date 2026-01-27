@@ -68,20 +68,20 @@ struct SkeletonAPIView: View {
         ) {
             HStack(spacing: 32) {
                 VStack {
-                    Skeleton(active: false)
+                    Moin.Skeleton(active: false)
                         .frame(width: 150)
                     Text("active: false").font(.caption).foregroundStyle(.secondary)
                 }
                 VStack {
-                    Skeleton(active: true)
+                    Moin.Skeleton(active: true)
                         .frame(width: 150)
                     Text("active: true").font(.caption).foregroundStyle(.secondary)
                 }
             }
         } code: {
             """
-            Skeleton(active: false)
-            Skeleton(active: true)
+            Moin.Skeleton(active: false)
+            Moin.Skeleton(active: true)
             """
         }
         .scrollAnchor("skeleton.active")
@@ -96,15 +96,15 @@ struct SkeletonAPIView: View {
             sectionId: "skeleton"
         ) {
             VStack(spacing: 16) {
-                Skeleton(active: true, avatar: false)
+                Moin.Skeleton(active: true, avatar: false)
                     .frame(width: 300)
-                Skeleton(active: true, avatar: true)
+                Moin.Skeleton(active: true, avatar: true)
                     .frame(width: 300)
             }
         } code: {
             """
-            Skeleton(active: true, avatar: false)
-            Skeleton(active: true, avatar: true)
+            Moin.Skeleton(active: true, avatar: false)
+            Moin.Skeleton(active: true, avatar: true)
             """
         }
         .scrollAnchor("skeleton.avatar")
@@ -119,15 +119,15 @@ struct SkeletonAPIView: View {
             sectionId: "skeleton"
         ) {
             VStack(spacing: 16) {
-                Skeleton(active: true, title: true)
+                Moin.Skeleton(active: true, title: true)
                     .frame(width: 300)
-                Skeleton(active: true, title: false)
+                Moin.Skeleton(active: true, title: false)
                     .frame(width: 300)
             }
         } code: {
             """
-            Skeleton(active: true, title: true)
-            Skeleton(active: true, title: false)
+            Moin.Skeleton(active: true, title: true)
+            Moin.Skeleton(active: true, title: false)
             """
         }
         .scrollAnchor("skeleton.title")
@@ -142,15 +142,15 @@ struct SkeletonAPIView: View {
             sectionId: "skeleton"
         ) {
             VStack(spacing: 16) {
-                Skeleton(active: true, title: true, paragraph: true)
+                Moin.Skeleton(active: true, title: true, paragraph: true)
                     .frame(width: 300)
-                Skeleton(active: true, title: true, paragraph: false)
+                Moin.Skeleton(active: true, title: true, paragraph: false)
                     .frame(width: 300)
             }
         } code: {
             """
-            Skeleton(active: true, paragraph: true)
-            Skeleton(active: true, paragraph: false)
+            Moin.Skeleton(active: true, paragraph: true)
+            Moin.Skeleton(active: true, paragraph: false)
             """
         }
         .scrollAnchor("skeleton.paragraph")
@@ -165,15 +165,15 @@ struct SkeletonAPIView: View {
             sectionId: "skeleton"
         ) {
             VStack(spacing: 16) {
-                Skeleton(active: true, round: false)
+                Moin.Skeleton(active: true, round: false)
                     .frame(width: 300)
-                Skeleton(active: true, round: true)
+                Moin.Skeleton(active: true, round: true)
                     .frame(width: 300)
             }
         } code: {
             """
-            Skeleton(active: true, round: false)
-            Skeleton(active: true, round: true)
+            Moin.Skeleton(active: true, round: false)
+            Moin.Skeleton(active: true, round: true)
             """
         }
         .scrollAnchor("skeleton.round")
@@ -191,7 +191,7 @@ struct SkeletonAPIView: View {
                 Toggle(tr("skeleton.toggle_loading"), isOn: $isLoading)
                     .frame(width: 160)
 
-                Skeleton(loading: isLoading, active: true) {
+                Moin.Skeleton(loading: isLoading, active: true) {
                     Text(tr("skeleton.actual_content"))
                         .padding()
                         .background(Color.blue.opacity(0.1))
@@ -201,7 +201,7 @@ struct SkeletonAPIView: View {
             }
         } code: {
             """
-            Skeleton(loading: isLoading, active: true) {
+            Moin.Skeleton(loading: isLoading, active: true) {
                 Text("Actual content")
             }
             """
@@ -220,16 +220,16 @@ struct SkeletonAPIView: View {
             sectionId: "element"
         ) {
             HStack(spacing: 16) {
-                Skeleton.Avatar(active: true)
-                Skeleton.Avatar(shape: .square, active: true)
-                Skeleton.Avatar(size: .large, active: true)
-                Skeleton.Avatar(size: .small, active: true)
+                _Skeleton.Avatar(active: true)
+                _Skeleton.Avatar(shape: .square, active: true)
+                _Skeleton.Avatar(size: .large, active: true)
+                _Skeleton.Avatar(size: .small, active: true)
             }
         } code: {
             """
-            Skeleton.Avatar(active: true)
-            Skeleton.Avatar(shape: .square, active: true)
-            Skeleton.Avatar(size: .large, active: true)
+            _Skeleton.Avatar(active: true)
+            _Skeleton.Avatar(shape: .square, active: true)
+            _Skeleton.Avatar(size: .large, active: true)
             """
         }
         .scrollAnchor("element.avatar")
@@ -244,15 +244,15 @@ struct SkeletonAPIView: View {
             sectionId: "element"
         ) {
             HStack(spacing: 16) {
-                Skeleton.Button(active: true)
-                Skeleton.Button(shape: .circle, active: true)
-                Skeleton.Button(shape: .round, active: true)
+                _Skeleton.Button(active: true)
+                _Skeleton.Button(shape: .circle, active: true)
+                _Skeleton.Button(shape: .round, active: true)
             }
         } code: {
             """
-            Skeleton.Button(active: true)
-            Skeleton.Button(shape: .circle, active: true)
-            Skeleton.Button(shape: .round, active: true)
+            _Skeleton.Button(active: true)
+            _Skeleton.Button(shape: .circle, active: true)
+            _Skeleton.Button(shape: .round, active: true)
             """
         }
         .scrollAnchor("element.button")
@@ -266,10 +266,10 @@ struct SkeletonAPIView: View {
             description: tr("skeleton.element_input"),
             sectionId: "element"
         ) {
-            Skeleton.Input(active: true)
+            _Skeleton.Input(active: true)
                 .frame(width: 200)
         } code: {
-            "Skeleton.Input(active: true)"
+            "_Skeleton.Input(active: true)"
         }
         .scrollAnchor("element.input")
     }
@@ -283,13 +283,13 @@ struct SkeletonAPIView: View {
             sectionId: "element"
         ) {
             HStack(spacing: 16) {
-                Skeleton.Image(active: true)
-                Skeleton.Image(width: 120, height: 80, active: true)
+                _Skeleton.SkeletonImage(active: true)
+                _Skeleton.SkeletonImage(width: 120, height: 80, active: true)
             }
         } code: {
             """
-            Skeleton.Image(active: true)
-            Skeleton.Image(width: 120, height: 80, active: true)
+            _Skeleton.SkeletonImage(active: true)
+            _Skeleton.SkeletonImage(width: 120, height: 80, active: true)
             """
         }
         .scrollAnchor("element.image")

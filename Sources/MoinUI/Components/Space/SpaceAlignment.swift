@@ -9,8 +9,4 @@ public enum _SpaceAlignment {
     case center
 }
 
-// MARK: - Moin.Space.Alignment typealias
 
-public extension Moin.Space {
-    typealias Alignment = _SpaceAlignment
-}

@@ -23,8 +23,4 @@ public enum _SpinSize: String, CaseIterable, CustomStringConvertible {
     }
 }
 
-// MARK: - Spin.Size typealias
 
-public extension Spin {
-    typealias Size = _SpinSize
-}

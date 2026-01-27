@@ -1,42 +1,10 @@
-// MARK: - Moin.Skeleton
-
 import SwiftUI
 
-public extension Moin {
-    typealias Skeleton = MoinUI.Skeleton
-}
 
-// MARK: - Skeleton
+// MARK: - _Skeleton (internal name, use Moin.Skeleton.View)
 
 /// 骨架屏组件，用于数据加载时的占位显示
-///
-/// ## 功能特点
-/// - 支持动画效果
-/// - 支持头像、标题、段落组合
-/// - 支持圆角模式
-/// - 支持 loading 条件渲染
-///
-/// ## 使用示例
-/// ```swift
-/// // 基础骨架屏
-/// Skeleton()
-///
-/// // 带动画
-/// Skeleton(active: true)
-///
-/// // 带头像
-/// Skeleton(avatar: true, active: true)
-///
-/// // 子组件
-/// Skeleton.Avatar(active: true)
-/// Skeleton.Button(shape: .round, active: true)
-///
-/// // 条件渲染
-/// Skeleton(loading: isLoading) {
-///     Text("Content loaded")
-/// }
-/// ```
-public struct Skeleton: View {
+public struct _Skeleton: View {
     // MARK: - Properties
 
     /// 是否显示动画
@@ -132,7 +100,7 @@ public struct Skeleton: View {
         HStack(alignment: .top, spacing: 16) {
             // 头像
             if let avatarConfig = avatar {
-                Skeleton.Avatar(
+                _Skeleton.Avatar(
                     size: avatarConfig.size,
                     shape: avatarConfig.shape,
                     active: active
@@ -143,7 +111,7 @@ public struct Skeleton: View {
             VStack(alignment: .leading, spacing: 0) {
                 // 标题
                 if let titleConfig = title {
-                    Skeleton.Block(
+                    _Skeleton.Block(
                         width: titleConfig.width ?? (avatar != nil ? 200 : 300),
                         height: token.titleHeight,
                         radius: round ? token.titleHeight / 2 : token.blockRadius,
@@ -155,7 +123,7 @@ public struct Skeleton: View {
                 if let paragraphConfig = paragraph {
                     let rows = paragraphConfig.rows ?? (title != nil ? 3 : 4)
                     ForEach(0..<rows, id: \.self) { index in
-                        Skeleton.Block(
+                        _Skeleton.Block(
                             width: paragraphWidth(for: index, total: rows, config: paragraphConfig),
                             height: token.paragraphLineHeight,
                             radius: round ? token.paragraphLineHeight / 2 : token.blockRadius,
@@ -186,9 +154,9 @@ public struct Skeleton: View {
     }
 }
 
-// MARK: - Skeleton.AvatarConfig
+// MARK: - _Skeleton.AvatarConfig
 
-public extension Skeleton {
+public extension _Skeleton {
     struct AvatarConfig {
         public let size: Size
         public let shape: AvatarShape
@@ -202,9 +170,9 @@ public extension Skeleton {
     }
 }
 
-// MARK: - Skeleton.TitleConfig
+// MARK: - _Skeleton.TitleConfig
 
-public extension Skeleton {
+public extension _Skeleton {
     struct TitleConfig {
         public let width: CGFloat?
 
@@ -216,9 +184,9 @@ public extension Skeleton {
     }
 }
 
-// MARK: - Skeleton.ParagraphConfig
+// MARK: - _Skeleton.ParagraphConfig
 
-public extension Skeleton {
+public extension _Skeleton {
     struct ParagraphConfig {
         public let rows: Int?
         public let width: CGFloat?
@@ -240,9 +208,9 @@ public extension Skeleton {
     }
 }
 
-// MARK: - Skeleton.Size
+// MARK: - _Skeleton.Size
 
-public extension Skeleton {
+public extension _Skeleton {
     enum Size {
         case small
         case `default`
@@ -278,18 +246,18 @@ public extension Skeleton {
     }
 }
 
-// MARK: - Skeleton.AvatarShape
+// MARK: - _Skeleton.AvatarShape
 
-public extension Skeleton {
+public extension _Skeleton {
     enum AvatarShape {
         case circle
         case square
     }
 }
 
-// MARK: - Skeleton.ButtonShape
+// MARK: - _Skeleton.ButtonShape
 
-public extension Skeleton {
+public extension _Skeleton {
     enum ButtonShape {
         case `default`
         case circle
@@ -298,9 +266,9 @@ public extension Skeleton {
     }
 }
 
-// MARK: - Skeleton.Avatar
+// MARK: - _Skeleton.Avatar
 
-public extension Skeleton {
+public extension _Skeleton {
     /// 头像骨架元素
     struct Avatar: View {
         let size: Size
@@ -325,11 +293,11 @@ public extension Skeleton {
             let avatarSize = size.avatarSize(from: token)
 
             if shape == .circle {
-                skeletonBackground(token: token, active: active)
+                _skeletonBackground(token: token, active: active)
                     .frame(width: avatarSize, height: avatarSize)
                     .clipShape(Circle())
             } else {
-                skeletonBackground(token: token, active: active)
+                _skeletonBackground(token: token, active: active)
                     .frame(width: avatarSize, height: avatarSize)
                     .clipShape(RoundedRectangle(cornerRadius: token.blockRadius))
             }
@@ -337,9 +305,9 @@ public extension Skeleton {
     }
 }
 
-// MARK: - Skeleton.Button
+// MARK: - _Skeleton.Button
 
-public extension Skeleton {
+public extension _Skeleton {
     /// 按钮骨架元素
     struct Button: View {
         let size: Size
@@ -380,7 +348,7 @@ public extension Skeleton {
                 }
             }()
 
-            skeletonBackground(token: token, active: active)
+            _skeletonBackground(token: token, active: active)
                 .frame(width: width, height: height)
                 .frame(maxWidth: block ? .infinity : nil)
                 .clipShape(RoundedRectangle(cornerRadius: cornerRadius))
@@ -388,9 +356,9 @@ public extension Skeleton {
     }
 }
 
-// MARK: - Skeleton.Input
+// MARK: - _Skeleton.Input
 
-public extension Skeleton {
+public extension _Skeleton {
     /// 输入框骨架元素
     struct Input: View {
         let size: Size
@@ -411,7 +379,7 @@ public extension Skeleton {
             let token = config.components.skeleton
             let height = size.inputHeight(from: token)
 
-            skeletonBackground(token: token, active: active)
+            _skeletonBackground(token: token, active: active)
                 .frame(height: height)
                 .frame(maxWidth: .infinity)
                 .clipShape(RoundedRectangle(cornerRadius: token.blockRadius))
@@ -419,11 +387,11 @@ public extension Skeleton {
     }
 }
 
-// MARK: - Skeleton.Image
+// MARK: - _Skeleton.Image
 
-public extension Skeleton {
+public extension _Skeleton {
     /// 图片骨架元素
-    struct Image: View {
+    struct SkeletonImage: View {
         let width: CGFloat?
         let height: CGFloat?
         let active: Bool
@@ -444,16 +412,16 @@ public extension Skeleton {
         public var body: some View {
             let token = config.components.skeleton
 
-            skeletonBackground(token: token, active: active)
+            _skeletonBackground(token: token, active: active)
                 .frame(width: width ?? 96, height: height ?? 96)
                 .clipShape(RoundedRectangle(cornerRadius: token.blockRadius))
         }
     }
 }
 
-// MARK: - Skeleton.Block
+// MARK: - _Skeleton.Block
 
-public extension Skeleton {
+public extension _Skeleton {
     /// 基础块骨架元素
     struct Block: View {
         let width: CGFloat?
@@ -480,12 +448,12 @@ public extension Skeleton {
             let token = config.components.skeleton
 
             if let width = width {
-                skeletonBackground(token: token, active: active)
+                _skeletonBackground(token: token, active: active)
                     .frame(width: width, height: height)
                     .clipShape(RoundedRectangle(cornerRadius: radius))
             } else {
                 GeometryReader { geometry in
-                    skeletonBackground(token: token, active: active)
+                    _skeletonBackground(token: token, active: active)
                         .frame(width: geometry.size.width, height: height)
                         .clipShape(RoundedRectangle(cornerRadius: radius))
                 }
@@ -498,7 +466,7 @@ public extension Skeleton {
 // MARK: - Skeleton Background Helper
 
 @ViewBuilder
-private func skeletonBackground(token: Moin.SkeletonToken, active: Bool) -> some View {
+func _skeletonBackground(token: Moin.SkeletonToken, active: Bool) -> some View {
     if active {
         TimelineView(.animation) { timeline in
             let phase = timeline.date.timeIntervalSinceReferenceDate.truncatingRemainder(dividingBy: token.motionDuration) / token.motionDuration
@@ -533,3 +501,6 @@ private func skeletonBackground(token: Moin.SkeletonToken, active: Bool) -> some
             .fill(token.color)
     }
 }
+
+
+

@@ -169,14 +169,14 @@ struct SpaceAPIView: View {
             description: tr("api.space.content"),
             sectionId: "space"
         ) {
-            Moin.Space {
+            _Space {
                 Moin.Button("Item 1") {}
                 Moin.Button("Item 2") {}
                 Moin.Button("Item 3") {}
             }
         } code: {
             """
-            Moin.Space {
+            _Space {
                 Moin.Button("Item 1") {}
                 Moin.Button("Item 2") {}
                 Moin.Button("Item 3") {}

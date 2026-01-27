@@ -9,8 +9,3 @@ public enum _ButtonSize {
     case large
 }
 
-// MARK: - Moin.Button.Size typealias
-
-public extension Moin.Button {
-    typealias Size = _ButtonSize
-}

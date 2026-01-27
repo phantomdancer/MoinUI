@@ -14,8 +14,4 @@ public enum _TagVariant {
     case borderless
 }
 
-// MARK: - Moin.Tag.Variant typealias
 
-public extension Moin.Tag {
-    typealias Variant = _TagVariant
-}

@@ -1,218 +1,217 @@
 import SwiftUI
 
-// MARK: - Moin.Badge
 
-public extension Moin {
-    /// 徽标组件 - 用于展示数字、状态或小红点
-    struct Badge<Content: View, CountView: View>: View {
-        @Environment(\.moinToken) private var token
-        @Environment(\.moinBadgeToken) private var badgeToken
-        @Environment(\.colorScheme) private var colorScheme
+// MARK: - _Badge (internal name, use Moin.Badge.View)
 
-        private let content: Content?
-        private let countNumber: Int?
-        private let countView: CountView?
-        private let dot: Bool
-        private let showZero: Bool
-        private let overflowCount: Int
-        private let size: Size
-        private let color: Moin.BadgeColor
-        private let offset: (x: CGFloat, y: CGFloat)?
-        private let status: Status?
-        private let text: String?
+/// 徽标组件 - 用于展示数字、状态或小红点
+public struct _Badge<Content: View, CountView: View>: View {
+    @Environment(\.moinToken) private var token
+    @Environment(\.moinBadgeToken) private var badgeToken
+    @Environment(\.colorScheme) private var colorScheme
 
-        /// 创建带数字的徽标
-        public init(
-            count: Int? = nil,
-            dot: Bool = false,
-            showZero: Bool = false,
-            overflowCount: Int = 99,
-            size: Size = .default,
-            color: Moin.BadgeColor = .default,
-            offset: (x: CGFloat, y: CGFloat)? = nil,
-            @ViewBuilder content: () -> Content
-        ) where CountView == EmptyView {
-            self.content = content()
-            self.countNumber = count
-            self.countView = nil
-            self.dot = dot
-            self.showZero = showZero
-            self.overflowCount = overflowCount
-            self.size = size
-            self.color = color
-            self.offset = offset
-            self.status = nil
-            self.text = nil
-        }
+    private let content: Content?
+    private let countNumber: Int?
+    private let countView: CountView?
+    private let dot: Bool
+    private let showZero: Bool
+    private let overflowCount: Int
+    private let size: _BadgeSize
+    private let color: _BadgeColor
+    private let offset: (x: CGFloat, y: CGFloat)?
+    private let status: _BadgeStatus?
+    private let text: String?
 
-        /// 创建带自定义指示器的徽标（类似 Ant Design count={<Icon/>}）
-        public init(
-            count: @escaping () -> CountView,
-            size: Size = .default,
-            offset: (x: CGFloat, y: CGFloat)? = nil,
-            @ViewBuilder content: () -> Content
-        ) {
-            self.content = content()
-            self.countNumber = nil
-            self.countView = count()
-            self.dot = false
-            self.showZero = false
-            self.overflowCount = 99
-            self.size = size
-            self.color = .default
-            self.offset = offset
-            self.status = nil
-            self.text = nil
-        }
+    /// 创建带数字的徽标
+    public init(
+        count: Int? = nil,
+        dot: Bool = false,
+        showZero: Bool = false,
+        overflowCount: Int = 99,
+        size: _BadgeSize = .default,
+        color: _BadgeColor = .default,
+        offset: (x: CGFloat, y: CGFloat)? = nil,
+        @ViewBuilder content: () -> Content
+    ) where CountView == EmptyView {
+        self.content = content()
+        self.countNumber = count
+        self.countView = nil
+        self.dot = dot
+        self.showZero = showZero
+        self.overflowCount = overflowCount
+        self.size = size
+        self.color = color
+        self.offset = offset
+        self.status = nil
+        self.text = nil
+    }
 
-        public var body: some View {
-            if let content = content {
-                content
-                    .overlay(alignment: .topTrailing) {
-                        badgeIndicator
-                            .offset(x: offsetX, y: offsetY)
-                    }
-            } else if let status = status {
-                statusView(status)
-            } else {
-                badgeIndicator
-            }
-        }
+    /// 创建带自定义指示器的徽标（类似 Ant Design count={<Icon/>}）
+    public init(
+        count: @escaping () -> CountView,
+        size: _BadgeSize = .default,
+        offset: (x: CGFloat, y: CGFloat)? = nil,
+        @ViewBuilder content: () -> Content
+    ) {
+        self.content = content()
+        self.countNumber = nil
+        self.countView = count()
+        self.dot = false
+        self.showZero = false
+        self.overflowCount = 99
+        self.size = size
+        self.color = .default
+        self.offset = offset
+        self.status = nil
+        self.text = nil
+    }
 
-        @ViewBuilder
-        private var badgeIndicator: some View {
-            if let countView = countView {
-                countView
-            } else if dot {
-                dotView
-            } else if let count = countNumber, (count > 0 || showZero) {
-                numberView(count)
-            }
-        }
-
-        private var dotView: some View {
-            Circle()
-                .fill(resolvedBadgeColor)
-                .frame(width: dotSize, height: dotSize)
-                .shadow(color: resolvedBadgeColor.opacity(badgeToken.shadowOpacity), radius: badgeToken.shadowRadius, x: 0, y: 1)
-        }
-
-        private func numberView(_ count: Int) -> some View {
-            let displayText = count > overflowCount ? "\(overflowCount)+" : "\(count)"
-            return Text(displayText)
-                .font(.system(size: fontSize, weight: badgeToken.textFontWeight))
-                .foregroundStyle(badgeToken.textColor)
-                .lineLimit(1)
-                .fixedSize()
-                .padding(.horizontal, horizontalPadding)
-                .frame(minWidth: minWidth, minHeight: height)
-                .background(resolvedBadgeColor)
-                .clipShape(Capsule())
-                .shadow(color: resolvedBadgeColor.opacity(badgeToken.shadowOpacity), radius: badgeToken.shadowRadius, x: 0, y: 1)
-        }
-
-        private func statusView(_ status: Status) -> some View {
-            HStack(spacing: 6) {
-                Circle()
-                    .fill(statusColor(status))
-                    .frame(width: badgeToken.statusSize, height: badgeToken.statusSize)
-
-                if let text = text {
-                    Text(text)
-                        .font(.system(size: 13))
-                        .foregroundStyle(token.colorText)
+    public var body: some View {
+        if let content = content {
+            content
+                .overlay(alignment: .topTrailing) {
+                    badgeIndicator
+                        .offset(x: offsetX, y: offsetY)
                 }
+        } else if let status = status {
+            statusView(status)
+        } else {
+            badgeIndicator
+        }
+    }
+
+    @ViewBuilder
+    private var badgeIndicator: some View {
+        if let countView = countView {
+            countView
+        } else if dot {
+            dotView
+        } else if let count = countNumber, (count > 0 || showZero) {
+            numberView(count)
+        }
+    }
+
+    private var dotView: some View {
+        Circle()
+            .fill(resolvedBadgeColor)
+            .frame(width: dotSize, height: dotSize)
+            .shadow(color: resolvedBadgeColor.opacity(badgeToken.shadowOpacity), radius: badgeToken.shadowRadius, x: 0, y: 1)
+    }
+
+    private func numberView(_ count: Int) -> some View {
+        let displayText = count > overflowCount ? "\(overflowCount)+" : "\(count)"
+        return Text(displayText)
+            .font(.system(size: fontSize, weight: badgeToken.textFontWeight))
+            .foregroundStyle(badgeToken.textColor)
+            .lineLimit(1)
+            .fixedSize()
+            .padding(.horizontal, horizontalPadding)
+            .frame(minWidth: minWidth, minHeight: height)
+            .background(resolvedBadgeColor)
+            .clipShape(Capsule())
+            .shadow(color: resolvedBadgeColor.opacity(badgeToken.shadowOpacity), radius: badgeToken.shadowRadius, x: 0, y: 1)
+    }
+
+    private func statusView(_ status: _BadgeStatus) -> some View {
+        HStack(spacing: 6) {
+            Circle()
+                .fill(statusColor(status))
+                .frame(width: badgeToken.statusSize, height: badgeToken.statusSize)
+
+            if let text = text {
+                Text(text)
+                    .font(.system(size: 13))
+                    .foregroundStyle(token.colorText)
             }
         }
+    }
 
-        private func statusColor(_ status: Status) -> Color {
-            switch status {
-            case .success: return token.colorSuccess
-            case .processing: return token.colorPrimary
-            case .default: return token.colorTextSecondary
-            case .error: return token.colorDanger
-            case .warning: return token.colorWarning
-            }
+    private func statusColor(_ status: _BadgeStatus) -> SwiftUI.Color {
+        switch status {
+        case .success: return token.colorSuccess
+        case .processing: return token.colorPrimary
+        case .default: return token.colorTextSecondary
+        case .error: return token.colorDanger
+        case .warning: return token.colorWarning
         }
+    }
 
-        // MARK: - Size Properties
+    // MARK: - Size Properties
 
-        private var fontSize: CGFloat {
-            switch size {
-            case .default: return badgeToken.textFontSize
-            case .small: return badgeToken.textFontSizeSM
-            }
+    private var fontSize: CGFloat {
+        switch size {
+        case .default: return badgeToken.textFontSize
+        case .small: return badgeToken.textFontSizeSM
         }
+    }
 
-        private var height: CGFloat {
-            switch size {
-            case .default: return badgeToken.indicatorHeight
-            case .small: return badgeToken.indicatorHeightSM
-            }
+    private var height: CGFloat {
+        switch size {
+        case .default: return badgeToken.indicatorHeight
+        case .small: return badgeToken.indicatorHeightSM
         }
+    }
 
-        private var minWidth: CGFloat {
-            height
+    private var minWidth: CGFloat {
+        height
+    }
+
+    private var horizontalPadding: CGFloat {
+        switch size {
+        case .default: return badgeToken.paddingH
+        case .small: return badgeToken.paddingHSM
         }
+    }
 
-        private var horizontalPadding: CGFloat {
-            switch size {
-            case .default: return badgeToken.paddingH
-            case .small: return badgeToken.paddingHSM
-            }
+    private var dotSize: CGFloat {
+        switch size {
+        case .default: return badgeToken.dotSize
+        case .small: return badgeToken.dotSizeSM
         }
+    }
 
-        private var dotSize: CGFloat {
-            switch size {
-            case .default: return badgeToken.dotSize
-            case .small: return badgeToken.dotSizeSM
-            }
-        }
+    private var offsetX: CGFloat {
+        if let x = offset?.x { return x }
+        return dot ? (dotSize / 2) : (height / 2)
+    }
 
-        private var offsetX: CGFloat {
-            if let x = offset?.x { return x }
-            return dot ? (dotSize / 2) : (height / 2)
-        }
+    private var offsetY: CGFloat {
+        if let y = offset?.y { return y }
+        return dot ? -(dotSize / 2) : -(height / 2)
+    }
 
-        private var offsetY: CGFloat {
-            if let y = offset?.y { return y }
-            return dot ? -(dotSize / 2) : -(height / 2)
-        }
+    // MARK: - Color
 
-        // MARK: - Color
+    private var isDark: Bool { colorScheme == .dark }
 
-        private var isDark: Bool { colorScheme == .dark }
-
-        private var resolvedBadgeColor: Color {
-            switch color {
-            case .default:
-                return badgeToken.badgeColor
-            case .success:
-                return token.colorSuccess
-            case .processing:
-                return token.colorPrimary
-            case .warning:
-                return token.colorWarning
-            case .error:
-                return token.colorDanger
-            case .custom(let c):
-                return c
-            }
+    private var resolvedBadgeColor: SwiftUI.Color {
+        switch color {
+        case .default:
+            return badgeToken.badgeColor
+        case .success:
+            return token.colorSuccess
+        case .processing:
+            return token.colorPrimary
+        case .warning:
+            return token.colorWarning
+        case .error:
+            return token.colorDanger
+        case .custom(let c):
+            return c
         }
     }
 }
 
 // MARK: - 独立徽标（无内容）
 
-public extension Moin.Badge where Content == EmptyView, CountView == EmptyView {
+public extension _Badge where Content == EmptyView, CountView == EmptyView {
     /// 创建独立徽标（无子内容）
     init(
         count: Int? = nil,
         dot: Bool = false,
         showZero: Bool = false,
         overflowCount: Int = 99,
-        size: Size = .default,
-        color: Moin.BadgeColor = .default
+        size: _BadgeSize = .default,
+        color: _BadgeColor = .default
     ) {
         self.content = nil
         self.countNumber = count
@@ -228,7 +227,7 @@ public extension Moin.Badge where Content == EmptyView, CountView == EmptyView {
     }
 
     /// 创建状态徽标（独立使用，类似 Ant Design）
-    init(status: Status, text: String? = nil) {
+    init(status: _BadgeStatus, text: String? = nil) {
         self.content = nil
         self.countNumber = nil
         self.countView = nil
@@ -242,3 +241,8 @@ public extension Moin.Badge where Content == EmptyView, CountView == EmptyView {
         self.text = text
     }
 }
+
+
+
+// MARK: - Moin.Badge Extensions
+

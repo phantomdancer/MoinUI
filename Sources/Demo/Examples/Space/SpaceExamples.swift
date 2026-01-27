@@ -104,14 +104,14 @@ struct SpaceExamples: View {
             title: tr("space.basic"),
             description: tr("space.basic_desc")
         ) {
-            Moin.Space {
+            _Space {
                 Moin.Button("\(tr("button.label.button")) 1", color: .primary) {}
                 Moin.Button("\(tr("button.label.button")) 2", color: .primary) {}
                 Moin.Button("\(tr("button.label.button")) 3", color: .primary) {}
             }
         } code: {
             """
-            Moin.Space {
+            _Space {
                 Moin.Button("\(tr("space.button_n").replacingOccurrences(of: "%d", with: "1"))", color: .primary) {}
                 Moin.Button("\(tr("space.button_n").replacingOccurrences(of: "%d", with: "2"))", color: .primary) {}
                 Moin.Button("\(tr("space.button_n").replacingOccurrences(of: "%d", with: "3"))", color: .primary) {}
@@ -213,18 +213,18 @@ struct SpaceExamples: View {
             title: tr("space.compact"),
             description: tr("space.compact_desc")
         ) {
-            Moin.Space {
-                Moin.SpaceCompact(direction: .vertical) {
+            _Space {
+                Moin.Space.Compact(direction: .vertical) {
                     Moin.Button("\(tr("button.label.button")) 1", variant: .outlined) {}
                     Moin.Button("\(tr("button.label.button")) 2", variant: .outlined) {}
                     Moin.Button("\(tr("button.label.button")) 3", variant: .outlined) {}
                 }
-                Moin.SpaceCompact(direction: .vertical) {
+                Moin.Space.Compact(direction: .vertical) {
                     Moin.Button("\(tr("button.label.button")) 1", variant: .dashed) {}
                     Moin.Button("\(tr("button.label.button")) 2", variant: .dashed) {}
                     Moin.Button("\(tr("button.label.button")) 3", variant: .dashed) {}
                 }
-                Moin.SpaceCompact(direction: .vertical) {
+                Moin.Space.Compact(direction: .vertical) {
                     Moin.Button("\(tr("button.label.button")) 1", color: .primary) {}
                     Moin.Button("\(tr("button.label.button")) 2", color: .primary) {}
                     Moin.Button("\(tr("button.label.button")) 3", color: .primary) {}
@@ -232,18 +232,18 @@ struct SpaceExamples: View {
             }
         } code: {
             """
-            Moin.Space {
-                Moin.SpaceCompact(direction: .vertical) {
+            _Space {
+                Moin.Space.Compact(direction: .vertical) {
                     Moin.Button("\(tr("space.button_n").replacingOccurrences(of: "%d", with: "1"))", variant: .outlined) {}
                     Moin.Button("\(tr("space.button_n").replacingOccurrences(of: "%d", with: "2"))", variant: .outlined) {}
                     Moin.Button("\(tr("space.button_n").replacingOccurrences(of: "%d", with: "3"))", variant: .outlined) {}
                 }
-                Moin.SpaceCompact(direction: .vertical) {
+                Moin.Space.Compact(direction: .vertical) {
                     Moin.Button("\(tr("space.button_n").replacingOccurrences(of: "%d", with: "1"))", variant: .dashed) {}
                     Moin.Button("\(tr("space.button_n").replacingOccurrences(of: "%d", with: "2"))", variant: .dashed) {}
                     Moin.Button("\(tr("space.button_n").replacingOccurrences(of: "%d", with: "3"))", variant: .dashed) {}
                 }
-                Moin.SpaceCompact(direction: .vertical) {
+                Moin.Space.Compact(direction: .vertical) {
                     Moin.Button("\(tr("space.button_n").replacingOccurrences(of: "%d", with: "1"))", color: .primary) {}
                     Moin.Button("\(tr("space.button_n").replacingOccurrences(of: "%d", with: "2"))", color: .primary) {}
                     Moin.Button("\(tr("space.button_n").replacingOccurrences(of: "%d", with: "3"))", color: .primary) {}

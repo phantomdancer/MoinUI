@@ -11,8 +11,4 @@ public enum _BadgeStatus {
     case warning
 }
 
-// MARK: - Moin.Badge.Status typealias
 
-public extension Moin.Badge {
-    typealias Status = _BadgeStatus
-}

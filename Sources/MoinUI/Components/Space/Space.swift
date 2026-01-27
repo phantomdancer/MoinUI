@@ -1,94 +1,93 @@
 import SwiftUI
 
-// MARK: - Moin.Space
 
-public extension Moin {
-    /// Space component for setting spacing between child elements
-    struct Space<Content: View, Separator: View>: View {
-        @Environment(\.moinToken) private var token
-        
-        // Ant Design Space has no component token, uses global padding directly
-        // @Environment(\.moinSpaceToken) private var spaceToken 
+// MARK: - _Space (internal name, use Moin.Space.View)
 
-        private let size: _SpaceSize
-        private let direction: _SpaceDirection
-        private let alignment: _SpaceAlignment
-        private let wrap: Bool
-        private let separator: Separator?
-        private let content: Content
+/// Space component for setting spacing between child elements
+public struct _Space<Content: View, Separator: View>: View {
+    @Environment(\.moinToken) private var token
 
-        /// Initialize Space component with separator
-        /// - Parameters:
-        ///   - size: Spacing size (.small, .medium, .large, .custom)
-        ///   - direction: Layout direction (.horizontal, .vertical)
-        ///   - alignment: Cross-axis alignment (.start, .end, .center)
-        ///   - wrap: Enable auto wrap (horizontal only)
-        ///   - separator: Separator view between items
-        ///   - content: Child views
-        public init(
-            size: _SpaceSize = .medium,
-            direction: _SpaceDirection = .horizontal,
-            alignment: _SpaceAlignment = .center,
-            wrap: Bool = false,
-            @ViewBuilder separator: () -> Separator,
-            @ViewBuilder content: () -> Content
-        ) {
-            self.size = size
-            self.direction = direction
-            self.alignment = alignment
-            self.wrap = wrap
-            self.separator = separator()
-            self.content = content()
+    // Ant Design Space has no component token, uses global padding directly
+    // @Environment(\.moinSpaceToken) private var spaceToken
+
+    private let size: _SpaceSize
+    private let direction: _SpaceDirection
+    private let alignment: _SpaceAlignment
+    private let wrap: Bool
+    private let separator: Separator?
+    private let content: Content
+
+    /// Initialize Space component with separator
+    /// - Parameters:
+    ///   - size: Spacing size (.small, .medium, .large, .custom)
+    ///   - direction: Layout direction (.horizontal, .vertical)
+    ///   - alignment: Cross-axis alignment (.start, .end, .center)
+    ///   - wrap: Enable auto wrap (horizontal only)
+    ///   - separator: Separator view between items
+    ///   - content: Child views
+    public init(
+        size: _SpaceSize = .medium,
+        direction: _SpaceDirection = .horizontal,
+        alignment: _SpaceAlignment = .center,
+        wrap: Bool = false,
+        @ViewBuilder separator: () -> Separator,
+        @ViewBuilder content: () -> Content
+    ) {
+        self.size = size
+        self.direction = direction
+        self.alignment = alignment
+        self.wrap = wrap
+        self.separator = separator()
+        self.content = content()
+    }
+
+    public var body: some View {
+        let layout = _SpaceLayout(
+            direction: direction,
+            spacing: spacing,
+            verticalAlignment: verticalAlignment,
+            horizontalAlignment: horizontalAlignment,
+            wrap: wrap,
+            separator: separator
+        )
+        layout.body(content: content)
+    }
+
+    // MARK: - Private
+
+    private var spacing: CGFloat {
+        switch size {
+        case .small:
+            return token.paddingXS
+        case .medium:
+            return token.padding
+        case .large:
+            return token.paddingLG
+        case ._custom(let value):
+            return value
         }
+    }
 
-        public var body: some View {
-            let layout = SpaceLayout(
-                direction: direction,
-                spacing: spacing,
-                verticalAlignment: verticalAlignment,
-                horizontalAlignment: horizontalAlignment,
-                wrap: wrap,
-                separator: separator
-            )
-            layout.body(content: content)
+    private var verticalAlignment: VerticalAlignment {
+        switch alignment {
+        case .start: return .top
+        case .end: return .bottom
+        case .center: return .center
         }
+    }
 
-        // MARK: - Private
-
-        private var spacing: CGFloat {
-            switch size {
-            case .small:
-                return token.paddingXS
-            case .medium:
-                return token.padding
-            case .large:
-                return token.paddingLG
-            case ._custom(let value):
-                return value
-            }
-        }
-
-        private var verticalAlignment: VerticalAlignment {
-            switch alignment {
-            case .start: return .top
-            case .end: return .bottom
-            case .center: return .center
-            }
-        }
-
-        private var horizontalAlignment: HorizontalAlignment {
-            switch alignment {
-            case .start: return .leading
-            case .end: return .trailing
-            case .center: return .center
-            }
+    private var horizontalAlignment: HorizontalAlignment {
+        switch alignment {
+        case .start: return .leading
+        case .end: return .trailing
+        case .center: return .center
         }
     }
 }
 
 // MARK: - Space without separator
 
-public extension Moin.Space where Separator == EmptyView {
+public extension _Space where Separator == EmptyView {
     /// Initialize Space component without separator
     init(
         size: _SpaceSize = .medium,
@@ -106,9 +105,9 @@ public extension Moin.Space where Separator == EmptyView {
     }
 }
 
-// MARK: - SpaceLayout
+// MARK: - _SpaceLayout
 
-private struct SpaceLayout<Separator: View> {
+private struct _SpaceLayout<Separator: View> {
     let direction: _SpaceDirection
     let spacing: CGFloat
     let verticalAlignment: VerticalAlignment
@@ -119,7 +118,7 @@ private struct SpaceLayout<Separator: View> {
     @ViewBuilder
     func body<Content: View>(content: Content) -> some View {
         if separator != nil {
-            _VariadicView.Tree(SpaceLayoutRoot(layout: self)) {
+            _VariadicView.Tree(_SpaceLayoutRoot(layout: self)) {
                 content
             }
         } else {
@@ -127,7 +126,7 @@ private struct SpaceLayout<Separator: View> {
             switch direction {
             case .horizontal:
                 if wrap {
-                    FlowLayout(spacing: spacing, alignment: verticalAlignment) {
+                    _FlowLayout(spacing: spacing, alignment: verticalAlignment) {
                         content
                     }
                 } else {
@@ -144,10 +143,10 @@ private struct SpaceLayout<Separator: View> {
     }
 }
 
-// MARK: - SpaceLayoutRoot
+// MARK: - _SpaceLayoutRoot
 
-private struct SpaceLayoutRoot<Separator: View>: _VariadicView.MultiViewRoot {
-    let layout: SpaceLayout<Separator>
+private struct _SpaceLayoutRoot<Separator: View>: _VariadicView.MultiViewRoot {
+    let layout: _SpaceLayout<Separator>
 
     @ViewBuilder
     func body(children: _VariadicView.Children) -> some View {
@@ -155,7 +154,7 @@ private struct SpaceLayoutRoot<Separator: View>: _VariadicView.MultiViewRoot {
         switch layout.direction {
         case .horizontal:
             if layout.wrap {
-                FlowLayout(spacing: layout.spacing, alignment: layout.verticalAlignment) {
+                _FlowLayout(spacing: layout.spacing, alignment: layout.verticalAlignment) {
                     ForEach(childArray.indices, id: \.self) { index in
                         childArray[index]
                         if index < childArray.count - 1, let sep = layout.separator {
@@ -186,10 +185,10 @@ private struct SpaceLayoutRoot<Separator: View>: _VariadicView.MultiViewRoot {
     }
 }
 
-// MARK: - FlowLayout
+// MARK: - _FlowLayout
 
 /// A flow layout that wraps children to next line when exceeding width
-private struct FlowLayout: Layout {
+private struct _FlowLayout: Layout {
     var spacing: CGFloat
     var alignment: VerticalAlignment
 
@@ -241,3 +240,8 @@ private struct FlowLayout: Layout {
         return (CGSize(width: totalWidth, height: totalHeight), positions)
     }
 }
+
+
+
+// MARK: - Moin.Space Extensions
+

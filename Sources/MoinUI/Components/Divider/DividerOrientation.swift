@@ -8,8 +8,4 @@ public enum _DividerOrientation: String, CaseIterable {
     case vertical
 }
 
-// MARK: - Moin.Divider.Orientation typealias
 
-public extension Moin.Divider {
-    typealias Orientation = _DividerOrientation
-}

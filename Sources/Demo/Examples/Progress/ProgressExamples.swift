@@ -375,7 +375,7 @@ private struct DashboardDemo: View {
     @Localized var tr
     @Environment(\.moinToken) var token
     @State private var gapDegree: Double = 50
-    @State private var gapPosition: Moin.Progress.GapPosition = .bottom
+    @State private var gapPosition: _Progress.GapPosition = .bottom
     
     var body: some View {
         HStack(alignment: .center, spacing: 32) {
@@ -393,10 +393,10 @@ private struct DashboardDemo: View {
                 HStack {
                     Text(tr("progress.gap_position"))
                     Picker("", selection: $gapPosition) {
-                        Text("Top").tag(Moin.Progress.GapPosition.top)
-                        Text("Bottom").tag(Moin.Progress.GapPosition.bottom)
-                        Text("Left").tag(Moin.Progress.GapPosition.left)
-                        Text("Right").tag(Moin.Progress.GapPosition.right)
+                        Text("Top").tag(_Progress.GapPosition.top)
+                        Text("Bottom").tag(_Progress.GapPosition.bottom)
+                        Text("Left").tag(_Progress.GapPosition.left)
+                        Text("Right").tag(_Progress.GapPosition.right)
                     }
                     .pickerStyle(.segmented)
                     .fixedSize()

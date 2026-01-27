@@ -21,8 +21,3 @@ public struct _ButtonLoading: ExpressibleByBooleanLiteral, Equatable {
     }
 }
 
-// MARK: - Moin.Button.Loading typealias
-
-public extension Moin.Button {
-    typealias Loading = _ButtonLoading
-}
