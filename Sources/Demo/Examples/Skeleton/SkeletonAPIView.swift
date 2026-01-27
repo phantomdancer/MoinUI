@@ -443,22 +443,21 @@ struct SkeletonAPIView: View {
             type: "Skeleton.Size",
             defaultValue: ".default",
             description: "输入框尺寸，支持预设值 .small、.default、.large 或自定义数值",
-            sectionId: "input",
-            preview: {
-                HStack(spacing: 16) {
-                    Moin.SkeletonInput(size: .small)
-                    Moin.SkeletonInput(size: .default)
-                    Moin.SkeletonInput(size: .large)
-                }
-            },
-            code: {
-                """
+            sectionId: "input"
+        ) {
+            HStack(spacing: 16) {
                 Moin.SkeletonInput(size: .small)
                 Moin.SkeletonInput(size: .default)
                 Moin.SkeletonInput(size: .large)
-                """
             }
-        )
+            .frame(maxWidth: 400, alignment: .leading)
+        } code: {
+            """
+            Moin.SkeletonInput(size: .small)
+            Moin.SkeletonInput(size: .default)
+            Moin.SkeletonInput(size: .large)
+            """
+        }
         .scrollAnchor("input.size")
     }
 
