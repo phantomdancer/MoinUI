@@ -749,6 +749,8 @@ public struct _MoinSkeletonFactory {
     public typealias Image = _Skeleton.SkeletonImage
     /// Moin.Skeleton.Block
     public typealias Block = _Skeleton.Block
+    /// Moin.Skeleton.Node
+    public typealias Node = _Skeleton.Node
     /// Moin.Skeleton.AvatarConfig
     public typealias AvatarConfig = _Skeleton.AvatarConfig
     /// Moin.Skeleton.TitleConfig

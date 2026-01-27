@@ -41,6 +41,7 @@ public enum Moin {
     public typealias SkeletonButton = _Skeleton.Button
     public typealias SkeletonInput = _Skeleton.Input
     public typealias SkeletonImage = _Skeleton.SkeletonImage
+    public typealias SkeletonNode = _Skeleton.Node
     public typealias SkeletonTitleProps = _Skeleton.TitleProps
     public typealias SkeletonParagraphProps = _Skeleton.ParagraphProps
 }

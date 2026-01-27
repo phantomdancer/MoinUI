@@ -1,5 +1,43 @@
 import SwiftUI
 
+// MARK: - Skeleton Background Helper
+
+@ViewBuilder
+func _skeletonBackground(token: Moin.SkeletonToken, active: Bool) -> some View {
+    if active {
+        TimelineView(.animation) { timeline in
+            let phase = timeline.date.timeIntervalSinceReferenceDate.truncatingRemainder(dividingBy: token.motionDuration) / token.motionDuration
+
+            Rectangle()
+                .fill(token.color)
+                .overlay(
+                    GeometryReader { geometry in
+                        let shimmerWidth = max(geometry.size.width * 0.5, 60)
+                        let totalTravel = geometry.size.width + shimmerWidth
+
+                        Rectangle()
+                            .fill(
+                                LinearGradient(
+                                    colors: [
+                                        .clear,
+                                        token.colorGradientEnd.opacity(0.5),
+                                        .clear
+                                    ],
+                                    startPoint: .leading,
+                                    endPoint: .trailing
+                                )
+                            )
+                            .frame(width: shimmerWidth)
+                            .offset(x: -shimmerWidth + phase * totalTravel)
+                    }
+                    .clipped()
+                )
+        }
+    } else {
+        Rectangle()
+            .fill(token.color)
+    }
+}
 
 // MARK: - _Skeleton (internal name, use Moin.Skeleton.View)
 
@@ -211,37 +249,48 @@ public extension _Skeleton {
 // MARK: - _Skeleton.Size
 
 public extension _Skeleton {
-    enum Size {
-        case small
-        case `default`
-        case large
-        case custom(CGFloat)
+    /// 骨架屏尺寸
+    struct Size: ExpressibleByIntegerLiteral, ExpressibleByFloatLiteral {
+        public let rawValue: CGFloat
+
+        public init(_ value: CGFloat) {
+            rawValue = value
+        }
+
+        public init(integerLiteral value: Int) {
+            rawValue = CGFloat(value)
+        }
+
+        public init(floatLiteral value: Double) {
+            rawValue = CGFloat(value)
+        }
+
+        /// 小尺寸
+        public static let small = Size(24)
+        /// 默认尺寸
+        public static let `default` = Size(32)
+        /// 大尺寸
+        public static let large = Size(40)
 
         func avatarSize(from token: Moin.SkeletonToken) -> CGFloat {
-            switch self {
-            case .small: return token.avatarSizeSM
-            case .default: return token.avatarSize
-            case .large: return token.avatarSizeLG
-            case .custom(let size): return size
-            }
+            if rawValue == Self.small.rawValue { return token.avatarSizeSM }
+            if rawValue == Self.`default`.rawValue { return token.avatarSize }
+            if rawValue == Self.large.rawValue { return token.avatarSizeLG }
+            return rawValue
         }
 
         func buttonHeight(from token: Moin.SkeletonToken) -> CGFloat {
-            switch self {
-            case .small: return token.buttonHeightSM
-            case .default: return token.buttonHeight
-            case .large: return token.buttonHeightLG
-            case .custom(let size): return size
-            }
+            if rawValue == Self.small.rawValue { return token.buttonHeightSM }
+            if rawValue == Self.`default`.rawValue { return token.buttonHeight }
+            if rawValue == Self.large.rawValue { return token.buttonHeightLG }
+            return rawValue
         }
 
         func inputHeight(from token: Moin.SkeletonToken) -> CGFloat {
-            switch self {
-            case .small: return token.inputHeightSM
-            case .default: return token.inputHeight
-            case .large: return token.inputHeightLG
-            case .custom(let size): return size
-            }
+            if rawValue == Self.small.rawValue { return token.inputHeightSM }
+            if rawValue == Self.`default`.rawValue { return token.inputHeight }
+            if rawValue == Self.large.rawValue { return token.inputHeightLG }
+            return rawValue
         }
     }
 }
@@ -349,9 +398,9 @@ public extension _Skeleton {
             }()
 
             _skeletonBackground(token: token, active: active)
-                .frame(width: width, height: height)
-                .frame(maxWidth: block ? .infinity : nil)
-                .clipShape(RoundedRectangle(cornerRadius: cornerRadius))
+            .frame(width: width, height: height)
+            .frame(maxWidth: block ? .infinity : nil)
+            .clipShape(RoundedRectangle(cornerRadius: cornerRadius))
         }
     }
 }
@@ -362,6 +411,7 @@ public extension _Skeleton {
     /// 输入框骨架元素
     struct Input: View {
         let size: Size
+        let block: Bool
         let active: Bool
 
         @Environment(\.moinToken) private var globalToken
@@ -369,20 +419,23 @@ public extension _Skeleton {
 
         public init(
             size: Size = .default,
+            block: Bool = false,
             active: Bool = false
         ) {
             self.size = size
+            self.block = block
             self.active = active
         }
 
         public var body: some View {
             let token = config.components.skeleton
             let height = size.inputHeight(from: token)
+            let width: CGFloat? = block ? nil : 200
 
             _skeletonBackground(token: token, active: active)
-                .frame(height: height)
-                .frame(maxWidth: .infinity)
-                .clipShape(RoundedRectangle(cornerRadius: token.blockRadius))
+            .frame(width: width, height: height)
+            .frame(maxWidth: block ? .infinity : nil)
+            .clipShape(RoundedRectangle(cornerRadius: token.blockRadius))
         }
     }
 }
@@ -413,8 +466,47 @@ public extension _Skeleton {
             let token = config.components.skeleton
 
             _skeletonBackground(token: token, active: active)
-                .frame(width: width ?? 96, height: height ?? 96)
+            .frame(width: width ?? 96, height: height ?? 96)
+            .clipShape(RoundedRectangle(cornerRadius: token.blockRadius))
+        }
+    }
+}
+
+// MARK: - _Skeleton.Node
+
+public extension _Skeleton {
+    /// 自定义骨架节点，支持传入任意子视图
+    struct Node: View {
+        let active: Bool
+        let content: AnyView?
+
+        @Environment(\.moinToken) private var globalToken
+        @ObservedObject private var config = Moin.ConfigProvider.shared
+
+        public init(active: Bool = false) {
+            self.active = active
+            self.content = nil
+        }
+
+        public init<Content: View>(active: Bool = false, @ViewBuilder content: () -> Content) {
+            self.active = active
+            self.content = AnyView(content())
+        }
+
+        public var body: some View {
+            let token = config.components.skeleton
+
+            if let content = content {
+                if active {
+                    content.overlay(_skeletonBackground(token: token, active: true).opacity(0.5))
+                } else {
+                    content
+                }
+            } else {
+                _skeletonBackground(token: token, active: active)
+                .frame(width: 96, height: 96)
                 .clipShape(RoundedRectangle(cornerRadius: token.blockRadius))
+            }
         }
     }
 }
@@ -449,58 +541,16 @@ public extension _Skeleton {
 
             if let width = width {
                 _skeletonBackground(token: token, active: active)
-                    .frame(width: width, height: height)
-                    .clipShape(RoundedRectangle(cornerRadius: radius))
+                .frame(width: width, height: height)
+                .clipShape(RoundedRectangle(cornerRadius: radius))
             } else {
                 GeometryReader { geometry in
                     _skeletonBackground(token: token, active: active)
-                        .frame(width: geometry.size.width, height: height)
-                        .clipShape(RoundedRectangle(cornerRadius: radius))
+                    .frame(width: geometry.size.width, height: height)
+                    .clipShape(RoundedRectangle(cornerRadius: radius))
                 }
                 .frame(height: height)
             }
         }
     }
 }
-
-// MARK: - Skeleton Background Helper
-
-@ViewBuilder
-func _skeletonBackground(token: Moin.SkeletonToken, active: Bool) -> some View {
-    if active {
-        TimelineView(.animation) { timeline in
-            let phase = timeline.date.timeIntervalSinceReferenceDate.truncatingRemainder(dividingBy: token.motionDuration) / token.motionDuration
-
-            Rectangle()
-                .fill(token.color)
-                .overlay(
-                    GeometryReader { geometry in
-                        let shimmerWidth = max(geometry.size.width * 0.5, 60)
-                        let totalTravel = geometry.size.width + shimmerWidth
-
-                        Rectangle()
-                            .fill(
-                                LinearGradient(
-                                    colors: [
-                                        .clear,
-                                        token.colorGradientEnd.opacity(0.5),
-                                        .clear
-                                    ],
-                                    startPoint: .leading,
-                                    endPoint: .trailing
-                                )
-                            )
-                            .frame(width: shimmerWidth)
-                            .offset(x: -shimmerWidth + phase * totalTravel)
-                    }
-                    .clipped()
-                )
-        }
-    } else {
-        Rectangle()
-            .fill(token.color)
-    }
-}
-
-
-
