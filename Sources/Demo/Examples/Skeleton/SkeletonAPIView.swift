@@ -120,16 +120,14 @@ struct SkeletonAPIView: View {
             description: tr("skeleton.prop_active"),
             sectionId: "skeleton"
         ) {
-            HStack(spacing: 32) {
-                VStack {
-                    Moin.Skeleton(active: false)
-                        .frame(width: 150)
-                    Text("active: false").font(.caption).foregroundStyle(.secondary)
+            HStack(spacing: 24) {
+                VStack(spacing: 12) {
+                    Text(tr("skeleton.default")).font(.subheadline).foregroundStyle(.secondary)
+                    Moin.Skeleton()
                 }
-                VStack {
+                VStack(spacing: 12) {
+                    Text(tr("skeleton.animation")).font(.subheadline).foregroundStyle(.secondary)
                     Moin.Skeleton(active: true)
-                        .frame(width: 150)
-                    Text("active: true").font(.caption).foregroundStyle(.secondary)
                 }
             }
         } code: {
