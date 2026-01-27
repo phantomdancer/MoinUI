@@ -102,17 +102,12 @@ struct SkeletonExamples: View {
             content: {
                 VStack(spacing: 24) {
                     Moin.Skeleton()
-                    Moin.Skeleton(avatar: true)
                 }
-                .frame(width: 350)
             },
             code: {
                 """
                 // \(tr("skeleton.default"))
                 Moin.Skeleton()
-
-                // \(tr("skeleton.with_avatar"))
-                Moin.Skeleton(avatar: true)
                 """
             }
         )
@@ -124,15 +119,12 @@ struct SkeletonExamples: View {
             description: tr("skeleton.active_desc"),
             content: {
                 VStack(spacing: 24) {
-                    Moin.Skeleton(active: true)
                     Moin.Skeleton(active: true, avatar: true)
                 }
-                .frame(width: 350)
             },
             code: {
                 """
                 // \(tr("skeleton.animation"))
-                Moin.Skeleton(active: true)
                 Moin.Skeleton(active: true, avatar: true)
                 """
             }
@@ -146,33 +138,30 @@ struct SkeletonExamples: View {
             content: {
                 VStack(spacing: 24) {
                     // 只有段落
-                    Moin.Skeleton(active: true, title: false, paragraph: true)
+                    Moin.Skeleton(title: false, paragraph: true)
 
                     // 圆角模式
-                    Moin.Skeleton(active: true, avatar: true, round: true)
+                    Moin.Skeleton(avatar: true, round: true)
 
                     // 自定义段落行数
                     Moin.Skeleton(
-                        active: true,
                         avatar: nil,
                         title: Moin.SkeletonTitleProps(width: 200),
                         paragraph: Moin.SkeletonParagraphProps(rows: 2, width: 150),
                         round: false
                     )
                 }
-                .frame(width: 350)
             },
             code: {
                 """
                 // \(tr("skeleton.paragraph_only"))
-                Moin.Skeleton(active: true, title: false, paragraph: true)
+                Moin.Skeleton(title: false, paragraph: true)
 
                 // \(tr("skeleton.round_mode"))
-                Moin.Skeleton(active: true, avatar: true, round: true)
+                Moin.Skeleton(avatar: true, round: true)
 
                 // \(tr("skeleton.custom_config"))
                 Moin.Skeleton(
-                    active: true,
                     avatar: nil,
                     title: Moin.SkeletonTitleProps(width: 200),
                     paragraph: Moin.SkeletonParagraphProps(rows: 2, width: 150),
@@ -193,10 +182,11 @@ struct SkeletonExamples: View {
                     VStack(alignment: .leading, spacing: 8) {
                         Text(tr("skeleton.avatar_element")).font(.caption).foregroundStyle(.secondary)
                         HStack(spacing: 16) {
-                            Moin.SkeletonAvatar(active: true)
-                            Moin.SkeletonAvatar(shape: .square, active: true)
-                            Moin.SkeletonAvatar(size: .large, active: true)
-                            Moin.SkeletonAvatar(size: .small, active: true)
+                            Moin.SkeletonAvatar(shape: .circle)
+                            Moin.SkeletonAvatar(shape: .square)
+                            Moin.SkeletonAvatar(size: .large)
+                            Moin.SkeletonAvatar(size: .small)
+                            Moin.SkeletonAvatar(size: 48) // 自定义尺寸
                         }
                     }
 
@@ -204,11 +194,13 @@ struct SkeletonExamples: View {
                     VStack(alignment: .leading, spacing: 8) {
                         Text(tr("skeleton.button_element")).font(.caption).foregroundStyle(.secondary)
                         HStack(spacing: 16) {
-                            Moin.SkeletonButton(active: true)
-                            Moin.SkeletonButton(shape: .circle, active: true)
-                            Moin.SkeletonButton(shape: .round, active: true)
-                            Moin.SkeletonButton(shape: .square, active: true)
-                            Moin.SkeletonButton(shape: .default, active: true)
+                            Moin.SkeletonButton(shape: .default)
+                            Moin.SkeletonButton(shape: .circle)
+                            Moin.SkeletonButton(shape: .round)
+                            Moin.SkeletonButton(shape: .square)
+                            Moin.SkeletonButton(size: .small)
+                            Moin.SkeletonButton(size: .large)
+                            Moin.SkeletonButton(block: true)
                         }
                     }
 
@@ -216,10 +208,10 @@ struct SkeletonExamples: View {
                     VStack(alignment: .leading, spacing: 8) {
                         Text(tr("skeleton.input_element")).font(.caption).foregroundStyle(.secondary)
                         HStack(spacing: 16) {
-                            Moin.SkeletonInput(active: true)
-                            Moin.SkeletonInput(size: .small, active: true)
-                            Moin.SkeletonInput(size: .large, active: true)
-                            Moin.SkeletonInput(block: true, active: true)
+                            Moin.SkeletonInput()
+                            Moin.SkeletonInput(size: .small)
+                            Moin.SkeletonInput(size: .large)
+                            Moin.SkeletonInput(block: true)
                         }
                     }
 
@@ -227,8 +219,8 @@ struct SkeletonExamples: View {
                     VStack(alignment: .leading, spacing: 8) {
                         Text(tr("skeleton.image_element")).font(.caption).foregroundStyle(.secondary)
                         HStack(spacing: 16) {
-                            Moin.SkeletonImage(active: true)
-                            Moin.SkeletonImage(width: 120, height: 80, active: true)
+                            Moin.SkeletonImage()
+                            Moin.SkeletonImage(width: 120, height: 80)
                         }
                     }
 
@@ -236,8 +228,8 @@ struct SkeletonExamples: View {
                     VStack(alignment: .leading, spacing: 8) {
                         Text(tr("skeleton.node_element")).font(.caption).foregroundStyle(.secondary)
                         HStack(spacing: 16) {
-                            Moin.SkeletonNode(active: true)
-                            Moin.SkeletonNode(active: true) {
+                            Moin.SkeletonNode()
+                            Moin.SkeletonNode {
                                 Circle()
                                     .fill(Color.blue)
                                     .frame(width: 40, height: 40)
@@ -249,35 +241,37 @@ struct SkeletonExamples: View {
             code: {
                 """
                 // \(tr("skeleton.avatar_element"))
-                Moin.SkeletonAvatar(active: true)
-                Moin.SkeletonAvatar(shape: .square, active: true)
-                Moin.SkeletonAvatar(size: .large, active: true)
-                Moin.SkeletonAvatar(size: .small, active: true)
-                Moin.SkeletonAvatar(size: 48, active: true)  // 自定义尺寸
+                Moin.SkeletonAvatar(shape: .circle)
+                Moin.SkeletonAvatar(shape: .square)
+                Moin.SkeletonAvatar(size: .large)
+                Moin.SkeletonAvatar(size: .small)
+                Moin.SkeletonAvatar(size: 48)
 
                 // \(tr("skeleton.button_element"))
-                Moin.SkeletonButton(active: true)
-                Moin.SkeletonButton(shape: .circle, active: true)
-                Moin.SkeletonButton(shape: .round, active: true)
-                Moin.SkeletonButton(shape: .square, active: true)
-                Moin.SkeletonButton(size: .small, active: true)
-                Moin.SkeletonButton(size: .large, active: true)
-                Moin.SkeletonButton(block: true, active: true)
+                Moin.SkeletonButton(shape: .default)
+                Moin.SkeletonButton(shape: .circle)
+                Moin.SkeletonButton(shape: .round)
+                Moin.SkeletonButton(shape: .square)
+                Moin.SkeletonButton(size: .small)
+                Moin.SkeletonButton(size: .large)
+                Moin.SkeletonButton(block: true)
 
                 // \(tr("skeleton.input_element"))
-                Moin.SkeletonInput(active: true)
-                Moin.SkeletonInput(size: .small, active: true)
-                Moin.SkeletonInput(size: .large, active: true)
-                Moin.SkeletonInput(block: true, active: true)
+                Moin.SkeletonInput()
+                Moin.SkeletonInput(size: .small)
+                Moin.SkeletonInput(size: .large)
+                Moin.SkeletonInput(block: true)
 
                 // \(tr("skeleton.image_element"))
-                Moin.SkeletonImage(active: true)
-                Moin.SkeletonImage(width: 120, height: 80, active: true)
+                Moin.SkeletonImage()
+                Moin.SkeletonImage(width: 120, height: 80)
 
                 // \(tr("skeleton.node_element"))
-                Moin.SkeletonNode(active: true)
-                Moin.SkeletonNode(active: true) {
-                    Circle().fill(Color.blue).frame(width: 40, height: 40)
+                Moin.SkeletonNode()
+                Moin.SkeletonNode {
+                    Circle()
+                        .fill(Color.blue)
+                        .frame(width: 40, height: 40)
                 }
                 """
             }
@@ -308,7 +302,6 @@ struct SkeletonExamples: View {
                             Spacer()
                         }
                     }
-                    .frame(width: 350)
                 }
             },
             code: {
