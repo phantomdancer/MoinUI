@@ -107,7 +107,8 @@ Button ✅, Typography ✅, Divider ✅, Space ✅, Tag ✅, Badge ✅, Avatar �
   - Tag.Checkable, Badge.Ribbon, Avatar.Group, Space.Compact
   - Spin.Indicator, Button.Loading, Checkbox.Group
   - Radio.Group, Radio.GroupView
-- Demo 中禁止使用下划线开头的内部类型（如 `_Tag`）
+- **全库禁止**使用下划线开头的内部类型（如 `_Tag`），仅 Factory 内部创建时例外
+- 库内部组件间引用也应使用 `Moin.Component` 形式（如 RadioGroup 中用 `Moin.Radio`）
 
 下一批: Rate
 

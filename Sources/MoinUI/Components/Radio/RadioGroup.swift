@@ -152,7 +152,7 @@ public struct _RadioGroup<Value: Hashable>: View {
 
         return layout {
             ForEach(options) { option in
-                _Radio(
+                Moin.Radio(
                     checked: Binding(
                         get: { value == option.value },
                         set: { isChecked in
@@ -258,7 +258,7 @@ public struct _RadioGroupView<Item: Identifiable, SelectionValue: Hashable, Cont
         layout {
             ForEach(data) { item in
                 let itemValue = item[keyPath: valuePath]
-                _Radio(
+                Moin.Radio(
                     checked: Binding(
                         get: { value == itemValue },
                         set: { isChecked in

@@ -119,7 +119,7 @@ struct _AvatarGroupContainer: _VariadicView_MultiViewRoot {
             // 如果有溢出，显示 +N
             if hasOverflow {
                 let overflowCount = count - visibleCount
-                _Avatar("+\(overflowCount)", size: size, shape: shape, gap: gap)
+                Moin.Avatar("+\(overflowCount)", size: size, shape: shape, gap: gap)
                     .overlay(
                         resolveShape(shape)
                             .stroke(borderColor, lineWidth: borderWidth)

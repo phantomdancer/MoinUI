@@ -84,7 +84,7 @@ public struct _CheckboxGroup<Value: Hashable>: View {
 
         layout {
             ForEach(options) { option in
-                _Checkbox(
+                Moin.Checkbox(
                     checked: Binding(
                         get: { selection.contains(option.value) },
                         set: { isChecked in
