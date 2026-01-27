@@ -112,8 +112,19 @@ public struct _MoinBadgeRibbonFactory {
 
 public struct _MoinAvatarFactory {
 
+    // MARK: - Nested Types
+
+    /// Moin.Avatar.Group
+    public typealias Group = _AvatarGroup
+    /// Moin.Avatar.Size
+    public typealias Size = _AvatarSize
+    /// Moin.Avatar.Shape
+    public typealias Shape = _AvatarShape
+    /// Moin.Avatar.Color
+    public typealias Color = _AvatarColor
+
     /// Moin.Avatar.Group(maxCount: 3) { ... }
-    public let Group = _MoinAvatarGroupFactory()
+    public let GroupFactory = _MoinAvatarGroupFactory()
 
     public init() {}
 
@@ -193,6 +204,15 @@ public struct _MoinAvatarGroupFactory {
 
 public struct _MoinDividerFactory {
 
+    // MARK: - Nested Types
+
+    /// Moin.Divider.Orientation
+    public typealias Orientation = _DividerOrientation
+    /// Moin.Divider.Variant
+    public typealias Variant = _DividerVariant
+    /// Moin.Divider.TitlePlacement
+    public typealias TitlePlacement = _DividerTitlePlacement
+
     public init() {}
 
     /// 无内容分割线
@@ -229,6 +249,15 @@ public struct _MoinDividerFactory {
 // MARK: - Space Factory
 
 public struct _MoinSpaceFactory {
+
+    // MARK: - Nested Types
+
+    /// Moin.Space.Size
+    public typealias Size = _SpaceSize
+    /// Moin.Space.Direction
+    public typealias Direction = _SpaceDirection
+    /// Moin.Space.Alignment
+    public typealias Alignment = _SpaceAlignment
 
     /// Moin.Space.Compact(direction: .horizontal) { ... }
     public let Compact = _MoinSpaceCompactFactory()
@@ -468,6 +497,29 @@ public struct _MoinAlertFactory {
 
 public struct _MoinProgressFactory {
 
+    // MARK: - Nested Types (Moin.Progress.Status, etc.)
+
+    /// Moin.Progress.Variant
+    public typealias Variant = _Progress.Variant
+    /// Moin.Progress.Status
+    public typealias Status = _Progress.Status
+    /// Moin.Progress.Size
+    public typealias Size = _Progress.Size
+    /// Moin.Progress.StrokeLinecap
+    public typealias StrokeLinecap = _Progress.StrokeLinecap
+    /// Moin.Progress.GapPosition
+    public typealias GapPosition = _Progress.GapPosition
+    /// Moin.Progress.GapPlacement
+    public typealias GapPlacement = _Progress.GapPlacement
+    /// Moin.Progress.SuccessProps
+    public typealias SuccessProps = _Progress.SuccessProps
+    /// Moin.Progress.GradientColor
+    public typealias GradientColor = _Progress.GradientColor
+    /// Moin.Progress.PercentPosition
+    public typealias PercentPosition = _Progress.PercentPosition
+    /// Moin.Progress.CircleStepsConfig
+    public typealias CircleStepsConfig = _Progress.CircleStepsConfig
+
     public init() {}
 
     public func callAsFunction(
@@ -561,6 +613,9 @@ public struct _MoinSwitchFactory {
 
 public struct _MoinCheckboxFactory {
 
+    /// Moin.Checkbox.Option - 选项类型
+    public typealias Option<T: Hashable> = _CheckboxOption<T>
+
     /// Moin.Checkbox.Group(selection: $selection, options: options)
     public let Group = _MoinCheckboxGroupFactory()
 
@@ -612,6 +667,9 @@ public struct _MoinCheckboxGroupFactory {
 // MARK: - Radio Factory
 
 public struct _MoinRadioFactory {
+
+    /// Moin.Radio.Option - 选项类型
+    public typealias Option<T: Hashable> = _RadioOption<T>
 
     /// Moin.Radio.Group(value: $value, options: options)
     public let Group = _MoinRadioGroupFactory()
@@ -689,6 +747,31 @@ public struct _MoinRadioGroupViewFactory {
 // MARK: - Skeleton Factory
 
 public struct _MoinSkeletonFactory {
+
+    // MARK: - Nested Types (Moin.Skeleton.Avatar, etc.)
+
+    /// Moin.Skeleton.Avatar
+    public typealias Avatar = _Skeleton.Avatar
+    /// Moin.Skeleton.Button
+    public typealias Button = _Skeleton.Button
+    /// Moin.Skeleton.Input
+    public typealias Input = _Skeleton.Input
+    /// Moin.Skeleton.Image
+    public typealias Image = _Skeleton.SkeletonImage
+    /// Moin.Skeleton.Block
+    public typealias Block = _Skeleton.Block
+    /// Moin.Skeleton.AvatarConfig
+    public typealias AvatarConfig = _Skeleton.AvatarConfig
+    /// Moin.Skeleton.TitleConfig
+    public typealias TitleConfig = _Skeleton.TitleConfig
+    /// Moin.Skeleton.ParagraphConfig
+    public typealias ParagraphConfig = _Skeleton.ParagraphConfig
+    /// Moin.Skeleton.Size
+    public typealias Size = _Skeleton.Size
+    /// Moin.Skeleton.AvatarShape
+    public typealias AvatarShape = _Skeleton.AvatarShape
+    /// Moin.Skeleton.ButtonShape
+    public typealias ButtonShape = _Skeleton.ButtonShape
 
     public init() {}
 

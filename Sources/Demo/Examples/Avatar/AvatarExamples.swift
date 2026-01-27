@@ -374,7 +374,7 @@ struct AvatarExamples: View {
                         .font(.caption)
                         .foregroundStyle(.secondary)
                     
-                    Moin.Avatar.Group(maxCount: 3) {
+                    Moin.AvatarGroup(maxCount: 3) {
                         Moin.Avatar(icon: "person")
                         Moin.Avatar("A")
                         Moin.Avatar("B", backgroundColor: .blue)
@@ -392,7 +392,7 @@ struct AvatarExamples: View {
                     Moin.Avatar(icon: "person.fill")
                 }
                 
-                Moin.Avatar.Group(maxCount: 3) {
+                Moin.AvatarGroup(maxCount: 3) {
                     Moin.Avatar(icon: "person")
                     Moin.Avatar("A")
                     Moin.Avatar("B", backgroundColor: .blue)

@@ -92,7 +92,7 @@ struct SpaceBasicDemoView: View {
     @Localized var tr
     
     var body: some View {
-        Moin.SpaceType {
+        Moin.Space {
             Moin.Button("\(tr("button.label.button")) 1", color: .primary) {}
             Moin.Button("\(tr("button.label.button")) 2", color: .primary) {}
             Moin.Button("\(tr("button.label.button")) 3", color: .primary) {}

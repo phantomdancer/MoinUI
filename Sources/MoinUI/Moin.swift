@@ -24,28 +24,27 @@ public enum Moin {
 
     // MARK: - Type Aliases
 
-    // Avatar
-    public typealias AvatarGroup = _AvatarGroup
-
     // Checkbox
     public typealias CheckboxOption<T: Hashable> = _CheckboxOption<T>
 
     // Radio
     public typealias RadioOption<T: Hashable> = _RadioOption<T>
 
+    // Avatar
+    public typealias AvatarGroup = _AvatarGroup
+
     // Space
     public typealias SpaceAlignment = _SpaceAlignment
 
-    // Progress (nested types access)
-    public typealias ProgressType = _Progress
+    // Progress
+    public typealias ProgressGapPosition = _Progress.GapPosition
 
-    // Skeleton (nested types access)
-    public typealias SkeletonType = _Skeleton
-
-    // Divider (nested types access)
-    public typealias DividerType = _Divider
-
-    // Space (nested types access)
-    public typealias SpaceType = _Space
+    // Skeleton
+    public typealias SkeletonAvatar = _Skeleton.Avatar
+    public typealias SkeletonButton = _Skeleton.Button
+    public typealias SkeletonInput = _Skeleton.Input
+    public typealias SkeletonImage = _Skeleton.SkeletonImage
+    public typealias SkeletonTitleConfig = _Skeleton.TitleConfig
+    public typealias SkeletonParagraphConfig = _Skeleton.ParagraphConfig
 }
 

@@ -155,8 +155,8 @@ struct SkeletonExamples: View {
                     Moin.Skeleton(
                         active: true,
                         avatar: nil,
-                        title: Moin.SkeletonType.TitleConfig(width: 200),
-                        paragraph: Moin.SkeletonType.ParagraphConfig(rows: 2, width: 150),
+                        title: Moin.SkeletonTitleConfig(width: 200),
+                        paragraph: Moin.SkeletonParagraphConfig(rows: 2, width: 150),
                         round: false
                     )
                 }
@@ -174,8 +174,8 @@ struct SkeletonExamples: View {
                 Moin.Skeleton(
                     active: true,
                     avatar: nil,
-                    title: Moin.SkeletonType.TitleConfig(width: 200),
-                    paragraph: Moin.SkeletonType.ParagraphConfig(rows: 2, width: 150),
+                    title: Moin.SkeletonTitleConfig(width: 200),
+                    paragraph: Moin.SkeletonParagraphConfig(rows: 2, width: 150),
                     round: false
                 )
                 """
@@ -191,49 +191,49 @@ struct SkeletonExamples: View {
                 VStack(spacing: 24) {
                     // 头像元素
                     HStack(spacing: 16) {
-                        Moin.SkeletonType.Avatar(active: true)
-                        Moin.SkeletonType.Avatar(shape: .square, active: true)
-                        Moin.SkeletonType.Avatar(size: .large, active: true)
-                        Moin.SkeletonType.Avatar(size: .small, active: true)
+                        Moin.SkeletonAvatar(active: true)
+                        Moin.SkeletonAvatar(shape: .square, active: true)
+                        Moin.SkeletonAvatar(size: .large, active: true)
+                        Moin.SkeletonAvatar(size: .small, active: true)
                     }
 
                     // 按钮元素
                     HStack(spacing: 16) {
-                        Moin.SkeletonType.Button(active: true)
-                        Moin.SkeletonType.Button(shape: .circle, active: true)
-                        Moin.SkeletonType.Button(shape: .round, active: true)
-                        Moin.SkeletonType.Button(size: .small, active: true)
+                        Moin.SkeletonButton(active: true)
+                        Moin.SkeletonButton(shape: .circle, active: true)
+                        Moin.SkeletonButton(shape: .round, active: true)
+                        Moin.SkeletonButton(size: .small, active: true)
                     }
 
                     // 输入框元素
-                    Moin.SkeletonType.Input(active: true)
+                    Moin.SkeletonInput(active: true)
                         .frame(width: 200)
 
                     // 图片元素
                     HStack(spacing: 16) {
-                        Moin.SkeletonType.SkeletonImage(active: true)
-                        Moin.SkeletonType.SkeletonImage(width: 120, height: 80, active: true)
+                        Moin.SkeletonImage(active: true)
+                        Moin.SkeletonImage(width: 120, height: 80, active: true)
                     }
                 }
             },
             code: {
                 """
                 // \(tr("skeleton.avatar_element"))
-                Moin.SkeletonType.Avatar(active: true)
-                Moin.SkeletonType.Avatar(shape: .square, active: true)
-                Moin.SkeletonType.Avatar(size: .large, active: true)
+                Moin.SkeletonAvatar(active: true)
+                Moin.SkeletonAvatar(shape: .square, active: true)
+                Moin.SkeletonAvatar(size: .large, active: true)
 
                 // \(tr("skeleton.button_element"))
-                Moin.SkeletonType.Button(active: true)
-                Moin.SkeletonType.Button(shape: .circle, active: true)
-                Moin.SkeletonType.Button(shape: .round, active: true)
+                Moin.SkeletonButton(active: true)
+                Moin.SkeletonButton(shape: .circle, active: true)
+                Moin.SkeletonButton(shape: .round, active: true)
 
                 // \(tr("skeleton.input_element"))
-                Moin.SkeletonType.Input(active: true)
+                Moin.SkeletonInput(active: true)
 
                 // \(tr("skeleton.image_element"))
-                Moin.SkeletonType.SkeletonImage(active: true)
-                Moin.SkeletonType.SkeletonImage(width: 120, height: 80, active: true)
+                Moin.SkeletonImage(active: true)
+                Moin.SkeletonImage(width: 120, height: 80, active: true)
                 """
             }
         )
