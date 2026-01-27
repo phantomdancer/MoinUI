@@ -6,9 +6,6 @@ import SwiftUI
 // MARK: - Tag Factory
 
 public struct _MoinTagFactory {
-    public typealias Color = _TagColor
-    public typealias Size = _TagSize
-    public typealias Variant = _TagVariant
 
     /// Moin.Tag.Checkable("text", isChecked: $checked)
     public let Checkable = _MoinCheckableTagFactory()
@@ -45,9 +42,6 @@ public struct _MoinCheckableTagFactory {
 // MARK: - Badge Factory
 
 public struct _MoinBadgeFactory {
-    public typealias Color = _BadgeColor
-    public typealias Size = _BadgeSize
-    public typealias Status = _BadgeStatus
 
     /// Moin.Badge.Ribbon(text: "New", content: { ... })
     public let Ribbon = _MoinBadgeRibbonFactory()
@@ -101,7 +95,6 @@ public struct _MoinBadgeFactory {
 
 /// Moin.Badge.Ribbon Factory
 public struct _MoinBadgeRibbonFactory {
-    public typealias Placement = _RibbonPlacement
 
     public init() {}
 
@@ -118,9 +111,6 @@ public struct _MoinBadgeRibbonFactory {
 // MARK: - Avatar Factory
 
 public struct _MoinAvatarFactory {
-    public typealias Size = _AvatarSize
-    public typealias Shape = _AvatarShape
-    public typealias Color = _AvatarColor
 
     /// Moin.Avatar.Group(maxCount: 3) { ... }
     public let Group = _MoinAvatarGroupFactory()
@@ -202,9 +192,6 @@ public struct _MoinAvatarGroupFactory {
 // MARK: - Divider Factory
 
 public struct _MoinDividerFactory {
-    public typealias Orientation = _DividerOrientation
-    public typealias Variant = _DividerVariant
-    public typealias TitlePlacement = _DividerTitlePlacement
 
     public init() {}
 
@@ -242,9 +229,6 @@ public struct _MoinDividerFactory {
 // MARK: - Space Factory
 
 public struct _MoinSpaceFactory {
-    public typealias Size = _SpaceSize
-    public typealias Direction = _SpaceDirection
-    public typealias Alignment = _SpaceAlignment
 
     /// Moin.Space.Compact(direction: .horizontal) { ... }
     public let Compact = _MoinSpaceCompactFactory()
@@ -313,7 +297,6 @@ public struct _MoinSpaceCompactFactory {
 // MARK: - Empty Factory
 
 public struct _MoinEmptyFactory {
-    public typealias ImageType = _Empty<EmptyView>.ImageType
 
     public init() {}
 
@@ -336,7 +319,6 @@ public struct _MoinEmptyFactory {
 // MARK: - Spin Factory
 
 public struct _MoinSpinFactory {
-    public typealias Size = _SpinSize
 
     /// Moin.Spin.Indicator(size: 24, color: .blue)
     public let Indicator = _MoinSpinIndicatorFactory()
@@ -453,7 +435,6 @@ public struct _MoinStatisticFactory {
 // MARK: - Alert Factory
 
 public struct _MoinAlertFactory {
-    public typealias AlertType = _Alert<EmptyView>.AlertType
 
     public init() {}
 
@@ -486,16 +467,6 @@ public struct _MoinAlertFactory {
 // MARK: - Progress Factory
 
 public struct _MoinProgressFactory {
-    public typealias Variant = _Progress.Variant
-    public typealias Status = _Progress.Status
-    public typealias Size = _Progress.Size
-    public typealias GapPosition = _Progress.GapPosition
-    public typealias GapPlacement = _Progress.GapPlacement
-    public typealias PercentPosition = _Progress.PercentPosition
-    public typealias StrokeLinecap = _Progress.StrokeLinecap
-    public typealias GradientColor = _Progress.GradientColor
-    public typealias SuccessProps = _Progress.SuccessProps
-    public typealias CircleStepsConfig = _Progress.CircleStepsConfig
 
     public init() {}
 
@@ -589,7 +560,6 @@ public struct _MoinSwitchFactory {
 // MARK: - Checkbox Factory
 
 public struct _MoinCheckboxFactory {
-    public typealias Option = _CheckboxOption
 
     /// Moin.Checkbox.Group(selection: $selection, options: options)
     public let Group = _MoinCheckboxGroupFactory()
@@ -642,10 +612,6 @@ public struct _MoinCheckboxGroupFactory {
 // MARK: - Radio Factory
 
 public struct _MoinRadioFactory {
-    public typealias Size = _RadioSize
-    public typealias Option = _RadioOption
-    public typealias OptionType = _RadioOptionType
-    public typealias ButtonStyle = _RadioButtonStyle
 
     /// Moin.Radio.Group(value: $value, options: options)
     public let Group = _MoinRadioGroupFactory()
@@ -723,17 +689,6 @@ public struct _MoinRadioGroupViewFactory {
 // MARK: - Skeleton Factory
 
 public struct _MoinSkeletonFactory {
-    public typealias TitleConfig = _Skeleton.TitleConfig
-    public typealias ParagraphConfig = _Skeleton.ParagraphConfig
-    public typealias AvatarConfig = _Skeleton.AvatarConfig
-    public typealias Size = _Skeleton.Size
-    public typealias AvatarShape = _Skeleton.AvatarShape
-    public typealias ButtonShape = _Skeleton.ButtonShape
-    public typealias Avatar = _Skeleton.Avatar
-    public typealias Button = _Skeleton.Button
-    public typealias Input = _Skeleton.Input
-    public typealias Image = _Skeleton.SkeletonImage
-    public typealias Block = _Skeleton.Block
 
     public init() {}
 

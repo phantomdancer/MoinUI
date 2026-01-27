@@ -790,12 +790,6 @@ public extension _Button where Label == EmptyView {
 
 /// Button 工厂，支持 Moin.Button("title") 语法
 public struct _MoinButtonFactory {
-    public typealias Color = _ButtonColor
-    public typealias Size = _ButtonSize
-    public typealias Variant = _ButtonVariant
-    public typealias Shape = _ButtonShape
-    public typealias IconPlacement = _ButtonIconPlacement
-    public typealias Group = _ButtonGroup
 
     /// Moin.Button.Loading(true, icon: "face.smiling")
     public let Loading = _MoinButtonLoadingFactory()
