@@ -130,6 +130,7 @@ struct SkeletonAPIView: View {
                     Moin.Skeleton(active: true)
                 }
             }
+            .frame(maxWidth: 500, alignment: .leading)
         } code: {
             """
             Moin.Skeleton(active: false)
@@ -153,6 +154,7 @@ struct SkeletonAPIView: View {
                 Moin.Skeleton(avatar: true)
                     .frame(width: 300)
             }
+            .frame(maxWidth: 400, alignment: .leading)
         } code: {
             """
             Moin.Skeleton(avatar: false)
@@ -176,6 +178,7 @@ struct SkeletonAPIView: View {
                 Moin.Skeleton(title: false)
                     .frame(width: 300)
             }
+            .frame(maxWidth: 400, alignment: .leading)
         } code: {
             """
             Moin.Skeleton(title: true)
@@ -199,6 +202,7 @@ struct SkeletonAPIView: View {
                 Moin.Skeleton(title: true, paragraph: false)
                     .frame(width: 300)
             }
+            .frame(maxWidth: 400, alignment: .leading)
         } code: {
             """
             Moin.Skeleton(paragraph: true)
@@ -222,6 +226,7 @@ struct SkeletonAPIView: View {
                 Moin.Skeleton(round: true)
                     .frame(width: 300)
             }
+            .frame(maxWidth: 400, alignment: .leading)
         } code: {
             """
             Moin.Skeleton(round: false)
@@ -277,6 +282,7 @@ struct SkeletonAPIView: View {
                 Moin.SkeletonAvatar(size: .large)
                 Moin.SkeletonAvatar(size: 48)
             }
+            .frame(maxWidth: 400, alignment: .leading)
         } code: {
             """
             Moin.SkeletonAvatar(size: .small)
@@ -351,6 +357,7 @@ struct SkeletonAPIView: View {
                 Moin.SkeletonButton(size: .default)
                 Moin.SkeletonButton(size: .large)
             }
+            .frame(maxWidth: 400, alignment: .leading)
         } code: {
             """
             Moin.SkeletonButton(size: .small)
@@ -375,6 +382,7 @@ struct SkeletonAPIView: View {
                 Moin.SkeletonButton(shape: .round)
                 Moin.SkeletonButton(shape: .square)
             }
+            .frame(maxWidth: 400, alignment: .leading)
         } code: {
             """
             Moin.SkeletonButton(shape: .default)
@@ -474,6 +482,7 @@ struct SkeletonAPIView: View {
                 Moin.SkeletonInput(block: true)
                     .frame(width: 200)
             }
+            .frame(maxWidth: 400, alignment: .leading)
         } code: {
             """
             Moin.SkeletonInput(block: false)
@@ -600,6 +609,7 @@ struct SkeletonAPIView: View {
                         .frame(width: 40, height: 40)
                 }
             }
+            .frame(maxWidth: 400, alignment: .leading)
         } code: {
             """
             Moin.SkeletonNode(active: false)
@@ -634,6 +644,7 @@ struct SkeletonAPIView: View {
                         .cornerRadius(8)
                 }
             }
+            .frame(maxWidth: 400, alignment: .leading)
         } code: {
             """
             Moin.SkeletonNode()
