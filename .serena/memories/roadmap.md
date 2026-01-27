@@ -102,13 +102,22 @@ Button ✅, Typography ✅, Divider ✅, Space ✅, Tag ✅, Badge ✅, Avatar �
 ### 架构重构 (2026-01-27)
 - ✅ 全部组件采用 Factory 模式：`Moin.Component("title")` 直接调用
 - 模式: `struct _MoinComponentFactory` + `callAsFunction` 方法
-- 类型访问: `Moin.Component.Size`, `Moin.Component.Color` 等 (typealias)
 - 子组件: `Moin.Component.SubComponent(...)` (实例属性 Factory)
   - Tag.Checkable, Badge.Ribbon, Avatar.Group, Space.Compact
   - Spin.Indicator, Button.Loading, Checkbox.Group
   - Radio.Group, Radio.GroupView
-- **全库禁止**使用下划线开头的内部类型（如 `_Tag`），仅 Factory 内部创建时例外
-- 库内部组件间引用也应使用 `Moin.Component` 形式（如 RadioGroup 中用 `Moin.Radio`）
+
+#### API 设计原则（与 Ant Design 一致）
+- **参数传递**: 用户通过简写枚举传参，如 `Moin.Avatar("A", size: .large, shape: .circle)`
+- **不暴露 typealias**: 移除 `Moin.Component.Size` 等 typealias，避免类型污染
+- **下划线约定**: `_Component` 类型保持 public（Factory 参数需要），但下划线前缀表示"不推荐直接使用"
+- **@_spi 不适用**: 因 Factory 参数/返回值使用下划线类型，无法应用 SPI 隐藏
+
+#### 内部类型访问控制
+- 纯内部辅助类型改为 `private` 或 `internal`：
+  - `_AvatarGroupContainer`, `_AnyShape`, `_SpinDot`, `_AvatarTextView` (private)
+  - `_AvatarAsyncImage`, `_RadioButton`, `_RadioButtonPosition` (internal)
+- 需要作为 Factory 参数/返回值的类型保持 `public`
 
 下一批: Rate
 
