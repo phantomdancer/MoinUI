@@ -8,7 +8,7 @@ struct SwitchAPIView: View {
         [
             DocSidebarSection(
                 title: tr("api.button.section.common"),
-                items: [.init(id: "isOn"), .init(id: "loading"), .init(id: "disabled"), .init(id: "checkedChildren"), .init(id: "unCheckedChildren"), .init(id: "size"), .init(id: "onChange")],
+                items: [.init(id: "checked"), .init(id: "loading"), .init(id: "disabled"), .init(id: "checkedChildren"), .init(id: "unCheckedChildren"), .init(id: "size"), .init(id: "onChange")],
                 sectionId: "api"
             )
         ]
@@ -30,7 +30,7 @@ struct SwitchAPIView: View {
     @ViewBuilder
     private func cardForItem(_ item: String) -> some View {
         switch item {
-        case "isOn": isOnCard
+        case "checked": checkedCard
         case "loading": loadingCard
         case "disabled": disabledCard
         case "checkedChildren": checkedChildrenCard
@@ -46,18 +46,18 @@ struct SwitchAPIView: View {
     @State private var isOnCheck1 = true
     @State private var isOnCheck2 = true
     
-    private var isOnCard: some View {
+    private var checkedCard: some View {
         PropertyCard(
-            name: "isOn",
+            name: "checked",
             type: "Binding<Bool>",
             defaultValue: "-",
-            description: tr("api.switch.isOn"),
+            description: tr("api.switch.checked"),
             sectionId: "api"
         ) {
-            Moin.Switch(isOn: $isOnCheck1)
+            Moin.Switch(checked: $isOnCheck1)
         } code: {
             """
-            Moin.Switch(isOn: $isOn)
+            Moin.Switch(checked: $checked)
             """
         }
     }
@@ -70,10 +70,10 @@ struct SwitchAPIView: View {
             description: tr("api.switch.loading"),
             sectionId: "api"
         ) {
-            Moin.Switch(isOn: .constant(true), loading: true)
+            Moin.Switch(checked: .constant(true), loading: true)
         } code: {
             """
-            Moin.Switch(isOn: $isOn, loading: true)
+            Moin.Switch(checked: $isOn, loading: true)
             """
         }
     }
@@ -87,13 +87,13 @@ struct SwitchAPIView: View {
             sectionId: "api"
         ) {
             HStack {
-                Moin.Switch(isOn: .constant(true), disabled: true)
-                Moin.Switch(isOn: .constant(false), disabled: true)
+                Moin.Switch(checked: .constant(true), disabled: true)
+                Moin.Switch(checked: .constant(false), disabled: true)
             }
         } code: {
             """
-            Moin.Switch(isOn: .constant(true), disabled: true)
-            Moin.Switch(isOn: .constant(false), disabled: true)
+            Moin.Switch(checked: .constant(true), disabled: true)
+            Moin.Switch(checked: .constant(false), disabled: true)
             """
         }
     }
@@ -108,20 +108,20 @@ struct SwitchAPIView: View {
         ) {
             VStack(spacing: 16) {
                 // String overload
-                Moin.Switch(isOn: $isOnCheck2, checkedText: "开启", uncheckedText: "关闭")
+                Moin.Switch(checked: $isOnCheck2, checkedText: "开启", uncheckedText: "关闭")
                 
                 // ViewBuilder overload
                 Moin.Switch(
-                    isOn: $isOnCheck2, 
+                    checked: $isOnCheck2, 
                     checkedChildren: { Text("ON") }, 
                     unCheckedChildren: { Text("OFF") }
                 )
             }
         } code: {
             """
-            Moin.Switch(isOn: $isOn, checkedText: "开启", uncheckedText: "关闭")
+            Moin.Switch(checked: $isOn, checkedText: "开启", uncheckedText: "关闭")
             
-            Moin.Switch(isOn: $isOn) {
+            Moin.Switch(checked: $isOn) {
                 Text("ON")
             } unCheckedChildren: {
                 Text("OFF")
@@ -139,19 +139,19 @@ struct SwitchAPIView: View {
             sectionId: "api"
         ) {
             VStack(spacing: 16) {
-                 Moin.Switch(isOn: $isOnCheck2, checkedText: "1", uncheckedText: "0")
+                 Moin.Switch(checked: $isOnCheck2, checkedText: "1", uncheckedText: "0")
                  
                  Moin.Switch(
-                    isOn: $isOnCheck2,
+                    checked: $isOnCheck2,
                     checkedChildren: { Text("YES") },
                     unCheckedChildren: { Text("NO") }
                  )
             }
         } code: {
             """
-            Moin.Switch(isOn: $isOn, checkedText: "1", uncheckedText: "0")
+            Moin.Switch(checked: $isOn, checkedText: "1", uncheckedText: "0")
             
-            Moin.Switch(isOn: $isOn) {
+            Moin.Switch(checked: $isOn) {
                 Text("YES")
             } unCheckedChildren: {
                 Text("NO")
@@ -172,13 +172,13 @@ struct SwitchAPIView: View {
             sectionId: "api"
         ) {
             HStack {
-                Moin.Switch(isOn: $isOnSize)
-                Moin.Switch(isOn: $isOnSize, size: .small)
+                Moin.Switch(checked: $isOnSize)
+                Moin.Switch(checked: $isOnSize, size: .small)
             }
         } code: {
             """
-            Moin.Switch(isOn: $isOn)
-            Moin.Switch(isOn: $isOn, size: .small)
+            Moin.Switch(checked: $isOn)
+            Moin.Switch(checked: $isOn, size: .small)
             """
         }
     }
@@ -191,12 +191,12 @@ struct SwitchAPIView: View {
             description: tr("api.switch.onChange"),
             sectionId: "api"
         ) {
-             Moin.Switch(isOn: $isOnCheck1) { value in 
+             Moin.Switch(checked: $isOnCheck1) { value in 
                 print("Switch changed: \(value)")
             }
         } code: {
             """
-            Moin.Switch(isOn: $isOn) { value in 
+            Moin.Switch(checked: $isOn) { value in 
                 print("Switch changed: \\(value)")
             }
             """

@@ -7,7 +7,7 @@ import AppKit
 public struct _CheckableTag: View {
     @Environment(\.moinToken) private var token
     @Environment(\.colorScheme) private var colorScheme
-    @Binding var isChecked: Bool
+    @Binding var checked: Bool
     @State private var isHovered = false
     @State private var isPressed = false
 
@@ -17,15 +17,15 @@ public struct _CheckableTag: View {
     /// 创建可选中标签
     /// - Parameters:
     ///   - text: 标签文本
-    ///   - isChecked: 选中状态绑定
+    ///   - checked: 选中状态绑定
     ///   - onChange: 状态变化回调
     public init(
         _ text: String,
-        isChecked: Binding<Bool>,
+        checked: Binding<Bool>,
         onChange: ((Bool) -> Void)? = nil
     ) {
         self.text = text
-        self._isChecked = isChecked
+        self._checked = checked
         self.onChange = onChange
     }
 
@@ -51,11 +51,11 @@ public struct _CheckableTag: View {
                     .onChanged { _ in isPressed = true }
                     .onEnded { _ in
                         isPressed = false
-                        isChecked.toggle()
-                        onChange?(isChecked)
+                        checked.toggle()
+                        onChange?(checked)
                     }
             )
-            .animation(.easeInOut(duration: token.motionDurationFast), value: isChecked)
+            .animation(.easeInOut(duration: token.motionDurationFast), value: checked)
             .animation(.easeInOut(duration: token.motionDurationFast), value: isHovered)
             .animation(.easeInOut(duration: token.motionDurationFast), value: isPressed)
     }
@@ -66,7 +66,7 @@ public struct _CheckableTag: View {
 
     private var foregroundColor: Color {
         // 按下或选中时：白色文字
-        if isPressed || isChecked {
+        if isPressed || checked {
             return .white
         }
         // hover 时：主色文字
@@ -79,7 +79,7 @@ public struct _CheckableTag: View {
 
     private var backgroundColor: Color {
         // 选中状态
-        if isChecked {
+        if checked {
             // 选中 + hover：主色 hover 态
             if isHovered {
                 return token.colorPrimaryHover

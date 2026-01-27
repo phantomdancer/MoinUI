@@ -59,7 +59,7 @@ struct SwitchTokenView: View {
         
         case "handleBg":
             TokenCard(name: "handleBg", type: "Color", defaultValue: "#fff", description: tr("token.switch.handleBg"), sectionId: "component") {
-                InteractiveSwitch(isOn: true, checkedText: "开启", uncheckedText: "关闭")
+                InteractiveSwitch(checked: true, checkedText: "开启", uncheckedText: "关闭")
                     .id(config.components.switch.handleBg)
             } editor: {
                 ColorPresetRow(label: "handleBg", color: binding(\.handleBg))
@@ -69,7 +69,7 @@ struct SwitchTokenView: View {
             
         case "handleShadow":
             TokenCard(name: "handleShadow", type: "Color", defaultValue: "rgba(0,35,11,0.2)", description: tr("token.switch.handleShadow"), sectionId: "component") {
-               InteractiveSwitch(isOn: true, checkedText: "开启", uncheckedText: "关闭")
+               InteractiveSwitch(checked: true, checkedText: "开启", uncheckedText: "关闭")
                    .id(config.components.switch.handleShadow)
             } editor: {
                 ColorPresetRow(label: "handleShadow", color: binding(\.handleShadow))
@@ -79,7 +79,7 @@ struct SwitchTokenView: View {
             
         case "handleSize":
             TokenCard(name: "handleSize", type: "number", defaultValue: "18", description: tr("token.switch.handleSize"), sectionId: "component") {
-               InteractiveSwitch(isOn: true, checkedText: "开启", uncheckedText: "关闭")
+               InteractiveSwitch(checked: true, checkedText: "开启", uncheckedText: "关闭")
                    .id(config.components.switch.handleSize)
             } editor: {
                 TokenValueRow(label: "handleSize", value: binding(\.handleSize), range: 10...50)
@@ -89,7 +89,7 @@ struct SwitchTokenView: View {
             
         case "handleSizeSM":
             TokenCard(name: "handleSizeSM", type: "number", defaultValue: "12", description: tr("token.switch.handleSizeSM"), sectionId: "component") {
-               InteractiveSwitch(isOn: true, size: .small, checkedText: "开启", uncheckedText: "关闭")
+               InteractiveSwitch(checked: true, size: .small, checkedText: "开启", uncheckedText: "关闭")
                    .id(config.components.switch.handleSizeSM)
             } editor: {
                 TokenValueRow(label: "handleSizeSM", value: binding(\.handleSizeSM), range: 8...40)
@@ -99,7 +99,7 @@ struct SwitchTokenView: View {
             
         case "innerMaxMargin":
             TokenCard(name: "innerMaxMargin", type: "number", defaultValue: "24", description: tr("token.switch.innerMaxMargin"), sectionId: "component") {
-               InteractiveSwitch(isOn: true, checkedText: "开启", uncheckedText: "关闭")
+               InteractiveSwitch(checked: true, checkedText: "开启", uncheckedText: "关闭")
                    .id(config.components.switch.innerMaxMargin)
             } editor: {
                 TokenValueRow(label: "innerMaxMargin", value: binding(\.innerMaxMargin), range: 10...50)
@@ -109,7 +109,7 @@ struct SwitchTokenView: View {
             
         case "innerMaxMarginSM":
              TokenCard(name: "innerMaxMarginSM", type: "number", defaultValue: "18", description: tr("token.switch.innerMaxMarginSM"), sectionId: "component") {
-               InteractiveSwitch(isOn: true, size: .small, checkedText: "开启", uncheckedText: "关闭")
+               InteractiveSwitch(checked: true, size: .small, checkedText: "开启", uncheckedText: "关闭")
                    .id(config.components.switch.innerMaxMarginSM)
             } editor: {
                  TokenValueRow(label: "innerMaxMarginSM", value: binding(\.innerMaxMarginSM), range: 10...50)
@@ -119,7 +119,7 @@ struct SwitchTokenView: View {
         
         case "innerMinMargin":
              TokenCard(name: "innerMinMargin", type: "number", defaultValue: "9", description: tr("token.switch.innerMinMargin"), sectionId: "component") {
-               InteractiveSwitch(isOn: true, checkedText: "开启", uncheckedText: "关闭")
+               InteractiveSwitch(checked: true, checkedText: "开启", uncheckedText: "关闭")
                    .id(config.components.switch.innerMinMargin)
             } editor: {
                  TokenValueRow(label: "innerMinMargin", value: binding(\.innerMinMargin), range: 0...50)
@@ -129,7 +129,7 @@ struct SwitchTokenView: View {
 
         case "innerMinMarginSM":
              TokenCard(name: "innerMinMarginSM", type: "number", defaultValue: "6", description: tr("token.switch.innerMinMarginSM"), sectionId: "component") {
-               InteractiveSwitch(isOn: true, size: .small, checkedText: "开启", uncheckedText: "关闭")
+               InteractiveSwitch(checked: true, size: .small, checkedText: "开启", uncheckedText: "关闭")
                    .id(config.components.switch.innerMinMarginSM)
             } editor: {
                  TokenValueRow(label: "innerMinMarginSM", value: binding(\.innerMinMarginSM), range: 0...50)
@@ -139,7 +139,7 @@ struct SwitchTokenView: View {
             
         case "trackHeight":
              TokenCard(name: "trackHeight", type: "number", defaultValue: "22", description: tr("token.switch.trackHeight"), sectionId: "component") {
-               InteractiveSwitch(isOn: true, checkedText: "开启", uncheckedText: "关闭")
+               InteractiveSwitch(checked: true, checkedText: "开启", uncheckedText: "关闭")
                    .id(config.components.switch.trackHeight)
             } editor: {
                  TokenValueRow(label: "trackHeight", value: binding(\.trackHeight), range: 10...50)
@@ -149,7 +149,7 @@ struct SwitchTokenView: View {
             
         case "trackHeightSM":
              TokenCard(name: "trackHeightSM", type: "number", defaultValue: "16", description: tr("token.switch.trackHeightSM"), sectionId: "component") {
-               InteractiveSwitch(isOn: true, size: .small, checkedText: "开启", uncheckedText: "关闭")
+               InteractiveSwitch(checked: true, size: .small, checkedText: "开启", uncheckedText: "关闭")
                    .id(config.components.switch.trackHeightSM)
             } editor: {
                  TokenValueRow(label: "trackHeightSM", value: binding(\.trackHeightSM), range: 10...50)
@@ -159,7 +159,7 @@ struct SwitchTokenView: View {
             
         case "trackMinWidth":
              TokenCard(name: "trackMinWidth", type: "number", defaultValue: "44", description: tr("token.switch.trackMinWidth"), sectionId: "component") {
-               InteractiveSwitch(isOn: true, checkedText: "开启", uncheckedText: "关闭")
+               InteractiveSwitch(checked: true, checkedText: "开启", uncheckedText: "关闭")
                    .id(config.components.switch.trackMinWidth)
             } editor: {
                  TokenValueRow(label: "trackMinWidth", value: binding(\.trackMinWidth), range: 20...100)
@@ -169,7 +169,7 @@ struct SwitchTokenView: View {
             
         case "trackMinWidthSM":
              TokenCard(name: "trackMinWidthSM", type: "number", defaultValue: "28", description: tr("token.switch.trackMinWidthSM"), sectionId: "component") {
-               InteractiveSwitch(isOn: true, size: .small, checkedText: "开启", uncheckedText: "关闭")
+               InteractiveSwitch(checked: true, size: .small, checkedText: "开启", uncheckedText: "关闭")
                    .id(config.components.switch.trackMinWidthSM)
             } editor: {
                  TokenValueRow(label: "trackMinWidthSM", value: binding(\.trackMinWidthSM), range: 20...100)
@@ -179,7 +179,7 @@ struct SwitchTokenView: View {
             
         case "trackPadding":
              TokenCard(name: "trackPadding", type: "number", defaultValue: "2", description: tr("token.switch.trackPadding"), sectionId: "component") {
-               InteractiveSwitch(isOn: true, checkedText: "开启", uncheckedText: "关闭")
+               InteractiveSwitch(checked: true, checkedText: "开启", uncheckedText: "关闭")
                    .id(config.components.switch.trackPadding)
             } editor: {
                  TokenValueRow(label: "trackPadding", value: binding(\.trackPadding), range: 0...10, step: 0.5)
@@ -191,7 +191,7 @@ struct SwitchTokenView: View {
         
         case "colorPrimary":
             TokenCard(name: "colorPrimary", type: "Color", defaultValue: "#1677ff", description: tr("token.switch.colorPrimary"), sectionId: "global") {
-                InteractiveSwitch(isOn: true, checkedText: "开启", uncheckedText: "关闭")
+                InteractiveSwitch(checked: true, checkedText: "开启", uncheckedText: "关闭")
                     .id(config.seed.colorPrimary)
             } editor: {
                 ColorPresetRow(label: "seed.colorPrimary", color: $config.seed.colorPrimary, onChange: { config.regenerateTokens() })
@@ -201,7 +201,7 @@ struct SwitchTokenView: View {
             
         case "colorTextQuaternary":
              TokenCard(name: "colorTextQuaternary", type: "Color", defaultValue: "rgba(0,0,0,0.25)", description: tr("token.switch.colorTextQuaternary"), sectionId: "global") {
-                InteractiveSwitch(isOn: false, checkedText: "On", uncheckedText: "Off")
+                InteractiveSwitch(checked: false, checkedText: "On", uncheckedText: "Off")
                     .id(token.colorTextQuaternary)
             } editor: {
                  ColorPresetRow(label: "token.colorTextQuaternary", color: Binding(
@@ -218,7 +218,7 @@ struct SwitchTokenView: View {
             
         case "colorTextTertiary":
              TokenCard(name: "colorTextTertiary", type: "Color", defaultValue: "rgba(0,0,0,0.45)", description: tr("token.switch.colorTextTertiary"), sectionId: "global") {
-                InteractiveSwitch(isOn: false, checkedText: "Hover (On)", uncheckedText: "Hover (Off)") // Hover state uses this for bg
+                InteractiveSwitch(checked: false, checkedText: "Hover (On)", uncheckedText: "Hover (Off)") // Hover state uses this for bg
                      .id(token.colorTextTertiary)
             } editor: {
                  ColorPresetRow(label: "token.colorTextTertiary", color: Binding(
@@ -235,7 +235,7 @@ struct SwitchTokenView: View {
             
         case "opacityLoading":
              TokenCard(name: "opacityLoading", type: "number", defaultValue: "0.65", description: tr("token.switch.opacityLoading"), sectionId: "global") {
-                InteractiveSwitch(isOn: true, loading: true, checkedText: "Loading", uncheckedText: "Loading")
+                InteractiveSwitch(checked: true, loading: true, checkedText: "Loading", uncheckedText: "Loading")
                      .id(config.components.switch.opacityLoading)
             } editor: {
                  TokenValueRow(label: "opacityLoading", value: binding(\.opacityLoading), range: 0...1, step: 0.05)
@@ -245,7 +245,7 @@ struct SwitchTokenView: View {
         
         case "motionDurationMid":
              TokenCard(name: "motionDurationMid", type: "string", defaultValue: "0.2s", description: tr("token.switch.motionDurationMid"), sectionId: "global") {
-                InteractiveSwitch(isOn: true, checkedText: "Click Me", uncheckedText: "Click Me")
+                InteractiveSwitch(checked: true, checkedText: "Click Me", uncheckedText: "Click Me")
                      .id(config.components.switch.motionDuration)
             } editor: {
                 TokenValueRow(label: "motionDuration (sec)", value: Binding(
@@ -269,15 +269,15 @@ struct SwitchTokenView: View {
 }
 
 private struct InteractiveSwitch: View {
-    @State var isOn: Bool
+    @State var checked: Bool
     var loading: Bool
     var disabled: Bool
     var size: ControlSize
     var checkedText: String?
     var uncheckedText: String?
-    
-    init(isOn: Bool = true, loading: Bool = false, disabled: Bool = false, size: ControlSize = .regular, checkedText: String? = nil, uncheckedText: String? = nil) {
-        self._isOn = State(initialValue: isOn)
+
+    init(checked: Bool = true, loading: Bool = false, disabled: Bool = false, size: ControlSize = .regular, checkedText: String? = nil, uncheckedText: String? = nil) {
+        self._checked = State(initialValue: checked)
         self.loading = loading
         self.disabled = disabled
         self.size = size
@@ -286,10 +286,10 @@ private struct InteractiveSwitch: View {
     }
 
     var body: some View {
-        if let checked = checkedText, let unchecked = uncheckedText {
-            Moin.Switch(isOn: $isOn, loading: loading, disabled: disabled, size: size, checkedText: checked, uncheckedText: unchecked)
+        if let checkedT = checkedText, let uncheckedT = uncheckedText {
+            Moin.Switch(checked: $checked, loading: loading, disabled: disabled, size: size, checkedText: checkedT, uncheckedText: uncheckedT)
         } else {
-            Moin.Switch(isOn: $isOn, loading: loading, disabled: disabled, size: size)
+            Moin.Switch(checked: $checked, loading: loading, disabled: disabled, size: size)
         }
     }
 }

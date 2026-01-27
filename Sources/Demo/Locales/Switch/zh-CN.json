@@ -9,7 +9,7 @@
   "switch.loading_desc": "标识 Switch 处于加载状态。",
   "switch.size": "两种大小",
   "switch.size_desc": "size=\"small\" 表示小号开关。",
-  "api.switch.isOn": "指定当前是否选中",
+  "api.switch.checked": "指定当前是否选中",
   "api.switch.loading": "加载中的开关",
   "api.switch.disabled": "禁用状态",
   "api.switch.checkedChildren": "选中时的内容",

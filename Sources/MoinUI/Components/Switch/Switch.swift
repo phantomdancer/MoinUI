@@ -9,7 +9,7 @@ public struct _Switch<CheckedContent: View, UncheckedContent: View>: View {
     @Environment(\.moinSwitchToken) private var token
     @Environment(\.isEnabled) private var isEnabled
 
-    @Binding var isOn: Bool
+    @Binding var checked: Bool
 
     /// 是否加载中
     var loading: Bool
@@ -30,7 +30,7 @@ public struct _Switch<CheckedContent: View, UncheckedContent: View>: View {
     var disabled: Bool
 
     public init(
-        isOn: Binding<Bool>,
+        checked: Binding<Bool>,
         loading: Bool = false,
         disabled: Bool = false,
         size: ControlSize = .regular,
@@ -38,7 +38,7 @@ public struct _Switch<CheckedContent: View, UncheckedContent: View>: View {
         @ViewBuilder unCheckedChildren: () -> UncheckedContent,
         onChange: ((Bool) -> Void)? = nil
     ) {
-        self._isOn = isOn
+        self._checked = checked
         self.loading = loading
         self.disabled = disabled
         self.size = size
@@ -56,14 +56,14 @@ public struct _Switch<CheckedContent: View, UncheckedContent: View>: View {
         let actualTrackHeight = size == .small ? token.trackHeightSM : token.trackHeight
         let actualHandleSize = size == .small ? token.handleSizeSM : token.handleSize
 
-        let styleBg = isOn ? token.colorPrimary : token.colorTextQuaternary
-        let styleBgHover = isOn ? token.colorPrimaryHover : token.colorTextTertiary
+        let styleBg = checked ? token.colorPrimary : token.colorTextQuaternary
+        let styleBgHover = checked ? token.colorPrimaryHover : token.colorTextTertiary
 
         let isEffectiveDisabled = !isEnabled || disabled
 
         let finalBg: Color
         if isEffectiveDisabled || loading {
-            finalBg = (isOn ? token.colorPrimary : token.colorTextQuaternary).opacity(token.opacityLoading)
+            finalBg = (checked ? token.colorPrimary : token.colorTextQuaternary).opacity(token.opacityLoading)
         } else {
              finalBg = isHovering ? styleBgHover : styleBg
         }
@@ -104,7 +104,7 @@ public struct _Switch<CheckedContent: View, UncheckedContent: View>: View {
                     .padding(.leading, innerMin)
                     .padding(.trailing, innerMax)
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    .opacity(isOn ? 1 : 0)
+                    .opacity(checked ? 1 : 0)
 
                 unCheckedChildren
                     .font(.system(size: 12))
@@ -113,12 +113,12 @@ public struct _Switch<CheckedContent: View, UncheckedContent: View>: View {
                     .padding(.leading, innerMax)
                     .padding(.trailing, innerMin)
                     .frame(maxWidth: .infinity, alignment: .trailing)
-                    .opacity(isOn ? 0 : 1)
+                    .opacity(checked ? 0 : 1)
             }
         )
         .overlay(
             HStack(spacing: 0) {
-                if isOn { Spacer() }
+                if checked { Spacer() }
 
                 Capsule()
                     .fill(token.handleBg)
@@ -130,7 +130,7 @@ public struct _Switch<CheckedContent: View, UncheckedContent: View>: View {
                             if loading {
                                 Circle()
                                     .trim(from: 0, to: 0.25)
-                                    .stroke((isOn ? token.colorPrimary : token.colorTextQuaternary).opacity(0.5), style: StrokeStyle(lineWidth: 1.5, lineCap: .round))
+                                    .stroke((checked ? token.colorPrimary : token.colorTextQuaternary).opacity(0.5), style: StrokeStyle(lineWidth: 1.5, lineCap: .round))
                                     .rotationEffect(Angle(degrees: 360))
                                     .frame(width: actualHandleSize * 0.7, height: actualHandleSize * 0.7)
                                     .modifier(_SwitchSpinningModifier())
@@ -138,11 +138,11 @@ public struct _Switch<CheckedContent: View, UncheckedContent: View>: View {
                         }
                     )
 
-                if !isOn { Spacer() }
+                if !checked { Spacer() }
             },
             alignment: .center
         )
-        .animation(.spring(response: token.motionDuration + 0.1, dampingFraction: 0.7, blendDuration: 0), value: isOn)
+        .animation(.spring(response: token.motionDuration + 0.1, dampingFraction: 0.7, blendDuration: 0), value: checked)
         .animation(.spring(response: token.motionDuration + 0.1, dampingFraction: 0.6, blendDuration: 0), value: isPressed)
         .animation(.easeInOut(duration: token.motionDuration), value: finalBg)
         .gesture(
@@ -155,8 +155,8 @@ public struct _Switch<CheckedContent: View, UncheckedContent: View>: View {
                 .onEnded { _ in
                     guard isEnabled && !disabled && !loading else { return }
                     isPressed = false
-                    isOn.toggle()
-                    onChange?(isOn)
+                    checked.toggle()
+                    onChange?(checked)
                 }
         )
         .contentShape(Capsule())
@@ -188,14 +188,14 @@ public struct _Switch<CheckedContent: View, UncheckedContent: View>: View {
 
 public extension _Switch where CheckedContent == EmptyView, UncheckedContent == EmptyView {
     init(
-        isOn: Binding<Bool>,
+        checked: Binding<Bool>,
         loading: Bool = false,
         disabled: Bool = false,
         size: ControlSize = .regular,
         onChange: ((Bool) -> Void)? = nil
     ) {
         self.init(
-            isOn: isOn,
+            checked: checked,
             loading: loading,
             disabled: disabled,
             size: size,
@@ -208,7 +208,7 @@ public extension _Switch where CheckedContent == EmptyView, UncheckedContent == 
 
 public extension _Switch where CheckedContent == Text, UncheckedContent == Text {
     init(
-        isOn: Binding<Bool>,
+        checked: Binding<Bool>,
         loading: Bool = false,
         disabled: Bool = false,
         size: ControlSize = .regular,
@@ -217,7 +217,7 @@ public extension _Switch where CheckedContent == Text, UncheckedContent == Text 
         onChange: ((Bool) -> Void)? = nil
     ) {
         self.init(
-            isOn: isOn,
+            checked: checked,
             loading: loading,
             disabled: disabled,
             size: size,

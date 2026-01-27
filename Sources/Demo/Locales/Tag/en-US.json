@@ -83,7 +83,7 @@
   "tag.api.icon": "SF Symbol icon name",
   "tag.api.closable": "Whether to show close button",
   "tag.api.onClose": "Close button click callback",
-  "tag.api.isChecked": "Checked state binding",
+  "tag.api.checked": "Checked state binding",
   "tag.api.onChange": "Checked state change callback",
   "tag.api.tagcolor_desc": "Tag color enumeration",
   "tag.api.color_default": "Default gray",

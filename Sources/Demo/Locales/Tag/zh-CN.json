@@ -83,7 +83,7 @@
   "tag.api.icon": "SF Symbol 图标名称",
   "tag.api.closable": "是否显示关闭按钮",
   "tag.api.onClose": "关闭按钮点击回调",
-  "tag.api.isChecked": "选中状态绑定",
+  "tag.api.checked": "选中状态绑定",
   "tag.api.onChange": "选中状态变化回调",
   "tag.api.tagcolor_desc": "标签颜色枚举",
   "tag.api.color_default": "默认灰色",

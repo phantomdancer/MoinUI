@@ -32,10 +32,10 @@ public struct _MoinCheckableTagFactory {
 
     public func callAsFunction(
         _ text: String,
-        isChecked: Binding<Bool>,
+        checked: Binding<Bool>,
         onChange: ((Bool) -> Void)? = nil
     ) -> _CheckableTag {
-        _CheckableTag(text, isChecked: isChecked, onChange: onChange)
+        _CheckableTag(text, checked: checked, onChange: onChange)
     }
 }
 
@@ -523,17 +523,17 @@ public struct _MoinSwitchFactory {
     public init() {}
 
     public func callAsFunction(
-        isOn: Binding<Bool>,
+        checked: Binding<Bool>,
         loading: Bool = false,
         disabled: Bool = false,
         size: ControlSize = .regular,
         onChange: ((Bool) -> Void)? = nil
     ) -> _Switch<EmptyView, EmptyView> {
-        _Switch(isOn: isOn, loading: loading, disabled: disabled, size: size, onChange: onChange)
+        _Switch(checked: checked, loading: loading, disabled: disabled, size: size, onChange: onChange)
     }
 
     public func callAsFunction(
-        isOn: Binding<Bool>,
+        checked: Binding<Bool>,
         loading: Bool = false,
         disabled: Bool = false,
         size: ControlSize = .regular,
@@ -541,11 +541,11 @@ public struct _MoinSwitchFactory {
         uncheckedText: String,
         onChange: ((Bool) -> Void)? = nil
     ) -> _Switch<Text, Text> {
-        _Switch(isOn: isOn, loading: loading, disabled: disabled, size: size, checkedText: checkedText, uncheckedText: uncheckedText, onChange: onChange)
+        _Switch(checked: checked, loading: loading, disabled: disabled, size: size, checkedText: checkedText, uncheckedText: uncheckedText, onChange: onChange)
     }
 
     public func callAsFunction<CheckedContent: View, UncheckedContent: View>(
-        isOn: Binding<Bool>,
+        checked: Binding<Bool>,
         loading: Bool = false,
         disabled: Bool = false,
         size: ControlSize = .regular,
@@ -553,7 +553,7 @@ public struct _MoinSwitchFactory {
         @ViewBuilder unCheckedChildren: () -> UncheckedContent,
         onChange: ((Bool) -> Void)? = nil
     ) -> _Switch<CheckedContent, UncheckedContent> {
-        _Switch(isOn: isOn, loading: loading, disabled: disabled, size: size, checkedChildren: checkedChildren, unCheckedChildren: unCheckedChildren, onChange: onChange)
+        _Switch(checked: checked, loading: loading, disabled: disabled, size: size, checkedChildren: checkedChildren, unCheckedChildren: unCheckedChildren, onChange: onChange)
     }
 }
 

@@ -13,7 +13,7 @@ struct ButtonAPIView: View {
         [
             DocSidebarSection(
                 title: tr("api.button.section.common"),
-                items: [.init(id: "action"), .init(id: "label"), .init(id: "isDisabled"), .init(id: "loading"), .init(id: "isBlock"), .init(id: "isGhost")],
+                items: [.init(id: "action"), .init(id: "label"), .init(id: "disabled"), .init(id: "loading"), .init(id: "block"), .init(id: "ghost")],
                 sectionId: "api"
             ),
             DocSidebarSection(
@@ -54,10 +54,10 @@ struct ButtonAPIView: View {
         switch item {
         case "action": actionPropertyCard
         case "label": labelPropertyCard
-        case "isDisabled": disabledPropertyCard
+        case "disabled": disabledPropertyCard
         case "loading": loadingPropertyCard
-        case "isBlock": blockPropertyCard
-        case "isGhost": ghostPropertyCard
+        case "block": blockPropertyCard
+        case "ghost": ghostPropertyCard
         case "variant": variantPropertyCard
         case "size": sizePropertyCard
         case "shape": shapePropertyCard

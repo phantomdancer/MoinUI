@@ -192,56 +192,56 @@ Moin.Button(icon: "heart.fill", shape: .circle) {}
 
     var disabledPropertyCard: some View {
         PropertyCard(
-            name: "isDisabled",
+            name: "disabled",
             type: "Bool",
             defaultValue: "false",
-            description: tr("button.api.isDisabled"),
+            description: tr("button.api.disabled"),
             sectionId: "api"
         ) {
-            Moin.Button(tr("button.label.disabled"), color: .primary, isDisabled: true) {}
+            Moin.Button(tr("button.label.disabled"), color: .primary, disabled: true) {}
         } code: {
-            "Moin.Button(\"\(tr("button.label.disabled"))\", isDisabled: true) {}"
+            "Moin.Button(\"\(tr("button.label.disabled"))\", disabled: true) {}"
         }
-        .scrollAnchor("api.isDisabled")
+        .scrollAnchor("api.disabled")
     }
 
     // MARK: - Block 属性卡片
 
     var blockPropertyCard: some View {
         PropertyCard(
-            name: "isBlock",
+            name: "block",
             type: "Bool",
             defaultValue: "false",
-            description: tr("button.api.isBlock"),
+            description: tr("button.api.block"),
             sectionId: "api"
         ) {
-            Moin.Button(tr("button.label.block"), color: .primary, isBlock: true) {}
+            Moin.Button(tr("button.label.block"), color: .primary, block: true) {}
         } code: {
-            "Moin.Button(\"\(tr("button.label.block"))\", isBlock: true) {}"
+            "Moin.Button(\"\(tr("button.label.block"))\", block: true) {}"
         }
-        .scrollAnchor("api.isBlock")
+        .scrollAnchor("api.block")
     }
 
     // MARK: - Ghost 属性卡片
 
     var ghostPropertyCard: some View {
         PropertyCard(
-            name: "isGhost",
+            name: "ghost",
             type: "Bool",
             defaultValue: "false",
-            description: tr("button.api.isGhost"),
+            description: tr("button.api.ghost"),
             sectionId: "api"
         ) {
             ZStack {
                 Color(white: 0.8)
                     .frame(height: 60)
                     .cornerRadius(8)
-                Moin.Button(tr("button.label.button"), color: .primary, isGhost: true) {}
+                Moin.Button(tr("button.label.button"), color: .primary, ghost: true) {}
             }
         } code: {
-            "Moin.Button(\"\(tr("button.label.button"))\", isGhost: true) {}"
+            "Moin.Button(\"\(tr("button.label.button"))\", ghost: true) {}"
         }
-        .scrollAnchor("api.isGhost")
+        .scrollAnchor("api.ghost")
     }
 
     // MARK: - IconPlacement 属性卡片

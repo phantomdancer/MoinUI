@@ -178,7 +178,7 @@ struct AlertExamples: View {
                 ) {
                     Moin.Space(size: .small, direction: .vertical) {
                         Moin.Button(tr("alert.demo.action.accept"), color: .primary, size: .small)
-                        Moin.Button(tr("alert.demo.action.decline"), color: .danger, size: .small, isGhost: true)
+                        Moin.Button(tr("alert.demo.action.decline"), color: .danger, size: .small, ghost: true)
                     }
                 }
             }

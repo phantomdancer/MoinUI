@@ -9,7 +9,7 @@
   "switch.loading_desc": "Indicates loading state of Switch.",
   "switch.size": "Two sizes",
   "switch.size_desc": "size=\"small\" stands for small switch.",
-  "api.switch.isOn": "Determine whether the Switch is checked",
+  "api.switch.checked": "Determine whether the Switch is checked",
   "api.switch.loading": "Loading state of switch",
   "api.switch.disabled": "Disable switch",
   "api.switch.checkedChildren": "The content to be shown when the state is checked",

@@ -472,7 +472,7 @@ extension ButtonTokenView {
             description: tr("api.global_token.colorTextDisabled"),
             sectionId: "global"
         ) {
-             Moin.Button(tr("button.label.disabled"), isDisabled: true) {}
+             Moin.Button(tr("button.label.disabled"), disabled: true) {}
         } code: {
             "// Derived from colorTextBase"
         }

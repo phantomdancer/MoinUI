@@ -221,9 +221,9 @@ public struct _Button<Label: View>: View {
     private let variant: _ButtonVariant
     private let shape: _ButtonShape
     private let loadingConfig: _ButtonLoading
-    private let isDisabled: Bool
-    private let isBlock: Bool
-    private let isGhost: Bool
+    private let disabled: Bool
+    private let block: Bool
+    private let ghost: Bool
     private let icon: String?
     private let iconPlacement: _ButtonIconPlacement
     private let href: URL?
@@ -249,9 +249,9 @@ public struct _Button<Label: View>: View {
         icon: String? = nil,
         iconPlacement: _ButtonIconPlacement = .start,
         loading: _ButtonLoading = false,
-        isDisabled: Bool = false,
-        isBlock: Bool = false,
-        isGhost: Bool = false,
+        disabled: Bool = false,
+        block: Bool = false,
+        ghost: Bool = false,
         href: URL? = nil,
         gradient: LinearGradient? = nil,
         fontColor: SwiftUI.Color? = nil,
@@ -265,9 +265,9 @@ public struct _Button<Label: View>: View {
             self.icon = icon
             self.iconPlacement = iconPlacement
             self.loadingConfig = loading
-            self.isDisabled = isDisabled
-            self.isBlock = isBlock
-            self.isGhost = isGhost
+            self.disabled = disabled
+            self.block = block
+            self.ghost = ghost
             self.href = href
             self.gradient = gradient
             self.fontColor = fontColor
@@ -280,7 +280,7 @@ public struct _Button<Label: View>: View {
         private var isLoading: Bool { showLoading }
 
         private var effectiveDisabled: Bool {
-            isDisabled || isLoading
+            disabled || isLoading
         }
 
         private var shouldApplyDisabledOpacity: Bool {
@@ -372,7 +372,7 @@ public struct _Button<Label: View>: View {
             .font(.system(size: fontSize, weight: buttonToken.fontWeight))
             .foregroundColor(foregroundColor)
             .frame(height: verticalPadding > 0 ? nil : controlHeight)
-            .frame(maxWidth: isBlock || compactContext.fillWidth ? .infinity : nil)
+            .frame(maxWidth: block || compactContext.fillWidth ? .infinity : nil)
             .frame(minWidth: shape == .circle ? controlHeight : nil)
             .padding(.vertical, verticalPadding > 0 ? verticalPadding : 0)
             .padding(.horizontal, shape == .circle ? 0 : horizontalPadding)
@@ -480,7 +480,7 @@ public struct _Button<Label: View>: View {
         /// 阴影颜色
         private var shadowColor: SwiftUI.Color {
             // 只有 solid variant 且非 ghost/disabled 时显示阴影
-            guard variant == .solid && !isGhost && !effectiveDisabled else {
+            guard variant == .solid && !ghost && !effectiveDisabled else {
                 return .clear
             }
             // 有色按钮使用主题色阴影，default 使用灰色
@@ -492,13 +492,13 @@ public struct _Button<Label: View>: View {
 
         /// 阴影半径
         private var shadowRadius: CGFloat {
-            guard variant == .solid && !isGhost && !effectiveDisabled else { return 0 }
+            guard variant == .solid && !ghost && !effectiveDisabled else { return 0 }
             return isPressed ? 1 : token.shadowRadius1
         }
 
         /// 阴影 Y 偏移
         private var shadowY: CGFloat {
-            guard variant == .solid && !isGhost && !effectiveDisabled else { return 0 }
+            guard variant == .solid && !ghost && !effectiveDisabled else { return 0 }
             return isPressed ? 0 : 1
         }
 
@@ -536,7 +536,7 @@ public struct _Button<Label: View>: View {
 
         private var backgroundColor: SwiftUI.Color {
             // Ghost 模式背景透明，hover 时白色半透明
-            if isGhost {
+            if ghost {
                 if isPressed { return SwiftUI.Color.white.opacity(0.25) }
                 else if isHovered { return SwiftUI.Color.white.opacity(0.15) }
                 return .clear // WAS: ghostBg
@@ -593,7 +593,7 @@ public struct _Button<Label: View>: View {
             }
 
             // Ghost 模式：default 用白色，有色用原色
-            if isGhost {
+            if ghost {
                 if effectiveDisabled { return SwiftUI.Color.white.opacity(0.5) } // WAS: defaultGhostColor
                 return color.isDefault ?  SwiftUI.Color.white : baseColor // WAS: defaultGhostColor
             }
@@ -644,7 +644,7 @@ public struct _Button<Label: View>: View {
 
         private var borderColor: SwiftUI.Color {
             // Ghost 模式：default 用白色边框，有色用原色边框
-            if isGhost {
+            if ghost {
                 if effectiveDisabled { return SwiftUI.Color.white.opacity(0.3) } // WAS: defaultGhostBorderColor
                 return color.isDefault ? SwiftUI.Color.white : baseColor // WAS: defaultGhostBorderColor
             }
@@ -725,9 +725,9 @@ public extension _Button where Label == Text {
         icon: String? = nil,
         iconPlacement: _ButtonIconPlacement = .start,
         loading: _ButtonLoading = false,
-        isDisabled: Bool = false,
-        isBlock: Bool = false,
-        isGhost: Bool = false,
+        disabled: Bool = false,
+        block: Bool = false,
+        ghost: Bool = false,
         href: URL? = nil,
         gradient: LinearGradient? = nil,
         fontColor: SwiftUI.Color? = nil,
@@ -741,9 +741,9 @@ public extension _Button where Label == Text {
             icon: icon,
             iconPlacement: iconPlacement,
             loading: loading,
-            isDisabled: isDisabled,
-            isBlock: isBlock,
-            isGhost: isGhost,
+            disabled: disabled,
+            block: block,
+            ghost: ghost,
             href: href,
             gradient: gradient,
             fontColor: fontColor,
@@ -762,7 +762,7 @@ public extension _Button where Label == EmptyView {
         variant: _ButtonVariant = .solid,
         shape: _ButtonShape = .circle,
         loading: _ButtonLoading = false,
-        isDisabled: Bool = false,
+        disabled: Bool = false,
         action: (() -> Void)? = nil
     ) {
         self.init(
@@ -773,9 +773,9 @@ public extension _Button where Label == EmptyView {
             icon: iconName,
             iconPlacement: .start,
             loading: loading,
-            isDisabled: isDisabled,
-            isBlock: false,
-            isGhost: false,
+            disabled: disabled,
+            block: false,
+            ghost: false,
             href: nil,
             gradient: nil,
             fontColor: nil,
@@ -806,9 +806,9 @@ public struct _MoinButtonFactory {
         icon: String? = nil,
         iconPlacement: _ButtonIconPlacement = .start,
         loading: _ButtonLoading = false,
-        isDisabled: Bool = false,
-        isBlock: Bool = false,
-        isGhost: Bool = false,
+        disabled: Bool = false,
+        block: Bool = false,
+        ghost: Bool = false,
         href: URL? = nil,
         gradient: LinearGradient? = nil,
         fontColor: SwiftUI.Color? = nil,
@@ -823,9 +823,9 @@ public struct _MoinButtonFactory {
             icon: icon,
             iconPlacement: iconPlacement,
             loading: loading,
-            isDisabled: isDisabled,
-            isBlock: isBlock,
-            isGhost: isGhost,
+            disabled: disabled,
+            block: block,
+            ghost: ghost,
             href: href,
             gradient: gradient,
             fontColor: fontColor,
@@ -841,7 +841,7 @@ public struct _MoinButtonFactory {
         variant: _ButtonVariant = .solid,
         shape: _ButtonShape = .circle,
         loading: _ButtonLoading = false,
-        isDisabled: Bool = false,
+        disabled: Bool = false,
         action: (() -> Void)? = nil
     ) -> _Button<EmptyView> {
         _Button(
@@ -851,7 +851,7 @@ public struct _MoinButtonFactory {
             variant: variant,
             shape: shape,
             loading: loading,
-            isDisabled: isDisabled,
+            disabled: disabled,
             action: action
         )
     }
@@ -865,9 +865,9 @@ public struct _MoinButtonFactory {
         icon: String? = nil,
         iconPlacement: _ButtonIconPlacement = .start,
         loading: _ButtonLoading = false,
-        isDisabled: Bool = false,
-        isBlock: Bool = false,
-        isGhost: Bool = false,
+        disabled: Bool = false,
+        block: Bool = false,
+        ghost: Bool = false,
         href: URL? = nil,
         gradient: LinearGradient? = nil,
         fontColor: SwiftUI.Color? = nil,
@@ -882,9 +882,9 @@ public struct _MoinButtonFactory {
             icon: icon,
             iconPlacement: iconPlacement,
             loading: loading,
-            isDisabled: isDisabled,
-            isBlock: isBlock,
-            isGhost: isGhost,
+            disabled: disabled,
+            block: block,
+            ghost: ghost,
             href: href,
             gradient: gradient,
             fontColor: fontColor,

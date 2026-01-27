@@ -15,7 +15,7 @@ final class SwitchTests: XCTestCase {
     }
     
     func testSwitchDefaults() {
-        let switchView = _Switch(isOn: .constant(true))
+        let switchView = _Switch(checked: .constant(true))
         // Verify initialization doesn't crash
         XCTAssertNotNil(switchView)
     }

@@ -96,13 +96,13 @@ struct SwitchExamples: View {
             title: tr("switch.basic"),
             description: tr("switch.basic_desc"),
             content: {
-                Moin.Switch(isOn: $isOn1, onChange: { value in
+                Moin.Switch(checked: $isOn1, onChange: { value in
                     print("Switch 1 changed: \(value)")
                 })
             },
             code: {
                 """
-                Moin.Switch(isOn: $isOn, onChange: { value in
+                Moin.Switch(checked: $isOn, onChange: { value in
                     print("Switch changed: \\(value)")
                 })
                 """
@@ -116,16 +116,16 @@ struct SwitchExamples: View {
             description: tr("switch.disabled_desc"),
             content: {
                 HStack(spacing: 20) {
-                    Moin.Switch(isOn: .constant(true), disabled: true)
+                    Moin.Switch(checked: .constant(true), disabled: true)
                     
-                    Moin.Switch(isOn: .constant(false), disabled: true)
+                    Moin.Switch(checked: .constant(false), disabled: true)
                 }
             },
             code: {
                 """
-                Moin.Switch(isOn: .constant(true), disabled: true)
+                Moin.Switch(checked: .constant(true), disabled: true)
                 
-                Moin.Switch(isOn: .constant(false), disabled: true)
+                Moin.Switch(checked: .constant(false), disabled: true)
                 """
             }
         )
@@ -138,25 +138,25 @@ struct SwitchExamples: View {
             content: {
                 HStack(spacing: 16) {
                     Moin.Switch(
-                        isOn: $isOn2,
+                        checked: $isOn2,
                         checkedText: "开启",
                         uncheckedText: "关闭"
                     )
                     
                     Moin.Switch(
-                        isOn: $isOn3,
+                        checked: $isOn3,
                         checkedText: "1",
                         uncheckedText: "0"
                     )
                     
                     Moin.Switch(
-                        isOn: $isOn2,
+                        checked: $isOn2,
                         checkedChildren: { Image(systemName: "checkmark") },
                         unCheckedChildren: { Image(systemName: "xmark") }
                     )
                     
                     Moin.Switch(
-                        isOn: $isOn3,
+                        checked: $isOn3,
                         checkedChildren: { Text("YES") },
                         unCheckedChildren: { Text("NO") }
                     )
@@ -164,10 +164,10 @@ struct SwitchExamples: View {
             },
             code: {
                 """
-                Moin.Switch(isOn: $isOn, checkedText: "开启", uncheckedText: "关闭")
-                Moin.Switch(isOn: $isOn, checkedText: "1", uncheckedText: "0")
-                Moin.Switch(isOn: $isOn, checkedChildren: { Image(systemName: "checkmark") }, unCheckedChildren: { Image(systemName: "xmark") })
-                Moin.Switch(isOn: $isOn, checkedChildren: { Text("YES") }, unCheckedChildren: { Text("NO") })
+                Moin.Switch(checked: $isOn, checkedText: "开启", uncheckedText: "关闭")
+                Moin.Switch(checked: $isOn, checkedText: "1", uncheckedText: "0")
+                Moin.Switch(checked: $isOn, checkedChildren: { Image(systemName: "checkmark") }, unCheckedChildren: { Image(systemName: "xmark") })
+                Moin.Switch(checked: $isOn, checkedChildren: { Text("YES") }, unCheckedChildren: { Text("NO") })
                 """
             }
         )
@@ -179,14 +179,14 @@ struct SwitchExamples: View {
             description: tr("switch.loading_desc"),
             content: {
                 HStack(spacing: 16) {
-                    Moin.Switch(isOn: .constant(true), loading: true)
-                    Moin.Switch(isOn: .constant(true), loading: true, size: .small)
+                    Moin.Switch(checked: .constant(true), loading: true)
+                    Moin.Switch(checked: .constant(true), loading: true, size: .small)
                 }
             },
             code: {
                 """
-                Moin.Switch(isOn: .constant(true), loading: true)
-                Moin.Switch(isOn: .constant(true), loading: true, size: .small)
+                Moin.Switch(checked: .constant(true), loading: true)
+                Moin.Switch(checked: .constant(true), loading: true, size: .small)
                 """
             }
         )
@@ -198,14 +198,14 @@ struct SwitchExamples: View {
             description: tr("switch.size_desc"),
             content: {
                 HStack(spacing: 16) {
-                    Moin.Switch(isOn: $isOn4)
-                    Moin.Switch(isOn: $isOn4, size: .small)
+                    Moin.Switch(checked: $isOn4)
+                    Moin.Switch(checked: $isOn4, size: .small)
                 }
             },
             code: {
                 """
-                Moin.Switch(isOn: $isOn)
-                Moin.Switch(isOn: $isOn, size: .small)
+                Moin.Switch(checked: $isOn)
+                Moin.Switch(checked: $isOn, size: .small)
                 """
             }
         )

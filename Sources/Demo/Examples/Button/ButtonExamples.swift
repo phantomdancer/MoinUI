@@ -191,19 +191,19 @@ struct ButtonExamples: View {
                 Color.gray.opacity(0.3)
                     .cornerRadius(Moin.Constants.Radius.md)
                 HStack(spacing: Moin.Constants.Spacing.md) {
-                    Moin.Button(tr("button.label.primary"), color: .primary, isGhost: true) {}
-                    Moin.Button(tr("button.label.default"), isGhost: true) {}
-                    Moin.Button(tr("button.label.dashed"), variant: .dashed, isGhost: true) {}
-                    Moin.Button(tr("button.label.danger"), color: .danger, isGhost: true) {}
+                    Moin.Button(tr("button.label.primary"), color: .primary, ghost: true) {}
+                    Moin.Button(tr("button.label.default"), ghost: true) {}
+                    Moin.Button(tr("button.label.dashed"), variant: .dashed, ghost: true) {}
+                    Moin.Button(tr("button.label.danger"), color: .danger, ghost: true) {}
                 }
                 .padding(Moin.Constants.Spacing.lg)
             }
         } code: {
             """
-            Moin.Button("\(tr("button.label.primary"))", color: .primary, isGhost: true) {}
-            Moin.Button("\(tr("button.label.default"))", isGhost: true) {}
-            Moin.Button("\(tr("button.label.dashed"))", variant: .dashed, isGhost: true) {}
-            Moin.Button("\(tr("button.label.danger"))", color: .danger, isGhost: true) {}
+            Moin.Button("\(tr("button.label.primary"))", color: .primary, ghost: true) {}
+            Moin.Button("\(tr("button.label.default"))", ghost: true) {}
+            Moin.Button("\(tr("button.label.dashed"))", variant: .dashed, ghost: true) {}
+            Moin.Button("\(tr("button.label.danger"))", color: .danger, ghost: true) {}
             """
         }
     }
@@ -438,31 +438,31 @@ struct ButtonExamples: View {
         ) {
             VStack(alignment: .leading, spacing: Moin.Constants.Spacing.md) {
                 HStack(spacing: Moin.Constants.Spacing.md) {
-                    Moin.Button(tr("button.label.primary"), color: .primary, isDisabled: true) {}
-                    Moin.Button(tr("button.label.default"), isDisabled: true) {}
-                    Moin.Button(tr("button.label.dashed"), variant: .dashed, isDisabled: true) {}
-                    Moin.Button(tr("button.label.text"), color: .primary, variant: .text, isDisabled: true) {}
-                    Moin.Button(tr("button.label.link"), color: .primary, variant: .link, isDisabled: true) {}
+                    Moin.Button(tr("button.label.primary"), color: .primary, disabled: true) {}
+                    Moin.Button(tr("button.label.default"), disabled: true) {}
+                    Moin.Button(tr("button.label.dashed"), variant: .dashed, disabled: true) {}
+                    Moin.Button(tr("button.label.text"), color: .primary, variant: .text, disabled: true) {}
+                    Moin.Button(tr("button.label.link"), color: .primary, variant: .link, disabled: true) {}
                 }
                 HStack(spacing: Moin.Constants.Spacing.md) {
-                    Moin.Button(tr("button.label.danger"), color: .danger, isDisabled: true) {}
-                    Moin.Button(tr("button.label.success"), color: .success, variant: .outlined, isDisabled: true) {}
-                    Moin.Button(tr("button.label.custom"), color: .purple, variant: .solid, isDisabled: true) {}
-                    Moin.Button(icon: "plus", color: .primary, isDisabled: true) {}
+                    Moin.Button(tr("button.label.danger"), color: .danger, disabled: true) {}
+                    Moin.Button(tr("button.label.success"), color: .success, variant: .outlined, disabled: true) {}
+                    Moin.Button(tr("button.label.custom"), color: .purple, variant: .solid, disabled: true) {}
+                    Moin.Button(icon: "plus", color: .primary, disabled: true) {}
                 }
             }
         } code: {
             """
-            Moin.Button("\(tr("button.label.primary"))", color: .primary, isDisabled: true) {}
-            Moin.Button("\(tr("button.label.default"))", isDisabled: true) {}
-            Moin.Button("\(tr("button.label.dashed"))", variant: .dashed, isDisabled: true) {}
-            Moin.Button("\(tr("button.label.text"))", color: .primary, variant: .text, isDisabled: true) {}
-            Moin.Button("\(tr("button.label.link"))", color: .primary, variant: .link, isDisabled: true) {}
+            Moin.Button("\(tr("button.label.primary"))", color: .primary, disabled: true) {}
+            Moin.Button("\(tr("button.label.default"))", disabled: true) {}
+            Moin.Button("\(tr("button.label.dashed"))", variant: .dashed, disabled: true) {}
+            Moin.Button("\(tr("button.label.text"))", color: .primary, variant: .text, disabled: true) {}
+            Moin.Button("\(tr("button.label.link"))", color: .primary, variant: .link, disabled: true) {}
 
-            Moin.Button("\(tr("button.label.danger"))", color: .danger, isDisabled: true) {}
-            Moin.Button("\(tr("button.label.success"))", color: .success, variant: .outlined, isDisabled: true) {}
-            Moin.Button("\(tr("button.label.custom"))", color: .purple, variant: .solid, isDisabled: true) {}
-            Moin.Button(icon: "plus", color: .primary, isDisabled: true) {}
+            Moin.Button("\(tr("button.label.danger"))", color: .danger, disabled: true) {}
+            Moin.Button("\(tr("button.label.success"))", color: .success, variant: .outlined, disabled: true) {}
+            Moin.Button("\(tr("button.label.custom"))", color: .purple, variant: .solid, disabled: true) {}
+            Moin.Button(icon: "plus", color: .primary, disabled: true) {}
             """
         }
     }
@@ -473,19 +473,19 @@ struct ButtonExamples: View {
             description: tr("button.block_desc")
         ) {
             VStack(spacing: Moin.Constants.Spacing.sm) {
-                Moin.Button(tr("button.label.primary"), color: .primary, isBlock: true) {}
-                Moin.Button(tr("button.label.default"), isBlock: true) {}
-                Moin.Button(tr("button.label.dashed"), variant: .dashed, isBlock: true) {}
-                Moin.Button(tr("button.label.text"), variant: .text, isBlock: true) {}
-                Moin.Button(tr("button.label.link"), variant: .link, isBlock: true) {}
+                Moin.Button(tr("button.label.primary"), color: .primary, block: true) {}
+                Moin.Button(tr("button.label.default"), block: true) {}
+                Moin.Button(tr("button.label.dashed"), variant: .dashed, block: true) {}
+                Moin.Button(tr("button.label.text"), variant: .text, block: true) {}
+                Moin.Button(tr("button.label.link"), variant: .link, block: true) {}
             }
         } code: {
             """
-            Moin.Button("\(tr("button.label.primary"))", color: .primary, isBlock: true) {}
-            Moin.Button("\(tr("button.label.default"))", isBlock: true) {}
-            Moin.Button("\(tr("button.label.dashed"))", variant: .dashed, isBlock: true) {}
-            Moin.Button("\(tr("button.label.text"))", variant: .text, isBlock: true) {}
-            Moin.Button("\(tr("button.label.link"))", variant: .link, isBlock: true) {}
+            Moin.Button("\(tr("button.label.primary"))", color: .primary, block: true) {}
+            Moin.Button("\(tr("button.label.default"))", block: true) {}
+            Moin.Button("\(tr("button.label.dashed"))", variant: .dashed, block: true) {}
+            Moin.Button("\(tr("button.label.text"))", variant: .text, block: true) {}
+            Moin.Button("\(tr("button.label.link"))", variant: .link, block: true) {}
             """
         }
     }

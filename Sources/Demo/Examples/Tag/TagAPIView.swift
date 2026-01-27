@@ -216,7 +216,7 @@ struct TagAPIView: View {
             let label = tr("tag.label.check_me")
             return """
             @State var checked = false
-            Moin.Tag.Checkable("\(label)", isChecked: $checked)
+            Moin.Tag.Checkable("\(label)", checked: $checked)
             """
         }
         .scrollAnchor("api.checkable")
@@ -228,6 +228,6 @@ private struct CheckableTagDemo: View {
     @State private var checked = false
     @Localized var tr
     var body: some View {
-        Moin.Tag.Checkable(tr("tag.label.check_me"), isChecked: $checked)
+        Moin.Tag.Checkable(tr("tag.label.check_me"), checked: $checked)
     }
 }

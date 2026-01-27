@@ -52,7 +52,7 @@ struct TagAPIContent: View {
                     ),
                     rows: [
                         ("text", "String", "-", tr("tag.api.text")),
-                        ("isChecked", "Binding<Bool>", "-", tr("tag.api.isChecked")),
+                        ("checked", "Binding<Bool>", "-", tr("tag.api.checked")),
                         ("onChange", "((Bool) -> Void)?", "nil", tr("tag.api.onChange")),
                     ]
                 )
