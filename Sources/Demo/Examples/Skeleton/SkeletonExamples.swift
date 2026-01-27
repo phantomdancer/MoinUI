@@ -100,11 +100,11 @@ struct SkeletonExamples: View {
             content: {
                 HStack(spacing: 24) {
                     VStack(spacing: 12) {
-                        Text(tr("skeleton.default")).font(.caption).foregroundStyle(.secondary)
+                        Text(tr("skeleton.default")).font(.subheadline).foregroundStyle(.secondary)
                         Moin.Skeleton()
                     }
                     VStack(spacing: 12) {
-                        Text(tr("skeleton.animation")).font(.caption).foregroundStyle(.secondary)
+                        Text(tr("skeleton.animation")).font(.subheadline).foregroundStyle(.secondary)
                         Moin.Skeleton(active: true)
                     }
                 }
@@ -126,20 +126,29 @@ struct SkeletonExamples: View {
             title: tr("skeleton.complex"),
             description: tr("skeleton.complex_desc"),
             content: {
-                VStack(spacing: 24) {
+                VStack(spacing: 8) {
                     // 只有段落
-                    Moin.Skeleton(title: false, paragraph: true)
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text(tr("skeleton.paragraph_only")).font(.subheadline).foregroundStyle(.secondary)
+                        Moin.Skeleton(title: false, paragraph: true)
+                    }
 
                     // 圆角模式
-                    Moin.Skeleton(avatar: true, round: true)
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text(tr("skeleton.round_mode")).font(.subheadline).foregroundStyle(.secondary)
+                        Moin.Skeleton(avatar: true, round: true)
+                    }
 
                     // 自定义段落行数
-                    Moin.Skeleton(
-                        avatar: nil,
-                        title: Moin.SkeletonTitleProps(width: 200),
-                        paragraph: Moin.SkeletonParagraphProps(rows: 2, width: 150),
-                        round: false
-                    )
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text(tr("skeleton.custom_config")).font(.subheadline).foregroundStyle(.secondary)
+                        Moin.Skeleton(
+                            avatar: nil,
+                            title: Moin.SkeletonTitleProps(width: 200),
+                            paragraph: Moin.SkeletonParagraphProps(rows: 2, width: 150),
+                            round: false
+                        )
+                    }
                 }
             },
             code: {
@@ -170,7 +179,7 @@ struct SkeletonExamples: View {
                 VStack(spacing: 24) {
                     // 头像元素
                     VStack(alignment: .leading, spacing: 8) {
-                        Text(tr("skeleton.avatar_element")).font(.caption).foregroundStyle(.secondary)
+                        Text(tr("skeleton.avatar_element")).font(.subheadline).foregroundStyle(.secondary)
                         HStack(spacing: 16) {
                             Moin.SkeletonAvatar(shape: .circle)
                             Moin.SkeletonAvatar(shape: .square)
@@ -182,7 +191,7 @@ struct SkeletonExamples: View {
 
                     // 按钮元素
                     VStack(alignment: .leading, spacing: 8) {
-                        Text(tr("skeleton.button_element")).font(.caption).foregroundStyle(.secondary)
+                        Text(tr("skeleton.button_element")).font(.subheadline).foregroundStyle(.secondary)
                         HStack(spacing: 16) {
                             Moin.SkeletonButton(shape: .default)
                             Moin.SkeletonButton(shape: .circle)
@@ -196,7 +205,7 @@ struct SkeletonExamples: View {
 
                     // 输入框元素
                     VStack(alignment: .leading, spacing: 8) {
-                        Text(tr("skeleton.input_element")).font(.caption).foregroundStyle(.secondary)
+                        Text(tr("skeleton.input_element")).font(.subheadline).foregroundStyle(.secondary)
                         HStack(spacing: 16) {
                             Moin.SkeletonInput()
                             Moin.SkeletonInput(size: .small)
@@ -207,7 +216,7 @@ struct SkeletonExamples: View {
 
                     // 图片元素
                     VStack(alignment: .leading, spacing: 8) {
-                        Text(tr("skeleton.image_element")).font(.caption).foregroundStyle(.secondary)
+                        Text(tr("skeleton.image_element")).font(.subheadline).foregroundStyle(.secondary)
                         HStack(spacing: 16) {
                             Moin.SkeletonImage()
                             Moin.SkeletonImage(width: 120, height: 80)
@@ -216,7 +225,7 @@ struct SkeletonExamples: View {
 
                     // Node 元素
                     VStack(alignment: .leading, spacing: 8) {
-                        Text(tr("skeleton.node_element")).font(.caption).foregroundStyle(.secondary)
+                        Text(tr("skeleton.node_element")).font(.subheadline).foregroundStyle(.secondary)
                         HStack(spacing: 16) {
                             Moin.SkeletonNode()
                             Moin.SkeletonNode {

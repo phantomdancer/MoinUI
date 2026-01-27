@@ -20,6 +20,7 @@
     "button_element": "Button element",
     "input_element": "Input element",
     "image_element": "Image element",
+    "node_element": "Custom Node",
     "toggle_loading": "Toggle loading",
     "user_name": "User Name",
     "user_desc": "This is user description",

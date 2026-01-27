@@ -20,6 +20,7 @@
     "button_element": "按钮元素",
     "input_element": "输入框元素",
     "image_element": "图片元素",
+    "node_element": "自定义节点",
     "toggle_loading": "切换加载",
     "user_name": "用户名称",
     "user_desc": "这是用户描述信息",
