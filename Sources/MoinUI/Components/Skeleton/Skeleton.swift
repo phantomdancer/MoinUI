@@ -12,9 +12,9 @@ public struct _Skeleton: View {
     /// 是否显示头像
     let avatar: AvatarConfig?
     /// 是否显示标题
-    let title: TitleConfig?
+    let title: TitleProps?
     /// 是否显示段落
-    let paragraph: ParagraphConfig?
+    let paragraph: ParagraphProps?
     /// 是否圆角
     let round: Bool
     /// 是否加载中（控制是否显示骨架屏）
@@ -48,8 +48,8 @@ public struct _Skeleton: View {
     public init(
         active: Bool = false,
         avatar: AvatarConfig?,
-        title: TitleConfig?,
-        paragraph: ParagraphConfig?,
+        title: TitleProps?,
+        paragraph: ParagraphProps?,
         round: Bool = false
     ) {
         self.active = active
@@ -139,7 +139,7 @@ public struct _Skeleton: View {
 
     // MARK: - Private
 
-    private func paragraphWidth(for index: Int, total: Int, config: ParagraphConfig) -> CGFloat? {
+    private func paragraphWidth(for index: Int, total: Int, config: ParagraphProps) -> CGFloat? {
         if let widths = config.widths, index < widths.count {
             return widths[index]
         }
@@ -173,21 +173,21 @@ public extension _Skeleton {
 // MARK: - _Skeleton.TitleConfig
 
 public extension _Skeleton {
-    struct TitleConfig {
+    struct TitleProps {
         public let width: CGFloat?
 
         public init(width: CGFloat? = nil) {
             self.width = width
         }
 
-        public static let `default` = TitleConfig()
+        public static let `default` = TitleProps()
     }
 }
 
 // MARK: - _Skeleton.ParagraphConfig
 
 public extension _Skeleton {
-    struct ParagraphConfig {
+    struct ParagraphProps {
         public let rows: Int?
         public let width: CGFloat?
         public let widths: [CGFloat]?
@@ -204,7 +204,7 @@ public extension _Skeleton {
             self.widths = widths
         }
 
-        public static let `default` = ParagraphConfig()
+        public static let `default` = ParagraphProps()
     }
 }
 

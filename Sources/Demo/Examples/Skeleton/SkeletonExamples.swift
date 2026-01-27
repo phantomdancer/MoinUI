@@ -155,8 +155,8 @@ struct SkeletonExamples: View {
                     Moin.Skeleton(
                         active: true,
                         avatar: nil,
-                        title: Moin.SkeletonTitleConfig(width: 200),
-                        paragraph: Moin.SkeletonParagraphConfig(rows: 2, width: 150),
+                        title: Moin.SkeletonTitleProps(width: 200),
+                        paragraph: Moin.SkeletonParagraphProps(rows: 2, width: 150),
                         round: false
                     )
                 }
@@ -174,8 +174,8 @@ struct SkeletonExamples: View {
                 Moin.Skeleton(
                     active: true,
                     avatar: nil,
-                    title: Moin.SkeletonTitleConfig(width: 200),
-                    paragraph: Moin.SkeletonParagraphConfig(rows: 2, width: 150),
+                    title: Moin.SkeletonTitleProps(width: 200),
+                    paragraph: Moin.SkeletonParagraphProps(rows: 2, width: 150),
                     round: false
                 )
                 """

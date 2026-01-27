@@ -752,9 +752,9 @@ public struct _MoinSkeletonFactory {
     /// Moin.Skeleton.AvatarConfig
     public typealias AvatarConfig = _Skeleton.AvatarConfig
     /// Moin.Skeleton.TitleConfig
-    public typealias TitleConfig = _Skeleton.TitleConfig
+    public typealias TitleConfig = _Skeleton.TitleProps
     /// Moin.Skeleton.ParagraphConfig
-    public typealias ParagraphConfig = _Skeleton.ParagraphConfig
+    public typealias ParagraphConfig = _Skeleton.ParagraphProps
     /// Moin.Skeleton.Size
     public typealias Size = _Skeleton.Size
     /// Moin.Skeleton.AvatarShape
@@ -779,8 +779,8 @@ public struct _MoinSkeletonFactory {
     public func callAsFunction(
         active: Bool = false,
         avatar: _Skeleton.AvatarConfig?,
-        title: _Skeleton.TitleConfig?,
-        paragraph: _Skeleton.ParagraphConfig?,
+        title: _Skeleton.TitleProps?,
+        paragraph: _Skeleton.ParagraphProps?,
         round: Bool = false
     ) -> _Skeleton {
         _Skeleton(active: active, avatar: avatar, title: title, paragraph: paragraph, round: round)
