@@ -174,7 +174,7 @@ struct SkeletonTokenView: View {
             description: "标题骨架的高度",
             sectionId: "component"
         ) {
-            Moin.Skeleton(active: true, title: true, paragraph: false)
+            Moin.Skeleton(title: true, paragraph: false)
                 .frame(width: 200)
         } editor: {
             TokenValueRow(label: "titleHeight", value: Binding(
@@ -194,7 +194,7 @@ struct SkeletonTokenView: View {
             description: "段落每行骨架的高度",
             sectionId: "component"
         ) {
-            Moin.Skeleton(active: true, title: false, paragraph: true)
+            Moin.Skeleton(title: false, paragraph: true)
                 .frame(width: 200)
         } editor: {
             TokenValueRow(label: "paragraphLineHeight", value: Binding(
@@ -214,7 +214,7 @@ struct SkeletonTokenView: View {
             description: "段落第一行与标题之间的间距",
             sectionId: "component"
         ) {
-            Moin.Skeleton(active: true, avatar: true)
+            Moin.Skeleton(avatar: true)
                 .frame(width: 200)
         } editor: {
             TokenValueRow(label: "paragraphLineMarginTop", value: Binding(
@@ -234,7 +234,7 @@ struct SkeletonTokenView: View {
             description: "骨架元素的圆角半径",
             sectionId: "component"
         ) {
-            Moin.Skeleton(active: true)
+            Moin.Skeleton()
                 .frame(width: 200)
         } editor: {
             TokenValueRow(label: "blockRadius", value: Binding(
@@ -276,7 +276,7 @@ struct SkeletonTokenView: View {
             description: "小尺寸头像的尺寸（对应 .small）",
             sectionId: "avatar"
         ) {
-            Moin.SkeletonAvatar(size: .small, active: true)
+            Moin.SkeletonAvatar(size: .small)
         } editor: {
             TokenValueRow(label: "avatarSizeSM", value: Binding(
                 get: { config.components.skeleton.avatarSizeSM },
@@ -295,7 +295,7 @@ struct SkeletonTokenView: View {
             description: "默认尺寸头像的尺寸（对应 .default）",
             sectionId: "avatar"
         ) {
-            Moin.SkeletonAvatar(size: .default, active: true)
+            Moin.SkeletonAvatar(size: .default)
         } editor: {
             TokenValueRow(label: "avatarSize", value: Binding(
                 get: { config.components.skeleton.avatarSize },
@@ -314,7 +314,7 @@ struct SkeletonTokenView: View {
             description: "大尺寸头像的尺寸（对应 .large）",
             sectionId: "avatar"
         ) {
-            Moin.SkeletonAvatar(size: .large, active: true)
+            Moin.SkeletonAvatar(size: .large)
         } editor: {
             TokenValueRow(label: "avatarSizeLG", value: Binding(
                 get: { config.components.skeleton.avatarSizeLG },
@@ -335,7 +335,7 @@ struct SkeletonTokenView: View {
             description: "小尺寸按钮的高度（对应 .small）",
             sectionId: "button"
         ) {
-            Moin.SkeletonButton(size: .small, active: true)
+            Moin.SkeletonButton(size: .small)
         } editor: {
             TokenValueRow(label: "buttonHeightSM", value: Binding(
                 get: { config.components.skeleton.buttonHeightSM },
@@ -354,7 +354,7 @@ struct SkeletonTokenView: View {
             description: "默认尺寸按钮的高度（对应 .default）",
             sectionId: "button"
         ) {
-            Moin.SkeletonButton(size: .default, active: true)
+            Moin.SkeletonButton(size: .default)
         } editor: {
             TokenValueRow(label: "buttonHeight", value: Binding(
                 get: { config.components.skeleton.buttonHeight },
@@ -373,7 +373,7 @@ struct SkeletonTokenView: View {
             description: "大尺寸按钮的高度（对应 .large）",
             sectionId: "button"
         ) {
-            Moin.SkeletonButton(size: .large, active: true)
+            Moin.SkeletonButton(size: .large)
         } editor: {
             TokenValueRow(label: "buttonHeightLG", value: Binding(
                 get: { config.components.skeleton.buttonHeightLG },
@@ -394,7 +394,7 @@ struct SkeletonTokenView: View {
             description: "小尺寸输入框的高度（对应 .small）",
             sectionId: "input"
         ) {
-            Moin.SkeletonInput(size: .small, active: true)
+            Moin.SkeletonInput(size: .small)
         } editor: {
             TokenValueRow(label: "inputHeightSM", value: Binding(
                 get: { config.components.skeleton.inputHeightSM },
@@ -413,7 +413,7 @@ struct SkeletonTokenView: View {
             description: "默认尺寸输入框的高度（对应 .default）",
             sectionId: "input"
         ) {
-            Moin.SkeletonInput(size: .default, active: true)
+            Moin.SkeletonInput(size: .default)
         } editor: {
             TokenValueRow(label: "inputHeight", value: Binding(
                 get: { config.components.skeleton.inputHeight },
@@ -432,7 +432,7 @@ struct SkeletonTokenView: View {
             description: "大尺寸输入框的高度（对应 .large）",
             sectionId: "input"
         ) {
-            Moin.SkeletonInput(size: .large, active: true)
+            Moin.SkeletonInput(size: .large)
         } editor: {
             TokenValueRow(label: "inputHeightLG", value: Binding(
                 get: { config.components.skeleton.inputHeightLG },

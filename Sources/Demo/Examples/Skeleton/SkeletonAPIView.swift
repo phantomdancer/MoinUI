@@ -148,15 +148,15 @@ struct SkeletonAPIView: View {
             sectionId: "skeleton"
         ) {
             VStack(spacing: 16) {
-                Moin.Skeleton(active: true, avatar: false)
+                Moin.Skeleton(avatar: false)
                     .frame(width: 300)
-                Moin.Skeleton(active: true, avatar: true)
+                Moin.Skeleton(avatar: true)
                     .frame(width: 300)
             }
         } code: {
             """
-            Moin.Skeleton(active: true, avatar: false)
-            Moin.Skeleton(active: true, avatar: true)
+            Moin.Skeleton(avatar: false)
+            Moin.Skeleton(avatar: true)
             """
         }
         .scrollAnchor("skeleton.avatar")
@@ -171,15 +171,15 @@ struct SkeletonAPIView: View {
             sectionId: "skeleton"
         ) {
             VStack(spacing: 16) {
-                Moin.Skeleton(active: true, title: true)
+                Moin.Skeleton(title: true)
                     .frame(width: 300)
-                Moin.Skeleton(active: true, title: false)
+                Moin.Skeleton(title: false)
                     .frame(width: 300)
             }
         } code: {
             """
-            Moin.Skeleton(active: true, title: true)
-            Moin.Skeleton(active: true, title: false)
+            Moin.Skeleton(title: true)
+            Moin.Skeleton(title: false)
             """
         }
         .scrollAnchor("skeleton.title")
@@ -194,15 +194,15 @@ struct SkeletonAPIView: View {
             sectionId: "skeleton"
         ) {
             VStack(spacing: 16) {
-                Moin.Skeleton(active: true, title: true, paragraph: true)
+                Moin.Skeleton(title: true, paragraph: true)
                     .frame(width: 300)
-                Moin.Skeleton(active: true, title: true, paragraph: false)
+                Moin.Skeleton(title: true, paragraph: false)
                     .frame(width: 300)
             }
         } code: {
             """
-            Moin.Skeleton(active: true, paragraph: true)
-            Moin.Skeleton(active: true, paragraph: false)
+            Moin.Skeleton(paragraph: true)
+            Moin.Skeleton(paragraph: false)
             """
         }
         .scrollAnchor("skeleton.paragraph")
@@ -217,15 +217,15 @@ struct SkeletonAPIView: View {
             sectionId: "skeleton"
         ) {
             VStack(spacing: 16) {
-                Moin.Skeleton(active: true, round: false)
+                Moin.Skeleton(round: false)
                     .frame(width: 300)
-                Moin.Skeleton(active: true, round: true)
+                Moin.Skeleton(round: true)
                     .frame(width: 300)
             }
         } code: {
             """
-            Moin.Skeleton(active: true, round: false)
-            Moin.Skeleton(active: true, round: true)
+            Moin.Skeleton(round: false)
+            Moin.Skeleton(round: true)
             """
         }
         .scrollAnchor("skeleton.round")
@@ -243,7 +243,7 @@ struct SkeletonAPIView: View {
                 Toggle(tr("skeleton.toggle_loading"), isOn: $isLoading)
                     .frame(width: 160)
 
-                Moin.Skeleton(loading: isLoading, active: true) {
+                Moin.Skeleton(loading: isLoading) {
                     Text(tr("skeleton.actual_content"))
                         .padding()
                         .background(Color.blue.opacity(0.1))
@@ -253,7 +253,7 @@ struct SkeletonAPIView: View {
             }
         } code: {
             """
-            Moin.Skeleton(loading: isLoading, active: true) {
+            Moin.Skeleton(loading: isLoading) {
                 Text("Actual content")
             }
             """
@@ -272,17 +272,17 @@ struct SkeletonAPIView: View {
             sectionId: "avatar"
         ) {
             HStack(spacing: 16) {
-                Moin.SkeletonAvatar(size: .small, active: true)
-                Moin.SkeletonAvatar(size: .default, active: true)
-                Moin.SkeletonAvatar(size: .large, active: true)
-                Moin.SkeletonAvatar(size: 48, active: true)
+                Moin.SkeletonAvatar(size: .small)
+                Moin.SkeletonAvatar(size: .default)
+                Moin.SkeletonAvatar(size: .large)
+                Moin.SkeletonAvatar(size: 48)
             }
         } code: {
             """
-            Moin.SkeletonAvatar(size: .small, active: true)
-            Moin.SkeletonAvatar(size: .default, active: true)
-            Moin.SkeletonAvatar(size: .large, active: true)
-            Moin.SkeletonAvatar(size: 48, active: true)  // 自定义尺寸
+            Moin.SkeletonAvatar(size: .small)
+            Moin.SkeletonAvatar(size: .default)
+            Moin.SkeletonAvatar(size: .large)
+            Moin.SkeletonAvatar(size: 48)  // 自定义尺寸
             """
         }
         .scrollAnchor("avatar.size")
@@ -297,13 +297,13 @@ struct SkeletonAPIView: View {
             sectionId: "avatar"
         ) {
             HStack(spacing: 16) {
-                Moin.SkeletonAvatar(shape: .circle, active: true)
-                Moin.SkeletonAvatar(shape: .square, active: true)
+                Moin.SkeletonAvatar(shape: .circle)
+                Moin.SkeletonAvatar(shape: .square)
             }
         } code: {
             """
-            Moin.SkeletonAvatar(shape: .circle, active: true)
-            Moin.SkeletonAvatar(shape: .square, active: true)
+            Moin.SkeletonAvatar(shape: .circle)
+            Moin.SkeletonAvatar(shape: .square)
             """
         }
         .scrollAnchor("avatar.shape")
@@ -347,15 +347,15 @@ struct SkeletonAPIView: View {
             sectionId: "button"
         ) {
             HStack(spacing: 16) {
-                Moin.SkeletonButton(size: .small, active: true)
-                Moin.SkeletonButton(size: .default, active: true)
-                Moin.SkeletonButton(size: .large, active: true)
+                Moin.SkeletonButton(size: .small)
+                Moin.SkeletonButton(size: .default)
+                Moin.SkeletonButton(size: .large)
             }
         } code: {
             """
-            Moin.SkeletonButton(size: .small, active: true)
-            Moin.SkeletonButton(size: .default, active: true)
-            Moin.SkeletonButton(size: .large, active: true)
+            Moin.SkeletonButton(size: .small)
+            Moin.SkeletonButton(size: .default)
+            Moin.SkeletonButton(size: .large)
             """
         }
         .scrollAnchor("button.size")
@@ -370,17 +370,17 @@ struct SkeletonAPIView: View {
             sectionId: "button"
         ) {
             HStack(spacing: 16) {
-                Moin.SkeletonButton(shape: .default, active: true)
-                Moin.SkeletonButton(shape: .circle, active: true)
-                Moin.SkeletonButton(shape: .round, active: true)
-                Moin.SkeletonButton(shape: .square, active: true)
+                Moin.SkeletonButton(shape: .default)
+                Moin.SkeletonButton(shape: .circle)
+                Moin.SkeletonButton(shape: .round)
+                Moin.SkeletonButton(shape: .square)
             }
         } code: {
             """
-            Moin.SkeletonButton(shape: .default, active: true)
-            Moin.SkeletonButton(shape: .circle, active: true)
-            Moin.SkeletonButton(shape: .round, active: true)
-            Moin.SkeletonButton(shape: .square, active: true)
+            Moin.SkeletonButton(shape: .default)
+            Moin.SkeletonButton(shape: .circle)
+            Moin.SkeletonButton(shape: .round)
+            Moin.SkeletonButton(shape: .square)
             """
         }
         .scrollAnchor("button.shape")
@@ -395,14 +395,14 @@ struct SkeletonAPIView: View {
             sectionId: "button"
         ) {
             HStack(spacing: 16) {
-                Moin.SkeletonButton(block: false, active: true)
-                Moin.SkeletonButton(block: true, active: true)
+                Moin.SkeletonButton(block: false)
+                Moin.SkeletonButton(block: true)
                     .frame(width: 150)
             }
         } code: {
             """
-            Moin.SkeletonButton(block: false, active: true)
-            Moin.SkeletonButton(block: true, active: true)
+            Moin.SkeletonButton(block: false)
+            Moin.SkeletonButton(block: true)
             """
         }
         .scrollAnchor("button.block")
@@ -446,16 +446,16 @@ struct SkeletonAPIView: View {
             sectionId: "input",
             preview: {
                 HStack(spacing: 16) {
-                    Moin.SkeletonInput(size: .small, active: true)
-                    Moin.SkeletonInput(size: .default, active: true)
-                    Moin.SkeletonInput(size: .large, active: true)
+                    Moin.SkeletonInput(size: .small)
+                    Moin.SkeletonInput(size: .default)
+                    Moin.SkeletonInput(size: .large)
                 }
             },
             code: {
                 """
-                Moin.SkeletonInput(size: .small, active: true)
-                Moin.SkeletonInput(size: .default, active: true)
-                Moin.SkeletonInput(size: .large, active: true)
+                Moin.SkeletonInput(size: .small)
+                Moin.SkeletonInput(size: .default)
+                Moin.SkeletonInput(size: .large)
                 """
             }
         )
@@ -471,14 +471,14 @@ struct SkeletonAPIView: View {
             sectionId: "input"
         ) {
             HStack(spacing: 16) {
-                Moin.SkeletonInput(block: false, active: true)
-                Moin.SkeletonInput(block: true, active: true)
+                Moin.SkeletonInput(block: false)
+                Moin.SkeletonInput(block: true)
                     .frame(width: 200)
             }
         } code: {
             """
-            Moin.SkeletonInput(block: false, active: true)
-            Moin.SkeletonInput(block: true, active: true)
+            Moin.SkeletonInput(block: false)
+            Moin.SkeletonInput(block: true)
             """
         }
         .scrollAnchor("input.block")
@@ -522,13 +522,13 @@ struct SkeletonAPIView: View {
             sectionId: "image"
         ) {
             HStack(spacing: 16) {
-                Moin.SkeletonImage(width: nil, active: true)
-                Moin.SkeletonImage(width: 120, active: true)
+                Moin.SkeletonImage(width: nil)
+                Moin.SkeletonImage(width: 120)
             }
         } code: {
             """
-            Moin.SkeletonImage(active: true)
-            Moin.SkeletonImage(width: 120, active: true)
+            Moin.SkeletonImage()
+            Moin.SkeletonImage(width: 120)
             """
         }
         .scrollAnchor("image.width")
@@ -543,13 +543,13 @@ struct SkeletonAPIView: View {
             sectionId: "image"
         ) {
             HStack(spacing: 16) {
-                Moin.SkeletonImage(height: nil, active: true)
-                Moin.SkeletonImage(width: 120, height: 80, active: true)
+                Moin.SkeletonImage(height: nil)
+                Moin.SkeletonImage(width: 120, height: 80)
             }
         } code: {
             """
-            Moin.SkeletonImage(active: true)
-            Moin.SkeletonImage(width: 120, height: 80, active: true)
+            Moin.SkeletonImage()
+            Moin.SkeletonImage(width: 120, height: 80)
             """
         }
         .scrollAnchor("image.height")
@@ -622,13 +622,13 @@ struct SkeletonAPIView: View {
             sectionId: "node"
         ) {
             HStack(spacing: 16) {
-                Moin.SkeletonNode(active: true)
+                Moin.SkeletonNode()
                 Moin.SkeletonNode(active: true) {
                     Circle()
                         .fill(Color.blue)
                         .frame(width: 40, height: 40)
                 }
-                Moin.SkeletonNode(active: false) {
+                Moin.SkeletonNode {
                     Text("Content")
                         .padding()
                         .background(Color.gray.opacity(0.2))
@@ -637,7 +637,7 @@ struct SkeletonAPIView: View {
             }
         } code: {
             """
-            Moin.SkeletonNode(active: true)
+            Moin.SkeletonNode()
             Moin.SkeletonNode(active: true) {
                 Circle().fill(Color.blue).frame(width: 40, height: 40)
             }
