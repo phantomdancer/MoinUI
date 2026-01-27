@@ -61,7 +61,7 @@ public struct _SpinIndicator: View {
 // MARK: - _SpinDot (Internal)
 
 /// 单个旋转点，带有 opacity 闪烁动画
-struct _SpinDot: View {
+private struct _SpinDot: View {
     let size: CGFloat
     let color: Color
     let delay: Double

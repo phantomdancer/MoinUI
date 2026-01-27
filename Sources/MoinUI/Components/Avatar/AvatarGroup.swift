@@ -88,7 +88,7 @@ public struct _AvatarGroup<Content: View>: View {
 
 // MARK: - Internal Implementation
 
-struct _AvatarGroupContainer: _VariadicView_MultiViewRoot {
+private struct _AvatarGroupContainer: _VariadicView_MultiViewRoot {
     let maxCount: Int?
     let spacing: CGFloat
     let borderWidth: CGFloat
@@ -119,7 +119,7 @@ struct _AvatarGroupContainer: _VariadicView_MultiViewRoot {
             // 如果有溢出，显示 +N
             if hasOverflow {
                 let overflowCount = count - visibleCount
-                Moin.Avatar("+\(overflowCount)", size: size, shape: shape, gap: gap)
+                _Avatar("+\(overflowCount)", size: size, shape: shape, gap: gap)
                     .overlay(
                         resolveShape(shape)
                             .stroke(borderColor, lineWidth: borderWidth)
@@ -148,7 +148,7 @@ struct _AvatarGroupContainer: _VariadicView_MultiViewRoot {
 }
 
 // Helper for AnyShape
-struct _AnyShape: Shape, @unchecked Sendable {
+private struct _AnyShape: Shape, @unchecked Sendable {
     private let _path: @Sendable (CGRect) -> Path
 
     init<S: Shape>(_ wrapped: S) {

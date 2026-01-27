@@ -225,7 +225,7 @@ public struct _Avatar: View {
 // MARK: - _AvatarTextView (内部)
 
 /// 头像文字视图 - 精确计算缩放比例
-struct _AvatarTextView: View {
+private struct _AvatarTextView: View {
     let text: String
     let fontSize: CGFloat
     let color: Color
