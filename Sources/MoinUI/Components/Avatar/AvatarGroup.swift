@@ -162,10 +162,3 @@ private struct _AnyShape: Shape, @unchecked Sendable {
         _path(rect)
     }
 }
-
-
-
-// MARK: - 兼容旧 API
-
-@available(*, deprecated, renamed: "Moin.Avatar.Group")
-public typealias MoinAvatarGroup<Content: View> = _AvatarGroup<Content>
