@@ -20,7 +20,6 @@ struct SkeletonExamples: View {
     /// 锚点列表
     private let anchors: [AnchorItem] = [
         AnchorItem(id: "basic", titleKey: "skeleton.basic"),
-        AnchorItem(id: "active", titleKey: "skeleton.active"),
         AnchorItem(id: "complex", titleKey: "skeleton.complex"),
         AnchorItem(id: "element", titleKey: "skeleton.element"),
         AnchorItem(id: "loading", titleKey: "skeleton.loading"),
@@ -73,8 +72,7 @@ struct SkeletonExamples: View {
 
     private var examplesContent: some View {
         ExamplePageWithAnchor(pageName: "Skeleton", anchors: anchors) { _ in
-            basicExample.id("basic")
-            activeExample.id("active")
+            basicAndActiveExample.id("basic")
             complexExample.id("complex")
             elementExample.id("element")
             loadingExample.id("loading")
@@ -95,37 +93,29 @@ struct SkeletonExamples: View {
 
     // MARK: - Examples
 
-    private var basicExample: some View {
+    private var basicAndActiveExample: some View {
         ExampleSection(
             title: tr("skeleton.basic"),
             description: tr("skeleton.basic_desc"),
             content: {
-                VStack(spacing: 24) {
-                    Moin.Skeleton()
+                HStack(spacing: 24) {
+                    VStack(spacing: 12) {
+                        Text(tr("skeleton.default")).font(.caption).foregroundStyle(.secondary)
+                        Moin.Skeleton()
+                    }
+                    VStack(spacing: 12) {
+                        Text(tr("skeleton.animation")).font(.caption).foregroundStyle(.secondary)
+                        Moin.Skeleton(active: true)
+                    }
                 }
             },
             code: {
                 """
                 // \(tr("skeleton.default"))
                 Moin.Skeleton()
-                """
-            }
-        )
-    }
 
-    private var activeExample: some View {
-        ExampleSection(
-            title: tr("skeleton.active"),
-            description: tr("skeleton.active_desc"),
-            content: {
-                VStack(spacing: 24) {
-                    Moin.Skeleton(active: true, avatar: true)
-                }
-            },
-            code: {
-                """
                 // \(tr("skeleton.animation"))
-                Moin.Skeleton(active: true, avatar: true)
+                Moin.Skeleton(active: true)
                 """
             }
         )
