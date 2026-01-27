@@ -201,7 +201,7 @@ struct CheckboxExamples: View {
     
     // MARK: - Group Example 2: City Options (Object)
     @State private var groupSelection2: Set<String> = ["London"]
-    private var groupOptions: [_CheckboxOption<String>] {
+    private var groupOptions: [Moin.CheckboxOption<String>] {
         [
             .init(label: tr("checkbox.london"), value: "London"),
             .init(label: tr("checkbox.paris"), value: "Paris"),
@@ -212,7 +212,7 @@ struct CheckboxExamples: View {
     // MARK: - Group Example 3: Celestial Options (With Disabled)
     @State private var groupSelection3: Set<String> = ["Sun"]
     
-    private var optionsWithDisabled: [_CheckboxOption<String>] {
+    private var optionsWithDisabled: [Moin.CheckboxOption<String>] {
         [
             .init(label: tr("checkbox.sun"), value: "Sun"),
             .init(label: tr("checkbox.moon"), value: "Moon"),
@@ -265,7 +265,7 @@ struct CheckboxExamples: View {
                 """
                 // 2. Object Options
                 @State private var selection2: Set<String> = ["London"]
-                let groupOptions: [_CheckboxOption<String>] = [
+                let groupOptions: [Moin.CheckboxOption<String>] = [
                     .init(label: "\(tr("checkbox.london"))", value: "London"),
                     .init(label: "\(tr("checkbox.paris"))", value: "Paris"),
                     .init(label: "\(tr("checkbox.new_york"))", value: "New York")

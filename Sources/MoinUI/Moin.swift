@@ -21,5 +21,31 @@ public enum Moin {
     public static let Checkbox = _MoinCheckboxFactory()
     public static let Radio = _MoinRadioFactory()
     public static let Skeleton = _MoinSkeletonFactory()
+
+    // MARK: - Type Aliases
+
+    // Avatar
+    public typealias AvatarGroup = _AvatarGroup
+
+    // Checkbox
+    public typealias CheckboxOption<T: Hashable> = _CheckboxOption<T>
+
+    // Radio
+    public typealias RadioOption<T: Hashable> = _RadioOption<T>
+
+    // Space
+    public typealias SpaceAlignment = _SpaceAlignment
+
+    // Progress (nested types access)
+    public typealias ProgressType = _Progress
+
+    // Skeleton (nested types access)
+    public typealias SkeletonType = _Skeleton
+
+    // Divider (nested types access)
+    public typealias DividerType = _Divider
+
+    // Space (nested types access)
+    public typealias SpaceType = _Space
 }
 

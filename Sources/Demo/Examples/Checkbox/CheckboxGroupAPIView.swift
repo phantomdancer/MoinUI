@@ -11,7 +11,7 @@ struct CheckboxGroupAPIView: View {
 
     private let options1 = ["Apple", "Pear", "Orange"]
 
-    private var options2: [_CheckboxOption<String>] {
+    private var options2: [Moin.CheckboxOption<String>] {
         [
             .init(label: tr("checkbox.london"), value: "London"),
             .init(label: tr("checkbox.paris"), value: "Paris"),
@@ -94,7 +94,7 @@ struct CheckboxGroupAPIView: View {
             }
         } code: {
             """
-            let options: [_CheckboxOption<String>] = [
+            let options: [Moin.CheckboxOption<String>] = [
                 .init(label: "London", value: "London"),
                 .init(label: "Paris", value: "Paris"),
                 .init(label: "New York", value: "New York")

@@ -363,7 +363,7 @@ struct AvatarExamples: View {
             description: tr("avatar.group_desc"),
             content: {
                 VStack(alignment: .leading, spacing: 16) {
-                    _AvatarGroup {
+                    Moin.AvatarGroup {
                         Moin.Avatar(icon: "person")
                         Moin.Avatar("A")
                         Moin.Avatar("B", backgroundColor: .blue)
@@ -385,7 +385,7 @@ struct AvatarExamples: View {
             },
             code: {
                 """
-                _AvatarGroup {
+                Moin.AvatarGroup {
                     Moin.Avatar(icon: "person")
                     Moin.Avatar("A")
                     Moin.Avatar("B", backgroundColor: .blue)

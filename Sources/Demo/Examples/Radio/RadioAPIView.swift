@@ -19,7 +19,7 @@ struct RadioAPIView: View {
     private let plainOptions = [1, 2, 3]
     private let stringOptions = ["A", "B", "C"]
 
-    private var objectOptions: [_RadioOption<String>] {
+    private var objectOptions: [Moin.RadioOption<String>] {
         [
             .init(label: tr("radio.london"), value: "London"),
             .init(label: tr("radio.paris"), value: "Paris"),
@@ -192,7 +192,7 @@ struct RadioAPIView: View {
             }
         } code: {
             """
-            let options: [_RadioOption<String>] = [
+            let options: [Moin.RadioOption<String>] = [
                 .init(label: "\(tr("radio.london"))", value: "London"),
                 .init(label: "\(tr("radio.paris"))", value: "Paris"),
                 .init(label: "\(tr("radio.new_york"))", value: "New York")

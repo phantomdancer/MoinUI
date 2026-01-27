@@ -183,7 +183,7 @@ struct RadioExamples: View {
     
     // MARK: - Group Example 2: Object Options
     @State private var groupSelectionObject = "London"
-    private var objectOptions: [_RadioOption<String>] {
+    private var objectOptions: [Moin.RadioOption<String>] {
         [
             .init(label: tr("radio.london"), value: "London"),
             .init(label: tr("radio.paris"), value: "Paris"),
@@ -210,7 +210,7 @@ struct RadioExamples: View {
                 """
                 @State private var selection = "London"
                 
-                private var options: [_RadioOption<String>] {
+                private var options: [Moin.RadioOption<String>] {
                     [
                         .init(label: "\(tr("radio.london"))", value: "London"),
                         .init(label: "\(tr("radio.paris"))", value: "Paris"),
@@ -250,7 +250,7 @@ struct RadioExamples: View {
     
     // MARK: - Group Example 4: Optional Selection with Disabled Items
     @State private var optionalSelection: String? = "Apple"
-    private var optionsWithDisabled: [_RadioOption<String>] {
+    private var optionsWithDisabled: [Moin.RadioOption<String>] {
         [
             .init(label: tr("radio.apple"), value: "Apple"),
             .init(label: tr("radio.pear"), value: "Pear"),
@@ -280,7 +280,7 @@ struct RadioExamples: View {
                 """
                 @State private var selection: String? = "Apple"
                 
-                private var options: [_RadioOption<String>] {
+                private var options: [Moin.RadioOption<String>] {
                     [
                         .init(label: "\(tr("radio.apple"))", value: "Apple"),
                         .init(label: "\(tr("radio.pear"))", value: "Pear"),
@@ -449,7 +449,7 @@ struct RadioExamples: View {
                 """
                 @State private var selection = "Apple"
 
-                let options: [_RadioOption<String>] = [
+                let options: [Moin.RadioOption<String>] = [
                     .init(label: "\(tr("radio.apple"))", value: "Apple"),
                     .init(label: "\(tr("radio.pear"))", value: "Pear"),
                     .init(label: "\(tr("radio.orange"))", value: "Orange", disabled: true)
@@ -537,7 +537,7 @@ struct RadioExamples: View {
         )
     }
     
-    private var buttonOptions: [_RadioOption<String>] {
+    private var buttonOptions: [Moin.RadioOption<String>] {
         [
             .init(label: tr("radio.apple"), value: "Apple"),
             .init(label: tr("radio.pear"), value: "Pear"),
