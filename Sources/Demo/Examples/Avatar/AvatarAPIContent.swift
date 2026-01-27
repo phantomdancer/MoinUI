@@ -74,8 +74,8 @@ struct AvatarAPIContent: View {
                     ]
                 )
 
-                // Moin.AvatarGroup
-                Text("Moin.AvatarGroup")
+                // Moin.Avatar.Group
+                Text("Moin.Avatar.Group")
                     .font(.title2)
                     .fontWeight(.semibold)
 

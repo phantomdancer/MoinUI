@@ -30,9 +30,6 @@ public enum Moin {
     // Radio
     public typealias RadioOption<T: Hashable> = _RadioOption<T>
 
-    // Avatar
-    public typealias AvatarGroup = _AvatarGroup
-
     // Space
     public typealias SpaceAlignment = _SpaceAlignment
 

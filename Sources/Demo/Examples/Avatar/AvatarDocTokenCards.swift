@@ -133,7 +133,7 @@ extension AvatarTokenView {
             description: tr("avatar.token.groupSpacing"),
             sectionId: "component"
         ) {
-            Moin.AvatarGroup {
+            Moin.Avatar.Group {
                 Moin.Avatar("A")
                 Moin.Avatar("B")
                 Moin.Avatar("C")
@@ -156,7 +156,7 @@ extension AvatarTokenView {
             description: tr("avatar.token.groupBorderColor"),
             sectionId: "component"
         ) {
-            Moin.AvatarGroup {
+            Moin.Avatar.Group {
                 Moin.Avatar("A")
                 Moin.Avatar("B")
             }
@@ -267,7 +267,7 @@ extension AvatarTokenView {
             description: tr("avatar.token.groupBorderWidth"),
             sectionId: "global"
         ) {
-            Moin.AvatarGroup {
+            Moin.Avatar.Group {
                 Moin.Avatar("A")
                 Moin.Avatar("B")
             }

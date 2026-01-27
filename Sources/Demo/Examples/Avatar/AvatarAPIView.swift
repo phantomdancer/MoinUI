@@ -273,14 +273,14 @@ struct AvatarAPIView: View {
             description: tr("avatar.api.max_count"),
             sectionId: "avatargroup"
         ) {
-            Moin.AvatarGroup(maxCount: 2) {
+            Moin.Avatar.Group(maxCount: 2) {
                 Moin.Avatar("A")
                 Moin.Avatar("B")
                 Moin.Avatar("C")
             }
         } code: {
             """
-            Moin.AvatarGroup(maxCount: 2) {
+            Moin.Avatar.Group(maxCount: 2) {
                 Moin.Avatar("A")
                 Moin.Avatar("B")
                 Moin.Avatar("C")
@@ -298,13 +298,13 @@ struct AvatarAPIView: View {
             description: tr("avatar.api.group_content"),
             sectionId: "avatargroup"
         ) {
-            Moin.AvatarGroup {
+            Moin.Avatar.Group {
                 Moin.Avatar("A")
                 Moin.Avatar("B")
             }
         } code: {
             """
-            Moin.AvatarGroup {
+            Moin.Avatar.Group {
                 Moin.Avatar("A")
                 Moin.Avatar("B")
             }

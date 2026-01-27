@@ -112,19 +112,8 @@ public struct _MoinBadgeRibbonFactory {
 
 public struct _MoinAvatarFactory {
 
-    // MARK: - Nested Types
-
-    /// Moin.Avatar.Group
-    public typealias Group = _AvatarGroup
-    /// Moin.Avatar.Size
-    public typealias Size = _AvatarSize
-    /// Moin.Avatar.Shape
-    public typealias Shape = _AvatarShape
-    /// Moin.Avatar.Color
-    public typealias Color = _AvatarColor
-
     /// Moin.Avatar.Group(maxCount: 3) { ... }
-    public let GroupFactory = _MoinAvatarGroupFactory()
+    public let Group = _MoinAvatarGroupFactory()
 
     public init() {}
 
