@@ -1,8 +1,8 @@
 import SwiftUI
 
-// MARK: - _RadioButton (internal name, use Moin.Radio.Button)
+// MARK: - _RadioButton (internal)
 
-public struct _RadioButton<Label: View>: View {
+struct _RadioButton<Label: View>: View {
     @Binding var checked: Bool
     var disabled: Bool
     let buttonStyle: _RadioButtonStyle
@@ -20,7 +20,7 @@ public struct _RadioButton<Label: View>: View {
     @State private var isHovering: Bool = false
     @State private var isPressed: Bool = false
 
-    public init(
+    init(
         checked: Binding<Bool>,
         disabled: Bool = false,
         buttonStyle: _RadioButtonStyle = .outline,
@@ -185,7 +185,7 @@ public struct _RadioButton<Label: View>: View {
         return isHovering ? radioToken.colorPrimary : radioToken.colorBorder
     }
 
-    public var body: some View {
+    var body: some View {
         label
             .font(.system(size: token.fontSize))
             .foregroundStyle(foregroundColor)

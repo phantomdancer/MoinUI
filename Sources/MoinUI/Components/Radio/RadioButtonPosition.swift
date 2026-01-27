@@ -1,13 +1,11 @@
 import SwiftUI
 
-// MARK: - _RadioButtonPosition (internal name, use Moin.Radio.ButtonPosition)
+// MARK: - _RadioButtonPosition (internal)
 
 /// Radio 按钮位置
-public enum _RadioButtonPosition: Sendable {
+enum _RadioButtonPosition: Sendable {
     case first
     case middle
     case last
     case single
 }
-
-

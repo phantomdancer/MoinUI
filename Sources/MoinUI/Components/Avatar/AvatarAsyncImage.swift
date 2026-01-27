@@ -1,18 +1,18 @@
 import SwiftUI
 
-// MARK: - _AvatarAsyncImage (internal name, use Moin.Avatar.AsyncImage)
+// MARK: - _AvatarAsyncImage (internal)
 
 /// 异步图片视图 - 支持加载失败兜底
-public struct _AvatarAsyncImage: View {
+struct _AvatarAsyncImage: View {
     let url: URL?
     let fallbackIcon: String
 
-    public init(url: URL?, fallbackIcon: String = "person.fill") {
+    init(url: URL?, fallbackIcon: String = "person.fill") {
         self.url = url
         self.fallbackIcon = fallbackIcon
     }
 
-    public var body: some View {
+    var body: some View {
         SwiftUI.AsyncImage(url: url) { phase in
             switch phase {
             case .empty:

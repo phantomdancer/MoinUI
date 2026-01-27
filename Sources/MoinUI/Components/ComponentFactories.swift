@@ -121,7 +121,6 @@ public struct _MoinAvatarFactory {
     public typealias Size = _AvatarSize
     public typealias Shape = _AvatarShape
     public typealias Color = _AvatarColor
-    public typealias AsyncImage = _AvatarAsyncImage
 
     /// Moin.Avatar.Group(maxCount: 3) { ... }
     public let Group = _MoinAvatarGroupFactory()
@@ -646,9 +645,7 @@ public struct _MoinRadioFactory {
     public typealias Size = _RadioSize
     public typealias Option = _RadioOption
     public typealias OptionType = _RadioOptionType
-    public typealias Button = _RadioButton
     public typealias ButtonStyle = _RadioButtonStyle
-    public typealias ButtonPosition = _RadioButtonPosition
 
     /// Moin.Radio.Group(value: $value, options: options)
     public let Group = _MoinRadioGroupFactory()
