@@ -103,6 +103,7 @@
       },
       "global": {
         "derived": "由全局 Token 派生",
+        "derived_from": "派生自",
         "derived_from_controlHeight": "由 controlHeight 派生",
         "colorFill": {
           "desc": "填充色，用于骨架屏动画渐变终点"

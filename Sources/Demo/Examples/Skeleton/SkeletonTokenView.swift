@@ -32,8 +32,8 @@ struct SkeletonTokenView: View {
             DocSidebarSection(
                 title: tr("doc.section.global_token"),
                 items: [
-                    .init(id: "colorFill"),
                     .init(id: "colorFillSecondary"),
+                    .init(id: "colorFill"),
                     .init(id: "controlHeight"),
                     .init(id: "controlHeightSM"),
                     .init(id: "controlHeightLG"),
@@ -216,7 +216,8 @@ struct SkeletonTokenView: View {
             sectionId: "component"
         ) {
             Moin.Skeleton(avatar: true)
-                .frame(width: 200)
+                .padding(.leading, 16)
+                .frame(width: 220)
         } editor: {
             TokenValueRow(label: "paragraphMarginTop", value: Binding(
                 get: { config.components.skeleton.paragraphMarginTop },
@@ -251,22 +252,6 @@ struct SkeletonTokenView: View {
 
     // MARK: - Global Token Cards
 
-    private var colorFillGlobalCard: some View {
-        TokenCard(
-            name: "colorFill",
-            type: "Color",
-            defaultValue: "#000000 15%",
-            description: tr("skeleton.token.global.colorFill.desc"),
-            sectionId: "global"
-        ) {
-            Moin.Skeleton(active: true)
-                .frame(width: 200)
-        } code: {
-            "// \(tr("skeleton.token.global.derived"))"
-        }
-        .scrollAnchor("global.colorFill")
-    }
-
     private var colorFillSecondaryGlobalCard: some View {
         TokenCard(
             name: "colorFillSecondary",
@@ -277,10 +262,30 @@ struct SkeletonTokenView: View {
         ) {
             Moin.Skeleton(active: false)
                 .frame(width: 200)
+        } editor: {
+            ColorPresetRow(label: "colorBgBase", color: $config.seed.colorBgBase, onChange: { config.regenerateTokens() })
         } code: {
-            "// \(tr("skeleton.token.global.derived"))"
+            "// \(tr("skeleton.token.global.derived_from")) colorBgBase"
         }
         .scrollAnchor("global.colorFillSecondary")
+    }
+
+    private var colorFillGlobalCard: some View {
+        TokenCard(
+            name: "colorFill",
+            type: "Color",
+            defaultValue: "#000000 15%",
+            description: tr("skeleton.token.global.colorFill.desc"),
+            sectionId: "global"
+        ) {
+            Moin.Skeleton(active: true)
+                .frame(width: 200)
+        } editor: {
+            ColorPresetRow(label: "colorBgBase", color: $config.seed.colorBgBase, onChange: { config.regenerateTokens() })
+        } code: {
+            "// \(tr("skeleton.token.global.derived_from")) colorBgBase"
+        }
+        .scrollAnchor("global.colorFill")
     }
 
     private var controlHeightGlobalCard: some View {
@@ -296,6 +301,7 @@ struct SkeletonTokenView: View {
                 Moin.SkeletonAvatar(size: .default)
                 Moin.SkeletonAvatar(size: .large)
             }
+            .padding(.horizontal, 8)
         } editor: {
             TokenValueRow(label: "controlHeight", value: $config.seed.controlHeight, range: 24...48, onChange: { config.regenerateTokens() })
         } code: {
@@ -317,8 +323,11 @@ struct SkeletonTokenView: View {
                 Moin.SkeletonButton(size: .small)
                 Moin.SkeletonInput(size: .small)
             }
+            .padding(.horizontal, 8)
+        } editor: {
+            TokenValueRow(label: "controlHeight", value: $config.seed.controlHeight, range: 24...48, onChange: { config.regenerateTokens() })
         } code: {
-            "// \(tr("skeleton.token.global.derived_from_controlHeight"))"
+            "// controlHeightSM = controlHeight × 0.75"
         }
         .scrollAnchor("global.controlHeightSM")
     }
@@ -336,8 +345,11 @@ struct SkeletonTokenView: View {
                 Moin.SkeletonButton(size: .large)
                 Moin.SkeletonInput(size: .large)
             }
+            .padding(.horizontal, 8)
+        } editor: {
+            TokenValueRow(label: "controlHeight", value: $config.seed.controlHeight, range: 24...48, onChange: { config.regenerateTokens() })
         } code: {
-            "// \(tr("skeleton.token.global.derived_from_controlHeight"))"
+            "// controlHeightLG = controlHeight × 1.25"
         }
         .scrollAnchor("global.controlHeightLG")
     }
@@ -369,9 +381,12 @@ struct SkeletonTokenView: View {
             sectionId: "global"
         ) {
             Moin.Skeleton(avatar: true)
-                .frame(width: 200)
+                .padding(.leading, 16)
+                .frame(width: 220)
+        } editor: {
+            TokenValueRow(label: "sizeUnit", value: $config.seed.sizeUnit, range: 2...8, onChange: { config.regenerateTokens() })
         } code: {
-            "// \(tr("skeleton.token.global.derived"))"
+            "// marginLG = sizeUnit × 6 = \(Int(config.seed.sizeUnit)) × 6 = \(Int(config.seed.sizeUnit * 6))"
         }
         .scrollAnchor("global.marginLG")
     }
@@ -385,9 +400,12 @@ struct SkeletonTokenView: View {
             sectionId: "global"
         ) {
             Moin.Skeleton(avatar: true)
-                .frame(width: 200)
+                .padding(.leading, 16)
+                .frame(width: 220)
+        } editor: {
+            TokenValueRow(label: "sizeUnit", value: $config.seed.sizeUnit, range: 2...8, onChange: { config.regenerateTokens() })
         } code: {
-            "// \(tr("skeleton.token.global.derived"))"
+            "// marginXXS = sizeUnit = \(Int(config.seed.sizeUnit))"
         }
         .scrollAnchor("global.marginXXS")
     }

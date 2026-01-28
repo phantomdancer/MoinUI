@@ -103,6 +103,7 @@
       },
       "global": {
         "derived": "Derived from global token",
+        "derived_from": "Derived from",
         "derived_from_controlHeight": "Derived from controlHeight",
         "colorFill": {
           "desc": "Fill color, used for skeleton animation gradient end"
