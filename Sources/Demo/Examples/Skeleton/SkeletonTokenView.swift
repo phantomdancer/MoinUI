@@ -146,8 +146,13 @@ struct SkeletonTokenView: View {
         ) {
             Moin.Skeleton(active: false)
                 .frame(width: 200)
+        } editor: {
+            ColorPresetRow(label: "color", color: Binding(
+                get: { config.components.skeleton.color },
+                set: { config.components.skeleton.color = $0 }
+            ))
         } code: {
-            "config.components.skeleton.color"
+            "config.components.skeleton.color = Color(...)"
         }
     }
 
@@ -161,8 +166,13 @@ struct SkeletonTokenView: View {
         ) {
             Moin.Skeleton(active: true)
                 .frame(width: 200)
+        } editor: {
+            ColorPresetRow(label: "colorGradientEnd", color: Binding(
+                get: { config.components.skeleton.colorGradientEnd },
+                set: { config.components.skeleton.colorGradientEnd = $0 }
+            ))
         } code: {
-            "config.components.skeleton.colorGradientEnd"
+            "config.components.skeleton.colorGradientEnd = Color(...)"
         }
     }
 
