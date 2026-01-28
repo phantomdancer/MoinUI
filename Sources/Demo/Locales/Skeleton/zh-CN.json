@@ -100,6 +100,34 @@
       },
       "blockRadius": {
         "desc": "骨架元素的圆角半径"
+      },
+      "global": {
+        "derived": "由全局 Token 派生",
+        "derived_from_controlHeight": "由 controlHeight 派生",
+        "colorFill": {
+          "desc": "填充色，用于骨架屏动画渐变终点"
+        },
+        "colorFillSecondary": {
+          "desc": "次级填充色，用于骨架屏基础背景"
+        },
+        "controlHeight": {
+          "desc": "控件基础高度，影响骨架屏元素尺寸"
+        },
+        "controlHeightSM": {
+          "desc": "小号控件高度，用于小尺寸骨架元素"
+        },
+        "controlHeightLG": {
+          "desc": "大号控件高度，用于大尺寸骨架元素"
+        },
+        "borderRadiusSM": {
+          "desc": "小号圆角，用于骨架屏元素圆角"
+        },
+        "marginLG": {
+          "desc": "大号间距，用于计算段落上边距"
+        },
+        "marginXXS": {
+          "desc": "超小间距，用于计算段落上边距"
+        }
       }
     }
   }

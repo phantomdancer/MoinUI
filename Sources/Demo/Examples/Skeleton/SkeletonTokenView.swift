@@ -10,7 +10,7 @@ struct SkeletonTokenView: View {
 
     // MARK: - Token Sections
 
-    private var tokenSections: [DocSidebarSection] {
+    private var componentSections: [DocSidebarSection] {
         [
             DocSidebarSection(
                 title: tr("doc.section.component_token"),
@@ -27,6 +27,29 @@ struct SkeletonTokenView: View {
         ]
     }
 
+    private var globalSections: [DocSidebarSection] {
+        [
+            DocSidebarSection(
+                title: tr("doc.section.global_token"),
+                items: [
+                    .init(id: "colorFill"),
+                    .init(id: "colorFillSecondary"),
+                    .init(id: "controlHeight"),
+                    .init(id: "controlHeightSM"),
+                    .init(id: "controlHeightLG"),
+                    .init(id: "borderRadiusSM"),
+                    .init(id: "marginLG"),
+                    .init(id: "marginXXS")
+                ],
+                sectionId: "global"
+            )
+        ]
+    }
+
+    private var allSections: [DocSidebarSection] {
+        componentSections + globalSections
+    }
+
     // 重置所有 Token 到默认值
     private func resetAll() {
         config.seed = Moin.SeedToken.default
@@ -36,18 +59,24 @@ struct SkeletonTokenView: View {
 
     var body: some View {
         ComponentDocBody(
-            sections: tokenSections,
+            sections: allSections,
             initialItemId: "component"
         ) { sectionId in
             switch sectionId {
             case "component":
                 Text(tr("doc.section.component_token")).font(.title3).fontWeight(.semibold)
+            case "global":
+                Text(tr("doc.section.global_token")).font(.title3).fontWeight(.semibold)
             default:
                 EmptyView()
             }
         } item: { item in
-            cardForItem(item)
-                .id(item)
+            let globalItemIds = globalSections.flatMap { $0.items.map { $0.id } }
+            if globalItemIds.contains(item) {
+                cardForItem(item, sectionId: "global")
+            } else {
+                cardForItem(item, sectionId: "component")
+            }
         } footer: {
             HStack(spacing: Moin.Constants.Spacing.sm) {
                 Moin.Button(tr("playground.token.reset"), color: .primary, variant: .solid) {
@@ -66,15 +95,29 @@ struct SkeletonTokenView: View {
     }
 
     @ViewBuilder
-    private func cardForItem(_ item: String) -> some View {
-        switch item {
-        case "gradientFromColor": gradientFromColorCard
-        case "gradientToColor": gradientToColorCard
-        case "titleHeight": titleHeightCard
-        case "paragraphLiHeight": paragraphLiHeightCard
-        case "paragraphMarginTop": paragraphMarginTopCard
-        case "blockRadius": blockRadiusCard
-        default: EmptyView()
+    private func cardForItem(_ item: String, sectionId: String) -> some View {
+        if sectionId == "component" {
+            switch item {
+            case "gradientFromColor": AnyView(gradientFromColorCard)
+            case "gradientToColor": AnyView(gradientToColorCard)
+            case "titleHeight": AnyView(titleHeightCard)
+            case "paragraphLiHeight": AnyView(paragraphLiHeightCard)
+            case "paragraphMarginTop": AnyView(paragraphMarginTopCard)
+            case "blockRadius": AnyView(blockRadiusCard)
+            default: AnyView(EmptyView())
+            }
+        } else {
+            switch item {
+            case "colorFill": AnyView(colorFillGlobalCard)
+            case "colorFillSecondary": AnyView(colorFillSecondaryGlobalCard)
+            case "controlHeight": AnyView(controlHeightGlobalCard)
+            case "controlHeightSM": AnyView(controlHeightSMGlobalCard)
+            case "controlHeightLG": AnyView(controlHeightLGGlobalCard)
+            case "borderRadiusSM": AnyView(borderRadiusSMGlobalCard)
+            case "marginLG": AnyView(marginLGGlobalCard)
+            case "marginXXS": AnyView(marginXXSGlobalCard)
+            default: AnyView(EmptyView())
+            }
         }
     }
 
@@ -89,7 +132,7 @@ struct SkeletonTokenView: View {
             sectionId: "component"
         ) {
             Moin.Skeleton(active: false)
-                .frame(width: 280)
+                .frame(width: 200)
         } editor: {
             ColorPresetRow(label: "gradientFromColor", color: Binding(
                 get: { config.components.skeleton.gradientFromColor },
@@ -98,6 +141,7 @@ struct SkeletonTokenView: View {
         } code: {
             "config.components.skeleton.gradientFromColor = Color(...)"
         }
+        .scrollAnchor("component.gradientFromColor")
     }
 
     private var gradientToColorCard: some View {
@@ -109,7 +153,7 @@ struct SkeletonTokenView: View {
             sectionId: "component"
         ) {
             Moin.Skeleton(active: true)
-                .frame(width: 280)
+                .frame(width: 200)
         } editor: {
             ColorPresetRow(label: "gradientToColor", color: Binding(
                 get: { config.components.skeleton.gradientToColor },
@@ -118,6 +162,7 @@ struct SkeletonTokenView: View {
         } code: {
             "config.components.skeleton.gradientToColor = Color(...)"
         }
+        .scrollAnchor("component.gradientToColor")
     }
 
     private var titleHeightCard: some View {
@@ -128,8 +173,8 @@ struct SkeletonTokenView: View {
             description: tr("skeleton.token.titleHeight.desc"),
             sectionId: "component"
         ) {
-            Moin.Skeleton(title: true, paragraph: true)
-                .frame(width: 280)
+            Moin.Skeleton(title: true, paragraph: false)
+                .frame(width: 200)
         } editor: {
             TokenValueRow(label: "titleHeight", value: Binding(
                 get: { config.components.skeleton.titleHeight },
@@ -138,6 +183,7 @@ struct SkeletonTokenView: View {
         } code: {
             "config.components.skeleton.titleHeight = \(Int(config.components.skeleton.titleHeight))"
         }
+        .scrollAnchor("component.titleHeight")
     }
 
     private var paragraphLiHeightCard: some View {
@@ -148,8 +194,8 @@ struct SkeletonTokenView: View {
             description: tr("skeleton.token.paragraphLiHeight.desc"),
             sectionId: "component"
         ) {
-            Moin.Skeleton(title: true, paragraph: true)
-                .frame(width: 280)
+            Moin.Skeleton(title: false, paragraph: true)
+                .frame(width: 200)
         } editor: {
             TokenValueRow(label: "paragraphLiHeight", value: Binding(
                 get: { config.components.skeleton.paragraphLiHeight },
@@ -158,6 +204,7 @@ struct SkeletonTokenView: View {
         } code: {
             "config.components.skeleton.paragraphLiHeight = \(Int(config.components.skeleton.paragraphLiHeight))"
         }
+        .scrollAnchor("component.paragraphLiHeight")
     }
 
     private var paragraphMarginTopCard: some View {
@@ -168,8 +215,8 @@ struct SkeletonTokenView: View {
             description: tr("skeleton.token.paragraphMarginTop.desc"),
             sectionId: "component"
         ) {
-            Moin.Skeleton(avatar: true, title: true, paragraph: true)
-                .frame(width: 320)
+            Moin.Skeleton(avatar: true)
+                .frame(width: 200)
         } editor: {
             TokenValueRow(label: "paragraphMarginTop", value: Binding(
                 get: { config.components.skeleton.paragraphMarginTop },
@@ -178,6 +225,7 @@ struct SkeletonTokenView: View {
         } code: {
             "config.components.skeleton.paragraphMarginTop = \(Int(config.components.skeleton.paragraphMarginTop))"
         }
+        .scrollAnchor("component.paragraphMarginTop")
     }
 
     private var blockRadiusCard: some View {
@@ -189,7 +237,7 @@ struct SkeletonTokenView: View {
             sectionId: "component"
         ) {
             Moin.Skeleton()
-                .frame(width: 280)
+                .frame(width: 200)
         } editor: {
             TokenValueRow(label: "blockRadius", value: Binding(
                 get: { config.components.skeleton.blockRadius },
@@ -198,5 +246,149 @@ struct SkeletonTokenView: View {
         } code: {
             "config.components.skeleton.blockRadius = \(Int(config.components.skeleton.blockRadius))"
         }
+        .scrollAnchor("component.blockRadius")
+    }
+
+    // MARK: - Global Token Cards
+
+    private var colorFillGlobalCard: some View {
+        TokenCard(
+            name: "colorFill",
+            type: "Color",
+            defaultValue: "#000000 15%",
+            description: tr("skeleton.token.global.colorFill.desc"),
+            sectionId: "global"
+        ) {
+            Moin.Skeleton(active: true)
+                .frame(width: 200)
+        } code: {
+            "// \(tr("skeleton.token.global.derived"))"
+        }
+        .scrollAnchor("global.colorFill")
+    }
+
+    private var colorFillSecondaryGlobalCard: some View {
+        TokenCard(
+            name: "colorFillSecondary",
+            type: "Color",
+            defaultValue: "#000000 6%",
+            description: tr("skeleton.token.global.colorFillSecondary.desc"),
+            sectionId: "global"
+        ) {
+            Moin.Skeleton(active: false)
+                .frame(width: 200)
+        } code: {
+            "// \(tr("skeleton.token.global.derived"))"
+        }
+        .scrollAnchor("global.colorFillSecondary")
+    }
+
+    private var controlHeightGlobalCard: some View {
+        TokenCard(
+            name: "controlHeight",
+            type: "CGFloat",
+            defaultValue: "32",
+            description: tr("skeleton.token.global.controlHeight.desc"),
+            sectionId: "global"
+        ) {
+            HStack(spacing: Moin.Constants.Spacing.md) {
+                Moin.SkeletonAvatar(size: .small)
+                Moin.SkeletonAvatar(size: .default)
+                Moin.SkeletonAvatar(size: .large)
+            }
+        } editor: {
+            TokenValueRow(label: "controlHeight", value: $config.seed.controlHeight, range: 24...48, onChange: { config.regenerateTokens() })
+        } code: {
+            "config.seed.controlHeight = \(Int(config.seed.controlHeight))"
+        }
+        .scrollAnchor("global.controlHeight")
+    }
+
+    private var controlHeightSMGlobalCard: some View {
+        TokenCard(
+            name: "controlHeightSM",
+            type: "CGFloat",
+            defaultValue: "24",
+            description: tr("skeleton.token.global.controlHeightSM.desc"),
+            sectionId: "global"
+        ) {
+            HStack(spacing: Moin.Constants.Spacing.md) {
+                Moin.SkeletonAvatar(size: .small)
+                Moin.SkeletonButton(size: .small)
+                Moin.SkeletonInput(size: .small)
+            }
+        } code: {
+            "// \(tr("skeleton.token.global.derived_from_controlHeight"))"
+        }
+        .scrollAnchor("global.controlHeightSM")
+    }
+
+    private var controlHeightLGGlobalCard: some View {
+        TokenCard(
+            name: "controlHeightLG",
+            type: "CGFloat",
+            defaultValue: "40",
+            description: tr("skeleton.token.global.controlHeightLG.desc"),
+            sectionId: "global"
+        ) {
+            HStack(spacing: Moin.Constants.Spacing.md) {
+                Moin.SkeletonAvatar(size: .large)
+                Moin.SkeletonButton(size: .large)
+                Moin.SkeletonInput(size: .large)
+            }
+        } code: {
+            "// \(tr("skeleton.token.global.derived_from_controlHeight"))"
+        }
+        .scrollAnchor("global.controlHeightLG")
+    }
+
+    private var borderRadiusSMGlobalCard: some View {
+        TokenCard(
+            name: "borderRadiusSM",
+            type: "CGFloat",
+            defaultValue: "4",
+            description: tr("skeleton.token.global.borderRadiusSM.desc"),
+            sectionId: "global"
+        ) {
+            Moin.Skeleton()
+                .frame(width: 200)
+        } editor: {
+            TokenValueRow(label: "borderRadius", value: $config.seed.borderRadius, range: 0...20, onChange: { config.regenerateTokens() })
+        } code: {
+            "config.seed.borderRadius = \(Int(config.seed.borderRadius))"
+        }
+        .scrollAnchor("global.borderRadiusSM")
+    }
+
+    private var marginLGGlobalCard: some View {
+        TokenCard(
+            name: "marginLG",
+            type: "CGFloat",
+            defaultValue: "24",
+            description: tr("skeleton.token.global.marginLG.desc"),
+            sectionId: "global"
+        ) {
+            Moin.Skeleton(avatar: true)
+                .frame(width: 200)
+        } code: {
+            "// \(tr("skeleton.token.global.derived"))"
+        }
+        .scrollAnchor("global.marginLG")
+    }
+
+    private var marginXXSGlobalCard: some View {
+        TokenCard(
+            name: "marginXXS",
+            type: "CGFloat",
+            defaultValue: "4",
+            description: tr("skeleton.token.global.marginXXS.desc"),
+            sectionId: "global"
+        ) {
+            Moin.Skeleton(avatar: true)
+                .frame(width: 200)
+        } code: {
+            "// \(tr("skeleton.token.global.derived"))"
+        }
+        .scrollAnchor("global.marginXXS")
     }
 }

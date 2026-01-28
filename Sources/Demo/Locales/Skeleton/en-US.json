@@ -100,6 +100,34 @@
       },
       "blockRadius": {
         "desc": "Border radius of skeleton elements"
+      },
+      "global": {
+        "derived": "Derived from global token",
+        "derived_from_controlHeight": "Derived from controlHeight",
+        "colorFill": {
+          "desc": "Fill color, used for skeleton animation gradient end"
+        },
+        "colorFillSecondary": {
+          "desc": "Secondary fill color, used for skeleton base background"
+        },
+        "controlHeight": {
+          "desc": "Base control height, affects skeleton element sizes"
+        },
+        "controlHeightSM": {
+          "desc": "Small control height, used for small skeleton elements"
+        },
+        "controlHeightLG": {
+          "desc": "Large control height, used for large skeleton elements"
+        },
+        "borderRadiusSM": {
+          "desc": "Small border radius, used for skeleton element corners"
+        },
+        "marginLG": {
+          "desc": "Large margin, used for calculating paragraph margin top"
+        },
+        "marginXXS": {
+          "desc": "Extra extra small margin, used for calculating paragraph margin top"
+        }
       }
     }
   }
