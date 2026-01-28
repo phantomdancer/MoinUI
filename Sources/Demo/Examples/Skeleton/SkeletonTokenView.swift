@@ -263,9 +263,17 @@ struct SkeletonTokenView: View {
             Moin.Skeleton(active: false)
                 .frame(width: 200)
         } editor: {
-            ColorPresetRow(label: "colorBgBase", color: $config.seed.colorBgBase, onChange: { config.regenerateTokens() })
+            ColorPresetRow(label: "colorBgBase", color: $config.seed.colorBgBase, onChange: {
+                config.regenerateTokens()
+                config.components.skeleton = .generate(from: config.token)
+            })
         } code: {
-            "// \(tr("skeleton.token.global.derived_from")) colorBgBase"
+            """
+            // colorFillSecondary \(tr("skeleton.token.global.derived_from")) colorBgBase
+            config.seed.colorBgBase = Color(...)
+            config.regenerateTokens()
+            config.components.skeleton = .generate(from: config.token)
+            """
         }
         .scrollAnchor("global.colorFillSecondary")
     }
@@ -281,9 +289,17 @@ struct SkeletonTokenView: View {
             Moin.Skeleton(active: true)
                 .frame(width: 200)
         } editor: {
-            ColorPresetRow(label: "colorBgBase", color: $config.seed.colorBgBase, onChange: { config.regenerateTokens() })
+            ColorPresetRow(label: "colorBgBase", color: $config.seed.colorBgBase, onChange: {
+                config.regenerateTokens()
+                config.components.skeleton = .generate(from: config.token)
+            })
         } code: {
-            "// \(tr("skeleton.token.global.derived_from")) colorBgBase"
+            """
+            // colorFill \(tr("skeleton.token.global.derived_from")) colorBgBase
+            config.seed.colorBgBase = Color(...)
+            config.regenerateTokens()
+            config.components.skeleton = .generate(from: config.token)
+            """
         }
         .scrollAnchor("global.colorFill")
     }
@@ -327,7 +343,11 @@ struct SkeletonTokenView: View {
         } editor: {
             TokenValueRow(label: "controlHeight", value: $config.seed.controlHeight, range: 24...48, onChange: { config.regenerateTokens() })
         } code: {
-            "// controlHeightSM = controlHeight × 0.75"
+            """
+            // controlHeightSM = controlHeight × 0.75
+            config.seed.controlHeight = \(Int(config.seed.controlHeight))
+            config.regenerateTokens()
+            """
         }
         .scrollAnchor("global.controlHeightSM")
     }
@@ -349,7 +369,11 @@ struct SkeletonTokenView: View {
         } editor: {
             TokenValueRow(label: "controlHeight", value: $config.seed.controlHeight, range: 24...48, onChange: { config.regenerateTokens() })
         } code: {
-            "// controlHeightLG = controlHeight × 1.25"
+            """
+            // controlHeightLG = controlHeight × 1.25
+            config.seed.controlHeight = \(Int(config.seed.controlHeight))
+            config.regenerateTokens()
+            """
         }
         .scrollAnchor("global.controlHeightLG")
     }
@@ -386,7 +410,12 @@ struct SkeletonTokenView: View {
         } editor: {
             TokenValueRow(label: "sizeUnit", value: $config.seed.sizeUnit, range: 2...8, onChange: { config.regenerateTokens() })
         } code: {
-            "// marginLG = sizeUnit × 6 = \(Int(config.seed.sizeUnit)) × 6 = \(Int(config.seed.sizeUnit * 6))"
+            """
+            // marginLG = sizeUnit × 6
+            config.seed.sizeUnit = \(Int(config.seed.sizeUnit))
+            config.regenerateTokens()
+            // marginLG = \(Int(config.seed.sizeUnit)) × 6 = \(Int(config.seed.sizeUnit * 6))
+            """
         }
         .scrollAnchor("global.marginLG")
     }
@@ -405,7 +434,12 @@ struct SkeletonTokenView: View {
         } editor: {
             TokenValueRow(label: "sizeUnit", value: $config.seed.sizeUnit, range: 2...8, onChange: { config.regenerateTokens() })
         } code: {
-            "// marginXXS = sizeUnit = \(Int(config.seed.sizeUnit))"
+            """
+            // marginXXS = sizeUnit
+            config.seed.sizeUnit = \(Int(config.seed.sizeUnit))
+            config.regenerateTokens()
+            // marginXXS = \(Int(config.seed.sizeUnit))
+            """
         }
         .scrollAnchor("global.marginXXS")
     }
