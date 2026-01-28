@@ -264,6 +264,10 @@ private struct MoinRadioTokenKey: EnvironmentKey {
     static let defaultValue = Moin.RadioToken.default
 }
 
+private struct MoinSkeletonTokenKey: EnvironmentKey {
+    static let defaultValue = Moin.SkeletonToken.default
+}
+
 public extension EnvironmentValues {
     var moinConfig: Moin.ConfigProvider {
         get { self[MoinConfigProviderKey.self] }
@@ -354,6 +358,11 @@ public extension EnvironmentValues {
         get { self[MoinRadioTokenKey.self] }
         set { self[MoinRadioTokenKey.self] = newValue }
     }
+
+    var moinSkeletonToken: Moin.SkeletonToken {
+        get { self[MoinSkeletonTokenKey.self] }
+        set { self[MoinSkeletonTokenKey.self] = newValue }
+    }
 }
 
 // MARK: - View Modifier
@@ -413,6 +422,8 @@ public extension Moin {
                 .environment(\.moinRadioToken, config.components.radio)
                 .environment(\.moinSpaceToken, config.components.space)
                 .environment(\.moinDividerToken, config.components.divider)
+                .environment(\.moinSkeletonToken, config.components.skeleton)
+                .environment(\.moinRateToken, config.components.rate)
                 .environment(\.moinTheme, config.theme)
                 .environment(\.moinComponents, config.components)
                 .environmentObject(config)

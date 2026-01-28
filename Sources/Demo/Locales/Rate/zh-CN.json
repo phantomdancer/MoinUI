@@ -1,0 +1,77 @@
+{
+  "component.rate": "Rate 评分",
+  "rate": {
+    "basic": "基础用法",
+    "basic_desc": "最简单的评分组件",
+    "half": "半星",
+    "half_desc": "支持选择半星",
+    "disabled": "只读",
+    "disabled_desc": "禁用交互的只读状态",
+    "clear": "清除",
+    "clear_desc": "再次点击可清除评分",
+    "count": "自定义数量",
+    "count_desc": "自定义星星总数",
+    "character": "自定义字符",
+    "character_desc": "使用自定义图标或字符",
+    "size": "尺寸",
+    "size_desc": "三种预设尺寸",
+    "default": "默认",
+    "current_value": "当前值",
+    "heart_icon": "心形图标",
+    "letter_character": "字母字符",
+    "hover_to_see_effect": "悬停查看效果",
+    "prop_value": "当前评分值（受控）",
+    "prop_count": "星星总数",
+    "prop_allowHalf": "是否允许半星选择",
+    "prop_allowClear": "是否允许再次点击清除评分",
+    "prop_disabled": "是否禁用评分交互",
+    "prop_size": "星星尺寸规格",
+    "prop_character": "自定义评分字符视图",
+    "prop_onChange": "评分值变化时的回调",
+    "prop_onHoverChange": "鼠标悬停值变化时的回调",
+    "token": {
+      "starColor": {
+        "desc": "已填充星星的颜色"
+      },
+      "starBg": {
+        "desc": "未填充星星的背景颜色"
+      },
+      "starSize": {
+        "desc": "默认尺寸星星的大小"
+      },
+      "starSizeSM": {
+        "desc": "小号尺寸星星的大小"
+      },
+      "starSizeLG": {
+        "desc": "大号尺寸星星的大小"
+      },
+      "starHoverScale": {
+        "desc": "悬停时星星的缩放比例"
+      },
+      "starGap": {
+        "desc": "星星之间的间距"
+      },
+      "global": {
+        "derived_from": "派生自",
+        "yellow6": {
+          "desc": "黄色调第6级，用于已填充星星的颜色"
+        },
+        "colorFillContent": {
+          "desc": "内容填充色，用于未填充星星的背景"
+        },
+        "controlHeight": {
+          "desc": "控件基础高度，影响默认星星尺寸"
+        },
+        "controlHeightSM": {
+          "desc": "小号控件高度，影响小号星星尺寸"
+        },
+        "controlHeightLG": {
+          "desc": "大号控件高度，影响大号星星尺寸"
+        },
+        "marginXXS": {
+          "desc": "超小间距，用于星星之间的间距"
+        }
+      }
+    }
+  }
+}

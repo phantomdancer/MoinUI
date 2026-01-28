@@ -168,13 +168,14 @@ struct ContentView: View {
     @State private var checkboxTab: CheckboxExamplesTab = .examples
     @State private var radioTab: RadioExamplesTab = .examples
     @State private var skeletonTab: SkeletonExamplesTab = .examples
+    @State private var rateTab: RateExamplesTab = .examples
 
     var body: some View {
         NavigationSplitView {
             Sidebar(selection: $navManager.selectedItem)
                 .navigationSplitViewColumnWidth(min: 240, ideal: 300, max: 420)
         } detail: {
-            DetailView(item: navManager.selectedItem, buttonTab: $buttonTab, switchTab: $switchTab, checkboxTab: $checkboxTab, radioTab: $radioTab, typographyTab: $typographyTab, tagTab: $tagTab, spaceTab: $spaceTab, dividerTab: $dividerTab, badgeTab: $badgeTab, avatarTab: $avatarTab, emptyTab: $emptyTab, spinTab: $spinTab, statisticTab: $statisticTab, alertTab: $alertTab, progressTab: $progressTab, tokenTab: $tokenTab, skeletonTab: $skeletonTab)
+            DetailView(item: navManager.selectedItem, buttonTab: $buttonTab, switchTab: $switchTab, checkboxTab: $checkboxTab, radioTab: $radioTab, typographyTab: $typographyTab, tagTab: $tagTab, spaceTab: $spaceTab, dividerTab: $dividerTab, badgeTab: $badgeTab, avatarTab: $avatarTab, emptyTab: $emptyTab, spinTab: $spinTab, statisticTab: $statisticTab, alertTab: $alertTab, progressTab: $progressTab, tokenTab: $tokenTab, skeletonTab: $skeletonTab, rateTab: $rateTab)
                 .navigationTitle(navManager.selectedItem.map { tr($0.titleKey) } ?? "MoinUI")
                 .toolbar {
                     ToolbarItemGroup(placement: .primaryAction) {
@@ -360,6 +361,17 @@ struct ContentView: View {
                              .fixedSize()
                         }
 
+                        // Rate 页面显示 Tab 切换
+                        if navManager.selectedItem == .rate {
+                             Picker("", selection: $rateTab) {
+                                 Text(tr("tab.examples")).tag(RateExamplesTab.examples)
+                                 Text(tr("tab.api")).tag(RateExamplesTab.api)
+                                 Text(tr("tab.token")).tag(RateExamplesTab.token)
+                             }
+                             .pickerStyle(.segmented)
+                             .fixedSize()
+                        }
+
                         Spacer()
 
                         Button {
@@ -407,6 +419,7 @@ enum NavItem: String, Identifiable {
     case `switch`
     case checkbox
     case radio
+    case rate
 
 
     // Components - Feedback
@@ -444,6 +457,7 @@ enum NavItem: String, Identifiable {
         case .switch: return DemoIcons.switchIcon
         case .checkbox: return DemoIcons.checkbox
         case .radio: return DemoIcons.radio
+        case .rate: return DemoIcons.rate
         case .alert: return DemoIcons.alert
         case .spin: return DemoIcons.spin
         case .progress: return DemoIcons.progress
@@ -472,6 +486,7 @@ enum NavItem: String, Identifiable {
         case .switch: return "component.switch"
         case .checkbox: return "component.checkbox"
         case .radio: return "component.radio"
+        case .rate: return "component.rate"
         case .alert: return "component.alert"
         case .spin: return "component.spin"
         case .progress: return "component.progress"
@@ -486,7 +501,7 @@ enum NavItem: String, Identifiable {
 
     static var overview: [NavItem] { [.introduction, .quickStart] }
     static var general: [NavItem] { [.button, .tag, .typography] }
-    static var dataEntry: [NavItem] { [.switch, .checkbox, .radio] }
+    static var dataEntry: [NavItem] { [.switch, .checkbox, .radio, .rate] }
     static var dataDisplay: [NavItem] { [.avatar, .badge, .empty, .statistic] }
     static var feedback: [NavItem] { [.alert, .spin, .progress, .skeleton] }
     static var layout: [NavItem] { [.divider, .space] }
@@ -589,6 +604,7 @@ struct DetailView: View {
     @Binding var progressTab: ProgressExamplesTab
     @Binding var tokenTab: TokenExamplesTab
     @Binding var skeletonTab: SkeletonExamplesTab
+    @Binding var rateTab: RateExamplesTab
 
     var body: some View {
         Group {
@@ -609,6 +625,8 @@ struct DetailView: View {
                 CheckboxExamples(selectedTab: $checkboxTab)
             case .radio:
                 RadioExamples(selectedTab: $radioTab)
+            case .rate:
+                RateExamples(selectedTab: $rateTab)
             case .typography:
                 TypographyExamples(selectedTab: $typographyTab)
             case .tag:

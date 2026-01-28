@@ -1,0 +1,77 @@
+{
+  "component.rate": "Rate",
+  "rate": {
+    "basic": "Basic",
+    "basic_desc": "The simplest rate component",
+    "half": "Half Star",
+    "half_desc": "Support selecting half star",
+    "disabled": "Read Only",
+    "disabled_desc": "Disabled interaction in read-only state",
+    "clear": "Clear",
+    "clear_desc": "Click again to clear rating",
+    "count": "Custom Count",
+    "count_desc": "Customize the total number of stars",
+    "character": "Custom Character",
+    "character_desc": "Use custom icon or character",
+    "size": "Size",
+    "size_desc": "Three preset sizes",
+    "default": "Default",
+    "current_value": "Current value",
+    "heart_icon": "Heart icon",
+    "letter_character": "Letter character",
+    "hover_to_see_effect": "Hover to see effect",
+    "prop_value": "Current rating value (controlled)",
+    "prop_count": "Total number of stars",
+    "prop_allowHalf": "Whether to allow half star selection",
+    "prop_allowClear": "Whether to allow clearing rating by clicking again",
+    "prop_disabled": "Whether to disable rating interaction",
+    "prop_size": "Star size specification",
+    "prop_character": "Custom rating character view",
+    "prop_onChange": "Callback when rating value changes",
+    "prop_onHoverChange": "Callback when hover value changes",
+    "token": {
+      "starColor": {
+        "desc": "Color of filled stars"
+      },
+      "starBg": {
+        "desc": "Background color of unfilled stars"
+      },
+      "starSize": {
+        "desc": "Size of default stars"
+      },
+      "starSizeSM": {
+        "desc": "Size of small stars"
+      },
+      "starSizeLG": {
+        "desc": "Size of large stars"
+      },
+      "starHoverScale": {
+        "desc": "Scale ratio when hovering over star"
+      },
+      "starGap": {
+        "desc": "Gap between stars"
+      },
+      "global": {
+        "derived_from": "Derived from",
+        "yellow6": {
+          "desc": "Yellow level 6, used for filled star color"
+        },
+        "colorFillContent": {
+          "desc": "Content fill color, used for unfilled star background"
+        },
+        "controlHeight": {
+          "desc": "Base control height, affects default star size"
+        },
+        "controlHeightSM": {
+          "desc": "Small control height, affects small star size"
+        },
+        "controlHeightLG": {
+          "desc": "Large control height, affects large star size"
+        },
+        "marginXXS": {
+          "desc": "Extra extra small margin, used for star gap"
+        }
+      }
+    }
+  }
+}

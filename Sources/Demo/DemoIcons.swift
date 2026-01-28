@@ -36,6 +36,9 @@ struct DemoIcons {
     static let spin = "arrow.trianglehead.2.counterclockwise.rotate.90"
     static let progress = "percent"
     static let skeleton = "rectangle.dashed"
+
+    // Data Entry
+    static let rate = "star"
     
     // Other (Playground specific)
     static let seed = "leaf"

@@ -21,6 +21,7 @@ public enum Moin {
     public static let Checkbox = _MoinCheckboxFactory()
     public static let Radio = _MoinRadioFactory()
     public static let Skeleton = _MoinSkeletonFactory()
+    public static let Rate = _MoinRateFactory()
 
     // MARK: - Type Aliases
 
