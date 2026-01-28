@@ -67,6 +67,20 @@
     "token_input_default": "默认输入框",
     "token_input_lg": "大号输入框",
     "token_animation": "动画",
-    "token_motion_duration": "动画持续时间"
+    "token_motion_duration": "动画持续时间",
+
+    "api_avatar_size_desc": "头像尺寸，支持预设值 .small、.default、.large 或自定义数值",
+    "api_avatar_shape_desc": "头像形状，支持 .circle（圆形）或 .square（方形）",
+    "api_active_desc": "是否显示动画效果",
+    "api_button_size_desc": "按钮尺寸，支持预设值 .small、.default、.large 或自定义数值",
+    "api_button_shape_desc": "按钮形状，支持 .default（默认）、.circle（圆形）、.round（圆角）、.square（方形）",
+    "api_block_desc": "是否为块级元素（撑满容器宽度）",
+    "api_input_size_desc": "输入框尺寸，支持预设值 .small、.default、.large 或自定义数值",
+    "api_image_width_desc": "图片宽度，nil 时使用默认值 96",
+    "api_image_height_desc": "图片高度，nil 时使用默认值 96",
+    "api_node_active_desc": "是否显示动画效果，当传入 content 时 active=true 会在内容上覆盖半透明骨架层",
+    "api_node_content_desc": "自定义内容，支持传入任意子视图。传入内容后，active=true 时会在内容上覆盖半透明骨架层",
+    "code_custom_size": "自定义尺寸",
+    "content": "内容"
   }
 }

@@ -293,7 +293,7 @@ struct SkeletonAPIView: View {
             name: "size",
             type: "Skeleton.Size",
             defaultValue: ".default",
-            description: "头像尺寸，支持预设值 .small、.default、.large 或自定义数值",
+            description: tr("skeleton.api_avatar_size_desc"),
             sectionId: "avatar"
         ) {
             HStack(spacing: 16) {
@@ -308,7 +308,7 @@ struct SkeletonAPIView: View {
             Moin.SkeletonAvatar(size: .small)
             Moin.SkeletonAvatar(size: .default)
             Moin.SkeletonAvatar(size: .large)
-            Moin.SkeletonAvatar(size: 48)  // 自定义尺寸
+            Moin.SkeletonAvatar(size: 48)  // \(tr("skeleton.code_custom_size"))
             """
         }
         .scrollAnchor("avatar.avatar.size")
@@ -319,7 +319,7 @@ struct SkeletonAPIView: View {
             name: "shape",
             type: "AvatarShape",
             defaultValue: ".circle",
-            description: "头像形状，支持 .circle（圆形）或 .square（方形）",
+            description: tr("skeleton.api_avatar_shape_desc"),
             sectionId: "avatar"
         ) {
             HStack(spacing: 16) {
@@ -340,7 +340,7 @@ struct SkeletonAPIView: View {
             name: "active",
             type: "Bool",
             defaultValue: "false",
-            description: "是否显示动画效果",
+            description: tr("skeleton.api_active_desc"),
             sectionId: "avatar"
         ) {
             HStack(spacing: 32) {
@@ -369,20 +369,22 @@ struct SkeletonAPIView: View {
             name: "size",
             type: "Skeleton.Size",
             defaultValue: ".default",
-            description: "按钮尺寸，支持预设值 .small、.default、.large 或自定义数值",
+            description: tr("skeleton.api_button_size_desc"),
             sectionId: "button"
         ) {
             HStack(spacing: 16) {
                 Moin.SkeletonButton(size: .small)
                 Moin.SkeletonButton(size: .default)
                 Moin.SkeletonButton(size: .large)
+                Moin.SkeletonButton(size: 36)
             }
-            .frame(maxWidth: 400, alignment: .leading)
+            .frame(maxWidth: 500, alignment: .leading)
         } code: {
             """
             Moin.SkeletonButton(size: .small)
             Moin.SkeletonButton(size: .default)
             Moin.SkeletonButton(size: .large)
+            Moin.SkeletonButton(size: 36)  // \(tr("skeleton.code_custom_size"))
             """
         }
         .scrollAnchor("button.button.size")
@@ -393,7 +395,7 @@ struct SkeletonAPIView: View {
             name: "shape",
             type: "ButtonShape",
             defaultValue: ".default",
-            description: "按钮形状，支持 .default（默认）、.circle（圆形）、.round（圆角）、.square（方形）",
+            description: tr("skeleton.api_button_shape_desc"),
             sectionId: "button"
         ) {
             HStack(spacing: 16) {
@@ -419,7 +421,7 @@ struct SkeletonAPIView: View {
             name: "block",
             type: "Bool",
             defaultValue: "false",
-            description: "是否为块级元素（撑满容器宽度）",
+            description: tr("skeleton.api_block_desc"),
             sectionId: "button"
         ) {
             HStack(spacing: 16) {
@@ -441,7 +443,7 @@ struct SkeletonAPIView: View {
             name: "active",
             type: "Bool",
             defaultValue: "false",
-            description: "是否显示动画效果",
+            description: tr("skeleton.api_active_desc"),
             sectionId: "button"
         ) {
             HStack(spacing: 32) {
@@ -470,20 +472,22 @@ struct SkeletonAPIView: View {
             name: "size",
             type: "Skeleton.Size",
             defaultValue: ".default",
-            description: "输入框尺寸，支持预设值 .small、.default、.large 或自定义数值",
+            description: tr("skeleton.api_input_size_desc"),
             sectionId: "input"
         ) {
             HStack(spacing: 16) {
                 Moin.SkeletonInput(size: .small)
                 Moin.SkeletonInput(size: .default)
                 Moin.SkeletonInput(size: .large)
+                Moin.SkeletonInput(size: 44)
             }
-            .frame(maxWidth: 400, alignment: .leading)
+            .frame(maxWidth: 500, alignment: .leading)
         } code: {
             """
             Moin.SkeletonInput(size: .small)
             Moin.SkeletonInput(size: .default)
             Moin.SkeletonInput(size: .large)
+            Moin.SkeletonInput(size: 44)  // \(tr("skeleton.code_custom_size"))
             """
         }
         .scrollAnchor("input.input.size")
@@ -494,7 +498,7 @@ struct SkeletonAPIView: View {
             name: "block",
             type: "Bool",
             defaultValue: "false",
-            description: "是否为块级元素（撑满容器宽度）",
+            description: tr("skeleton.api_block_desc"),
             sectionId: "input"
         ) {
             HStack(spacing: 16) {
@@ -517,7 +521,7 @@ struct SkeletonAPIView: View {
             name: "active",
             type: "Bool",
             defaultValue: "false",
-            description: "是否显示动画效果",
+            description: tr("skeleton.api_active_desc"),
             sectionId: "input"
         ) {
             HStack(spacing: 32) {
@@ -546,7 +550,7 @@ struct SkeletonAPIView: View {
             name: "width",
             type: "CGFloat?",
             defaultValue: "nil",
-            description: "图片宽度，nil 时使用默认值 96",
+            description: tr("skeleton.api_image_width_desc"),
             sectionId: "image"
         ) {
             HStack(spacing: 16) {
@@ -567,7 +571,7 @@ struct SkeletonAPIView: View {
             name: "height",
             type: "CGFloat?",
             defaultValue: "nil",
-            description: "图片高度，nil 时使用默认值 96",
+            description: tr("skeleton.api_image_height_desc"),
             sectionId: "image"
         ) {
             HStack(spacing: 16) {
@@ -588,7 +592,7 @@ struct SkeletonAPIView: View {
             name: "active",
             type: "Bool",
             defaultValue: "false",
-            description: "是否显示动画效果",
+            description: tr("skeleton.api_active_desc"),
             sectionId: "image"
         ) {
             HStack(spacing: 32) {
@@ -617,7 +621,7 @@ struct SkeletonAPIView: View {
             name: "active",
             type: "Bool",
             defaultValue: "false",
-            description: "是否显示动画效果，当传入 content 时 active=true 会在内容上覆盖半透明骨架层",
+            description: tr("skeleton.api_node_active_desc"),
             sectionId: "node"
         ) {
             HStack(spacing: 16) {
@@ -647,7 +651,7 @@ struct SkeletonAPIView: View {
             name: "content",
             type: "View?",
             defaultValue: "nil",
-            description: "自定义内容，支持传入任意子视图。传入内容后，active=true 时会在内容上覆盖半透明骨架层",
+            description: tr("skeleton.api_node_content_desc"),
             sectionId: "node"
         ) {
             HStack(spacing: 16) {
@@ -658,7 +662,7 @@ struct SkeletonAPIView: View {
                         .frame(width: 40, height: 40)
                 }
                 Moin.SkeletonNode {
-                    Text("Content")
+                    Text(tr("skeleton.content"))
                         .padding()
                         .background(Color.gray.opacity(0.2))
                         .cornerRadius(8)
@@ -670,6 +674,9 @@ struct SkeletonAPIView: View {
             Moin.SkeletonNode()
             Moin.SkeletonNode(active: true) {
                 Circle().fill(Color.blue).frame(width: 40, height: 40)
+            }
+            Moin.SkeletonNode {
+                Text("\(tr("skeleton.content"))")
             }
             """
         }

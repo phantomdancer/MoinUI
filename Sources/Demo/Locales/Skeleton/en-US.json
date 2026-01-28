@@ -67,6 +67,20 @@
     "token_input_default": "Default input",
     "token_input_lg": "Large input",
     "token_animation": "Animation",
-    "token_motion_duration": "Animation duration"
+    "token_motion_duration": "Animation duration",
+
+    "api_avatar_size_desc": "Avatar size, supports preset values .small, .default, .large or custom number",
+    "api_avatar_shape_desc": "Avatar shape, supports .circle or .square",
+    "api_active_desc": "Whether to show animation effect",
+    "api_button_size_desc": "Button size, supports preset values .small, .default, .large or custom number",
+    "api_button_shape_desc": "Button shape, supports .default, .circle, .round, .square",
+    "api_block_desc": "Whether to be block element (fill container width)",
+    "api_input_size_desc": "Input size, supports preset values .small, .default, .large or custom number",
+    "api_image_width_desc": "Image width, uses default value 96 when nil",
+    "api_image_height_desc": "Image height, uses default value 96 when nil",
+    "api_node_active_desc": "Whether to show animation effect. When content is provided and active=true, a semi-transparent skeleton layer will overlay the content",
+    "api_node_content_desc": "Custom content, supports any child view. When content is provided and active=true, a semi-transparent skeleton layer will overlay the content",
+    "code_custom_size": "Custom size",
+    "content": "Content"
   }
 }
