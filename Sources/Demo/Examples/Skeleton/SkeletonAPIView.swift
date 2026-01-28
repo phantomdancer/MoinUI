@@ -168,13 +168,13 @@ struct SkeletonAPIView: View {
             description: tr("skeleton.prop_avatar"),
             sectionId: "skeleton"
         ) {
-            VStack(spacing: 16) {
+            HStack(spacing: 24) {
                 Moin.Skeleton(avatar: false)
-                    .frame(width: 300)
+                    .frame(width: 280)
                 Moin.Skeleton(avatar: true)
-                    .frame(width: 300)
+                    .frame(width: 280)
             }
-            .frame(maxWidth: 400, alignment: .leading)
+            .frame(maxWidth: 600, alignment: .leading)
         } code: {
             """
             Moin.Skeleton(avatar: false)
@@ -192,13 +192,13 @@ struct SkeletonAPIView: View {
             description: tr("skeleton.prop_title"),
             sectionId: "skeleton"
         ) {
-            VStack(spacing: 16) {
+            HStack(spacing: 24) {
                 Moin.Skeleton(title: true)
-                    .frame(width: 300)
+                    .frame(width: 280)
                 Moin.Skeleton(title: false)
-                    .frame(width: 300)
+                    .frame(width: 280)
             }
-            .frame(maxWidth: 400, alignment: .leading)
+            .frame(maxWidth: 600, alignment: .leading)
         } code: {
             """
             Moin.Skeleton(title: true)
@@ -216,13 +216,13 @@ struct SkeletonAPIView: View {
             description: tr("skeleton.prop_paragraph"),
             sectionId: "skeleton"
         ) {
-            VStack(spacing: 16) {
+            HStack(spacing: 24) {
                 Moin.Skeleton(title: true, paragraph: true)
-                    .frame(width: 300)
+                    .frame(width: 280)
                 Moin.Skeleton(title: true, paragraph: false)
-                    .frame(width: 300)
+                    .frame(width: 280)
             }
-            .frame(maxWidth: 400, alignment: .leading)
+            .frame(maxWidth: 600, alignment: .leading)
         } code: {
             """
             Moin.Skeleton(paragraph: true)
@@ -240,13 +240,13 @@ struct SkeletonAPIView: View {
             description: tr("skeleton.prop_round"),
             sectionId: "skeleton"
         ) {
-            VStack(spacing: 16) {
+            HStack(spacing: 24) {
                 Moin.Skeleton(round: false)
-                    .frame(width: 300)
+                    .frame(width: 280)
                 Moin.Skeleton(round: true)
-                    .frame(width: 300)
+                    .frame(width: 280)
             }
-            .frame(maxWidth: 400, alignment: .leading)
+            .frame(maxWidth: 600, alignment: .leading)
         } code: {
             """
             Moin.Skeleton(round: false)
