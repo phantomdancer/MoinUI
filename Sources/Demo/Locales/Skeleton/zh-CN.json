@@ -81,6 +81,26 @@
     "api_node_active_desc": "是否显示动画效果，当传入 content 时 active=true 会在内容上覆盖半透明骨架层",
     "api_node_content_desc": "自定义内容，支持传入任意子视图。传入内容后，active=true 时会在内容上覆盖半透明骨架层",
     "code_custom_size": "自定义尺寸",
-    "content": "内容"
+    "content": "内容",
+    "token": {
+      "gradientFromColor": {
+        "desc": "渐变色起点颜色，用于显示静态骨架效果"
+      },
+      "gradientToColor": {
+        "desc": "渐变色终点颜色，用于显示动画光效效果"
+      },
+      "titleHeight": {
+        "desc": "标题骨架的高度"
+      },
+      "paragraphLiHeight": {
+        "desc": "段落每行骨架的高度"
+      },
+      "paragraphMarginTop": {
+        "desc": "段落骨架与标题之间的间距"
+      },
+      "blockRadius": {
+        "desc": "骨架元素的圆角半径"
+      }
+    }
   }
 }

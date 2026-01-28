@@ -2,14 +2,17 @@ import SwiftUI
 
 // MARK: - Skeleton Background Helper
 
+/// 动画时长（与 Ant Design 保持一致）
+private let skeletonMotionDuration: Double = 1.4
+
 @ViewBuilder
 func _skeletonBackground(token: Moin.SkeletonToken, active: Bool) -> some View {
     if active {
         TimelineView(.animation) { timeline in
-            let phase = timeline.date.timeIntervalSinceReferenceDate.truncatingRemainder(dividingBy: token.motionDuration) / token.motionDuration
+            let phase = timeline.date.timeIntervalSinceReferenceDate.truncatingRemainder(dividingBy: skeletonMotionDuration) / skeletonMotionDuration
 
             Rectangle()
-                .fill(token.color)
+                .fill(token.gradientFromColor)
                 .overlay(
                     GeometryReader { geometry in
                         let shimmerWidth = max(geometry.size.width * 0.5, 60)
@@ -20,7 +23,7 @@ func _skeletonBackground(token: Moin.SkeletonToken, active: Bool) -> some View {
                                 LinearGradient(
                                     colors: [
                                         .clear,
-                                        token.colorGradientEnd.opacity(0.5),
+                                        token.gradientToColor.opacity(0.5),
                                         .clear
                                     ],
                                     startPoint: .leading,
@@ -35,7 +38,7 @@ func _skeletonBackground(token: Moin.SkeletonToken, active: Bool) -> some View {
         }
     } else {
         Rectangle()
-            .fill(token.color)
+            .fill(token.gradientFromColor)
     }
 }
 
@@ -163,11 +166,11 @@ public struct _Skeleton: View {
                     ForEach(0..<rows, id: \.self) { index in
                         _Skeleton.Block(
                             width: paragraphWidth(for: index, total: rows, config: paragraphConfig),
-                            height: token.paragraphLineHeight,
-                            radius: round ? token.paragraphLineHeight / 2 : token.blockRadius,
+                            height: token.paragraphLiHeight,
+                            radius: round ? token.paragraphLiHeight / 2 : token.blockRadius,
                             active: active
                         )
-                        .padding(.top, index == 0 && title != nil ? token.paragraphLineMarginTop : (index == 0 ? 0 : 16))
+                        .padding(.top, index == 0 && title != nil ? token.paragraphMarginTop : (index == 0 ? 0 : 16))
                     }
                 }
             }
@@ -272,24 +275,10 @@ public extension _Skeleton {
         /// 大尺寸
         public static let large = Size(40)
 
-        func avatarSize(from token: Moin.SkeletonToken) -> CGFloat {
-            if rawValue == Self.small.rawValue { return token.avatarSizeSM }
-            if rawValue == Self.`default`.rawValue { return token.avatarSize }
-            if rawValue == Self.large.rawValue { return token.avatarSizeLG }
-            return rawValue
-        }
-
-        func buttonHeight(from token: Moin.SkeletonToken) -> CGFloat {
-            if rawValue == Self.small.rawValue { return token.buttonHeightSM }
-            if rawValue == Self.`default`.rawValue { return token.buttonHeight }
-            if rawValue == Self.large.rawValue { return token.buttonHeightLG }
-            return rawValue
-        }
-
-        func inputHeight(from token: Moin.SkeletonToken) -> CGFloat {
-            if rawValue == Self.small.rawValue { return token.inputHeightSM }
-            if rawValue == Self.`default`.rawValue { return token.inputHeight }
-            if rawValue == Self.large.rawValue { return token.inputHeightLG }
+        func controlHeight(from token: Moin.Token) -> CGFloat {
+            if rawValue == Self.small.rawValue { return token.controlHeightSM }
+            if rawValue == Self.`default`.rawValue { return token.controlHeight }
+            if rawValue == Self.large.rawValue { return token.controlHeightLG }
             return rawValue
         }
     }
@@ -338,17 +327,17 @@ public extension _Skeleton {
         }
 
         public var body: some View {
-            let token = config.components.skeleton
-            let avatarSize = size.avatarSize(from: token)
+            let skeletonToken = config.components.skeleton
+            let avatarSize = size.controlHeight(from: globalToken)
 
             if shape == .circle {
-                _skeletonBackground(token: token, active: active)
+                _skeletonBackground(token: skeletonToken, active: active)
                     .frame(width: avatarSize, height: avatarSize)
                     .clipShape(Circle())
             } else {
-                _skeletonBackground(token: token, active: active)
+                _skeletonBackground(token: skeletonToken, active: active)
                     .frame(width: avatarSize, height: avatarSize)
-                    .clipShape(RoundedRectangle(cornerRadius: token.blockRadius))
+                    .clipShape(RoundedRectangle(cornerRadius: skeletonToken.blockRadius))
             }
         }
     }
@@ -380,8 +369,8 @@ public extension _Skeleton {
         }
 
         public var body: some View {
-            let token = config.components.skeleton
-            let height = size.buttonHeight(from: token)
+            let skeletonToken = config.components.skeleton
+            let height = size.controlHeight(from: globalToken)
             let width: CGFloat? = {
                 switch shape {
                 case .circle: return height
@@ -393,11 +382,11 @@ public extension _Skeleton {
                 case .circle: return height / 2
                 case .round: return height / 2
                 case .square: return 0
-                case .default: return token.blockRadius
+                case .default: return skeletonToken.blockRadius
                 }
             }()
 
-            _skeletonBackground(token: token, active: active)
+            _skeletonBackground(token: skeletonToken, active: active)
             .frame(width: width, height: height)
             .frame(maxWidth: block ? .infinity : nil)
             .clipShape(RoundedRectangle(cornerRadius: cornerRadius))
@@ -428,14 +417,14 @@ public extension _Skeleton {
         }
 
         public var body: some View {
-            let token = config.components.skeleton
-            let height = size.inputHeight(from: token)
+            let skeletonToken = config.components.skeleton
+            let height = size.controlHeight(from: globalToken)
             let width: CGFloat? = block ? nil : 200
 
-            _skeletonBackground(token: token, active: active)
+            _skeletonBackground(token: skeletonToken, active: active)
             .frame(width: width, height: height)
             .frame(maxWidth: block ? .infinity : nil)
-            .clipShape(RoundedRectangle(cornerRadius: token.blockRadius))
+            .clipShape(RoundedRectangle(cornerRadius: skeletonToken.blockRadius))
         }
     }
 }

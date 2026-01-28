@@ -81,6 +81,26 @@
     "api_node_active_desc": "Whether to show animation effect. When content is provided and active=true, a semi-transparent skeleton layer will overlay the content",
     "api_node_content_desc": "Custom content, supports any child view. When content is provided and active=true, a semi-transparent skeleton layer will overlay the content",
     "code_custom_size": "Custom size",
-    "content": "Content"
+    "content": "Content",
+    "token": {
+      "gradientFromColor": {
+        "desc": "Start color of gradient, used for static skeleton effect"
+      },
+      "gradientToColor": {
+        "desc": "End color of gradient, used for shimmer animation effect"
+      },
+      "titleHeight": {
+        "desc": "Height of title skeleton"
+      },
+      "paragraphLiHeight": {
+        "desc": "Height of each paragraph line"
+      },
+      "paragraphMarginTop": {
+        "desc": "Margin top of paragraph skeleton from title"
+      },
+      "blockRadius": {
+        "desc": "Border radius of skeleton elements"
+      }
+    }
   }
 }

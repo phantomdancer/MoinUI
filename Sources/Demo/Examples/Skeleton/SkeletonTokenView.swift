@@ -12,49 +12,17 @@ struct SkeletonTokenView: View {
 
     private var tokenSections: [DocSidebarSection] {
         [
-            // 组件 Token
             DocSidebarSection(
                 title: tr("doc.section.component_token"),
                 items: [
-                    .init(id: "color"),
-                    .init(id: "colorGradientEnd"),
+                    .init(id: "gradientFromColor"),
+                    .init(id: "gradientToColor"),
                     .init(id: "titleHeight"),
-                    .init(id: "paragraphLineHeight"),
-                    .init(id: "paragraphLineMarginTop"),
-                    .init(id: "blockRadius"),
-                    .init(id: "motionDuration")
+                    .init(id: "paragraphLiHeight"),
+                    .init(id: "paragraphMarginTop"),
+                    .init(id: "blockRadius")
                 ],
                 sectionId: "component"
-            ),
-            // 头像尺寸 Token
-            DocSidebarSection(
-                title: "Avatar Sizes",
-                items: [
-                    .init(id: "avatarSizeSM"),
-                    .init(id: "avatarSize"),
-                    .init(id: "avatarSizeLG")
-                ],
-                sectionId: "avatar"
-            ),
-            // 按钮尺寸 Token
-            DocSidebarSection(
-                title: "Button Sizes",
-                items: [
-                    .init(id: "buttonHeightSM"),
-                    .init(id: "buttonHeight"),
-                    .init(id: "buttonHeightLG")
-                ],
-                sectionId: "button"
-            ),
-            // 输入框尺寸 Token
-            DocSidebarSection(
-                title: "Input Sizes",
-                items: [
-                    .init(id: "inputHeightSM"),
-                    .init(id: "inputHeight"),
-                    .init(id: "inputHeightLG")
-                ],
-                sectionId: "input"
             )
         ]
     }
@@ -74,12 +42,6 @@ struct SkeletonTokenView: View {
             switch sectionId {
             case "component":
                 Text(tr("doc.section.component_token")).font(.title3).fontWeight(.semibold)
-            case "avatar":
-                Text("Avatar Sizes").font(.title3).fontWeight(.semibold)
-            case "button":
-                Text("Button Sizes").font(.title3).fontWeight(.semibold)
-            case "input":
-                Text("Input Sizes").font(.title3).fontWeight(.semibold)
             default:
                 EmptyView()
             }
@@ -106,73 +68,55 @@ struct SkeletonTokenView: View {
     @ViewBuilder
     private func cardForItem(_ item: String) -> some View {
         switch item {
-        // Component Tokens
-        case "color": colorCard
-        case "colorGradientEnd": colorGradientEndCard
+        case "gradientFromColor": gradientFromColorCard
+        case "gradientToColor": gradientToColorCard
         case "titleHeight": titleHeightCard
-        case "paragraphLineHeight": paragraphLineHeightCard
-        case "paragraphLineMarginTop": paragraphLineMarginTopCard
+        case "paragraphLiHeight": paragraphLiHeightCard
+        case "paragraphMarginTop": paragraphMarginTopCard
         case "blockRadius": blockRadiusCard
-        case "motionDuration": motionDurationCard
-
-        // Avatar Size Tokens
-        case "avatarSizeSM": avatarSizeSMCard
-        case "avatarSize": avatarSizeCard
-        case "avatarSizeLG": avatarSizeLGCard
-
-        // Button Size Tokens
-        case "buttonHeightSM": buttonHeightSMCard
-        case "buttonHeight": buttonHeightCard
-        case "buttonHeightLG": buttonHeightLGCard
-
-        // Input Size Tokens
-        case "inputHeightSM": inputHeightSMCard
-        case "inputHeight": inputHeightCard
-        case "inputHeightLG": inputHeightLGCard
-
         default: EmptyView()
         }
     }
 
     // MARK: - Component Token Cards
 
-    private var colorCard: some View {
+    private var gradientFromColorCard: some View {
         TokenCard(
-            name: "color",
+            name: "gradientFromColor",
             type: "Color",
             defaultValue: "token.colorFillSecondary",
-            description: "骨架屏主色，用于显示静态骨架效果",
+            description: tr("skeleton.token.gradientFromColor.desc"),
             sectionId: "component"
         ) {
             Moin.Skeleton(active: false)
-                .frame(width: 200)
+                .frame(width: 280)
         } editor: {
-            ColorPresetRow(label: "color", color: Binding(
-                get: { config.components.skeleton.color },
-                set: { config.components.skeleton.color = $0 }
+            ColorPresetRow(label: "gradientFromColor", color: Binding(
+                get: { config.components.skeleton.gradientFromColor },
+                set: { config.components.skeleton.gradientFromColor = $0 }
             ))
         } code: {
-            "config.components.skeleton.color = Color(...)"
+            "config.components.skeleton.gradientFromColor = Color(...)"
         }
     }
 
-    private var colorGradientEndCard: some View {
+    private var gradientToColorCard: some View {
         TokenCard(
-            name: "colorGradientEnd",
+            name: "gradientToColor",
             type: "Color",
             defaultValue: "token.colorFill",
-            description: "骨架屏渐变结束色，用于显示动画光效效果",
+            description: tr("skeleton.token.gradientToColor.desc"),
             sectionId: "component"
         ) {
             Moin.Skeleton(active: true)
-                .frame(width: 200)
+                .frame(width: 280)
         } editor: {
-            ColorPresetRow(label: "colorGradientEnd", color: Binding(
-                get: { config.components.skeleton.colorGradientEnd },
-                set: { config.components.skeleton.colorGradientEnd = $0 }
+            ColorPresetRow(label: "gradientToColor", color: Binding(
+                get: { config.components.skeleton.gradientToColor },
+                set: { config.components.skeleton.gradientToColor = $0 }
             ))
         } code: {
-            "config.components.skeleton.colorGradientEnd = Color(...)"
+            "config.components.skeleton.gradientToColor = Color(...)"
         }
     }
 
@@ -180,12 +124,12 @@ struct SkeletonTokenView: View {
         TokenCard(
             name: "titleHeight",
             type: "CGFloat",
-            defaultValue: "16",
-            description: "标题骨架的高度",
+            defaultValue: "token.controlHeight / 2",
+            description: tr("skeleton.token.titleHeight.desc"),
             sectionId: "component"
         ) {
-            Moin.Skeleton(title: true, paragraph: false)
-                .frame(width: 200)
+            Moin.Skeleton(title: true, paragraph: true)
+                .frame(width: 280)
         } editor: {
             TokenValueRow(label: "titleHeight", value: Binding(
                 get: { config.components.skeleton.titleHeight },
@@ -196,43 +140,43 @@ struct SkeletonTokenView: View {
         }
     }
 
-    private var paragraphLineHeightCard: some View {
+    private var paragraphLiHeightCard: some View {
         TokenCard(
-            name: "paragraphLineHeight",
+            name: "paragraphLiHeight",
             type: "CGFloat",
-            defaultValue: "16",
-            description: "段落每行骨架的高度",
+            defaultValue: "token.controlHeight / 2",
+            description: tr("skeleton.token.paragraphLiHeight.desc"),
             sectionId: "component"
         ) {
-            Moin.Skeleton(title: false, paragraph: true)
-                .frame(width: 200)
+            Moin.Skeleton(title: true, paragraph: true)
+                .frame(width: 280)
         } editor: {
-            TokenValueRow(label: "paragraphLineHeight", value: Binding(
-                get: { config.components.skeleton.paragraphLineHeight },
-                set: { config.components.skeleton.paragraphLineHeight = $0 }
+            TokenValueRow(label: "paragraphLiHeight", value: Binding(
+                get: { config.components.skeleton.paragraphLiHeight },
+                set: { config.components.skeleton.paragraphLiHeight = $0 }
             ), range: 8...32, step: 2)
         } code: {
-            "config.components.skeleton.paragraphLineHeight = \(Int(config.components.skeleton.paragraphLineHeight))"
+            "config.components.skeleton.paragraphLiHeight = \(Int(config.components.skeleton.paragraphLiHeight))"
         }
     }
 
-    private var paragraphLineMarginTopCard: some View {
+    private var paragraphMarginTopCard: some View {
         TokenCard(
-            name: "paragraphLineMarginTop",
+            name: "paragraphMarginTop",
             type: "CGFloat",
-            defaultValue: "12",
-            description: "段落第一行与标题之间的间距",
+            defaultValue: "token.marginLG + token.marginXXS",
+            description: tr("skeleton.token.paragraphMarginTop.desc"),
             sectionId: "component"
         ) {
-            Moin.Skeleton(avatar: true)
-                .frame(width: 200)
+            Moin.Skeleton(avatar: true, title: true, paragraph: true)
+                .frame(width: 320)
         } editor: {
-            TokenValueRow(label: "paragraphLineMarginTop", value: Binding(
-                get: { config.components.skeleton.paragraphLineMarginTop },
-                set: { config.components.skeleton.paragraphLineMarginTop = $0 }
-            ), range: 0...24, step: 2)
+            TokenValueRow(label: "paragraphMarginTop", value: Binding(
+                get: { config.components.skeleton.paragraphMarginTop },
+                set: { config.components.skeleton.paragraphMarginTop = $0 }
+            ), range: 0...48, step: 2)
         } code: {
-            "config.components.skeleton.paragraphLineMarginTop = \(Int(config.components.skeleton.paragraphLineMarginTop))"
+            "config.components.skeleton.paragraphMarginTop = \(Int(config.components.skeleton.paragraphMarginTop))"
         }
     }
 
@@ -241,11 +185,11 @@ struct SkeletonTokenView: View {
             name: "blockRadius",
             type: "CGFloat",
             defaultValue: "token.borderRadiusSM",
-            description: "骨架元素的圆角半径",
+            description: tr("skeleton.token.blockRadius.desc"),
             sectionId: "component"
         ) {
             Moin.Skeleton()
-                .frame(width: 200)
+                .frame(width: 280)
         } editor: {
             TokenValueRow(label: "blockRadius", value: Binding(
                 get: { config.components.skeleton.blockRadius },
@@ -253,203 +197,6 @@ struct SkeletonTokenView: View {
             ), range: 0...16, step: 1)
         } code: {
             "config.components.skeleton.blockRadius = \(Int(config.components.skeleton.blockRadius))"
-        }
-    }
-
-    private var motionDurationCard: some View {
-        TokenCard(
-            name: "motionDuration",
-            type: "Double",
-            defaultValue: "1.5",
-            description: "骨架屏动画持续时间（秒）",
-            sectionId: "component"
-        ) {
-            Moin.Skeleton(active: true)
-                .frame(width: 200)
-        } editor: {
-            TokenValueRow(label: "motionDuration", value: Binding(
-                get: { CGFloat(config.components.skeleton.motionDuration) },
-                set: { config.components.skeleton.motionDuration = Double($0) }
-            ), range: 0.5...3, step: 0.1)
-        } code: {
-            "config.components.skeleton.motionDuration = \(config.components.skeleton.motionDuration)"
-        }
-    }
-
-    // MARK: - Avatar Size Cards
-
-    private var avatarSizeSMCard: some View {
-        TokenCard(
-            name: "avatarSizeSM",
-            type: "CGFloat",
-            defaultValue: "token.controlHeightSM",
-            description: "小尺寸头像的尺寸（对应 .small）",
-            sectionId: "avatar"
-        ) {
-            Moin.SkeletonAvatar(size: .small)
-        } editor: {
-            TokenValueRow(label: "avatarSizeSM", value: Binding(
-                get: { config.components.skeleton.avatarSizeSM },
-                set: { config.components.skeleton.avatarSizeSM = $0 }
-            ), range: 16...48, step: 2)
-        } code: {
-            "config.components.skeleton.avatarSizeSM = \(Int(config.components.skeleton.avatarSizeSM))"
-        }
-    }
-
-    private var avatarSizeCard: some View {
-        TokenCard(
-            name: "avatarSize",
-            type: "CGFloat",
-            defaultValue: "token.controlHeight",
-            description: "默认尺寸头像的尺寸（对应 .default）",
-            sectionId: "avatar"
-        ) {
-            Moin.SkeletonAvatar(size: .default)
-        } editor: {
-            TokenValueRow(label: "avatarSize", value: Binding(
-                get: { config.components.skeleton.avatarSize },
-                set: { config.components.skeleton.avatarSize = $0 }
-            ), range: 24...64, step: 2)
-        } code: {
-            "config.components.skeleton.avatarSize = \(Int(config.components.skeleton.avatarSize))"
-        }
-    }
-
-    private var avatarSizeLGCard: some View {
-        TokenCard(
-            name: "avatarSizeLG",
-            type: "CGFloat",
-            defaultValue: "token.controlHeightLG",
-            description: "大尺寸头像的尺寸（对应 .large）",
-            sectionId: "avatar"
-        ) {
-            Moin.SkeletonAvatar(size: .large)
-        } editor: {
-            TokenValueRow(label: "avatarSizeLG", value: Binding(
-                get: { config.components.skeleton.avatarSizeLG },
-                set: { config.components.skeleton.avatarSizeLG = $0 }
-            ), range: 32...80, step: 2)
-        } code: {
-            "config.components.skeleton.avatarSizeLG = \(Int(config.components.skeleton.avatarSizeLG))"
-        }
-    }
-
-    // MARK: - Button Size Cards
-
-    private var buttonHeightSMCard: some View {
-        TokenCard(
-            name: "buttonHeightSM",
-            type: "CGFloat",
-            defaultValue: "token.controlHeightSM",
-            description: "小尺寸按钮的高度（对应 .small）",
-            sectionId: "button"
-        ) {
-            Moin.SkeletonButton(size: .small)
-        } editor: {
-            TokenValueRow(label: "buttonHeightSM", value: Binding(
-                get: { config.components.skeleton.buttonHeightSM },
-                set: { config.components.skeleton.buttonHeightSM = $0 }
-            ), range: 20...40, step: 2)
-        } code: {
-            "config.components.skeleton.buttonHeightSM = \(Int(config.components.skeleton.buttonHeightSM))"
-        }
-    }
-
-    private var buttonHeightCard: some View {
-        TokenCard(
-            name: "buttonHeight",
-            type: "CGFloat",
-            defaultValue: "token.controlHeight",
-            description: "默认尺寸按钮的高度（对应 .default）",
-            sectionId: "button"
-        ) {
-            Moin.SkeletonButton(size: .default)
-        } editor: {
-            TokenValueRow(label: "buttonHeight", value: Binding(
-                get: { config.components.skeleton.buttonHeight },
-                set: { config.components.skeleton.buttonHeight = $0 }
-            ), range: 24...48, step: 2)
-        } code: {
-            "config.components.skeleton.buttonHeight = \(Int(config.components.skeleton.buttonHeight))"
-        }
-    }
-
-    private var buttonHeightLGCard: some View {
-        TokenCard(
-            name: "buttonHeightLG",
-            type: "CGFloat",
-            defaultValue: "token.controlHeightLG",
-            description: "大尺寸按钮的高度（对应 .large）",
-            sectionId: "button"
-        ) {
-            Moin.SkeletonButton(size: .large)
-        } editor: {
-            TokenValueRow(label: "buttonHeightLG", value: Binding(
-                get: { config.components.skeleton.buttonHeightLG },
-                set: { config.components.skeleton.buttonHeightLG = $0 }
-            ), range: 32...64, step: 2)
-        } code: {
-            "config.components.skeleton.buttonHeightLG = \(Int(config.components.skeleton.buttonHeightLG))"
-        }
-    }
-
-    // MARK: - Input Size Cards
-
-    private var inputHeightSMCard: some View {
-        TokenCard(
-            name: "inputHeightSM",
-            type: "CGFloat",
-            defaultValue: "token.controlHeightSM",
-            description: "小尺寸输入框的高度（对应 .small）",
-            sectionId: "input"
-        ) {
-            Moin.SkeletonInput(size: .small)
-        } editor: {
-            TokenValueRow(label: "inputHeightSM", value: Binding(
-                get: { config.components.skeleton.inputHeightSM },
-                set: { config.components.skeleton.inputHeightSM = $0 }
-            ), range: 20...40, step: 2)
-        } code: {
-            "config.components.skeleton.inputHeightSM = \(Int(config.components.skeleton.inputHeightSM))"
-        }
-    }
-
-    private var inputHeightCard: some View {
-        TokenCard(
-            name: "inputHeight",
-            type: "CGFloat",
-            defaultValue: "token.controlHeight",
-            description: "默认尺寸输入框的高度（对应 .default）",
-            sectionId: "input"
-        ) {
-            Moin.SkeletonInput(size: .default)
-        } editor: {
-            TokenValueRow(label: "inputHeight", value: Binding(
-                get: { config.components.skeleton.inputHeight },
-                set: { config.components.skeleton.inputHeight = $0 }
-            ), range: 24...48, step: 2)
-        } code: {
-            "config.components.skeleton.inputHeight = \(Int(config.components.skeleton.inputHeight))"
-        }
-    }
-
-    private var inputHeightLGCard: some View {
-        TokenCard(
-            name: "inputHeightLG",
-            type: "CGFloat",
-            defaultValue: "token.controlHeightLG",
-            description: "大尺寸输入框的高度（对应 .large）",
-            sectionId: "input"
-        ) {
-            Moin.SkeletonInput(size: .large)
-        } editor: {
-            TokenValueRow(label: "inputHeightLG", value: Binding(
-                get: { config.components.skeleton.inputHeightLG },
-                set: { config.components.skeleton.inputHeightLG = $0 }
-            ), range: 32...64, step: 2)
-        } code: {
-            "config.components.skeleton.inputHeightLG = \(Int(config.components.skeleton.inputHeightLG))"
         }
     }
 }
