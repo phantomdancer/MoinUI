@@ -18,27 +18,47 @@ struct SkeletonAPIView: View {
             ),
             DocSidebarSection(
                 title: "Skeleton.Avatar",
-                items: [.init(id: "avatar.size"), .init(id: "avatar.shape"), .init(id: "avatar.active")],
+                items: [
+                    .init(id: "avatar.size", displayName: "size"),
+                    .init(id: "avatar.shape", displayName: "shape"),
+                    .init(id: "avatar.active", displayName: "active")
+                ],
                 sectionId: "avatar"
             ),
             DocSidebarSection(
                 title: "Skeleton.Button",
-                items: [.init(id: "button.size"), .init(id: "button.shape"), .init(id: "button.block"), .init(id: "button.active")],
+                items: [
+                    .init(id: "button.size", displayName: "size"),
+                    .init(id: "button.shape", displayName: "shape"),
+                    .init(id: "button.block", displayName: "block"),
+                    .init(id: "button.active", displayName: "active")
+                ],
                 sectionId: "button"
             ),
             DocSidebarSection(
                 title: "Skeleton.Input",
-                items: [.init(id: "input.size"), .init(id: "input.block"), .init(id: "input.active")],
+                items: [
+                    .init(id: "input.size", displayName: "size"),
+                    .init(id: "input.block", displayName: "block"),
+                    .init(id: "input.active", displayName: "active")
+                ],
                 sectionId: "input"
             ),
             DocSidebarSection(
                 title: "Skeleton.Image",
-                items: [.init(id: "image.width"), .init(id: "image.height"), .init(id: "image.active")],
+                items: [
+                    .init(id: "image.width", displayName: "width"),
+                    .init(id: "image.height", displayName: "height"),
+                    .init(id: "image.active", displayName: "active")
+                ],
                 sectionId: "image"
             ),
             DocSidebarSection(
                 title: "Skeleton.Node",
-                items: [.init(id: "node.active"), .init(id: "node.content")],
+                items: [
+                    .init(id: "node.active", displayName: "active"),
+                    .init(id: "node.content", displayName: "content")
+                ],
                 sectionId: "node"
             )
         ]
@@ -291,7 +311,7 @@ struct SkeletonAPIView: View {
             Moin.SkeletonAvatar(size: 48)  // 自定义尺寸
             """
         }
-        .scrollAnchor("avatar.size")
+        .scrollAnchor("avatar.avatar.size")
     }
 
     private var avatarShapePropertyCard: some View {
@@ -312,7 +332,7 @@ struct SkeletonAPIView: View {
             Moin.SkeletonAvatar(shape: .square)
             """
         }
-        .scrollAnchor("avatar.shape")
+        .scrollAnchor("avatar.avatar.shape")
     }
 
     private var avatarActivePropertyCard: some View {
@@ -339,7 +359,7 @@ struct SkeletonAPIView: View {
             Moin.SkeletonAvatar(active: true)
             """
         }
-        .scrollAnchor("avatar.active")
+        .scrollAnchor("avatar.avatar.active")
     }
 
     // MARK: - Button Property Cards
@@ -365,7 +385,7 @@ struct SkeletonAPIView: View {
             Moin.SkeletonButton(size: .large)
             """
         }
-        .scrollAnchor("button.size")
+        .scrollAnchor("button.button.size")
     }
 
     private var buttonShapePropertyCard: some View {
@@ -391,7 +411,7 @@ struct SkeletonAPIView: View {
             Moin.SkeletonButton(shape: .square)
             """
         }
-        .scrollAnchor("button.shape")
+        .scrollAnchor("button.button.shape")
     }
 
     private var buttonBlockPropertyCard: some View {
@@ -413,7 +433,7 @@ struct SkeletonAPIView: View {
             Moin.SkeletonButton(block: true)
             """
         }
-        .scrollAnchor("button.block")
+        .scrollAnchor("button.button.block")
     }
 
     private var buttonActivePropertyCard: some View {
@@ -440,7 +460,7 @@ struct SkeletonAPIView: View {
             Moin.SkeletonButton(button: true)
             """
         }
-        .scrollAnchor("button.active")
+        .scrollAnchor("button.button.active")
     }
 
     // MARK: - Input Property Cards
@@ -466,7 +486,7 @@ struct SkeletonAPIView: View {
             Moin.SkeletonInput(size: .large)
             """
         }
-        .scrollAnchor("input.size")
+        .scrollAnchor("input.input.size")
     }
 
     private var inputBlockPropertyCard: some View {
@@ -489,7 +509,7 @@ struct SkeletonAPIView: View {
             Moin.SkeletonInput(block: true)
             """
         }
-        .scrollAnchor("input.block")
+        .scrollAnchor("input.input.block")
     }
 
     private var inputActivePropertyCard: some View {
@@ -516,7 +536,7 @@ struct SkeletonAPIView: View {
             Moin.SkeletonInput(active: true)
             """
         }
-        .scrollAnchor("input.active")
+        .scrollAnchor("input.input.active")
     }
 
     // MARK: - Image Property Cards
@@ -539,7 +559,7 @@ struct SkeletonAPIView: View {
             Moin.SkeletonImage(width: 120)
             """
         }
-        .scrollAnchor("image.width")
+        .scrollAnchor("image.image.width")
     }
 
     private var imageHeightPropertyCard: some View {
@@ -560,7 +580,7 @@ struct SkeletonAPIView: View {
             Moin.SkeletonImage(width: 120, height: 80)
             """
         }
-        .scrollAnchor("image.height")
+        .scrollAnchor("image.image.height")
     }
 
     private var imageActivePropertyCard: some View {
@@ -587,7 +607,7 @@ struct SkeletonAPIView: View {
             Moin.SkeletonImage(active: true)
             """
         }
-        .scrollAnchor("image.active")
+        .scrollAnchor("image.image.active")
     }
 
     // MARK: - Node Property Cards
@@ -619,7 +639,7 @@ struct SkeletonAPIView: View {
             }
             """
         }
-        .scrollAnchor("node.active")
+        .scrollAnchor("node.node.active")
     }
 
     private var nodeContentPropertyCard: some View {
@@ -653,6 +673,6 @@ struct SkeletonAPIView: View {
             }
             """
         }
-        .scrollAnchor("node.content")
+        .scrollAnchor("node.node.content")
     }
 }
