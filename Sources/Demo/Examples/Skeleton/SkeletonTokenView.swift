@@ -263,15 +263,27 @@ struct SkeletonTokenView: View {
             Moin.Skeleton(active: false)
                 .frame(width: 200)
         } editor: {
-            ColorPresetRow(label: "colorBgBase", color: $config.seed.colorBgBase, onChange: {
-                config.regenerateTokens()
-                config.components.skeleton = .generate(from: config.token)
-            })
+            HStack {
+                Text("Theme")
+                Spacer()
+                Picker("", selection: Binding(
+                    get: { config.theme },
+                    set: {
+                        config.theme = $0
+                        config.components.skeleton = .generate(from: config.token)
+                    }
+                )) {
+                    Text("Light").tag(Moin.Theme.light)
+                    Text("Dark").tag(Moin.Theme.dark)
+                }
+                .pickerStyle(.segmented)
+                .frame(width: 140)
+            }
         } code: {
             """
-            // colorFillSecondary \(tr("skeleton.token.global.derived_from")) colorBgBase
-            config.seed.colorBgBase = Color(...)
-            config.regenerateTokens()
+            // colorFillSecondary \(tr("skeleton.token.global.derived_from")) theme
+            // Light: #000000 6%, Dark: #FFFFFF 12%
+            config.theme = .light // or .dark
             config.components.skeleton = .generate(from: config.token)
             """
         }
@@ -289,15 +301,27 @@ struct SkeletonTokenView: View {
             Moin.Skeleton(active: true)
                 .frame(width: 200)
         } editor: {
-            ColorPresetRow(label: "colorBgBase", color: $config.seed.colorBgBase, onChange: {
-                config.regenerateTokens()
-                config.components.skeleton = .generate(from: config.token)
-            })
+            HStack {
+                Text("Theme")
+                Spacer()
+                Picker("", selection: Binding(
+                    get: { config.theme },
+                    set: {
+                        config.theme = $0
+                        config.components.skeleton = .generate(from: config.token)
+                    }
+                )) {
+                    Text("Light").tag(Moin.Theme.light)
+                    Text("Dark").tag(Moin.Theme.dark)
+                }
+                .pickerStyle(.segmented)
+                .frame(width: 140)
+            }
         } code: {
             """
-            // colorFill \(tr("skeleton.token.global.derived_from")) colorBgBase
-            config.seed.colorBgBase = Color(...)
-            config.regenerateTokens()
+            // colorFill \(tr("skeleton.token.global.derived_from")) theme
+            // Light: #000000 15%, Dark: #FFFFFF 18%
+            config.theme = .light // or .dark
             config.components.skeleton = .generate(from: config.token)
             """
         }
