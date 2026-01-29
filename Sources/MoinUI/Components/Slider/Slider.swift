@@ -472,7 +472,15 @@ public struct _MultiSlider: View {
         let normalizedVal = (markValue - min) / (max - min)
         let position = trackLength * (reverse ? 1 - normalizedVal : normalizedVal)
         let sorted = displaySorted
-        let isActive = included && sorted.count >= 2 && markValue >= sorted.first! && markValue <= sorted.last!
+        // 单值：mark <= value 激活；多值：mark 在范围内激活
+        let isActive: Bool = {
+            guard included, let first = sorted.first else { return false }
+            if sorted.count == 1 {
+                return reverse ? markValue >= first : markValue <= first
+            }
+            guard let last = sorted.last else { return false }
+            return markValue >= first && markValue <= last
+        }()
 
         Circle()
             .fill(Color.white)
@@ -496,7 +504,15 @@ public struct _MultiSlider: View {
                 let normalizedVal = (markKey.id - min) / (max - min)
                 let position = trackLength * (reverse ? 1 - normalizedVal : normalizedVal)
                 let sorted = displaySorted
-                let isActive = included && sorted.count >= 2 && markKey.id >= sorted.first! && markKey.id <= sorted.last!
+                // 单值：mark <= value 激活；多值：mark 在范围内激活
+                let isActive: Bool = {
+                    guard included, let first = sorted.first else { return false }
+                    if sorted.count == 1 {
+                        return reverse ? markKey.id >= first : markKey.id <= first
+                    }
+                    guard let last = sorted.last else { return false }
+                    return markKey.id >= first && markKey.id <= last
+                }()
 
                 markKey.mark.label
                     .font(.system(size: token.fontSize))

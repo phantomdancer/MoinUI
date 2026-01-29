@@ -424,6 +424,7 @@ public extension Moin {
                 .environment(\.moinDividerToken, config.components.divider)
                 .environment(\.moinSkeletonToken, config.components.skeleton)
                 .environment(\.moinRateToken, config.components.rate)
+                .environment(\.moinSliderToken, config.components.slider)
                 .environment(\.moinTheme, config.theme)
                 .environment(\.moinComponents, config.components)
                 .environmentObject(config)
