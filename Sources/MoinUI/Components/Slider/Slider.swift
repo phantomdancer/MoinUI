@@ -400,59 +400,24 @@ public struct _RangeSlider: View {
         !isEnabled || disabled
     }
 
-    // 拖拽时用实时位置，非拖拽时用 value
-    private var lowerHandleValue: Double {
-        guard let handle = draggingHandle else {
-            return value.lowerBound
-        }
-        return handle == .lower
-            ? Swift.min(draggingValue, anchorValue)
-            : Swift.min(anchorValue, draggingValue)
+    // 归一化辅助
+    private func normalized(_ val: Double) -> Double {
+        let n = (val - min) / (max - min)
+        return reverse ? 1 - n : n
     }
 
-    private var upperHandleValue: Double {
-        guard let handle = draggingHandle else {
-            return value.upperBound
-        }
-        return handle == .upper
-            ? Swift.max(draggingValue, anchorValue)
-            : Swift.max(anchorValue, draggingValue)
-    }
-
-    // 两个 handle 的显示位置（拖拽时各自独立）
+    // handle 位置：拖拽时用 draggingValue/anchorValue，否则用 value
     private var lowerHandlePosition: Double {
-        if let handle = draggingHandle {
-            // 拖拽中：lower handle 显示在 anchorValue 或 draggingValue
-            let pos = handle == .lower ? draggingValue : anchorValue
-            let normalized = (pos - min) / (max - min)
-            return reverse ? 1 - normalized : normalized
-        } else {
-            let normalized = (value.lowerBound - min) / (max - min)
-            return reverse ? 1 - normalized : normalized
-        }
+        normalized(draggingHandle == .lower ? draggingValue : (draggingHandle != nil ? anchorValue : value.lowerBound))
     }
 
     private var upperHandlePosition: Double {
-        if let handle = draggingHandle {
-            // 拖拽中：upper handle 显示在 anchorValue 或 draggingValue
-            let pos = handle == .upper ? draggingValue : anchorValue
-            let normalized = (pos - min) / (max - min)
-            return reverse ? 1 - normalized : normalized
-        } else {
-            let normalized = (value.upperBound - min) / (max - min)
-            return reverse ? 1 - normalized : normalized
-        }
+        normalized(draggingHandle == .upper ? draggingValue : (draggingHandle != nil ? anchorValue : value.upperBound))
     }
 
-    private var effectiveLower: Double {
-        let normalized = (lowerHandleValue - min) / (max - min)
-        return reverse ? 1 - normalized : normalized
-    }
-
-    private var effectiveUpper: Double {
-        let normalized = (upperHandleValue - min) / (max - min)
-        return reverse ? 1 - normalized : normalized
-    }
+    // track 范围（总是较小到较大）
+    private var effectiveLower: Double { Swift.min(lowerHandlePosition, upperHandlePosition) }
+    private var effectiveUpper: Double { Swift.max(lowerHandlePosition, upperHandlePosition) }
 
     private var markKeys: [MarkKey] {
         guard let marks = marks else { return [] }
