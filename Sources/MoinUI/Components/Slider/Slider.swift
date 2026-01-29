@@ -361,6 +361,8 @@ public struct _RangeSlider: View {
     @State private var isHovering = false
     @State private var draggingHandle: DraggingHandle?
     @State private var hoveringHandle: DraggingHandle?
+    @State private var anchorValue: Double = 0    // 拖拽时固定的 handle 位置
+    @State private var draggingValue: Double = 0  // 拖拽时移动的 handle 位置
 
     private enum DraggingHandle {
         case lower, upper
@@ -398,20 +400,58 @@ public struct _RangeSlider: View {
         !isEnabled || disabled
     }
 
-    private var normalizedLower: Double {
-        (value.lowerBound - min) / (max - min)
+    // 拖拽时用实时位置，非拖拽时用 value
+    private var lowerHandleValue: Double {
+        guard let handle = draggingHandle else {
+            return value.lowerBound
+        }
+        return handle == .lower
+            ? Swift.min(draggingValue, anchorValue)
+            : Swift.min(anchorValue, draggingValue)
     }
 
-    private var normalizedUpper: Double {
-        (value.upperBound - min) / (max - min)
+    private var upperHandleValue: Double {
+        guard let handle = draggingHandle else {
+            return value.upperBound
+        }
+        return handle == .upper
+            ? Swift.max(draggingValue, anchorValue)
+            : Swift.max(anchorValue, draggingValue)
+    }
+
+    // 两个 handle 的显示位置（拖拽时各自独立）
+    private var lowerHandlePosition: Double {
+        if let handle = draggingHandle {
+            // 拖拽中：lower handle 显示在 anchorValue 或 draggingValue
+            let pos = handle == .lower ? draggingValue : anchorValue
+            let normalized = (pos - min) / (max - min)
+            return reverse ? 1 - normalized : normalized
+        } else {
+            let normalized = (value.lowerBound - min) / (max - min)
+            return reverse ? 1 - normalized : normalized
+        }
+    }
+
+    private var upperHandlePosition: Double {
+        if let handle = draggingHandle {
+            // 拖拽中：upper handle 显示在 anchorValue 或 draggingValue
+            let pos = handle == .upper ? draggingValue : anchorValue
+            let normalized = (pos - min) / (max - min)
+            return reverse ? 1 - normalized : normalized
+        } else {
+            let normalized = (value.upperBound - min) / (max - min)
+            return reverse ? 1 - normalized : normalized
+        }
     }
 
     private var effectiveLower: Double {
-        reverse ? 1 - normalizedUpper : normalizedLower
+        let normalized = (lowerHandleValue - min) / (max - min)
+        return reverse ? 1 - normalized : normalized
     }
 
     private var effectiveUpper: Double {
-        reverse ? 1 - normalizedLower : normalizedUpper
+        let normalized = (upperHandleValue - min) / (max - min)
+        return reverse ? 1 - normalized : normalized
     }
 
     private var markKeys: [MarkKey] {
@@ -443,9 +483,9 @@ public struct _RangeSlider: View {
                     dotView(for: markKey.id, in: trackLength)
                 }
 
-                // Handles
-                handleView(position: trackLength * effectiveLower, handleType: .lower, isActive: draggingHandle == .lower)
-                handleView(position: trackLength * effectiveUpper, handleType: .upper, isActive: draggingHandle == .upper)
+                // Handles - 用独立位置渲染，拖拽时不交换
+                handleView(position: trackLength * lowerHandlePosition, handleType: .lower, isActive: draggingHandle == .lower)
+                handleView(position: trackLength * upperHandlePosition, handleType: .upper, isActive: draggingHandle == .upper)
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .contentShape(Rectangle())
@@ -460,18 +500,20 @@ public struct _RangeSlider: View {
                         }
                         NSCursor.pointingHand.set()
                         
-                        // 根据鼠标位置判断哪个 handle 被 hover
-                        let pos = vertical ? (trackLength - location.y) : location.x
-                        let lowerPos = trackLength * effectiveLower
-                        let upperPos = trackLength * effectiveUpper
-                        let handleRadius = sliderToken.handleSizeHover / 2
-                        
-                        if abs(pos - lowerPos) <= handleRadius {
-                            hoveringHandle = .lower
-                        } else if abs(pos - upperPos) <= handleRadius {
-                            hoveringHandle = .upper
-                        } else {
-                            hoveringHandle = nil
+                        // 拖拽中不更新 hover 状态，避免非拖拽 handle 被高亮
+                        if draggingHandle == nil {
+                            let pos = vertical ? (trackLength - location.y) : location.x
+                            let lowerPos = trackLength * effectiveLower
+                            let upperPos = trackLength * effectiveUpper
+                            let handleRadius = sliderToken.handleSizeHover / 2
+
+                            if abs(pos - lowerPos) <= handleRadius {
+                                hoveringHandle = .lower
+                            } else if abs(pos - upperPos) <= handleRadius {
+                                hoveringHandle = .upper
+                            } else {
+                                hoveringHandle = nil
+                            }
                         }
                     }
                 case .ended:
@@ -664,22 +706,24 @@ public struct _RangeSlider: View {
                 if draggingHandle == nil {
                     let distToLower = abs(newValue - value.lowerBound)
                     let distToUpper = abs(newValue - value.upperBound)
-                    draggingHandle = distToLower < distToUpper ? .lower : .upper
+                    if distToLower < distToUpper {
+                        draggingHandle = .lower
+                        anchorValue = value.upperBound
+                        draggingValue = value.lowerBound
+                    } else {
+                        draggingHandle = .upper
+                        anchorValue = value.lowerBound
+                        draggingValue = value.upperBound
+                    }
                 }
 
-                var newLower = value.lowerBound
-                var newUpper = value.upperBound
+                // 更新被拖拽 handle 的位置
+                draggingValue = newValue
 
-                switch draggingHandle {
-                case .lower:
-                    newLower = Swift.min(newValue, newUpper)
-                case .upper:
-                    newUpper = Swift.max(newValue, newLower)
-                case .none:
-                    break
-                }
-
-                let newRange = newLower...newUpper
+                // 用 anchorValue 和 draggingValue 构建范围
+                let finalLower = Swift.min(draggingValue, anchorValue)
+                let finalUpper = Swift.max(draggingValue, anchorValue)
+                let newRange = finalLower...finalUpper
                 if newRange != value {
                     value = newRange
                     onChange?(newRange)
