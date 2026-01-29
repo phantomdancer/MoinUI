@@ -292,12 +292,33 @@ public struct _Slider: View {
                 var newValue = min + normalized * (max - min)
                 newValue = Swift.max(min, Swift.min(max, newValue))
 
-                // Apply step
+                // 构建所有可吸附点：step 点 + marks 位置
+                var snapPoints: Set<Double> = []
+                
+                // 添加 step 点
                 if let step = step, step > 0 {
-                    newValue = round((newValue - min) / step) * step + min
+                    var v = min
+                    while v <= max {
+                        snapPoints.insert(v)
+                        v += step
+                    }
                 }
-
-                // Snap to marks if dots mode
+                
+                // 添加 marks 位置
+                if let marks = marks {
+                    for markValue in marks.keys {
+                        snapPoints.insert(markValue)
+                    }
+                }
+                
+                // 找最近的吸附点
+                if !snapPoints.isEmpty {
+                    if let closest = snapPoints.min(by: { abs($0 - newValue) < abs($1 - newValue) }) {
+                        newValue = closest
+                    }
+                }
+                
+                // dots 模式：只能停在 marks 位置
                 if dots, let marks = marks {
                     let markValues = Array(marks.keys)
                     if let closest = markValues.min(by: { abs($0 - newValue) < abs($1 - newValue) }) {
@@ -605,12 +626,33 @@ public struct _RangeSlider: View {
                 var newValue = min + normalized * (max - min)
                 newValue = Swift.max(min, Swift.min(max, newValue))
 
-                // Apply step
+                // 构建所有可吸附点：step 点 + marks 位置
+                var snapPoints: Set<Double> = []
+                
+                // 添加 step 点
                 if let step = step, step > 0 {
-                    newValue = round((newValue - min) / step) * step + min
+                    var v = min
+                    while v <= max {
+                        snapPoints.insert(v)
+                        v += step
+                    }
                 }
-
-                // Snap to marks if dots mode
+                
+                // 添加 marks 位置
+                if let marks = marks {
+                    for markValue in marks.keys {
+                        snapPoints.insert(markValue)
+                    }
+                }
+                
+                // 找最近的吸附点
+                if !snapPoints.isEmpty {
+                    if let closest = snapPoints.min(by: { abs($0 - newValue) < abs($1 - newValue) }) {
+                        newValue = closest
+                    }
+                }
+                
+                // dots 模式：只能停在 marks 位置
                 if dots, let marks = marks {
                     let markValues = Array(marks.keys)
                     if let closest = markValues.min(by: { abs($0 - newValue) < abs($1 - newValue) }) {
