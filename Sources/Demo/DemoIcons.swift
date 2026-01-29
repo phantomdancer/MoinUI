@@ -37,6 +37,7 @@ struct DemoIcons {
     static let progress = "percent"
     static let skeleton = "rectangle.dashed"
     static let result = "checkmark.seal"
+    static let timeline = "clock.arrow.circlepath"
 
     // Data Entry
     static let rate = "star"

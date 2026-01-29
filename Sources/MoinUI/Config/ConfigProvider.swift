@@ -268,6 +268,10 @@ private struct MoinSkeletonTokenKey: EnvironmentKey {
     static let defaultValue = Moin.SkeletonToken.default
 }
 
+private struct MoinTimelineTokenKey: EnvironmentKey {
+    static let defaultValue = Moin.TimelineToken.default
+}
+
 public extension EnvironmentValues {
     var moinConfig: Moin.ConfigProvider {
         get { self[MoinConfigProviderKey.self] }
@@ -363,6 +367,11 @@ public extension EnvironmentValues {
         get { self[MoinSkeletonTokenKey.self] }
         set { self[MoinSkeletonTokenKey.self] = newValue }
     }
+
+    var moinTimelineToken: Moin.TimelineToken {
+        get { self[MoinTimelineTokenKey.self] }
+        set { self[MoinTimelineTokenKey.self] = newValue }
+    }
 }
 
 // MARK: - View Modifier
@@ -426,6 +435,7 @@ public extension Moin {
                 .environment(\.moinRateToken, config.components.rate)
                 .environment(\.moinSliderToken, config.components.slider)
                 .environment(\.moinResultToken, config.components.result)
+                .environment(\.moinTimelineToken, config.components.timeline)
                 .environment(\.moinTheme, config.theme)
                 .environment(\.moinComponents, config.components)
                 .environmentObject(config)

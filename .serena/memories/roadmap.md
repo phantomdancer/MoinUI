@@ -17,7 +17,7 @@
 ## 按复杂度排序（简单优先，无依赖优先）
 
 ### 已完成
-Button ✅, Typography ✅, Divider ✅, Space ✅, Tag ✅, Badge ✅, Avatar ✅, Empty ✅, Spin ✅, Statistic ✅, Alert ✅, Progress ✅, Switch ✅, Checkbox ✅, Radio ✅, Skeleton ✅, Rate ✅, Slider ✅, Result ✅, Icon ⏭
+Button ✅, Typography ✅, Divider ✅, Space ✅, Tag ✅, Badge ✅, Avatar ✅, Empty ✅, Spin ✅, Statistic ✅, Alert ✅, Progress ✅, Switch ✅, Checkbox ✅, Radio ✅, Skeleton ✅, Rate ✅, Slider ✅, Result ✅, Timeline ✅, Icon ⏭
 
 ### 第一梯队：极简组件（无依赖，几乎无状态）
 
@@ -41,7 +41,7 @@ Button ✅, Typography ✅, Divider ✅, Space ✅, Tag ✅, Badge ✅, Avatar �
 | Radio | ★★☆☆☆ | ✅ 已完成 |
 | Skeleton | ★★☆☆☆ | ✅ 已完成 |
 | Result | ★★☆☆☆ | ✅ 已完成 |
-| Timeline | ★★☆☆☆ | 时间轴 |
+| Timeline | ★★☆☆☆ | ✅ 已完成 |
 
 ### 第三梯队：中等组件（无依赖，较多状态/变体）
 
