@@ -7,6 +7,7 @@ struct RateAPIView: View {
     @Localized var tr
     @State private var basicValue: Double = 3
     @State private var halfValue: Double = 2.5
+    @State private var noClearValue: Double = 3
 
     // MARK: - API Sections
 
@@ -167,7 +168,7 @@ struct RateAPIView: View {
                 }
                 VStack(alignment: .leading, spacing: 4) {
                     Text("allowClear: false").font(.caption).foregroundStyle(.secondary)
-                    Moin.Rate(value: .constant(3), allowClear: false)
+                    Moin.Rate(value: $noClearValue, allowClear: false)
                 }
             }
         } code: {
