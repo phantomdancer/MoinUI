@@ -20,6 +20,7 @@ public extension Moin {
         public var radio: Moin.RadioToken
         public var skeleton: Moin.SkeletonToken
         public var rate: Moin.RateToken
+        public var slider: Moin.SliderToken
 
         public static func generate(from token: Token, isDark: Bool = false) -> ComponentToken {
             ComponentToken(
@@ -38,7 +39,8 @@ public extension Moin {
                 checkbox: .resolve(token: token),
                 radio: .resolve(token: token),
                 skeleton: .generate(from: token),
-                rate: .generate(from: token)
+                rate: .generate(from: token),
+                slider: .generate(from: token)
             )
         }
 

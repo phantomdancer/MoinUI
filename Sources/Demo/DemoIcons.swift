@@ -39,6 +39,7 @@ struct DemoIcons {
 
     // Data Entry
     static let rate = "star"
+    static let slider = "slider.horizontal.3"
     
     // Other (Playground specific)
     static let seed = "leaf"

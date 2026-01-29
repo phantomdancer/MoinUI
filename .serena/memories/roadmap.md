@@ -17,7 +17,7 @@
 ## 按复杂度排序（简单优先，无依赖优先）
 
 ### 已完成
-Button ✅, Typography ✅, Divider ✅, Space ✅, Tag ✅, Badge ✅, Avatar ✅, Empty ✅, Spin ✅, Statistic ✅, Alert ✅, Progress ✅, Switch ✅, Checkbox ✅, Radio ✅, Skeleton ✅, Rate ✅, Icon ⏭
+Button ✅, Typography ✅, Divider ✅, Space ✅, Tag ✅, Badge ✅, Avatar ✅, Empty ✅, Spin ✅, Statistic ✅, Alert ✅, Progress ✅, Switch ✅, Checkbox ✅, Radio ✅, Skeleton ✅, Rate ✅, Slider ✅, Icon ⏭
 
 ### 第一梯队：极简组件（无依赖，几乎无状态）
 
@@ -48,7 +48,7 @@ Button ✅, Typography ✅, Divider ✅, Space ✅, Tag ✅, Badge ✅, Avatar �
 | 组件 | 复杂度 | 说明 |
 |------|--------|------|
 | Rate | ★★★☆☆ | ✅ 已完成 |
-| Slider | ★★★☆☆ | 滑动条 |
+| Slider | ★★★☆☆ | ✅ 已完成 |
 | Input | ★★★☆☆ | 输入框（状态多） |
 | InputNumber | ★★★☆☆ | 数字输入 |
 | Card | ★★★☆☆ | 卡片容器 |
@@ -119,9 +119,7 @@ Button ✅, Typography ✅, Divider ✅, Space ✅, Tag ✅, Badge ✅, Avatar �
   - `_AvatarAsyncImage`, `_RadioButton`, `_RadioButtonPosition` (internal)
 - 需要作为 Factory 参数/返回值的类型保持 `public`
 
-下一批: Slider
-
-再下批: Slider → Input → Card → Collapse → Tabs
+下一批: Input → Card → Collapse → Tabs
 
 再下批: Tooltip → Popover → Modal → Message
 

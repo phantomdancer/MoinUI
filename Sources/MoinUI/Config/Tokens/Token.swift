@@ -10,6 +10,7 @@ public extension Moin {
         public var colorPrimaryActive: Color
         public var colorPrimaryBg: Color
         public var colorPrimaryBorder: Color
+        public var colorPrimaryBorderHover: Color
 
         // MARK: - Success Colors
         public var colorSuccess: Color
@@ -169,6 +170,7 @@ public extension Moin {
             self.colorPrimaryActive = map.colorPrimaryActive
             self.colorPrimaryBg = map.colorPrimaryBg
             self.colorPrimaryBorder = map.colorPrimaryBorder
+            self.colorPrimaryBorderHover = map.colorPrimaryBorderHover
             // Success
             self.colorSuccess = map.colorSuccess
             self.colorSuccessHover = map.colorSuccessHover
