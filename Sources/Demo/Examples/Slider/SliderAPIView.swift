@@ -26,6 +26,7 @@ struct SliderAPIView: View {
                     .init(id: "marks"),
                     .init(id: "dots"),
                     .init(id: "included"),
+                    .init(id: "draggableTrack"),
                     .init(id: "onChange"),
                     .init(id: "onChangeComplete")
                 ],
@@ -63,6 +64,7 @@ struct SliderAPIView: View {
         case "marks": marksPropertyCard
         case "dots": dotsPropertyCard
         case "included": includedPropertyCard
+        case "draggableTrack": draggableTrackPropertyCard
         case "onChange": onChangePropertyCard
         case "onChangeComplete": onChangeCompletePropertyCard
         default: EmptyView()
@@ -374,6 +376,23 @@ struct SliderAPIView: View {
             """
         }
         .scrollAnchor("slider.included")
+    }
+
+    private var draggableTrackPropertyCard: some View {
+        PropertyCard(
+            name: "draggableTrack",
+            type: "Bool",
+            defaultValue: "false",
+            description: tr("slider.api.draggableTrack_desc"),
+            sectionId: "slider"
+        ) {
+            Moin.Slider(value: $rangeValue, draggableTrack: true)
+        } code: {
+            """
+            Moin.Slider(value: $range, draggableTrack: true)
+            """
+        }
+        .scrollAnchor("slider.draggableTrack")
     }
 
     private var onChangePropertyCard: some View {

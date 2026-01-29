@@ -351,6 +351,7 @@ public struct _RangeSlider: View {
     let marks: [Double: _SliderMark<AnyView>]?
     let dots: Bool
     let included: Bool
+    let draggableTrack: Bool
     var onChange: ((ClosedRange<Double>) -> Void)?
     var onChangeComplete: ((ClosedRange<Double>) -> Void)?
 
@@ -359,12 +360,17 @@ public struct _RangeSlider: View {
     @Environment(\.isEnabled) private var isEnabled
 
     @State private var isHovering = false
-    @State private var draggingHandle: DraggingHandle?
-    @State private var hoveringHandle: DraggingHandle?
-    @State private var anchorValue: Double = 0    // 拖拽时固定的 handle 位置
-    @State private var draggingValue: Double = 0  // 拖拽时移动的 handle 位置
+    @State private var draggingMode: DraggingMode?
+    @State private var hoveringHandle: HoveringHandle?
+    @State private var anchorValue: Double = 0
+    @State private var draggingValue: Double = 0
+    @State private var trackDragStart: (lower: Double, upper: Double)?  // 轨道拖拽起始值
 
-    private enum DraggingHandle {
+    private enum DraggingMode {
+        case lower, upper, track
+    }
+
+    private enum HoveringHandle {
         case lower, upper
     }
 
@@ -379,6 +385,7 @@ public struct _RangeSlider: View {
         marks: [Double: _SliderMark<AnyView>]? = nil,
         dots: Bool = false,
         included: Bool = true,
+        draggableTrack: Bool = false,
         onChange: ((ClosedRange<Double>) -> Void)? = nil,
         onChangeComplete: ((ClosedRange<Double>) -> Void)? = nil
     ) {
@@ -392,6 +399,7 @@ public struct _RangeSlider: View {
         self.marks = marks
         self.dots = dots
         self.included = included
+        self.draggableTrack = draggableTrack
         self.onChange = onChange
         self.onChangeComplete = onChangeComplete
     }
@@ -408,11 +416,11 @@ public struct _RangeSlider: View {
 
     // handle 位置：拖拽时用 draggingValue/anchorValue，否则用 value
     private var lowerHandlePosition: Double {
-        normalized(draggingHandle == .lower ? draggingValue : (draggingHandle != nil ? anchorValue : value.lowerBound))
+        normalized(draggingMode == .lower ? draggingValue : (draggingMode == .upper ? anchorValue : value.lowerBound))
     }
 
     private var upperHandlePosition: Double {
-        normalized(draggingHandle == .upper ? draggingValue : (draggingHandle != nil ? anchorValue : value.upperBound))
+        normalized(draggingMode == .upper ? draggingValue : (draggingMode == .lower ? anchorValue : value.upperBound))
     }
 
     // track 范围（总是较小到较大）
@@ -449,8 +457,8 @@ public struct _RangeSlider: View {
                 }
 
                 // Handles - 用独立位置渲染，拖拽时不交换
-                handleView(position: trackLength * lowerHandlePosition, handleType: .lower, isActive: draggingHandle == .lower)
-                handleView(position: trackLength * upperHandlePosition, handleType: .upper, isActive: draggingHandle == .upper)
+                handleView(position: trackLength * lowerHandlePosition, handleType: .lower, isActive: draggingMode == .lower)
+                handleView(position: trackLength * upperHandlePosition, handleType: .upper, isActive: draggingMode == .upper)
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .contentShape(Rectangle())
@@ -466,7 +474,7 @@ public struct _RangeSlider: View {
                         NSCursor.pointingHand.set()
                         
                         // 拖拽中不更新 hover 状态，避免非拖拽 handle 被高亮
-                        if draggingHandle == nil {
+                        if draggingMode == nil {
                             let pos = vertical ? (trackLength - location.y) : location.x
                             let lowerPos = trackLength * effectiveLower
                             let upperPos = trackLength * effectiveUpper
@@ -528,7 +536,7 @@ public struct _RangeSlider: View {
     }
 
     @ViewBuilder
-    private func handleView(position: CGFloat, handleType: DraggingHandle, isActive: Bool) -> some View {
+    private func handleView(position: CGFloat, handleType: HoveringHandle, isActive: Bool) -> some View {
         // isActive = 当前滑块正在被拖动
         // isThisHandleHovered = 当前滑块被 hover
         let isThisHandleHovered = hoveringHandle == handleType
@@ -633,69 +641,107 @@ public struct _RangeSlider: View {
                 var newValue = min + normalized * (max - min)
                 newValue = Swift.max(min, Swift.min(max, newValue))
 
-                // 构建所有可吸附点：step 点 + marks 位置
-                var snapPoints: Set<Double> = []
-                
-                // 添加 step 点
-                if let step = step, step > 0 {
-                    var v = min
-                    while v <= max {
-                        snapPoints.insert(v)
-                        v += step
+                // 吸附逻辑（仅非 track 拖拽时）
+                func snap(_ val: Double) -> Double {
+                    var result = val
+                    var snapPoints: Set<Double> = []
+                    if let step = step, step > 0 {
+                        var v = min
+                        while v <= max {
+                            snapPoints.insert(v)
+                            v += step
+                        }
                     }
-                }
-                
-                // 添加 marks 位置
-                if let marks = marks {
-                    for markValue in marks.keys {
-                        snapPoints.insert(markValue)
+                    if let marks = marks {
+                        for markValue in marks.keys {
+                            snapPoints.insert(markValue)
+                        }
                     }
-                }
-                
-                // 找最近的吸附点
-                if !snapPoints.isEmpty {
-                    if let closest = snapPoints.min(by: { abs($0 - newValue) < abs($1 - newValue) }) {
-                        newValue = closest
+                    if !snapPoints.isEmpty,
+                       let closest = snapPoints.min(by: { abs($0 - result) < abs($1 - result) }) {
+                        result = closest
                     }
-                }
-                
-                // dots 模式：只能停在 marks 位置
-                if dots, let marks = marks {
-                    let markValues = Array(marks.keys)
-                    if let closest = markValues.min(by: { abs($0 - newValue) < abs($1 - newValue) }) {
-                        newValue = closest
+                    if dots, let marks = marks {
+                        let markValues = Array(marks.keys)
+                        if let closest = markValues.min(by: { abs($0 - result) < abs($1 - result) }) {
+                            result = closest
+                        }
                     }
+                    return result
                 }
 
-                // Determine which handle to move
-                if draggingHandle == nil {
+                // 确定拖拽模式
+                if draggingMode == nil {
                     let distToLower = abs(newValue - value.lowerBound)
                     let distToUpper = abs(newValue - value.upperBound)
-                    if distToLower < distToUpper {
-                        draggingHandle = .lower
+                    let handleThreshold = (max - min) * Double(sliderToken.handleSizeHover / trackLength)
+                    let isOnTrack = draggableTrack && newValue > value.lowerBound && newValue < value.upperBound
+
+                    if distToLower <= handleThreshold {
+                        draggingMode = .lower
+                        anchorValue = value.upperBound
+                        draggingValue = value.lowerBound
+                    } else if distToUpper <= handleThreshold {
+                        draggingMode = .upper
+                        anchorValue = value.lowerBound
+                        draggingValue = value.upperBound
+                    } else if isOnTrack {
+                        draggingMode = .track
+                        trackDragStart = (value.lowerBound, value.upperBound)
+                        anchorValue = newValue  // 记录起始拖拽位置
+                    } else if distToLower < distToUpper {
+                        draggingMode = .lower
                         anchorValue = value.upperBound
                         draggingValue = value.lowerBound
                     } else {
-                        draggingHandle = .upper
+                        draggingMode = .upper
                         anchorValue = value.lowerBound
                         draggingValue = value.upperBound
                     }
                 }
 
-                // 更新被拖拽 handle 的位置
-                draggingValue = newValue
+                // 处理拖拽
+                switch draggingMode {
+                case .track:
+                    guard let start = trackDragStart else { return }
+                    let delta = newValue - anchorValue
+                    var newLower = start.lower + delta
+                    var newUpper = start.upper + delta
+                    let rangeSize = start.upper - start.lower
 
-                // 用 anchorValue 和 draggingValue 构建范围
-                let finalLower = Swift.min(draggingValue, anchorValue)
-                let finalUpper = Swift.max(draggingValue, anchorValue)
-                let newRange = finalLower...finalUpper
-                if newRange != value {
-                    value = newRange
-                    onChange?(newRange)
+                    // 限制范围不超出边界
+                    if newLower < min {
+                        newLower = min
+                        newUpper = min + rangeSize
+                    }
+                    if newUpper > max {
+                        newUpper = max
+                        newLower = max - rangeSize
+                    }
+
+                    let newRange = newLower...newUpper
+                    if newRange != value {
+                        value = newRange
+                        onChange?(newRange)
+                    }
+
+                case .lower, .upper:
+                    draggingValue = snap(newValue)
+                    let finalLower = Swift.min(draggingValue, anchorValue)
+                    let finalUpper = Swift.max(draggingValue, anchorValue)
+                    let newRange = finalLower...finalUpper
+                    if newRange != value {
+                        value = newRange
+                        onChange?(newRange)
+                    }
+
+                case .none:
+                    break
                 }
             }
             .onEnded { _ in
-                draggingHandle = nil
+                draggingMode = nil
+                trackDragStart = nil
                 onChangeComplete?(value)
             }
     }
@@ -788,6 +834,7 @@ public struct _MoinSliderFactory {
         marks: [Double: String]? = nil,
         dots: Bool = false,
         included: Bool = true,
+        draggableTrack: Bool = false,
         onChange: ((ClosedRange<Double>) -> Void)? = nil,
         onChangeComplete: ((ClosedRange<Double>) -> Void)? = nil
     ) -> _RangeSlider {
@@ -806,6 +853,7 @@ public struct _MoinSliderFactory {
             marks: convertedMarks,
             dots: dots,
             included: included,
+            draggableTrack: draggableTrack,
             onChange: onChange,
             onChangeComplete: onChangeComplete
         )
@@ -823,6 +871,7 @@ public struct _MoinSliderFactory {
         marks: [Double: _SliderMark<Label>],
         dots: Bool = false,
         included: Bool = true,
+        draggableTrack: Bool = false,
         onChange: ((ClosedRange<Double>) -> Void)? = nil,
         onChangeComplete: ((ClosedRange<Double>) -> Void)? = nil
     ) -> _RangeSlider {
@@ -841,6 +890,7 @@ public struct _MoinSliderFactory {
             marks: convertedMarks,
             dots: dots,
             included: included,
+            draggableTrack: draggableTrack,
             onChange: onChange,
             onChangeComplete: onChangeComplete
         )

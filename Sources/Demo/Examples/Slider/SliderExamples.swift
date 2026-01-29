@@ -15,6 +15,7 @@ struct SliderExamples: View {
     // 状态 - 基础
     @State private var basicValue: Double = 30
     @State private var basicRangeValue: ClosedRange<Double> = 20...50
+    @State private var draggableTrackValue: ClosedRange<Double> = 20...50
     @State private var basicDisabled = false
 
     // 状态 - 图标
@@ -134,6 +135,11 @@ struct SliderExamples: View {
                     Moin.Slider(value: $basicValue, disabled: basicDisabled)
                     Moin.Slider(value: $basicRangeValue, disabled: basicDisabled)
 
+                    Text(tr("slider.draggable_track"))
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                    Moin.Slider(value: $draggableTrackValue, disabled: basicDisabled, draggableTrack: true)
+
                     HStack {
                         Text("Disabled:")
                             .foregroundStyle(.secondary)
@@ -145,10 +151,12 @@ struct SliderExamples: View {
                 """
                 @State private var value: Double = 30
                 @State private var range: ClosedRange<Double> = 20...50
-                @State private var disabled = false
 
                 Moin.Slider(value: $value, disabled: disabled)
                 Moin.Slider(value: $range, disabled: disabled)
+
+                // \(tr("slider.draggable_track"))
+                Moin.Slider(value: $range, draggableTrack: true)
                 """
             }
         )
