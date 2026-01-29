@@ -152,3 +152,6 @@ Button ✅, Typography ✅, Divider ✅, Space ✅, Tag ✅, Badge ✅, Avatar �
 
 - **Localization**:
   - [x] Refactor JSON structure (separate component/common keys)
+
+- **Rate**:
+  - [ ] tooltips prop (需 Tooltip 组件支持)
