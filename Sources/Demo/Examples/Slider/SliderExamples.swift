@@ -16,6 +16,7 @@ struct SliderExamples: View {
     @State private var basicValue: Double = 30
     @State private var basicRangeValue: ClosedRange<Double> = 20...50
     @State private var draggableTrackValue: ClosedRange<Double> = 20...50
+    @State private var editableValue: [Double] = [20, 50]
     @State private var basicDisabled = false
 
     // 状态 - 图标
@@ -49,6 +50,7 @@ struct SliderExamples: View {
     /// 锚点列表
     private let anchors: [AnchorItem] = [
         AnchorItem(id: "basic", titleKey: "slider.basic"),
+        AnchorItem(id: "editable", titleKey: "slider.editable"),
         AnchorItem(id: "icon", titleKey: "slider.icon"),
         AnchorItem(id: "event", titleKey: "slider.event"),
         AnchorItem(id: "mark", titleKey: "slider.mark"),
@@ -104,6 +106,7 @@ struct SliderExamples: View {
     private var examplesContent: some View {
         ExamplePageWithAnchor(pageName: "Slider", anchors: anchors) { _ in
             basicExample.id("basic")
+            editableExample.id("editable")
             iconExample.id("icon")
             eventExample.id("event")
             markExample.id("mark")
@@ -157,6 +160,31 @@ struct SliderExamples: View {
 
                 // \(tr("slider.draggable_track"))
                 Moin.Slider(value: $range, draggableTrack: true)
+                """
+            }
+        )
+    }
+
+    // MARK: - Editable Example
+
+    private var editableExample: some View {
+        ExampleSection(
+            title: tr("slider.editable"),
+            description: tr("slider.editable_desc"),
+            content: {
+                VStack(alignment: .leading, spacing: 12) {
+                    Moin.Slider(value: $editableValue, minCount: 1, maxCount: 5)
+                    Text("\(tr("slider.current_value")): \(editableValue.map { String(Int($0)) }.joined(separator: ", "))")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
+            },
+            code: {
+                """
+                @State private var value: [Double] = [20, 50]
+
+                // \(tr("slider.editable_desc"))
+                Moin.Slider(value: $value, minCount: 1, maxCount: 5)
                 """
             }
         )

@@ -5,6 +5,8 @@
     "slider.basic": "Basic",
     "slider.basic_desc": "Basic slider. When range is true, display as dual thumb mode. Use disabled to make slider interactivity disabled.",
     "slider.draggable_track": "Draggable Track (move range together)",
+    "slider.editable": "Dynamic Nodes",
+    "slider.editable_desc": "Click on the track to add a node, drag a node out to delete it.",
     "slider.icon": "Slider with Icon",
     "slider.icon_desc": "You can add an icon beside the slider to make it meaningful.",
     "slider.event": "Event",

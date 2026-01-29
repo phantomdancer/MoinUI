@@ -5,6 +5,8 @@
     "slider.basic": "基本",
     "slider.basic_desc": "基本滑动条。当 range 为 true 时，渲染为双滑块模式。使用 disabled 禁用滑动条交互。",
     "slider.draggable_track": "可拖拽轨道（整体平移）",
+    "slider.editable": "动态增减节点",
+    "slider.editable_desc": "点击轨道空白处添加节点，将节点拖出滑块区域可删除。",
     "slider.icon": "带图标的滑块",
     "slider.icon_desc": "滑块左右可以设置图标来表达业务含义。",
     "slider.event": "事件",
