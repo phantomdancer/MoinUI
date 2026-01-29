@@ -170,13 +170,14 @@ struct ContentView: View {
     @State private var skeletonTab: SkeletonExamplesTab = .examples
     @State private var rateTab: RateExamplesTab = .examples
     @State private var sliderTab: SliderExamplesTab = .examples
+    @State private var resultTab: ResultExamplesTab = .examples
 
     var body: some View {
         NavigationSplitView {
             Sidebar(selection: $navManager.selectedItem)
                 .navigationSplitViewColumnWidth(min: 240, ideal: 300, max: 420)
         } detail: {
-            DetailView(item: navManager.selectedItem, buttonTab: $buttonTab, switchTab: $switchTab, checkboxTab: $checkboxTab, radioTab: $radioTab, typographyTab: $typographyTab, tagTab: $tagTab, spaceTab: $spaceTab, dividerTab: $dividerTab, badgeTab: $badgeTab, avatarTab: $avatarTab, emptyTab: $emptyTab, spinTab: $spinTab, statisticTab: $statisticTab, alertTab: $alertTab, progressTab: $progressTab, tokenTab: $tokenTab, skeletonTab: $skeletonTab, rateTab: $rateTab, sliderTab: $sliderTab)
+            DetailView(item: navManager.selectedItem, buttonTab: $buttonTab, switchTab: $switchTab, checkboxTab: $checkboxTab, radioTab: $radioTab, typographyTab: $typographyTab, tagTab: $tagTab, spaceTab: $spaceTab, dividerTab: $dividerTab, badgeTab: $badgeTab, avatarTab: $avatarTab, emptyTab: $emptyTab, spinTab: $spinTab, statisticTab: $statisticTab, alertTab: $alertTab, progressTab: $progressTab, tokenTab: $tokenTab, skeletonTab: $skeletonTab, rateTab: $rateTab, sliderTab: $sliderTab, resultTab: $resultTab)
                 .navigationTitle(navManager.selectedItem.map { tr($0.titleKey) } ?? "MoinUI")
                 .toolbar {
                     ToolbarItemGroup(placement: .primaryAction) {
@@ -384,6 +385,17 @@ struct ContentView: View {
                              .fixedSize()
                         }
 
+                        // Result 页面显示 Tab 切换
+                        if navManager.selectedItem == .result {
+                             Picker("", selection: $resultTab) {
+                                 Text(tr("tab.examples")).tag(ResultExamplesTab.examples)
+                                 Text(tr("tab.api")).tag(ResultExamplesTab.api)
+                                 Text(tr("tab.token")).tag(ResultExamplesTab.token)
+                             }
+                             .pickerStyle(.segmented)
+                             .fixedSize()
+                        }
+
                         Spacer()
 
                         Button {
@@ -440,6 +452,7 @@ enum NavItem: String, Identifiable {
     case spin
     case progress
     case skeleton
+    case result
 
     // Components - Layout
     case space
@@ -476,6 +489,7 @@ enum NavItem: String, Identifiable {
         case .spin: return DemoIcons.spin
         case .progress: return DemoIcons.progress
         case .skeleton: return DemoIcons.skeleton
+        case .result: return DemoIcons.result
         case .space: return DemoIcons.space
         case .divider: return DemoIcons.divider
         case .configProvider: return DemoIcons.configProvider
@@ -506,6 +520,7 @@ enum NavItem: String, Identifiable {
         case .spin: return "component.spin"
         case .progress: return "component.progress"
         case .skeleton: return "component.skeleton"
+        case .result: return "component.result"
         case .space: return "component.space"
         case .divider: return "component.divider"
         case .configProvider: return "component.configProvider"
@@ -518,7 +533,7 @@ enum NavItem: String, Identifiable {
     static var general: [NavItem] { [.button, .tag, .typography] }
     static var dataEntry: [NavItem] { [.switch, .checkbox, .radio, .rate, .slider] }
     static var dataDisplay: [NavItem] { [.avatar, .badge, .empty, .statistic] }
-    static var feedback: [NavItem] { [.alert, .spin, .progress, .skeleton] }
+    static var feedback: [NavItem] { [.alert, .spin, .progress, .skeleton, .result] }
     static var layout: [NavItem] { [.divider, .space] }
     static var development: [NavItem] { [.theme, .token, .configProvider, .localization, .colors] }
 }
@@ -627,6 +642,7 @@ struct DetailView: View {
     @Binding var skeletonTab: SkeletonExamplesTab
     @Binding var rateTab: RateExamplesTab
     @Binding var sliderTab: SliderExamplesTab
+    @Binding var resultTab: ResultExamplesTab
 
     var body: some View {
         Group {
@@ -671,6 +687,8 @@ struct DetailView: View {
                 ProgressExamplesWrapper(selectedTab: $progressTab)
             case .skeleton:
                 SkeletonExamples(selectedTab: $skeletonTab)
+            case .result:
+                ResultExamplesWrapper(selectedTab: $resultTab)
             case .space:
                 SpaceExamples(selectedTab: $spaceTab)
             case .divider:

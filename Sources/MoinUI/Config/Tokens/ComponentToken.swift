@@ -21,6 +21,7 @@ public extension Moin {
         public var skeleton: Moin.SkeletonToken
         public var rate: Moin.RateToken
         public var slider: Moin.SliderToken
+        public var result: Moin.ResultToken
 
         public static func generate(from token: Token, isDark: Bool = false) -> ComponentToken {
             ComponentToken(
@@ -40,7 +41,8 @@ public extension Moin {
                 radio: .resolve(token: token),
                 skeleton: .generate(from: token),
                 rate: .generate(from: token),
-                slider: .generate(from: token)
+                slider: .generate(from: token),
+                result: .generate(from: token)
             )
         }
 

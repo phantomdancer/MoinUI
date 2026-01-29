@@ -1,0 +1,90 @@
+{
+  "result": {
+    "title": "Result 结果",
+    "description": "用于反馈一系列操作任务的处理结果。",
+    "success": "成功结果",
+    "success_desc": "成功的结果页面。",
+    "info": "信息结果",
+    "info_desc": "展示处理结果。",
+    "warning": "警告结果",
+    "warning_desc": "警告类型的结果页面。",
+    "error": "失败结果",
+    "error_desc": "失败的结果页面。",
+    "403": "403",
+    "403_desc": "无权限访问。",
+    "404": "404",
+    "404_desc": "页面不存在。",
+    "500": "500",
+    "500_desc": "服务器错误。",
+    "custom_icon": "自定义图标",
+    "custom_icon_desc": "可以自定义图标。",
+    "demo": {
+      "success_title": "成功提交",
+      "success_subtitle": "您的订单已成功提交，我们将尽快处理。",
+      "info_title": "您的操作已执行",
+      "info_subtitle": "请等待系统处理完成。",
+      "warning_title": "您的操作存在问题",
+      "warning_subtitle": "请检查并修改以下内容后重试。",
+      "error_title": "提交失败",
+      "error_subtitle": "请检查并修改以下内容后重新提交。",
+      "403_subtitle": "抱歉，您没有权限访问此页面。",
+      "404_subtitle": "抱歉，您访问的页面不存在。",
+      "500_subtitle": "抱歉，服务器出错了。",
+      "custom_icon_title": "您的操作已完成",
+      "custom_icon_subtitle": "感谢您的使用！",
+      "go_console": "返回首页",
+      "buy_again": "再次购买",
+      "back_home": "返回首页",
+      "next": "下一步"
+    }
+  },
+  "api": {
+    "result": {
+      "status": "结果的状态",
+      "title": "标题文字",
+      "subTitle": "副标题文字",
+      "icon": "自定义图标",
+      "extra": "操作区",
+      "demo": {
+        "success": "成功",
+        "error": "失败",
+        "title": "操作结果",
+        "subtitle": "这是一段描述。",
+        "primary": "主按钮",
+        "default": "默认按钮"
+      }
+    }
+  },
+  "token": {
+    "result": {
+      "titleFontSize": "标题字体大小",
+      "subtitleFontSize": "副标题字体大小",
+      "iconFontSize": "图标大小",
+      "extraMargin": "操作区外边距",
+      "padding": "内间距",
+      "colorSuccess": "成功状态颜色",
+      "colorError": "错误状态颜色",
+      "colorInfo": "信息状态颜色",
+      "colorWarning": "警告状态颜色",
+      "colorText": "标题文字颜色",
+      "colorTextSecondary": "副标题文字颜色",
+      "demo": {
+        "title": "标题",
+        "subtitle": "副标题描述",
+        "action": "操作",
+        "success": "成功",
+        "error": "失败",
+        "info": "信息",
+        "warning": "警告"
+      }
+    },
+    "global": {
+      "colorText": {
+        "hint": "标题文字颜色由全局 colorText 控制"
+      },
+      "colorTextSecondary": {
+        "hint": "副标题颜色由全局 colorTextSecondary 控制"
+      }
+    }
+  }
+}

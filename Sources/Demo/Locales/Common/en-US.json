@@ -71,7 +71,10 @@
     "checkbox": "Checkbox",
     "radio": "Radio",
     "skeleton": "Skeleton",
-    "colors": "Colors"
+    "colors": "Colors",
+    "rate": "Rate",
+    "slider": "Slider",
+    "result": "Result"
   },
   "home": {
     "tagline": "A modern macOS SwiftUI Component Library",

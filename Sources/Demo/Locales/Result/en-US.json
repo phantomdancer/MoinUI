@@ -1,0 +1,90 @@
+{
+  "result": {
+    "title": "Result",
+    "description": "Used to display the result of an operation.",
+    "success": "Success",
+    "success_desc": "A success result page.",
+    "info": "Info",
+    "info_desc": "An info result page.",
+    "warning": "Warning",
+    "warning_desc": "A warning result page.",
+    "error": "Error",
+    "error_desc": "An error result page.",
+    "403": "403",
+    "403_desc": "Unauthorized access.",
+    "404": "404",
+    "404_desc": "Page not found.",
+    "500": "500",
+    "500_desc": "Server error.",
+    "custom_icon": "Custom Icon",
+    "custom_icon_desc": "You can customize the icon.",
+    "demo": {
+      "success_title": "Successfully Submitted",
+      "success_subtitle": "Your order has been successfully submitted and we will process it as soon as possible.",
+      "info_title": "Your operation has been executed",
+      "info_subtitle": "Please wait for the system to complete processing.",
+      "warning_title": "There are some problems with your operation",
+      "warning_subtitle": "Please check and modify the following before retrying.",
+      "error_title": "Submission Failed",
+      "error_subtitle": "Please check and modify the following before resubmitting.",
+      "403_subtitle": "Sorry, you do not have permission to access this page.",
+      "404_subtitle": "Sorry, the page you visited does not exist.",
+      "500_subtitle": "Sorry, the server is wrong.",
+      "custom_icon_title": "Your operation has been completed",
+      "custom_icon_subtitle": "Thank you for using!",
+      "go_console": "Go Console",
+      "buy_again": "Buy Again",
+      "back_home": "Back Home",
+      "next": "Next"
+    }
+  },
+  "api": {
+    "result": {
+      "status": "Result status",
+      "title": "Title text",
+      "subTitle": "Subtitle text",
+      "icon": "Custom icon",
+      "extra": "Extra actions",
+      "demo": {
+        "success": "Success",
+        "error": "Error",
+        "title": "Operation Result",
+        "subtitle": "This is a description.",
+        "primary": "Primary",
+        "default": "Default"
+      }
+    }
+  },
+  "token": {
+    "result": {
+      "titleFontSize": "Title font size",
+      "subtitleFontSize": "Subtitle font size",
+      "iconFontSize": "Icon size",
+      "extraMargin": "Extra area margin",
+      "padding": "Padding",
+      "colorSuccess": "Success status color",
+      "colorError": "Error status color",
+      "colorInfo": "Info status color",
+      "colorWarning": "Warning status color",
+      "colorText": "Title text color",
+      "colorTextSecondary": "Subtitle text color",
+      "demo": {
+        "title": "Title",
+        "subtitle": "Subtitle description",
+        "action": "Action",
+        "success": "Success",
+        "error": "Error",
+        "info": "Info",
+        "warning": "Warning"
+      }
+    },
+    "global": {
+      "colorText": {
+        "hint": "Title text color is controlled by global colorText"
+      },
+      "colorTextSecondary": {
+        "hint": "Subtitle color is controlled by global colorTextSecondary"
+      }
+    }
+  }
+}

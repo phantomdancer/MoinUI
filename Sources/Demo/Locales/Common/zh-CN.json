@@ -71,7 +71,10 @@
     "checkbox": "Checkbox 多选框",
     "radio": "Radio 单选框",
     "skeleton": "Skeleton 骨架屏",
-    "colors": "Colors 颜色集合"
+    "colors": "Colors 颜色集合",
+    "rate": "Rate 评分",
+    "slider": "Slider 滑动输入条",
+    "result": "Result 结果"
   },
   "home": {
     "tagline": "现代化的 macOS SwiftUI 组件库",

@@ -23,6 +23,7 @@ public enum Moin {
     public static let Skeleton = _MoinSkeletonFactory()
     public static let Rate = _MoinRateFactory()
     public static let Slider = _MoinSliderFactory()
+    public static let Result = _MoinResultFactory()
 
     // MARK: - Type Aliases
 

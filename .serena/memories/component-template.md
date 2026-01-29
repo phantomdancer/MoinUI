@@ -185,5 +185,6 @@ Skeleton.ParagraphConfig(rows: 3)
 - [ ] **Token View**: `code` 展示实时数值，无硬编码。
 - [ ] **API View**: 示例使用 `@State`，`code` 与预览代码一致且可交互。
 - [ ] **国际化**: 全面覆盖，包括 `code` 块中的字符串。
+- [ ] **Token 环境注入**: `ConfigProvider.swift` 的 `ThemeRoot.body` 中添加 `.environment(\.moin{Name}Token, config.components.{name})`，否则 Token 编辑器不生效。
 - [ ] **构建测试**: `swift build` 无警告，`swift test` 通过。
 - [ ] **一致性**: 对比 Ant Design 源码，确保 API 和 Token 命名/行为一致。
