@@ -208,7 +208,7 @@ struct SliderAPIView: View {
             description: tr("slider.api.disabled_desc"),
             sectionId: "slider"
         ) {
-            VStack(alignment: .leading, spacing: 12) {
+            HStack(spacing: 24) {
                 VStack(alignment: .leading, spacing: 4) {
                     Text("disabled: false (\(tr("slider.default")))").font(.caption).foregroundStyle(.secondary)
                     Moin.Slider(value: .constant(30), disabled: false)

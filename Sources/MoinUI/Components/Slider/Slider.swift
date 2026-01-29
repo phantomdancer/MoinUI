@@ -517,6 +517,8 @@ public struct _MultiSlider: View {
     private func snap(_ val: Double) -> Double {
         var result = val
         var snapPoints: Set<Double> = []
+
+        // step 点
         if let step = step, step > 0 {
             var v = min
             while v <= max {
@@ -524,21 +526,28 @@ public struct _MultiSlider: View {
                 v += step
             }
         }
-        if let marks = marks {
+
+        // marks 只在有 step 时也加入吸附点（step + marks 组合）
+        if step != nil, let marks = marks {
             for markValue in marks.keys {
                 snapPoints.insert(markValue)
             }
         }
+
+        // 吸附到 step 点或 step+marks 点
         if !snapPoints.isEmpty,
            let closest = snapPoints.min(by: { abs($0 - result) < abs($1 - result) }) {
             result = closest
         }
+
+        // dots=true 时，只能停在 marks 位置
         if dots, let marks = marks {
             let markValues = Array(marks.keys)
             if let closest = markValues.min(by: { abs($0 - result) < abs($1 - result) }) {
                 result = closest
             }
         }
+
         return result
     }
 
