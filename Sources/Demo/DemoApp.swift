@@ -520,6 +520,7 @@ struct Sidebar: View {
                 ForEach(NavItem.overview) { item in
                     NavigationLink(value: item) {
                         Label(tr(item.titleKey), systemImage: item.icon)
+                            .frame(maxWidth: .infinity, alignment: .leading)
                     }
                 }
             }
@@ -528,6 +529,7 @@ struct Sidebar: View {
                 ForEach(NavItem.development) { item in
                     NavigationLink(value: item) {
                         Label(tr(item.titleKey), systemImage: item.icon)
+                            .frame(maxWidth: .infinity, alignment: .leading)
                     }
                 }
             }
@@ -541,6 +543,7 @@ struct Sidebar: View {
                             Image(systemName: item.icon)
                                 .environment(\.locale, Locale(identifier: "en"))
                         }
+                        .frame(maxWidth: .infinity, alignment: .leading)
                     }
                 }
             }
@@ -549,6 +552,7 @@ struct Sidebar: View {
                 ForEach(NavItem.dataEntry) { item in
                     NavigationLink(value: item) {
                         Label(tr(item.titleKey), systemImage: item.icon)
+                            .frame(maxWidth: .infinity, alignment: .leading)
                     }
                 }
             }
@@ -557,6 +561,7 @@ struct Sidebar: View {
                 ForEach(NavItem.dataDisplay) { item in
                     NavigationLink(value: item) {
                         Label(tr(item.titleKey), systemImage: item.icon)
+                            .frame(maxWidth: .infinity, alignment: .leading)
                     }
                 }
             }
@@ -565,6 +570,7 @@ struct Sidebar: View {
                 ForEach(NavItem.feedback) { item in
                     NavigationLink(value: item) {
                         Label(tr(item.titleKey), systemImage: item.icon)
+                            .frame(maxWidth: .infinity, alignment: .leading)
                     }
                 }
             }
@@ -573,12 +579,12 @@ struct Sidebar: View {
                 ForEach(NavItem.layout) { item in
                     NavigationLink(value: item) {
                         Label(tr(item.titleKey), systemImage: item.icon)
+                            .frame(maxWidth: .infinity, alignment: .leading)
                     }
                 }
             }
         }
         .listStyle(.sidebar)
-        .frame(minWidth: 240, maxWidth: 240)
         .navigationTitle("MoinUI")
     }
 }
