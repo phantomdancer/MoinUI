@@ -153,3 +153,7 @@ Button ✅, Typography ✅, Divider ✅, Space ✅, Tag ✅, Badge ✅, Avatar �
 
 - **Rate**:
   - [ ] tooltips prop (需 Tooltip 组件支持)
+
+- **Slider**:
+  - [ ] 带输入框的滑块 (需 Input 组件支持)
+  - [ ] 自定义提示 tooltip (需 Tooltip 组件支持)
