@@ -106,7 +106,7 @@ public struct _Rate<Character: View>: View {
     }
 
     public var body: some View {
-        HStack(spacing: rateToken.starGap) {
+        HStack(spacing: token.marginXS) {
             ForEach(0..<count, id: \.self) { index in
                 starView(for: index)
             }

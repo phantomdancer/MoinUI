@@ -22,8 +22,7 @@ struct RateTokenView: View {
                     .init(id: "starSize"),
                     .init(id: "starSizeSM"),
                     .init(id: "starSizeLG"),
-                    .init(id: "starHoverScale"),
-                    .init(id: "starGap")
+                    .init(id: "starHoverScale")
                 ],
                 sectionId: "component"
             )
@@ -40,7 +39,7 @@ struct RateTokenView: View {
                     .init(id: "controlHeight"),
                     .init(id: "controlHeightSM"),
                     .init(id: "controlHeightLG"),
-                    .init(id: "marginXXS")
+                    .init(id: "marginXS")
                 ],
                 sectionId: "global"
             )
@@ -105,7 +104,6 @@ struct RateTokenView: View {
             case "starSizeSM": AnyView(starSizeSMCard)
             case "starSizeLG": AnyView(starSizeLGCard)
             case "starHoverScale": AnyView(starHoverScaleCard)
-            case "starGap": AnyView(starGapCard)
             default: AnyView(EmptyView())
             }
         } else {
@@ -115,7 +113,7 @@ struct RateTokenView: View {
             case "controlHeight": AnyView(controlHeightGlobalCard)
             case "controlHeightSM": AnyView(controlHeightSMGlobalCard)
             case "controlHeightLG": AnyView(controlHeightLGGlobalCard)
-            case "marginXXS": AnyView(marginXXSGlobalCard)
+            case "marginXS": AnyView(marginXSGlobalCard)
             default: AnyView(EmptyView())
             }
         }
@@ -248,25 +246,7 @@ struct RateTokenView: View {
         .scrollAnchor("component.starHoverScale")
     }
 
-    private var starGapCard: some View {
-        TokenCard(
-            name: "starGap",
-            type: "CGFloat",
-            defaultValue: "token.marginXXS",
-            description: tr("rate.token.starGap.desc"),
-            sectionId: "component"
-        ) {
-            Moin.Rate(value: $previewValue)
-        } editor: {
-            TokenValueRow(label: "starGap", value: Binding(
-                get: { config.components.rate.starGap },
-                set: { config.components.rate.starGap = $0 }
-            ), range: 0...16, step: 1)
-        } code: {
-            "config.components.rate.starGap = \(Int(config.components.rate.starGap))"
-        }
-        .scrollAnchor("component.starGap")
-    }
+
 
     // MARK: - Global Token Cards
 
@@ -414,12 +394,12 @@ struct RateTokenView: View {
         .scrollAnchor("global.controlHeightLG")
     }
 
-    private var marginXXSGlobalCard: some View {
+    private var marginXSGlobalCard: some View {
         TokenCard(
-            name: "marginXXS",
+            name: "marginXS",
             type: "CGFloat",
-            defaultValue: "4",
-            description: tr("rate.token.global.marginXXS.desc"),
+            defaultValue: "8",
+            description: tr("rate.token.global.marginXS.desc"),
             sectionId: "global"
         ) {
             Moin.Rate(value: $previewValue)
@@ -430,11 +410,11 @@ struct RateTokenView: View {
             })
         } code: {
             """
-            // marginXXS = sizeUnit
+            // marginXS = sizeUnit × 2
             config.seed.sizeUnit = \(Int(config.seed.sizeUnit))
-            // starGap = marginXXS = \(Int(config.seed.sizeUnit))
+            // star gap = marginXS = \(Int(config.seed.sizeUnit * 2))
             """
         }
-        .scrollAnchor("global.marginXXS")
+        .scrollAnchor("global.marginXS")
     }
 }

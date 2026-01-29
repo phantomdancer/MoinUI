@@ -22,8 +22,6 @@ public extension Moin {
         public var starSizeSM: CGFloat
         /// 大号星星尺寸
         public var starSizeLG: CGFloat
-        /// 星星间距
-        public var starGap: CGFloat
 
         // MARK: - Interaction
 
@@ -39,7 +37,6 @@ public extension Moin {
                 starSize: token.controlHeight * 0.625,
                 starSizeSM: token.controlHeightSM * 0.625,
                 starSizeLG: token.controlHeightLG * 0.625,
-                starGap: token.marginXXS,
                 starHoverScale: 1.1
             )
         }

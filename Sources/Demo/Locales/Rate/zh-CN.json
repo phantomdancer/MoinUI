@@ -49,9 +49,6 @@
       "starHoverScale": {
         "desc": "悬停时星星的缩放比例"
       },
-      "starGap": {
-        "desc": "星星之间的间距"
-      },
       "global": {
         "derived_from": "派生自",
         "yellow6": {
@@ -69,8 +66,8 @@
         "controlHeightLG": {
           "desc": "大号控件高度，影响大号星星尺寸"
         },
-        "marginXXS": {
-          "desc": "超小间距，用于星星之间的间距"
+        "marginXS": {
+          "desc": "小间距，用于星星之间的间距"
         }
       }
     }

@@ -49,9 +49,6 @@
       "starHoverScale": {
         "desc": "Scale ratio when hovering over star"
       },
-      "starGap": {
-        "desc": "Gap between stars"
-      },
       "global": {
         "derived_from": "Derived from",
         "yellow6": {
@@ -69,8 +66,8 @@
         "controlHeightLG": {
           "desc": "Large control height, affects large star size"
         },
-        "marginXXS": {
-          "desc": "Extra extra small margin, used for star gap"
+        "marginXS": {
+          "desc": "Extra small margin, used for star gap"
         }
       }
     }
