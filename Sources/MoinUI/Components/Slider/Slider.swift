@@ -61,13 +61,6 @@ public struct _Slider: View {
     var onChange: ((Double) -> Void)?
     var onChangeComplete: ((Double) -> Void)?
 
-    @Environment(\.moinSliderToken) private var sliderToken
-    @Environment(\.moinToken) private var token
-    @Environment(\.isEnabled) private var isEnabled
-
-    @State private var isHovering = false
-    @State private var isDragging = false
-
     public init(
         value: Binding<Double>,
         min: Double = 0,
@@ -96,245 +89,39 @@ public struct _Slider: View {
         self.onChangeComplete = onChangeComplete
     }
 
-    private var isEffectiveDisabled: Bool {
-        !isEnabled || disabled
-    }
-
-    private var normalizedValue: Double {
-        (value - min) / (max - min)
-    }
-
-    private var effectiveValue: Double {
-        reverse ? 1 - normalizedValue : normalizedValue
-    }
-
-    private var markKeys: [MarkKey] {
-        guard let marks = marks else { return [] }
-        return marks.keys.sorted().map { MarkKey($0, marks[$0]!) }
+    // 将 Double 转换为 [Double] 绑定
+    private var arrayBinding: Binding<[Double]> {
+        Binding(
+            get: { [value] },
+            set: { arr in
+                if let v = arr.first { value = v }
+            }
+        )
     }
 
     public var body: some View {
-        GeometryReader { geo in
-            let size = vertical ? geo.size.height : geo.size.width
-            let trackLength = size
-
-            ZStack(alignment: vertical ? .bottom : .leading) {
-                // Rail (背景轨道)
-                Capsule()
-                    .fill(isHovering && !isEffectiveDisabled ? sliderToken.railHoverBg : sliderToken.railBg)
-                    .frame(
-                        width: vertical ? sliderToken.railSize : nil,
-                        height: vertical ? nil : sliderToken.railSize
-                    )
-
-                // Track (已选轨道)
-                if included {
-                    Capsule()
-                        .fill(trackColor)
-                        .frame(
-                            width: vertical ? sliderToken.railSize : trackLength * effectiveValue,
-                            height: vertical ? trackLength * effectiveValue : sliderToken.railSize
-                        )
-                }
-
-                // Dots (刻度点)
-                ForEach(markKeys) { markKey in
-                    dotView(for: markKey.id, in: trackLength)
-                }
-
-                // Handle (滑块)
-                handleView(in: trackLength)
+        _MultiSlider(
+            value: arrayBinding,
+            min: min,
+            max: max,
+            step: step,
+            disabled: disabled,
+            vertical: vertical,
+            reverse: reverse,
+            marks: marks,
+            dots: dots,
+            included: included,
+            editable: false,
+            draggableTrack: false,
+            minCount: 1,
+            maxCount: 1,
+            onChange: { arr in
+                if let v = arr.first { onChange?(v) }
+            },
+            onChangeComplete: { arr in
+                if let v = arr.first { onChangeComplete?(v) }
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .contentShape(Rectangle())
-            .onContinuousHover { phase in
-                switch phase {
-                case .active:
-                    if isEffectiveDisabled {
-                        NSCursor.operationNotAllowed.set()
-                    } else {
-                        if !isHovering {
-                            isHovering = true
-                        }
-                        NSCursor.pointingHand.set()
-                    }
-                case .ended:
-                    if isHovering {
-                        isHovering = false
-                    }
-                    NSCursor.arrow.set()
-                }
-            }
-            .gesture(dragGesture(in: trackLength))
-            .overlay(alignment: vertical ? .leading : .bottom) {
-                marksView(trackLength: trackLength)
-            }
-        }
-        .frame(
-            width: vertical ? sliderToken.controlSize * 3 : nil,
-            height: vertical ? nil : sliderToken.controlSize * 3
         )
-        .animation(.easeInOut(duration: token.motionDurationMid), value: value)
-        .animation(.easeInOut(duration: token.motionDurationFast), value: isHovering)
-    }
-
-    private var trackColor: Color {
-        if isEffectiveDisabled {
-            return sliderToken.trackBgDisabled
-        }
-        return isHovering ? sliderToken.trackHoverBg : sliderToken.trackBg
-    }
-
-    @ViewBuilder
-    private func handleView(in trackLength: CGFloat) -> some View {
-        let handleSize = (isHovering || isDragging) && !isEffectiveDisabled
-            ? sliderToken.handleSizeHover
-            : sliderToken.handleSize
-        let lineWidth = (isHovering || isDragging) && !isEffectiveDisabled
-            ? sliderToken.handleLineWidthHover
-            : sliderToken.handleLineWidth
-        let position = trackLength * effectiveValue
-
-        Circle()
-            .fill(Color.white)
-            .overlay(
-                Circle()
-                    .stroke(handleBorderColor, lineWidth: lineWidth)
-            )
-            .overlay(
-                Circle()
-                    .stroke(sliderToken.handleActiveOutlineColor, lineWidth: (isHovering || isDragging) && !isEffectiveDisabled ? 6 : 0)
-            )
-            .frame(width: handleSize, height: handleSize)
-            .offset(
-                x: vertical ? 0 : position - handleSize / 2,
-                y: vertical ? -(position - handleSize / 2) : 0
-            )
-            .allowsHitTesting(false)
-    }
-
-    private var handleBorderColor: Color {
-        if isEffectiveDisabled {
-            return sliderToken.handleColorDisabled
-        }
-        // 拖动时使用 active 颜色
-        if isDragging {
-            return sliderToken.handleActiveColor
-        }
-        // hover 时使用 hover 颜色
-        if isHovering {
-            return sliderToken.handleHoverColor
-        }
-        return sliderToken.handleColor
-    }
-
-    @ViewBuilder
-    private func dotView(for markValue: Double, in trackLength: CGFloat) -> some View {
-        let normalized = (markValue - min) / (max - min)
-        let position = trackLength * (reverse ? 1 - normalized : normalized)
-        let isActive = included && (reverse ? markValue >= value : markValue <= value)
-
-        Circle()
-            .fill(Color.white)
-            .overlay(
-                Circle()
-                    .stroke(
-                        isActive ? sliderToken.dotActiveBorderColor : sliderToken.dotBorderColor,
-                        lineWidth: sliderToken.handleLineWidth
-                    )
-            )
-            .frame(width: sliderToken.dotSize, height: sliderToken.dotSize)
-            .offset(
-                x: vertical ? 0 : position - sliderToken.dotSize / 2,
-                y: vertical ? -(position - sliderToken.dotSize / 2) : 0
-            )
-    }
-
-    @ViewBuilder
-    private func marksView(trackLength: CGFloat) -> some View {
-        ZStack(alignment: .topLeading) {
-            ForEach(markKeys) { markKey in
-                let normalized = (markKey.id - min) / (max - min)
-                let position = trackLength * (reverse ? 1 - normalized : normalized)
-                let isActive = included && (reverse ? markKey.id >= value : markKey.id <= value)
-
-                markKey.mark.label
-                    .font(.system(size: token.fontSize))
-                    .foregroundStyle(
-                        markKey.mark.style?.color ?? (isActive ? token.colorText : token.colorTextSecondary)
-                    )
-                    .fontWeight(markKey.mark.style?.fontWeight)
-                    .offset(
-                        x: vertical ? sliderToken.controlSize * 3 + 8 : position,
-                        y: vertical ? trackLength - position : sliderToken.controlSize * 3 + 4
-                    )
-                    .fixedSize()
-            }
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-    }
-
-    private func dragGesture(in trackLength: CGFloat) -> some Gesture {
-        DragGesture(minimumDistance: 0)
-            .onChanged { gesture in
-                guard !isEffectiveDisabled else { return }
-                isDragging = true
-
-                let location = vertical ? gesture.location.y : gesture.location.x
-                var normalized = vertical
-                    ? 1 - (location / trackLength)
-                    : location / trackLength
-
-                if reverse {
-                    normalized = 1 - normalized
-                }
-
-                var newValue = min + normalized * (max - min)
-                newValue = Swift.max(min, Swift.min(max, newValue))
-
-                // 构建所有可吸附点：step 点 + marks 位置
-                var snapPoints: Set<Double> = []
-                
-                // 添加 step 点
-                if let step = step, step > 0 {
-                    var v = min
-                    while v <= max {
-                        snapPoints.insert(v)
-                        v += step
-                    }
-                }
-                
-                // 添加 marks 位置
-                if let marks = marks {
-                    for markValue in marks.keys {
-                        snapPoints.insert(markValue)
-                    }
-                }
-                
-                // 找最近的吸附点
-                if !snapPoints.isEmpty {
-                    if let closest = snapPoints.min(by: { abs($0 - newValue) < abs($1 - newValue) }) {
-                        newValue = closest
-                    }
-                }
-                
-                // dots 模式：只能停在 marks 位置
-                if dots, let marks = marks {
-                    let markValues = Array(marks.keys)
-                    if let closest = markValues.min(by: { abs($0 - newValue) < abs($1 - newValue) }) {
-                        newValue = closest
-                    }
-                }
-
-                if newValue != value {
-                    value = newValue
-                    onChange?(newValue)
-                }
-            }
-            .onEnded { _ in
-                isDragging = false
-                onChangeComplete?(value)
-            }
     }
 }
 
@@ -553,7 +340,7 @@ public struct _MultiSlider: View {
                     )
 
                 // Track segments
-                if included && displaySorted.count >= 2 {
+                if included && !displaySorted.isEmpty {
                     trackView(trackLength: trackLength)
                 }
 
@@ -620,8 +407,11 @@ public struct _MultiSlider: View {
     @ViewBuilder
     private func trackView(trackLength: CGFloat) -> some View {
         let sorted = displaySorted
-        let startPos = trackLength * normalized(sorted.first!)
-        let endPos = trackLength * normalized(sorted.last!)
+        // 单值：从起点到当前值；多值：从第一个到最后一个
+        let startNorm: CGFloat = sorted.count >= 2 ? normalized(sorted.first!) : (reverse ? normalized(sorted.first!) : 0)
+        let endNorm: CGFloat = sorted.count >= 2 ? normalized(sorted.last!) : (reverse ? 1 : normalized(sorted.last!))
+        let startPos = trackLength * startNorm
+        let endPos = trackLength * endNorm
         let trackWidth = abs(endPos - startPos)
         let offset = Swift.min(startPos, endPos)
 
