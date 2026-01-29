@@ -20,6 +20,8 @@ struct RateExamples: View {
     @State private var countValue: Double = 3
     @State private var characterValue: Double = 3
     @State private var sizeValue: Double = 3
+    @State private var noClearValue: Double = 3
+    @State private var letterValue: Double = 3
 
     // 懒加载状态
     @State private var apiReady = false
@@ -178,7 +180,7 @@ struct RateExamples: View {
                     }
                     VStack(alignment: .leading, spacing: 4) {
                         Text("allowClear: false").font(.caption).foregroundStyle(.secondary)
-                        Moin.Rate(value: .constant(3), allowClear: false)
+                        Moin.Rate(value: $noClearValue, allowClear: false)
                     }
                 }
             },
@@ -214,6 +216,9 @@ struct RateExamples: View {
         )
     }
 
+    @State private var chineseValue: Double = 3
+    @State private var indexValue: Double = 3
+
     private var characterExample: some View {
         ExampleSection(
             title: tr("rate.character"),
@@ -228,9 +233,29 @@ struct RateExamples: View {
                     }
                     VStack(alignment: .leading, spacing: 4) {
                         Text(tr("rate.letter_character")).font(.caption).foregroundStyle(.secondary)
-                        Moin.Rate(value: .constant(3)) {
+                        Moin.Rate(value: $letterValue) {
                             Text("A")
                                 .fontWeight(.bold)
+                        }
+                    }
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text(tr("rate.chinese_character")).font(.caption).foregroundStyle(.secondary)
+                        Moin.Rate(value: $chineseValue, allowHalf: true) {
+                            Text("好")
+                                .fontWeight(.bold)
+                        }
+                    }
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text("Custom Per Character").font(.caption).foregroundStyle(.secondary)
+                        Moin.Rate(value: $indexValue) { index in
+                            switch index {
+                            case 0, 1:
+                                Image(systemName: "face.dashed") // Frown/Sad equivalent
+                            case 2:
+                                Image(systemName: "face.smiling") // Meh/Neutral equivalent
+                            default:
+                                Image(systemName: "face.smiling.inverse") // Smile equivalent
+                            }
                         }
                     }
                 }
@@ -245,6 +270,20 @@ struct RateExamples: View {
                 // \(tr("rate.letter_character"))
                 Moin.Rate(value: $value) {
                     Text("A").fontWeight(.bold)
+                }
+                
+                // \(tr("rate.chinese_character"))
+                Moin.Rate(value: $value, allowHalf: true) {
+                    Text("好").fontWeight(.bold)
+                }
+                
+                // Custom Per Character
+                Moin.Rate(value: $value) { index in
+                    switch index {
+                    case 0, 1: Image(systemName: "face.dashed")
+                    case 2: Image(systemName: "face.smiling")
+                    default: Image(systemName: "face.smiling.inverse")
+                    }
                 }
                 """
             }

@@ -37,7 +37,7 @@ public struct _Rate<Character: View>: View {
     let allowClear: Bool
     let disabled: Bool
     let size: _RateSize
-    let character: Character
+    let character: (Int) -> Character
     var onChange: ((Double) -> Void)?
     var onHoverChange: ((Double?) -> Void)?
 
@@ -47,6 +47,28 @@ public struct _Rate<Character: View>: View {
 
     @State private var hoverValue: Double? = nil
     @State private var hoveringIndex: Int? = nil
+
+    public init(
+        value: Binding<Double>,
+        count: Int = 5,
+        allowHalf: Bool = false,
+        allowClear: Bool = true,
+        disabled: Bool = false,
+        size: _RateSize = .medium,
+        @ViewBuilder character: @escaping (Int) -> Character,
+        onChange: ((Double) -> Void)? = nil,
+        onHoverChange: ((Double?) -> Void)? = nil
+    ) {
+        self._value = value
+        self.count = count
+        self.allowHalf = allowHalf
+        self.allowClear = allowClear
+        self.disabled = disabled
+        self.size = size
+        self.character = character
+        self.onChange = onChange
+        self.onHoverChange = onHoverChange
+    }
 
     public init(
         value: Binding<Double>,
@@ -65,7 +87,8 @@ public struct _Rate<Character: View>: View {
         self.allowClear = allowClear
         self.disabled = disabled
         self.size = size
-        self.character = character()
+        let charView = character()
+        self.character = { _ in charView }
         self.onChange = onChange
         self.onHoverChange = onHoverChange
     }
@@ -96,14 +119,15 @@ public struct _Rate<Character: View>: View {
     private func starView(for index: Int) -> some View {
         let fillRatio = calculateFillRatio(for: index)
         let isHovering = hoveringIndex == index
+        let charView = character(index)
 
         ZStack {
             // Background (empty star)
-            character
+            charView
                 .foregroundStyle(rateToken.starBg)
 
             // Filled overlay
-            character
+            charView
                 .foregroundStyle(rateToken.starColor)
                 .mask(alignment: .leading) {
                     GeometryReader { geo in
@@ -233,7 +257,7 @@ public struct _MoinRateFactory {
         )
     }
 
-    /// 自定义字符评分
+    /// 自定义字符评分 (统一)
     public func callAsFunction<C: View>(
         value: Binding<Double>,
         count: Int = 5,
@@ -242,6 +266,31 @@ public struct _MoinRateFactory {
         disabled: Bool = false,
         size: Size = .medium,
         @ViewBuilder character: () -> C,
+        onChange: ((Double) -> Void)? = nil,
+        onHoverChange: ((Double?) -> Void)? = nil
+    ) -> _Rate<C> {
+        _Rate(
+            value: value,
+            count: count,
+            allowHalf: allowHalf,
+            allowClear: allowClear,
+            disabled: disabled,
+            size: size,
+            character: character,
+            onChange: onChange,
+            onHoverChange: onHoverChange
+        )
+    }
+
+    /// 自定义字符评分 (按索引)
+    public func callAsFunction<C: View>(
+        value: Binding<Double>,
+        count: Int = 5,
+        allowHalf: Bool = false,
+        allowClear: Bool = true,
+        disabled: Bool = false,
+        size: Size = .medium,
+        @ViewBuilder character: @escaping (Int) -> C,
         onChange: ((Double) -> Void)? = nil,
         onHoverChange: ((Double?) -> Void)? = nil
     ) -> _Rate<C> {
