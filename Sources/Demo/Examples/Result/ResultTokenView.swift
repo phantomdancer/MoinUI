@@ -104,7 +104,7 @@ struct ResultTokenView: View {
             description: tr("token.result.titleFontSize"),
             sectionId: "component"
         ) {
-            Moin.Result(tr("token.result.demo.title"), status: .success)
+            Moin.Result(status: .success, title: tr("token.result.demo.title"))
                 .frame(maxWidth: 300)
         } editor: {
             TokenValueRow(
@@ -124,9 +124,9 @@ struct ResultTokenView: View {
             sectionId: "component"
         ) {
             Moin.Result(
-                tr("token.result.demo.title"),
-                subTitle: tr("token.result.demo.subtitle"),
-                status: .info
+                status: .info,
+                title: tr("token.result.demo.title"),
+                subTitle: tr("token.result.demo.subtitle")
             )
             .frame(maxWidth: 300)
         } editor: {
@@ -146,7 +146,7 @@ struct ResultTokenView: View {
             description: tr("token.result.iconFontSize"),
             sectionId: "component"
         ) {
-            Moin.Result(tr("token.result.demo.title"), status: .success)
+            Moin.Result(status: .success, title: tr("token.result.demo.title"))
                 .frame(maxWidth: 300)
         } editor: {
             TokenValueRow(
@@ -166,11 +166,12 @@ struct ResultTokenView: View {
             sectionId: "component"
         ) {
             Moin.Result(
-                tr("token.result.demo.title"),
-                status: .success
-            ) {
-                Moin.Button(tr("token.result.demo.action"), variant: .solid) {}
-            }
+                status: .success,
+                title: tr("token.result.demo.title"),
+                extra: {
+                    Moin.Button(tr("token.result.demo.action"), color: .primary) {}
+                }
+            )
             .frame(maxWidth: 300)
         } editor: {
             TokenValueRow(
@@ -189,7 +190,7 @@ struct ResultTokenView: View {
             description: tr("token.result.padding"),
             sectionId: "component"
         ) {
-            Moin.Result(tr("token.result.demo.title"), status: .info)
+            Moin.Result(status: .info, title: tr("token.result.demo.title"))
                 .frame(maxWidth: 300)
                 .background(token.colorBgLayout)
         } editor: {
@@ -211,7 +212,7 @@ struct ResultTokenView: View {
             description: tr("token.result.colorSuccess"),
             sectionId: "global"
         ) {
-            Moin.Result(tr("token.result.demo.success"), status: .success)
+            Moin.Result(status: .success, title: tr("token.result.demo.success"))
                 .frame(maxWidth: 300)
         } editor: {
             ColorPresetRow(
@@ -235,7 +236,7 @@ struct ResultTokenView: View {
             description: tr("token.result.colorError"),
             sectionId: "global"
         ) {
-            Moin.Result(tr("token.result.demo.error"), status: .error)
+            Moin.Result(status: .error, title: tr("token.result.demo.error"))
                 .frame(maxWidth: 300)
         } editor: {
             ColorPresetRow(
@@ -259,7 +260,7 @@ struct ResultTokenView: View {
             description: tr("token.result.colorInfo"),
             sectionId: "global"
         ) {
-            Moin.Result(tr("token.result.demo.info"), status: .info)
+            Moin.Result(status: .info, title: tr("token.result.demo.info"))
                 .frame(maxWidth: 300)
         } editor: {
             ColorPresetRow(
@@ -283,7 +284,7 @@ struct ResultTokenView: View {
             description: tr("token.result.colorWarning"),
             sectionId: "global"
         ) {
-            Moin.Result(tr("token.result.demo.warning"), status: .warning)
+            Moin.Result(status: .warning, title: tr("token.result.demo.warning"))
                 .frame(maxWidth: 300)
         } editor: {
             ColorPresetRow(
@@ -307,7 +308,7 @@ struct ResultTokenView: View {
             description: tr("token.result.colorText"),
             sectionId: "global"
         ) {
-            Moin.Result(tr("token.result.demo.title"), status: .info)
+            Moin.Result(status: .info, title: tr("token.result.demo.title"))
                 .frame(maxWidth: 300)
         } editor: {
             Text(tr("token.global.colorText.hint"))
@@ -325,9 +326,9 @@ struct ResultTokenView: View {
             sectionId: "global"
         ) {
             Moin.Result(
-                tr("token.result.demo.title"),
-                subTitle: tr("token.result.demo.subtitle"),
-                status: .info
+                status: .info,
+                title: tr("token.result.demo.title"),
+                subTitle: tr("token.result.demo.subtitle")
             )
             .frame(maxWidth: 300)
         } editor: {

@@ -36,27 +36,29 @@ struct ResultExamples: View {
             description: tr("result.success_desc")
         ) {
             Moin.Result(
-                tr("result.demo.success_title"),
+                status: .success,
+                title: tr("result.demo.success_title"),
                 subTitle: tr("result.demo.success_subtitle"),
-                status: .success
-            ) {
-                HStack(spacing: 8) {
-                    Moin.Button(tr("result.demo.go_console"), variant: .solid) {}
-                    Moin.Button(tr("result.demo.buy_again")) {}
+                extra: {
+                    HStack(spacing: 8) {
+                        Moin.Button(tr("result.demo.go_console"), color: .primary) {}
+                        Moin.Button(tr("result.demo.buy_again")) {}
+                    }
                 }
-            }
+            )
         } code: {
             """
             Moin.Result(
-                "\(tr("result.demo.success_title"))",
+                status: .success,
+                title: "\(tr("result.demo.success_title"))",
                 subTitle: "\(tr("result.demo.success_subtitle"))",
-                status: .success
-            ) {
-                HStack(spacing: 8) {
-                    Moin.Button("\(tr("result.demo.go_console"))", variant: .solid) {}
-                    Moin.Button("\(tr("result.demo.buy_again"))") {}
+                extra: {
+                    HStack(spacing: 8) {
+                        Moin.Button("\(tr("result.demo.go_console"))", color: .primary) {}
+                        Moin.Button("\(tr("result.demo.buy_again"))") {}
+                    }
                 }
-            }
+            )
             """
         }
     }
@@ -69,21 +71,23 @@ struct ResultExamples: View {
             description: tr("result.info_desc")
         ) {
             Moin.Result(
-                tr("result.demo.info_title"),
+                status: .info,
+                title: tr("result.demo.info_title"),
                 subTitle: tr("result.demo.info_subtitle"),
-                status: .info
-            ) {
-                Moin.Button(tr("result.demo.go_console"), variant: .solid) {}
-            }
+                extra: {
+                    Moin.Button(tr("result.demo.go_console"), color: .primary) {}
+                }
+            )
         } code: {
             """
             Moin.Result(
-                "\(tr("result.demo.info_title"))",
+                status: .info,
+                title: "\(tr("result.demo.info_title"))",
                 subTitle: "\(tr("result.demo.info_subtitle"))",
-                status: .info
-            ) {
-                Moin.Button("\(tr("result.demo.go_console"))", variant: .solid) {}
-            }
+                extra: {
+                    Moin.Button("\(tr("result.demo.go_console"))", color: .primary) {}
+                }
+            )
             """
         }
     }
@@ -96,21 +100,23 @@ struct ResultExamples: View {
             description: tr("result.warning_desc")
         ) {
             Moin.Result(
-                tr("result.demo.warning_title"),
+                status: .warning,
+                title: tr("result.demo.warning_title"),
                 subTitle: tr("result.demo.warning_subtitle"),
-                status: .warning
-            ) {
-                Moin.Button(tr("result.demo.go_console"), variant: .solid) {}
-            }
+                extra: {
+                    Moin.Button(tr("result.demo.go_console"), color: .primary) {}
+                }
+            )
         } code: {
             """
             Moin.Result(
-                "\(tr("result.demo.warning_title"))",
+                status: .warning,
+                title: "\(tr("result.demo.warning_title"))",
                 subTitle: "\(tr("result.demo.warning_subtitle"))",
-                status: .warning
-            ) {
-                Moin.Button("\(tr("result.demo.go_console"))", variant: .solid) {}
-            }
+                extra: {
+                    Moin.Button("\(tr("result.demo.go_console"))", color: .primary) {}
+                }
+            )
             """
         }
     }
@@ -123,27 +129,29 @@ struct ResultExamples: View {
             description: tr("result.error_desc")
         ) {
             Moin.Result(
-                tr("result.demo.error_title"),
+                status: .error,
+                title: tr("result.demo.error_title"),
                 subTitle: tr("result.demo.error_subtitle"),
-                status: .error
-            ) {
-                HStack(spacing: 8) {
-                    Moin.Button(tr("result.demo.go_console"), variant: .solid) {}
-                    Moin.Button(tr("result.demo.buy_again")) {}
+                extra: {
+                    HStack(spacing: 8) {
+                        Moin.Button(tr("result.demo.go_console"), color: .primary) {}
+                        Moin.Button(tr("result.demo.buy_again")) {}
+                    }
                 }
-            }
+            )
         } code: {
             """
             Moin.Result(
-                "\(tr("result.demo.error_title"))",
+                status: .error,
+                title: "\(tr("result.demo.error_title"))",
                 subTitle: "\(tr("result.demo.error_subtitle"))",
-                status: .error
-            ) {
-                HStack(spacing: 8) {
-                    Moin.Button("\(tr("result.demo.go_console"))", variant: .solid) {}
-                    Moin.Button("\(tr("result.demo.buy_again"))") {}
+                extra: {
+                    HStack(spacing: 8) {
+                        Moin.Button("\(tr("result.demo.go_console"))", color: .primary) {}
+                        Moin.Button("\(tr("result.demo.buy_again"))") {}
+                    }
                 }
-            }
+            )
             """
         }
     }
@@ -156,21 +164,23 @@ struct ResultExamples: View {
             description: tr("result.403_desc")
         ) {
             Moin.Result(
-                "403",
+                status: .unauthorized,
+                title: "403",
                 subTitle: tr("result.demo.403_subtitle"),
-                status: .unauthorized
-            ) {
-                Moin.Button(tr("result.demo.back_home"), variant: .solid) {}
-            }
+                extra: {
+                    Moin.Button(tr("result.demo.back_home"), color: .primary) {}
+                }
+            )
         } code: {
             """
             Moin.Result(
-                "403",
+                status: .unauthorized,
+                title: "403",
                 subTitle: "\(tr("result.demo.403_subtitle"))",
-                status: .unauthorized
-            ) {
-                Moin.Button("\(tr("result.demo.back_home"))", variant: .solid) {}
-            }
+                extra: {
+                    Moin.Button("\(tr("result.demo.back_home"))", color: .primary) {}
+                }
+            )
             """
         }
     }
@@ -183,21 +193,23 @@ struct ResultExamples: View {
             description: tr("result.404_desc")
         ) {
             Moin.Result(
-                "404",
+                status: .notFound,
+                title: "404",
                 subTitle: tr("result.demo.404_subtitle"),
-                status: .notFound
-            ) {
-                Moin.Button(tr("result.demo.back_home"), variant: .solid) {}
-            }
+                extra: {
+                    Moin.Button(tr("result.demo.back_home"), color: .primary) {}
+                }
+            )
         } code: {
             """
             Moin.Result(
-                "404",
+                status: .notFound,
+                title: "404",
                 subTitle: "\(tr("result.demo.404_subtitle"))",
-                status: .notFound
-            ) {
-                Moin.Button("\(tr("result.demo.back_home"))", variant: .solid) {}
-            }
+                extra: {
+                    Moin.Button("\(tr("result.demo.back_home"))", color: .primary) {}
+                }
+            )
             """
         }
     }
@@ -210,21 +222,23 @@ struct ResultExamples: View {
             description: tr("result.500_desc")
         ) {
             Moin.Result(
-                "500",
+                status: .serverError,
+                title: "500",
                 subTitle: tr("result.demo.500_subtitle"),
-                status: .serverError
-            ) {
-                Moin.Button(tr("result.demo.back_home"), variant: .solid) {}
-            }
+                extra: {
+                    Moin.Button(tr("result.demo.back_home"), color: .primary) {}
+                }
+            )
         } code: {
             """
             Moin.Result(
-                "500",
+                status: .serverError,
+                title: "500",
                 subTitle: "\(tr("result.demo.500_subtitle"))",
-                status: .serverError
-            ) {
-                Moin.Button("\(tr("result.demo.back_home"))", variant: .solid) {}
-            }
+                extra: {
+                    Moin.Button("\(tr("result.demo.back_home"))", color: .primary) {}
+                }
+            )
             """
         }
     }
@@ -244,7 +258,7 @@ struct ResultExamples: View {
                 Image(systemName: "face.smiling")
                     .foregroundStyle(.orange)
             } extra: {
-                Moin.Button(tr("result.demo.next"), variant: .solid) {}
+                Moin.Button(tr("result.demo.next"), color: .primary) {}
             }
         } code: {
             """
@@ -256,7 +270,7 @@ struct ResultExamples: View {
                 Image(systemName: "face.smiling")
                     .foregroundStyle(.orange)
             } extra: {
-                Moin.Button("\(tr("result.demo.next"))", variant: .solid) {}
+                Moin.Button("\(tr("result.demo.next"))", color: .primary) {}
             }
             """
         }

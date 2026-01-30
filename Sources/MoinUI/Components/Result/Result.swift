@@ -125,8 +125,8 @@ public struct _MoinResultFactory {
 
     /// 简单调用 (仅标题字符串)
     public func callAsFunction(
-        _ title: String,
-        status: _ResultStatus = .info
+        status: _ResultStatus = .info,
+        title: String
     ) -> _Result<Text, EmptyView, EmptyView, EmptyView, EmptyView> {
         _Result(
             status: status,
@@ -140,9 +140,9 @@ public struct _MoinResultFactory {
 
     /// 标题 + 副标题 (字符串)
     public func callAsFunction(
-        _ title: String,
-        subTitle: String,
-        status: _ResultStatus = .info
+        status: _ResultStatus = .info,
+        title: String,
+        subTitle: String
     ) -> _Result<Text, Text, EmptyView, EmptyView, EmptyView> {
         _Result(
             status: status,
@@ -175,9 +175,9 @@ public struct _MoinResultFactory {
 
     /// 字符串标题 + ViewBuilder 其他
     public func callAsFunction<E: View>(
-        _ title: String,
-        subTitle: String? = nil,
         status: _ResultStatus = .info,
+        title: String,
+        subTitle: String? = nil,
         @ViewBuilder extra: () -> E
     ) -> _Result<Text, Text?, EmptyView, E, EmptyView> {
         _Result(

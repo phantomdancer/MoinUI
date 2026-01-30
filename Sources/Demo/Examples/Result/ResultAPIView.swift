@@ -57,18 +57,18 @@ struct ResultAPIView: View {
         ) {
             HStack(spacing: 16) {
                 VStack {
-                    Moin.Result(tr("api.result.demo.success"), status: .success)
+                    Moin.Result(status: .success, title: tr("api.result.demo.success"))
                         .frame(maxWidth: 200)
                 }
                 VStack {
-                    Moin.Result(tr("api.result.demo.error"), status: .error)
+                    Moin.Result(status: .error, title: tr("api.result.demo.error"))
                         .frame(maxWidth: 200)
                 }
             }
         } code: {
             """
-            Moin.Result("\(tr("api.result.demo.success"))", status: .success)
-            Moin.Result("\(tr("api.result.demo.error"))", status: .error)
+            Moin.Result(status: .success, title: "\(tr("api.result.demo.success"))")
+            Moin.Result(status: .error, title: "\(tr("api.result.demo.error"))")
             // .info, .warning, .notFound, .unauthorized, .serverError
             """
         }
@@ -82,11 +82,11 @@ struct ResultAPIView: View {
             description: tr("api.result.title"),
             sectionId: "api"
         ) {
-            Moin.Result(tr("api.result.demo.title"), status: .info)
+            Moin.Result(status: .info, title: tr("api.result.demo.title"))
                 .frame(maxWidth: 300)
         } code: {
             """
-            Moin.Result("\(tr("api.result.demo.title"))", status: .info)
+            Moin.Result(status: .info, title: "\(tr("api.result.demo.title"))")
             """
         }
     }
@@ -100,17 +100,17 @@ struct ResultAPIView: View {
             sectionId: "api"
         ) {
             Moin.Result(
-                tr("api.result.demo.title"),
-                subTitle: tr("api.result.demo.subtitle"),
-                status: .info
+                status: .info,
+                title: tr("api.result.demo.title"),
+                subTitle: tr("api.result.demo.subtitle")
             )
             .frame(maxWidth: 300)
         } code: {
             """
             Moin.Result(
-                "\(tr("api.result.demo.title"))",
-                subTitle: "\(tr("api.result.demo.subtitle"))",
-                status: .info
+                status: .info,
+                title: "\(tr("api.result.demo.title"))",
+                subTitle: "\(tr("api.result.demo.subtitle"))"
             )
             """
         }
@@ -152,28 +152,30 @@ struct ResultAPIView: View {
             sectionId: "api"
         ) {
             Moin.Result(
-                tr("api.result.demo.title"),
+                status: .success,
+                title: tr("api.result.demo.title"),
                 subTitle: tr("api.result.demo.subtitle"),
-                status: .success
-            ) {
-                HStack(spacing: 8) {
-                    Moin.Button(tr("api.result.demo.primary"), variant: .solid) {}
-                    Moin.Button(tr("api.result.demo.default")) {}
+                extra: {
+                    HStack(spacing: 8) {
+                        Moin.Button(tr("api.result.demo.primary"), color: .primary) {}
+                        Moin.Button(tr("api.result.demo.default")) {}
+                    }
                 }
-            }
+            )
             .frame(maxWidth: 400)
         } code: {
             """
             Moin.Result(
-                "\(tr("api.result.demo.title"))",
+                status: .success,
+                title: "\(tr("api.result.demo.title"))",
                 subTitle: "\(tr("api.result.demo.subtitle"))",
-                status: .success
-            ) {
-                HStack(spacing: 8) {
-                    Moin.Button("\(tr("api.result.demo.primary"))", variant: .solid) {}
-                    Moin.Button("\(tr("api.result.demo.default"))") {}
+                extra: {
+                    HStack(spacing: 8) {
+                        Moin.Button("\(tr("api.result.demo.primary"))", color: .primary) {}
+                        Moin.Button("\(tr("api.result.demo.default"))") {}
+                    }
                 }
-            }
+            )
             """
         }
     }
