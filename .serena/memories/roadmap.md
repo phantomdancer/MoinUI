@@ -8,7 +8,7 @@
 | 布局 | Divider, Flex, Grid, Layout, Space, Splitter |
 | 导航 | Affix, Anchor, Breadcrumb, Dropdown, Menu, Pagination, Steps |
 | 数据录入 | AutoComplete, Cascader, Checkbox, ColorPicker, DatePicker, Form, Input, InputNumber, Mentions, Radio, Rate, Select, Slider, Switch, TimePicker, Transfer, TreeSelect, Upload |
-| 数据展示 | Avatar, Badge, Calendar, Card, Carousel, Collapse, Descriptions, Empty, Image, List, Masonry, Popover, QRCode, Segmented, Statistic, Table, Tabs, Tag, Tooltip, Tour, Tree |
+| 数据展示 | Avatar, Badge, Calendar, Card, Carousel, Collapse, Descriptions, Empty, Image, List, Masonry, Popover, QRCode, Segmented, Statistic, Table, Tabs, Tag, Timeline, Tooltip, Tour, Tree |
 | 反馈 | Alert, Drawer, Message, Modal, Notification, Popconfirm, Progress, Result, Skeleton, Spin |
 | 其他 | App, ConfigProvider, FloatButton, Watermark |
 
@@ -41,6 +41,7 @@ Button ✅, Typography ✅, Divider ✅, Space ✅, Tag ✅, Badge ✅, Avatar �
 | Radio | ★★☆☆☆ | ✅ 已完成 |
 | Skeleton | ★★☆☆☆ | ✅ 已完成 |
 | Result | ★★☆☆☆ | ✅ 已完成 |
+| Timeline | ★★☆☆☆ | ⏳ 待开发 |
 
 
 ### 第三梯队：中等组件（无依赖，较多状态/变体）
@@ -134,12 +135,6 @@ Button ✅, Typography ✅, Divider ✅, Space ✅, Tag ✅, Badge ✅, Avatar �
   - [ ] AvatarGroup max.popover (溢出头像 Popover 展示)
   - 已排除: srcSet (Web特有)、draggable (SwiftUI不适用)、crossOrigin (不需要)
 
-- **Button**:
-  - [x] Doc: Grouped API & Token navigation (DocSidebar)
-
-- **Tag**:
-  - [x] Doc: Grouped API & Token navigation (DocSidebar)
-
 - **Badge**:
   - [ ] 添加 Title 属性 (悬停显示完整数值)
   - [ ] 添加缩放进出动画
@@ -147,9 +142,6 @@ Button ✅, Typography ✅, Divider ✅, Space ✅, Tag ✅, Badge ✅, Avatar �
 
 - **Statistic**:
   - 已排除: Timer 组件 (SwiftUI 原生支持)、formatter (View 类型已覆盖)、分隔符 (NumberFormatter 处理)
-
-- **Localization**:
-  - [x] Refactor JSON structure (separate component/common keys)
 
 - **Rate**:
   - [ ] tooltips prop (需 Tooltip 组件支持)
