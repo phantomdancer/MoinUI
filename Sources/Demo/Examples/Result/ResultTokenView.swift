@@ -14,8 +14,7 @@ struct ResultTokenView: View {
                     .init(id: "titleFontSize"),
                     .init(id: "subtitleFontSize"),
                     .init(id: "iconFontSize"),
-                    .init(id: "extraMargin"),
-                    .init(id: "padding")
+                    .init(id: "extraMargin")
                 ],
                 sectionId: "component"
             ),
@@ -26,8 +25,16 @@ struct ResultTokenView: View {
                     .init(id: "colorError"),
                     .init(id: "colorInfo"),
                     .init(id: "colorWarning"),
-                    .init(id: "colorText"),
-                    .init(id: "colorTextSecondary")
+                    .init(id: "colorTextHeading"),
+                    .init(id: "colorTextDescription"),
+                    .init(id: "colorFillAlter"),
+                    .init(id: "lineHeight"),
+                    .init(id: "lineHeightHeading3"),
+                    .init(id: "marginXS"),
+                    .init(id: "paddingToken"),
+                    .init(id: "paddingLG"),
+                    .init(id: "paddingXL"),
+                    .init(id: "paddingXS")
                 ],
                 sectionId: "global"
             )
@@ -80,15 +87,22 @@ struct ResultTokenView: View {
         case "subtitleFontSize": subtitleFontSizeCard
         case "iconFontSize": iconFontSizeCard
         case "extraMargin": extraMarginCard
-        case "padding": paddingCard
 
         // Global Token
         case "colorSuccess": colorSuccessCard
         case "colorError": colorErrorCard
         case "colorInfo": colorInfoCard
         case "colorWarning": colorWarningCard
-        case "colorText": colorTextCard
-        case "colorTextSecondary": colorTextSecondaryCard
+        case "colorTextHeading": colorTextHeadingCard
+        case "colorTextDescription": colorTextDescriptionCard
+        case "colorFillAlter": colorFillAlterCard
+        case "lineHeight": lineHeightCard
+        case "lineHeightHeading3": lineHeightHeading3Card
+        case "marginXS": marginXSCard
+        case "paddingToken": paddingTokenCard
+        case "paddingLG": paddingLGCard
+        case "paddingXL": paddingXLCard
+        case "paddingXS": paddingXSCard
 
         default: EmptyView()
         }
@@ -182,25 +196,6 @@ struct ResultTokenView: View {
         }
     }
 
-    private var paddingCard: some View {
-        TokenCard(
-            name: "padding",
-            type: "CGFloat",
-            defaultValue: "\(Int(Moin.ResultToken.default.padding))",
-            description: tr("token.result.padding"),
-            sectionId: "component"
-        ) {
-            Moin.Result(status: .info, title: tr("token.result.demo.title"))
-                .frame(maxWidth: 300)
-                .background(token.colorBgLayout)
-        } editor: {
-            TokenValueRow(
-                label: "padding",
-                value: $config.components.result.padding,
-                range: 16...80
-            )
-        }
-    }
 
     // MARK: - Global Token Cards
 
@@ -300,29 +295,29 @@ struct ResultTokenView: View {
         }
     }
 
-    private var colorTextCard: some View {
+    private var colorTextHeadingCard: some View {
         TokenCard(
-            name: "colorText",
+            name: "colorTextHeading",
             type: "Color",
             defaultValue: "rgba(0,0,0,0.88)",
-            description: tr("token.result.colorText"),
+            description: tr("token.result.colorTextHeading"),
             sectionId: "global"
         ) {
             Moin.Result(status: .info, title: tr("token.result.demo.title"))
                 .frame(maxWidth: 300)
         } editor: {
-            Text(tr("token.global.colorText.hint"))
+            Text(tr("token.global.readonly.hint"))
                 .font(.caption)
                 .foregroundStyle(.secondary)
         }
     }
 
-    private var colorTextSecondaryCard: some View {
+    private var colorTextDescriptionCard: some View {
         TokenCard(
-            name: "colorTextSecondary",
+            name: "colorTextDescription",
             type: "Color",
-            defaultValue: "rgba(0,0,0,0.65)",
-            description: tr("token.result.colorTextSecondary"),
+            defaultValue: "rgba(0,0,0,0.45)",
+            description: tr("token.result.colorTextDescription"),
             sectionId: "global"
         ) {
             Moin.Result(
@@ -332,7 +327,147 @@ struct ResultTokenView: View {
             )
             .frame(maxWidth: 300)
         } editor: {
-            Text(tr("token.global.colorTextSecondary.hint"))
+            Text(tr("token.global.readonly.hint"))
+                .font(.caption)
+                .foregroundStyle(.secondary)
+        }
+    }
+
+    private var colorFillAlterCard: some View {
+        TokenCard(
+            name: "colorFillAlter",
+            type: "Color",
+            defaultValue: "rgba(0,0,0,0.02)",
+            description: tr("token.result.colorFillAlter"),
+            sectionId: "global"
+        ) {
+            Moin.Result(status: .info, title: tr("token.result.demo.title"))
+                .frame(maxWidth: 300)
+        } editor: {
+            Text(tr("token.global.readonly.hint"))
+                .font(.caption)
+                .foregroundStyle(.secondary)
+        }
+    }
+
+    private var lineHeightCard: some View {
+        TokenCard(
+            name: "lineHeight",
+            type: "CGFloat",
+            defaultValue: "1.5714",
+            description: tr("token.result.lineHeight"),
+            sectionId: "global"
+        ) {
+            Moin.Result(
+                status: .info,
+                title: tr("token.result.demo.title"),
+                subTitle: tr("token.result.demo.subtitle")
+            )
+            .frame(maxWidth: 300)
+        } editor: {
+            Text(tr("token.global.readonly.hint"))
+                .font(.caption)
+                .foregroundStyle(.secondary)
+        }
+    }
+
+    private var lineHeightHeading3Card: some View {
+        TokenCard(
+            name: "lineHeightHeading3",
+            type: "CGFloat",
+            defaultValue: "1.3333",
+            description: tr("token.result.lineHeightHeading3"),
+            sectionId: "global"
+        ) {
+            Moin.Result(status: .info, title: tr("token.result.demo.title"))
+                .frame(maxWidth: 300)
+        } editor: {
+            Text(tr("token.global.readonly.hint"))
+                .font(.caption)
+                .foregroundStyle(.secondary)
+        }
+    }
+
+    private var marginXSCard: some View {
+        TokenCard(
+            name: "marginXS",
+            type: "CGFloat",
+            defaultValue: "8",
+            description: tr("token.result.marginXS"),
+            sectionId: "global"
+        ) {
+            Moin.Result(status: .info, title: tr("token.result.demo.title"))
+                .frame(maxWidth: 300)
+        } editor: {
+            Text(tr("token.global.readonly.hint"))
+                .font(.caption)
+                .foregroundStyle(.secondary)
+        }
+    }
+
+    private var paddingTokenCard: some View {
+        TokenCard(
+            name: "padding",
+            type: "CGFloat",
+            defaultValue: "16",
+            description: tr("token.result.paddingToken"),
+            sectionId: "global"
+        ) {
+            Moin.Result(status: .info, title: tr("token.result.demo.title"))
+                .frame(maxWidth: 300)
+        } editor: {
+            Text(tr("token.global.readonly.hint"))
+                .font(.caption)
+                .foregroundStyle(.secondary)
+        }
+    }
+
+    private var paddingLGCard: some View {
+        TokenCard(
+            name: "paddingLG",
+            type: "CGFloat",
+            defaultValue: "24",
+            description: tr("token.result.paddingLG"),
+            sectionId: "global"
+        ) {
+            Moin.Result(status: .info, title: tr("token.result.demo.title"))
+                .frame(maxWidth: 300)
+        } editor: {
+            Text(tr("token.global.readonly.hint"))
+                .font(.caption)
+                .foregroundStyle(.secondary)
+        }
+    }
+
+    private var paddingXLCard: some View {
+        TokenCard(
+            name: "paddingXL",
+            type: "CGFloat",
+            defaultValue: "32",
+            description: tr("token.result.paddingXL"),
+            sectionId: "global"
+        ) {
+            Moin.Result(status: .info, title: tr("token.result.demo.title"))
+                .frame(maxWidth: 300)
+        } editor: {
+            Text(tr("token.global.readonly.hint"))
+                .font(.caption)
+                .foregroundStyle(.secondary)
+        }
+    }
+
+    private var paddingXSCard: some View {
+        TokenCard(
+            name: "paddingXS",
+            type: "CGFloat",
+            defaultValue: "8",
+            description: tr("token.result.paddingXS"),
+            sectionId: "global"
+        ) {
+            Moin.Result(status: .info, title: tr("token.result.demo.title"))
+                .frame(maxWidth: 300)
+        } editor: {
+            Text(tr("token.global.readonly.hint"))
                 .font(.caption)
                 .foregroundStyle(.secondary)
         }

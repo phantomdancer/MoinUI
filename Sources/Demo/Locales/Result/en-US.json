@@ -61,13 +61,20 @@
       "subtitleFontSize": "Subtitle font size",
       "iconFontSize": "Icon size",
       "extraMargin": "Extra area margin",
-      "padding": "Padding",
-      "colorSuccess": "Success status color",
-      "colorError": "Error status color",
-      "colorInfo": "Info status color",
-      "colorWarning": "Warning status color",
-      "colorText": "Title text color",
-      "colorTextSecondary": "Subtitle text color",
+      "colorSuccess": "Token sequence for successful operations, used by Result, Progress and other components.",
+      "colorError": "Token sequence for failed operations, used by error buttons, error status tips (Result) and other components.",
+      "colorInfo": "Token sequence for information operations, used by Alert, Tag, Progress and other components.",
+      "colorWarning": "Token sequence for warning operations, used by Notification, Alert and other warning components or Input components.",
+      "colorTextHeading": "Controls heading text color.",
+      "colorTextDescription": "Controls description text color.",
+      "colorFillAlter": "Controls alternate background color.",
+      "lineHeight": "Text line height",
+      "lineHeightHeading3": "Line height for h3 headings",
+      "marginXS": "Controls element margin, small size.",
+      "paddingToken": "Controls element padding.",
+      "paddingLG": "Controls element large padding.",
+      "paddingXL": "Controls element extra-large padding.",
+      "paddingXS": "Controls element extra-small padding.",
       "demo": {
         "title": "Title",
         "subtitle": "Subtitle description",
@@ -79,11 +86,8 @@
       }
     },
     "global": {
-      "colorText": {
-        "hint": "Title text color is controlled by global colorText"
-      },
-      "colorTextSecondary": {
-        "hint": "Subtitle color is controlled by global colorTextSecondary"
+      "readonly": {
+        "hint": "This global token is read-only"
       }
     }
   }

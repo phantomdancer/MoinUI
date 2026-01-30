@@ -61,13 +61,20 @@
       "subtitleFontSize": "副标题字体大小",
       "iconFontSize": "图标大小",
       "extraMargin": "操作区外边距",
-      "padding": "内间距",
-      "colorSuccess": "成功状态颜色",
-      "colorError": "错误状态颜色",
-      "colorInfo": "信息状态颜色",
-      "colorWarning": "警告状态颜色",
-      "colorText": "标题文字颜色",
-      "colorTextSecondary": "副标题文字颜色",
+      "colorSuccess": "用于表示操作成功的 Token 序列，如 Result、Progress 等组件会使用该组梯度变量。",
+      "colorError": "用于表示操作失败的 Token 序列，如失败按钮、错误状态提示（Result）组件等。",
+      "colorInfo": "用于表示操作信息的 Token 序列，如 Alert、Tag、Progress 等组件都有用到该组梯度变量。",
+      "colorWarning": "用于表示操作警告的 Token 序列，如 Notification、Alert 等警告类组件或 Input 输入类等组件会使用该组梯度变量。",
+      "colorTextHeading": "控制标题字体颜色。",
+      "colorTextDescription": "控制文本描述字体颜色。",
+      "colorFillAlter": "控制元素替代背景色。",
+      "lineHeight": "文本行高",
+      "lineHeightHeading3": "h3 标签所使用的行高",
+      "marginXS": "控制元素外边距，小尺寸。",
+      "paddingToken": "控制元素的内间距。",
+      "paddingLG": "控制元素的大内间距。",
+      "paddingXL": "控制元素的特大内间距。",
+      "paddingXS": "控制元素的特小内间距。",
       "demo": {
         "title": "标题",
         "subtitle": "副标题描述",
@@ -79,11 +86,8 @@
       }
     },
     "global": {
-      "colorText": {
-        "hint": "标题文字颜色由全局 colorText 控制"
-      },
-      "colorTextSecondary": {
-        "hint": "副标题颜色由全局 colorTextSecondary 控制"
+      "readonly": {
+        "hint": "此全局 Token 为只读，不可直接修改"
       }
     }
   }
