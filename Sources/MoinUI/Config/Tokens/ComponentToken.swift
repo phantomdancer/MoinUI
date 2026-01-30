@@ -22,7 +22,7 @@ public extension Moin {
         public var rate: Moin.RateToken
         public var slider: Moin.SliderToken
         public var result: Moin.ResultToken
-        public var timeline: Moin.TimelineToken
+
 
         public static func generate(from token: Token, isDark: Bool = false) -> ComponentToken {
             ComponentToken(
@@ -44,7 +44,7 @@ public extension Moin {
                 rate: .generate(from: token),
                 slider: .generate(from: token),
                 result: .generate(from: token),
-                timeline: .generate(from: token)
+
             )
         }
 

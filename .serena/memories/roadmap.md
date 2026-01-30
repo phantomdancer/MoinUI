@@ -8,7 +8,7 @@
 | 布局 | Divider, Flex, Grid, Layout, Space, Splitter |
 | 导航 | Affix, Anchor, Breadcrumb, Dropdown, Menu, Pagination, Steps |
 | 数据录入 | AutoComplete, Cascader, Checkbox, ColorPicker, DatePicker, Form, Input, InputNumber, Mentions, Radio, Rate, Select, Slider, Switch, TimePicker, Transfer, TreeSelect, Upload |
-| 数据展示 | Avatar, Badge, Calendar, Card, Carousel, Collapse, Descriptions, Empty, Image, List, Masonry, Popover, QRCode, Segmented, Statistic, Table, Tabs, Tag, Timeline, Tooltip, Tour, Tree |
+| 数据展示 | Avatar, Badge, Calendar, Card, Carousel, Collapse, Descriptions, Empty, Image, List, Masonry, Popover, QRCode, Segmented, Statistic, Table, Tabs, Tag, Tooltip, Tour, Tree |
 | 反馈 | Alert, Drawer, Message, Modal, Notification, Popconfirm, Progress, Result, Skeleton, Spin |
 | 其他 | App, ConfigProvider, FloatButton, Watermark |
 
@@ -17,7 +17,7 @@
 ## 按复杂度排序（简单优先，无依赖优先）
 
 ### 已完成
-Button ✅, Typography ✅, Divider ✅, Space ✅, Tag ✅, Badge ✅, Avatar ✅, Empty ✅, Spin ✅, Statistic ✅, Alert ✅, Progress ✅, Switch ✅, Checkbox ✅, Radio ✅, Skeleton ✅, Rate ✅, Slider ✅, Result ✅, Timeline ✅, Icon ⏭
+Button ✅, Typography ✅, Divider ✅, Space ✅, Tag ✅, Badge ✅, Avatar ✅, Empty ✅, Spin ✅, Statistic ✅, Alert ✅, Progress ✅, Switch ✅, Checkbox ✅, Radio ✅, Skeleton ✅, Rate ✅, Slider ✅, Result ✅, Icon ⏭
 
 ### 第一梯队：极简组件（无依赖，几乎无状态）
 
@@ -41,7 +41,7 @@ Button ✅, Typography ✅, Divider ✅, Space ✅, Tag ✅, Badge ✅, Avatar �
 | Radio | ★★☆☆☆ | ✅ 已完成 |
 | Skeleton | ★★☆☆☆ | ✅ 已完成 |
 | Result | ★★☆☆☆ | ✅ 已完成 |
-| Timeline | ★★☆☆☆ | ✅ 已完成 |
+
 
 ### 第三梯队：中等组件（无依赖，较多状态/变体）
 
