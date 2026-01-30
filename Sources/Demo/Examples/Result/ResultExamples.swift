@@ -250,28 +250,32 @@ struct ResultExamples: View {
             title: tr("result.custom_icon"),
             description: tr("result.custom_icon_desc")
         ) {
-            Moin.Result(status: .info) {
-                Text(tr("result.demo.custom_icon_title"))
-            } subTitle: {
-                Text(tr("result.demo.custom_icon_subtitle"))
-            } icon: {
-                Image(systemName: "face.smiling")
-                    .foregroundStyle(.orange)
-            } extra: {
-                Moin.Button(tr("result.demo.next"), color: .primary) {}
-            }
+            Moin.Result(
+                status: .info,
+                title: tr("result.demo.custom_icon_title"),
+                subTitle: tr("result.demo.custom_icon_subtitle"),
+                icon: {
+                    Image(systemName: "face.smiling")
+                        .foregroundStyle(.orange)
+                },
+                extra: {
+                    Moin.Button(tr("result.demo.next"), color: .primary) {}
+                }
+            )
         } code: {
             """
-            Moin.Result(status: .info) {
-                Text("\(tr("result.demo.custom_icon_title"))")
-            } subTitle: {
-                Text("\(tr("result.demo.custom_icon_subtitle"))")
-            } icon: {
-                Image(systemName: "face.smiling")
-                    .foregroundStyle(.orange)
-            } extra: {
-                Moin.Button("\(tr("result.demo.next"))", color: .primary) {}
-            }
+            Moin.Result(
+                status: .info,
+                title: "\(tr("result.demo.custom_icon_title"))",
+                subTitle: "\(tr("result.demo.custom_icon_subtitle"))",
+                icon: {
+                    Image(systemName: "face.smiling")
+                        .foregroundStyle(.orange)
+                },
+                extra: {
+                    Moin.Button("\(tr("result.demo.next"))", color: .primary) {}
+                }
+            )
             """
         }
     }

@@ -189,4 +189,22 @@ public struct _MoinResultFactory {
             content: nil
         )
     }
+
+    /// 完整参数调用 (字符串标题 + ViewBuilder icon/extra)
+    public func callAsFunction<I: View, E: View>(
+        status: _ResultStatus = .info,
+        title: String,
+        subTitle: String? = nil,
+        @ViewBuilder icon: () -> I,
+        @ViewBuilder extra: () -> E = { EmptyView() }
+    ) -> _Result<Text, Text?, I, E, EmptyView> {
+        _Result(
+            status: status,
+            title: Text(title),
+            subTitle: subTitle.map { Text($0) },
+            customIcon: icon(),
+            extra: extra(),
+            content: nil
+        )
+    }
 }
