@@ -1,6 +1,6 @@
 import SwiftUI
 
-enum ProgressExamplesTab: Hashable {
+enum ProgressExamplesTab: String, CaseIterable {
     case examples
     case api
     case token

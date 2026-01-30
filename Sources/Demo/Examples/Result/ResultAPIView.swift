@@ -124,21 +124,25 @@ struct ResultAPIView: View {
             description: tr("api.result.icon"),
             sectionId: "api"
         ) {
-            Moin.Result(status: .info) {
-                Text(tr("api.result.demo.title"))
-            } icon: {
-                Image(systemName: "heart.fill")
-                    .foregroundStyle(.pink)
-            }
+            Moin.Result(
+                status: .info,
+                title: tr("api.result.demo.title"),
+                icon: {
+                    Image(systemName: "heart.fill")
+                        .foregroundStyle(.pink)
+                }
+            )
             .frame(maxWidth: 300)
         } code: {
             """
-            Moin.Result(status: .info) {
-                Text("\(tr("api.result.demo.title"))")
-            } icon: {
-                Image(systemName: "heart.fill")
-                    .foregroundStyle(.pink)
-            }
+            Moin.Result(
+                status: .info,
+                title: "\(tr("api.result.demo.title"))",
+                icon: {
+                    Image(systemName: "heart.fill")
+                        .foregroundStyle(.pink)
+                }
+            )
             """
         }
     }

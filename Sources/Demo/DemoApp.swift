@@ -151,27 +151,27 @@ struct ContentView: View {
     @StateObject private var navManager = NavigationManager.shared
     @EnvironmentObject var configProvider: Moin.ConfigProvider
     @Localized var tr
-    @State private var typographyTab: TypographyExamplesTab = .examples
-    @State private var tagTab: TagExamplesTab = .examples
-    @State private var spaceTab: SpaceExamplesTab = .examples
-    @State private var dividerTab: DividerExamplesTab = .examples
-    @State private var tokenTab: TokenExamplesTab = .examples
-    @State private var badgeTab: BadgeExamplesTab = .examples
-    @State private var avatarTab: AvatarExamplesTab = .examples
-    @State private var emptyTab: EmptyExamplesTab = .examples
-    @State private var spinTab: SpinExamplesTab = .examples
-    @State private var statisticTab: StatisticExamplesTab = .examples
-    @State private var alertTab: AlertExamplesTab = .examples
-    @State private var progressTab: ProgressExamplesTab = .examples
-    @State private var buttonTab: ButtonExamplesTab = .examples
-    @State private var switchTab: SwitchExamplesTab = .examples
-    @State private var checkboxTab: CheckboxExamplesTab = .examples
-    @State private var radioTab: RadioExamplesTab = .examples
-    @State private var skeletonTab: SkeletonExamplesTab = .examples
-    @State private var rateTab: RateExamplesTab = .examples
-    @State private var sliderTab: SliderExamplesTab = .examples
-    @State private var resultTab: ResultExamplesTab = .examples
-    @State private var timelineTab: TimelineExamplesTab = .examples
+    @AppStorage("Demo.typographyTab") private var typographyTab: TypographyExamplesTab = .examples
+    @AppStorage("Demo.tagTab") private var tagTab: TagExamplesTab = .examples
+    @AppStorage("Demo.spaceTab") private var spaceTab: SpaceExamplesTab = .examples
+    @AppStorage("Demo.dividerTab") private var dividerTab: DividerExamplesTab = .examples
+    @AppStorage("Demo.tokenTab") private var tokenTab: TokenExamplesTab = .examples
+    @AppStorage("Demo.badgeTab") private var badgeTab: BadgeExamplesTab = .examples
+    @AppStorage("Demo.avatarTab") private var avatarTab: AvatarExamplesTab = .examples
+    @AppStorage("Demo.emptyTab") private var emptyTab: EmptyExamplesTab = .examples
+    @AppStorage("Demo.spinTab") private var spinTab: SpinExamplesTab = .examples
+    @AppStorage("Demo.statisticTab") private var statisticTab: StatisticExamplesTab = .examples
+    @AppStorage("Demo.alertTab") private var alertTab: AlertExamplesTab = .examples
+    @AppStorage("Demo.progressTab") private var progressTab: ProgressExamplesTab = .examples
+    @AppStorage("Demo.buttonTab") private var buttonTab: ButtonExamplesTab = .examples
+    @AppStorage("Demo.switchTab") private var switchTab: SwitchExamplesTab = .examples
+    @AppStorage("Demo.checkboxTab") private var checkboxTab: CheckboxExamplesTab = .examples
+    @AppStorage("Demo.radioTab") private var radioTab: RadioExamplesTab = .examples
+    @AppStorage("Demo.skeletonTab") private var skeletonTab: SkeletonExamplesTab = .examples
+    @AppStorage("Demo.rateTab") private var rateTab: RateExamplesTab = .examples
+    @AppStorage("Demo.sliderTab") private var sliderTab: SliderExamplesTab = .examples
+    @AppStorage("Demo.resultTab") private var resultTab: ResultExamplesTab = .examples
+    @AppStorage("Demo.timelineTab") private var timelineTab: TimelineExamplesTab = .examples
 
     var body: some View {
         NavigationSplitView {
