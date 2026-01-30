@@ -37,6 +37,7 @@ struct DemoIcons {
     static let progress = "percent"
     static let skeleton = "rectangle.dashed"
     static let result = "checkmark.seal"
+    static let tooltip = "bubble.left"
 
 
     // Data Entry

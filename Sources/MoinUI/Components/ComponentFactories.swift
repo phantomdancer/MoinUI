@@ -801,3 +801,43 @@ public struct _MoinSkeletonFactory {
         _Skeleton(loading: loading, active: active, avatar: avatar, title: title, paragraph: paragraph, round: round, content: content)
     }
 }
+
+// MARK: - Tooltip Factory
+
+public struct _MoinTooltipFactory {
+    
+    // MARK: - Nested Types
+    
+    /// Moin.Tooltip.Placement
+    public typealias Placement = _TooltipPlacement
+    /// Moin.Tooltip.Trigger
+    public typealias Trigger = _TooltipTrigger
+    
+    public init() {}
+    
+    /// 文字 Tooltip
+    public func callAsFunction<Content: View>(
+        _ title: String,
+        placement: _TooltipPlacement = .top,
+        arrow: Bool = true,
+        color: Color? = nil,
+        trigger: _TooltipTrigger = .hover,
+        isOpen: Binding<Bool>? = nil,
+        @ViewBuilder content: () -> Content
+    ) -> _Tooltip<Content, Text> {
+        _Tooltip(title, placement: placement, arrow: arrow, color: color, trigger: trigger, isOpen: isOpen, content: content)
+    }
+    
+    /// 自定义内容 Tooltip
+    public func callAsFunction<Content: View, TooltipContent: View>(
+        placement: _TooltipPlacement = .top,
+        arrow: Bool = true,
+        color: Color? = nil,
+        trigger: _TooltipTrigger = .hover,
+        isOpen: Binding<Bool>? = nil,
+        @ViewBuilder tooltip: () -> TooltipContent,
+        @ViewBuilder content: () -> Content
+    ) -> _Tooltip<Content, TooltipContent> {
+        _Tooltip(content: content, tooltip: tooltip, placement: placement, arrow: arrow, color: color, trigger: trigger, isOpen: isOpen)
+    }
+}

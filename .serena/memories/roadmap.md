@@ -17,7 +17,7 @@
 ## 按复杂度排序（简单优先，无依赖优先）
 
 ### 已完成
-Button ✅, Typography ✅, Divider ✅, Space ✅, Tag ✅, Badge ✅, Avatar ✅, Empty ✅, Spin ✅, Statistic ✅, Alert ✅, Progress ✅, Switch ✅, Checkbox ✅, Radio ✅, Skeleton ✅, Rate ✅, Slider ✅, Result ✅, Icon ⏭
+Button ✅, Typography ✅, Divider ✅, Space ✅, Tag ✅, Badge ✅, Avatar ✅, Empty ✅, Spin ✅, Statistic ✅, Alert ✅, Progress ✅, Switch ✅, Checkbox ✅, Radio ✅, Skeleton ✅, Rate ✅, Slider ✅, Result ✅, Tooltip ✅, Icon ⏭
 
 ### 第一梯队：极简组件（无依赖，几乎无状态）
 
@@ -62,7 +62,7 @@ Button ✅, Typography ✅, Divider ✅, Space ✅, Tag ✅, Badge ✅, Avatar �
 
 | 组件 | 复杂度 | 说明 |
 |------|--------|------|
-| Tooltip | ★★★☆☆ | 文字提示气泡 |
+| Tooltip | ★★★☆☆ | ✅ 已完成 |
 | Popover | ★★★☆☆ | 气泡卡片 |
 | Modal | ★★★☆☆ | 对话框 |
 | Drawer | ★★★☆☆ | 侧边抽屉 |
