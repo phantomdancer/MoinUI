@@ -122,6 +122,7 @@ class TooltipAnchorNSView: NSView {
         // 保存 generation token
         self.currentGeneration = TooltipWindow.shared.show(
             content: content,
+            parentWindow: window, // 传入当前窗口作为父窗口
             targetRect: rectInScreen,
             placement: placement,
             arrowConfig: arrowConfig,
@@ -150,27 +151,22 @@ class TooltipAnchorNSView: NSView {
         observers.forEach { NotificationCenter.default.removeObserver($0) }
         observers.removeAll()
         
-        guard let window = self.window else { return }
-        
-        // 1. 监听窗口移动/调整大小
-        // 当窗口位置改变时，Tooltip 的绝对坐标就不准了，应该隐藏
-        let windowMove = NotificationCenter.default.addObserver(
-            forName: NSWindow.didMoveNotification,
-            object: window,
+        // 0. 监听应用程序活跃状态
+        // 失去焦点时隐藏
+        let resignActive = NotificationCenter.default.addObserver(
+            forName: NSApplication.willResignActiveNotification,
+            object: nil,
             queue: nil
         ) { [weak self] _ in
             self?.forceHide()
         }
-        observers.append(windowMove)
+        observers.append(resignActive)
+
+        guard let _ = self.window else { return }
         
-        let windowResize = NotificationCenter.default.addObserver(
-            forName: NSWindow.didResizeNotification,
-            object: window,
-            queue: nil
-        ) { [weak self] _ in
-            self?.forceHide()
-        }
-        observers.append(windowResize)
+        // 1. 窗口移动/调整大小 - 不再需要监听！
+        // 因为我们使用了 addChildWindow，子窗口会自动跟随父窗口移动。
+        // 这极大地简化了代码并提高了性能。
         
         // 2. 监听滚动
         // 如果我们在 ScrollView 内，监听其 bounds 变化 (即 scrolling)

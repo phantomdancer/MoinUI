@@ -19,7 +19,7 @@ class TooltipWindow: NSWindow {
         self.isReleasedWhenClosed = false
         self.backgroundColor = .clear // 透明背景，内容由 SwiftUI 视图绘制
         self.hasShadow = false // SwiftUI 视图自己带阴影，或者我们可以这里开启
-        self.level = .floating // 浮动在最上层
+        // self.level = .floating // 不再需要全局置顶
         self.isOpaque = false
         
         // 忽略鼠标事件? 
@@ -29,10 +29,13 @@ class TooltipWindow: NSWindow {
     }
     
     private var generation: Int = 0
+    // 记录当前的父窗口，用于解绑
+    private weak var currentParentWindow: NSWindow?
     
     /// 显示 Tooltip
     func show<Content: View>(
         content: Content,
+        parentWindow: NSWindow, // 新增参数：宿主窗口
         targetRect: CGRect, // 屏幕坐标系下的目标 Frame
         placement: _TooltipPlacement,
         arrowConfig: _TooltipArrowConfig,
@@ -41,6 +44,18 @@ class TooltipWindow: NSWindow {
     ) -> Int {
         // Increment generation to invalidate any pending hide completions
         generation += 1
+        
+        // 0. 绑定父子窗口关系
+        // 如果之前绑在别的窗口上，先解绑
+        if currentParentWindow != parentWindow {
+            currentParentWindow?.removeChildWindow(self)
+        }
+        
+        // 绑定到新窗口 (如果还没绑定)
+        if self.parent != parentWindow {
+            parentWindow.addChildWindow(self, ordered: .above)
+            currentParentWindow = parentWindow
+        }
         
         // 1. 设置内容
         // 我们用 NSHostingView 包装
@@ -93,6 +108,12 @@ class TooltipWindow: NSWindow {
            if self.generation == gen {
                self.orderOut(nil)
                self.contentView = nil
+               
+               // 解除父子关系，避免持有引用
+               if let parent = self.currentParentWindow {
+                   parent.removeChildWindow(self)
+                   self.currentParentWindow = nil
+               }
            }
         }
     }
