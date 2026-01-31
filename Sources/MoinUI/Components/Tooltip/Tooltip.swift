@@ -205,7 +205,7 @@ public struct _Tooltip<Content: View, TooltipContent: View>: View {
             bgColor: effectiveBgColor,
             arrowSize: tooltipToken.arrowSize,
             borderRadius: tooltipToken.borderRadius,
-            arrowOffset: 12
+            arrowOffset: 8
         ) {
             tooltipContent
                 .font(.system(size: tooltipToken.fontSize))
@@ -269,6 +269,7 @@ private struct TooltipBubble<Content: View>: View {
     let borderRadius: CGFloat
     let arrowOffset: CGFloat
     @ViewBuilder let content: () -> Content
+
     
     var body: some View {
         // 根据主方向组装
