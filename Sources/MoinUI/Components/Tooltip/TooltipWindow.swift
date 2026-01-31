@@ -28,6 +28,8 @@ class TooltipWindow: NSWindow {
         self.ignoresMouseEvents = false 
     }
     
+    private var generation: Int = 0
+    
     /// 显示 Tooltip
     func show<Content: View>(
         content: Content,
@@ -36,10 +38,12 @@ class TooltipWindow: NSWindow {
         arrowConfig: _TooltipArrowConfig,
         arrowSize: CGFloat,
         offset: CGFloat = 4 // 距离目标的间距
-    ) {
+    ) -> Int {
+        // Increment generation to invalidate any pending hide completions
+        generation += 1
+        
         // 1. 设置内容
         // 我们用 NSHostingView 包装
-        // 为了获取 Content 的大小，我们需要先 layout
         let hostingView = NSHostingView(rootView: content.edgesIgnoringSafeArea(.all))
         self.contentView = hostingView
         
@@ -59,22 +63,37 @@ class TooltipWindow: NSWindow {
         self.setFrame(frame, display: true)
         self.orderFront(nil)
         
-        // 5. 动画? 
-        self.alphaValue = 0
-        NSAnimationContext.runAnimationGroup { context in
-            context.duration = 0.15
-            self.animator().alphaValue = 1
+        // 5. 动画
+        if self.alphaValue > 0.1 && self.isVisible {
+            // Instant transition
+             self.animator().alphaValue = 1
+        } else {
+            // Normal fade in
+            self.alphaValue = 0
+            NSAnimationContext.runAnimationGroup { context in
+                context.duration = 0.15
+                self.animator().alphaValue = 1
+            }
         }
+        
+        return generation
     }
     
     /// 隐藏 Tooltip
-    func hide() {
+    func hide(forGeneration gen: Int) {
+        // 如果传入的 generation 不等于当前的，说明 Window 已经被新的 Tooltip 接管，
+        // 我们不能执行隐藏操作。
+        guard gen == self.generation else { return }
+        
         NSAnimationContext.runAnimationGroup { context in
             context.duration = 0.1
             self.animator().alphaValue = 0
         } completionHandler: {
-           self.orderOut(nil)
-           self.contentView = nil
+           // Double check generation in completion
+           if self.generation == gen {
+               self.orderOut(nil)
+               self.contentView = nil
+           }
         }
     }
     

@@ -104,6 +104,10 @@ class TooltipAnchorNSView: NSView {
     
     // MARK: - Show/Hide Logic
     
+    var currentGeneration: Int?
+    
+    // MARK: - Show/Hide Logic
+    
     func showTooltip() {
         guard let window = self.window else { return }
         
@@ -115,19 +119,8 @@ class TooltipAnchorNSView: NSView {
         
         guard let content = tooltipContent else { return }
         
-        // 构造 TooltipView (Bubble)
-        // 注意：我们这里传入的是用户提供的 raw content，我们需要包裹 TooltipBubble
-        // 但是 _Tooltip 里的 tooltipContent 已经是用户的一层封装，
-        // 在 Tooltip.swift 中，`tooltipView` 组装了 TooltipBubble。
-        // 我们需要传递组装好的 TooltipBubble 给 Window。
-        
-        // 问题：TooltipAnchor 接收的是 generic TooltipContent。
-        // 在 Tooltip.swift 的调用处，我们会传递 组装好的 View 吗？
-        // 现有的 TooltipView 是在 `_Tooltip` struct 的 body 里的 `tooltipView` 属性构建的。
-        // 那个 `tooltipView` 包含了 `TooltipBubble` 和 padding/colors。
-        // 所以我们应该传入那个 `tooltipView`。
-        
-        TooltipWindow.shared.show(
+        // 保存 generation token
+        self.currentGeneration = TooltipWindow.shared.show(
             content: content,
             targetRect: rectInScreen,
             placement: placement,
@@ -139,7 +132,10 @@ class TooltipAnchorNSView: NSView {
     }
     
     func hideTooltip() {
-        TooltipWindow.shared.hide()
+        if let gen = currentGeneration {
+            TooltipWindow.shared.hide(forGeneration: gen)
+            currentGeneration = nil
+        }
         isTooltipVisible = false
     }
 }
