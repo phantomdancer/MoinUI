@@ -105,12 +105,18 @@ struct TooltipExamples: View {
     
     // MARK: - Placement
     
+    @State private var placementArrowCenter = false
+    
     private var placementExample: some View {
         ExampleSection(
             title: tr("tooltip.placement"),
             description: tr("tooltip.placement_desc"),
             content: {
                 VStack(spacing: 12) {
+                    
+                    Toggle(tr("tooltip.arrow_center"), isOn: $placementArrowCenter)
+                        .padding(.bottom, 8)
+                    
                     // Top row
                     HStack(spacing: 8) {
                         Spacer()
@@ -148,11 +154,13 @@ struct TooltipExamples: View {
             },
             code: {
                 """
-                Moin.Tooltip("prompt text", placement: .top) {
+                // placement: .top
+                Moin.Tooltip("prompt text", placement: .top, arrow: \(placementArrowCenter ? ".center" : ".true")) {
                     Moin.Button("Top") {}
                 }
                 
-                Moin.Tooltip("prompt text", placement: .bottomLeft) {
+                // placement: .bottomLeft
+                Moin.Tooltip("prompt text", placement: .bottomLeft, arrow: \(placementArrowCenter ? ".center" : ".true")) {
                     Moin.Button("Bottom Left") {}
                 }
                 """
@@ -161,7 +169,7 @@ struct TooltipExamples: View {
     }
     
     private func placementButton(_ placement: _TooltipPlacement) -> some View {
-        Moin.Tooltip(tr("tooltip.prompt_text"), placement: placement) {
+        Moin.Tooltip(tr("tooltip.prompt_text"), placement: placement, arrow: placementArrowCenter ? .center : .true) {
             Moin.Button(placement.rawValue.capitalized) {}
                 .frame(minWidth: 80)
         }
