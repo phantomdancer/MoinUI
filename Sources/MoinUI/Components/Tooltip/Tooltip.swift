@@ -100,11 +100,13 @@ public struct _Tooltip<Content: View, TooltipContent: View>: View {
     @State private var internalIsOpen: Bool = false
     @State private var isHovering: Bool = false
     @State private var hoverTask: Task<Void, Never>?
-    @State private var tooltipSize: CGSize = .zero
-    @State private var targetSize: CGSize = .zero
     
     @Environment(\.moinTooltipToken) private var tooltipToken
     @Environment(\.moinToken) private var token
+    
+    // 注入当前的环境变量到 Tooltip Window 中
+    // 因为 TooltipWindow 是一个新的 View Hierarchy Root
+    @Environment(\.colorScheme) private var colorScheme
     
     private var effectiveIsOpen: Bool {
         get { isOpen || internalIsOpen }
@@ -151,175 +153,50 @@ public struct _Tooltip<Content: View, TooltipContent: View>: View {
     
     public var body: some View {
         content
-            .overlay(alignment: overlayAlignment) {
-                if effectiveIsOpen {
-                    tooltipView
-                        .fixedSize()
-                        // 垂直对齐修正
-                        .alignmentGuide(verticalGuide) { d in
-                            computeVerticalGuide(d)
-                        }
-                        // 水平对齐修正
-                        .alignmentGuide(horizontalGuide) { d in
-                            computeHorizontalGuide(d)
-                        }
-                        .animation(.easeInOut(duration: tooltipToken.motionDurationMid), value: effectiveIsOpen)
-                }
-            }
-            .onContinuousHover { phase in
-                guard trigger == .hover else { return }
-                switch phase {
-                case .active:
-                    if !isHovering {
-                        isHovering = true
-                        scheduleShow()
+            .overlay(
+                TooltipAnchor(
+                    isOpen: Binding(get: { effectiveIsOpen }, set: { _ in }),
+                    tooltipContent: tooltipView,
+                    placement: placement,
+                    arrowConfig: arrowConfig,
+                    trigger: trigger,
+                    arrowSize: tooltipToken.arrowSize,
+                    offset: 4,
+                    onHover: { hovering in
+                        handleHover(hovering)
                     }
-                case .ended:
-                    isHovering = false
-                    scheduleHide()
-                }
-            }
+                )
+                // 确保 Anchor 不拦截点击，虽然内部 hitTest 已经处理，
+                // 但在这里声明更清晰 (SwiftUI 层面)
+                .allowsHitTesting(false)
+            )
             .onTapGesture {
                 guard trigger == .click else { return }
-                withAnimation(.easeInOut(duration: tooltipToken.motionDurationMid)) {
-                    internalIsOpen.toggle()
-                }
+                toggleWithAnimation()
             }
     }
     
-    // MARK: - Alignment Logic
+    // MARK: - Logic
     
-    /// 根据 placement 决定 overlay 对齐到目标的哪个点
-    private var overlayAlignment: Alignment {
-        switch placement {
-        case .top: return .top
-        case .topLeft: return .topLeading
-        case .topRight: return .topTrailing
-            
-        case .bottom: return .bottom
-        case .bottomLeft: return .bottomLeading
-        case .bottomRight: return .bottomTrailing
-            
-        case .left: return .leading
-        case .leftTop: return .topLeading
-        case .leftBottom: return .bottomLeading
-            
-        case .right: return .trailing
-        case .rightTop: return .topTrailing
-        case .rightBottom: return .bottomTrailing
+    private func handleHover(_ hovering: Bool) {
+        if hovering {
+            if !isHovering {
+                isHovering = true
+                scheduleShow()
+            }
+        } else {
+            isHovering = false
+            scheduleHide()
         }
     }
     
-    /// 垂直方向我们要修改哪个 Guide?
-    private var verticalGuide: VerticalAlignment {
-        switch placement {
-        // 对于 Top 系列，我们要修改 .top guide (使其指向 Tooltip 底部)
-        case .top, .topLeft, .topRight: return .top
-            
-        // 对于 Bottom 系列，我们要修改 .bottom guide (使其指向 Tooltip 顶部)
-        case .bottom, .bottomLeft, .bottomRight: return .bottom
-            
-        // 对于侧边系列，维持默认 (Center/Top/Bottom 对齐)
-        case .left, .right: return .center
-        case .leftTop, .rightTop: return .top
-        case .leftBottom, .rightBottom: return .bottom
+    private func toggleWithAnimation() {
+        withAnimation(.easeInOut(duration: tooltipToken.motionDurationMid)) {
+            internalIsOpen.toggle()
         }
     }
     
-    /// 水平方向我们要修改哪个 Guide?
-    private var horizontalGuide: HorizontalAlignment {
-        switch placement {
-        case .left, .leftTop, .leftBottom: return .leading
-        case .right, .rightTop, .rightBottom: return .trailing
-        
-        case .top, .bottom: return .center
-        case .topLeft, .bottomLeft: return .leading
-        case .topRight, .bottomRight: return .trailing
-        }
-    }
-    
-    /// 计算垂直偏移
-    private func computeVerticalGuide(_ d: ViewDimensions) -> CGFloat {
-        let gap: CGFloat = tooltipToken.arrowSize + 4
-        // 18 = 12(bubble padding) + arrowOffset. 确保箭头对齐目标边缘
-        let alignOffset: CGFloat = 18 + tooltipToken.arrowSize
-        
-        switch placement {
-        case .top, .topLeft, .topRight:
-            // 此 View 的 Top 对齐到 Container Top.
-            // 我们希望此 View Bottom 位于 Container Top 并上移 gap
-            // 返回 d[.bottom] + gap 让 .top alignment line = bottom edge + gap
-            return d[.bottom] + gap
-            
-        case .bottom, .bottomLeft, .bottomRight:
-            // 此 View Bottom 对齐 Container Bottom.
-            // 我们希望此 View Top 位于 Container Bottom 并下移 gap (gap > 0)
-            // 返回 d[.top] - gap
-            return d[.top] - gap
-            
-        case .left, .right:
-            return d[VerticalAlignment.center]
-            
-        case .leftTop, .rightTop:
-            // Top 对齐 Top.
-            // 箭头在 Tooltip Top + alignOffset.
-            // 目标中心 (?) No, 目标 Top.
-            // 我们希望箭头对齐 Target Top.
-            // 所以 View 应该上移 alignOffset.
-            // 返回 d[.top] + alignOffset.
-            return d[.top] + alignOffset
-            
-        case .leftBottom, .rightBottom:
-            // Bottom 对齐 Bottom.
-            // 箭头在 Tooltip Bottom - alignOffset.
-            // 我们希望箭头对齐 Target Bottom.
-            // View 下移 alignOffset.
-            // 返回 d[.bottom] - alignOffset.
-            return d[.bottom] - alignOffset
-        }
-    }
-    
-    /// 计算水平偏移
-    private func computeHorizontalGuide(_ d: ViewDimensions) -> CGFloat {
-        let gap: CGFloat = tooltipToken.arrowSize + 4
-        let alignOffset: CGFloat = 18 + tooltipToken.arrowSize
-        
-        switch placement {
-        case .left, .leftTop, .leftBottom:
-            // Leading 对齐 Leading (Target).
-            // 希望 View Trailing 位于 Target Leading 并左移 gap.
-            // 返回 d[.trailing] + gap.
-            return d[.trailing] + gap
-            
-        case .right, .rightTop, .rightBottom:
-            // Trailing 对齐 Trailing (Target).
-            // 希望 View Leading 位于 Target Trailing 并右移 gap.
-            // 返回 d[.leading] - gap.
-            return d[.leading] - gap
-            
-        case .top, .bottom:
-            return d[HorizontalAlignment.center]
-            
-        case .topLeft, .bottomLeft:
-            // Leading 对齐 Leading.
-            // 箭头在 Leading + alignOffset.
-            // 希望箭头对齐 Target Leading.
-            // View 左移 alignOffset.
-            // 返回 d[.leading] + alignOffset.
-            return d[.leading] + alignOffset
-            
-        case .topRight, .bottomRight:
-            // Trailing 对齐 Trailing.
-            // 箭头在 Trailing - alignOffset.
-            // 希望箭头对齐 Target Trailing.
-            // View 右移 alignOffset.
-            // 返回 d[.trailing] - alignOffset.
-            return d[.trailing] - alignOffset
-        }
-    }
-    
-    
-    // MARK: - Tooltip View
+    // MARK: - Tooltip View Construction
     
     private var tooltipView: some View {
         TooltipBubble(
@@ -343,6 +220,10 @@ public struct _Tooltip<Content: View, TooltipContent: View>: View {
             y: tooltipToken.boxShadow.y
         )
         .fixedSize()
+        // 关键：注入 Environment
+        .environment(\.moinToken, token)
+        .environment(\.moinTooltipToken, tooltipToken)
+        .environment(\.colorScheme, colorScheme) // 确保暗黑模式跟随
     }
     
     private var effectiveBgColor: Color {
