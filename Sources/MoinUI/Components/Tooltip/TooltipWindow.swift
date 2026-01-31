@@ -45,6 +45,15 @@ class TooltipWindow: NSWindow {
         // Increment generation to invalidate any pending hide completions
         generation += 1
         
+        // 通知之前的 Tooltip 实例，它已经被抢占了
+        // 这一步很难做到，因为我们没有指向之前 Tooltip 实例的引用。
+        // 但是我们可以发送一个 Notification。
+        NotificationCenter.default.post(
+            name: .moinTooltipDidShow, 
+            object: nil, 
+            userInfo: ["generation": generation]
+        )
+        
         // 0. 绑定父子窗口关系
         // 如果之前绑在别的窗口上，先解绑
         if currentParentWindow != parentWindow {
@@ -114,6 +123,9 @@ class TooltipWindow: NSWindow {
                    parent.removeChildWindow(self)
                    self.currentParentWindow = nil
                }
+                // 隐藏成功，重置状态
+                // self.generation = 0  <-- 改回：不要重置为0，否则会导致下一次 show 生成的 index 跟之前的冲突，或逻辑重叠。
+                // 保持累加是更安全的策略。 
            }
         }
     }
@@ -216,4 +228,8 @@ class TooltipWindow: NSWindow {
         
         return CGRect(x: x, y: y, width: w, height: h)
     }
+}
+
+extension NSNotification.Name {
+    static let moinTooltipDidShow = NSNotification.Name("MoinTooltipDidShow")
 }

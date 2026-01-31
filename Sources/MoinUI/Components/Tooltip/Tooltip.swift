@@ -108,6 +108,9 @@ public struct _Tooltip<Content: View, TooltipContent: View>: View {
     // 因为 TooltipWindow 是一个新的 View Hierarchy Root
     @Environment(\.colorScheme) private var colorScheme
     
+    // Debug ID
+    private let id = UUID().uuidString.prefix(4)
+    
     private var effectiveIsOpen: Bool {
         get { isOpen || internalIsOpen }
     }
@@ -164,6 +167,12 @@ public struct _Tooltip<Content: View, TooltipContent: View>: View {
                     offset: 4,
                     onHover: { hovering in
                         handleHover(hovering)
+                    },
+                    onClick: {
+                         handleAnchorClick()
+                    },
+                    onClose: {
+                        handleForceClose()
                     }
                 )
                 // 确保 Anchor 不拦截点击，虽然内部 hitTest 已经处理，
@@ -172,15 +181,34 @@ public struct _Tooltip<Content: View, TooltipContent: View>: View {
             )
             .simultaneousGesture(
                 TapGesture().onEnded {
+                    print("[Tooltip(\(id))] TapGesture Detected. Trigger: \(trigger)")
                     guard trigger == .click else { return }
                     toggleWithAnimation()
                 }
             )
+            .onReceive(NotificationCenter.default.publisher(for: .moinTooltipDidShow)) { _ in
+                 guard internalIsOpen else { return }
+                 // 当任何一个 Tooltip (可能是自己，也可能是别人) show 之后
+                 // 所有的 _Tooltip 都会收到通知。
+                 // 如果我们是 Click 模式，我们应该在别人打开时自动关闭吗？
+                 // 通常是的。同一时间只能有一个 Tooltip。
+                 
+                 // 简单粗暴：收到通知就把自己关了？
+                 // 不行，那样把自己刚打开的也关了。
+                 
+                 // 我们需要知道是不是自己触发的 notification
+                 // user info 只有 generation。
+                 
+                 // 暂时先只打印日志，看看时序
+                 // print("[Tooltip(\(id))] Notification Received: moinTooltipDidShow")
+            }
     }
     
     // MARK: - Logic
     
     private func handleHover(_ hovering: Bool) {
+        guard trigger == .hover else { return }
+        print("[Tooltip(\(id))] Hover event: \(hovering). Current isHovering: \(isHovering)")
         if hovering {
             if !isHovering {
                 isHovering = true
@@ -192,9 +220,25 @@ public struct _Tooltip<Content: View, TooltipContent: View>: View {
         }
     }
     
+    private func handleAnchorClick() {
+        guard trigger == .click else { return }
+        print("[Tooltip(\(id))] Anchor Click Event Received")
+    }
+
+    private func handleForceClose() {
+        // 当 Window 被抢占时，强制重置内部状态，但不执行 hide 动画（因为 Window 已经没了）
+        print("[Tooltip(\(id))] Force Close Received (Preempted). Resetting state.")
+        // 必须在主线程更新 UI 状态
+        DispatchQueue.main.async {
+            self.internalIsOpen = false
+            self.isHovering = false
+        }
+    }
+
     private func toggleWithAnimation() {
         withAnimation(.easeInOut(duration: tooltipToken.motionDurationMid)) {
             internalIsOpen.toggle()
+            print("[Tooltip(\(id))] Toggling internalIsOpen. New State: \(internalIsOpen)")
         }
     }
     

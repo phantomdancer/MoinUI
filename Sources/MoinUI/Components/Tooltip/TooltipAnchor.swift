@@ -15,18 +15,25 @@ struct TooltipAnchor<TooltipContent: View>: NSViewRepresentable {
     // 我们需要一个回调来更新 isOpen (当 trigger == .hover 时)
     // 或者我们自己在内部管理 hover 状态，并通过 Binding 更新外部
     
-    var onHover: ((Bool) -> Void)?
-    
-    func makeNSView(context: Context) -> TooltipAnchorNSView {
-        let view = TooltipAnchorNSView()
-        view.onHoverChange = { hovering in
-            // 简单的传递事件，让外部处理 Delay 和 State
-             if trigger == .hover {
-                self.onHover?(hovering)
-             }
-        }
-        return view
-    }
+     var onHover: ((Bool) -> Void)?
+     var onClick: (() -> Void)?
+     var onClose: (() -> Void)? // 新增：强制关闭回调
+     
+     func makeNSView(context: Context) -> TooltipAnchorNSView {
+         let view = TooltipAnchorNSView()
+         view.onHoverChange = { hovering in
+              if trigger == .hover {
+                 self.onHover?(hovering)
+              }
+         }
+         view.onClick = {
+             self.onClick?()
+         }
+         view.onClose = {
+             self.onClose?()
+         }
+         return view
+     }
     
     func updateNSView(_ nsView: TooltipAnchorNSView, context: Context) {
         // 更新内容和配置
@@ -57,6 +64,8 @@ class TooltipAnchorNSView: NSView {
     var trigger: _TooltipTrigger = .hover
     
     var onHoverChange: ((Bool) -> Void)?
+    var onClick: (() -> Void)?
+    var onClose: (() -> Void)? // 新增
     
     private var trackingArea: NSTrackingArea?
     var isTooltipVisible: Bool = false
@@ -86,19 +95,48 @@ class TooltipAnchorNSView: NSView {
     }
     
     override func mouseEntered(with event: NSEvent) {
+        // 只有 hover 模式下才响应
+        guard trigger == .hover else { return }
         // 通知 Hover 开始
         onHoverChange?(true)
     }
     
     override func mouseExited(with event: NSEvent) {
+        guard trigger == .hover else { return }
         // 通知 Hover 结束
         onHoverChange?(false)
     }
     
+    override func mouseDown(with event: NSEvent) {
+        super.mouseDown(with: event)
+        // 只有当 trigger 为 click 时，我们才真的关心这个点击，
+        // 但这里我们只负责转发，逻辑在外部判断。
+        // 不过要注意，如果这里消费了事件，下面的视图可能收不到。
+        // 但我们在 hitTest 返回了 nil，所以正常情况下 mouseDown 不会被调用？
+        // 不，hitTest 返回 nil 意味着我们自己不可交互。
+        // 那我们怎么捕获点击？
+        
+        // 方案：hitTest 不返回 nil，而是让 super.hitTest 处理。
+        // 然后在 mouseDown 里调用 onClick，并透传事件给下一个响应者？
+        // NSView 的事件传递比较复杂。
+        
+        onClick?()
+    }
+
     // 使得 View 透明不阻挡点击
     override func hitTest(_ point: NSPoint) -> NSView? {
-        // 返回 nil 表示不接收点击事件，事件会传递给下面的 View
-        // 但是 TrackingArea 仍然有效，因为它是 frame-based
+        // 如果我们想要拦截点击来触发 Tooltip，同时又不影响底部按钮点击...
+        // 这在 AppKit 里很难做到“既要又要”。
+        // 通常如果是 Click Trigger，TooltipAnchor 应该包裹的内容本身就是触发源。
+        // 但我们现在的架构是 TooltipAnchor 覆盖在 Content 上 (overlay)。
+        
+        // 如果 hitTest 返回 nil，mouseDown 永远不会被调用。
+        // 如果 hitTest 返回 self，mouseDown 会被调用，但底下的 Content 收不到。
+        
+        // 所以我们在 SwiftUI 层用 simultaneousGesture 是对的。
+        // 但是为什么 simultaneousGesture 还是有时候失效？
+        
+        // 让我们先恢复 hitTest 为 nil，因为我们依赖 SwiftUI 的 Gesture。
         return nil
     }
     
@@ -161,6 +199,32 @@ class TooltipAnchorNSView: NSView {
             self?.forceHide()
         }
         observers.append(resignActive)
+        
+        // 新增：监听 Tooltip 被抢占通知
+        let globalShow = NotificationCenter.default.addObserver(
+            forName: .moinTooltipDidShow,
+            object: nil,
+            queue: nil
+        ) { [weak self] note in
+            // 如果收到了 show 通知，但 generation 不一样，说明我们被抢占了。
+            // 实际上，只要收到这个通知，就说明有一个新的 show 发生了。
+            // 我们需要检查这个通知是不是自己发的。
+            
+            // user info 里的 generation
+            if let gen = note.userInfo?["generation"] as? Int,
+               let selfGen = self?.currentGeneration,
+               gen != selfGen {
+               
+               // 别人的 Tooltip 显示了，我们就不应该再持有 currentGeneration 了
+               // 也不需要去 hide window，因为 window 已经被别人复用了
+               self?.currentGeneration = nil
+               
+               // 并且我们应该通知外部，我们被关闭了 (Reset internal state)
+               // 不论是 click 还是 hover，如果 Window 被人抢了，我们逻辑上就是关闭了
+               self?.onClose?()  // <--- 专门通知外部关闭
+            }
+        }
+        observers.append(globalShow)
 
         guard let _ = self.window else { return }
         
