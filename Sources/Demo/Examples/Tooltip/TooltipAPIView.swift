@@ -111,26 +111,56 @@ struct TooltipAPIView: View {
 
     // MARK: - arrow
 
+    // MARK: - arrow
+    
+    @State private var arrowState: String = "Show"
+    
+    private var arrowConfig: _TooltipArrowConfig {
+        switch arrowState {
+        case "Show": return .true
+        case "Hide": return .false
+        case "Center": return .center
+        default: return .true
+        }
+    }
+
     private var arrowPropertyCard: some View {
         PropertyCard(
             name: "arrow",
-            type: "Bool",
+            type: "Bool | ArrowConfig",
             defaultValue: "true",
             description: tr("tooltip.api_arrow_desc"),
             sectionId: "tooltip"
         ) {
-            HStack(spacing: 16) {
-                Moin.Tooltip(tr("tooltip.with_arrow"), arrow: true) {
-                    Moin.Button(tr("tooltip.with_arrow")) {}
+            VStack(spacing: 20) {
+                Picker("", selection: $arrowState) {
+                    Text("Show").tag("Show")
+                    Text("Hide").tag("Hide")
+                    Text("Center").tag("Center")
                 }
-                Moin.Tooltip(tr("tooltip.no_arrow"), arrow: false) {
-                    Moin.Button(tr("tooltip.no_arrow")) {}
+                .pickerStyle(.segmented)
+                .frame(maxWidth: 300)
+                
+                HStack(spacing: 16) {
+                    Moin.Tooltip("Top Left", placement: .topLeft, arrow: arrowConfig) {
+                        Moin.Button("TL") {}
+                    }
+                    Moin.Tooltip("Top Center", placement: .top, arrow: arrowConfig) {
+                        Moin.Button("Top") {}
+                    }
+                    Moin.Tooltip("Top Right", placement: .topRight, arrow: arrowConfig) {
+                        Moin.Button("TR") {}
+                    }
                 }
             }
         } code: {
             """
-            Moin.Tooltip("\\(tr("tooltip.with_arrow"))", arrow: true) { ... }
-            Moin.Tooltip("\\(tr("tooltip.no_arrow"))", arrow: false) { ... }
+            // dynamic arrow config
+            let arrowConfig: _TooltipArrowConfig = \(arrowState == "Center" ? ".center" : (arrowState == "Show" ? ".true" : ".false"))
+            
+            Moin.Tooltip("Top Left", placement: .topLeft, arrow: arrowConfig) {
+                Moin.Button("TL") {}
+            }
             """
         }
         .scrollAnchor("tooltip.arrow")

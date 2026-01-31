@@ -812,10 +812,25 @@ public struct _MoinTooltipFactory {
     public typealias Placement = _TooltipPlacement
     /// Moin.Tooltip.Trigger
     public typealias Trigger = _TooltipTrigger
+    /// Moin.Tooltip.ArrowConfig
+    public typealias ArrowConfig = _TooltipArrowConfig
     
     public init() {}
     
-    /// 文字 Tooltip
+    /// 文字 Tooltip (Arrow Config)
+    public func callAsFunction<Content: View>(
+        _ title: String,
+        placement: _TooltipPlacement = .top,
+        arrow: _TooltipArrowConfig,
+        color: Color? = nil,
+        trigger: _TooltipTrigger = .hover,
+        isOpen: Binding<Bool>? = nil,
+        @ViewBuilder content: () -> Content
+    ) -> _Tooltip<Content, Text> {
+        _Tooltip(title, placement: placement, arrow: arrow, color: color, trigger: trigger, isOpen: isOpen, content: content)
+    }
+
+    /// 文字 Tooltip (Bool Arrow)
     public func callAsFunction<Content: View>(
         _ title: String,
         placement: _TooltipPlacement = .top,
@@ -828,7 +843,20 @@ public struct _MoinTooltipFactory {
         _Tooltip(title, placement: placement, arrow: arrow, color: color, trigger: trigger, isOpen: isOpen, content: content)
     }
     
-    /// 自定义内容 Tooltip
+    /// 自定义内容 Tooltip (Arrow Config)
+    public func callAsFunction<Content: View, TooltipContent: View>(
+        placement: _TooltipPlacement = .top,
+        arrow: _TooltipArrowConfig,
+        color: Color? = nil,
+        trigger: _TooltipTrigger = .hover,
+        isOpen: Binding<Bool>? = nil,
+        @ViewBuilder tooltip: () -> TooltipContent,
+        @ViewBuilder content: () -> Content
+    ) -> _Tooltip<Content, TooltipContent> {
+        _Tooltip(content: content, tooltip: tooltip, placement: placement, arrow: arrow, color: color, trigger: trigger, isOpen: isOpen)
+    }
+
+    /// 自定义内容 Tooltip (Bool Arrow)
     public func callAsFunction<Content: View, TooltipContent: View>(
         placement: _TooltipPlacement = .top,
         arrow: Bool = true,

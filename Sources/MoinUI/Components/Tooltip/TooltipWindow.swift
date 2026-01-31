@@ -40,34 +40,29 @@ class TooltipWindow: NSWindow {
         placement: _TooltipPlacement,
         arrowConfig: _TooltipArrowConfig,
         arrowSize: CGFloat,
-        offset: CGFloat = 4 // 距离目标的间距
+        offset: CGFloat = 4,
+        layoutState: TooltipLayoutState? = nil
     ) -> Int {
         // Increment generation to invalidate any pending hide completions
         generation += 1
         
-        // 通知之前的 Tooltip 实例，它已经被抢占了
-        // 这一步很难做到，因为我们没有指向之前 Tooltip 实例的引用。
-        // 但是我们可以发送一个 Notification。
+        // ... (lines 48-67 skipped/same) ...
         NotificationCenter.default.post(
             name: .moinTooltipDidShow, 
             object: nil, 
             userInfo: ["generation": generation]
         )
         
-        // 0. 绑定父子窗口关系
-        // 如果之前绑在别的窗口上，先解绑
         if currentParentWindow != parentWindow {
             currentParentWindow?.removeChildWindow(self)
         }
         
-        // 绑定到新窗口 (如果还没绑定)
         if self.parent != parentWindow {
             parentWindow.addChildWindow(self, ordered: .above)
             currentParentWindow = parentWindow
         }
         
         // 1. 设置内容
-        // 我们用 NSHostingView 包装
         let hostingView = NSHostingView(rootView: content.edgesIgnoringSafeArea(.all))
         self.contentView = hostingView
         
@@ -82,6 +77,86 @@ class TooltipWindow: NSWindow {
             offset: offset,
             arrowSize: arrowSize
         )
+        
+        // 3.1 动态计算箭头偏移 (PointAtCenter 逻辑)
+        if arrowConfig.pointAtCenter, let state = layoutState {
+            // 我们通过 calculateFrame 计算出的 frame 是标准的对齐 (例如 topLeft = 左对齐)
+            // 现在我们要让箭头指向 Target 中心
+            // 目标中心 X
+            let targetMidX = targetRect.midX
+            let targetMidY = targetRect.midY
+            
+            // Tooltip 帧原点 (Screen coords)
+            let tooltipMinX = frame.minX
+            let tooltipMinY = frame.minY
+            // Tooltip 帧最大值
+            let tooltipMaxX = frame.maxX
+            let tooltipMaxY = frame.maxY // macOS Screen Y goes up, so maxY is Top.
+            // Wait, NSWindow frame is Bottom-Left.
+            // Vertically: Top placement -> Tooltip is above Target. Arrow is at Bottom of Tooltip.
+            // Arrow Y should be frame.minY? No, arrow logic inside Bubble.
+            
+            // 我们只需要计算 "箭头相对于 Tooltip 边缘的偏移"
+            
+            switch placement.primaryDirection {
+            case .top, .bottom:
+                // 水平偏移
+                // ArrowX (Screen) = TargetMidX
+                // ArrowOffset (Relative to Tooltip Left) = TargetMidX - TooltipMinX
+                // 默认对齐是 Center 吗？ Placement arrowAlignment says Center.
+                // 无论默认对齐是什么，我们要强制用 .leading + offset 或者重新计算
+                
+                let relativeX = targetMidX - tooltipMinX
+                
+                // 我们强制使用 .leading 对齐，然后 offset = relativeX - arrowWidth/2
+                // 但是 Bubble 里的 offset 是 Spacer width.
+                // Spacer + Arrow.
+                // So Spacer Width = relativeX - ArrowWidth/2. (ArrowWidth is arrowSize * 2 for horizontal arrow)
+                let spacerWidth = relativeX - (arrowSize) // arrowSize*2 width -> center is arrowSize
+                
+                DispatchQueue.main.async {
+                    state.arrowAlignmentOverride = .leading
+                    state.arrowOffsetOverride = max(0, spacerWidth)
+                }
+                
+            case .leading, .trailing:
+                // 垂直偏移
+                // ArrowY (Screen) = TargetMidY
+                // ArrowOffset (Relative to Tooltip Top? or Bottom?)
+                // Bubble VStack layout:
+                // If .top alignment: Spacer(height) + Arrow.
+                // Arrow is drawn from Top down? layout is VStack.
+                // Standard SwiftUI VStack starts from Top.
+                
+                // But NSWindow Y grows UP. Frame coordinates check.
+                // targetRect is Screen Coords (Bottom-Left origin).
+                // tooltip frame is Screen Coords (Bottom-Left origin).
+                
+                // Tooltip Top (MaxY)
+                // Target MidY
+                // Distance from Top = TooltipMaxY - TargetMidY.
+                
+                let distanceFromTop = frame.maxY - targetMidY
+                
+                // Spacer Height = distanceFromTop - ArrowHeight/2.
+                // ArrowHeight is arrowSize * 2 for vertical arrow. center is at arrowSize.
+                
+                let spacerHeight = distanceFromTop - arrowSize
+                
+                 DispatchQueue.main.async {
+                    state.arrowAlignmentOverride = .top
+                    state.arrowOffsetOverride = max(0, spacerHeight)
+                }
+            }
+        } else {
+             // Reset overrides if not pointAtCenter
+             if let state = layoutState {
+                 DispatchQueue.main.async {
+                     state.arrowAlignmentOverride = nil
+                     state.arrowOffsetOverride = nil
+                 }
+             }
+        }
         
         // 4. 设置 Frame 并显示
         self.setFrame(frame, display: true)

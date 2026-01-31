@@ -11,6 +11,7 @@ struct TooltipAnchor<TooltipContent: View>: NSViewRepresentable {
     let trigger: _TooltipTrigger
     let arrowSize: CGFloat
     let offset: CGFloat
+    let layoutState: TooltipLayoutState
     
     // 我们需要一个回调来更新 isOpen (当 trigger == .hover 时)
     // 或者我们自己在内部管理 hover 状态，并通过 Binding 更新外部
@@ -43,6 +44,7 @@ struct TooltipAnchor<TooltipContent: View>: NSViewRepresentable {
         nsView.arrowSize = arrowSize
         nsView.offset = offset
         nsView.trigger = trigger
+        nsView.layoutState = layoutState // Assign state
         
         // 外部强制控制显示/隐藏 (例如 Click 模式)
         // 如果 isOpen 为 true，且当前没有显示，则强制显示
@@ -62,6 +64,7 @@ class TooltipAnchorNSView: NSView {
     var arrowSize: CGFloat = 8
     var offset: CGFloat = 4
     var trigger: _TooltipTrigger = .hover
+    var layoutState: TooltipLayoutState? // Add this
     
     var onHoverChange: ((Bool) -> Void)?
     var onClick: (() -> Void)?
@@ -165,7 +168,8 @@ class TooltipAnchorNSView: NSView {
             placement: placement,
             arrowConfig: arrowConfig,
             arrowSize: arrowSize,
-            offset: offset
+            offset: offset,
+            layoutState: layoutState // Pass state
         )
         isTooltipVisible = true
     }

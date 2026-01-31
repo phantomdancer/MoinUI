@@ -182,6 +182,10 @@ struct TooltipExamples: View {
                     Moin.Tooltip(tr("tooltip.no_arrow"), arrow: false) {
                         Moin.Button(tr("tooltip.no_arrow")) {}
                     }
+
+                    Moin.Tooltip(tr("tooltip.arrow_center"), placement: .topLeft, arrow: .center) {
+                        Moin.Button(tr("tooltip.arrow_center")) {}
+                    }
                 }
             },
             code: {
@@ -192,6 +196,10 @@ struct TooltipExamples: View {
                 
                 Moin.Tooltip("No Arrow", arrow: false) {
                     Moin.Button("No Arrow") {}
+                }
+
+                Moin.Tooltip("Arrow Center", placement: .topLeft, arrow: .center) {
+                    Moin.Button("Arrow Center") {}
                 }
                 """
             }

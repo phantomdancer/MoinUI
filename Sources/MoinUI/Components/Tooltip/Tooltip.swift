@@ -86,6 +86,13 @@ private struct TooltipSizeKey: PreferenceKey {
     }
 }
 
+// MARK: - Layout State
+
+class TooltipLayoutState: ObservableObject {
+    @Published var arrowOffsetOverride: CGFloat? = nil
+    @Published var arrowAlignmentOverride: _TooltipPlacement.ArrowAlignment? = nil
+}
+
 // MARK: - _Tooltip
 
 public struct _Tooltip<Content: View, TooltipContent: View>: View {
@@ -108,7 +115,7 @@ public struct _Tooltip<Content: View, TooltipContent: View>: View {
     // 因为 TooltipWindow 是一个新的 View Hierarchy Root
     @Environment(\.colorScheme) private var colorScheme
     
-
+    @StateObject private var layoutState = TooltipLayoutState()
     
     private var effectiveIsOpen: Bool {
         get { isOpen || internalIsOpen }
@@ -164,6 +171,7 @@ public struct _Tooltip<Content: View, TooltipContent: View>: View {
                     trigger: trigger,
                     arrowSize: tooltipToken.arrowSize,
                     offset: 4,
+                    layoutState: layoutState, // Pass state
                     onHover: { hovering in
                         handleHover(hovering)
                     },
@@ -243,7 +251,8 @@ public struct _Tooltip<Content: View, TooltipContent: View>: View {
             bgColor: effectiveBgColor,
             arrowSize: tooltipToken.arrowSize,
             borderRadius: tooltipToken.borderRadius,
-            arrowOffset: 8
+            arrowOffset: 8,
+            layoutState: layoutState // Pass state
         ) {
             tooltipContent
                 .font(.system(size: tooltipToken.fontSize))
@@ -306,9 +315,18 @@ private struct TooltipBubble<Content: View>: View {
     let arrowSize: CGFloat
     let borderRadius: CGFloat
     let arrowOffset: CGFloat
-    @ViewBuilder let content: () -> Content
-
+    @ObservedObject var layoutState: TooltipLayoutState // Observe State
     
+    @ViewBuilder let content: () -> Content
+    
+    var effectiveAlignment: _TooltipPlacement.ArrowAlignment {
+        layoutState.arrowAlignmentOverride ?? placement.arrowAlignment
+    }
+    
+    var effectiveArrowOffset: CGFloat {
+        layoutState.arrowOffsetOverride ?? arrowOffset
+    }
+
     var body: some View {
         // 根据主方向组装
         switch placement.primaryDirection {
@@ -357,19 +375,19 @@ private struct TooltipBubble<Content: View>: View {
     @ViewBuilder
     private func arrowRowHorizontal(pointingDown: Bool) -> some View {
         HStack(spacing: 0) {
-            switch placement.arrowAlignment {
+            switch effectiveAlignment { // Use effective alignment
             case .center:
                 Spacer(minLength: 0)
                 horizontalArrow(pointingDown: pointingDown)
                 Spacer(minLength: 0)
             case .leading:
-                Spacer().frame(width: arrowOffset)
+                Spacer().frame(width: effectiveArrowOffset) // Use effective offset
                 horizontalArrow(pointingDown: pointingDown)
                 Spacer(minLength: 0)
             case .trailing:
                 Spacer(minLength: 0)
                 horizontalArrow(pointingDown: pointingDown)
-                Spacer().frame(width: arrowOffset)
+                Spacer().frame(width: effectiveArrowOffset) // Use effective offset
             default:
                 Spacer(minLength: 0)
                 horizontalArrow(pointingDown: pointingDown)
@@ -382,19 +400,19 @@ private struct TooltipBubble<Content: View>: View {
     @ViewBuilder
     private func arrowColumnVertical(pointingRight: Bool) -> some View {
         VStack(spacing: 0) {
-            switch placement.arrowAlignment {
+            switch effectiveAlignment { // Use effective alignment
             case .center:
                 Spacer(minLength: 0)
                 verticalArrow(pointingRight: pointingRight)
                 Spacer(minLength: 0)
             case .top:
-                Spacer().frame(height: arrowOffset)
+                Spacer().frame(height: effectiveArrowOffset) // Use effective offset
                 verticalArrow(pointingRight: pointingRight)
                 Spacer(minLength: 0)
             case .bottom:
                 Spacer(minLength: 0)
                 verticalArrow(pointingRight: pointingRight)
-                Spacer().frame(height: arrowOffset)
+                Spacer().frame(height: effectiveArrowOffset) // Use effective offset
             default:
                 Spacer(minLength: 0)
                 verticalArrow(pointingRight: pointingRight)
@@ -491,6 +509,26 @@ public extension _Tooltip where TooltipContent == Text {
     init(
         _ title: String,
         placement: _TooltipPlacement = .top,
+        arrow: _TooltipArrowConfig,
+        color: Color? = nil,
+        trigger: _TooltipTrigger = .hover,
+        isOpen: Binding<Bool>? = nil,
+        @ViewBuilder content: () -> Content
+    ) {
+        self.init(
+            content: content,
+            tooltip: { Text(title) },
+            placement: placement,
+            arrow: arrow,
+            color: color,
+            trigger: trigger,
+            isOpen: isOpen
+        )
+    }
+    
+    init(
+        _ title: String,
+        placement: _TooltipPlacement = .top,
         arrow: Bool = true,
         color: Color? = nil,
         trigger: _TooltipTrigger = .hover,
@@ -553,7 +591,26 @@ public struct TooltipModifier<TooltipContent: View>: ViewModifier {
 }
 
 public extension View {
-    /// 添加 Tooltip
+    /// 添加 Tooltip (支持 Arrow Config)
+    func moinTooltip<TooltipContent: View>(
+        placement: _TooltipPlacement = .top,
+        arrow: _TooltipArrowConfig,
+        color: Color? = nil,
+        trigger: _TooltipTrigger = .hover,
+        isOpen: Binding<Bool>? = nil,
+        @ViewBuilder content: () -> TooltipContent
+    ) -> some View {
+        modifier(TooltipModifier(
+            tooltipContent: content(),
+            placement: placement,
+            arrowConfig: arrow,
+            color: color,
+            trigger: trigger,
+            isOpen: isOpen ?? .constant(false)
+        ))
+    }
+    
+    /// 添加 Tooltip (Boolean arrow)
     func moinTooltip<TooltipContent: View>(
         placement: _TooltipPlacement = .top,
         arrow: Bool = true,
@@ -592,3 +649,6 @@ public extension View {
         }
     }
 }
+// MARK: - Factory
+
+
