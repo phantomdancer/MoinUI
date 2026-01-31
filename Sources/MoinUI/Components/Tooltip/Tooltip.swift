@@ -170,10 +170,12 @@ public struct _Tooltip<Content: View, TooltipContent: View>: View {
                 // 但在这里声明更清晰 (SwiftUI 层面)
                 .allowsHitTesting(false)
             )
-            .onTapGesture {
-                guard trigger == .click else { return }
-                toggleWithAnimation()
-            }
+            .simultaneousGesture(
+                TapGesture().onEnded {
+                    guard trigger == .click else { return }
+                    toggleWithAnimation()
+                }
+            )
     }
     
     // MARK: - Logic
