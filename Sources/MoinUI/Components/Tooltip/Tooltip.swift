@@ -108,8 +108,7 @@ public struct _Tooltip<Content: View, TooltipContent: View>: View {
     // 因为 TooltipWindow 是一个新的 View Hierarchy Root
     @Environment(\.colorScheme) private var colorScheme
     
-    // Debug ID
-    private let id = UUID().uuidString.prefix(4)
+
     
     private var effectiveIsOpen: Bool {
         get { isOpen || internalIsOpen }
@@ -181,7 +180,6 @@ public struct _Tooltip<Content: View, TooltipContent: View>: View {
             )
             .simultaneousGesture(
                 TapGesture().onEnded {
-                    print("[Tooltip(\(id))] TapGesture Detected. Trigger: \(trigger)")
                     guard trigger == .click else { return }
                     toggleWithAnimation()
                 }
@@ -208,7 +206,6 @@ public struct _Tooltip<Content: View, TooltipContent: View>: View {
     
     private func handleHover(_ hovering: Bool) {
         guard trigger == .hover else { return }
-        print("[Tooltip(\(id))] Hover event: \(hovering). Current isHovering: \(isHovering)")
         if hovering {
             if !isHovering {
                 isHovering = true
@@ -222,13 +219,9 @@ public struct _Tooltip<Content: View, TooltipContent: View>: View {
     
     private func handleAnchorClick() {
         guard trigger == .click else { return }
-        print("[Tooltip(\(id))] Anchor Click Event Received")
     }
 
     private func handleForceClose() {
-        // 当 Window 被抢占时，强制重置内部状态，但不执行 hide 动画（因为 Window 已经没了）
-        print("[Tooltip(\(id))] Force Close Received (Preempted). Resetting state.")
-        // 必须在主线程更新 UI 状态
         DispatchQueue.main.async {
             self.internalIsOpen = false
             self.isHovering = false
@@ -238,7 +231,6 @@ public struct _Tooltip<Content: View, TooltipContent: View>: View {
     private func toggleWithAnimation() {
         withAnimation(.easeInOut(duration: tooltipToken.motionDurationMid)) {
             internalIsOpen.toggle()
-            print("[Tooltip(\(id))] Toggling internalIsOpen. New State: \(internalIsOpen)")
         }
     }
     

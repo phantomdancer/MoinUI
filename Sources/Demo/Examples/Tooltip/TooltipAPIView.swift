@@ -177,16 +177,12 @@ struct TooltipAPIView: View {
         ) {
             HStack(spacing: 16) {
                 Moin.Tooltip("Hover", trigger: .hover) {
-                    Moin.Button("Hover") {
-                        print("[TooltipAPI] Hover Button Clicked")
-                    }
+                    Moin.Button("Hover") {}
                 }
                 
                 // Debugging Click Trigger
                 Moin.Tooltip("Click", trigger: .click) {
-                    Moin.Button("Click Debug") {
-                        print("[TooltipAPI] Click Button Pressed")
-                    }
+                    Moin.Button("Click Debug") {}
                 }
             }
         } code: {
@@ -210,9 +206,7 @@ struct TooltipAPIView: View {
         ) {
             HStack(spacing: 16) {
                 Moin.Tooltip("Controlled", isOpen: $isOpen) {
-                    Moin.Button("Target") {
-                        print("[TooltipAPI] Controlled Target Button Clicked")
-                    }
+                    Moin.Button("Target") {}
                 }
                 
                 Toggle("Show Tooltip", isOn: $isOpen)
