@@ -138,4 +138,66 @@ class TooltipAnchorNSView: NSView {
         }
         isTooltipVisible = false
     }
+    private var observers: [NSObjectProtocol] = []
+    
+    override func viewDidMoveToWindow() {
+        super.viewDidMoveToWindow()
+        setupObservers()
+    }
+    
+    private func setupObservers() {
+        // 清理旧的观察者
+        observers.forEach { NotificationCenter.default.removeObserver($0) }
+        observers.removeAll()
+        
+        guard let window = self.window else { return }
+        
+        // 1. 监听窗口移动/调整大小
+        // 当窗口位置改变时，Tooltip 的绝对坐标就不准了，应该隐藏
+        let windowMove = NotificationCenter.default.addObserver(
+            forName: NSWindow.didMoveNotification,
+            object: window,
+            queue: nil
+        ) { [weak self] _ in
+            self?.forceHide()
+        }
+        observers.append(windowMove)
+        
+        let windowResize = NotificationCenter.default.addObserver(
+            forName: NSWindow.didResizeNotification,
+            object: window,
+            queue: nil
+        ) { [weak self] _ in
+            self?.forceHide()
+        }
+        observers.append(windowResize)
+        
+        // 2. 监听滚动
+        // 如果我们在 ScrollView 内，监听其 bounds 变化 (即 scrolling)
+        if let scrollView = self.enclosingScrollView {
+            // 监听 ClipView 的 bounds 变化，这是最高效/准确捕获滚动的方式
+            scrollView.contentView.postsBoundsChangedNotifications = true
+            let scrollObserver = NotificationCenter.default.addObserver(
+                forName: NSView.boundsDidChangeNotification,
+                object: scrollView.contentView,
+                queue: nil
+            ) { [weak self] _ in
+                self?.forceHide()
+            }
+            observers.append(scrollObserver)
+        }
+    }
+    
+    /// 当发生外部干扰（滚动、移动）时，强制隐藏并通知外部状态更新
+    private func forceHide() {
+        if isTooltipVisible {
+            hideTooltip()
+            // 通知外部 Hover 结束，防止鼠标不动时 Tooltip 又被 schedule 出来
+            onHoverChange?(false)
+        }
+    }
+    
+    deinit {
+        observers.forEach { NotificationCenter.default.removeObserver($0) }
+    }
 }
