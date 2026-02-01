@@ -111,6 +111,18 @@ struct TooltipTokenView: View {
         Moin.Tooltip(tr("tooltip.prompt_text"), placement: .right) {
             Moin.Button("Hover me") {}
         }
+        .environment(\.moinTooltipToken, config.components.tooltip)
+        .environment(\.moinToken, config.token)
+    }
+
+    private var loremIpsum = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+
+    private var longTextPreviewTooltip: some View {
+        Moin.Tooltip(loremIpsum, placement: .bottom) {
+            Moin.Button("Long Text Hover") {}
+        }
+        .environment(\.moinTooltipToken, config.components.tooltip)
+        .environment(\.moinToken, config.token)
     }
 
     // MARK: - 组件 Token: maxWidth
@@ -122,7 +134,7 @@ struct TooltipTokenView: View {
             defaultValue: "250",
             description: tr("tooltip.token_maxWidth_desc"),
             sectionId: "component",
-            preview: { previewTooltip },
+            preview: { longTextPreviewTooltip },
             editor: {
                 TokenValueRow(
                     label: "maxWidth",

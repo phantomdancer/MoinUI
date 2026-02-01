@@ -11,6 +11,8 @@ struct TooltipAnchor<TooltipContent: View>: NSViewRepresentable {
     let trigger: _TooltipTrigger
     let arrowSize: CGFloat
     let offset: CGFloat
+    let maxWidth: CGFloat? // <--- Add
+    let zIndex: Int
     let layoutState: TooltipLayoutState
     
     // 我们需要一个回调来更新 open (当 trigger == .hover 时)
@@ -43,6 +45,8 @@ struct TooltipAnchor<TooltipContent: View>: NSViewRepresentable {
         nsView.arrowConfig = arrowConfig
         nsView.arrowSize = arrowSize
         nsView.offset = offset
+        nsView.maxWidth = maxWidth
+        nsView.zIndex = zIndex
         nsView.trigger = trigger
         nsView.layoutState = layoutState // Assign state
         
@@ -66,6 +70,8 @@ class TooltipAnchorNSView: NSView {
     var arrowConfig: _TooltipArrowConfig = .true
     var arrowSize: CGFloat = 8
     var offset: CGFloat = 4
+    var maxWidth: CGFloat? = nil
+    var zIndex: Int = 1070
     var trigger: _TooltipTrigger = .hover
     var layoutState: TooltipLayoutState? // Add this
     
@@ -172,7 +178,9 @@ class TooltipAnchorNSView: NSView {
             placement: placement,
             arrowConfig: arrowConfig,
             arrowSize: arrowSize,
+            maxWidth: maxWidth,
             offset: offset,
+            zIndex: zIndex,
             layoutState: layoutState // Pass state
         )
         isTooltipVisible = true

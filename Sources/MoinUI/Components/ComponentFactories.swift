@@ -826,7 +826,7 @@ public struct _MoinTooltipFactory {
         trigger: _TooltipTrigger = .hover,
         open: Binding<Bool>? = nil,
         @ViewBuilder content: () -> Content
-    ) -> _Tooltip<Content, Text> {
+    ) -> _Tooltip<Content, TooltipTextWrapper> {
         _Tooltip(title, placement: placement, arrow: arrow, color: color, trigger: trigger, open: open, content: content)
     }
 
@@ -839,7 +839,7 @@ public struct _MoinTooltipFactory {
         trigger: _TooltipTrigger = .hover,
         open: Binding<Bool>? = nil,
         @ViewBuilder content: () -> Content
-    ) -> _Tooltip<Content, Text> {
+    ) -> _Tooltip<Content, TooltipTextWrapper> {
         _Tooltip(title, placement: placement, arrow: arrow, color: color, trigger: trigger, open: open, content: content)
     }
     
@@ -878,7 +878,7 @@ public struct _MoinTooltipFactory {
         trigger: _TooltipTrigger = .hover,
         open: Binding<Bool>? = nil,
         @ViewBuilder content: () -> Content
-    ) -> _Tooltip<Content, Text> {
+    ) -> _Tooltip<Content, TooltipTextWrapper> {
         _Tooltip(optional: title, placement: placement, arrow: arrow, color: color, trigger: trigger, open: open, content: content)
     }
 }

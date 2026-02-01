@@ -25,7 +25,13 @@ class TooltipWindow: NSWindow {
         // 忽略鼠标事件? 
         // Tooltip 通常不交互，或者如果需要交互(复制文本)，不能忽略。
         // Ant Design 的 Tooltip 默认鼠标移入 Tooltip 也会保持显示。
-        self.ignoresMouseEvents = false 
+        // 设置默认 level，实际上会在 show 时更新
+        self.level = .init(rawValue: 1070)
+        
+        // 忽略鼠标事件? 
+        // Tooltip 通常不交互，或者如果需要交互(复制文本)，不能忽略。
+        // Ant Design 的 Tooltip 默认鼠标移入 Tooltip 也会保持显示。
+        self.ignoresMouseEvents = false  
     }
     
     private var generation: Int = 0
@@ -40,11 +46,17 @@ class TooltipWindow: NSWindow {
         placement: _TooltipPlacement,
         arrowConfig: _TooltipArrowConfig,
         arrowSize: CGFloat,
+
+        maxWidth: CGFloat? = nil,
         offset: CGFloat = 4,
+        zIndex: Int = 1070,
         layoutState: TooltipLayoutState? = nil
     ) -> Int {
         // Increment generation to invalidate any pending hide completions
         generation += 1
+        
+        // Update Level
+        self.level = NSWindow.Level(rawValue: Int(zIndex))
         
         // ... (lines 48-67 skipped/same) ...
         NotificationCenter.default.post(
@@ -66,8 +78,28 @@ class TooltipWindow: NSWindow {
         let hostingView = NSHostingView(rootView: content.edgesIgnoringSafeArea(.all))
         self.contentView = hostingView
         
-        // 2. 计算大小 (Fitting Size)
-        let size = hostingView.fittingSize
+        // 2. 计算大小
+        // 关键修复：如果有 maxWidth，先设置宽度约束让 SwiftUI 计算换行后的高度
+        var size: CGSize
+        if let maxWidth = maxWidth {
+            // 先获取理想尺寸
+            let idealSize = hostingView.fittingSize
+            
+            // 如果理想宽度超过 maxWidth，需要在限定宽度下重新计算
+            if idealSize.width > maxWidth {
+                // 设置临时 frame 宽度，强制 SwiftUI 重新布局
+                hostingView.frame = CGRect(x: 0, y: 0, width: maxWidth, height: 10000)
+                hostingView.layoutSubtreeIfNeeded()
+                
+                // 重新获取 fittingSize（此时会考虑宽度限制）
+                size = hostingView.fittingSize
+                size.width = min(size.width, maxWidth)
+            } else {
+                size = idealSize
+            }
+        } else {
+            size = hostingView.fittingSize
+        }
         
         // 3. 计算位置
         let frame = calculateFrame(

@@ -178,6 +178,9 @@ public struct _Tooltip<Content: View, TooltipContent: View>: View {
                     trigger: trigger,
                     arrowSize: token.sizePopupArrow,
                     offset: 4,
+                    maxWidth: tooltipToken.maxWidth, // Pass maxWidth
+                    zIndex: tooltipToken.zIndexPopup, // Pass zIndex
+
                     layoutState: layoutState, // Pass state
                     onHover: { hovering in
                         handleHover(hovering)
@@ -267,6 +270,7 @@ public struct _Tooltip<Content: View, TooltipContent: View>: View {
                 .foregroundStyle(token.colorTextLightSolid)
                 .padding(.vertical, token.paddingSM / 2)
                 .padding(.horizontal, token.paddingXS)
+                .frame(maxWidth: tooltipToken.maxWidth) // Apply maxWidth
         }
         .shadow(
             color: Color.black.opacity(0.12),
@@ -274,7 +278,7 @@ public struct _Tooltip<Content: View, TooltipContent: View>: View {
             x: 0,
             y: 3
         )
-        .fixedSize()
+        .fixedSize(horizontal: false, vertical: true) // 水平可约束以换行，垂直自适应
         // 关键：注入 Environment
         .environment(\.moinToken, token)
         .environment(\.moinTooltipToken, tooltipToken)
@@ -517,7 +521,7 @@ private struct ArrowShape: Shape {
 
 // MARK: - Convenience Initializers
 
-public extension _Tooltip where TooltipContent == Text {
+public extension _Tooltip where TooltipContent == TooltipTextWrapper {
     init(
         _ title: String,
         placement: _TooltipPlacement = .top,
@@ -529,7 +533,7 @@ public extension _Tooltip where TooltipContent == Text {
     ) {
         self.init(
             content: content,
-            tooltip: { Text(title) },
+            tooltip: { TooltipTextWrapper(title) },
             placement: placement,
             arrow: arrow,
             color: color,
@@ -549,7 +553,7 @@ public extension _Tooltip where TooltipContent == Text {
     ) {
         self.init(
             content: content,
-            tooltip: { Text(title) },
+            tooltip: { TooltipTextWrapper(title) },
             placement: placement,
             arrow: arrow ? .true : .false,
             color: color,
@@ -569,7 +573,7 @@ public extension _Tooltip where TooltipContent == Text {
     ) {
         self.init(
             content: content,
-            tooltip: { Text(title) },
+            tooltip: { TooltipTextWrapper(title) },
             placement: placement,
             arrow: arrow ? .true : .false,
             color: color,
@@ -590,7 +594,7 @@ public extension _Tooltip where TooltipContent == Text {
     ) {
         self.init(
             content: content,
-            tooltip: { Text(title ?? "") },
+            tooltip: { TooltipTextWrapper(title ?? "") },
             placement: placement,
             arrow: arrow ? .true : .false,
             color: color,
