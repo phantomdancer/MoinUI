@@ -868,4 +868,17 @@ public struct _MoinTooltipFactory {
     ) -> _Tooltip<Content, TooltipContent> {
         _Tooltip(content: content, tooltip: tooltip, placement: placement, arrow: arrow, color: color, trigger: trigger, isOpen: isOpen)
     }
+    
+    /// 可选文字 Tooltip，当 title 为 nil 时不显示 Tooltip
+    public func callAsFunction<Content: View>(
+        optional title: String?,
+        placement: _TooltipPlacement = .top,
+        arrow: Bool = true,
+        color: Color? = nil,
+        trigger: _TooltipTrigger = .hover,
+        isOpen: Binding<Bool>? = nil,
+        @ViewBuilder content: () -> Content
+    ) -> _Tooltip<Content, Text> {
+        _Tooltip(optional: title, placement: placement, arrow: arrow, color: color, trigger: trigger, isOpen: isOpen, content: content)
+    }
 }

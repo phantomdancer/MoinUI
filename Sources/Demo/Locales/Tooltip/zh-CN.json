@@ -22,6 +22,9 @@
     "tooltip.click": "点击",
     "tooltip.hover_trigger": "悬停触发",
     "tooltip.click_trigger": "点击触发",
+    "tooltip.enable": "启用",
+    "tooltip.disable": "禁用",
+    "tooltip.disabled_tip": "当 title 为 nil 时禁用 Tooltip",
     
     "tooltip.api_title": "title",
     "tooltip.api_title_desc": "提示文字内容。",

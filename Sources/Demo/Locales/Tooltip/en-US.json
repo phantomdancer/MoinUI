@@ -22,6 +22,9 @@
     "tooltip.click": "Click",
     "tooltip.hover_trigger": "Hover to show",
     "tooltip.click_trigger": "Click to show",
+    "tooltip.enable": "Enable",
+    "tooltip.disable": "Disable",
+    "tooltip.disabled_tip": "Tooltip is disabled when title is nil",
     
     "tooltip.api_title": "title",
     "tooltip.api_title_desc": "The text shown in the tooltip.",

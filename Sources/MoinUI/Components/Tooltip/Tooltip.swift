@@ -102,6 +102,7 @@ public struct _Tooltip<Content: View, TooltipContent: View>: View {
     private let arrowConfig: _TooltipArrowConfig
     private let color: Color?
     private let trigger: _TooltipTrigger
+    private let disabled: Bool
     
     @Binding private var isOpen: Bool
     @State private var internalIsOpen: Bool = false
@@ -118,7 +119,7 @@ public struct _Tooltip<Content: View, TooltipContent: View>: View {
     @StateObject private var layoutState = TooltipLayoutState()
     
     private var effectiveIsOpen: Bool {
-        get { isOpen || internalIsOpen }
+        get { disabled ? false : (isOpen || internalIsOpen) }
     }
     
     public init(
@@ -128,7 +129,8 @@ public struct _Tooltip<Content: View, TooltipContent: View>: View {
         arrow: _TooltipArrowConfig = .true,
         color: Color? = nil,
         trigger: _TooltipTrigger = .hover,
-        isOpen: Binding<Bool>? = nil
+        isOpen: Binding<Bool>? = nil,
+        disabled: Bool = false
     ) {
         self.content = content()
         self.tooltipContent = tooltip()
@@ -137,6 +139,7 @@ public struct _Tooltip<Content: View, TooltipContent: View>: View {
         self.color = color
         self.trigger = trigger
         self._isOpen = isOpen ?? .constant(false)
+        self.disabled = disabled
     }
     
     // Bool 便捷初始化
@@ -213,7 +216,7 @@ public struct _Tooltip<Content: View, TooltipContent: View>: View {
     // MARK: - Logic
     
     private func handleHover(_ hovering: Bool) {
-        guard trigger == .hover else { return }
+        guard trigger == .hover, !disabled else { return }
         if hovering {
             if !isHovering {
                 isHovering = true
@@ -563,6 +566,28 @@ public extension _Tooltip where TooltipContent == Text {
             color: color,
             trigger: trigger,
             isOpen: isOpen
+        )
+    }
+    
+    /// 可选 String 初始化器，当 title 为 nil 时不显示 Tooltip
+    init(
+        optional title: String?,
+        placement: _TooltipPlacement = .top,
+        arrow: Bool = true,
+        color: Color? = nil,
+        trigger: _TooltipTrigger = .hover,
+        isOpen: Binding<Bool>? = nil,
+        @ViewBuilder content: () -> Content
+    ) {
+        self.init(
+            content: content,
+            tooltip: { Text(title ?? "") },
+            placement: placement,
+            arrow: arrow ? .true : .false,
+            color: color,
+            trigger: trigger,
+            isOpen: isOpen,
+            disabled: title?.isEmpty != false  // title 为 nil 或空字符串时禁用
         )
     }
 }

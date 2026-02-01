@@ -51,23 +51,47 @@ struct TooltipAPIView: View {
         }
     }
 
-    // MARK: - title
-
+    @State private var titleDisabled = false
+    
     private var titlePropertyCard: some View {
         PropertyCard(
             name: "title",
-            type: "String | View",
+            type: "String | String? | View",
             defaultValue: "-",
             description: tr("tooltip.api_title_desc"),
             sectionId: "tooltip"
         ) {
-            Moin.Tooltip(tr("tooltip.prompt_text")) {
-                Moin.Button("Hover me") {}
+            VStack(alignment: .leading, spacing: 16) {
+                // 基础用法
+                Moin.Tooltip(tr("tooltip.prompt_text")) {
+                    Moin.Button("Hover me") {}
+                }
+                
+                // 可选用法：nil 或 "" 时禁用
+                HStack(spacing: 12) {
+                    Moin.Tooltip(optional: titleDisabled ? nil : tr("tooltip.prompt_text")) {
+                        Moin.Button(titleDisabled ? tr("tooltip.enable") : tr("tooltip.disable")) {
+                            titleDisabled.toggle()
+                        }
+                    }
+                    Text(tr("tooltip.disabled_tip"))
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
             }
         } code: {
             """
-            Moin.Tooltip("\\(tr("tooltip.prompt_text"))") {
+            // \(tr("tooltip.basic"))
+            Moin.Tooltip("\(tr("tooltip.prompt_text"))") {
                 Moin.Button("Hover me") {}
+            }
+            
+            // \(tr("tooltip.disabled_tip"))
+            @State private var disabled = \(titleDisabled)
+            Moin.Tooltip(optional: disabled ? nil : "prompt text") {
+                Moin.Button(disabled ? "Enable" : "Disable") {
+                    disabled.toggle()
+                }
             }
             """
         }
@@ -130,6 +154,7 @@ struct TooltipAPIView: View {
             type: "Bool | ArrowConfig",
             defaultValue: "true",
             description: tr("tooltip.api_arrow_desc"),
+            enumValues: "true | false | .center",
             sectionId: "tooltip"
         ) {
             VStack(spacing: 20) {

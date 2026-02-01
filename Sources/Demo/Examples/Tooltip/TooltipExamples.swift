@@ -82,14 +82,26 @@ struct TooltipExamples: View {
     
     // MARK: - Basic
     
+    @State private var tooltipDisabled = false
+    
     private var basicExample: some View {
         ExampleSection(
             title: tr("tooltip.basic"),
             description: tr("tooltip.basic_desc"),
             content: {
-                HStack(spacing: 20) {
-                    Moin.Tooltip("prompt text", placement: .top) {
-                        Text("Tooltip will show on mouse enter.")
+                VStack(spacing: 20) {
+                    HStack(spacing: 20) {
+                        Moin.Tooltip("prompt text", placement: .top) {
+                            Text("Tooltip will show on mouse enter.")
+                        }
+                    }
+                    
+                    HStack(spacing: 20) {
+                        Moin.Tooltip(optional: tooltipDisabled ? nil : "prompt text", placement: .top) {
+                            Moin.Button(tooltipDisabled ? tr("tooltip.enable") : tr("tooltip.disable")) {
+                                tooltipDisabled.toggle()
+                            }
+                        }
                     }
                 }
             },
@@ -97,6 +109,14 @@ struct TooltipExamples: View {
                 """
                 Moin.Tooltip("prompt text", placement: .top) {
                     Text("Tooltip will show on mouse enter.")
+                }
+                
+                // \(tr("tooltip.disabled_tip"))
+                @State private var disabled = \(tooltipDisabled)
+                Moin.Tooltip(optional: disabled ? nil : "prompt text", placement: .top) {
+                    Moin.Button(disabled ? "Enable" : "Disable") {
+                        disabled.toggle()
+                    }
                 }
                 """
             }
