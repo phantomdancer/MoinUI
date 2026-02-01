@@ -4,6 +4,7 @@ import MoinUI
 // MARK: - TooltipTokenView
 
 /// Tooltip 组件 Token 文档视图
+/// 严格按照 Ant Design: 组件 Token + 全局 Token 分开展示
 struct TooltipTokenView: View {
     @Localized var tr
     @ObservedObject var config = Moin.ConfigProvider.shared
@@ -12,18 +13,29 @@ struct TooltipTokenView: View {
 
     private var tokenSections: [DocSidebarSection] {
         [
+            // 组件 Token (仅2个)
             DocSidebarSection(
                 title: tr("token.tooltip.component"),
                 items: [
-                    .init(id: "borderRadius"),
-                    .init(id: "paddingVertical"),
-                    .init(id: "paddingHorizontal"),
-                    .init(id: "arrowSize"),
-                    .init(id: "colorBg"),
-                    .init(id: "colorText"),
-                    .init(id: "fontSize")
+                    .init(id: "maxWidth"),
+                    .init(id: "zIndexPopup")
                 ],
                 sectionId: "component"
+            ),
+            // 全局 Token
+            DocSidebarSection(
+                title: tr("token.tooltip.global"),
+                items: [
+                    .init(id: "colorBgSpotlight"),
+                    .init(id: "colorTextLightSolid"),
+                    .init(id: "borderRadius"),
+                    .init(id: "fontSize"),
+                    .init(id: "paddingSM"),
+                    .init(id: "paddingXS"),
+                    .init(id: "sizePopupArrow"),
+                    .init(id: "motionDurationMid")
+                ],
+                sectionId: "global"
             )
         ]
     }
@@ -41,10 +53,17 @@ struct TooltipTokenView: View {
             sections: tokenSections,
             initialItemId: "component"
         ) { sectionId in
-            if sectionId == "component" {
+            switch sectionId {
+            case "component":
                 Text(tr("token.tooltip.component"))
                     .font(.title3)
                     .fontWeight(.semibold)
+            case "global":
+                Text(tr("token.tooltip.global"))
+                    .font(.title3)
+                    .fontWeight(.semibold)
+            default:
+                EmptyView()
             }
         } item: { item in
             cardForItem(item)
@@ -70,13 +89,18 @@ struct TooltipTokenView: View {
     @ViewBuilder
     private func cardForItem(_ item: String) -> some View {
         switch item {
+        // 组件 Token
+        case "maxWidth": maxWidthTokenCard
+        case "zIndexPopup": zIndexPopupTokenCard
+        // 全局 Token
+        case "colorBgSpotlight": colorBgSpotlightTokenCard
+        case "colorTextLightSolid": colorTextLightSolidTokenCard
         case "borderRadius": borderRadiusTokenCard
-        case "paddingVertical": paddingVerticalTokenCard
-        case "paddingHorizontal": paddingHorizontalTokenCard
-        case "arrowSize": arrowSizeTokenCard
-        case "colorBg": colorBgTokenCard
-        case "colorText": colorTextTokenCard
         case "fontSize": fontSizeTokenCard
+        case "paddingSM": paddingSMTokenCard
+        case "paddingXS": paddingXSTokenCard
+        case "sizePopupArrow": sizePopupArrowTokenCard
+        case "motionDurationMid": motionDurationMidTokenCard
         default: EmptyView()
         }
     }
@@ -89,7 +113,106 @@ struct TooltipTokenView: View {
         }
     }
 
-    // MARK: - borderRadius
+    // MARK: - 组件 Token: maxWidth
+
+    private var maxWidthTokenCard: some View {
+        TokenCard(
+            name: "maxWidth",
+            type: "CGFloat",
+            defaultValue: "250",
+            description: tr("tooltip.token_maxWidth_desc"),
+            sectionId: "component",
+            preview: { previewTooltip },
+            editor: {
+                TokenValueRow(
+                    label: "maxWidth",
+                    value: $config.components.tooltip.maxWidth,
+                    range: 100...500,
+                    step: 10
+                )
+            },
+            code: {
+                "config.components.tooltip.maxWidth = \(Int(config.components.tooltip.maxWidth))"
+            }
+        )
+        .scrollAnchor("tooltip.maxWidth")
+    }
+
+    // MARK: - 组件 Token: zIndexPopup
+
+    private var zIndexPopupTokenCard: some View {
+        TokenCard(
+            name: "zIndexPopup",
+            type: "Int",
+            defaultValue: "1070",
+            description: tr("tooltip.token_zIndexPopup_desc"),
+            sectionId: "component",
+            preview: { previewTooltip },
+            editor: {
+                TokenValueRow(
+                    label: "zIndexPopup",
+                    value: Binding(
+                        get: { CGFloat(config.components.tooltip.zIndexPopup) },
+                        set: { config.components.tooltip.zIndexPopup = Int($0) }
+                    ),
+                    range: 1000...2000,
+                    step: 10
+                )
+            },
+            code: {
+                "config.components.tooltip.zIndexPopup = \(config.components.tooltip.zIndexPopup)"
+            }
+        )
+        .scrollAnchor("tooltip.zIndexPopup")
+    }
+
+    // MARK: - 全局 Token: colorBgSpotlight
+
+    private var colorBgSpotlightTokenCard: some View {
+        TokenCard(
+            name: "colorBgSpotlight",
+            type: "Color",
+            defaultValue: "rgba(0,0,0,0.85)",
+            description: tr("tooltip.token_colorBgSpotlight_desc"),
+            sectionId: "global",
+            preview: { previewTooltip },
+            editor: {
+                ColorPresetRow(
+                    label: "colorBgSpotlight",
+                    color: $config.token.colorBgSpotlight
+                )
+            },
+            code: {
+                "config.token.colorBgSpotlight = Color(hex: 0x000000, alpha: 0.85)"
+            }
+        )
+        .scrollAnchor("tooltip.colorBgSpotlight")
+    }
+
+    // MARK: - 全局 Token: colorTextLightSolid
+
+    private var colorTextLightSolidTokenCard: some View {
+        TokenCard(
+            name: "colorTextLightSolid",
+            type: "Color",
+            defaultValue: "#fff",
+            description: tr("tooltip.token_colorTextLightSolid_desc"),
+            sectionId: "global",
+            preview: { previewTooltip },
+            editor: {
+                ColorPresetRow(
+                    label: "colorTextLightSolid",
+                    color: $config.token.colorTextLightSolid
+                )
+            },
+            code: {
+                "config.token.colorTextLightSolid = .white"
+            }
+        )
+        .scrollAnchor("tooltip.colorTextLightSolid")
+    }
+
+    // MARK: - 全局 Token: borderRadius
 
     private var borderRadiusTokenCard: some View {
         TokenCard(
@@ -97,145 +220,24 @@ struct TooltipTokenView: View {
             type: "CGFloat",
             defaultValue: "6",
             description: tr("tooltip.token_borderRadius_desc"),
-            sectionId: "component",
+            sectionId: "global",
             preview: { previewTooltip },
             editor: {
                 TokenValueRow(
                     label: "borderRadius",
-                    value: $config.components.tooltip.borderRadius,
+                    value: $config.token.borderRadius,
                     range: 0...20,
                     step: 1
                 )
             },
             code: {
-                "config.components.tooltip.borderRadius = \(Int(config.components.tooltip.borderRadius))"
+                "config.token.borderRadius = \(Int(config.token.borderRadius))"
             }
         )
         .scrollAnchor("tooltip.borderRadius")
     }
 
-    // MARK: - paddingVertical
-
-    private var paddingVerticalTokenCard: some View {
-        TokenCard(
-            name: "paddingVertical",
-            type: "CGFloat",
-            defaultValue: "6",
-            description: tr("tooltip.token_paddingVertical_desc"),
-            sectionId: "component",
-            preview: { previewTooltip },
-            editor: {
-                TokenValueRow(
-                    label: "paddingVertical",
-                    value: $config.components.tooltip.paddingVertical,
-                    range: 0...20,
-                    step: 1
-                )
-            },
-            code: {
-                "config.components.tooltip.paddingVertical = \(Int(config.components.tooltip.paddingVertical))"
-            }
-        )
-        .scrollAnchor("tooltip.paddingVertical")
-    }
-
-    // MARK: - paddingHorizontal
-
-    private var paddingHorizontalTokenCard: some View {
-        TokenCard(
-            name: "paddingHorizontal",
-            type: "CGFloat",
-            defaultValue: "8",
-            description: tr("tooltip.token_paddingHorizontal_desc"),
-            sectionId: "component",
-            preview: { previewTooltip },
-            editor: {
-                TokenValueRow(
-                    label: "paddingHorizontal",
-                    value: $config.components.tooltip.paddingHorizontal,
-                    range: 0...30,
-                    step: 1
-                )
-            },
-            code: {
-                "config.components.tooltip.paddingHorizontal = \(Int(config.components.tooltip.paddingHorizontal))"
-            }
-        )
-        .scrollAnchor("tooltip.paddingHorizontal")
-    }
-
-    // MARK: - arrowSize
-
-    private var arrowSizeTokenCard: some View {
-        TokenCard(
-            name: "arrowSize",
-            type: "CGFloat",
-            defaultValue: "8",
-            description: tr("tooltip.token_arrowSize_desc"),
-            sectionId: "component",
-            preview: { previewTooltip },
-            editor: {
-                TokenValueRow(
-                    label: "arrowSize",
-                    value: $config.components.tooltip.arrowSize,
-                    range: 4...16,
-                    step: 1
-                )
-            },
-            code: {
-                "config.components.tooltip.arrowSize = \(Int(config.components.tooltip.arrowSize))"
-            }
-        )
-        .scrollAnchor("tooltip.arrowSize")
-    }
-
-    // MARK: - colorBg
-
-    private var colorBgTokenCard: some View {
-        TokenCard(
-            name: "colorBg",
-            type: "Color",
-            defaultValue: "rgba(0,0,0,0.85)",
-            description: tr("tooltip.token_colorBg_desc"),
-            sectionId: "component",
-            preview: { previewTooltip },
-            editor: {
-                ColorPresetRow(
-                    label: "colorBg",
-                    color: $config.components.tooltip.colorBg
-                )
-            },
-            code: {
-                "config.components.tooltip.colorBg = Color(hex: 0x000000, alpha: 0.85)"
-            }
-        )
-        .scrollAnchor("tooltip.colorBg")
-    }
-
-    // MARK: - colorText
-
-    private var colorTextTokenCard: some View {
-        TokenCard(
-            name: "colorText",
-            type: "Color",
-            defaultValue: ".white",
-            description: tr("tooltip.token_colorText_desc"),
-            sectionId: "component",
-            preview: { previewTooltip },
-            editor: {
-                ColorPresetRow(
-                    label: "colorText",
-                    color: $config.components.tooltip.colorText
-                )
-            },
-            code: {
-                "config.components.tooltip.colorText = .white"
-            }
-        )
-        .scrollAnchor("tooltip.colorText")
-    }
-
-    // MARK: - fontSize
+    // MARK: - 全局 Token: fontSize
 
     private var fontSizeTokenCard: some View {
         TokenCard(
@@ -243,21 +245,124 @@ struct TooltipTokenView: View {
             type: "CGFloat",
             defaultValue: "14",
             description: tr("tooltip.token_fontSize_desc"),
-            sectionId: "component",
+            sectionId: "global",
             preview: { previewTooltip },
             editor: {
                 TokenValueRow(
                     label: "fontSize",
-                    value: $config.components.tooltip.fontSize,
+                    value: $config.token.fontSize,
                     range: 10...20,
                     step: 1
                 )
             },
             code: {
-                "config.components.tooltip.fontSize = \(Int(config.components.tooltip.fontSize))"
+                "config.token.fontSize = \(Int(config.token.fontSize))"
             }
         )
         .scrollAnchor("tooltip.fontSize")
+    }
+
+    // MARK: - 全局 Token: paddingSM
+
+    private var paddingSMTokenCard: some View {
+        TokenCard(
+            name: "paddingSM",
+            type: "CGFloat",
+            defaultValue: "12",
+            description: tr("tooltip.token_paddingSM_desc"),
+            sectionId: "global",
+            preview: { previewTooltip },
+            editor: {
+                TokenValueRow(
+                    label: "paddingSM",
+                    value: $config.token.paddingSM,
+                    range: 4...24,
+                    step: 1
+                )
+            },
+            code: {
+                "config.token.paddingSM = \(Int(config.token.paddingSM))"
+            }
+        )
+        .scrollAnchor("tooltip.paddingSM")
+    }
+
+    // MARK: - 全局 Token: paddingXS
+
+    private var paddingXSTokenCard: some View {
+        TokenCard(
+            name: "paddingXS",
+            type: "CGFloat",
+            defaultValue: "8",
+            description: tr("tooltip.token_paddingXS_desc"),
+            sectionId: "global",
+            preview: { previewTooltip },
+            editor: {
+                TokenValueRow(
+                    label: "paddingXS",
+                    value: $config.token.paddingXS,
+                    range: 2...16,
+                    step: 1
+                )
+            },
+            code: {
+                "config.token.paddingXS = \(Int(config.token.paddingXS))"
+            }
+        )
+        .scrollAnchor("tooltip.paddingXS")
+    }
+
+    // MARK: - 全局 Token: sizePopupArrow
+
+    private var sizePopupArrowTokenCard: some View {
+        TokenCard(
+            name: "sizePopupArrow",
+            type: "CGFloat",
+            defaultValue: "6",
+            description: tr("tooltip.token_sizePopupArrow_desc"),
+            sectionId: "global",
+            preview: { previewTooltip },
+            editor: {
+                TokenValueRow(
+                    label: "sizePopupArrow",
+                    value: $config.token.sizePopupArrow,
+                    range: 4...16,
+                    step: 1
+                )
+            },
+            code: {
+                "config.token.sizePopupArrow = \(Int(config.token.sizePopupArrow))"
+            }
+        )
+        .scrollAnchor("tooltip.sizePopupArrow")
+    }
+
+    // MARK: - 全局 Token: motionDurationMid
+
+    private var motionDurationMidTokenCard: some View {
+        TokenCard(
+            name: "motionDurationMid",
+            type: "Double",
+            defaultValue: "0.2",
+            description: tr("tooltip.token_motionDurationMid_desc"),
+            sectionId: "global",
+            preview: { previewTooltip },
+            editor: {
+                TokenValueRow(
+                    label: "motionDurationMid",
+                    value: Binding(
+                        get: { CGFloat(config.token.motionDurationMid) },
+                        set: { config.token.motionDurationMid = Double($0) }
+                    ),
+                    range: 0.05...0.5,
+                    step: 0.05
+                )
+            },
+            code: {
+                "config.token.motionDurationMid = \(config.token.motionDurationMid)"
+            }
+        )
+        .scrollAnchor("tooltip.motionDurationMid")
     }
 }
 

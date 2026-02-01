@@ -103,8 +103,9 @@ public struct _Tooltip<Content: View, TooltipContent: View>: View {
     private let color: Color?
     private let trigger: _TooltipTrigger
     private let disabled: Bool
+    private let isControlled: Bool  // 是否由外部控制
     
-    @Binding private var isOpen: Bool
+    @Binding private var open: Bool
     @State private var internalIsOpen: Bool = false
     @State private var isHovering: Bool = false
     @State private var hoverTask: Task<Void, Never>?
@@ -119,7 +120,9 @@ public struct _Tooltip<Content: View, TooltipContent: View>: View {
     @StateObject private var layoutState = TooltipLayoutState()
     
     private var effectiveIsOpen: Bool {
-        get { disabled ? false : (isOpen || internalIsOpen) }
+        if disabled { return false }
+        // 如果是受控模式，完全由 open 控制；否则由 internalIsOpen 控制
+        return isControlled ? open : internalIsOpen
     }
     
     public init(
@@ -129,7 +132,7 @@ public struct _Tooltip<Content: View, TooltipContent: View>: View {
         arrow: _TooltipArrowConfig = .true,
         color: Color? = nil,
         trigger: _TooltipTrigger = .hover,
-        isOpen: Binding<Bool>? = nil,
+        open: Binding<Bool>? = nil,
         disabled: Bool = false
     ) {
         self.content = content()
@@ -138,8 +141,9 @@ public struct _Tooltip<Content: View, TooltipContent: View>: View {
         self.arrowConfig = arrow
         self.color = color
         self.trigger = trigger
-        self._isOpen = isOpen ?? .constant(false)
+        self._open = open ?? .constant(false)
         self.disabled = disabled
+        self.isControlled = open != nil  // 传入了 open 则为受控模式
     }
     
     // Bool 便捷初始化
@@ -150,7 +154,7 @@ public struct _Tooltip<Content: View, TooltipContent: View>: View {
         arrow: Bool,
         color: Color? = nil,
         trigger: _TooltipTrigger = .hover,
-        isOpen: Binding<Bool>? = nil
+        open: Binding<Bool>? = nil
     ) {
         self.init(
             content: content,
@@ -159,7 +163,7 @@ public struct _Tooltip<Content: View, TooltipContent: View>: View {
             arrow: arrow ? .true : .false,
             color: color,
             trigger: trigger,
-            isOpen: isOpen
+            open: open
         )
     }
     
@@ -167,12 +171,12 @@ public struct _Tooltip<Content: View, TooltipContent: View>: View {
         content
             .overlay(
                 TooltipAnchor(
-                    isOpen: Binding(get: { effectiveIsOpen }, set: { _ in }),
+                    open: effectiveIsOpen,
                     tooltipContent: tooltipView,
                     placement: placement,
                     arrowConfig: arrowConfig,
                     trigger: trigger,
-                    arrowSize: tooltipToken.arrowSize,
+                    arrowSize: token.sizePopupArrow,
                     offset: 4,
                     layoutState: layoutState, // Pass state
                     onHover: { hovering in
@@ -216,7 +220,8 @@ public struct _Tooltip<Content: View, TooltipContent: View>: View {
     // MARK: - Logic
     
     private func handleHover(_ hovering: Bool) {
-        guard trigger == .hover, !disabled else { return }
+        // 受控模式下不响应 hover
+        guard trigger == .hover, !disabled, !isControlled else { return }
         if hovering {
             if !isHovering {
                 isHovering = true
@@ -240,7 +245,7 @@ public struct _Tooltip<Content: View, TooltipContent: View>: View {
     }
 
     private func toggleWithAnimation() {
-        withAnimation(.easeInOut(duration: tooltipToken.motionDurationMid)) {
+        withAnimation(.easeInOut(duration: token.motionDurationMid)) {
             internalIsOpen.toggle()
         }
     }
@@ -252,22 +257,22 @@ public struct _Tooltip<Content: View, TooltipContent: View>: View {
             placement: placement,
             arrowConfig: arrowConfig,
             bgColor: effectiveBgColor,
-            arrowSize: tooltipToken.arrowSize,
-            borderRadius: tooltipToken.borderRadius,
+            arrowSize: token.sizePopupArrow,
+            borderRadius: token.borderRadius,
             arrowOffset: 8,
             layoutState: layoutState // Pass state
         ) {
             tooltipContent
-                .font(.system(size: tooltipToken.fontSize))
-                .foregroundStyle(tooltipToken.colorText)
-                .padding(.vertical, tooltipToken.paddingVertical)
-                .padding(.horizontal, tooltipToken.paddingHorizontal)
+                .font(.system(size: token.fontSize))
+                .foregroundStyle(token.colorTextLightSolid)
+                .padding(.vertical, token.paddingSM / 2)
+                .padding(.horizontal, token.paddingXS)
         }
         .shadow(
-            color: tooltipToken.boxShadow.color,
-            radius: tooltipToken.boxShadow.radius,
-            x: tooltipToken.boxShadow.x,
-            y: tooltipToken.boxShadow.y
+            color: Color.black.opacity(0.12),
+            radius: 8,
+            x: 0,
+            y: 3
         )
         .fixedSize()
         // 关键：注入 Environment
@@ -277,18 +282,22 @@ public struct _Tooltip<Content: View, TooltipContent: View>: View {
     }
     
     private var effectiveBgColor: Color {
-        color ?? tooltipToken.colorBg
+        color ?? token.colorBgSpotlight
     }
     
     // MARK: - Hover Delay
     
+    // 全局 Token: mouseEnterDelay = 0.1s, mouseLeaveDelay = 0.1s, motionDurationMid = 0.2s
+    private let mouseEnterDelay: Double = 0.1
+    private let mouseLeaveDelay: Double = 0.1
+    
     private func scheduleShow() {
         hoverTask?.cancel()
         hoverTask = Task {
-            try? await Task.sleep(nanoseconds: UInt64(tooltipToken.mouseEnterDelay * 1_000_000_000))
+            try? await Task.sleep(nanoseconds: UInt64(mouseEnterDelay * 1_000_000_000))
             guard !Task.isCancelled, isHovering else { return }
             await MainActor.run {
-                withAnimation(.easeInOut(duration: tooltipToken.motionDurationMid)) {
+                withAnimation(.easeInOut(duration: token.motionDurationMid)) {
                     internalIsOpen = true
                 }
             }
@@ -298,10 +307,10 @@ public struct _Tooltip<Content: View, TooltipContent: View>: View {
     private func scheduleHide() {
         hoverTask?.cancel()
         hoverTask = Task {
-            try? await Task.sleep(nanoseconds: UInt64(tooltipToken.mouseLeaveDelay * 1_000_000_000))
+            try? await Task.sleep(nanoseconds: UInt64(mouseLeaveDelay * 1_000_000_000))
             guard !Task.isCancelled, !isHovering else { return }
             await MainActor.run {
-                withAnimation(.easeInOut(duration: tooltipToken.motionDurationMid)) {
+                withAnimation(.easeInOut(duration: token.motionDurationMid)) {
                     internalIsOpen = false
                 }
             }
@@ -515,7 +524,7 @@ public extension _Tooltip where TooltipContent == Text {
         arrow: _TooltipArrowConfig,
         color: Color? = nil,
         trigger: _TooltipTrigger = .hover,
-        isOpen: Binding<Bool>? = nil,
+        open: Binding<Bool>? = nil,
         @ViewBuilder content: () -> Content
     ) {
         self.init(
@@ -525,7 +534,7 @@ public extension _Tooltip where TooltipContent == Text {
             arrow: arrow,
             color: color,
             trigger: trigger,
-            isOpen: isOpen
+            open: open
         )
     }
     
@@ -535,7 +544,7 @@ public extension _Tooltip where TooltipContent == Text {
         arrow: Bool = true,
         color: Color? = nil,
         trigger: _TooltipTrigger = .hover,
-        isOpen: Binding<Bool>? = nil,
+        open: Binding<Bool>? = nil,
         @ViewBuilder content: () -> Content
     ) {
         self.init(
@@ -545,7 +554,7 @@ public extension _Tooltip where TooltipContent == Text {
             arrow: arrow ? .true : .false,
             color: color,
             trigger: trigger,
-            isOpen: isOpen
+            open: open
         )
     }
     
@@ -555,7 +564,7 @@ public extension _Tooltip where TooltipContent == Text {
         arrow: Bool = true,
         color: Color? = nil,
         trigger: _TooltipTrigger = .hover,
-        isOpen: Binding<Bool>? = nil,
+        open: Binding<Bool>? = nil,
         @ViewBuilder content: () -> Content
     ) {
         self.init(
@@ -565,7 +574,7 @@ public extension _Tooltip where TooltipContent == Text {
             arrow: arrow ? .true : .false,
             color: color,
             trigger: trigger,
-            isOpen: isOpen
+            open: open
         )
     }
     
@@ -576,7 +585,7 @@ public extension _Tooltip where TooltipContent == Text {
         arrow: Bool = true,
         color: Color? = nil,
         trigger: _TooltipTrigger = .hover,
-        isOpen: Binding<Bool>? = nil,
+        open: Binding<Bool>? = nil,
         @ViewBuilder content: () -> Content
     ) {
         self.init(
@@ -586,7 +595,7 @@ public extension _Tooltip where TooltipContent == Text {
             arrow: arrow ? .true : .false,
             color: color,
             trigger: trigger,
-            isOpen: isOpen,
+            open: open,
             disabled: title?.isEmpty != false  // title 为 nil 或空字符串时禁用
         )
     }
@@ -600,7 +609,7 @@ public struct TooltipModifier<TooltipContent: View>: ViewModifier {
     let arrowConfig: _TooltipArrowConfig
     let color: Color?
     let trigger: _TooltipTrigger
-    @Binding var isOpen: Bool
+    @Binding var open: Bool
     
     public func body(content: Content) -> some View {
         _Tooltip(
@@ -610,7 +619,7 @@ public struct TooltipModifier<TooltipContent: View>: ViewModifier {
             arrow: arrowConfig,
             color: color,
             trigger: trigger,
-            isOpen: $isOpen
+            open: $open
         )
     }
 }
@@ -622,7 +631,7 @@ public extension View {
         arrow: _TooltipArrowConfig,
         color: Color? = nil,
         trigger: _TooltipTrigger = .hover,
-        isOpen: Binding<Bool>? = nil,
+        open: Binding<Bool>? = nil,
         @ViewBuilder content: () -> TooltipContent
     ) -> some View {
         modifier(TooltipModifier(
@@ -631,7 +640,7 @@ public extension View {
             arrowConfig: arrow,
             color: color,
             trigger: trigger,
-            isOpen: isOpen ?? .constant(false)
+            open: open ?? .constant(false)
         ))
     }
     
@@ -641,7 +650,7 @@ public extension View {
         arrow: Bool = true,
         color: Color? = nil,
         trigger: _TooltipTrigger = .hover,
-        isOpen: Binding<Bool>? = nil,
+        open: Binding<Bool>? = nil,
         @ViewBuilder content: () -> TooltipContent
     ) -> some View {
         modifier(TooltipModifier(
@@ -650,7 +659,7 @@ public extension View {
             arrowConfig: arrow ? .true : .false,
             color: color,
             trigger: trigger,
-            isOpen: isOpen ?? .constant(false)
+            open: open ?? .constant(false)
         ))
     }
     
@@ -661,14 +670,14 @@ public extension View {
         arrow: Bool = true,
         color: Color? = nil,
         trigger: _TooltipTrigger = .hover,
-        isOpen: Binding<Bool>? = nil
+        open: Binding<Bool>? = nil
     ) -> some View {
         moinTooltip(
             placement: placement,
             arrow: arrow,
             color: color,
             trigger: trigger,
-            isOpen: isOpen
+            open: open
         ) {
             Text(title)
         }

@@ -24,7 +24,7 @@
     "tooltip.click_trigger": "Click to show",
     "tooltip.enable": "Enable",
     "tooltip.disable": "Disable",
-    "tooltip.disabled_tip": "Tooltip is disabled when title is nil",
+    "tooltip.disabled_tip": "Tooltip is disabled when title is nil or empty",
     
     "tooltip.api_title": "title",
     "tooltip.api_title_desc": "The text shown in the tooltip.",
@@ -36,23 +36,25 @@
     "tooltip.api_color_desc": "Custom background color.",
     "tooltip.api_trigger": "trigger",
     "tooltip.api_trigger_desc": "Trigger mode, supports hover and click.",
-    "tooltip.api_isOpen": "isOpen",
-    "tooltip.api_isOpen_desc": "Binding to control visibility.",
+    "tooltip.api_open": "open",
+    "tooltip.api_open_desc": "Binding to control visibility.",
     
-    "tooltip.token_borderRadius": "borderRadius",
-    "tooltip.token_borderRadius_desc": "Border radius of tooltip.",
-    "tooltip.token_paddingVertical": "paddingVertical",
-    "tooltip.token_paddingVertical_desc": "Vertical padding.",
-    "tooltip.token_paddingHorizontal": "paddingHorizontal",
-    "tooltip.token_paddingHorizontal_desc": "Horizontal padding.",
-    "tooltip.token_arrowSize": "arrowSize",
-    "tooltip.token_arrowSize_desc": "Arrow size.",
-    "tooltip.token_colorBg": "colorBg",
-    "tooltip.token_colorBg_desc": "Background color.",
-    "tooltip.token_colorText": "colorText",
-    "tooltip.token_colorText_desc": "Text color.",
-    "tooltip.token_fontSize": "fontSize",
-    "tooltip.token_fontSize_desc": "Font size.",
-
-    "token.tooltip.component": "Component Token"
+    "token.tooltip.component": "Component Token",
+    "token.tooltip.global": "Global Token",
+    
+    "tooltip.token_maxWidth": "maxWidth",
+    "tooltip.token_maxWidth_desc": "Tooltip maximum width.",
+    "tooltip.token_zIndexPopup": "zIndexPopup",
+    "tooltip.token_zIndexPopup_desc": "Tooltip z-index.",
+    
+    "tooltip.token_colorBgSpotlight": "colorBgSpotlight",
+    "tooltip.token_colorBgSpotlight_desc": "Background color for strong attention, currently only used in Tooltip.",
+    "tooltip.token_colorTextLightSolid": "colorTextLightSolid",
+    "tooltip.token_colorTextLightSolid_desc": "Text color on colored backgrounds.",
+    "tooltip.token_borderRadius_desc": "Base border radius for components.",
+    "tooltip.token_fontSize_desc": "Most widely used font size in the design system.",
+    "tooltip.token_paddingSM_desc": "Small padding for elements.",
+    "tooltip.token_paddingXS_desc": "Extra small padding for elements.",
+    "tooltip.token_sizePopupArrow_desc": "Arrow size for popup components.",
+    "tooltip.token_motionDurationMid_desc": "Medium motion duration for animations."
 }

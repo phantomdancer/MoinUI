@@ -6,7 +6,7 @@ struct TooltipAPIView: View {
 
     // MARK: - State Variables
 
-    @State private var isOpen = false
+    @State private var open = false
 
     private var apiSections: [DocSidebarSection] {
         [
@@ -18,7 +18,7 @@ struct TooltipAPIView: View {
                     .init(id: "arrow"),
                     .init(id: "color"),
                     .init(id: "trigger"),
-                    .init(id: "isOpen")
+                    .init(id: "open")
                 ],
                 sectionId: "tooltip"
             )
@@ -46,7 +46,7 @@ struct TooltipAPIView: View {
         case "arrow": arrowPropertyCard
         case "color": colorPropertyCard
         case "trigger": triggerPropertyCard
-        case "isOpen": isOpenPropertyCard
+        case "open": openPropertyCard
         default: EmptyView()
         }
     }
@@ -249,34 +249,34 @@ struct TooltipAPIView: View {
         .scrollAnchor("tooltip.trigger")
     }
 
-    // MARK: - isOpen
+    // MARK: - open
 
-    private var isOpenPropertyCard: some View {
+    private var openPropertyCard: some View {
         PropertyCard(
-            name: "isOpen",
+            name: "open",
             type: "Binding<Bool>?",
             defaultValue: "nil",
-            description: tr("tooltip.api_isOpen_desc"),
+            description: tr("tooltip.api_open_desc"),
             sectionId: "tooltip"
         ) {
             HStack(spacing: 16) {
-                Moin.Tooltip("Controlled", isOpen: $isOpen) {
+                Moin.Tooltip("Controlled", open: $open) {
                     Moin.Button("Target") {}
                 }
                 
-                Toggle("Show Tooltip", isOn: $isOpen)
+                Toggle("Show Tooltip", isOn: $open)
             }
         } code: {
             """
-            @State private var isOpen = false
+            @State private var open = false
             
-            Moin.Tooltip("Controlled", isOpen: $isOpen) {
+            Moin.Tooltip("Controlled", open: $open) {
                 Moin.Button("Target") {}
             }
             
-            Toggle("Show Tooltip", isOn: $isOpen)
+            Toggle("Show Tooltip", isOn: $open)
             """
         }
-        .scrollAnchor("tooltip.isOpen")
+        .scrollAnchor("tooltip.open")
     }
 }

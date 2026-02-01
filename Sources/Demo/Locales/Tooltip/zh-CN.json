@@ -24,7 +24,7 @@
     "tooltip.click_trigger": "点击触发",
     "tooltip.enable": "启用",
     "tooltip.disable": "禁用",
-    "tooltip.disabled_tip": "当 title 为 nil 时禁用 Tooltip",
+    "tooltip.disabled_tip": "当 title 为 nil 或空字符串时禁用 Tooltip",
     
     "tooltip.api_title": "title",
     "tooltip.api_title_desc": "提示文字内容。",
@@ -36,23 +36,25 @@
     "tooltip.api_color_desc": "自定义背景颜色。",
     "tooltip.api_trigger": "trigger",
     "tooltip.api_trigger_desc": "触发方式，支持 hover 和 click。",
-    "tooltip.api_isOpen": "isOpen",
-    "tooltip.api_isOpen_desc": "控制显示状态的绑定。",
+    "tooltip.api_open": "open",
+    "tooltip.api_open_desc": "控制显示状态的绑定。",
     
-    "tooltip.token_borderRadius": "borderRadius",
-    "tooltip.token_borderRadius_desc": "气泡框圆角半径。",
-    "tooltip.token_paddingVertical": "paddingVertical",
-    "tooltip.token_paddingVertical_desc": "垂直内边距。",
-    "tooltip.token_paddingHorizontal": "paddingHorizontal",
-    "tooltip.token_paddingHorizontal_desc": "水平内边距。",
-    "tooltip.token_arrowSize": "arrowSize",
-    "tooltip.token_arrowSize_desc": "箭头大小。",
-    "tooltip.token_colorBg": "colorBg",
-    "tooltip.token_colorBg_desc": "背景颜色。",
-    "tooltip.token_colorText": "colorText",
-    "tooltip.token_colorText_desc": "文字颜色。",
-    "tooltip.token_fontSize": "fontSize",
-    "tooltip.token_fontSize_desc": "字体大小。",
-
-    "token.tooltip.component": "组件 Token"
+    "token.tooltip.component": "组件 Token",
+    "token.tooltip.global": "全局 Token",
+    
+    "tooltip.token_maxWidth": "maxWidth",
+    "tooltip.token_maxWidth_desc": "文字提示最大宽度。",
+    "tooltip.token_zIndexPopup": "zIndexPopup",
+    "tooltip.token_zIndexPopup_desc": "文字提示 z-index。",
+    
+    "tooltip.token_colorBgSpotlight": "colorBgSpotlight",
+    "tooltip.token_colorBgSpotlight_desc": "用于引起用户强烈关注的背景色，目前只用在 Tooltip 的背景色上。",
+    "tooltip.token_colorTextLightSolid": "colorTextLightSolid",
+    "tooltip.token_colorTextLightSolid_desc": "控制带背景色的文本颜色。",
+    "tooltip.token_borderRadius_desc": "基础组件的圆角大小。",
+    "tooltip.token_fontSize_desc": "设计系统中使用最广泛的字体大小。",
+    "tooltip.token_paddingSM_desc": "控制元素的小内间距。",
+    "tooltip.token_paddingXS_desc": "控制元素的特小内间距。",
+    "tooltip.token_sizePopupArrow_desc": "组件箭头的尺寸。",
+    "tooltip.token_motionDurationMid_desc": "动效播放速度，中速。用于中型元素动画交互。"
 }

@@ -4,7 +4,7 @@ import AppKit
 
 struct TooltipAnchor<TooltipContent: View>: NSViewRepresentable {
     
-    @Binding var isOpen: Bool
+    let open: Bool
     let tooltipContent: TooltipContent
     let placement: _TooltipPlacement
     let arrowConfig: _TooltipArrowConfig
@@ -13,7 +13,7 @@ struct TooltipAnchor<TooltipContent: View>: NSViewRepresentable {
     let offset: CGFloat
     let layoutState: TooltipLayoutState
     
-    // 我们需要一个回调来更新 isOpen (当 trigger == .hover 时)
+    // 我们需要一个回调来更新 open (当 trigger == .hover 时)
     // 或者我们自己在内部管理 hover 状态，并通过 Binding 更新外部
     
      var onHover: ((Bool) -> Void)?
@@ -47,10 +47,13 @@ struct TooltipAnchor<TooltipContent: View>: NSViewRepresentable {
         nsView.layoutState = layoutState // Assign state
         
         // 外部强制控制显示/隐藏 (例如 Click 模式)
-        // 如果 isOpen 为 true，且当前没有显示，则强制显示
-        if isOpen && !nsView.isTooltipVisible {
+        // 如果 open 为 true，且当前没有显示，则强制显示
+        nsView.shouldShow = open
+        
+        // 外部强制控制显示/隐藏
+        if open && !nsView.isTooltipVisible {
             nsView.showTooltip()
-        } else if !isOpen && nsView.isTooltipVisible {
+        } else if !open && nsView.isTooltipVisible {
             nsView.hideTooltip()
         }
     }
@@ -72,6 +75,7 @@ class TooltipAnchorNSView: NSView {
     
     private var trackingArea: NSTrackingArea?
     var isTooltipVisible: Bool = false
+    var shouldShow: Bool = false // 记录外部期望的显示状态
     
     override func updateTrackingAreas() {
         super.updateTrackingAreas()
@@ -185,7 +189,22 @@ class TooltipAnchorNSView: NSView {
     
     override func viewDidMoveToWindow() {
         super.viewDidMoveToWindow()
+        
+        // 如果 window 为 nil，说明 View 被移出了窗口层级，必须强制清理 Tooltip
+        if self.window == nil {
+            forceHide()
+            // 移除所有观察者
+            observers.forEach { NotificationCenter.default.removeObserver($0) }
+            observers.removeAll()
+            return
+        }
+        
         setupObservers()
+        
+        // 如果应该显示但还没显示（之前可能因为没有 window 失败了），现在尝试显示
+        if shouldShow && !isTooltipVisible {
+             showTooltip()
+        }
     }
     
     private func setupObservers() {
@@ -210,31 +229,16 @@ class TooltipAnchorNSView: NSView {
             object: nil,
             queue: nil
         ) { [weak self] note in
-            // 如果收到了 show 通知，但 generation 不一样，说明我们被抢占了。
-            // 实际上，只要收到这个通知，就说明有一个新的 show 发生了。
-            // 我们需要检查这个通知是不是自己发的。
-            
-            // user info 里的 generation
             if let gen = note.userInfo?["generation"] as? Int,
                let selfGen = self?.currentGeneration,
                gen != selfGen {
-               
-               // 别人的 Tooltip 显示了，我们就不应该再持有 currentGeneration 了
-               // 也不需要去 hide window，因为 window 已经被别人复用了
                self?.currentGeneration = nil
-               
-               // 并且我们应该通知外部，我们被关闭了 (Reset internal state)
-               // 不论是 click 还是 hover，如果 Window 被人抢了，我们逻辑上就是关闭了
-               self?.onClose?()  // <--- 专门通知外部关闭
+               self?.onClose?()
             }
         }
         observers.append(globalShow)
 
         guard let _ = self.window else { return }
-        
-        // 1. 窗口移动/调整大小 - 不再需要监听！
-        // 因为我们使用了 addChildWindow，子窗口会自动跟随父窗口移动。
-        // 这极大地简化了代码并提高了性能。
         
         // 2. 监听滚动
         // 如果我们在 ScrollView 内，监听其 bounds 变化 (即 scrolling)

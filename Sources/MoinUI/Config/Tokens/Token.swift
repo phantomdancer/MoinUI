@@ -162,6 +162,10 @@ public extension Moin {
         /// 三级阴影 (弹窗、抽屉)
         public var shadowRadius3: CGFloat
         public var shadowOpacity3: Double
+        
+        // MARK: - Popup Arrow
+        /// 组件箭头的尺寸 (Ant Design: sizePopupArrow)
+        public var sizePopupArrow: CGFloat
 
         public init(from map: MapToken) {
             // Primary
@@ -298,6 +302,8 @@ public extension Moin {
             self.shadowOpacity2 = 0.12
             self.shadowRadius3 = 16
             self.shadowOpacity3 = 0.16
+            // Popup Arrow
+            self.sizePopupArrow = 6  // Ant Design 默认 16，我们使用 6
         }
 
         public static func generate(from seed: SeedToken, theme: Theme) -> Token {
