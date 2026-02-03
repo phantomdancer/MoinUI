@@ -17,7 +17,7 @@
 ## 按复杂度排序（简单优先，无依赖优先）
 
 ### 已完成
-Button ✅, Typography ✅, Divider ✅, Space ✅, Tag ✅, Badge ✅, Avatar ✅, Empty ✅, Spin ✅, Statistic ✅, Alert ✅, Progress ✅, Switch ✅, Checkbox ✅, Radio ✅, Skeleton ✅, Rate ✅, Slider ✅, Result ✅, Tooltip ✅, Icon ⏭
+Button ✅, Typography ✅, Divider ✅, Space ✅, Tag ✅, Badge ✅, Avatar ✅, Empty ✅, Spin ✅, Statistic ✅, Alert ✅, Progress ✅, Switch ✅, Checkbox ✅, Radio ✅, Skeleton ✅, Rate ✅, Slider ✅, Result ✅, Tooltip ✅, Popover ✅, Icon ⏭
 
 ### 第一梯队：极简组件（无依赖，几乎无状态）
 
@@ -63,7 +63,7 @@ Button ✅, Typography ✅, Divider ✅, Space ✅, Tag ✅, Badge ✅, Avatar �
 | 组件 | 复杂度 | 说明 |
 |------|--------|------|
 | Tooltip | ★★★☆☆ | ✅ 已完成 (Refactored to AppKit Window) |
-| Popover | ★★★☆☆ | 气泡卡片 |
+| Popover | ★★★☆☆ | ✅ 已完成 (独立窗口实现) |
 | Modal | ★★★☆☆ | 对话框 |
 | Drawer | ★★★☆☆ | 侧边抽屉 |
 | Message | ★★★☆☆ | 全局消息 |
@@ -98,7 +98,7 @@ Button ✅, Typography ✅, Divider ✅, Space ✅, Tag ✅, Badge ✅, Avatar �
 ## 建议实现顺序
 
 ```
-已完成: Button → Typography → Divider → Space → Tag → Badge → Avatar → Empty → Spin → Statistic → Alert → Progress → Switch → Checkbox → Radio → Skeleton ✅
+已完成: Button → Typography → Divider → Space → Tag → Badge → Avatar → Empty → Spin → Statistic → Alert → Progress → Switch → Checkbox → Radio → Skeleton → Rate → Slider → Result → Tooltip → Popover ✅
 
 ### 架构重构 (2026-01-27)
 - ✅ 全部组件采用 Factory 模式：`Moin.Component("title")` 直接调用
