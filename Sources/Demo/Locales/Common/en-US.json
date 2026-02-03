@@ -75,7 +75,8 @@
     "rate": "Rate",
     "slider": "Slider",
     "result": "Result",
-    "tooltip": "Tooltip"
+    "tooltip": "Tooltip",
+    "popover": "Popover"
   },
   "home": {
     "tagline": "A modern macOS SwiftUI Component Library",

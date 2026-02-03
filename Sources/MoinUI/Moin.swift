@@ -25,6 +25,7 @@ public enum Moin {
     public static let Slider = _MoinSliderFactory()
     public static let Result = _MoinResultFactory()
     public static let Tooltip = _MoinTooltipFactory()
+    public static let Popover = _MoinPopoverFactory()
 
 
     // MARK: - Type Aliases

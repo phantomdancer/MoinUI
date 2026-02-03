@@ -1,0 +1,31 @@
+{
+    "popover.basic": "基础用法",
+    "popover.basic_desc": "最简单的用法，浮层的大小由内容区域决定。",
+    "popover.trigger_type": "三种触发方式",
+    "popover.trigger_type_desc": "鼠标悬停、点击触发。",
+    "popover.placement": "位置",
+    "popover.placement_desc": "位置有12个方向可选。",
+    "popover.arrow": "箭头展示",
+    "popover.arrow_desc": "可以隐藏箭头或使箭头始终指向元素中心。",
+    "popover.control": "受控模式",
+    "popover.control_desc": "使用 open 属性控制显示隐藏。",
+
+    "popover.api_title_desc": "卡片标题。",
+    "popover.api_content_desc": "卡片内容。",
+    "popover.api_placement_desc": "气泡框位置，可选12个方向。",
+    "popover.api_arrow_desc": "是否显示箭头，或配置箭头是否居中。",
+    "popover.api_trigger_desc": "触发行为，可选 hover/click。",
+    "popover.api_open_desc": "用于手动控制浮层显隐。",
+
+    "token.popover.component": "组件 Token",
+    "token.popover.global": "全局 Token",
+    "popover.token_titleMinWidth_desc": "标题区域的最小宽度。",
+    "popover.token_zIndexPopup_desc": "Popover 的 z-index 层级。",
+    "popover.token_innerPadding_desc": "内容区域的内边距。",
+    "popover.token_titleMarginBottom_desc": "标题与内容之间的间距。",
+    "popover.token_colorBgElevated_desc": "浮层的背景色。",
+    "popover.token_colorText_desc": "内容文本颜色。",
+    "popover.token_borderRadiusLG_desc": "浮层圆角大小。",
+    "popover.token_fontSize_desc": "内容字体大小。",
+    "popover.token_sizePopupArrow_desc": "箭头大小。"
+}

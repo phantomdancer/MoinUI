@@ -268,6 +268,10 @@ private struct MoinSkeletonTokenKey: EnvironmentKey {
     static let defaultValue = Moin.SkeletonToken.default
 }
 
+private struct MoinPopoverTokenKey: EnvironmentKey {
+    static let defaultValue = Moin.PopoverToken.default
+}
+
 
 
 public extension EnvironmentValues {
@@ -366,6 +370,10 @@ public extension EnvironmentValues {
         set { self[MoinSkeletonTokenKey.self] = newValue }
     }
 
+    var moinPopoverToken: Moin.PopoverToken {
+        get { self[MoinPopoverTokenKey.self] }
+        set { self[MoinPopoverTokenKey.self] = newValue }
+    }
 
 }
 
@@ -430,6 +438,7 @@ public extension Moin {
                 .environment(\.moinRateToken, config.components.rate)
                 .environment(\.moinSliderToken, config.components.slider)
                 .environment(\.moinResultToken, config.components.result)
+                .environment(\.moinPopoverToken, config.components.popover)
 
                 .environment(\.moinTheme, config.theme)
                 .environment(\.moinComponents, config.components)

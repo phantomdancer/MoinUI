@@ -34,6 +34,7 @@ enum DemoTranslations {
         "Locales/Slider",
         "Locales/Result",
         "Locales/Tooltip",
+        "Locales/Popover",
     ]
 
     static func register() {

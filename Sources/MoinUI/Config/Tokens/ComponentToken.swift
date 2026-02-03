@@ -23,6 +23,7 @@ public extension Moin {
         public var slider: Moin.SliderToken
         public var result: Moin.ResultToken
         public var tooltip: Moin.TooltipToken
+        public var popover: Moin.PopoverToken
 
 
         public static func generate(from token: Token, isDark: Bool = false) -> ComponentToken {
@@ -45,7 +46,8 @@ public extension Moin {
                 rate: .generate(from: token),
                 slider: .generate(from: token),
                 result: .generate(from: token),
-                tooltip: .generate(from: token)
+                tooltip: .generate(from: token),
+                popover: .generate(from: token)
             )
         }
 

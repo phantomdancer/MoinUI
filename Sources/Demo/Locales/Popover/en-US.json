@@ -1,0 +1,31 @@
+{
+    "popover.basic": "Basic",
+    "popover.basic_desc": "The simplest usage. Popover size is determined by content.",
+    "popover.trigger_type": "Trigger Types",
+    "popover.trigger_type_desc": "Mouse enter and click triggers.",
+    "popover.placement": "Placement",
+    "popover.placement_desc": "12 placement options are available.",
+    "popover.arrow": "Arrow",
+    "popover.arrow_desc": "Hide arrow or make it point to center.",
+    "popover.control": "Controlled Mode",
+    "popover.control_desc": "Use open prop to control visibility.",
+
+    "popover.api_title_desc": "Title of the card.",
+    "popover.api_content_desc": "Content of the card.",
+    "popover.api_placement_desc": "Popover placement, 12 options available.",
+    "popover.api_arrow_desc": "Whether to show arrow or center it.",
+    "popover.api_trigger_desc": "Trigger mode: hover or click.",
+    "popover.api_open_desc": "Programmatically control visibility.",
+
+    "token.popover.component": "Component Token",
+    "token.popover.global": "Global Token",
+    "popover.token_titleMinWidth_desc": "Minimum width of title area.",
+    "popover.token_zIndexPopup_desc": "z-index of popover layer.",
+    "popover.token_innerPadding_desc": "Inner padding of content area.",
+    "popover.token_titleMarginBottom_desc": "Spacing between title and content.",
+    "popover.token_colorBgElevated_desc": "Background color of popover.",
+    "popover.token_colorText_desc": "Content text color.",
+    "popover.token_borderRadiusLG_desc": "Border radius of popover.",
+    "popover.token_fontSize_desc": "Content font size.",
+    "popover.token_sizePopupArrow_desc": "Arrow size."
+}

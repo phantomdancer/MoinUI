@@ -75,7 +75,8 @@
     "rate": "Rate 评分",
     "slider": "Slider 滑动输入条",
     "result": "Result 结果",
-    "tooltip": "Tooltip 文字提示"
+    "tooltip": "Tooltip 文字提示",
+    "popover": "Popover 气泡卡片"
   },
   "home": {
     "tagline": "现代化的 macOS SwiftUI 组件库",

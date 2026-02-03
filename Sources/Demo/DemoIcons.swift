@@ -38,6 +38,7 @@ struct DemoIcons {
     static let skeleton = "rectangle.dashed"
     static let result = "checkmark.seal"
     static let tooltip = "bubble.left"
+    static let popover = "bubble.left.and.bubble.right"
 
 
     // Data Entry
