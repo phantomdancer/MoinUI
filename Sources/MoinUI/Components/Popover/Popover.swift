@@ -110,13 +110,7 @@ public struct _Popover<Content: View, TitleContent: View, PopoverContent: View>:
             .padding(popoverToken.innerPadding)
             .frame(minWidth: popoverToken.titleMinWidth, alignment: .leading)
         }
-        .shadow(
-            color: Color.black.opacity(0.12),
-            radius: 8,
-            x: 0,
-            y: 3
-        )
-        .fixedSize()
+        // 阴影由系统处理 (TooltipWindow.hasShadow)
         .environment(\.moinToken, token)
         .environment(\.moinPopoverToken, popoverToken)
         .environment(\.colorScheme, colorScheme)
@@ -242,6 +236,10 @@ private struct PopoverBubble<Content: View>: View {
         content()
             .background(bgColor)
             .clipShape(RoundedRectangle(cornerRadius: borderRadius))
+            .overlay(
+                RoundedRectangle(cornerRadius: borderRadius)
+                    .stroke(Color.black.opacity(0.06), lineWidth: 0.5)
+            )
     }
     
     @ViewBuilder
@@ -290,6 +288,7 @@ private struct PopoverBubble<Content: View>: View {
                 Spacer(minLength: 0)
             }
         }
+        .frame(maxHeight: .infinity)
     }
     
     private func horizontalArrow(pointingDown: Bool) -> some View {

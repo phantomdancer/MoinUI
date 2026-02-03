@@ -264,12 +264,14 @@ class TooltipAnchorNSView: NSView {
         }
     }
     
-    /// 当发生外部干扰（滚动、移动）时，强制隐藏并通知外部状态更新
+    /// 当发生外部干扰（滚动、移动、失活）时，强制隐藏并通知外部状态更新
     private func forceHide() {
         if isTooltipVisible {
             hideTooltip()
-            // 通知外部 Hover 结束，防止鼠标不动时 Tooltip 又被 schedule 出来
+            // 通知外部 Hover 结束
             onHoverChange?(false)
+            // 通知外部关闭（用于 click trigger）
+            onClose?()
         }
     }
     

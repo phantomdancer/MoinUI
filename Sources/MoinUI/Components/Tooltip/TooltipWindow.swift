@@ -17,8 +17,8 @@ class TooltipWindow: NSWindow {
             defer: false
         )
         self.isReleasedWhenClosed = false
-        self.backgroundColor = .clear // 透明背景，内容由 SwiftUI 视图绘制
-        self.hasShadow = false // SwiftUI 视图自己带阴影，或者我们可以这里开启
+        self.backgroundColor = .clear // 透明背景
+        self.hasShadow = true // 系统阴影会自动扩展边界
         // self.level = .floating // 不再需要全局置顶
         self.isOpaque = false
         
@@ -28,10 +28,9 @@ class TooltipWindow: NSWindow {
         // 设置默认 level，实际上会在 show 时更新
         self.level = .init(rawValue: 1070)
         
-        // 忽略鼠标事件? 
-        // Tooltip 通常不交互，或者如果需要交互(复制文本)，不能忽略。
-        // Ant Design 的 Tooltip 默认鼠标移入 Tooltip 也会保持显示。
-        self.ignoresMouseEvents = false  
+        // 穿透鼠标事件，避免拦截点击
+        // 这样 Tooltip/Popover 就是纯展示，不会阻碍点击其他程序
+        self.ignoresMouseEvents = true  
     }
     
     private var generation: Int = 0
@@ -216,6 +215,12 @@ class TooltipWindow: NSWindow {
         // 我们不能执行隐藏操作。
         guard gen == self.generation else { return }
         
+        // 立即解除父子关系，避免影响焦点切换
+        if let parent = self.currentParentWindow {
+            parent.removeChildWindow(self)
+            self.currentParentWindow = nil
+        }
+        
         NSAnimationContext.runAnimationGroup { context in
             context.duration = 0.1
             self.animator().alphaValue = 0
@@ -224,15 +229,6 @@ class TooltipWindow: NSWindow {
            if self.generation == gen {
                self.orderOut(nil)
                self.contentView = nil
-               
-               // 解除父子关系，避免持有引用
-               if let parent = self.currentParentWindow {
-                   parent.removeChildWindow(self)
-                   self.currentParentWindow = nil
-               }
-                // 隐藏成功，重置状态
-                // self.generation = 0  <-- 改回：不要重置为0，否则会导致下一次 show 生成的 index 跟之前的冲突，或逻辑重叠。
-                // 保持累加是更安全的策略。 
            }
         }
     }
