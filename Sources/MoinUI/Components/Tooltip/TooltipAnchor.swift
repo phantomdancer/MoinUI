@@ -19,6 +19,7 @@ struct TooltipAnchor<TooltipContent: View>: NSViewRepresentable {
     // 或者我们自己在内部管理 hover 状态，并通过 Binding 更新外部
     
      var onHover: ((Bool) -> Void)?
+     var onTooltipHover: ((Bool) -> Void)? // Callback for tooltip content hover
      var onClick: (() -> Void)?
      var onClose: (() -> Void)? // 新增：强制关闭回调
      
@@ -29,6 +30,9 @@ struct TooltipAnchor<TooltipContent: View>: NSViewRepresentable {
                  self.onHover?(hovering)
               }
          }
+          view.onTooltipHover = { hovering in
+              self.onTooltipHover?(hovering)
+          }
          view.onClick = {
              self.onClick?()
          }
@@ -76,6 +80,7 @@ class TooltipAnchorNSView: NSView {
     var layoutState: TooltipLayoutState? // Add this
     
     var onHoverChange: ((Bool) -> Void)?
+    var onTooltipHover: ((Bool) -> Void)?
     var onClick: (() -> Void)?
     var onClose: (() -> Void)? // 新增
     
@@ -181,7 +186,8 @@ class TooltipAnchorNSView: NSView {
             maxWidth: maxWidth,
             offset: offset,
             zIndex: zIndex,
-            layoutState: layoutState // Pass state
+            layoutState: layoutState, // Pass state
+            onHover: onTooltipHover // Pass tooltip hover callback
         )
         isTooltipVisible = true
     }

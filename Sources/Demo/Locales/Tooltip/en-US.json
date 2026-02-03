@@ -25,6 +25,10 @@
     "tooltip.enable": "Enable",
     "tooltip.disable": "Disable",
     "tooltip.disabled_tip": "Tooltip is disabled when title is nil or empty",
+    "tooltip.delay": "Delay",
+    "tooltip.delay_desc": "Mouse enter/leave delay.",
+    "tooltip.delay_text": "Enter 1s, Leave 1s",
+    "tooltip.delay_btn": "Delay 1s",
     
     "tooltip.api_title": "title",
     "tooltip.api_title_desc": "The text shown in the tooltip.",

@@ -4,6 +4,9 @@ import SwiftUI
 
 // MARK: - Tooltip Window
 
+
+// MARK: - Tooltip Window
+
 class TooltipWindow: NSWindow {
     
     // 我们不需要每次新建 window，可以复用
@@ -19,18 +22,11 @@ class TooltipWindow: NSWindow {
         self.isReleasedWhenClosed = false
         self.backgroundColor = .clear // 透明背景
         self.hasShadow = true // 系统阴影会自动扩展边界
-        // self.level = .floating // 不再需要全局置顶
         self.isOpaque = false
         
-        // 忽略鼠标事件? 
-        // Tooltip 通常不交互，或者如果需要交互(复制文本)，不能忽略。
-        // Ant Design 的 Tooltip 默认鼠标移入 Tooltip 也会保持显示。
-        // 设置默认 level，实际上会在 show 时更新
+        // 允许鼠标交互，支持 Hover Tooltip 本身
         self.level = .init(rawValue: 1070)
-        
-        // 穿透鼠标事件，避免拦截点击
-        // 这样 Tooltip/Popover 就是纯展示，不会阻碍点击其他程序
-        self.ignoresMouseEvents = true  
+        self.ignoresMouseEvents = false
     }
     
     private var generation: Int = 0
@@ -49,7 +45,8 @@ class TooltipWindow: NSWindow {
         maxWidth: CGFloat? = nil,
         offset: CGFloat = 4,
         zIndex: Int = 1070,
-        layoutState: TooltipLayoutState? = nil
+        layoutState: TooltipLayoutState? = nil,
+        onHover: ((Bool) -> Void)? = nil // Add onHover callback
     ) -> Int {
         // Increment generation to invalidate any pending hide completions
         generation += 1
@@ -57,10 +54,9 @@ class TooltipWindow: NSWindow {
         // Update Level
         self.level = NSWindow.Level(rawValue: Int(zIndex))
         
-        // ... (lines 48-67 skipped/same) ...
         NotificationCenter.default.post(
-            name: .moinTooltipDidShow, 
-            object: nil, 
+            name: .moinTooltipDidShow,
+            object: nil,
             userInfo: ["generation": generation]
         )
         
@@ -75,7 +71,12 @@ class TooltipWindow: NSWindow {
         
         // 1. 设置内容
         let hostingView = NSHostingView(rootView: content.edgesIgnoringSafeArea(.all))
-        self.contentView = hostingView
+        
+        // Wrap in Container handling Hover
+        let containerView = TooltipContainerView(contentView: hostingView)
+        containerView.onHover = onHover
+        
+        self.contentView = containerView
         
         // 2. 计算大小
         // 关键修复：如果有 maxWidth，先设置宽度约束让 SwiftUI 计算换行后的高度
@@ -111,69 +112,21 @@ class TooltipWindow: NSWindow {
         
         // 3.1 动态计算箭头偏移 (PointAtCenter 逻辑)
         if arrowConfig.pointAtCenter, let state = layoutState {
-            // 我们通过 calculateFrame 计算出的 frame 是标准的对齐 (例如 topLeft = 左对齐)
-            // 现在我们要让箭头指向 Target 中心
-            // 目标中心 X
             let targetMidX = targetRect.midX
             let targetMidY = targetRect.midY
-            
-            // Tooltip 帧原点 (Screen coords)
             let tooltipMinX = frame.minX
-            let tooltipMinY = frame.minY
-            // Tooltip 帧最大值
-            let tooltipMaxX = frame.maxX
-            let tooltipMaxY = frame.maxY // macOS Screen Y goes up, so maxY is Top.
-            // Wait, NSWindow frame is Bottom-Left.
-            // Vertically: Top placement -> Tooltip is above Target. Arrow is at Bottom of Tooltip.
-            // Arrow Y should be frame.minY? No, arrow logic inside Bubble.
-            
-            // 我们只需要计算 "箭头相对于 Tooltip 边缘的偏移"
             
             switch placement.primaryDirection {
             case .top, .bottom:
-                // 水平偏移
-                // ArrowX (Screen) = TargetMidX
-                // ArrowOffset (Relative to Tooltip Left) = TargetMidX - TooltipMinX
-                // 默认对齐是 Center 吗？ Placement arrowAlignment says Center.
-                // 无论默认对齐是什么，我们要强制用 .leading + offset 或者重新计算
-                
                 let relativeX = targetMidX - tooltipMinX
-                
-                // 我们强制使用 .leading 对齐，然后 offset = relativeX - arrowWidth/2
-                // 但是 Bubble 里的 offset 是 Spacer width.
-                // Spacer + Arrow.
-                // So Spacer Width = relativeX - ArrowWidth/2. (ArrowWidth is arrowSize * 2 for horizontal arrow)
-                let spacerWidth = relativeX - (arrowSize) // arrowSize*2 width -> center is arrowSize
-                
+                let spacerWidth = relativeX - (arrowSize)
                 DispatchQueue.main.async {
                     state.arrowAlignmentOverride = .leading
                     state.arrowOffsetOverride = max(0, spacerWidth)
                 }
-                
             case .leading, .trailing:
-                // 垂直偏移
-                // ArrowY (Screen) = TargetMidY
-                // ArrowOffset (Relative to Tooltip Top? or Bottom?)
-                // Bubble VStack layout:
-                // If .top alignment: Spacer(height) + Arrow.
-                // Arrow is drawn from Top down? layout is VStack.
-                // Standard SwiftUI VStack starts from Top.
-                
-                // But NSWindow Y grows UP. Frame coordinates check.
-                // targetRect is Screen Coords (Bottom-Left origin).
-                // tooltip frame is Screen Coords (Bottom-Left origin).
-                
-                // Tooltip Top (MaxY)
-                // Target MidY
-                // Distance from Top = TooltipMaxY - TargetMidY.
-                
                 let distanceFromTop = frame.maxY - targetMidY
-                
-                // Spacer Height = distanceFromTop - ArrowHeight/2.
-                // ArrowHeight is arrowSize * 2 for vertical arrow. center is at arrowSize.
-                
                 let spacerHeight = distanceFromTop - arrowSize
-                
                  DispatchQueue.main.async {
                     state.arrowAlignmentOverride = .top
                     state.arrowOffsetOverride = max(0, spacerHeight)
@@ -245,51 +198,24 @@ class TooltipWindow: NSWindow {
         var x: CGFloat = 0
         var y: CGFloat = 0
         
-        // 箭头高度包含在 contentSize 吗？
-        // TooltipBubble 是包含箭头的 View。所以 contentSize 已经包含了箭头尺寸。
-        // 但是我们需要知道箭头的方向和偏移来对齐。
-        
-        // 注意：macOS 屏幕坐标系 (0,0) 可能在左下角 (AppKit默认) 或 左上角 (CoreGraphics/SwiftUI处理后)。
-        // NSWindow setFrame 使用的是 **Bottom-Left** origin (AppKit Coordinates).
-        // 但是 targetRect 往往来自 window.convertToScreen，它也是 Bottom-Left 吗？
-        // 需确认。NSWindow.frame 是 Bottom-Left。
-        
         let w = contentSize.width
         let h = contentSize.height
-        
-        // gap 是 目标 和 Tooltip 实体之间的距离 (不包含箭头嵌入部分?)
-        // 因为 TooltipBubble 已经画了箭头，所以这里的 spacing 应该是 目标边缘 到 箭头尖端 的微小距离 (offset)
-        // 或者如果 offset 包含了箭头高度...
-        // 我们的 TooltipBubble 逻辑：
-        // placement.top -> Arrow is at bottom.
-        // The view height INCLUDES the arrow height.
-        // So we just need to place the View Bottom at Target Top + Spacing.
         
         let spacing = offset
         
         switch placement {
         case .top, .topLeft, .topRight:
-            // Tooltip 在 Target 上方。
-            // Tooltip Y = Target MaxY + spacing
             y = targetRect.maxY + spacing
-            
             if placement == .top {
-                // 水平居中: Tooltip MidX = Target MidX
                 x = targetRect.midX - w / 2
             } else if placement == .topLeft {
-                // 左对齐: Tooltip Left = Target Left
                 x = targetRect.minX
             } else {
-                // 右对齐: Tooltip Right = Target Right
                 x = targetRect.maxX - w
             }
             
         case .bottom, .bottomLeft, .bottomRight:
-            // Tooltip 在 Target 下方。
-            // Tooltip Top (MaxY) = Target MinY - spacing
-            // Tooltip MinY = Target MinY - spacing - h
             y = targetRect.minY - spacing - h
-            
             if placement == .bottom {
                 x = targetRect.midX - w / 2
             } else if placement == .bottomLeft {
@@ -299,27 +225,17 @@ class TooltipWindow: NSWindow {
             }
             
         case .left, .leftTop, .leftBottom:
-            // Tooltip 在 Target 左侧。
-            // Tooltip Right (MaxX) = Target MinX - spacing
-            // Tooltip MinX = Target MinX - spacing - w
             x = targetRect.minX - spacing - w
-            
             if placement == .left {
-                // 垂直居中: Tooltip MidY = Target MidY -> Tooltip MinY = Target MidY - h/2
                 y = targetRect.midY - h / 2
             } else if placement == .leftTop {
-                // 顶部对齐: Tooltip Top(MaxY) = Target Top(MaxY)
                 y = targetRect.maxY - h
             } else {
-                //底部对齐: Tooltip Bottom(MinY) = Target Bottom(MinY)
                 y = targetRect.minY
             }
             
         case .right, .rightTop, .rightBottom:
-            // Tooltip 在 Target 右侧。
-            // Tooltip Left (MinX) = Target MaxX + spacing
             x = targetRect.maxX + spacing
-            
             if placement == .right {
                 y = targetRect.midY - h / 2
             } else if placement == .rightTop {
@@ -332,6 +248,67 @@ class TooltipWindow: NSWindow {
         return CGRect(x: x, y: y, width: w, height: h)
     }
 }
+
+// MARK: - Tooltip Container View (Handles Hover)
+
+private class TooltipContainerView: NSView {
+    let contentView: NSView
+    var onHover: ((Bool) -> Void)?
+    
+    init(contentView: NSView) {
+        self.contentView = contentView
+        super.init(frame: .zero)
+        
+        self.addSubview(contentView)
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            contentView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            contentView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            contentView.topAnchor.constraint(equalTo: self.topAnchor),
+            contentView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+        ])
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func updateTrackingAreas() {
+        super.updateTrackingAreas()
+        
+        for area in trackingAreas {
+            removeTrackingArea(area)
+        }
+        
+        let options: NSTrackingArea.Options = [
+            .mouseEnteredAndExited,
+            .activeAlways,
+            .inVisibleRect
+        ]
+        
+        let trackingArea = NSTrackingArea(
+            rect: self.bounds,
+            options: options,
+            owner: self,
+            userInfo: nil
+        )
+        addTrackingArea(trackingArea)
+    }
+    
+    override func mouseEntered(with event: NSEvent) {
+        onHover?(true)
+    }
+    
+    override func mouseExited(with event: NSEvent) {
+        onHover?(false)
+    }
+    
+    // Transparent for clicks?
+    // If we want to allow selecting text, we shouldn't hitTest -> nil.
+    // If we want to block clicks, normal NSView does that.
+}
+
+
 
 extension NSNotification.Name {
     static let moinTooltipDidShow = NSNotification.Name("MoinTooltipDidShow")

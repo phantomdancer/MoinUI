@@ -9,12 +9,16 @@ public struct _Popover<Content: View, TitleContent: View, PopoverContent: View>:
     private let placement: _TooltipPlacement
     private let arrowConfig: _TooltipArrowConfig
     private let trigger: _TooltipTrigger
+    private let mouseEnterDelay: Double
+    private let mouseLeaveDelay: Double
     private let disabled: Bool
     private let isControlled: Bool
     
     @Binding private var open: Bool
     @State private var internalIsOpen: Bool = false
     @State private var isHovering: Bool = false
+    @State private var isAnchorHovering: Bool = false
+    @State private var isPopoverHovering: Bool = false
     @State private var hoverTask: Task<Void, Never>?
     
     @Environment(\.moinPopoverToken) private var popoverToken
@@ -37,6 +41,8 @@ public struct _Popover<Content: View, TitleContent: View, PopoverContent: View>:
         placement: _TooltipPlacement = .top,
         arrow: _TooltipArrowConfig = .true,
         trigger: _TooltipTrigger = .hover,
+        mouseEnterDelay: Double = 0.1,
+        mouseLeaveDelay: Double = 0.1,
         open: Binding<Bool>? = nil,
         disabled: Bool = false
     ) {
@@ -46,6 +52,8 @@ public struct _Popover<Content: View, TitleContent: View, PopoverContent: View>:
         self.placement = placement
         self.arrowConfig = arrow
         self.trigger = trigger
+        self.mouseEnterDelay = mouseEnterDelay
+        self.mouseLeaveDelay = mouseLeaveDelay
         self._open = open ?? .constant(false)
         self.disabled = disabled
         self.isControlled = open != nil
@@ -66,7 +74,10 @@ public struct _Popover<Content: View, TitleContent: View, PopoverContent: View>:
                     zIndex: popoverToken.zIndexPopup,
                     layoutState: layoutState,
                     onHover: { hovering in
-                        handleHover(hovering)
+                        handleHover(source: .anchor, hovering: hovering)
+                    },
+                    onTooltipHover: { hovering in
+                         handleHover(source: .popover, hovering: hovering)
                     },
                     onClick: {
                         handleAnchorClick()
@@ -118,16 +129,35 @@ public struct _Popover<Content: View, TitleContent: View, PopoverContent: View>:
     
     // MARK: - Logic
     
-    private func handleHover(_ hovering: Bool) {
+    private enum HoverSource {
+        case anchor
+        case popover
+    }
+
+    private func handleHover(source: HoverSource, hovering: Bool) {
         guard trigger == .hover, !disabled, !isControlled else { return }
-        if hovering {
+        
+        switch source {
+        case .anchor:
+            isAnchorHovering = hovering
+        case .popover:
+            isPopoverHovering = hovering
+        }
+        
+        let effectiveHover = isAnchorHovering || isPopoverHovering
+        
+        if effectiveHover {
             if !isHovering {
                 isHovering = true
                 scheduleShow()
+            } else {
+                 scheduleShow()
             }
         } else {
-            isHovering = false
-            scheduleHide()
+            if isHovering {
+                isHovering = false
+                scheduleHide()
+            }
         }
     }
     
@@ -139,6 +169,8 @@ public struct _Popover<Content: View, TitleContent: View, PopoverContent: View>:
         DispatchQueue.main.async {
             self.internalIsOpen = false
             self.isHovering = false
+            self.isAnchorHovering = false
+            self.isPopoverHovering = false
         }
     }
     
@@ -148,8 +180,7 @@ public struct _Popover<Content: View, TitleContent: View, PopoverContent: View>:
         }
     }
     
-    private let mouseEnterDelay: Double = 0.1
-    private let mouseLeaveDelay: Double = 0.1
+    // mouseEnterDelay and mouseLeaveDelay are now instance properties
     
     private func scheduleShow() {
         hoverTask?.cancel()
@@ -376,6 +407,8 @@ public extension _Popover where TitleContent == EmptyView {
         placement: _TooltipPlacement = .top,
         arrow: _TooltipArrowConfig = .true,
         trigger: _TooltipTrigger = .hover,
+        mouseEnterDelay: Double = 0.1,
+        mouseLeaveDelay: Double = 0.1,
         open: Binding<Bool>? = nil,
         disabled: Bool = false
     ) {
@@ -385,6 +418,8 @@ public extension _Popover where TitleContent == EmptyView {
         self.placement = placement
         self.arrowConfig = arrow
         self.trigger = trigger
+        self.mouseEnterDelay = mouseEnterDelay
+        self.mouseLeaveDelay = mouseLeaveDelay
         self._open = open ?? .constant(false)
         self.disabled = disabled
         self.isControlled = open != nil
@@ -401,6 +436,8 @@ public extension _Popover where TitleContent == Text {
         placement: _TooltipPlacement = .top,
         arrow: _TooltipArrowConfig = .true,
         trigger: _TooltipTrigger = .hover,
+        mouseEnterDelay: Double = 0.1,
+        mouseLeaveDelay: Double = 0.1,
         open: Binding<Bool>? = nil,
         disabled: Bool = false
     ) {
@@ -410,6 +447,8 @@ public extension _Popover where TitleContent == Text {
         self.placement = placement
         self.arrowConfig = arrow
         self.trigger = trigger
+        self.mouseEnterDelay = mouseEnterDelay
+        self.mouseLeaveDelay = mouseLeaveDelay
         self._open = open ?? .constant(false)
         self.disabled = disabled
         self.isControlled = open != nil
@@ -429,6 +468,8 @@ public struct _MoinPopoverFactory {
         placement: _TooltipPlacement = .top,
         arrow: _TooltipArrowConfig = .true,
         trigger: _TooltipTrigger = .hover,
+        mouseEnterDelay: Double = 0.1,
+        mouseLeaveDelay: Double = 0.1,
         open: Binding<Bool>? = nil,
         disabled: Bool = false
     ) -> _Popover<Content, TitleContent, PopoverContent> {
@@ -439,6 +480,8 @@ public struct _MoinPopoverFactory {
             placement: placement,
             arrow: arrow,
             trigger: trigger,
+            mouseEnterDelay: mouseEnterDelay,
+            mouseLeaveDelay: mouseLeaveDelay,
             open: open,
             disabled: disabled
         )
@@ -452,6 +495,8 @@ public struct _MoinPopoverFactory {
         placement: _TooltipPlacement = .top,
         arrow: _TooltipArrowConfig = .true,
         trigger: _TooltipTrigger = .hover,
+        mouseEnterDelay: Double = 0.1,
+        mouseLeaveDelay: Double = 0.1,
         open: Binding<Bool>? = nil,
         disabled: Bool = false
     ) -> _Popover<Content, Text, PopoverContent> {
@@ -462,6 +507,8 @@ public struct _MoinPopoverFactory {
             placement: placement,
             arrow: arrow,
             trigger: trigger,
+            mouseEnterDelay: mouseEnterDelay,
+            mouseLeaveDelay: mouseLeaveDelay,
             open: open,
             disabled: disabled
         )
@@ -474,6 +521,8 @@ public struct _MoinPopoverFactory {
         placement: _TooltipPlacement = .top,
         arrow: _TooltipArrowConfig = .true,
         trigger: _TooltipTrigger = .hover,
+        mouseEnterDelay: Double = 0.1,
+        mouseLeaveDelay: Double = 0.1,
         open: Binding<Bool>? = nil,
         disabled: Bool = false
     ) -> _Popover<Content, EmptyView, PopoverContent> {
@@ -483,6 +532,8 @@ public struct _MoinPopoverFactory {
             placement: placement,
             arrow: arrow,
             trigger: trigger,
+            mouseEnterDelay: mouseEnterDelay,
+            mouseLeaveDelay: mouseLeaveDelay,
             open: open,
             disabled: disabled
         )

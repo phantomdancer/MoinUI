@@ -62,8 +62,8 @@ Button ✅, Typography ✅, Divider ✅, Space ✅, Tag ✅, Badge ✅, Avatar �
 
 | 组件 | 复杂度 | 说明 |
 |------|--------|------|
-| Tooltip | ★★★☆☆ | ✅ 已完成 (Refactored to AppKit Window) |
-| Popover | ★★★☆☆ | ✅ 已完成 (独立窗口实现) |
+| Tooltip | ★★★☆☆ | ✅ 已完成 (Window + Interaction + Configurable Delays) |
+| Popover | ★★★☆☆ | ✅ 已完成 (Window + Interaction + Configurable Delays) |
 | Modal | ★★★☆☆ | 对话框 |
 | Drawer | ★★★☆☆ | 侧边抽屉 |
 | Message | ★★★☆☆ | 全局消息 |

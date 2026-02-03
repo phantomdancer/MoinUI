@@ -9,6 +9,8 @@
     "popover.arrow_desc": "可以隐藏箭头或使箭头始终指向元素中心。",
     "popover.control": "受控模式",
     "popover.control_desc": "使用 open 属性控制显示隐藏。",
+    "popover.delay": "延时",
+    "popover.delay_desc": "鼠标移入/移出延时。",
 
     "popover.api_title_desc": "卡片标题。",
     "popover.api_content_desc": "卡片内容。",

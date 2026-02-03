@@ -24,7 +24,8 @@ struct TooltipExamples: View {
         AnchorItem(id: "placement", titleKey: "tooltip.placement"),
         AnchorItem(id: "arrow", titleKey: "tooltip.arrow"),
         AnchorItem(id: "color", titleKey: "tooltip.color"),
-        AnchorItem(id: "trigger", titleKey: "tooltip.trigger")
+        AnchorItem(id: "trigger", titleKey: "tooltip.trigger"),
+        AnchorItem(id: "delay", titleKey: "tooltip.delay")
     ]
     
     var body: some View {
@@ -77,6 +78,7 @@ struct TooltipExamples: View {
             arrowExample.id("arrow")
             colorExample.id("color")
             triggerExample.id("trigger")
+            delayExample.id("delay")
         }
     }
     
@@ -300,6 +302,38 @@ struct TooltipExamples: View {
                 
                 Moin.Tooltip("Click to show", trigger: .click) {
                     Moin.Button("Click") {}
+                }
+                """
+            }
+        )
+    }
+
+    // MARK: - Delay
+    
+    private var delayExample: some View {
+        ExampleSection(
+            title: tr("tooltip.delay"),
+            description: tr("tooltip.delay_desc"),
+            content: {
+                HStack(spacing: 20) {
+                    Moin.Tooltip(
+                        tr("tooltip.delay_text"),
+                        arrow: true,
+                        mouseEnterDelay: 1.0,
+                        mouseLeaveDelay: 1.0
+                    ) {
+                        Moin.Button(tr("tooltip.delay_btn")) {}
+                    }
+                }
+            },
+            code: {
+                """
+                Moin.Tooltip(
+                    "Enter 1s, Leave 1s",
+                    mouseEnterDelay: 1.0,
+                    mouseLeaveDelay: 1.0
+                ) {
+                    Moin.Button("Delay 1s") {}
                 }
                 """
             }

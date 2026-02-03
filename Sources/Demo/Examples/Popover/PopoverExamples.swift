@@ -23,7 +23,8 @@ struct PopoverExamples: View {
         AnchorItem(id: "triggerType", titleKey: "popover.trigger_type"),
         AnchorItem(id: "placement", titleKey: "popover.placement"),
         AnchorItem(id: "arrow", titleKey: "popover.arrow"),
-        AnchorItem(id: "control", titleKey: "popover.control")
+        AnchorItem(id: "control", titleKey: "popover.control"),
+        AnchorItem(id: "delay", titleKey: "popover.delay")
     ]
     
     var body: some View {
@@ -76,6 +77,7 @@ struct PopoverExamples: View {
             placementExample.id("placement")
             arrowExample.id("arrow")
             controlExample.id("control")
+            delayExample.id("delay")
         }
     }
     
@@ -321,6 +323,31 @@ struct PopoverExamples: View {
                         Button("Close") { open = false }
                     }
                 }, trigger: .click, open: $open)
+                """
+            }
+        )
+    }
+
+    // MARK: - Delay
+    
+    private var delayExample: some View {
+        ExampleSection(
+            title: tr("popover.delay"),
+            description: tr("popover.delay_desc"),
+            content: {
+                Moin.Popover("Title", content: {
+                    Moin.Button("Delay 0.5s") {}
+                }, popoverContent: {
+                    Text("Content")
+                }, mouseEnterDelay: 0.5, mouseLeaveDelay: 0.5)
+            },
+            code: {
+                """
+                Moin.Popover("Title", content: {
+                    Moin.Button("Delay 0.5s") {}
+                }, popoverContent: {
+                    Text("Content")
+                }, mouseEnterDelay: 0.5, mouseLeaveDelay: 0.5)
                 """
             }
         )

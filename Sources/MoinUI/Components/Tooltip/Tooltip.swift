@@ -102,12 +102,16 @@ public struct _Tooltip<Content: View, TooltipContent: View>: View {
     private let arrowConfig: _TooltipArrowConfig
     private let color: Color?
     private let trigger: _TooltipTrigger
+    private let mouseEnterDelay: Double
+    private let mouseLeaveDelay: Double
     private let disabled: Bool
     private let isControlled: Bool  // 是否由外部控制
     
     @Binding private var open: Bool
     @State private var internalIsOpen: Bool = false
-    @State private var isHovering: Bool = false
+    @State private var isHovering: Bool = false // Effective hovering state
+    @State private var isAnchorHovering: Bool = false
+    @State private var isTooltipHovering: Bool = false
     @State private var hoverTask: Task<Void, Never>?
     
     @Environment(\.moinTooltipToken) private var tooltipToken
@@ -132,6 +136,8 @@ public struct _Tooltip<Content: View, TooltipContent: View>: View {
         arrow: _TooltipArrowConfig = .true,
         color: Color? = nil,
         trigger: _TooltipTrigger = .hover,
+        mouseEnterDelay: Double = 0.1,
+        mouseLeaveDelay: Double = 0.1,
         open: Binding<Bool>? = nil,
         disabled: Bool = false
     ) {
@@ -141,6 +147,8 @@ public struct _Tooltip<Content: View, TooltipContent: View>: View {
         self.arrowConfig = arrow
         self.color = color
         self.trigger = trigger
+        self.mouseEnterDelay = mouseEnterDelay
+        self.mouseLeaveDelay = mouseLeaveDelay
         self._open = open ?? .constant(false)
         self.disabled = disabled
         self.isControlled = open != nil  // 传入了 open 则为受控模式
@@ -154,6 +162,8 @@ public struct _Tooltip<Content: View, TooltipContent: View>: View {
         arrow: Bool,
         color: Color? = nil,
         trigger: _TooltipTrigger = .hover,
+        mouseEnterDelay: Double = 0.1,
+        mouseLeaveDelay: Double = 0.1,
         open: Binding<Bool>? = nil
     ) {
         self.init(
@@ -163,6 +173,8 @@ public struct _Tooltip<Content: View, TooltipContent: View>: View {
             arrow: arrow ? .true : .false,
             color: color,
             trigger: trigger,
+            mouseEnterDelay: mouseEnterDelay,
+            mouseLeaveDelay: mouseLeaveDelay,
             open: open
         )
     }
@@ -183,7 +195,10 @@ public struct _Tooltip<Content: View, TooltipContent: View>: View {
 
                     layoutState: layoutState, // Pass state
                     onHover: { hovering in
-                        handleHover(hovering)
+                        handleHover(source: .anchor, hovering: hovering)
+                    },
+                    onTooltipHover: { hovering in
+                        handleHover(source: .tooltip, hovering: hovering)
                     },
                     onClick: {
                          handleAnchorClick()
@@ -222,17 +237,41 @@ public struct _Tooltip<Content: View, TooltipContent: View>: View {
     
     // MARK: - Logic
     
-    private func handleHover(_ hovering: Bool) {
+    private enum HoverSource {
+        case anchor
+        case tooltip
+    }
+
+    private func handleHover(source: HoverSource, hovering: Bool) {
         // 受控模式下不响应 hover
         guard trigger == .hover, !disabled, !isControlled else { return }
-        if hovering {
+        
+        // Update specific state
+        switch source {
+        case .anchor:
+            isAnchorHovering = hovering
+        case .tooltip:
+            isTooltipHovering = hovering
+        }
+        
+        let effectiveHover = isAnchorHovering || isTooltipHovering
+        
+        if effectiveHover {
             if !isHovering {
                 isHovering = true
                 scheduleShow()
+            } else {
+                // If we are already effectively hovering (e.g. moved from anchor to tooltip),
+                // we might need to cancel any pending hide?
+                // scheduleShow cancels existing task.
+                 scheduleShow()
             }
         } else {
-            isHovering = false
-            scheduleHide()
+            // Both false
+            if isHovering {
+                isHovering = false
+                scheduleHide()
+            }
         }
     }
     
@@ -244,6 +283,8 @@ public struct _Tooltip<Content: View, TooltipContent: View>: View {
         DispatchQueue.main.async {
             self.internalIsOpen = false
             self.isHovering = false
+            self.isAnchorHovering = false
+            self.isTooltipHovering = false
         }
     }
 
@@ -292,8 +333,7 @@ public struct _Tooltip<Content: View, TooltipContent: View>: View {
     // MARK: - Hover Delay
     
     // 全局 Token: mouseEnterDelay = 0.1s, mouseLeaveDelay = 0.1s, motionDurationMid = 0.2s
-    private let mouseEnterDelay: Double = 0.1
-    private let mouseLeaveDelay: Double = 0.1
+    // mouseEnterDelay and mouseLeaveDelay are now instance properties
     
     private func scheduleShow() {
         hoverTask?.cancel()
@@ -528,6 +568,8 @@ public extension _Tooltip where TooltipContent == TooltipTextWrapper {
         arrow: _TooltipArrowConfig,
         color: Color? = nil,
         trigger: _TooltipTrigger = .hover,
+        mouseEnterDelay: Double = 0.1,
+        mouseLeaveDelay: Double = 0.1,
         open: Binding<Bool>? = nil,
         @ViewBuilder content: () -> Content
     ) {
@@ -538,6 +580,8 @@ public extension _Tooltip where TooltipContent == TooltipTextWrapper {
             arrow: arrow,
             color: color,
             trigger: trigger,
+            mouseEnterDelay: mouseEnterDelay,
+            mouseLeaveDelay: mouseLeaveDelay,
             open: open
         )
     }
@@ -548,6 +592,8 @@ public extension _Tooltip where TooltipContent == TooltipTextWrapper {
         arrow: Bool = true,
         color: Color? = nil,
         trigger: _TooltipTrigger = .hover,
+        mouseEnterDelay: Double = 0.1,
+        mouseLeaveDelay: Double = 0.1,
         open: Binding<Bool>? = nil,
         @ViewBuilder content: () -> Content
     ) {
@@ -558,6 +604,8 @@ public extension _Tooltip where TooltipContent == TooltipTextWrapper {
             arrow: arrow ? .true : .false,
             color: color,
             trigger: trigger,
+            mouseEnterDelay: mouseEnterDelay,
+            mouseLeaveDelay: mouseLeaveDelay,
             open: open
         )
     }
@@ -568,6 +616,8 @@ public extension _Tooltip where TooltipContent == TooltipTextWrapper {
         arrow: Bool = true,
         color: Color? = nil,
         trigger: _TooltipTrigger = .hover,
+        mouseEnterDelay: Double = 0.1,
+        mouseLeaveDelay: Double = 0.1,
         open: Binding<Bool>? = nil,
         @ViewBuilder content: () -> Content
     ) {
@@ -578,6 +628,8 @@ public extension _Tooltip where TooltipContent == TooltipTextWrapper {
             arrow: arrow ? .true : .false,
             color: color,
             trigger: trigger,
+            mouseEnterDelay: mouseEnterDelay,
+            mouseLeaveDelay: mouseLeaveDelay,
             open: open
         )
     }
@@ -589,6 +641,8 @@ public extension _Tooltip where TooltipContent == TooltipTextWrapper {
         arrow: Bool = true,
         color: Color? = nil,
         trigger: _TooltipTrigger = .hover,
+        mouseEnterDelay: Double = 0.1,
+        mouseLeaveDelay: Double = 0.1,
         open: Binding<Bool>? = nil,
         @ViewBuilder content: () -> Content
     ) {
@@ -599,6 +653,8 @@ public extension _Tooltip where TooltipContent == TooltipTextWrapper {
             arrow: arrow ? .true : .false,
             color: color,
             trigger: trigger,
+            mouseEnterDelay: mouseEnterDelay,
+            mouseLeaveDelay: mouseLeaveDelay,
             open: open,
             disabled: title?.isEmpty != false  // title 为 nil 或空字符串时禁用
         )
@@ -613,6 +669,8 @@ public struct TooltipModifier<TooltipContent: View>: ViewModifier {
     let arrowConfig: _TooltipArrowConfig
     let color: Color?
     let trigger: _TooltipTrigger
+    let mouseEnterDelay: Double
+    let mouseLeaveDelay: Double
     @Binding var open: Bool
     
     public func body(content: Content) -> some View {
@@ -623,6 +681,8 @@ public struct TooltipModifier<TooltipContent: View>: ViewModifier {
             arrow: arrowConfig,
             color: color,
             trigger: trigger,
+            mouseEnterDelay: mouseEnterDelay,
+            mouseLeaveDelay: mouseLeaveDelay,
             open: $open
         )
     }
@@ -635,6 +695,8 @@ public extension View {
         arrow: _TooltipArrowConfig,
         color: Color? = nil,
         trigger: _TooltipTrigger = .hover,
+        mouseEnterDelay: Double = 0.1,
+        mouseLeaveDelay: Double = 0.1,
         open: Binding<Bool>? = nil,
         @ViewBuilder content: () -> TooltipContent
     ) -> some View {
@@ -644,6 +706,8 @@ public extension View {
             arrowConfig: arrow,
             color: color,
             trigger: trigger,
+            mouseEnterDelay: mouseEnterDelay,
+            mouseLeaveDelay: mouseLeaveDelay,
             open: open ?? .constant(false)
         ))
     }
@@ -654,6 +718,8 @@ public extension View {
         arrow: Bool = true,
         color: Color? = nil,
         trigger: _TooltipTrigger = .hover,
+        mouseEnterDelay: Double = 0.1,
+        mouseLeaveDelay: Double = 0.1,
         open: Binding<Bool>? = nil,
         @ViewBuilder content: () -> TooltipContent
     ) -> some View {
@@ -663,6 +729,8 @@ public extension View {
             arrowConfig: arrow ? .true : .false,
             color: color,
             trigger: trigger,
+            mouseEnterDelay: mouseEnterDelay,
+            mouseLeaveDelay: mouseLeaveDelay,
             open: open ?? .constant(false)
         ))
     }
@@ -674,6 +742,8 @@ public extension View {
         arrow: Bool = true,
         color: Color? = nil,
         trigger: _TooltipTrigger = .hover,
+        mouseEnterDelay: Double = 0.1,
+        mouseLeaveDelay: Double = 0.1,
         open: Binding<Bool>? = nil
     ) -> some View {
         moinTooltip(
@@ -681,6 +751,8 @@ public extension View {
             arrow: arrow,
             color: color,
             trigger: trigger,
+            mouseEnterDelay: mouseEnterDelay,
+            mouseLeaveDelay: mouseLeaveDelay,
             open: open
         ) {
             Text(title)

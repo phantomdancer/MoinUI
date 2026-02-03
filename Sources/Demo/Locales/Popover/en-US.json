@@ -9,6 +9,8 @@
     "popover.arrow_desc": "Hide arrow or make it point to center.",
     "popover.control": "Controlled Mode",
     "popover.control_desc": "Use open prop to control visibility.",
+    "popover.delay": "Delay",
+    "popover.delay_desc": "Mouse enter/leave delay.",
 
     "popover.api_title_desc": "Title of the card.",
     "popover.api_content_desc": "Content of the card.",

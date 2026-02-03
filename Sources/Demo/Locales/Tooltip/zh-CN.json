@@ -25,6 +25,10 @@
     "tooltip.enable": "启用",
     "tooltip.disable": "禁用",
     "tooltip.disabled_tip": "当 title 为 nil 或空字符串时禁用 Tooltip",
+    "tooltip.delay": "延时",
+    "tooltip.delay_desc": "鼠标移入/移出延时。",
+    "tooltip.delay_text": "移入 1s, 移出 1s",
+    "tooltip.delay_btn": "延时 1s",
     
     "tooltip.api_title": "title",
     "tooltip.api_title_desc": "提示文字内容。",

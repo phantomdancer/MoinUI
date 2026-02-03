@@ -824,10 +824,12 @@ public struct _MoinTooltipFactory {
         arrow: _TooltipArrowConfig,
         color: Color? = nil,
         trigger: _TooltipTrigger = .hover,
+        mouseEnterDelay: Double = 0.1,
+        mouseLeaveDelay: Double = 0.1,
         open: Binding<Bool>? = nil,
         @ViewBuilder content: () -> Content
     ) -> _Tooltip<Content, TooltipTextWrapper> {
-        _Tooltip(title, placement: placement, arrow: arrow, color: color, trigger: trigger, open: open, content: content)
+        _Tooltip(title, placement: placement, arrow: arrow, color: color, trigger: trigger, mouseEnterDelay: mouseEnterDelay, mouseLeaveDelay: mouseLeaveDelay, open: open, content: content)
     }
 
     /// 文字 Tooltip (Bool Arrow)
@@ -837,10 +839,12 @@ public struct _MoinTooltipFactory {
         arrow: Bool = true,
         color: Color? = nil,
         trigger: _TooltipTrigger = .hover,
+        mouseEnterDelay: Double = 0.1,
+        mouseLeaveDelay: Double = 0.1,
         open: Binding<Bool>? = nil,
         @ViewBuilder content: () -> Content
     ) -> _Tooltip<Content, TooltipTextWrapper> {
-        _Tooltip(title, placement: placement, arrow: arrow, color: color, trigger: trigger, open: open, content: content)
+        _Tooltip(title, placement: placement, arrow: arrow, color: color, trigger: trigger, mouseEnterDelay: mouseEnterDelay, mouseLeaveDelay: mouseLeaveDelay, open: open, content: content)
     }
     
     /// 自定义内容 Tooltip (Arrow Config)
@@ -849,11 +853,13 @@ public struct _MoinTooltipFactory {
         arrow: _TooltipArrowConfig,
         color: Color? = nil,
         trigger: _TooltipTrigger = .hover,
+        mouseEnterDelay: Double = 0.1,
+        mouseLeaveDelay: Double = 0.1,
         open: Binding<Bool>? = nil,
         @ViewBuilder tooltip: () -> TooltipContent,
         @ViewBuilder content: () -> Content
     ) -> _Tooltip<Content, TooltipContent> {
-        _Tooltip(content: content, tooltip: tooltip, placement: placement, arrow: arrow, color: color, trigger: trigger, open: open)
+        _Tooltip(content: content, tooltip: tooltip, placement: placement, arrow: arrow, color: color, trigger: trigger, mouseEnterDelay: mouseEnterDelay, mouseLeaveDelay: mouseLeaveDelay, open: open)
     }
 
     /// 自定义内容 Tooltip (Bool Arrow)
@@ -862,11 +868,13 @@ public struct _MoinTooltipFactory {
         arrow: Bool = true,
         color: Color? = nil,
         trigger: _TooltipTrigger = .hover,
+        mouseEnterDelay: Double = 0.1,
+        mouseLeaveDelay: Double = 0.1,
         open: Binding<Bool>? = nil,
         @ViewBuilder tooltip: () -> TooltipContent,
         @ViewBuilder content: () -> Content
     ) -> _Tooltip<Content, TooltipContent> {
-        _Tooltip(content: content, tooltip: tooltip, placement: placement, arrow: arrow, color: color, trigger: trigger, open: open)
+        _Tooltip(content: content, tooltip: tooltip, placement: placement, arrow: arrow, color: color, trigger: trigger, mouseEnterDelay: mouseEnterDelay, mouseLeaveDelay: mouseLeaveDelay, open: open)
     }
     
     /// 可选文字 Tooltip，当 title 为 nil 时不显示 Tooltip
@@ -876,9 +884,11 @@ public struct _MoinTooltipFactory {
         arrow: Bool = true,
         color: Color? = nil,
         trigger: _TooltipTrigger = .hover,
+        mouseEnterDelay: Double = 0.1,
+        mouseLeaveDelay: Double = 0.1,
         open: Binding<Bool>? = nil,
         @ViewBuilder content: () -> Content
     ) -> _Tooltip<Content, TooltipTextWrapper> {
-        _Tooltip(optional: title, placement: placement, arrow: arrow, color: color, trigger: trigger, open: open, content: content)
+        _Tooltip(optional: title, placement: placement, arrow: arrow, color: color, trigger: trigger, mouseEnterDelay: mouseEnterDelay, mouseLeaveDelay: mouseLeaveDelay, open: open, content: content)
     }
 }
